@@ -1,45 +1,33 @@
 package ee.schimke.shokz
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.safeContentPadding
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import org.jetbrains.compose.resources.painterResource
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import ee.schimke.shokz.files.FileExplorerScreen
+import ee.schimke.shokz.home.HomeScreen
+import kotlinx.serialization.Serializable
 import org.jetbrains.compose.ui.tooling.preview.Preview
-
-import shokz.composeapp.generated.resources.Res
-import shokz.composeapp.generated.resources.compose_multiplatform
 
 @Composable
 @Preview
 fun App() {
-    MaterialTheme {
-        var showContent by remember { mutableStateOf(true) }
-        Column(
-            modifier = Modifier.fillMaxWidth()
-                .safeContentPadding(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Button(onClick = { showContent = !showContent }) {
-                Text("Click me!")
-            }
-            AnimatedVisibility(visible = showContent) {
-                val greeting = remember { Greeting().greet() }
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Image(painterResource(Res.drawable.compose_multiplatform), null)
-                    Text("Compose: $greeting")
-                }
-            }
+    val navController = rememberNavController()
+
+    NavHost(navController, startDestination = Home) {
+        composable<Home> {
+            HomeScreen(onFileExplorer = {
+//                navController.navigate(FileExplorer)
+            })
         }
+//        composable<FileExplorer> {
+//            FileExplorerScreen()
+//        }
     }
 }
+
+@Serializable
+data object Home
+
+//@Serializable
+//data object FileExplorer

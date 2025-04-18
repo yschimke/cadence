@@ -3,7 +3,9 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    kotlin("plugin.serialization").version(libs.versions.kotlin)
     id("com.gradleup.compat.patrouille").version("0.0.0")
+    id("dev.zacsweers.metro").version("0.1.2")
 }
 
 kotlin {
@@ -25,16 +27,27 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+            implementation("androidx.core:core-splashscreen:1.0.1")
         }
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
-            implementation(compose.material)
+            implementation(compose.material3)
+            implementation(compose.material3AdaptiveNavigationSuite)
+            implementation("org.jetbrains.androidx.navigation:navigation-compose:2.9.0-alpha16")
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
+            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.0")
+        }
+        androidInstrumentedTest.dependencies {
+            implementation(libs.junit)
+            implementation(libs.kotlin.test.junit)
+            implementation(libs.androidx.test.junit)
+            implementation(libs.androidx.espresso.core)
+            implementation("androidx.test:runner:1.6.2")
         }
     }
 }
@@ -49,6 +62,8 @@ android {
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     packaging {
         resources {
@@ -71,7 +86,10 @@ compatPatrouille {
     kotlin(embeddedKotlinVersion)
 }
 
-dependencies {
-    debugImplementation(compose.uiTooling)
+metro {
 }
+
+//dependencies {
+//    debugImplementation(compose.uiTooling)
+//}
 
