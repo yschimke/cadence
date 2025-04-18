@@ -16,7 +16,7 @@ import kotlin.reflect.KClass
 @ContributesBinding(AppScope::class)
 @Inject
 class MetroViewModelFactory(
-    private val viewModelProviders: Map<KClass<out ViewModel>, Provider<ViewModel>>
+    private val viewModelProviders: Map<KClass<out ViewModel>, ViewModelCreator>
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(
@@ -29,7 +29,7 @@ class MetroViewModelFactory(
 
         return try {
             @Suppress("UNCHECKED_CAST")
-            provider() as T
+            provider.create(extras) as T
         } catch (e: Exception) {
             throw RuntimeException(e)
         }

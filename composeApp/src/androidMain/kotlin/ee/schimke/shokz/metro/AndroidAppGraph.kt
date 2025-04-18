@@ -3,6 +3,7 @@ package ee.schimke.shokz.metro
 import android.app.Activity
 import android.content.Context
 import androidx.datastore.core.DataStore
+import androidx.lifecycle.ViewModel
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.DependencyGraph
 import dev.zacsweers.metro.Multibinds
