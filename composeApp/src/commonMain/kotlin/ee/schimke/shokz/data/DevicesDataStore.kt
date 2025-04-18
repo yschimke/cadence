@@ -22,7 +22,11 @@ import okio.SYSTEM
  */
 fun createFilesDataStore(producePath: () -> Path): DataStore<Devices> =
     DataStoreFactory.create(
-        OkioStorage<Devices>(FileSystem.SYSTEM, serializer = Devices.ADAPTER.toOkioSerializer(), producePath = producePath),
+        OkioStorage(
+            FileSystem.SYSTEM,
+            serializer = Devices.ADAPTER.toOkioSerializer(),
+            producePath = producePath
+        ),
         corruptionHandler = onCorrupt(produceNewData = { Devices() })
     )
 
@@ -30,7 +34,7 @@ fun <T> onCorrupt(produceNewData: () -> T): ReplaceFileCorruptionHandler<T> {
     return ReplaceFileCorruptionHandler<T>({ produceNewData() })
 }
 
-fun <T: Message<T, Nothing>> ProtoAdapter<T>.toOkioSerializer(): OkioSerializer<T> {
+fun <T : Message<T, Nothing>> ProtoAdapter<T>.toOkioSerializer(): OkioSerializer<T> {
     return object : OkioSerializer<T> {
         override val defaultValue: T = this@toOkioSerializer.decode(ByteString.EMPTY)
 

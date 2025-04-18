@@ -12,7 +12,7 @@ import ee.schimke.shokz.platform.Platform
 
 class HomeViewModel(
     private val platform: Platform
-): ViewModel() {
+) : ViewModel() {
 
     fun greeting(): String {
         return platform.name
@@ -24,6 +24,6 @@ class HomeViewModel(
 @Inject
 class HomeViewModelCreator(
     private val platform: Platform
-): ViewModelCreator {
+) : ViewModelCreator {
     override fun create(extras: CreationExtras): HomeViewModel = HomeViewModel(platform)
 }

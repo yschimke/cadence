@@ -5,12 +5,16 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import androidx.documentfile.provider.DocumentFile
+import com.google.modernstorage.storage.toOkioPath
+import okio.Path
 
 @Composable
 actual fun rememberFileExplorerOpenLauncher(
-    onGranted: (String) -> Unit,
+    onGranted: (Path) -> Unit,
 ): () -> Unit {
-    val contentResolver = LocalContext.current.contentResolver
+    val context = LocalContext.current
+    val contentResolver = context.contentResolver
 
     val launcher = rememberLauncherForActivityResult(
         contract = object : ActivityResultContracts.OpenDocumentTree() {
@@ -29,15 +33,19 @@ actual fun rememberFileExplorerOpenLauncher(
             }
         },
         onResult = { uri ->
-            println("Selected URI $uri")
-
             if (uri != null) {
                 contentResolver.takePersistableUriPermission(
                     uri,
                     Intent.FLAG_GRANT_READ_URI_PERMISSION
                             or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
                 )
-                onGranted(uri.toString())
+
+
+                val directory = DocumentFile.fromTreeUri(context, uri)
+
+                if (directory != null) {
+                    onGranted(directory.uri.toOkioPath())
+                }
             }
         }
     )

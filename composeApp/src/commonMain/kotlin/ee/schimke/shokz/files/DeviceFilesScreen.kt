@@ -28,7 +28,7 @@ fun DeviceFilesScreen(modifier: Modifier = Modifier) {
             .safeContentPadding(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("Files " + uiState.route.id)
+        Text("Files " + uiState.name)
 
         if (uiState is DeviceFilesViewModel.UiState.Loaded) {
             val files = (uiState as DeviceFilesViewModel.UiState.Loaded).files

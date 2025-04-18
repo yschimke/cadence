@@ -12,10 +12,6 @@ import androidx.compose.ui.platform.LocalContext
 fun AndroidMaterialTheme(content: @Composable () -> Unit) {
     val isDark = isSystemInDarkTheme()
 
-    SideEffect {
-        println("AndroidMaterialTheme isDark: $isDark")
-    }
-
     MaterialTheme(
         colorScheme = if (isDark) dynamicDarkColorScheme(LocalContext.current) else dynamicLightColorScheme(
             LocalContext.current

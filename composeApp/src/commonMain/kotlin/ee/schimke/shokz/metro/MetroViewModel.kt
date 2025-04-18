@@ -10,7 +10,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 @Composable
 inline fun <reified VM : ViewModel> metroViewModel(
     viewModelStoreOwner: ViewModelStoreOwner =
-        checkNotNull(LocalViewModelStoreOwner .current) {
+        checkNotNull(LocalViewModelStoreOwner.current) {
             "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
         },
     key: String? = null

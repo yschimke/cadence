@@ -18,13 +18,14 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import okio.Path
 
 class DevicesViewModel(
     private val devicesRepo: DevicesRepo
 ) : ViewModel() {
-    fun addDevice(uri: String) {
+    fun addDevice(path: Path) {
         viewModelScope.launch {
-            devicesRepo.addDevice(Device(name = "Unknown", uri = uri))
+            devicesRepo.addDevice(Device(name = "Unknown", path = path.toString()))
         }
     }
 
@@ -39,7 +40,7 @@ class DevicesViewModel(
     sealed interface UiState {
         data object Loading : UiState
 
-        data class Devices(val devices: List<Device>): UiState
+        data class Devices(val devices: List<Device>) : UiState
     }
 }
 
@@ -48,7 +49,7 @@ class DevicesViewModel(
 @Inject
 class DevicesViewModelCreator(
     private val devicesRepo: DevicesRepo
-): ViewModelCreator {
+) : ViewModelCreator {
     override fun create(extras: CreationExtras): DevicesViewModel = DevicesViewModel(devicesRepo)
 }
 

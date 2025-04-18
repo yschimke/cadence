@@ -12,6 +12,7 @@ import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.Inject
 import ee.schimke.shokz.DeviceFiles
+import ee.schimke.shokz.data.DeviceFilesRepo
 import ee.schimke.shokz.data.DevicesRepo
 import ee.schimke.shokz.datastore.proto.Device
 import ee.schimke.shokz.home.HomeViewModel
@@ -22,6 +23,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -31,11 +33,20 @@ import okio.Path
 class DeviceFilesViewModel(
     private val savedStateHandle: SavedStateHandle,
     private val devicesRepo: DevicesRepo,
+    private val deviceFilesRepo: DeviceFilesRepo,
 ) : ViewModel() {
     val route = savedStateHandle.toRoute<DeviceFiles>()
 
-    val uiState: StateFlow<UiState> = devicesRepo.devices.flatMapLatest {
-        flowOf<UiState>(UiState.Loaded(route, listOf()))
+    val uiState: StateFlow<UiState> = flow<UiState> {
+        val device = devicesRepo.getDevice(route.id)
+
+        if (device == null) {
+            emit(UiState.NotAvailable(route))
+        } else {
+            val sequence = deviceFilesRepo.listFiles(device)
+            val files = sequence.toList()
+            emit(UiState.Loaded(device, files))
+        }
     }.stateIn(
         viewModelScope,
         started = SharingStarted.WhileSubscribed(),
@@ -43,11 +54,22 @@ class DeviceFilesViewModel(
     )
 
     sealed class UiState {
-        abstract val route: DeviceFiles
+        abstract val name: String
 
-        data class Loading(override val route: DeviceFiles) : UiState()
+        data class Loading(val route: DeviceFiles) : UiState() {
+            override val name: String
+                get() = route.id
+        }
 
-        data class Loaded(override val route: DeviceFiles, val files: List<Path>) : UiState()
+        data class NotAvailable(val route: DeviceFiles) : UiState() {
+            override val name: String
+                get() = route.id
+        }
+
+        data class Loaded(val device: Device, val files: List<Path>) : UiState() {
+            override val name: String
+                get() = device.name
+        }
     }
 }
 
@@ -55,9 +77,10 @@ class DeviceFilesViewModel(
 @ViewModelKey(DeviceFilesViewModel::class)
 @Inject
 class DeviceFilesViewModelCreator(
-    private val devicesRepo: DevicesRepo
+    private val devicesRepo: DevicesRepo,
+    private val deviceFilesRepo: DeviceFilesRepo,
 ) : ViewModelCreator {
     override fun create(extras: CreationExtras): DeviceFilesViewModel =
-        DeviceFilesViewModel(extras.createSavedStateHandle(), devicesRepo)
+        DeviceFilesViewModel(extras.createSavedStateHandle(), devicesRepo, deviceFilesRepo)
 }
 

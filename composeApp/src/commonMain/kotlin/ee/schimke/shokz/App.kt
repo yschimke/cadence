@@ -44,8 +44,9 @@ fun App() {
         composable<Devices> {
             DevicesScreen(
                 modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
-                onDeviceClick = { navController.navigate(DeviceFiles(id = it.id)) }
-            )
+                onDeviceClick = {
+                    navController.navigate(DeviceFiles(id = it.id))
+                })
         }
         composable<DeviceFiles> {
             DeviceFilesScreen(

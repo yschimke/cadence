@@ -11,5 +11,5 @@ message Devices {
 message Device {
   string id = 1;
   string name = 2;
-  string uri = 3;
+  string path = 3;
 }

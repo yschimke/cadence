@@ -18,6 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ee.schimke.shokz.datastore.proto.Device
 import ee.schimke.shokz.metro.metroViewModel
+import okio.Path
+import okio.Path.Companion.toPath
 
 @Composable
 fun DevicesScreen(modifier: Modifier = Modifier, onDeviceClick: (Device) -> Unit) {
@@ -42,7 +44,7 @@ fun DevicesScreen(modifier: Modifier = Modifier, onDeviceClick: (Device) -> Unit
             files.forEach {
                 ElevatedCard(modifier = Modifier.fillMaxWidth(), onClick = { onDeviceClick(it) }) {
                     Text(it.name)
-                    Text(it.uri)
+                    Text(it.path.toPath().name)
                 }
             }
         } else if (uiState is DevicesViewModel.UiState.Loading) {
@@ -57,5 +59,5 @@ fun DevicesScreen(modifier: Modifier = Modifier, onDeviceClick: (Device) -> Unit
 
 @Composable
 expect fun rememberFileExplorerOpenLauncher(
-    onGranted: (String) -> Unit,
+    onGranted: (Path) -> Unit,
 ): () -> Unit
