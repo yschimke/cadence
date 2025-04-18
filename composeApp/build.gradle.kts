@@ -28,6 +28,7 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation("androidx.core:core-splashscreen:1.0.1")
+            implementation("com.google.modernstorage:modernstorage-storage:1.0.0-alpha06")
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -41,6 +42,7 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
             implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.0")
+            implementation("com.squareup.okio:okio:3.10.2")
         }
         androidInstrumentedTest.dependencies {
             implementation(libs.junit)

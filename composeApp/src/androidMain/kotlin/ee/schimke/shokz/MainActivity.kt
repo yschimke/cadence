@@ -29,7 +29,7 @@ class MainActivity(
         super.onCreate(savedInstanceState)
 
         setContent {
-            AndroidMaterialTheme() {
+            AndroidMaterialTheme {
                 App()
             }
         }
