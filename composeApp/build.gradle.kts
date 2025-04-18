@@ -29,7 +29,8 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation("androidx.core:core-splashscreen:1.0.1")
-            implementation("com.google.modernstorage:modernstorage-storage:1.0.0-alpha06")
+            implementation("me.saket.modernstorage:modernstorage-permissions:1.0.0-alpha09")
+            implementation("me.saket.modernstorage:modernstorage-storage:1.0.0-alpha09")
             implementation("androidx.documentfile:documentfile:1.0.1")
         }
         commonMain.dependencies {

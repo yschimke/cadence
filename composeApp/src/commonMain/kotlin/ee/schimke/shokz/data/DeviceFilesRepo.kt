@@ -13,6 +13,8 @@ import okio.Path.Companion.toPath
 @Inject
 class DeviceFilesRepo(private val fileSystem: FileSystem, private val platform: Platform) {
     suspend fun listFiles(device: Device): List<Path> {
-        return withContext(Dispatchers.Default) { platform.listRecursively(device.path.toPath()) }
+        return withContext(Dispatchers.Default) {
+            fileSystem.listRecursively(device.path.toPath()).toList()
+        }
     }
 }

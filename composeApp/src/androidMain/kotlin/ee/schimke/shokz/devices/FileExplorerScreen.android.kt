@@ -40,12 +40,7 @@ actual fun rememberFileExplorerOpenLauncher(
                             or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
                 )
 
-
-                val directory = DocumentFile.fromTreeUri(context, uri)
-
-                if (directory != null) {
-                    onGranted(directory.uri.toOkioPath())
-                }
+                onGranted(uri.toOkioPath())
             }
         }
     )
