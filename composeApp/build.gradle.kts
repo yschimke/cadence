@@ -99,7 +99,7 @@ wire {
 }
 
 metro {
-    debug.set(true)
+//    debug.set(true)
     reportsDestination.set(layout.buildDirectory.dir("metro/reports"))
 }
 
