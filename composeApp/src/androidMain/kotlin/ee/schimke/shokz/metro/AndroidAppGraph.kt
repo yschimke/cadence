@@ -46,7 +46,7 @@ abstract class AndroidAppGraph : AppGraph {
         synchronized(this) {
             if (!::ds.isInitialized) {
                 ds = createFilesDataStore {
-                    context.filesDir.resolve("devices-3.pb").toOkioPath()
+                    context.filesDir.resolve("devices-4.pb").toOkioPath()
                 }
             }
         }
