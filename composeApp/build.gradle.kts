@@ -13,17 +13,6 @@ kotlin {
     androidTarget {
     }
 
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
-            baseName = "ComposeApp"
-            isStatic = true
-        }
-    }
-
     sourceSets {
         androidMain.dependencies {
             implementation(compose.preview)
@@ -47,6 +36,7 @@ kotlin {
             implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.0")
             implementation("com.squareup.okio:okio:3.10.2")
             implementation("androidx.datastore:datastore:1.1.4")
+            implementation("cafe.adriel.bonsai:bonsai-core:1.2.0")
         }
         androidInstrumentedTest.dependencies {
             implementation(libs.junit)
