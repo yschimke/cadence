@@ -1,14 +1,11 @@
 package ee.schimke.shokz.devices
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.safeContentPadding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -32,9 +29,11 @@ fun DevicesScreen(modifier: Modifier = Modifier, onDeviceClick: (Device) -> Unit
     })
 
     Column(
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier
+            .fillMaxWidth()
             .safeContentPadding(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(5.dp, Alignment.Top)
     ) {
         Text("Devices")
 
@@ -44,7 +43,7 @@ fun DevicesScreen(modifier: Modifier = Modifier, onDeviceClick: (Device) -> Unit
             files.forEach {
                 ElevatedCard(modifier = Modifier.fillMaxWidth(), onClick = { onDeviceClick(it) }) {
                     Text(it.name)
-                    Text(it.path.toPath().name)
+                    Text(it.path.toPath().name.substringAfterLast("%3A").replace("%2F", "/"))
                 }
             }
         } else if (uiState is DevicesViewModel.UiState.Loading) {

@@ -37,6 +37,7 @@ kotlin {
             implementation("com.squareup.okio:okio:3.10.2")
             implementation("androidx.datastore:datastore:1.1.4")
             implementation("cafe.adriel.bonsai:bonsai-core:1.2.0")
+            implementation("cafe.adriel.bonsai:bonsai-file-system:1.2.0")
         }
         androidInstrumentedTest.dependencies {
             implementation(libs.junit)

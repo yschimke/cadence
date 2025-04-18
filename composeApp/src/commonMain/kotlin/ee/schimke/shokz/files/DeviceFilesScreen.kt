@@ -1,12 +1,11 @@
 package ee.schimke.shokz.files
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.safeContentPadding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -14,7 +13,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import cafe.adriel.bonsai.core.Bonsai
+import cafe.adriel.bonsai.core.tree.Tree
+import cafe.adriel.bonsai.filesystem.FileSystemBonsaiStyle
 import ee.schimke.shokz.metro.metroViewModel
 
 @Composable
@@ -24,22 +27,24 @@ fun DeviceFilesScreen(modifier: Modifier = Modifier) {
     val uiState by viewModel.uiState.collectAsState()
 
     Column(
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier
+            .fillMaxWidth()
             .safeContentPadding(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text("Files " + uiState.name)
 
         if (uiState is DeviceFilesViewModel.UiState.Loaded) {
-            val files = (uiState as DeviceFilesViewModel.UiState.Loaded).files
+            val files = (uiState as DeviceFilesViewModel.UiState.Loaded).fileTree()
 
-            files.forEach {
-                Surface {
-                    Row {
-                        Text(it.name)
-                    }
-                }
-            }
+                Bonsai(
+                    files,
+                    style = FileSystemBonsaiStyle(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                        .border(1.dp, Color.Black)
+                )
         } else if (uiState is DeviceFilesViewModel.UiState.Loading) {
             Text("Loading...")
         }

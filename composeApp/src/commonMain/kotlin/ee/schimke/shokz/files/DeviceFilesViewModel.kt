@@ -2,12 +2,16 @@
 
 package ee.schimke.shokz.files
 
+import android.content.Context
+import androidx.compose.runtime.Composable
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.navigation.toRoute
+import cafe.adriel.bonsai.core.tree.Tree
+import cafe.adriel.bonsai.filesystem.FileSystemTree
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.Inject
@@ -15,25 +19,24 @@ import ee.schimke.shokz.DeviceFiles
 import ee.schimke.shokz.data.DeviceFilesRepo
 import ee.schimke.shokz.data.DevicesRepo
 import ee.schimke.shokz.datastore.proto.Device
-import ee.schimke.shokz.home.HomeViewModel
 import ee.schimke.shokz.metro.ViewModelCreator
 import ee.schimke.shokz.metro.ViewModelKey
-import ee.schimke.shokz.platform.Platform
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
+import okio.FileSystem
 import okio.Path
+import okio.Path.Companion.toOkioPath
+import okio.Path.Companion.toPath
 
 class DeviceFilesViewModel(
     private val savedStateHandle: SavedStateHandle,
     private val devicesRepo: DevicesRepo,
     private val deviceFilesRepo: DeviceFilesRepo,
+    private val fileSystem: FileSystem,
+    private val path: Path,
 ) : ViewModel() {
     val route = savedStateHandle.toRoute<DeviceFiles>()
 
@@ -43,9 +46,7 @@ class DeviceFilesViewModel(
         if (device == null) {
             emit(UiState.NotAvailable(route))
         } else {
-            val sequence = deviceFilesRepo.listFiles(device)
-            val files = sequence.toList()
-            emit(UiState.Loaded(device, files))
+            emit(UiState.Loaded(device, device.path.toPath(), fileSystem))
         }
     }.stateIn(
         viewModelScope,
@@ -66,9 +67,15 @@ class DeviceFilesViewModel(
                 get() = route.id
         }
 
-        data class Loaded(val device: Device, val files: List<Path>) : UiState() {
+        data class Loaded(val device: Device, val root: Path, val fileSystem: FileSystem) :
+            UiState() {
             override val name: String
                 get() = device.name
+
+            @Composable
+            fun fileTree(): Tree<Path> = Tree {
+                FileSystemTree(root, fileSystem)
+            }
         }
     }
 }
@@ -79,8 +86,16 @@ class DeviceFilesViewModel(
 class DeviceFilesViewModelCreator(
     private val devicesRepo: DevicesRepo,
     private val deviceFilesRepo: DeviceFilesRepo,
+    private val fileSystem: FileSystem,
+    private val context: Context,
 ) : ViewModelCreator {
     override fun create(extras: CreationExtras): DeviceFilesViewModel =
-        DeviceFilesViewModel(extras.createSavedStateHandle(), devicesRepo, deviceFilesRepo)
+        DeviceFilesViewModel(
+            extras.createSavedStateHandle(),
+            devicesRepo,
+            deviceFilesRepo,
+            fileSystem,
+            context.filesDir.toOkioPath()
+        )
 }
 

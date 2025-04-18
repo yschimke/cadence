@@ -3,26 +3,19 @@ package ee.schimke.shokz.metro
 import android.app.Activity
 import android.content.Context
 import androidx.datastore.core.DataStore
-import androidx.documentfile.provider.DocumentFile
-import com.google.modernstorage.storage.AndroidFileSystem
-import com.google.modernstorage.storage.toOkioPath
-import com.google.modernstorage.storage.toUri
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.DependencyGraph
 import dev.zacsweers.metro.Multibinds
 import dev.zacsweers.metro.Provider
 import dev.zacsweers.metro.Provides
 import dev.zacsweers.metro.SingleIn
-import ee.schimke.shokz.data.AndroidFixedFileSystem
+import ee.schimke.shokz.data.AndroidFileSystem
 import ee.schimke.shokz.data.createFilesDataStore
 import ee.schimke.shokz.datastore.proto.Devices
 import ee.schimke.shokz.platform.AndroidPlatform
 import ee.schimke.shokz.platform.Platform
 import okio.FileSystem
-import okio.ForwardingFileSystem
-import okio.Path
 import okio.Path.Companion.toOkioPath
-import kotlin.collections.addAll
 import kotlin.reflect.KClass
 
 @DependencyGraph(AppScope::class)
@@ -55,7 +48,7 @@ abstract class AndroidAppGraph : AppGraph {
     }
 
     @Provides
-    fun provideFileSystem(context: Context): FileSystem = AndroidFixedFileSystem(context)
+    fun provideFileSystem(context: Context): FileSystem = AndroidFileSystem(context)
 
     @DependencyGraph.Factory
     fun interface Factory {

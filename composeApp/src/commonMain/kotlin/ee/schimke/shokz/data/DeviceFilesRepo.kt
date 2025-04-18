@@ -4,7 +4,6 @@ import dev.zacsweers.metro.Inject
 import ee.schimke.shokz.datastore.proto.Device
 import ee.schimke.shokz.platform.Platform
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
 import okio.FileSystem
 import okio.Path

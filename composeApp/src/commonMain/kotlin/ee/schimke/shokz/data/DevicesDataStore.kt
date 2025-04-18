@@ -15,7 +15,6 @@ import okio.ByteString
 import okio.FileSystem
 import okio.IOException
 import okio.Path
-import okio.SYSTEM
 
 /**
  * Gets the singleton DataStore instance, creating it if necessary.
