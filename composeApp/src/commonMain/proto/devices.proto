@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+package ee.schimke.shokz.datastore.proto;
+
+message Devices {
+  repeated Device devices = 1;
+}
+
+message Device {
+  string id = 1;
+  string name = 2;
+  string uri = 3;
+}

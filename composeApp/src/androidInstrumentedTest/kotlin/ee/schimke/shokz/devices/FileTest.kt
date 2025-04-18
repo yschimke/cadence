@@ -1,4 +1,4 @@
-package ee.schimke.shokz.files
+package ee.schimke.shokz.devices
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Test

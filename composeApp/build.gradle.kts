@@ -6,6 +6,7 @@ plugins {
     kotlin("plugin.serialization").version(libs.versions.kotlin)
     id("com.gradleup.compat.patrouille").version("0.0.0")
     id("dev.zacsweers.metro").version("0.1.2")
+    id("com.squareup.wire").version("5.3.1")
 }
 
 kotlin {
@@ -43,6 +44,7 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtime.compose)
             implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.0")
             implementation("com.squareup.okio:okio:3.10.2")
+            implementation("androidx.datastore:datastore:1.1.4")
         }
         androidInstrumentedTest.dependencies {
             implementation(libs.junit)
@@ -86,6 +88,14 @@ android {
 compatPatrouille {
     java(17)
     kotlin(embeddedKotlinVersion)
+}
+
+wire {
+    sourcePath {
+        srcDir("src/commonMain/proto")
+    }
+
+    kotlin {}
 }
 
 metro {

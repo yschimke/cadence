@@ -18,16 +18,12 @@ import kotlin.reflect.KClass
  */
 @Keep
 class MetroAppComponentFactory : AppComponentFactory() {
-  init {
-    println("MetroAppComponentFactory init")
-  }
 
   private inline fun <reified T : Any> getInstance(
     cl: ClassLoader,
     className: String,
     providers: Map<KClass<out T>, Provider<T>>,
   ): T? {
-    println("getInstance " + className)
     val clazz = Class.forName(className, false, cl).asSubclass(T::class.java)
     val modelProvider = providers[clazz.kotlin] ?: return null
     return modelProvider()
@@ -38,25 +34,14 @@ class MetroAppComponentFactory : AppComponentFactory() {
     className: String,
     intent: Intent?,
   ): Activity {
-    println("instantiateActivityCompat " + className)
     return getInstance(cl, className, activityProviders)
       ?: super.instantiateActivityCompat(cl, className, intent)
   }
 
   override fun instantiateApplicationCompat(cl: ClassLoader, className: String): Application {
-    println("instantiateApplicationCompat " + className)
     val app = super.instantiateApplicationCompat(cl, className)
     activityProviders = (app as ShokzApplication).appGraph.activityProviders
     return app
-  }
-
-  override fun instantiateProviderCompat(
-    cl: ClassLoader,
-    className: String
-  ): ContentProvider {
-    println("instantiateProviderCompat " + className)
-
-    return super.instantiateProviderCompat(cl, className)
   }
 
   // AppComponentFactory can be created multiple times
