@@ -2,21 +2,16 @@
 
 package ee.schimke.shokz.files
 
-import android.content.Context
-import androidx.compose.runtime.Composable
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.navigation.toRoute
-import cafe.adriel.bonsai.core.tree.Tree
-import cafe.adriel.bonsai.filesystem.FileSystemTree
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.Inject
 import ee.schimke.shokz.DeviceFiles
-import ee.schimke.shokz.data.DeviceFilesRepo
 import ee.schimke.shokz.data.DevicesRepo
 import ee.schimke.shokz.datastore.proto.Device
 import ee.schimke.shokz.metro.ViewModelCreator
@@ -28,15 +23,12 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
 import okio.FileSystem
 import okio.Path
-import okio.Path.Companion.toOkioPath
 import okio.Path.Companion.toPath
 
 class DeviceFilesViewModel(
     private val savedStateHandle: SavedStateHandle,
     private val devicesRepo: DevicesRepo,
-    private val deviceFilesRepo: DeviceFilesRepo,
     private val fileSystem: FileSystem,
-    private val path: Path,
 ) : ViewModel() {
     val route = savedStateHandle.toRoute<DeviceFiles>()
 
@@ -71,11 +63,6 @@ class DeviceFilesViewModel(
             UiState() {
             override val name: String
                 get() = device.name
-
-            @Composable
-            fun fileTree(): Tree<Path> = Tree {
-                FileSystemTree(root, fileSystem)
-            }
         }
     }
 }
@@ -85,17 +72,13 @@ class DeviceFilesViewModel(
 @Inject
 class DeviceFilesViewModelCreator(
     private val devicesRepo: DevicesRepo,
-    private val deviceFilesRepo: DeviceFilesRepo,
     private val fileSystem: FileSystem,
-    private val context: Context,
 ) : ViewModelCreator {
     override fun create(extras: CreationExtras): DeviceFilesViewModel =
         DeviceFilesViewModel(
             extras.createSavedStateHandle(),
             devicesRepo,
-            deviceFilesRepo,
             fileSystem,
-            context.filesDir.toOkioPath()
         )
 }
 

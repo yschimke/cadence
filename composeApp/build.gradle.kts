@@ -38,6 +38,8 @@ kotlin {
             implementation("androidx.datastore:datastore:1.1.4")
             implementation("cafe.adriel.bonsai:bonsai-core:1.2.0")
             implementation("cafe.adriel.bonsai:bonsai-file-system:1.2.0")
+            implementation("org.jetbrains.compose.material:material-icons-core:1.7.3")
+            implementation("org.jetbrains.compose.material:material-icons-extended:1.7.3")
         }
         androidInstrumentedTest.dependencies {
             implementation(libs.junit)
