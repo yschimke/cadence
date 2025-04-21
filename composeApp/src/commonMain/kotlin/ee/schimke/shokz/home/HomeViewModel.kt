@@ -11,12 +11,7 @@ import ee.schimke.shokz.platform.Platform
 
 
 class HomeViewModel(
-    private val platform: Platform
 ) : ViewModel() {
-
-    fun greeting(): String {
-        return platform.name
-    }
 }
 
 @ContributesIntoMap(AppScope::class)
@@ -25,5 +20,5 @@ class HomeViewModel(
 class HomeViewModelCreator(
     private val platform: Platform
 ) : ViewModelCreator {
-    override fun create(extras: CreationExtras): HomeViewModel = HomeViewModel(platform)
+    override fun create(extras: CreationExtras): HomeViewModel = HomeViewModel()
 }

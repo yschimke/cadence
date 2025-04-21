@@ -2,10 +2,14 @@ package ee.schimke.shokz.data
 
 import android.content.Context
 import com.google.modernstorage.storage.toUri
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.binding
 import okio.Path
 import okio.Path.Companion.toOkioPath
 
+@ContributesBinding(AppScope::class, binding = binding<StorageManager>())
 @Inject
 class AndroidStorageManager(
     val applicationContext: Context,

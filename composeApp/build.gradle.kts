@@ -40,6 +40,8 @@ kotlin {
             implementation("cafe.adriel.bonsai:bonsai-file-system:1.2.0")
             implementation("org.jetbrains.compose.material:material-icons-core:1.7.3")
             implementation("org.jetbrains.compose.material:material-icons-extended:1.7.3")
+            implementation("io.github.kevinnzou:compose-webview-multiplatform:1.9.40")
+            implementation("io.ktor:ktor-client-core:3.1.2")
         }
         androidInstrumentedTest.dependencies {
             implementation(libs.junit)

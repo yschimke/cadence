@@ -9,7 +9,6 @@ import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.webkit.MimeTypeMap
-import androidx.core.content.contentValuesOf
 import androidx.core.database.getLongOrNull
 import androidx.core.database.getStringOrNull
 import androidx.core.provider.DocumentsContractCompat

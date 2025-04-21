@@ -8,7 +8,7 @@ import androidx.datastore.core.okio.OkioSerializer
 import androidx.datastore.core.okio.OkioStorage
 import com.squareup.wire.Message
 import com.squareup.wire.ProtoAdapter
-import ee.schimke.shokz.datastore.proto.Devices
+import ee.schimke.shokz.datastore.proto.Settings
 import okio.BufferedSink
 import okio.BufferedSource
 import okio.ByteString
@@ -19,14 +19,14 @@ import okio.Path
 /**
  * Gets the singleton DataStore instance, creating it if necessary.
  */
-fun createFilesDataStore(producePath: () -> Path): DataStore<Devices> =
+fun createFilesDataStore(producePath: () -> Path): DataStore<Settings> =
     DataStoreFactory.create(
         OkioStorage(
             FileSystem.SYSTEM,
-            serializer = Devices.ADAPTER.toOkioSerializer(),
+            serializer = Settings.ADAPTER.toOkioSerializer(),
             producePath = producePath
         ),
-        corruptionHandler = onCorrupt(produceNewData = { Devices() })
+        corruptionHandler = onCorrupt(produceNewData = { Settings() })
     )
 
 fun <T> onCorrupt(produceNewData: () -> T): ReplaceFileCorruptionHandler<T> {

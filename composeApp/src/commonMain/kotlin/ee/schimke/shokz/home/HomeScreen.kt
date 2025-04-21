@@ -20,10 +20,9 @@ import shokz.composeapp.generated.resources.Res
 import shokz.composeapp.generated.resources.compose_multiplatform
 
 @Composable
-fun HomeScreen(onFileExplorer: () -> Unit, modifier: Modifier = Modifier) {
+fun HomeScreen(onFileExplorer: () -> Unit, onBookmarks: () -> Unit, modifier: Modifier = Modifier) {
     val viewModel = metroViewModel<HomeViewModel>()
 
-    var showContent by remember { mutableStateOf(true) }
     Column(
         modifier = modifier.fillMaxWidth()
             .safeContentPadding(),
@@ -32,15 +31,8 @@ fun HomeScreen(onFileExplorer: () -> Unit, modifier: Modifier = Modifier) {
         Button(onClick = onFileExplorer) {
             Text("File Explorer")
         }
-        AnimatedVisibility(visible = showContent) {
-            val greeting = remember { viewModel.greeting() }
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Image(painterResource(Res.drawable.compose_multiplatform), null)
-                Text("Compose: $greeting")
-            }
+        Button(onClick = onBookmarks) {
+            Text("Bookmarks")
         }
     }
 }

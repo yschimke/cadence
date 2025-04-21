@@ -10,6 +10,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import ee.schimke.shokz.bookmarks.BookmarksScreen
+import ee.schimke.shokz.browser.BrowserScreen
 import ee.schimke.shokz.devices.DevicesScreen
 import ee.schimke.shokz.files.DeviceFilesScreen
 import ee.schimke.shokz.home.HomeScreen
@@ -23,7 +25,7 @@ fun App() {
 
     NavHost(
         navController,
-        startDestination = Devices,
+        startDestination = Home,
         modifier = Modifier.fillMaxSize(),
         popExitTransition = {
             scaleOut(
@@ -39,6 +41,9 @@ fun App() {
                 modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
                 onFileExplorer = {
                     navController.navigate(Devices)
+                },
+                onBookmarks = {
+                    navController.navigate(Bookmarks)
                 })
         }
         composable<Devices> {
@@ -53,6 +58,19 @@ fun App() {
                 modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
             )
         }
+        composable<Browser> {
+            BrowserScreen(
+                modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
+            )
+        }
+        composable<Bookmarks> {
+            BookmarksScreen(
+                modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
+                onNavigateTo = {
+                    navController.navigate(Browser(it.toString()))
+                }
+            )
+        }
     }
 }
 
@@ -64,3 +82,9 @@ data object Devices
 
 @Serializable
 data class DeviceFiles(val id: String)
+
+@Serializable
+data class Browser(val url: String?)
+
+@Serializable
+data object Bookmarks

@@ -3,12 +3,12 @@ package ee.schimke.shokz.data
 import androidx.datastore.core.DataStore
 import dev.zacsweers.metro.Inject
 import ee.schimke.shokz.datastore.proto.Device
-import ee.schimke.shokz.datastore.proto.Devices
+import ee.schimke.shokz.datastore.proto.Settings
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 
 @Inject
-class DevicesRepo(private val dataStore: DataStore<Devices>) {
+class DevicesRepo(private val dataStore: DataStore<Settings>) {
     suspend fun addDevice(device: Device) {
         dataStore.updateData { devices ->
             devices.copy(devices.devices + device)
@@ -19,5 +19,5 @@ class DevicesRepo(private val dataStore: DataStore<Devices>) {
         return devices.first().devices.find { it.id == id }
     }
 
-    val devices: Flow<Devices> = dataStore.data
+    val devices: Flow<Settings> = dataStore.data
 }
