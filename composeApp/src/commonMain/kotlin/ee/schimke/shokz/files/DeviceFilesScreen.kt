@@ -4,6 +4,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.safeContentPadding
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -32,7 +33,16 @@ fun DeviceFilesScreen(modifier: Modifier = Modifier) {
         Text("Files " + uiState.name)
 
         if (uiState is DeviceFilesViewModel.UiState.Loaded) {
-            val files = (uiState as DeviceFilesViewModel.UiState.Loaded)
+            val loaded = uiState as DeviceFilesViewModel.UiState.Loaded
+
+            Surface {
+                Column {
+                    Text("Volume Info")
+                    Text(loaded.volume.toString())
+                }
+            }
+
+            val files = loaded
 
             Bonsai(
                 shokzFileSystemTree(rootPath = files.root, fileSystem = files.fileSystem),

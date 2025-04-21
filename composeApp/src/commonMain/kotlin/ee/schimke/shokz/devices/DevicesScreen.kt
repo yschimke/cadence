@@ -28,6 +28,16 @@ fun DevicesScreen(modifier: Modifier = Modifier, onDeviceClick: (Device) -> Unit
         viewModel.addDevice(it)
     })
 
+    DevicesScreen(modifier, uiState, permissionCheck, onDeviceClick)
+}
+
+@Composable
+fun DevicesScreen(
+    modifier: Modifier = Modifier,
+    uiState: DevicesViewModel.UiState,
+    permissionCheck: () -> Unit,
+    onDeviceClick: (Device) -> Unit
+) {
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -38,9 +48,7 @@ fun DevicesScreen(modifier: Modifier = Modifier, onDeviceClick: (Device) -> Unit
         Text("Devices")
 
         if (uiState is DevicesViewModel.UiState.Devices) {
-            val files = (uiState as DevicesViewModel.UiState.Devices).devices
-
-            files.forEach {
+            uiState.devices.forEach {
                 ElevatedCard(modifier = Modifier.fillMaxWidth(), onClick = { onDeviceClick(it) }) {
                     Text(it.name)
                     Text(it.path.toPath().name.substringAfterLast("%3A").replace("%2F", "/"))
@@ -52,6 +60,17 @@ fun DevicesScreen(modifier: Modifier = Modifier, onDeviceClick: (Device) -> Unit
 
         Button(onClick = permissionCheck) {
             Text("Manage New Device")
+        }
+
+        Text("Available Devices")
+
+        if (uiState is DevicesViewModel.UiState.Devices) {
+            uiState.usbDevices.forEach {
+                ElevatedCard(modifier = Modifier.fillMaxWidth(), onClick = {  }) {
+                    Text(it.name)
+                    Text(it.toString())
+                }
+            }
         }
     }
 }

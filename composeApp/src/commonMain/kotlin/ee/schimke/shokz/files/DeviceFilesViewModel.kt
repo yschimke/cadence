@@ -2,8 +2,10 @@
 
 package ee.schimke.shokz.files
 
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
@@ -13,6 +15,8 @@ import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.Inject
 import ee.schimke.shokz.DeviceFiles
 import ee.schimke.shokz.data.DevicesRepo
+import ee.schimke.shokz.data.StorageManager
+import ee.schimke.shokz.data.Volume
 import ee.schimke.shokz.datastore.proto.Device
 import ee.schimke.shokz.metro.ViewModelCreator
 import ee.schimke.shokz.metro.ViewModelKey
@@ -29,6 +33,7 @@ class DeviceFilesViewModel(
     private val savedStateHandle: SavedStateHandle,
     private val devicesRepo: DevicesRepo,
     private val fileSystem: FileSystem,
+    private val storageManager: StorageManager,
 ) : ViewModel() {
     val route = savedStateHandle.toRoute<DeviceFiles>()
 
@@ -38,7 +43,9 @@ class DeviceFilesViewModel(
         if (device == null) {
             emit(UiState.NotAvailable(route))
         } else {
-            emit(UiState.Loaded(device, device.path.toPath(), fileSystem))
+            val volume = storageManager.getVolume(device.path.toPath())
+
+            emit(UiState.Loaded(device, device.path.toPath(), fileSystem, volume))
         }
     }.stateIn(
         viewModelScope,
@@ -59,7 +66,7 @@ class DeviceFilesViewModel(
                 get() = route.id
         }
 
-        data class Loaded(val device: Device, val root: Path, val fileSystem: FileSystem) :
+        data class Loaded(val device: Device, val root: Path, val fileSystem: FileSystem, val volume: Volume?) :
             UiState() {
             override val name: String
                 get() = device.name
@@ -73,12 +80,14 @@ class DeviceFilesViewModel(
 class DeviceFilesViewModelCreator(
     private val devicesRepo: DevicesRepo,
     private val fileSystem: FileSystem,
+    private val storageManager: StorageManager,
 ) : ViewModelCreator {
     override fun create(extras: CreationExtras): DeviceFilesViewModel =
         DeviceFilesViewModel(
             extras.createSavedStateHandle(),
             devicesRepo,
             fileSystem,
+            storageManager
         )
 }
 

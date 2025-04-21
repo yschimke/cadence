@@ -10,6 +10,11 @@ import androidx.compose.material.icons.filled.DriveFolderUpload
 import androidx.compose.material.icons.outlined.Folder
 import androidx.compose.material.icons.outlined.FolderOpen
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.text.font.FontWeight
@@ -23,8 +28,11 @@ import cafe.adriel.bonsai.core.node.Leaf
 import cafe.adriel.bonsai.core.node.Node
 import cafe.adriel.bonsai.core.tree.Tree
 import cafe.adriel.bonsai.core.tree.TreeScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import okio.FileSystem
 import okio.Path
+import java.net.URLDecoder
 
 @Composable
 fun shokzFileSystemTree(
@@ -44,20 +52,22 @@ fun TreeScope.ShokzFileSystemNode(
     fileSystem: FileSystem,
     isRoot: Boolean,
 ) {
-    if (fileSystem.metadata(path).isDirectory) {
-        val name =
-            if (isRoot) path.name.substringAfterLast("%3A")
-                .replace("%2F", "/") else path.name.substringAfterLast("%2F")
+    val isDirectory = rememberIsDirectory(fileSystem, path)
 
+    val displayName = remember (path) { URLDecoder.decode(path.toString(), Charsets.UTF_8) }
+    val parts = remember (path) { displayName.split("/", ":").filter { it.isNotEmpty() } }
+
+    if (isRoot || isDirectory.value == true) {
         Branch(
             content = path,
-            name = name,
+            name = parts.last(),
             customIcon = { if (isRoot) style.RootNodeIcon(it) else style.DefaultNodeIcon(it) },
             customName = { if (isRoot) style.RootNodeName(it) else style.DefaultNodeName(it) }
         ) {
-            fileSystem
-                .listOrNull(path)
-                ?.forEach { path ->
+            val children by rememberFileList(fileSystem, path)
+
+            if (children != null) {
+                children?.forEach { path ->
                     ShokzFileSystemNode(
                         style = style,
                         path,
@@ -65,15 +75,46 @@ fun TreeScope.ShokzFileSystemNode(
                         isRoot = false
                     )
                 }
+            } else {
+                Leaf(
+                    content = "Loading...",
+                )
+            }
         }
     } else {
         Leaf(
             content = path,
-            name = path.name.substringAfterLast("%2F"),
+            name = parts.last(),
             customIcon = { style.DefaultNodeIcon(it) },
             customName = { style.DefaultNodeName(it) }
         )
     }
+}
+
+@Composable
+private fun rememberIsDirectory(fileSystem: FileSystem, path: Path): State<Boolean?> {
+    val result = remember { mutableStateOf<Boolean?>(null) }
+
+    LaunchedEffect(path) {
+        withContext(Dispatchers.IO) {
+            result.value = fileSystem.metadata(path).isDirectory
+        }
+    }
+
+    return result
+}
+
+@Composable
+private fun rememberFileList(fileSystem: FileSystem, path: Path): State<List<Path>?> {
+    val result = remember { mutableStateOf<List<Path>?>(null) }
+
+    LaunchedEffect(path) {
+        withContext(Dispatchers.IO) {
+            result.value = fileSystem.listOrNull(path)
+        }
+    }
+
+    return result
 }
 
 @Composable

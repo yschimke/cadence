@@ -157,10 +157,13 @@ class AndroidFileSystem(private val context: Context) : FileSystem() {
     }
 
     override fun metadataOrNull(path: Path): FileMetadata? {
-        val uri = path.toUri()
+        if (isPhysicalFile(path)) {
+            return fetchMetadataFromPhysicalFile(path)
+        }
+
+        val uri = path.toDocumentUri() ?: return null
 
         return when {
-            uri.isPhysicalFile() -> fetchMetadataFromPhysicalFile(path)
             uri.authority == MediaStore.AUTHORITY -> fetchMetadataFromMediaStore(path, uri)
             else -> fetchMetadataFromDocumentProvider(path)
         }

@@ -10,10 +10,14 @@ import dev.zacsweers.metro.Provider
 import dev.zacsweers.metro.Provides
 import dev.zacsweers.metro.SingleIn
 import ee.schimke.shokz.data.AndroidFileSystem
+import ee.schimke.shokz.data.AndroidStorageManager
+import ee.schimke.shokz.data.StorageManager
 import ee.schimke.shokz.data.createFilesDataStore
 import ee.schimke.shokz.datastore.proto.Devices
 import ee.schimke.shokz.platform.AndroidPlatform
 import ee.schimke.shokz.platform.Platform
+import ee.schimke.shokz.usb.AndroidUsbManager
+import ee.schimke.shokz.usb.UsbManager
 import okio.FileSystem
 import okio.Path.Companion.toOkioPath
 import kotlin.reflect.KClass
@@ -49,6 +53,13 @@ abstract class AndroidAppGraph : AppGraph {
 
     @Provides
     fun provideFileSystem(context: Context): FileSystem = AndroidFileSystem(context)
+
+    @Provides
+    fun provideStorageManager(storageManager: AndroidStorageManager): StorageManager =
+        storageManager
+
+    @Provides
+    fun provideUsbManager(usbManager: AndroidUsbManager): UsbManager = usbManager
 
     @DependencyGraph.Factory
     fun interface Factory {
