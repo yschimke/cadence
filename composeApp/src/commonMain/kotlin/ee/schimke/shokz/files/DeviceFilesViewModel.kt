@@ -14,12 +14,13 @@ import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.Inject
 import ee.schimke.shokz.DeviceFiles
+import ee.schimke.shokz.browser.BrowserViewModel
 import ee.schimke.shokz.data.DevicesRepo
 import ee.schimke.shokz.data.StorageManager
 import ee.schimke.shokz.data.Volume
 import ee.schimke.shokz.datastore.proto.Device
-import ee.schimke.shokz.metro.ViewModelCreator
 import ee.schimke.shokz.metro.ViewModelKey
+import ee.schimke.shokz.metro.ViewModelScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -29,6 +30,9 @@ import okio.FileSystem
 import okio.Path
 import okio.Path.Companion.toPath
 
+@ContributesIntoMap(ViewModelScope::class)
+@ViewModelKey(DeviceFilesViewModel::class)
+@Inject
 class DeviceFilesViewModel(
     private val savedStateHandle: SavedStateHandle,
     private val devicesRepo: DevicesRepo,
@@ -72,22 +76,5 @@ class DeviceFilesViewModel(
                 get() = device.name
         }
     }
-}
-
-@ContributesIntoMap(AppScope::class)
-@ViewModelKey(DeviceFilesViewModel::class)
-@Inject
-class DeviceFilesViewModelCreator(
-    private val devicesRepo: DevicesRepo,
-    private val fileSystem: FileSystem,
-    private val storageManager: StorageManager,
-) : ViewModelCreator {
-    override fun create(extras: CreationExtras): DeviceFilesViewModel =
-        DeviceFilesViewModel(
-            extras.createSavedStateHandle(),
-            devicesRepo,
-            fileSystem,
-            storageManager
-        )
 }
 

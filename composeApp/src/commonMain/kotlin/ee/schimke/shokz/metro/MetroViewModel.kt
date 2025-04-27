@@ -1,3 +1,5 @@
+// Copyright (C) 2025 Zac Sweers
+// SPDX-License-Identifier: Apache-2.0
 package ee.schimke.shokz.metro
 
 import androidx.compose.runtime.Composable
@@ -13,7 +15,7 @@ inline fun <reified VM : ViewModel> metroViewModel(
         checkNotNull(LocalViewModelStoreOwner.current) {
             "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
         },
-    key: String? = null
+    key: String? = null,
 ): VM {
     return viewModel(viewModelStoreOwner, key, factory = metroViewModelProviderFactory())
 }

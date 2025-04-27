@@ -10,6 +10,12 @@ pluginManagement {
                 includeGroupAndSubgroups("com.google")
             }
         }
+        maven {
+            url = uri("https://oss.sonatype.org/content/repositories/snapshots/")
+            mavenContent {
+                includeGroupAndSubgroups("dev.zacsweers.metro")
+            }
+        }
         mavenCentral()
         gradlePluginPortal()
     }
@@ -22,6 +28,12 @@ dependencyResolutionManagement {
                 includeGroupAndSubgroups("androidx")
                 includeGroupAndSubgroups("com.android")
                 includeGroupAndSubgroups("com.google")
+            }
+        }
+        maven {
+            url = uri("https://oss.sonatype.org/content/repositories/snapshots/")
+            mavenContent {
+                includeGroupAndSubgroups("dev.zacsweers.metro")
             }
         }
         mavenCentral()

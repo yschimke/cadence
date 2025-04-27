@@ -5,7 +5,7 @@ plugins {
     alias(libs.plugins.composeCompiler)
     kotlin("plugin.serialization").version(libs.versions.kotlin)
     id("com.gradleup.compat.patrouille").version("0.0.0")
-    id("dev.zacsweers.metro").version("0.1.2")
+    id("dev.zacsweers.metro").version("0.3.0-SNAPSHOT")
     id("com.squareup.wire").version("5.3.1")
 }
 

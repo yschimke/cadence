@@ -8,10 +8,11 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.Inject
+import ee.schimke.shokz.browser.BrowserViewModel
 import ee.schimke.shokz.data.DevicesRepo
 import ee.schimke.shokz.datastore.proto.Device
-import ee.schimke.shokz.metro.ViewModelCreator
 import ee.schimke.shokz.metro.ViewModelKey
+import ee.schimke.shokz.metro.ViewModelScope
 import ee.schimke.shokz.usb.UsbDevice
 import ee.schimke.shokz.usb.UsbManager
 import kotlinx.coroutines.flow.SharingStarted
@@ -23,6 +24,9 @@ import okio.Path
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
+@ContributesIntoMap(ViewModelScope::class)
+@ViewModelKey(DevicesViewModel::class)
+@Inject
 class DevicesViewModel(
     private val devicesRepo: DevicesRepo,
     private val usbManager: UsbManager,
@@ -53,15 +57,5 @@ class DevicesViewModel(
 
         data class Devices(val devices: List<Device>, val usbDevices: List<UsbDevice>) : UiState
     }
-}
-
-@ContributesIntoMap(AppScope::class)
-@ViewModelKey(DevicesViewModel::class)
-@Inject
-class DevicesViewModelCreator(
-    private val devicesRepo: DevicesRepo,
-    private val usbManager: UsbManager
-) : ViewModelCreator {
-    override fun create(extras: CreationExtras): DevicesViewModel = DevicesViewModel(devicesRepo, usbManager)
 }
 

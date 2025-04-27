@@ -3,6 +3,7 @@ package ee.schimke.shokz
 import android.app.Application
 import dev.zacsweers.metro.createGraphFactory
 import ee.schimke.shokz.metro.AndroidAppGraph
+import ee.schimke.shokz.metro.AppGraph
 
 class ShokzApplication : Application() {
     /** Holder reference for the app graph for [MetroAppComponentFactory]. */
