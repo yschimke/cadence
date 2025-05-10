@@ -4,9 +4,9 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     kotlin("plugin.serialization").version(libs.versions.kotlin)
-    id("com.gradleup.compat.patrouille").version("0.0.0")
-    id("dev.zacsweers.metro").version("0.3.0-SNAPSHOT")
-    id("com.squareup.wire").version("5.3.1")
+    id("com.gradleup.compat.patrouille").version(libs.versions.patrouille)
+    id("dev.zacsweers.metro").version(libs.versions.metro)
+    id("com.squareup.wire").version(libs.versions.wire)
 }
 
 kotlin {
@@ -17,38 +17,38 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
-            implementation("androidx.core:core-splashscreen:1.0.1")
-            implementation("me.saket.modernstorage:modernstorage-permissions:1.0.0-alpha09")
-            implementation("me.saket.modernstorage:modernstorage-storage:1.0.0-alpha09")
-            implementation("androidx.documentfile:documentfile:1.0.1")
+            implementation(libs.androidx.core.splashscreen)
+            implementation(libs.modernstorage.permissions)
+            implementation(libs.modernstorage.storage)
+            implementation(libs.androidx.documentfile)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
             implementation(compose.material3AdaptiveNavigationSuite)
-            implementation("org.jetbrains.androidx.navigation:navigation-compose:2.9.0-alpha16")
+            implementation(libs.navigation.compose)
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
-            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.0")
-            implementation("com.squareup.okio:okio:3.10.2")
-            implementation("androidx.datastore:datastore:1.1.4")
-            implementation("cafe.adriel.bonsai:bonsai-core:1.2.0")
-            implementation("cafe.adriel.bonsai:bonsai-file-system:1.2.0")
-            implementation("org.jetbrains.compose.material:material-icons-core:1.7.3")
-            implementation("org.jetbrains.compose.material:material-icons-extended:1.7.3")
-            implementation("io.github.kevinnzou:compose-webview-multiplatform:1.9.40")
-            implementation("io.ktor:ktor-client-core:3.1.2")
+            implementation(libs.kotlinx.serialization.json)
+            implementation("com.squareup.okio:okio:3.11.0")
+            implementation(libs.androidx.datastore)
+            implementation(libs.bonsai.core)
+            implementation(libs.bonsai.file.system)
+            implementation(libs.material.icons.core)
+            implementation(libs.material.icons.extended)
+            implementation(libs.compose.webview.multiplatform)
+            implementation(libs.ktor.client.core)
         }
         androidInstrumentedTest.dependencies {
             implementation(libs.junit)
             implementation(libs.kotlin.test.junit)
             implementation(libs.androidx.test.junit)
             implementation(libs.androidx.espresso.core)
-            implementation("androidx.test:runner:1.6.2")
+            implementation(libs.androidx.runner)
         }
     }
 }
@@ -99,8 +99,3 @@ metro {
     debug.set(true)
     reportsDestination.set(layout.buildDirectory.dir("metro/reports"))
 }
-
-//dependencies {
-//    debugImplementation(compose.uiTooling)
-//}
-
