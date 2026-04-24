@@ -2,19 +2,24 @@
 
 Ordered by information-per-hour, not by eventual library topology.
 
-## 1. Extract the RCSP opcode catalogue from Jieli's iOS SDK
+## 1. Extract the RCSP opcode catalogue from Jieli's iOS SDK ✅ (2026-04-24)
 
-- Clone [`Jieli-Tech/iOS-JL_Bluetooth`](https://github.com/Jieli-Tech/iOS-JL_Bluetooth).
-- Grep the Swift sources for the command enum / opcode registry. Expected shape:
-  a big `enum RcspCommand : UInt16 { case getBattery = 0x0001 … }` or
-  equivalent, and framing constants (sync bytes, length layout, checksum
-  algorithm).
-- Cross-reference with [`Jieli-Tech/fw-AC63_BT_SDK`](https://github.com/Jieli-Tech/fw-AC63_BT_SDK) `bt_profile/rcsp/` for
-  the wire-format side. Where the two agree, we have a confirmed spec.
-- Write the findings into a new `research/rcsp.md` with: framing diagram,
-  opcode table, and any known-shape TLV payloads.
+Done. See [rcsp.md](rcsp.md). Captured: wire framing (sync `FE DC BA`,
+8-bit op + 16-bit head flags + 16-bit length + payload + `EF` end), the
+top-level opcode table cross-referenced between iOS `kJL_*` and firmware
+`JL_OPCODE_*`, the `SYS_INFO` / `GET_TARGET_FEATURE` sub-attribute IDs,
+the status-code enum, and the auth-API surface (BR/EDR link key + BD_ADDR
+based — potentially reproducible without RE-ing `JL_HashPair`).
 
-This is the single cheapest step. Everything else depends on it.
+**Gaps left** (cheap → expensive):
+
+- `FUNCTION_CMD` (op `0x0E`) and `DATA` (op `0x01`) sub-opcode tables —
+  read `apps/common/third_party_profile/jieli/JL_rcsp/rcsp_bluetooth.c`
+  in the AC63 SDK and the `JL_FunctionBaseManager` subclasses in the
+  iOS framework. Already sparse-clone of the AC63 SDK in `/tmp/fw-AC63`.
+- CRC algorithm — same source.
+- Per-opcode multi-byte endianness — confirm per-opcode at sniff time.
+- Auth handshake byte sequence — best learned from a pcap (step 3).
 
 ## 2. Decompile the Shokz Android app to confirm which opcodes Shokz actually
    uses vs. the full Jieli surface
