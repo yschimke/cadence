@@ -23,6 +23,15 @@ import shokz.composeapp.generated.resources.compose_multiplatform
 fun HomeScreen(onFileExplorer: () -> Unit, onBookmarks: () -> Unit, modifier: Modifier = Modifier) {
     val viewModel = metroViewModel<HomeViewModel>()
 
+    HomeContent(onFileExplorer, onBookmarks, modifier)
+}
+
+@Composable
+internal fun HomeContent(
+    onFileExplorer: () -> Unit,
+    onBookmarks: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     Column(
         modifier = modifier.fillMaxWidth()
             .safeContentPadding(),

@@ -16,10 +16,8 @@ import ee.schimke.shokz.devices.DevicesScreen
 import ee.schimke.shokz.files.DeviceFilesScreen
 import ee.schimke.shokz.home.HomeScreen
 import kotlinx.serialization.Serializable
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
-@Preview
 fun App() {
     val navController = rememberNavController()
 

@@ -24,6 +24,14 @@ fun DeviceFilesScreen(modifier: Modifier = Modifier) {
 
     val uiState by viewModel.uiState.collectAsState()
 
+    DeviceFilesContent(uiState, modifier)
+}
+
+@Composable
+internal fun DeviceFilesContent(
+    uiState: DeviceFilesViewModel.UiState,
+    modifier: Modifier = Modifier,
+) {
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -33,7 +41,7 @@ fun DeviceFilesScreen(modifier: Modifier = Modifier) {
         Text("Files " + uiState.name)
 
         if (uiState is DeviceFilesViewModel.UiState.Loaded) {
-            val loaded = uiState as DeviceFilesViewModel.UiState.Loaded
+            val loaded = uiState
 
             Surface {
                 Column {

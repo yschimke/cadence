@@ -7,6 +7,13 @@ plugins {
     id("com.gradleup.compat.patrouille").version(libs.versions.patrouille)
     id("dev.zacsweers.metro").version(libs.versions.metro)
     id("com.squareup.wire").version(libs.versions.wire)
+    id("ee.schimke.composeai.preview").version("0.7.0")
+}
+
+composePreview {
+    variant.set("debug")
+    sdkVersion.set(35)
+    enabled.set(true)
 }
 
 kotlin {
