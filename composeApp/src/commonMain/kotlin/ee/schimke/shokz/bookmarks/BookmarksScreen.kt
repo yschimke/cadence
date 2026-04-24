@@ -22,7 +22,7 @@ fun BookmarksScreen(modifier: Modifier = Modifier, onNavigateTo: (Url) -> Unit) 
 }
 
 @Composable
-private fun BookmarksScreen(
+internal fun BookmarksScreen(
     modifier: Modifier,
     uiState: BookmarksViewModel.UiState,
     onNavigateTo: (Url) -> Unit
