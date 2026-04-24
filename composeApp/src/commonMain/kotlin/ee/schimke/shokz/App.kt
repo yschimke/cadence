@@ -10,11 +10,13 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import ee.schimke.shokz.bluetooth.BluetoothControlsScreen
 import ee.schimke.shokz.bookmarks.BookmarksScreen
 import ee.schimke.shokz.browser.BrowserScreen
 import ee.schimke.shokz.devices.DevicesScreen
 import ee.schimke.shokz.files.DeviceFilesScreen
 import ee.schimke.shokz.home.HomeScreen
+import ee.schimke.shokz.sync.FileSyncScreen
 import kotlinx.serialization.Serializable
 
 @Composable
@@ -37,12 +39,11 @@ fun App() {
         composable<Home> {
             HomeScreen(
                 modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
-                onFileExplorer = {
-                    navController.navigate(Devices)
-                },
-                onBookmarks = {
-                    navController.navigate(Bookmarks)
-                })
+                onFileExplorer = { navController.navigate(Devices) },
+                onBookmarks = { navController.navigate(Bookmarks) },
+                onBluetoothControls = { navController.navigate(BluetoothControls) },
+                onFileSync = { navController.navigate(FileSync) },
+            )
         }
         composable<Devices> {
             DevicesScreen(
@@ -69,6 +70,16 @@ fun App() {
                 }
             )
         }
+        composable<BluetoothControls> {
+            BluetoothControlsScreen(
+                modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
+            )
+        }
+        composable<FileSync> {
+            FileSyncScreen(
+                modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
+            )
+        }
     }
 }
 
@@ -86,3 +97,9 @@ data class Browser(val url: String?)
 
 @Serializable
 data object Bookmarks
+
+@Serializable
+data object BluetoothControls
+
+@Serializable
+data object FileSync

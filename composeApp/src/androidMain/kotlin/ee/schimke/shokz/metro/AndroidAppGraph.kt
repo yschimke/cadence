@@ -10,6 +10,8 @@ import dev.zacsweers.metro.Provider
 import dev.zacsweers.metro.Provides
 import ee.schimke.shokz.ShokzApplication
 import ee.schimke.shokz.data.AndroidFileSystem
+import ee.schimke.shokz.sync.SyncOrchestrator
+import ee.schimke.shokz.sync.SyncRepo
 import okio.FileSystem
 import kotlin.reflect.KClass
 
@@ -23,6 +25,10 @@ interface AndroidAppGraph: AppGraph {
     abstract val activityProviders: Map<KClass<out Activity>, Provider<Activity>>
 
     val viewModelGraphFactory: AndroidViewModelGraph.Factory
+
+    val syncOrchestrator: SyncOrchestrator
+
+    val syncRepo: SyncRepo
 
     @Provides
     fun provideFileSystem(context: Context): FileSystem = AndroidFileSystem(context)
