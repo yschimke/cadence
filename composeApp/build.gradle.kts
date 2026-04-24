@@ -84,7 +84,7 @@ android {
 
 compatPatrouille {
     java(17)
-    kotlin(embeddedKotlinVersion)
+    kotlin(libs.versions.kotlin.get())
 }
 
 wire {

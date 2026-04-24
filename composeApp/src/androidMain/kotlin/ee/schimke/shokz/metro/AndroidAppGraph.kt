@@ -13,7 +13,7 @@ import ee.schimke.shokz.data.AndroidFileSystem
 import okio.FileSystem
 import kotlin.reflect.KClass
 
-@DependencyGraph(AppScope::class, isExtendable = true)
+@DependencyGraph(AppScope::class)
 interface AndroidAppGraph: AppGraph {
     /**
      * A multibinding map of activity classes to their providers accessible for
@@ -21,6 +21,8 @@ interface AndroidAppGraph: AppGraph {
      */
     @Multibinds
     abstract val activityProviders: Map<KClass<out Activity>, Provider<Activity>>
+
+    val viewModelGraphFactory: AndroidViewModelGraph.Factory
 
     @Provides
     fun provideFileSystem(context: Context): FileSystem = AndroidFileSystem(context)
