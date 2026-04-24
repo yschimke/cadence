@@ -9,6 +9,6 @@ import kotlin.reflect.KClass
 
 /** A [MapKey] annotation for binding ViewModels in a multibinding map. */
 @MapKey
-@Target(AnnotationTarget.CLASS)
+@Target(AnnotationTarget.FUNCTION, AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)
 annotation class ViewModelKey(val value: KClass<out ViewModel>)

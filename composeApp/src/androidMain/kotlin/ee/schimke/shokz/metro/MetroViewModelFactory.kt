@@ -6,7 +6,6 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Inject
-import dev.zacsweers.metro.createGraphFactory
 import kotlin.collections.get
 import kotlin.invoke
 
@@ -19,9 +18,7 @@ import kotlin.invoke
 class MetroViewModelFactory(val appGraph: AndroidAppGraph) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
-        val viewModelGraph = createGraphFactory<AndroidViewModelGraph.Factory>().create(appGraph, extras)
-
-        println(viewModelGraph.viewModelProviders)
+        val viewModelGraph = appGraph.viewModelGraphFactory.create(extras)
 
         val provider =
             viewModelGraph.viewModelProviders[modelClass.kotlin]
