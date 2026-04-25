@@ -1,0 +1,32 @@
+name: Preview Baselines
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: preview-baselines
+  cancel-in-progress: false
+
+jobs:
+  update:
+    name: Render baselines and update preview_main
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - uses: yschimke/compose-ai-tools/.github/actions/preview-baselines@main
