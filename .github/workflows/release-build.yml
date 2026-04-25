@@ -1,38 +1,44 @@
-name: Release Build
+name: Release
 
 on:
-  release:
-    types: [published]
+  push:
+    tags: ['v*']
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Tag to build (e.g. v1.0.0)'
+        description: 'Tag to build (e.g. v0.1.1)'
         required: true
 
 permissions:
   contents: write
+  packages: write
 
 concurrency:
-  group: release-build-${{ github.event.release.tag_name || inputs.tag }}
+  group: release-${{ github.ref_name }}
   cancel-in-progress: false
 
 # Notes:
-#   The release APK is built unsigned. To produce a signed APK/AAB suitable
-#   for Play distribution, wire up a signingConfig in composeApp/build.gradle.kts
-#   that reads SHOKZ_KEYSTORE_PATH/PASSWORD/KEY_ALIAS/KEY_PASSWORD from env,
-#   then add a step here that decodes a base64 SIGNING_KEYSTORE secret to
-#   $SHOKZ_KEYSTORE_PATH before assembleRelease.
+#   - APK is built unsigned. To produce a signed APK/AAB suitable for Play
+#     distribution, wire up a signingConfig in composeApp/build.gradle.kts
+#     that reads SHOKZ_KEYSTORE_PATH/PASSWORD/KEY_ALIAS/KEY_PASSWORD from
+#     env, then add a step here that decodes a base64 SIGNING_KEYSTORE
+#     secret to $SHOKZ_KEYSTORE_PATH before assembleRelease.
+#   - GitHub Packages publishing is wired in the root build.gradle.kts:
+#     any subproject that applies the `maven-publish` plugin and declares
+#     publications will be uploaded by the `publish` step below. Today no
+#     module does that — once a library module is extracted, no workflow
+#     change is needed.
 jobs:
-  build-release:
-    name: Build & upload release APK
+  release:
+    name: Build & publish release
     runs-on: ubuntu-latest
     timeout-minutes: 45
     env:
-      TAG_NAME: ${{ github.event.release.tag_name || inputs.tag }}
+      TAG_NAME: ${{ github.ref_type == 'tag' && github.ref_name || inputs.tag }}
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.release.tag_name || inputs.tag }}
+          ref: ${{ github.ref_type == 'tag' && github.ref_name || inputs.tag }}
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -51,20 +57,22 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Assemble release
+      - name: Assemble release artifacts
         run: ./gradlew :composeApp:assembleRelease :composeApp:bundleRelease --stacktrace
 
-      - name: Stage artifacts
+      - name: Publish library artifacts to GitHub Packages
+        env:
+          GITHUB_ACTOR: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: ./gradlew publishLibraries --stacktrace
+
+      - name: Stage release assets
         id: stage
         run: |
           set -euo pipefail
           mkdir -p _release
           version="${TAG_NAME#v}"
           shopt -s nullglob
-          # APKs land as composeApp-release.apk (signed) or
-          # composeApp-release-unsigned.apk (no signingConfig). Either way
-          # we publish it as shokz-<version>.apk; the suffix encodes signing
-          # state for transparency.
           for f in composeApp/build/outputs/apk/release/*.apk; do
             name=$(basename "$f" .apk)
             suffix=""
@@ -79,8 +87,8 @@ jobs:
           ls -la _release/
           echo "version=${version}" >> "$GITHUB_OUTPUT"
 
-      - name: Upload to GitHub release
-        if: github.event_name == 'release'
+      - name: Attach assets to GitHub release
+        if: github.event_name == 'push'
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ env.TAG_NAME }}
@@ -90,7 +98,7 @@ jobs:
           fail_on_unmatched_files: true
 
       - name: Upload workflow artifact
-        if: github.event_name != 'release'
+        if: github.event_name != 'push'
         uses: actions/upload-artifact@v4
         with:
           name: release-${{ steps.stage.outputs.version }}
