@@ -4,10 +4,10 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     kotlin("plugin.serialization").version(libs.versions.kotlin)
-    id("com.gradleup.compat.patrouille").version(libs.versions.patrouille)
+    id("com.gradleup.tapmoc").version(libs.versions.tapmoc)
     id("dev.zacsweers.metro").version(libs.versions.metro)
     id("com.squareup.wire").version(libs.versions.wire)
-    id("ee.schimke.composeai.preview").version("0.7.0")
+    id("ee.schimke.composeai.preview").version("0.8.0")
     alias(libs.plugins.playPublisher)
 }
 
@@ -54,7 +54,7 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
             implementation(libs.kotlinx.serialization.json)
-            implementation("com.squareup.okio:okio:3.11.0")
+            implementation("com.squareup.okio:okio:3.17.0")
             implementation(libs.androidx.datastore)
             implementation(libs.bonsai.core)
             implementation(libs.bonsai.file.system)
@@ -123,7 +123,7 @@ play {
     enabled.set(System.getenv("ANDROID_PUBLISHER_CREDENTIALS") != null)
 }
 
-compatPatrouille {
+tapmoc {
     java(17)
     kotlin(libs.versions.kotlin.get())
 }
