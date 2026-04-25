@@ -16,7 +16,9 @@ jobs:
   update:
     name: Render baselines and update preview_main
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 60
+    env:
+      BASELINE_BRANCH: preview_main
     steps:
       - uses: actions/checkout@v4
 
@@ -26,7 +28,81 @@ jobs:
           distribution: temurin
           java-version: 17
 
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+        with:
+          packages: >-
+            platform-tools
+            platforms;android-36
+            build-tools;36.0.0
+
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - uses: yschimke/compose-ai-tools/.github/actions/preview-baselines@main
+      - name: Install compose-preview CLI
+        run: |
+          set -euo pipefail
+          curl -fsSL https://raw.githubusercontent.com/yschimke/compose-ai-tools/main/scripts/install.sh | bash
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Render previews
+        run: compose-preview show --json --timeout 600 > _previews.json
+
+      - name: Stage baselines tree
+        run: |
+          set -euo pipefail
+          mkdir -p _baselines/renders
+          python3 - <<'PY'
+          import json, hashlib, os, shutil
+          previews = json.load(open("_previews.json"))
+          baselines = {}
+          for entry in previews:
+              for cap in entry.get("captures") or [entry]:
+                  png = cap.get("pngPath") or entry.get("pngPath")
+                  pid = cap.get("id") or entry.get("id")
+                  if not png or not os.path.exists(png):
+                      continue
+                  with open(png, "rb") as fh:
+                      sha = hashlib.sha256(fh.read()).hexdigest()
+                  dest = os.path.join("_baselines", "renders", f"{pid}.png")
+                  os.makedirs(os.path.dirname(dest), exist_ok=True)
+                  shutil.copy2(png, dest)
+                  baselines[pid] = sha
+          with open("_baselines/baselines.json", "w") as fh:
+              json.dump(baselines, fh, indent=2, sort_keys=True)
+          PY
+
+      - name: Push to baselines branch
+        env:
+          GITHUB_TOKEN_INLINE: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          cd _baselines
+          git init -q
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git remote add origin \
+            "https://x-access-token:${GITHUB_TOKEN_INLINE}@github.com/${REPO}.git"
+
+          git add -A
+          TREE=$(git write-tree)
+
+          PARENT=""
+          if git fetch --depth=1 --quiet origin "$BASELINE_BRANCH" 2>/dev/null; then
+            PARENT=$(git rev-parse FETCH_HEAD)
+            PARENT_TREE=$(git rev-parse "${PARENT}^{tree}")
+            if [ "$TREE" = "$PARENT_TREE" ]; then
+              echo "Baselines unchanged vs ${BASELINE_BRANCH}; skipping push."
+              exit 0
+            fi
+          fi
+
+          MSG="Update preview baselines from ${GITHUB_SHA::8}"
+          if [ -n "$PARENT" ]; then
+            COMMIT=$(git commit-tree "$TREE" -p "$PARENT" -m "$MSG")
+          else
+            COMMIT=$(git commit-tree "$TREE" -m "$MSG")
+          fi
+
+          git push --quiet origin "${COMMIT}:refs/heads/${BASELINE_BRANCH}"

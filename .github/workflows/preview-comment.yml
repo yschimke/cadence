@@ -16,7 +16,10 @@ jobs:
   compare:
     name: Render previews and post diff comment
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 60
+    env:
+      BASELINE_BRANCH: preview_main
+      HEAD_BRANCH: preview_pr
     steps:
       - uses: actions/checkout@v4
 
@@ -26,7 +29,192 @@ jobs:
           distribution: temurin
           java-version: 17
 
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+        with:
+          packages: >-
+            platform-tools
+            platforms;android-36
+            build-tools;36.0.0
+
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - uses: yschimke/compose-ai-tools/.github/actions/preview-comment@main
+      - name: Install compose-preview CLI
+        run: |
+          set -euo pipefail
+          curl -fsSL https://raw.githubusercontent.com/yschimke/compose-ai-tools/main/scripts/install.sh | bash
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Render previews
+        run: compose-preview show --json --timeout 600 > _previews.json
+
+      - name: Fetch baselines
+        run: |
+          set -euo pipefail
+          mkdir -p _baselines
+          if git ls-remote --exit-code origin "$BASELINE_BRANCH" >/dev/null 2>&1; then
+            git fetch origin "$BASELINE_BRANCH"
+            git show "origin/${BASELINE_BRANCH}:baselines.json" \
+              > _baselines/baselines.json 2>/dev/null || echo '{}' > _baselines/baselines.json
+          else
+            echo '{}' > _baselines/baselines.json
+          fi
+
+      - name: Stage changed PNGs
+        id: stage
+        run: |
+          set -euo pipefail
+          mkdir -p _pr_renders/renders
+          python3 - <<'PY'
+          import json, hashlib, os, shutil
+          previews = json.load(open("_previews.json"))
+          baselines = json.load(open("_baselines/baselines.json"))
+          changed = []
+          for entry in previews:
+              caps = entry.get("captures") or [entry]
+              for cap in caps:
+                  png = cap.get("pngPath") or entry.get("pngPath")
+                  pid = cap.get("id") or entry.get("id")
+                  if not png or not pid or not os.path.exists(png):
+                      continue
+                  with open(png, "rb") as fh:
+                      sha = hashlib.sha256(fh.read()).hexdigest()
+                  if baselines.get(pid) != sha:
+                      dest = os.path.join("_pr_renders", "renders", f"{pid}.png")
+                      os.makedirs(os.path.dirname(dest), exist_ok=True)
+                      shutil.copy2(png, dest)
+                      changed.append({"id": pid, "sha": sha, "before": baselines.get(pid)})
+          json.dump(changed, open("_pr_renders/changed.json", "w"), indent=2)
+          print(f"Changed previews: {len(changed)}")
+          PY
+          count=$(python3 -c "import json;print(len(json.load(open('_pr_renders/changed.json'))))")
+          echo "count=$count" >> "$GITHUB_OUTPUT"
+
+      - name: Push PR renders
+        id: push
+        if: steps.stage.outputs.count != '0'
+        env:
+          GITHUB_TOKEN_INLINE: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          set -euo pipefail
+          cd _pr_renders
+          git init -q
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git remote add origin \
+            "https://x-access-token:${GITHUB_TOKEN_INLINE}@github.com/${REPO}.git"
+          git add -A
+          TREE=$(git write-tree)
+          MSG="Preview renders for PR #${PR_NUMBER} (${GITHUB_SHA::8})"
+
+          attempt=1
+          while :; do
+            PARENT=""
+            if git fetch --depth=1 --quiet origin "$HEAD_BRANCH" 2>/dev/null; then
+              PARENT=$(git rev-parse FETCH_HEAD)
+            fi
+            if [ -n "$PARENT" ]; then
+              COMMIT=$(git commit-tree "$TREE" -p "$PARENT" -m "$MSG")
+            else
+              COMMIT=$(git commit-tree "$TREE" -m "$MSG")
+            fi
+            if git push --quiet origin "${COMMIT}:refs/heads/${HEAD_BRANCH}" 2>&1; then
+              echo "head_sha=$COMMIT" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            if [ "$attempt" -ge 5 ]; then
+              echo "Push to ${HEAD_BRANCH} failed after ${attempt} attempts." >&2
+              exit 1
+            fi
+            delay=$((attempt * 2 + RANDOM % 3))
+            echo "Push lost the race; retry ${attempt}/5 in ${delay}s…" >&2
+            attempt=$((attempt + 1))
+            sleep "$delay"
+          done
+
+      - name: Resolve baseline SHA
+        id: base
+        env:
+          GITHUB_TOKEN_INLINE: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          BASE_SHA=$(git ls-remote \
+            "https://x-access-token:${GITHUB_TOKEN_INLINE}@github.com/${REPO}.git" \
+            "refs/heads/${BASELINE_BRANCH}" | awk '{print $1}')
+          echo "sha=${BASE_SHA:-$BASELINE_BRANCH}" >> "$GITHUB_OUTPUT"
+
+      - name: Build comment body
+        id: comment
+        env:
+          REPO: ${{ github.repository }}
+          BASE_SHA: ${{ steps.base.outputs.sha }}
+          HEAD_SHA: ${{ steps.push.outputs.head_sha }}
+        run: |
+          set -euo pipefail
+          python3 - <<'PY' > _comment_body.md
+          import json, os
+          repo = os.environ["REPO"]
+          base = os.environ.get("BASE_SHA", "")
+          head = os.environ.get("HEAD_SHA", "")
+          changed = json.load(open("_pr_renders/changed.json")) \
+              if os.path.exists("_pr_renders/changed.json") else []
+          print("<!-- preview-diff -->")
+          print("## Compose preview diff")
+          print()
+          if not changed:
+              print("No changed previews. ✅")
+              raise SystemExit
+          print(f"{len(changed)} preview(s) changed.")
+          print()
+          print("| Preview | Before | After |")
+          print("| --- | --- | --- |")
+          for c in changed:
+              pid = c["id"]
+              before = c.get("before")
+              before_md = (
+                  f'<img src="https://raw.githubusercontent.com/{repo}/{base}/'
+                  f'renders/{pid}.png" width="240">'
+                  if before else "_new_"
+              )
+              after_md = (
+                  f'<img src="https://raw.githubusercontent.com/{repo}/{head}/'
+                  f'renders/{pid}.png" width="240">'
+                  if head else "_pending push_"
+              )
+              print(f"| `{pid}` | {before_md} | {after_md} |")
+          PY
+
+      - name: Post or update PR comment
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          set -euo pipefail
+          BODY=$(cat _comment_body.md)
+          MARKER="<!-- preview-diff -->"
+          COMMENT_ID=$(gh api \
+            "repos/${REPO}/issues/${PR_NUMBER}/comments" \
+            --paginate \
+            --jq ".[] | select(.body | startswith(\"${MARKER}\")) | .id" \
+            | head -1)
+          if [ -n "$COMMENT_ID" ]; then
+            gh api "repos/${REPO}/issues/comments/${COMMENT_ID}" \
+              -X PATCH -f body="$BODY"
+          else
+            gh pr comment "$PR_NUMBER" --body "$BODY"
+          fi
+
+      - name: Upload renders artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: preview-renders
+          path: |
+            _previews.json
+            _pr_renders/
+          if-no-files-found: ignore
