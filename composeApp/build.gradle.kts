@@ -74,11 +74,11 @@ kotlin {
 }
 
 android {
-    namespace = "ee.schimke.shokz"
+    namespace = "ee.schimke.cadence"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "ee.schimke.shokz"
+        applicationId = "ee.schimke.cadence"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = appVersionCode
@@ -91,14 +91,14 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-    val releaseKeystorePath = System.getenv("SHOKZ_KEYSTORE_PATH")
+    val releaseKeystorePath = System.getenv("CADENCE_KEYSTORE_PATH")
     signingConfigs {
         if (releaseKeystorePath != null) {
             create("release") {
                 storeFile = file(releaseKeystorePath)
-                storePassword = System.getenv("SHOKZ_KEYSTORE_PASSWORD")
-                keyAlias = System.getenv("SHOKZ_KEY_ALIAS")
-                keyPassword = System.getenv("SHOKZ_KEY_PASSWORD")
+                storePassword = System.getenv("CADENCE_KEYSTORE_PASSWORD")
+                keyAlias = System.getenv("CADENCE_KEY_ALIAS")
+                keyPassword = System.getenv("CADENCE_KEY_PASSWORD")
             }
         }
     }

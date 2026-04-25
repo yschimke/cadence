@@ -195,7 +195,7 @@ the workflow YAML — that's the directory layout GPP expects.
 - Do we want the tag to push to production directly with a 1% staged
   rollout, or always land in internal first? Answer drives whether
   there's one workflow or two.
-- App ID `ee.schimke.shokz` — has it been reserved in Play Console
+- App ID `ee.schimke.cadence` — has it been reserved in Play Console
   yet? Service-account propagation can't start until the app exists
   and a first manual upload has happened (Play won't accept an
   API-only first upload).
@@ -221,12 +221,12 @@ Differences from the original sketch above:
   `// x-release-please-version`. `versionCode` is derived deterministically
   from `versionName` (MAJOR\*10000 + MINOR\*100 + PATCH) — no git-history
   read, no env var. Capped at major < 22 which is plenty.
-- **Signing.** `signingConfigs.release` reads `SHOKZ_KEYSTORE_PATH` /
-  `_PASSWORD` / `SHOKZ_KEY_ALIAS` / `SHOKZ_KEY_PASSWORD` from env. Local
-  builds without those env vars skip the signing config entirely (so
-  `:assembleRelease` still works for local profiling, just unsigned).
+- **Signing.** `signingConfigs.release` reads `CADENCE_KEYSTORE_PATH` /
+  `_PASSWORD` / `CADENCE_KEY_ALIAS` / `CADENCE_KEY_PASSWORD` from env.
+  Local builds without those env vars skip the signing config entirely
+  (so `:assembleRelease` still works for local profiling, just unsigned).
 - **Secrets.** `SIGNING_KEYSTORE` (base64 keystore),
-  `SHOKZ_KEYSTORE_PASSWORD`, `SHOKZ_KEY_ALIAS`, `SHOKZ_KEY_PASSWORD`,
+  `CADENCE_KEYSTORE_PASSWORD`, `CADENCE_KEY_ALIAS`, `CADENCE_KEY_PASSWORD`,
   `PLAY_SERVICE_ACCOUNT_JSON`. The Play upload step gates on both the
   keystore and the credentials being present, so a release without them
   configured still produces an unsigned APK on the GitHub release —
@@ -234,7 +234,7 @@ Differences from the original sketch above:
 
 What is **not** yet done — needs a human:
 
-- App `ee.schimke.shokz` reserved in Play Console + first manual upload
+- App `ee.schimke.cadence` reserved in Play Console + first manual upload
   (Play won't accept an API-only first upload).
 - Service account created, granted Release Manager on the app, JSON
   installed as `PLAY_SERVICE_ACCOUNT_JSON`. Wait 36h after granting

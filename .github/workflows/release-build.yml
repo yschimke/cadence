@@ -21,9 +21,9 @@ concurrency:
 #   Required secrets for signed builds and Play upload (workflow no-ops them
 #   when absent so that re-running an old release without secrets still works):
 #     SIGNING_KEYSTORE              - base64 of the upload keystore (.jks)
-#     SHOKZ_KEYSTORE_PASSWORD       - keystore password
-#     SHOKZ_KEY_ALIAS               - key alias inside the keystore
-#     SHOKZ_KEY_PASSWORD            - key password
+#     CADENCE_KEYSTORE_PASSWORD     - keystore password
+#     CADENCE_KEY_ALIAS             - key alias inside the keystore
+#     CADENCE_KEY_PASSWORD          - key password
 #     PLAY_SERVICE_ACCOUNT_JSON     - service account JSON contents; presence
 #                                     also gates the Play upload step
 # GitHub Packages publishing is wired in the root build.gradle.kts:
@@ -70,13 +70,13 @@ jobs:
           set -euo pipefail
           keystore="${RUNNER_TEMP}/upload.jks"
           printf '%s' "$SIGNING_KEYSTORE" | base64 -d > "$keystore"
-          echo "SHOKZ_KEYSTORE_PATH=$keystore" >> "$GITHUB_ENV"
+          echo "CADENCE_KEYSTORE_PATH=$keystore" >> "$GITHUB_ENV"
 
       - name: Assemble release
         env:
-          SHOKZ_KEYSTORE_PASSWORD: ${{ secrets.SHOKZ_KEYSTORE_PASSWORD }}
-          SHOKZ_KEY_ALIAS: ${{ secrets.SHOKZ_KEY_ALIAS }}
-          SHOKZ_KEY_PASSWORD: ${{ secrets.SHOKZ_KEY_PASSWORD }}
+          CADENCE_KEYSTORE_PASSWORD: ${{ secrets.CADENCE_KEYSTORE_PASSWORD }}
+          CADENCE_KEY_ALIAS: ${{ secrets.CADENCE_KEY_ALIAS }}
+          CADENCE_KEY_PASSWORD: ${{ secrets.CADENCE_KEY_PASSWORD }}
         run: ./gradlew :composeApp:assembleRelease :composeApp:bundleRelease --stacktrace
 
       - name: Publish library artifacts to GitHub Packages
@@ -89,9 +89,9 @@ jobs:
         if: env.HAS_PLAY_CREDENTIALS == 'true' && env.HAS_SIGNING_KEYSTORE == 'true'
         env:
           ANDROID_PUBLISHER_CREDENTIALS: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
-          SHOKZ_KEYSTORE_PASSWORD: ${{ secrets.SHOKZ_KEYSTORE_PASSWORD }}
-          SHOKZ_KEY_ALIAS: ${{ secrets.SHOKZ_KEY_ALIAS }}
-          SHOKZ_KEY_PASSWORD: ${{ secrets.SHOKZ_KEY_PASSWORD }}
+          CADENCE_KEYSTORE_PASSWORD: ${{ secrets.CADENCE_KEYSTORE_PASSWORD }}
+          CADENCE_KEY_ALIAS: ${{ secrets.CADENCE_KEY_ALIAS }}
+          CADENCE_KEY_PASSWORD: ${{ secrets.CADENCE_KEY_PASSWORD }}
         run: ./gradlew :composeApp:publishBundle --stacktrace
 
       - name: Stage release assets
@@ -103,7 +103,7 @@ jobs:
           shopt -s nullglob
           # APKs land as composeApp-release.apk (signed) or
           # composeApp-release-unsigned.apk (no signingConfig). Either way
-          # we publish it as shokz-<version>.apk; the suffix encodes signing
+          # we publish it as cadence-<version>.apk; the suffix encodes signing
           # state for transparency.
           for f in composeApp/build/outputs/apk/release/*.apk; do
             name=$(basename "$f" .apk)
@@ -111,10 +111,10 @@ jobs:
             case "$name" in
               *-unsigned) suffix="-unsigned" ;;
             esac
-            cp "$f" "_release/shokz-${version}${suffix}.apk"
+            cp "$f" "_release/cadence-${version}${suffix}.apk"
           done
           for f in composeApp/build/outputs/bundle/release/*.aab; do
-            cp "$f" "_release/shokz-${version}.aab"
+            cp "$f" "_release/cadence-${version}.aab"
           done
           ls -la _release/
           echo "version=${version}" >> "$GITHUB_OUTPUT"
