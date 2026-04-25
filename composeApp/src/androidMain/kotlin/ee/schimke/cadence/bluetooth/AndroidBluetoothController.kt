@@ -54,13 +54,15 @@ class AndroidBluetoothController(
         applicationContext.getSystemService(Context.MEDIA_SESSION_SERVICE) as? MediaSessionManager
 
     private val refreshTrigger = MutableStateFlow(0L)
+    private val workingModeFlow = MutableStateFlow(WorkingMode.Bluetooth)
 
     override val state: Flow<BluetoothState> = combine(
         connectionFlow(),
         volumeFlow(),
         mediaInfoFlow(),
+        workingModeFlow,
         refreshTrigger,
-    ) { connection, volume, media, _ ->
+    ) { connection, volume, media, mode, _ ->
         BluetoothState(
             connectedDevice = connection,
             volumePercent = volume.percent,
@@ -69,6 +71,7 @@ class AndroidBluetoothController(
             mediaInfo = media,
             mediaAccessGranted = isNotificationAccessGranted(),
             permissionMissing = !hasBluetoothConnectPermission(),
+            workingMode = mode,
         )
     }.distinctUntilChanged()
 
@@ -123,6 +126,11 @@ class AndroidBluetoothController(
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
         runCatching { applicationContext.startActivity(intent) }
+    }
+
+    override suspend fun setWorkingMode(mode: WorkingMode): String {
+        workingModeFlow.value = mode
+        return "Pending RCSP transport (opcode 0x0E sub-opcode unconfirmed)"
     }
 
     override suspend fun dispatchAdvanced(command: AdvancedCommand): String = when (command) {
