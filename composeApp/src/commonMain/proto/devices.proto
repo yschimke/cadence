@@ -7,6 +7,9 @@ package ee.schimke.shokz.datastore.proto;
 message Settings {
   repeated Device devices = 1;
   repeated Bookmark bookmarks = 2;
+  repeated SyncSource sync_sources = 3;
+  repeated StagedFile staged_files = 4;
+  SyncPreferences sync_preferences = 5;
 }
 
 message Device {
@@ -19,4 +22,50 @@ message Bookmark {
   string name = 1;
   string url = 2;
   string favicon = 3;
+}
+
+message SyncSource {
+  string id = 1;
+  string name = 2;
+  SourceKind kind = 3;
+  // For LOCAL_DIRECTORY: SAF tree URI string. For NFS_SHARE: nfs://host/export.
+  string location = 4;
+  // Optional sub-path filter (relative to location).
+  string subpath = 5;
+}
+
+enum SourceKind {
+  LOCAL_DIRECTORY = 0;
+  NFS_SHARE = 1;
+}
+
+message StagedFile {
+  string id = 1;
+  string source_id = 2;
+  // Absolute resource locator (URI for SAF, NFS path for shares).
+  string source_uri = 3;
+  string display_name = 4;
+  // Relative target path written under the device root (e.g. "podcasts/episode.mp3").
+  string target_relative_path = 5;
+  int64 size_bytes = 6;
+  StagedStatus status = 7;
+  string error_message = 8;
+  int64 bytes_transferred = 9;
+}
+
+enum StagedStatus {
+  PENDING = 0;
+  IN_PROGRESS = 1;
+  COMPLETED = 2;
+  FAILED = 3;
+  SKIPPED = 4;
+}
+
+message SyncPreferences {
+  // Target device id files should be synced to (matches Device.id).
+  string target_device_id = 1;
+  // If true, automatically run the sync when matching USB device is attached.
+  bool auto_sync_on_usb = 2;
+  // Optional VID:PID pattern in form "VID:PID" for triggering auto-sync.
+  string usb_match = 3;
 }

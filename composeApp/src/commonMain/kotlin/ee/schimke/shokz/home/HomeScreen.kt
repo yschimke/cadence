@@ -1,46 +1,67 @@
 package ee.schimke.shokz.home
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import ee.schimke.shokz.metro.metroViewModel
-import org.jetbrains.compose.resources.painterResource
-import shokz.composeapp.generated.resources.Res
-import shokz.composeapp.generated.resources.compose_multiplatform
 
 @Composable
-fun HomeScreen(onFileExplorer: () -> Unit, onBookmarks: () -> Unit, modifier: Modifier = Modifier) {
+fun HomeScreen(
+    onFileExplorer: () -> Unit,
+    onBookmarks: () -> Unit,
+    onBluetoothControls: () -> Unit,
+    onFileSync: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     val viewModel = metroViewModel<HomeViewModel>()
 
-    HomeContent(onFileExplorer, onBookmarks, modifier)
+    HomeContent(
+        onFileExplorer = onFileExplorer,
+        onBookmarks = onBookmarks,
+        onBluetoothControls = onBluetoothControls,
+        onFileSync = onFileSync,
+        modifier = modifier,
+    )
 }
 
 @Composable
 internal fun HomeContent(
     onFileExplorer: () -> Unit,
     onBookmarks: () -> Unit,
+    onBluetoothControls: () -> Unit,
+    onFileSync: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier.fillMaxWidth()
-            .safeContentPadding(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier = modifier.fillMaxWidth().safeContentPadding().padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        Button(onClick = onFileExplorer) {
+        Text(
+            "Shokz",
+            style = MaterialTheme.typography.headlineMedium,
+            fontWeight = FontWeight.SemiBold,
+        )
+        Button(onClick = onBluetoothControls, modifier = Modifier.fillMaxWidth()) {
+            Text("Bluetooth Controls")
+        }
+        Button(onClick = onFileSync, modifier = Modifier.fillMaxWidth()) {
+            Text("File Sync")
+        }
+        Button(onClick = onFileExplorer, modifier = Modifier.fillMaxWidth()) {
             Text("File Explorer")
         }
-        Button(onClick = onBookmarks) {
+        Button(onClick = onBookmarks, modifier = Modifier.fillMaxWidth()) {
             Text("Bookmarks")
         }
     }

@@ -26,6 +26,8 @@ internal fun HomeScreenPreview() {
         HomeContent(
             onFileExplorer = {},
             onBookmarks = {},
+            onBluetoothControls = {},
+            onFileSync = {},
             modifier = themedModifier,
         )
     }
