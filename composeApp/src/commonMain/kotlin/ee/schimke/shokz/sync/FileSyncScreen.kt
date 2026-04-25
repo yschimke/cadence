@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.width
@@ -18,6 +19,8 @@ import androidx.compose.material.icons.filled.Sync
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -52,11 +55,13 @@ import ee.schimke.shokz.metro.metroViewModel
 fun FileSyncScreen(modifier: Modifier = Modifier) {
     val viewModel = metroViewModel<FileSyncViewModel>()
     val state by viewModel.state.collectAsState()
+    val suggestions by viewModel.suggestions.collectAsState()
     val launcher = rememberDirectorySourceLauncher { name, uri ->
         viewModel.addLocalDirectory(name, uri)
     }
 
     var showAddNfs by remember { mutableStateOf(false) }
+    var showDiscover by remember { mutableStateOf(false) }
 
     if (showAddNfs) {
         AddNfsDialog(
@@ -68,11 +73,23 @@ fun FileSyncScreen(modifier: Modifier = Modifier) {
         )
     }
 
+    if (showDiscover) {
+        SourceSuggestionsDialog(
+            suggestions = suggestions,
+            onSelect = viewModel::openSuggestion,
+            onDismiss = { showDiscover = false },
+        )
+    }
+
     FileSyncContent(
         modifier = modifier,
         state = state,
         onAddLocalDirectory = launcher,
         onAddNfsShare = { showAddNfs = true },
+        onDiscoverApps = {
+            viewModel.loadSuggestions()
+            showDiscover = true
+        },
         onRemoveSource = viewModel::removeSource,
         onStageAllFromSource = viewModel::stageAllFromSource,
         onRemoveStaged = viewModel::removeStaged,
@@ -92,6 +109,7 @@ internal fun FileSyncContent(
     state: FileSyncViewModel.UiState,
     onAddLocalDirectory: () -> Unit,
     onAddNfsShare: () -> Unit,
+    onDiscoverApps: () -> Unit,
     onRemoveSource: (String) -> Unit,
     onStageAllFromSource: (String) -> Unit,
     onRemoveStaged: (String) -> Unit,
@@ -130,18 +148,22 @@ internal fun FileSyncContent(
         item {
             SectionHeader(
                 title = "Sources",
-                subtitle = "Local directories (SAF) or NFS shares",
+                subtitle = "Pick any folder reachable through Android's system file picker — local, cloud, SMB, etc.",
                 trailing = {
-                    OutlinedButton(onClick = onAddLocalDirectory) { Text("Add directory") }
+                    OutlinedButton(onClick = onAddLocalDirectory) { Text("Add source") }
                     Gap(8)
                     OutlinedButton(onClick = onAddNfsShare) { Text("Add NFS") }
                 },
             )
         }
+        item {
+            DiscoverAppsRow(onDiscoverApps = onDiscoverApps)
+        }
         if (state.sources.isEmpty()) {
             item {
                 Text(
-                    "No sources yet. Add a local directory (e.g. your podcast staging folder) to begin.",
+                    "No sources yet. Tap “Add source” to pick a local folder, Drive, OneDrive, " +
+                        "or any folder exposed by an installed file manager.",
                     style = MaterialTheme.typography.bodyMedium,
                 )
             }
@@ -424,6 +446,116 @@ private fun AddNfsDialog(
         },
         dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } },
     )
+}
+
+@Composable
+private fun DiscoverAppsRow(onDiscoverApps: () -> Unit) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Column(Modifier.weight(1f)) {
+                Text(
+                    "Don't see your storage?",
+                    style = MaterialTheme.typography.titleSmall,
+                    fontWeight = FontWeight.SemiBold,
+                )
+                Text(
+                    "Drive, Dropbox, Nextcloud, SMB, FTP, WebDAV and more become pickable once" +
+                        " you install an app that exposes them through Android's file picker.",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+            Gap(8)
+            OutlinedButton(onClick = onDiscoverApps) { Text("Discover apps") }
+        }
+    }
+}
+
+@Composable
+private fun SourceSuggestionsDialog(
+    suggestions: List<SourceSuggestion>,
+    onSelect: (SourceSuggestion) -> Unit,
+    onDismiss: () -> Unit,
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Discover storage apps") },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Text(
+                    "These apps register a Storage Access Framework provider. Once installed," +
+                        " their folders appear in the Android file picker used by “Add source”.",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                if (suggestions.isEmpty()) {
+                    Text("Loading…", style = MaterialTheme.typography.bodyMedium)
+                } else {
+                    LazyColumn(
+                        modifier = Modifier.fillMaxWidth().heightIn(max = 420.dp),
+                        verticalArrangement = Arrangement.spacedBy(6.dp),
+                    ) {
+                        items(suggestions, key = { it.packageName }) { suggestion ->
+                            SourceSuggestionRow(suggestion = suggestion, onSelect = onSelect)
+                        }
+                    }
+                }
+            }
+        },
+        confirmButton = { TextButton(onClick = onDismiss) { Text("Done") } },
+    )
+}
+
+@Composable
+private fun SourceSuggestionRow(
+    suggestion: SourceSuggestion,
+    onSelect: (SourceSuggestion) -> Unit,
+) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Column(Modifier.weight(1f)) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        suggestion.displayName,
+                        style = MaterialTheme.typography.titleSmall,
+                        fontWeight = FontWeight.SemiBold,
+                    )
+                    if (suggestion.installed) {
+                        Gap(8)
+                        AssistChip(onClick = {}, label = { Text("Installed") })
+                    }
+                }
+                Text(
+                    suggestion.description,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                if (suggestion.capabilities.isNotEmpty()) {
+                    Text(
+                        suggestion.capabilities.joinToString(" • "),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+            Gap(8)
+            OutlinedButton(onClick = { onSelect(suggestion) }) {
+                Text(if (suggestion.installed) "Open" else "Install")
+            }
+        }
+    }
 }
 
 @Composable

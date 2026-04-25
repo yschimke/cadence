@@ -12,8 +12,10 @@ import ee.schimke.shokz.datastore.proto.SyncPreferences
 import ee.schimke.shokz.datastore.proto.SyncSource
 import ee.schimke.shokz.metro.ViewModelKey
 import ee.schimke.shokz.metro.ViewModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -27,7 +29,11 @@ class FileSyncViewModel(
     private val devicesRepo: DevicesRepo,
     private val sourceBrowser: SourceBrowser,
     private val orchestrator: SyncOrchestrator,
+    private val sourceSuggestions: SourceSuggestionsProvider,
 ) : ViewModel() {
+
+    private val _suggestions = MutableStateFlow<List<SourceSuggestion>>(emptyList())
+    val suggestions: StateFlow<List<SourceSuggestion>> = _suggestions.asStateFlow()
 
     val state: StateFlow<UiState> = combine(
         syncRepo.sources,
@@ -115,6 +121,14 @@ class FileSyncViewModel(
     }
 
     fun cancelSync() = orchestrator.cancel()
+
+    fun loadSuggestions() {
+        viewModelScope.launch { _suggestions.value = sourceSuggestions.list() }
+    }
+
+    fun openSuggestion(suggestion: SourceSuggestion) {
+        sourceSuggestions.open(suggestion)
+    }
 
     data class UiState(
         val sources: List<SyncSource> = emptyList(),
