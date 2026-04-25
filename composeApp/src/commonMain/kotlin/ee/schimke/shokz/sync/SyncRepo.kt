@@ -2,11 +2,11 @@ package ee.schimke.shokz.sync
 
 import androidx.datastore.core.DataStore
 import dev.zacsweers.metro.Inject
-import ee.schimke.shokz.datastore.proto.SourceKind
+import ee.schimke.shokz.datastore.proto.NetworkConstraint
 import ee.schimke.shokz.datastore.proto.Settings
-import ee.schimke.shokz.datastore.proto.StagedFile
-import ee.schimke.shokz.datastore.proto.StagedStatus
+import ee.schimke.shokz.datastore.proto.SourceKind
 import ee.schimke.shokz.datastore.proto.SyncPreferences
+import ee.schimke.shokz.datastore.proto.SyncProfile
 import ee.schimke.shokz.datastore.proto.SyncSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -19,7 +19,7 @@ import kotlin.uuid.Uuid
 class SyncRepo(private val dataStore: DataStore<Settings>) {
 
     val sources: Flow<List<SyncSource>> = dataStore.data.map { it.sync_sources }
-    val stagedFiles: Flow<List<StagedFile>> = dataStore.data.map { it.staged_files }
+    val profiles: Flow<List<SyncProfile>> = dataStore.data.map { it.sync_profiles }
     val preferences: Flow<SyncPreferences?> = dataStore.data.map { it.sync_preferences }
 
     suspend fun addLocalDirectorySource(name: String, treeUri: String, subpath: String = "") {
@@ -48,41 +48,65 @@ class SyncRepo(private val dataStore: DataStore<Settings>) {
         dataStore.updateData { settings ->
             settings.copy(
                 sync_sources = settings.sync_sources.filterNot { it.id == id },
-                staged_files = settings.staged_files.filterNot { it.source_id == id },
+                sync_profiles = settings.sync_profiles.map { profile ->
+                    profile.copy(source_ids = profile.source_ids.filterNot { it == id })
+                },
             )
         }
     }
 
-    suspend fun stageFiles(items: List<StagedFile>) {
-        dataStore.updateData { it.copy(staged_files = it.staged_files + items) }
-    }
-
-    suspend fun removeStaged(id: String) {
+    suspend fun addProfile(
+        name: String,
+        sourceIds: List<String>,
+        refreshIntervalMinutes: Int = 60,
+        networkConstraint: NetworkConstraint = NetworkConstraint.UNMETERED,
+    ): SyncProfile {
+        val id = Uuid.random().toString()
+        val subpath = sanitizeSubpath(name).ifBlank { id }
+        var created: SyncProfile = SyncProfile()
         dataStore.updateData { settings ->
-            settings.copy(staged_files = settings.staged_files.filterNot { it.id == id })
+            // First profile created defaults to auto-refresh on; subsequent profiles
+            // default to manual-only so the user explicitly opts in to extra background work.
+            val isFirst = settings.sync_profiles.isEmpty()
+            val profile = SyncProfile(
+                id = id,
+                name = name.ifBlank { "Untitled" },
+                source_ids = sourceIds,
+                staging_subpath = subpath,
+                refresh_interval_minutes = refreshIntervalMinutes,
+                network_constraint = networkConstraint,
+                auto_refresh = isFirst,
+            )
+            created = profile
+            settings.copy(sync_profiles = settings.sync_profiles + profile)
         }
+        return created
     }
 
-    suspend fun clearCompleted() {
+    suspend fun updateProfile(id: String, transform: (SyncProfile) -> SyncProfile) {
         dataStore.updateData { settings ->
-            settings.copy(staged_files = settings.staged_files.filterNot { it.status == StagedStatus.COMPLETED })
-        }
-    }
-
-    suspend fun resetAllToPending() {
-        dataStore.updateData { settings ->
-            settings.copy(staged_files = settings.staged_files.map {
-                it.copy(status = StagedStatus.PENDING, error_message = "", bytes_transferred = 0)
-            })
-        }
-    }
-
-    suspend fun updateStaged(id: String, transform: (StagedFile) -> StagedFile) {
-        dataStore.updateData { settings ->
-            settings.copy(staged_files = settings.staged_files.map {
+            settings.copy(sync_profiles = settings.sync_profiles.map {
                 if (it.id == id) transform(it) else it
             })
         }
+    }
+
+    suspend fun removeProfile(id: String) {
+        dataStore.updateData { settings ->
+            settings.copy(sync_profiles = settings.sync_profiles.filterNot { it.id == id })
+        }
+    }
+
+    suspend fun setAutoRefresh(id: String, enabled: Boolean) {
+        updateProfile(id) { it.copy(auto_refresh = enabled) }
+    }
+
+    suspend fun recordRefreshSuccess(id: String, isoTimestamp: String) {
+        updateProfile(id) { it.copy(last_refreshed_at = isoTimestamp, last_error = "") }
+    }
+
+    suspend fun recordRefreshFailure(id: String, error: String) {
+        updateProfile(id) { it.copy(last_error = error) }
     }
 
     suspend fun updatePreferences(transform: (SyncPreferences) -> SyncPreferences) {
@@ -92,9 +116,12 @@ class SyncRepo(private val dataStore: DataStore<Settings>) {
     }
 
     suspend fun getSource(id: String): SyncSource? = sources.first().firstOrNull { it.id == id }
-    suspend fun getStaged(id: String): StagedFile? = stagedFiles.first().firstOrNull { it.id == id }
-    suspend fun pendingFiles(): List<StagedFile> =
-        stagedFiles.first().filter { it.status == StagedStatus.PENDING || it.status == StagedStatus.FAILED }
+    suspend fun getProfile(id: String): SyncProfile? = profiles.first().firstOrNull { it.id == id }
+    suspend fun listProfiles(): List<SyncProfile> = profiles.first()
 
-    fun newStagedId(): String = Uuid.random().toString()
+    private fun sanitizeSubpath(name: String): String =
+        name.lowercase()
+            .replace(Regex("[^a-z0-9._-]+"), "-")
+            .trim('-', '.')
+            .take(48)
 }

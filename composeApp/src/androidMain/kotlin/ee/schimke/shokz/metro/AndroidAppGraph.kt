@@ -10,6 +10,8 @@ import dev.zacsweers.metro.Provider
 import dev.zacsweers.metro.Provides
 import ee.schimke.shokz.ShokzApplication
 import ee.schimke.shokz.data.AndroidFileSystem
+import ee.schimke.shokz.sync.RefreshOrchestrator
+import ee.schimke.shokz.sync.RefreshScheduler
 import ee.schimke.shokz.sync.SyncOrchestrator
 import ee.schimke.shokz.sync.SyncRepo
 import okio.FileSystem
@@ -29,6 +31,10 @@ interface AndroidAppGraph: AppGraph {
     val syncOrchestrator: SyncOrchestrator
 
     val syncRepo: SyncRepo
+
+    val refreshOrchestrator: RefreshOrchestrator
+
+    val refreshScheduler: RefreshScheduler
 
     @Provides
     fun provideFileSystem(context: Context): FileSystem = AndroidFileSystem(context)

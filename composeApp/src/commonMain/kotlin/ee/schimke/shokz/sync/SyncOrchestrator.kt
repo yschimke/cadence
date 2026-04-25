@@ -7,8 +7,8 @@ interface SyncOrchestrator {
 
     /**
      * Trigger a sync run targeting [targetDeviceId] (a [Device.id] from
-     * [DevicesRepo]). Implementations must return immediately; progress is
-     * reported via [progress].
+     * [DevicesRepo]). Iterates every profile and copies its staging directory
+     * onto the device under the profile's staging_subpath.
      */
     suspend fun startSync(targetDeviceId: String?)
 
@@ -17,6 +17,7 @@ interface SyncOrchestrator {
 
 data class SyncProgress(
     val running: Boolean = false,
+    val currentProfileName: String? = null,
     val currentFileName: String? = null,
     val currentBytes: Long = 0,
     val currentTotal: Long = 0,

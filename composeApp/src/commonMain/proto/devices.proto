@@ -8,8 +8,12 @@ message Settings {
   repeated Device devices = 1;
   repeated Bookmark bookmarks = 2;
   repeated SyncSource sync_sources = 3;
+  // Reserved: was a flat staged-files list, replaced by per-profile
+  // staging directories. Field number kept aside so older proto blobs
+  // are still skipped cleanly.
   repeated StagedFile staged_files = 4;
   SyncPreferences sync_preferences = 5;
+  repeated SyncProfile sync_profiles = 6;
 }
 
 message Device {
@@ -68,4 +72,30 @@ message SyncPreferences {
   bool auto_sync_on_usb = 2;
   // Optional VID:PID pattern in form "VID:PID" for triggering auto-sync.
   string usb_match = 3;
+}
+
+message SyncProfile {
+  string id = 1;
+  string name = 2;
+  // SyncSource.id values that feed this profile.
+  repeated string source_ids = 3;
+  // Sub-folder under the app staging root and (mirrored) on the device.
+  string staging_subpath = 4;
+  // Auto-refresh interval. 0 disables the periodic job even when auto_refresh is on.
+  int32 refresh_interval_minutes = 5;
+  NetworkConstraint network_constraint = 6;
+  // ISO-8601 timestamp of the last successful refresh; empty if never refreshed.
+  string last_refreshed_at = 7;
+  // Most recent refresh error, empty when the last run succeeded.
+  string last_error = 8;
+  // When true, WorkManager keeps this profile fresh in the background. By
+  // default the first profile created has this on; later profiles default to
+  // manual-only and can be toggled on as overrides.
+  bool auto_refresh = 9;
+}
+
+enum NetworkConstraint {
+  ANY = 0;
+  CONNECTED = 1;
+  UNMETERED = 2;
 }

@@ -28,6 +28,7 @@ kotlin {
             implementation(libs.modernstorage.permissions)
             implementation(libs.modernstorage.storage)
             implementation(libs.androidx.documentfile)
+            implementation(libs.androidx.work.runtime)
         }
         commonMain.dependencies {
             implementation(compose.runtime)

@@ -6,9 +6,9 @@ import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.Inject
 import ee.schimke.shokz.data.DevicesRepo
 import ee.schimke.shokz.datastore.proto.Device
-import ee.schimke.shokz.datastore.proto.StagedFile
-import ee.schimke.shokz.datastore.proto.StagedStatus
+import ee.schimke.shokz.datastore.proto.NetworkConstraint
 import ee.schimke.shokz.datastore.proto.SyncPreferences
+import ee.schimke.shokz.datastore.proto.SyncProfile
 import ee.schimke.shokz.datastore.proto.SyncSource
 import ee.schimke.shokz.metro.ViewModelKey
 import ee.schimke.shokz.metro.ViewModelScope
@@ -27,33 +27,37 @@ import kotlinx.coroutines.launch
 class FileSyncViewModel(
     private val syncRepo: SyncRepo,
     private val devicesRepo: DevicesRepo,
-    private val sourceBrowser: SourceBrowser,
     private val orchestrator: SyncOrchestrator,
+    private val refreshOrchestrator: RefreshOrchestrator,
+    private val refreshScheduler: RefreshScheduler,
     private val sourceSuggestions: SourceSuggestionsProvider,
 ) : ViewModel() {
 
     private val _suggestions = MutableStateFlow<List<SourceSuggestion>>(emptyList())
     val suggestions: StateFlow<List<SourceSuggestion>> = _suggestions.asStateFlow()
 
-    val state: StateFlow<UiState> = combine(
+    private val baseFlow = combine(
         syncRepo.sources,
-        syncRepo.stagedFiles,
+        syncRepo.profiles,
         devicesRepo.devices.map { it.devices },
         syncRepo.preferences,
-        orchestrator.progress,
-    ) { sources, staged, devices, prefs, progress ->
-        UiState(
-            sources = sources,
-            stagedFiles = staged,
-            devices = devices,
-            preferences = prefs ?: SyncPreferences(),
-            progress = progress,
-        )
-    }.stateIn(
-        viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = UiState(),
-    )
+    ) { sources, profiles, devices, prefs ->
+        BasePart(sources, profiles, devices, prefs ?: SyncPreferences())
+    }
+
+    val state: StateFlow<UiState> = baseFlow
+        .combine(refreshOrchestrator.progress) { base, refresh -> base to refresh }
+        .combine(orchestrator.progress) { (base, refresh), syncProgress ->
+            UiState(
+                sources = base.sources,
+                profiles = base.profiles,
+                devices = base.devices,
+                preferences = base.preferences,
+                refresh = refresh,
+                sync = syncProgress,
+            )
+        }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), UiState())
 
     fun addLocalDirectory(name: String, treeUri: String) {
         viewModelScope.launch { syncRepo.addLocalDirectorySource(name, treeUri) }
@@ -67,53 +71,44 @@ class FileSyncViewModel(
         viewModelScope.launch { syncRepo.removeSource(id) }
     }
 
-    fun stageAllFromSource(sourceId: String) {
+    fun addProfile(
+        name: String,
+        sourceIds: List<String>,
+        refreshIntervalMinutes: Int,
+        networkConstraint: NetworkConstraint,
+    ) {
         viewModelScope.launch {
-            val source = syncRepo.getSource(sourceId) ?: return@launch
-            val items = sourceBrowser.browse(sourceId)
-            val toStage = items.map { item ->
-                StagedFile(
-                    id = syncRepo.newStagedId(),
-                    source_id = source.id,
-                    source_uri = item.sourceUri,
-                    display_name = item.displayName,
-                    target_relative_path = item.relativePath,
-                    size_bytes = item.sizeBytes,
-                    status = StagedStatus.PENDING,
-                )
-            }
-            if (toStage.isNotEmpty()) syncRepo.stageFiles(toStage)
+            val profile = syncRepo.addProfile(name, sourceIds, refreshIntervalMinutes, networkConstraint)
+            // Run an initial refresh so the profile is materialised on disk.
+            refreshScheduler.runNow(profile.id)
         }
     }
 
-    fun removeStaged(id: String) {
-        viewModelScope.launch { syncRepo.removeStaged(id) }
+    fun deleteProfile(id: String) {
+        viewModelScope.launch {
+            refreshScheduler.cancel(id)
+            syncRepo.removeProfile(id)
+        }
     }
 
-    fun clearCompleted() {
-        viewModelScope.launch { syncRepo.clearCompleted() }
+    fun toggleAutoRefresh(profile: SyncProfile, enabled: Boolean) {
+        viewModelScope.launch { syncRepo.setAutoRefresh(profile.id, enabled) }
     }
 
-    fun retryFailures() {
-        viewModelScope.launch { syncRepo.resetAllToPending() }
+    fun refreshNow(profileId: String) {
+        refreshScheduler.runNow(profileId)
     }
 
     fun selectTargetDevice(deviceId: String) {
-        viewModelScope.launch {
-            syncRepo.updatePreferences { it.copy(target_device_id = deviceId) }
-        }
+        viewModelScope.launch { syncRepo.updatePreferences { it.copy(target_device_id = deviceId) } }
     }
 
     fun setAutoSync(enabled: Boolean) {
-        viewModelScope.launch {
-            syncRepo.updatePreferences { it.copy(auto_sync_on_usb = enabled) }
-        }
+        viewModelScope.launch { syncRepo.updatePreferences { it.copy(auto_sync_on_usb = enabled) } }
     }
 
     fun setUsbMatch(value: String) {
-        viewModelScope.launch {
-            syncRepo.updatePreferences { it.copy(usb_match = value) }
-        }
+        viewModelScope.launch { syncRepo.updatePreferences { it.copy(usb_match = value) } }
     }
 
     fun startSync() {
@@ -130,11 +125,19 @@ class FileSyncViewModel(
         sourceSuggestions.open(suggestion)
     }
 
+    private data class BasePart(
+        val sources: List<SyncSource>,
+        val profiles: List<SyncProfile>,
+        val devices: List<Device>,
+        val preferences: SyncPreferences,
+    )
+
     data class UiState(
         val sources: List<SyncSource> = emptyList(),
-        val stagedFiles: List<StagedFile> = emptyList(),
+        val profiles: List<SyncProfile> = emptyList(),
         val devices: List<Device> = emptyList(),
         val preferences: SyncPreferences = SyncPreferences(),
-        val progress: SyncProgress = SyncProgress(),
+        val refresh: RefreshProgress = RefreshProgress(),
+        val sync: SyncProgress = SyncProgress(),
     )
 }

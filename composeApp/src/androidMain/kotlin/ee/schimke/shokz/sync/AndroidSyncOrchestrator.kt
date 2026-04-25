@@ -9,7 +9,6 @@ import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.SingleIn
 import dev.zacsweers.metro.binding
 import ee.schimke.shokz.data.DevicesRepo
-import ee.schimke.shokz.datastore.proto.StagedStatus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -18,6 +17,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import okio.buffer
 
 @ContributesBinding(AppScope::class, binding = binding<SyncOrchestrator>())
 @SingleIn(AppScope::class)
@@ -26,6 +26,7 @@ class AndroidSyncOrchestrator(
     private val context: Context,
     private val syncRepo: SyncRepo,
     private val devicesRepo: DevicesRepo,
+    private val stagingArea: StagingArea,
 ) : SyncOrchestrator {
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
@@ -42,66 +43,74 @@ class AndroidSyncOrchestrator(
             ?: return reportError("No target device selected")
 
         val device = devicesRepo.getDevice(deviceId) ?: return reportError("Target device not found")
-        val pending = syncRepo.pendingFiles()
-        if (pending.isEmpty()) {
-            _progress.value = SyncProgress(running = false, lastError = "Nothing to sync")
+        val profiles = syncRepo.listProfiles().filter { it.source_ids.isNotEmpty() }
+        if (profiles.isEmpty()) return reportError("No sync profiles configured")
+
+        val plan: List<Pair<ee.schimke.shokz.datastore.proto.SyncProfile, List<StagedEntry>>> =
+            profiles.map { profile ->
+                profile to stagingArea.listProfileFiles(profile.staging_subpath)
+            }.filter { it.second.isNotEmpty() }
+
+        if (plan.isEmpty()) {
+            _progress.value = SyncProgress(
+                running = false,
+                lastError = "Staging is empty — refresh a profile first",
+            )
             return
         }
 
+        val totalFiles = plan.sumOf { it.second.size }
+
         currentJob = scope.launch {
-            _progress.value = SyncProgress(running = true, filesTotal = pending.size)
+            _progress.value = SyncProgress(running = true, filesTotal = totalFiles)
             val rootUri = Uri.parse(device.path)
             val rootDoc = DocumentFile.fromTreeUri(context, rootUri)
                 ?: return@launch reportError("Cannot open device tree URI")
 
             var completed = 0
-            for (file in pending) {
+            for ((profile, entries) in plan) {
                 if (!isActive) break
-                _progress.value = _progress.value.copy(
-                    currentFileName = file.display_name,
-                    currentBytes = 0,
-                    currentTotal = file.size_bytes,
-                )
-                syncRepo.updateStaged(file.id) { it.copy(status = StagedStatus.IN_PROGRESS, bytes_transferred = 0) }
-                try {
-                    copyOne(file, rootDoc)
-                    syncRepo.updateStaged(file.id) {
-                        it.copy(status = StagedStatus.COMPLETED, bytes_transferred = file.size_bytes)
-                    }
-                } catch (t: Throwable) {
-                    syncRepo.updateStaged(file.id) {
-                        it.copy(status = StagedStatus.FAILED, error_message = t.message ?: t.javaClass.simpleName)
-                    }
+                _progress.value = _progress.value.copy(currentProfileName = profile.name)
+                val profileRootSegments = profile.staging_subpath.split('/').filter { it.isNotBlank() }
+                val profileRoot = ensureDirectories(rootDoc, profileRootSegments)
+                for (entry in entries) {
+                    if (!isActive) break
+                    _progress.value = _progress.value.copy(
+                        currentFileName = entry.relativePath,
+                        currentBytes = 0,
+                        currentTotal = entry.sizeBytes,
+                    )
+                    runCatching { copyOne(entry, profileRoot) }
+                        .onFailure {
+                            _progress.value = _progress.value.copy(
+                                lastError = "${entry.relativePath}: ${it.message ?: it.javaClass.simpleName}",
+                            )
+                        }
+                    completed++
+                    _progress.value = _progress.value.copy(filesCompleted = completed)
                 }
-                completed++
-                _progress.value = _progress.value.copy(filesCompleted = completed)
             }
-            _progress.value = _progress.value.copy(running = false, currentFileName = null)
+            _progress.value = _progress.value.copy(running = false, currentFileName = null, currentProfileName = null)
         }
     }
 
-    private fun copyOne(
-        file: ee.schimke.shokz.datastore.proto.StagedFile,
-        rootDoc: DocumentFile,
-    ) {
-        val targetSegments = file.target_relative_path.split('/').filter { it.isNotBlank() }
-            .ifEmpty { listOf(file.display_name.ifBlank { "file" }) }
-        val parent = ensureDirectories(rootDoc, targetSegments.dropLast(1))
-        val name = targetSegments.last()
-        // Replace any existing entry to keep behaviour predictable.
+    private fun copyOne(entry: StagedEntry, profileRoot: DocumentFile) {
+        val segments = entry.relativePath.split('/').filter { it.isNotBlank() }
+            .ifEmpty { listOf(entry.absolutePath.name) }
+        val parent = ensureDirectories(profileRoot, segments.dropLast(1))
+        val name = segments.last()
         parent.findFile(name)?.delete()
         val mime = guessMimeType(name)
         val target = parent.createFile(mime, name)
             ?: throw IllegalStateException("Could not create $name on device")
 
-        context.contentResolver.openInputStream(Uri.parse(file.source_uri)).use { input ->
-            requireNotNull(input) { "Source not readable: ${file.source_uri}" }
+        stagingArea.fileSystem.source(entry.absolutePath).buffer().use { source ->
             context.contentResolver.openOutputStream(target.uri, "wt").use { output ->
                 requireNotNull(output) { "Target not writable: ${target.uri}" }
                 val buffer = ByteArray(64 * 1024)
                 var transferred = 0L
                 while (true) {
-                    val read = input.read(buffer)
+                    val read = source.read(buffer)
                     if (read <= 0) break
                     output.write(buffer, 0, read)
                     transferred += read

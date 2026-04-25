@@ -13,14 +13,17 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Cloud
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Folder
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Sync
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -36,8 +39,8 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -45,9 +48,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import ee.schimke.shokz.datastore.proto.NetworkConstraint
 import ee.schimke.shokz.datastore.proto.SourceKind
-import ee.schimke.shokz.datastore.proto.StagedFile
-import ee.schimke.shokz.datastore.proto.StagedStatus
+import ee.schimke.shokz.datastore.proto.SyncProfile
 import ee.schimke.shokz.datastore.proto.SyncSource
 import ee.schimke.shokz.metro.metroViewModel
 
@@ -62,6 +65,7 @@ fun FileSyncScreen(modifier: Modifier = Modifier) {
 
     var showAddNfs by remember { mutableStateOf(false) }
     var showDiscover by remember { mutableStateOf(false) }
+    var showAddProfile by remember { mutableStateOf(false) }
 
     if (showAddNfs) {
         AddNfsDialog(
@@ -72,12 +76,21 @@ fun FileSyncScreen(modifier: Modifier = Modifier) {
             },
         )
     }
-
     if (showDiscover) {
         SourceSuggestionsDialog(
             suggestions = suggestions,
             onSelect = viewModel::openSuggestion,
             onDismiss = { showDiscover = false },
+        )
+    }
+    if (showAddProfile) {
+        AddProfileDialog(
+            availableSources = state.sources,
+            onDismiss = { showAddProfile = false },
+            onConfirm = { name, sourceIds, interval, network ->
+                viewModel.addProfile(name, sourceIds, interval, network)
+                showAddProfile = false
+            },
         )
     }
 
@@ -91,10 +104,10 @@ fun FileSyncScreen(modifier: Modifier = Modifier) {
             showDiscover = true
         },
         onRemoveSource = viewModel::removeSource,
-        onStageAllFromSource = viewModel::stageAllFromSource,
-        onRemoveStaged = viewModel::removeStaged,
-        onClearCompleted = viewModel::clearCompleted,
-        onRetryFailures = viewModel::retryFailures,
+        onAddProfile = { showAddProfile = true },
+        onDeleteProfile = viewModel::deleteProfile,
+        onRefreshProfile = viewModel::refreshNow,
+        onToggleAutoRefresh = viewModel::toggleAutoRefresh,
         onSelectTargetDevice = viewModel::selectTargetDevice,
         onSetAutoSync = viewModel::setAutoSync,
         onSetUsbMatch = viewModel::setUsbMatch,
@@ -111,10 +124,10 @@ internal fun FileSyncContent(
     onAddNfsShare: () -> Unit,
     onDiscoverApps: () -> Unit,
     onRemoveSource: (String) -> Unit,
-    onStageAllFromSource: (String) -> Unit,
-    onRemoveStaged: (String) -> Unit,
-    onClearCompleted: () -> Unit,
-    onRetryFailures: () -> Unit,
+    onAddProfile: () -> Unit,
+    onDeleteProfile: (String) -> Unit,
+    onRefreshProfile: (String) -> Unit,
+    onToggleAutoRefresh: (SyncProfile, Boolean) -> Unit,
     onSelectTargetDevice: (String) -> Unit,
     onSetAutoSync: (Boolean) -> Unit,
     onSetUsbMatch: (String) -> Unit,
@@ -141,8 +154,39 @@ internal fun FileSyncContent(
                 state = state,
                 onStartSync = onStartSync,
                 onCancelSync = onCancelSync,
-                onRetryFailures = onRetryFailures,
-                onClearCompleted = onClearCompleted,
+            )
+        }
+        item {
+            SectionHeader(
+                title = "Sync profiles",
+                subtitle = "Each profile pulls from a set of sources into its own local folder, " +
+                    "ready to copy to the headphones on USB connect.",
+                trailing = {
+                    Button(onClick = onAddProfile, enabled = state.sources.isNotEmpty()) {
+                        Text("Add profile")
+                    }
+                },
+            )
+        }
+        if (state.profiles.isEmpty()) {
+            item {
+                Text(
+                    if (state.sources.isEmpty())
+                        "Add a source first, then create a profile to combine sources into a single staging area."
+                    else
+                        "No profiles yet. Add one — its first refresh will run immediately.",
+                    style = MaterialTheme.typography.bodyMedium,
+                )
+            }
+        }
+        items(state.profiles, key = { it.id }) { profile ->
+            ProfileCard(
+                profile = profile,
+                sources = state.sources,
+                refresh = state.refresh,
+                onRefreshNow = { onRefreshProfile(profile.id) },
+                onToggleAuto = { onToggleAutoRefresh(profile, it) },
+                onDelete = { onDeleteProfile(profile.id) },
             )
         }
         item {
@@ -156,9 +200,7 @@ internal fun FileSyncContent(
                 },
             )
         }
-        item {
-            DiscoverAppsRow(onDiscoverApps = onDiscoverApps)
-        }
+        item { DiscoverAppsRow(onDiscoverApps = onDiscoverApps) }
         if (state.sources.isEmpty()) {
             item {
                 Text(
@@ -172,20 +214,7 @@ internal fun FileSyncContent(
             SourceCard(
                 source = source,
                 onRemove = { onRemoveSource(source.id) },
-                onStageAll = { onStageAllFromSource(source.id) },
             )
-        }
-        item {
-            SectionHeader(
-                title = "Staging area (${state.stagedFiles.size} files)",
-                subtitle = "Files queued to copy on next USB sync",
-            )
-        }
-        if (state.stagedFiles.isEmpty()) {
-            item { Text("Nothing staged.", style = MaterialTheme.typography.bodyMedium) }
-        }
-        items(state.stagedFiles, key = { it.id }) { staged ->
-            StagedFileRow(staged, onRemove = { onRemoveStaged(staged.id) })
         }
     }
 }
@@ -197,10 +226,7 @@ private fun Gap(width: Int) {
 
 @Composable
 private fun SectionHeader(title: String, subtitle: String? = null, trailing: @Composable (() -> Unit)? = null) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.fillMaxWidth(),
-    ) {
+    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
         Column(Modifier.weight(1f)) {
             Text(title, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
             subtitle?.let {
@@ -229,7 +255,7 @@ private fun TargetDeviceCard(
 
     ElevatedCard(modifier = Modifier.fillMaxWidth()) {
         Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            Text("Target device", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
+            Text("Target headphones", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
             ExposedDropdownMenuBox(expanded = expanded, onExpandedChange = { expanded = !expanded }) {
                 OutlinedTextField(
                     value = selected?.name ?: "Select managed device…",
@@ -280,10 +306,9 @@ private fun ProgressCard(
     state: FileSyncViewModel.UiState,
     onStartSync: () -> Unit,
     onCancelSync: () -> Unit,
-    onRetryFailures: () -> Unit,
-    onClearCompleted: () -> Unit,
 ) {
-    val progress = state.progress
+    val sync = state.sync
+    val refresh = state.refresh
     ElevatedCard(modifier = Modifier.fillMaxWidth()) {
         Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -291,11 +316,16 @@ private fun ProgressCard(
                 Gap(12)
                 Column(Modifier.weight(1f)) {
                     Text(
-                        if (progress.running) "Syncing…" else "Idle",
+                        when {
+                            sync.running -> "Copying to headphones…"
+                            refresh.running -> "Refreshing ${refresh.profileName ?: ""}".trim()
+                            else -> "Idle"
+                        },
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.SemiBold,
                     )
-                    progress.lastError?.let {
+                    val errorText = sync.lastError ?: refresh.lastError
+                    errorText?.let {
                         Text(
                             it,
                             style = MaterialTheme.typography.bodySmall,
@@ -304,113 +334,153 @@ private fun ProgressCard(
                     }
                 }
             }
-            if (progress.running || progress.filesTotal > 0) {
+            if (sync.running || sync.filesTotal > 0) {
                 LinearProgressIndicator(
                     progress = {
-                        if (progress.filesTotal == 0) 0f
-                        else (progress.filesCompleted.toFloat() / progress.filesTotal.toFloat())
-                            .coerceIn(0f, 1f)
+                        if (sync.filesTotal == 0) 0f
+                        else (sync.filesCompleted.toFloat() / sync.filesTotal.toFloat()).coerceIn(0f, 1f)
                     },
                     modifier = Modifier.fillMaxWidth(),
                 )
-                progress.currentFileName?.let {
-                    Text("$it (${progress.filesCompleted}/${progress.filesTotal})",
-                        style = MaterialTheme.typography.bodySmall)
+                sync.currentFileName?.let {
+                    Text(
+                        "${sync.currentProfileName?.plus(" • ").orEmpty()}$it (${sync.filesCompleted}/${sync.filesTotal})",
+                        style = MaterialTheme.typography.bodySmall,
+                    )
                 }
-                if (progress.currentTotal > 0) {
+                if (sync.currentTotal > 0) {
                     LinearProgressIndicator(
                         progress = {
-                            (progress.currentBytes.toFloat() / progress.currentTotal.toFloat())
-                                .coerceIn(0f, 1f)
+                            (sync.currentBytes.toFloat() / sync.currentTotal.toFloat()).coerceIn(0f, 1f)
                         },
                         modifier = Modifier.fillMaxWidth(),
                     )
                 }
             }
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                Button(onClick = onStartSync, enabled = !progress.running) { Text("Sync now") }
-                if (progress.running) {
-                    OutlinedButton(onClick = onCancelSync) { Text("Cancel") }
-                }
-                OutlinedButton(onClick = onRetryFailures) { Text("Retry failures") }
-                TextButton(onClick = onClearCompleted) { Text("Clear completed") }
+                Button(onClick = onStartSync, enabled = !sync.running) { Text("Sync to headphones") }
+                if (sync.running) OutlinedButton(onClick = onCancelSync) { Text("Cancel") }
             }
         }
     }
+}
+
+@Composable
+private fun ProfileCard(
+    profile: SyncProfile,
+    sources: List<SyncSource>,
+    refresh: RefreshProgress,
+    onRefreshNow: () -> Unit,
+    onToggleAuto: (Boolean) -> Unit,
+    onDelete: () -> Unit,
+) {
+    val isCurrentlyRefreshing = refresh.running && refresh.profileId == profile.id
+    val sourceNames = profile.source_ids.mapNotNull { id -> sources.firstOrNull { it.id == id }?.name }
+    ElevatedCard(modifier = Modifier.fillMaxWidth()) {
+        Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(Icons.Filled.Cloud, contentDescription = null)
+                Gap(12)
+                Column(Modifier.weight(1f)) {
+                    Text(profile.name, fontWeight = FontWeight.SemiBold, style = MaterialTheme.typography.titleMedium)
+                    Text(
+                        if (sourceNames.isEmpty()) "No sources" else sourceNames.joinToString(" • "),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+                IconButton(onClick = onDelete) { Icon(Icons.Filled.Close, contentDescription = "Delete profile") }
+            }
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Switch(checked = profile.auto_refresh, onCheckedChange = onToggleAuto)
+                Gap(12)
+                Column(Modifier.weight(1f)) {
+                    Text(
+                        if (profile.auto_refresh)
+                            "Auto-refresh every ${profile.refresh_interval_minutes} min" +
+                                " on ${profile.network_constraint.label()}"
+                        else
+                            "Manual refresh only",
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                    val last = profile.last_refreshed_at.ifBlank { null }
+                    Text(
+                        last?.let { "Last refreshed $it" } ?: "Never refreshed",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    if (profile.last_error.isNotBlank()) {
+                        Text(
+                            profile.last_error,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.error,
+                        )
+                    }
+                }
+            }
+            if (isCurrentlyRefreshing) {
+                LinearProgressIndicator(
+                    progress = {
+                        if (refresh.filesTotal == 0) 0f
+                        else (refresh.filesCompleted.toFloat() / refresh.filesTotal.toFloat()).coerceIn(0f, 1f)
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                )
+                refresh.currentFileName?.let {
+                    Text(
+                        "$it (${refresh.filesCompleted}/${refresh.filesTotal})",
+                        style = MaterialTheme.typography.bodySmall,
+                    )
+                }
+            }
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                OutlinedButton(onClick = onRefreshNow, enabled = !isCurrentlyRefreshing) {
+                    Icon(Icons.Filled.Refresh, contentDescription = null)
+                    Gap(4)
+                    Text("Refresh now")
+                }
+            }
+        }
+    }
+}
+
+private fun NetworkConstraint.label(): String = when (this) {
+    NetworkConstraint.ANY -> "any network"
+    NetworkConstraint.CONNECTED -> "any connection"
+    NetworkConstraint.UNMETERED -> "Wi-Fi"
 }
 
 @Composable
 private fun SourceCard(
     source: SyncSource,
     onRemove: () -> Unit,
-    onStageAll: () -> Unit,
 ) {
     ElevatedCard(modifier = Modifier.fillMaxWidth()) {
-        Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(Icons.Filled.Folder, contentDescription = null)
-                Gap(12)
-                Column(Modifier.weight(1f)) {
-                    Text(source.name.ifBlank { "Unnamed" }, fontWeight = FontWeight.SemiBold)
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Icon(Icons.Filled.Folder, contentDescription = null)
+            Gap(12)
+            Column(Modifier.weight(1f)) {
+                Text(source.name.ifBlank { "Unnamed" }, fontWeight = FontWeight.SemiBold)
+                Text(
+                    source.location,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                if (source.kind == SourceKind.NFS_SHARE) {
                     Text(
-                        source.location,
+                        "NFS browsing not yet implemented; saved for future mount.",
                         style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        color = MaterialTheme.colorScheme.error,
                     )
                 }
-                AssistChip(onClick = {}, label = {
-                    Text(if (source.kind == SourceKind.LOCAL_DIRECTORY) "LOCAL" else "NFS")
-                })
-                IconButton(onClick = onRemove) { Icon(Icons.Filled.Close, contentDescription = "Remove") }
             }
-            if (source.kind == SourceKind.NFS_SHARE) {
-                Text(
-                    "NFS browsing is not yet implemented. Saved for future mount.",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.error,
-                )
-            } else {
-                OutlinedButton(onClick = onStageAll) { Text("Stage all files") }
-            }
-        }
-    }
-}
-
-@Composable
-private fun StagedFileRow(staged: StagedFile, onRemove: () -> Unit) {
-    ElevatedCard(modifier = Modifier.fillMaxWidth()) {
-        Column(modifier = Modifier.padding(12.dp)) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Column(Modifier.weight(1f)) {
-                    Text(staged.display_name, fontWeight = FontWeight.SemiBold)
-                    Text(
-                        staged.target_relative_path,
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
-                AssistChip(
-                    onClick = {},
-                    label = { Text(staged.status.name) },
-                )
-                IconButton(onClick = onRemove) { Icon(Icons.Filled.Close, contentDescription = "Remove") }
-            }
-            if (staged.status == StagedStatus.IN_PROGRESS && staged.size_bytes > 0) {
-                LinearProgressIndicator(
-                    progress = {
-                        (staged.bytes_transferred.toFloat() / staged.size_bytes.toFloat())
-                            .coerceIn(0f, 1f)
-                    },
-                    modifier = Modifier.fillMaxWidth(),
-                )
-            }
-            if (staged.status == StagedStatus.FAILED && staged.error_message.isNotBlank()) {
-                Text(
-                    staged.error_message,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.error,
-                )
-            }
+            AssistChip(onClick = {}, label = {
+                Text(if (source.kind == SourceKind.LOCAL_DIRECTORY) "LOCAL" else "NFS")
+            })
+            IconButton(onClick = onRemove) { Icon(Icons.Filled.Close, contentDescription = "Remove") }
         }
     }
 }
@@ -443,6 +513,92 @@ private fun AddNfsDialog(
                 onClick = { onConfirm(name.ifBlank { host }, host, exportPath) },
                 enabled = host.isNotBlank(),
             ) { Text("Add") }
+        },
+        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } },
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun AddProfileDialog(
+    availableSources: List<SyncSource>,
+    onDismiss: () -> Unit,
+    onConfirm: (name: String, sourceIds: List<String>, intervalMinutes: Int, network: NetworkConstraint) -> Unit,
+) {
+    var name by remember { mutableStateOf("") }
+    val selected = remember { mutableStateOf(emptySet<String>()) }
+    var interval by remember { mutableStateOf("60") }
+    var network by remember { mutableStateOf(NetworkConstraint.UNMETERED) }
+    var networkExpanded by remember { mutableStateOf(false) }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Create sync profile") },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                OutlinedTextField(
+                    value = name,
+                    onValueChange = { name = it },
+                    label = { Text("Profile name") },
+                    placeholder = { Text("Podcasts") },
+                )
+                Text("Sources", style = MaterialTheme.typography.titleSmall)
+                LazyColumn(modifier = Modifier.heightIn(max = 200.dp)) {
+                    items(availableSources, key = { it.id }) { source ->
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Checkbox(
+                                checked = selected.value.contains(source.id),
+                                onCheckedChange = { checked ->
+                                    selected.value = if (checked) selected.value + source.id
+                                    else selected.value - source.id
+                                },
+                            )
+                            Text(source.name.ifBlank { source.location })
+                        }
+                    }
+                }
+                OutlinedTextField(
+                    value = interval,
+                    onValueChange = { interval = it.filter(Char::isDigit).take(4) },
+                    label = { Text("Auto-refresh interval (minutes, min 15)") },
+                )
+                ExposedDropdownMenuBox(
+                    expanded = networkExpanded,
+                    onExpandedChange = { networkExpanded = !networkExpanded },
+                ) {
+                    OutlinedTextField(
+                        value = network.label(),
+                        onValueChange = {},
+                        readOnly = true,
+                        label = { Text("Network constraint") },
+                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = networkExpanded) },
+                        modifier = Modifier.menuAnchor().fillMaxWidth(),
+                    )
+                    ExposedDropdownMenu(
+                        expanded = networkExpanded,
+                        onDismissRequest = { networkExpanded = false },
+                    ) {
+                        NetworkConstraint.values().forEach { value ->
+                            DropdownMenuItem(
+                                text = { Text(value.label()) },
+                                onClick = {
+                                    network = value
+                                    networkExpanded = false
+                                },
+                            )
+                        }
+                    }
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(
+                enabled = name.isNotBlank() && selected.value.isNotEmpty(),
+                onClick = {
+                    val minutes = interval.toIntOrNull()?.coerceAtLeast(15) ?: 60
+                    onConfirm(name.trim(), selected.value.toList(), minutes, network)
+                },
+            ) { Text("Create") }
         },
         dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } },
     )
