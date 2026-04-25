@@ -20,48 +20,43 @@ import ee.schimke.cadence.metro.metroViewModel
 
 @Composable
 fun DeviceFilesScreen(modifier: Modifier = Modifier) {
-    val viewModel = metroViewModel<DeviceFilesViewModel>()
+  val viewModel = metroViewModel<DeviceFilesViewModel>()
 
-    val uiState by viewModel.uiState.collectAsState()
+  val uiState by viewModel.uiState.collectAsState()
 
-    DeviceFilesContent(uiState, modifier)
+  DeviceFilesContent(uiState, modifier)
 }
 
 @Composable
 internal fun DeviceFilesContent(
-    uiState: DeviceFilesViewModel.UiState,
-    modifier: Modifier = Modifier,
+  uiState: DeviceFilesViewModel.UiState,
+  modifier: Modifier = Modifier,
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .safeContentPadding(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text("Files " + uiState.name)
+  Column(
+    modifier = modifier.fillMaxWidth().safeContentPadding(),
+    horizontalAlignment = Alignment.CenterHorizontally,
+  ) {
+    Text("Files " + uiState.name)
 
-        if (uiState is DeviceFilesViewModel.UiState.Loaded) {
-            val loaded = uiState
+    if (uiState is DeviceFilesViewModel.UiState.Loaded) {
+      val loaded = uiState
 
-            Surface {
-                Column {
-                    Text("Volume Info")
-                    Text(loaded.volume.toString())
-                }
-            }
-
-            val files = loaded
-
-            Bonsai(
-                cadenceFileSystemTree(rootPath = files.root, fileSystem = files.fileSystem),
-                style = FileSystemBonsaiStyle(),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f)
-                    .border(1.dp, Color.Black)
-            )
-        } else if (uiState is DeviceFilesViewModel.UiState.Loading) {
-            Text("Loading...")
+      Surface {
+        Column {
+          Text("Volume Info")
+          Text(loaded.volume.toString())
         }
+      }
+
+      val files = loaded
+
+      Bonsai(
+        cadenceFileSystemTree(rootPath = files.root, fileSystem = files.fileSystem),
+        style = FileSystemBonsaiStyle(),
+        modifier = Modifier.fillMaxWidth().weight(1f).border(1.dp, Color.Black),
+      )
+    } else if (uiState is DeviceFilesViewModel.UiState.Loading) {
+      Text("Loading...")
     }
+  }
 }

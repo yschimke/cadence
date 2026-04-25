@@ -4,14 +4,10 @@ package ee.schimke.cadence.browser
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.createSavedStateHandle
-import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.navigation.toRoute
-import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.Inject
 import ee.schimke.cadence.Browser
-import ee.schimke.cadence.bookmarks.BookmarksViewModel
 import ee.schimke.cadence.metro.ViewModelKey
 import ee.schimke.cadence.metro.ViewModelScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -20,6 +16,5 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ViewModelKey(BrowserViewModel::class)
 @Inject
 class BrowserViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
-    val route = savedStateHandle.toRoute<Browser>()
+  val route = savedStateHandle.toRoute<Browser>()
 }
-

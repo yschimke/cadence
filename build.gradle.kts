@@ -1,15 +1,21 @@
 import org.gradle.api.publish.PublishingExtension
 
 plugins {
-    // this is necessary to avoid the plugins to be loaded multiple times
-    // in each subproject's classloader
-    alias(libs.plugins.androidApplication) apply false
-    alias(libs.plugins.androidKotlinMultiplatformLibrary) apply false
-    alias(libs.plugins.androidLibrary) apply false
-    alias(libs.plugins.composeMultiplatform) apply false
-    alias(libs.plugins.composeCompiler) apply false
-    alias(libs.plugins.kotlinMultiplatform) apply false
-    alias(libs.plugins.playPublisher) apply false
+  // this is necessary to avoid the plugins to be loaded multiple times
+  // in each subproject's classloader
+  alias(libs.plugins.androidApplication) apply false
+  alias(libs.plugins.androidKotlinMultiplatformLibrary) apply false
+  alias(libs.plugins.androidLibrary) apply false
+  alias(libs.plugins.composeMultiplatform) apply false
+  alias(libs.plugins.composeCompiler) apply false
+  alias(libs.plugins.kotlinMultiplatform) apply false
+  alias(libs.plugins.playPublisher) apply false
+  alias(libs.plugins.ktfmt)
+}
+
+allprojects {
+  apply(plugin = rootProject.libs.plugins.ktfmt.get().pluginId)
+  extensions.configure<com.ncorti.ktfmt.gradle.KtfmtExtension> { googleStyle() }
 }
 
 // Wires the GitHub Packages Maven repository into any subproject that
@@ -18,34 +24,47 @@ plugins {
 // `publishAllPublicationsToGitHubPackagesRepository`. No library module
 // exists today — when one is added (apply `maven-publish` + declare a
 // publication), it will publish on the next tag without further wiring.
-val githubRepository = providers.gradleProperty("github.repository")
+val githubRepository =
+  providers
+    .gradleProperty("github.repository")
     .orElse(providers.environmentVariable("GITHUB_REPOSITORY"))
     .orElse("yschimke/cadence")
 
-val publishLibraries = tasks.register("publishLibraries") {
+val publishLibraries =
+  tasks.register("publishLibraries") {
     group = "publishing"
-    description = "Publishes all library publications to GitHub Packages " +
+    description =
+      "Publishes all library publications to GitHub Packages " +
         "(no-op until a module applies the maven-publish plugin)."
+  }
+
+// Points this checkout's hooks at .githooks (where pre-commit lives). Run
+// `./gradlew installGitHooks` once after cloning. No-op outside a git working
+// tree.
+tasks.register<Exec>("installGitHooks") {
+  group = "git hooks"
+  description = "Configures git to run hooks from .githooks/."
+  workingDir = rootDir
+  commandLine("git", "config", "core.hooksPath", ".githooks")
+  onlyIf { rootDir.resolve(".git").exists() }
 }
 
 subprojects {
-    plugins.withId("maven-publish") {
-        extensions.configure<PublishingExtension> {
-            repositories {
-                maven {
-                    name = "GitHubPackages"
-                    url = uri("https://maven.pkg.github.com/${githubRepository.get()}")
-                    credentials {
-                        username = System.getenv("GITHUB_ACTOR")
-                            ?: providers.gradleProperty("gpr.user").orNull
-                        password = System.getenv("GITHUB_TOKEN")
-                            ?: providers.gradleProperty("gpr.token").orNull
-                    }
-                }
-            }
+  plugins.withId("maven-publish") {
+    extensions.configure<PublishingExtension> {
+      repositories {
+        maven {
+          name = "GitHubPackages"
+          url = uri("https://maven.pkg.github.com/${githubRepository.get()}")
+          credentials {
+            username = System.getenv("GITHUB_ACTOR") ?: providers.gradleProperty("gpr.user").orNull
+            password = System.getenv("GITHUB_TOKEN") ?: providers.gradleProperty("gpr.token").orNull
+          }
         }
-        publishLibraries.configure {
-            dependsOn(tasks.named("publishAllPublicationsToGitHubPackagesRepository"))
-        }
+      }
     }
+    publishLibraries.configure {
+      dependsOn(tasks.named("publishAllPublicationsToGitHubPackagesRepository"))
+    }
+  }
 }

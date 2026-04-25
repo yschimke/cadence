@@ -28,150 +28,128 @@ import cafe.adriel.bonsai.core.node.Leaf
 import cafe.adriel.bonsai.core.node.Node
 import cafe.adriel.bonsai.core.tree.Tree
 import cafe.adriel.bonsai.core.tree.TreeScope
+import java.net.URLDecoder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okio.FileSystem
 import okio.Path
-import java.net.URLDecoder
 
 @Composable
 fun cadenceFileSystemTree(
-    style: BonsaiStyle<Path> = CadenceBonsaiStyle(),
-    rootPath: Path,
-    fileSystem: FileSystem,
-    isRoot: Boolean = true,
-): Tree<Path> =
-    Tree {
-        CadenceFileSystemNode(style, rootPath, fileSystem, isRoot = isRoot)
-    }
+  style: BonsaiStyle<Path> = CadenceBonsaiStyle(),
+  rootPath: Path,
+  fileSystem: FileSystem,
+  isRoot: Boolean = true,
+): Tree<Path> = Tree { CadenceFileSystemNode(style, rootPath, fileSystem, isRoot = isRoot) }
 
 @Composable
 fun TreeScope.CadenceFileSystemNode(
-    style: BonsaiStyle<Path>,
-    path: Path,
-    fileSystem: FileSystem,
-    isRoot: Boolean,
+  style: BonsaiStyle<Path>,
+  path: Path,
+  fileSystem: FileSystem,
+  isRoot: Boolean,
 ) {
-    val isDirectory = rememberIsDirectory(fileSystem, path)
+  val isDirectory = rememberIsDirectory(fileSystem, path)
 
-    val displayName = remember (path) { URLDecoder.decode(path.toString(), Charsets.UTF_8) }
-    val parts = remember (path) { displayName.split("/", ":").filter { it.isNotEmpty() } }
+  val displayName = remember(path) { URLDecoder.decode(path.toString(), Charsets.UTF_8) }
+  val parts = remember(path) { displayName.split("/", ":").filter { it.isNotEmpty() } }
 
-    if (isRoot || isDirectory.value == true) {
-        Branch(
-            content = path,
-            name = parts.last(),
-            customIcon = { if (isRoot) style.RootNodeIcon(it) else style.DefaultNodeIcon(it) },
-            customName = { if (isRoot) style.RootNodeName(it) else style.DefaultNodeName(it) }
-        ) {
-            val children by rememberFileList(fileSystem, path)
+  if (isRoot || isDirectory.value == true) {
+    Branch(
+      content = path,
+      name = parts.last(),
+      customIcon = { if (isRoot) style.RootNodeIcon(it) else style.DefaultNodeIcon(it) },
+      customName = { if (isRoot) style.RootNodeName(it) else style.DefaultNodeName(it) },
+    ) {
+      val children by rememberFileList(fileSystem, path)
 
-            if (children != null) {
-                children?.forEach { path ->
-                    CadenceFileSystemNode(
-                        style = style,
-                        path,
-                        fileSystem,
-                        isRoot = false
-                    )
-                }
-            } else {
-                Leaf(
-                    content = "Loading...",
-                )
-            }
+      if (children != null) {
+        children?.forEach { path ->
+          CadenceFileSystemNode(style = style, path, fileSystem, isRoot = false)
         }
-    } else {
-        Leaf(
-            content = path,
-            name = parts.last(),
-            customIcon = { style.DefaultNodeIcon(it) },
-            customName = { style.DefaultNodeName(it) }
-        )
+      } else {
+        Leaf(content = "Loading...")
+      }
     }
+  } else {
+    Leaf(
+      content = path,
+      name = parts.last(),
+      customIcon = { style.DefaultNodeIcon(it) },
+      customName = { style.DefaultNodeName(it) },
+    )
+  }
 }
 
 @Composable
 private fun rememberIsDirectory(fileSystem: FileSystem, path: Path): State<Boolean?> {
-    val result = remember { mutableStateOf<Boolean?>(null) }
+  val result = remember { mutableStateOf<Boolean?>(null) }
 
-    LaunchedEffect(path) {
-        withContext(Dispatchers.IO) {
-            result.value = fileSystem.metadata(path).isDirectory
-        }
-    }
+  LaunchedEffect(path) {
+    withContext(Dispatchers.IO) { result.value = fileSystem.metadata(path).isDirectory }
+  }
 
-    return result
+  return result
 }
 
 @Composable
 private fun rememberFileList(fileSystem: FileSystem, path: Path): State<List<Path>?> {
-    val result = remember { mutableStateOf<List<Path>?>(null) }
+  val result = remember { mutableStateOf<List<Path>?>(null) }
 
-    LaunchedEffect(path) {
-        withContext(Dispatchers.IO) {
-            result.value = fileSystem.listOrNull(path)
-        }
-    }
+  LaunchedEffect(path) {
+    withContext(Dispatchers.IO) { result.value = fileSystem.listOrNull(path) }
+  }
 
-    return result
+  return result
 }
 
 @Composable
 fun <T> BonsaiStyle<T>.DefaultNodeIcon(node: Node<T>) {
-    val (icon, colorFilter) = if (node is BranchNode && node.isExpanded) {
-        this.nodeExpandedIcon(node) to this.nodeExpandedIconColorFilter
+  val (icon, colorFilter) =
+    if (node is BranchNode && node.isExpanded) {
+      this.nodeExpandedIcon(node) to this.nodeExpandedIconColorFilter
     } else {
-        this.nodeCollapsedIcon(node) to this.nodeCollapsedIconColorFilter
+      this.nodeCollapsedIcon(node) to this.nodeCollapsedIconColorFilter
     }
 
-    if (icon != null) {
-        Image(
-            painter = icon,
-            colorFilter = colorFilter,
-            contentDescription = node.name,
-        )
-    }
+  if (icon != null) {
+    Image(painter = icon, colorFilter = colorFilter, contentDescription = node.name)
+  }
 }
 
 @Composable
 fun <T> BonsaiStyle<T>.RootNodeIcon(node: Node<T>) {
-    Image(
-        Icons.Default.DriveFolderUpload,
-        contentDescription = node.name,
-    )
+  Image(Icons.Default.DriveFolderUpload, contentDescription = node.name)
 }
 
 @Composable
 fun <T> BonsaiStyle<T>.DefaultNodeName(node: Node<T>) {
-    BasicText(
-        text = node.name,
-        style = this.nodeNameTextStyle,
-        modifier = Modifier.padding(start = this.nodeNameStartPadding)
-    )
+  BasicText(
+    text = node.name,
+    style = this.nodeNameTextStyle,
+    modifier = Modifier.padding(start = this.nodeNameStartPadding),
+  )
 }
 
 @Composable
 fun <T> BonsaiStyle<T>.RootNodeName(node: Node<T>) {
-    BasicText(
-        text = node.name,
-        style = this.nodeNameTextStyle.copy(fontSize = 20.sp, fontWeight = FontWeight.Bold),
-        modifier = Modifier.padding(start = this.nodeNameStartPadding)
-    )
+  BasicText(
+    text = node.name,
+    style = this.nodeNameTextStyle.copy(fontSize = 20.sp, fontWeight = FontWeight.Bold),
+    modifier = Modifier.padding(start = this.nodeNameStartPadding),
+  )
 }
 
 fun CadenceBonsaiStyle(): BonsaiStyle<Path> =
-    BonsaiStyle(
-        nodeNameStartPadding = 4.dp,
-        nodeCollapsedIcon = { node ->
-            rememberVectorPainter(
-                if (node is BranchNode) Icons.Outlined.Folder
-                else Icons.AutoMirrored.Outlined.InsertDriveFile
-            )
-        },
-        nodeExpandedIcon = {
-            rememberVectorPainter(Icons.Outlined.FolderOpen)
-        },
-        toggleIcon = { rememberVectorPainter(Icons.Default.ChevronRight) },
-        nodeNameTextStyle = DefaultNodeTextStyle.copy(fontSize = 15.sp)
-    )
+  BonsaiStyle(
+    nodeNameStartPadding = 4.dp,
+    nodeCollapsedIcon = { node ->
+      rememberVectorPainter(
+        if (node is BranchNode) Icons.Outlined.Folder
+        else Icons.AutoMirrored.Outlined.InsertDriveFile
+      )
+    },
+    nodeExpandedIcon = { rememberVectorPainter(Icons.Outlined.FolderOpen) },
+    toggleIcon = { rememberVectorPainter(Icons.Default.ChevronRight) },
+    nodeNameTextStyle = DefaultNodeTextStyle.copy(fontSize = 15.sp),
+  )

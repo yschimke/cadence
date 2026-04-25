@@ -20,62 +20,53 @@ import okio.Path.Companion.toPath
 
 @Composable
 fun DevicesScreen(modifier: Modifier = Modifier, onDeviceClick: (Device) -> Unit) {
-    val viewModel = metroViewModel<DevicesViewModel>()
+  val viewModel = metroViewModel<DevicesViewModel>()
 
-    val uiState by viewModel.uiState.collectAsState()
+  val uiState by viewModel.uiState.collectAsState()
 
-    val permissionCheck = rememberFileExplorerOpenLauncher(onGranted = {
-        viewModel.addDevice(it)
-    })
+  val permissionCheck = rememberFileExplorerOpenLauncher(onGranted = { viewModel.addDevice(it) })
 
-    DevicesScreen(modifier, uiState, permissionCheck, onDeviceClick)
+  DevicesScreen(modifier, uiState, permissionCheck, onDeviceClick)
 }
 
 @Composable
 fun DevicesScreen(
-    modifier: Modifier = Modifier,
-    uiState: DevicesViewModel.UiState,
-    permissionCheck: () -> Unit,
-    onDeviceClick: (Device) -> Unit
+  modifier: Modifier = Modifier,
+  uiState: DevicesViewModel.UiState,
+  permissionCheck: () -> Unit,
+  onDeviceClick: (Device) -> Unit,
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .safeContentPadding(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(5.dp, Alignment.Top)
-    ) {
-        Text("Devices")
+  Column(
+    modifier = modifier.fillMaxWidth().safeContentPadding(),
+    horizontalAlignment = Alignment.CenterHorizontally,
+    verticalArrangement = Arrangement.spacedBy(5.dp, Alignment.Top),
+  ) {
+    Text("Devices")
 
-        if (uiState is DevicesViewModel.UiState.Devices) {
-            uiState.devices.forEach {
-                ElevatedCard(modifier = Modifier.fillMaxWidth(), onClick = { onDeviceClick(it) }) {
-                    Text(it.name)
-                    Text(it.path.toPath().name.substringAfterLast("%3A").replace("%2F", "/"))
-                }
-            }
-        } else if (uiState is DevicesViewModel.UiState.Loading) {
-            Text("Loading...")
+    if (uiState is DevicesViewModel.UiState.Devices) {
+      uiState.devices.forEach {
+        ElevatedCard(modifier = Modifier.fillMaxWidth(), onClick = { onDeviceClick(it) }) {
+          Text(it.name)
+          Text(it.path.toPath().name.substringAfterLast("%3A").replace("%2F", "/"))
         }
-
-        Button(onClick = permissionCheck) {
-            Text("Manage New Device")
-        }
-
-        Text("Available Devices")
-
-        if (uiState is DevicesViewModel.UiState.Devices) {
-            uiState.usbDevices.forEach {
-                ElevatedCard(modifier = Modifier.fillMaxWidth(), onClick = {  }) {
-                    Text(it.name)
-                    Text(it.toString())
-                }
-            }
-        }
+      }
+    } else if (uiState is DevicesViewModel.UiState.Loading) {
+      Text("Loading...")
     }
+
+    Button(onClick = permissionCheck) { Text("Manage New Device") }
+
+    Text("Available Devices")
+
+    if (uiState is DevicesViewModel.UiState.Devices) {
+      uiState.usbDevices.forEach {
+        ElevatedCard(modifier = Modifier.fillMaxWidth(), onClick = {}) {
+          Text(it.name)
+          Text(it.toString())
+        }
+      }
+    }
+  }
 }
 
-@Composable
-expect fun rememberFileExplorerOpenLauncher(
-    onGranted: (Path) -> Unit,
-): () -> Unit
+@Composable expect fun rememberFileExplorerOpenLauncher(onGranted: (Path) -> Unit): () -> Unit

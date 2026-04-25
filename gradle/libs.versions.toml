@@ -22,6 +22,7 @@ junit = "4.13.2"
 kotlin = "2.3.21"
 kotlinxCoroutines = "1.10.2"
 kotlinxSerializationJson = "1.11.0"
+ktfmt = "0.26.0"
 ktorClientCore = "3.4.3"
 materialIconsCore = "1.7.3"
 metro = "1.0.0-RC4"
@@ -69,4 +70,5 @@ androidLibrary = { id = "com.android.library", version.ref = "agp" }
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+ktfmt = { id = "com.ncorti.ktfmt.gradle", version.ref = "ktfmt" }
 playPublisher = { id = "com.github.triplet.play", version.ref = "playPublisher" }

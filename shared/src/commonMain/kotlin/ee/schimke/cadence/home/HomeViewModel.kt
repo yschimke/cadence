@@ -1,18 +1,12 @@
 package ee.schimke.cadence.home
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewmodel.CreationExtras
-import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.Inject
-import ee.schimke.cadence.files.DeviceFilesViewModel
 import ee.schimke.cadence.metro.ViewModelKey
 import ee.schimke.cadence.metro.ViewModelScope
-import ee.schimke.cadence.platform.Platform
 
 @ContributesIntoMap(ViewModelScope::class)
 @ViewModelKey(HomeViewModel::class)
 @Inject
-class HomeViewModel(
-) : ViewModel() {
-}
+class HomeViewModel() : ViewModel() {}

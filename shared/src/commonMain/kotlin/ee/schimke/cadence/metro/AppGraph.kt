@@ -11,11 +11,9 @@ import okio.Path.Companion.toOkioPath
 
 interface AppGraph {
 
-    @Provides
-    @SingleIn(AppScope::class)
-    fun provideFilesDataStore(context: Context): DataStore<Settings> {
-        return createFilesDataStore {
-                    context.filesDir.resolve("devices-4.pb").toOkioPath()
-                }
-    }
+  @Provides
+  @SingleIn(AppScope::class)
+  fun provideFilesDataStore(context: Context): DataStore<Settings> {
+    return createFilesDataStore { context.filesDir.resolve("devices-4.pb").toOkioPath() }
+  }
 }
