@@ -54,7 +54,7 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
             implementation(libs.kotlinx.serialization.json)
-            implementation("com.squareup.okio:okio:3.11.0")
+            implementation("com.squareup.okio:okio:3.17.0")
             implementation(libs.androidx.datastore)
             implementation(libs.bonsai.core)
             implementation(libs.bonsai.file.system)
