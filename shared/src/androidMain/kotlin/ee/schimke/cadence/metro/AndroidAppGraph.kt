@@ -8,7 +8,6 @@ import dev.zacsweers.metro.DependencyGraph
 import dev.zacsweers.metro.Multibinds
 import dev.zacsweers.metro.Provider
 import dev.zacsweers.metro.Provides
-import ee.schimke.cadence.CadenceApplication
 import ee.schimke.cadence.data.AndroidFileSystem
 import ee.schimke.cadence.sync.RefreshOrchestrator
 import ee.schimke.cadence.sync.RefreshScheduler

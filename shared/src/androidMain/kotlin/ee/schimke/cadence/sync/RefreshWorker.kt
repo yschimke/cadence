@@ -3,7 +3,7 @@ package ee.schimke.cadence.sync
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import ee.schimke.cadence.CadenceApplication
+import ee.schimke.cadence.metro.AppGraphProvider
 
 class RefreshWorker(
     context: Context,
@@ -13,7 +13,7 @@ class RefreshWorker(
     override suspend fun doWork(): Result {
         val profileId = inputData.getString(KEY_PROFILE_ID)?.takeIf { it.isNotBlank() }
             ?: return Result.failure()
-        val app = applicationContext as? CadenceApplication ?: return Result.retry()
+        val app = applicationContext as? AppGraphProvider ?: return Result.retry()
         val orchestrator = app.appGraph.refreshOrchestrator
         return try {
             orchestrator.refresh(profileId)

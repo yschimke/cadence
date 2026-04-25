@@ -3,15 +3,18 @@ package ee.schimke.cadence
 import android.app.Application
 import dev.zacsweers.metro.createGraphFactory
 import ee.schimke.cadence.metro.AndroidAppGraph
+import ee.schimke.cadence.metro.AppGraphProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class CadenceApplication : Application() {
+class CadenceApplication : Application(), AppGraphProvider {
     /** Holder reference for the app graph for [MetroAppComponentFactory]. */
-    val appGraph by lazy { createGraphFactory<AndroidAppGraph.Factory>().create(this) }
+    override val appGraph: AndroidAppGraph by lazy {
+        createGraphFactory<AndroidAppGraph.Factory>().create(this)
+    }
 
     private val appScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
