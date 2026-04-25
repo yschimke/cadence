@@ -20,11 +20,13 @@ import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.FastForward
 import androidx.compose.material.icons.filled.FastRewind
+import androidx.compose.material.icons.filled.MusicNote
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.SkipNext
 import androidx.compose.material.icons.filled.SkipPrevious
 import androidx.compose.material.icons.filled.Stop
+import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material.icons.automirrored.filled.VolumeDown
 import androidx.compose.material.icons.automirrored.filled.VolumeOff
 import androidx.compose.material.icons.automirrored.filled.VolumeUp
@@ -34,11 +36,15 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.FilledIconButton
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
@@ -91,6 +97,7 @@ fun BluetoothControlsScreen(modifier: Modifier = Modifier) {
         onRewind = viewModel::rewind,
         onOpenSettings = viewModel::openSystemBluetoothSettings,
         onRequestMediaAccess = viewModel::requestMediaAccess,
+        onSelectWorkingMode = viewModel::selectWorkingMode,
         onAdvanced = viewModel::dispatch,
     )
 }
@@ -112,6 +119,7 @@ internal fun BluetoothControlsContent(
     onRewind: () -> Unit,
     onOpenSettings: () -> Unit,
     onRequestMediaAccess: () -> Unit,
+    onSelectWorkingMode: (WorkingMode) -> Unit,
     onAdvanced: (AdvancedCommand) -> Unit,
 ) {
     Box(modifier = modifier) {
@@ -126,8 +134,10 @@ internal fun BluetoothControlsContent(
             if (state.permissionMissing) {
                 item { PermissionWarningCard(onOpenSettings) }
             }
+            item { WorkingModeCard(state.workingMode, onSelectWorkingMode) }
             item { NowPlayingCard(state, onRequestMediaAccess) }
             item { TransportCard(onPlayPause, onPrevious, onNext, onStop, onRewind, onFastForward, state.mediaInfo?.playing == true) }
+            item { EqPresetsCard(onAdvanced) }
             item { VolumeCard(state, onSetVolume, onAdjustVolume, onToggleMute) }
             item { AdvancedCommandsCard(onAdvanced) }
         }
@@ -301,6 +311,86 @@ private fun VolumeCard(
     }
 }
 
+private val eqPresetCommands = listOf(
+    AdvancedCommand.EqFlat,
+    AdvancedCommand.EqVocal,
+    AdvancedCommand.EqBassBoost,
+    AdvancedCommand.EqTreble,
+)
+
+@Composable
+private fun WorkingModeCard(
+    selected: WorkingMode,
+    onSelect: (WorkingMode) -> Unit,
+) {
+    ElevatedCard(modifier = Modifier.fillMaxWidth()) {
+        Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Text(
+                "Working mode",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.SemiBold,
+            )
+            val options = WorkingMode.entries
+            SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
+                options.forEachIndexed { index, mode ->
+                    SegmentedButton(
+                        selected = mode == selected,
+                        onClick = { onSelect(mode) },
+                        shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
+                        icon = {
+                            Icon(
+                                imageVector = when (mode) {
+                                    WorkingMode.Bluetooth -> Icons.Filled.Bluetooth
+                                    WorkingMode.Mp3 -> Icons.Filled.MusicNote
+                                },
+                                contentDescription = null,
+                            )
+                        },
+                        label = {
+                            Text(
+                                when (mode) {
+                                    WorkingMode.Bluetooth -> "Bluetooth"
+                                    WorkingMode.Mp3 -> "MP3"
+                                }
+                            )
+                        },
+                    )
+                }
+            }
+            Text(
+                "Selection is presentation-only until FUNCTION_CMD (0x0E) sub-opcodes are confirmed.",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+    }
+}
+
+@Composable
+private fun EqPresetsCard(onAdvanced: (AdvancedCommand) -> Unit) {
+    ElevatedCard(modifier = Modifier.fillMaxWidth()) {
+        Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(Icons.Filled.Tune, contentDescription = null)
+                Spacer(Modifier.width(8.dp))
+                Text(
+                    "EQ presets",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.SemiBold,
+                )
+            }
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                eqPresetCommands.forEach { cmd ->
+                    FilledTonalButton(
+                        onClick = { onAdvanced(cmd) },
+                        modifier = Modifier.weight(1f),
+                    ) { Text(cmd.label.removePrefix("EQ: ")) }
+                }
+            }
+        }
+    }
+}
+
 @Composable
 private fun AdvancedCommandsCard(onAdvanced: (AdvancedCommand) -> Unit) {
     var expanded by remember { mutableStateOf(false) }
@@ -327,6 +417,7 @@ private fun AdvancedCommandsCard(onAdvanced: (AdvancedCommand) -> Unit) {
             }
             if (expanded) {
                 AdvancedCommand.entries
+                    .filterNot { it in eqPresetCommands }
                     .groupBy { it.category }
                     .forEach { (category, commands) ->
                         HorizontalDivider()

@@ -3,6 +3,7 @@ package ee.schimke.cadence.preview
 import ee.schimke.cadence.bluetooth.BluetoothState
 import ee.schimke.cadence.bluetooth.ConnectedDevice
 import ee.schimke.cadence.bluetooth.MediaInfo
+import ee.schimke.cadence.bluetooth.WorkingMode
 import ee.schimke.cadence.data.Volume
 import ee.schimke.cadence.datastore.proto.Bookmark
 import ee.schimke.cadence.datastore.proto.Device
@@ -123,6 +124,16 @@ internal object PreviewFixtures {
     )
 
     val btPermissionMissing = btDisconnected.copy(permissionMissing = true)
+
+    val btMp3Mode = btConnectedPlaying.copy(
+        workingMode = WorkingMode.Mp3,
+        mediaInfo = nowPlaying.copy(
+            title = "swim/intervals_2k.mp3",
+            artist = "On-device flash",
+            album = null,
+            packageName = null,
+        ),
+    )
 
     // ---- Sync fixtures ---------------------------------------------------
 

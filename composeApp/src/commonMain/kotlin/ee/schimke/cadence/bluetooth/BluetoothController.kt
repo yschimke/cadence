@@ -24,11 +24,20 @@ interface BluetoothController {
     fun requestMediaAccess()
 
     /**
+     * UI-selected working mode. The opcode that switches the headphones between
+     * Bluetooth and on-device MP3 playback is unconfirmed (FUNCTION_CMD 0x0E
+     * sub-opcode), so the selection is currently presentation-only.
+     */
+    suspend fun setWorkingMode(mode: WorkingMode): String
+
+    /**
      * Best-effort dispatch for the catalogue of vendor (RCSP) commands documented
      * in research/. Returns a human-readable result string for the UI to display.
      */
     suspend fun dispatchAdvanced(command: AdvancedCommand): String
 }
+
+enum class WorkingMode { Bluetooth, Mp3 }
 
 data class BluetoothState(
     val connectedDevice: ConnectedDevice? = null,
@@ -38,6 +47,7 @@ data class BluetoothState(
     val mediaInfo: MediaInfo? = null,
     val mediaAccessGranted: Boolean = false,
     val permissionMissing: Boolean = false,
+    val workingMode: WorkingMode = WorkingMode.Bluetooth,
 )
 
 data class ConnectedDevice(

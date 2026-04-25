@@ -128,7 +128,7 @@ internal fun DeviceFilesNotAvailablePreview() {
 // ----------------------------------------------------------------------
 // Bluetooth controls
 
-@Preview(name = "BT controls - disconnected", showBackground = true, heightDp = 1100)
+@Preview(name = "BT controls - disconnected", showBackground = true, heightDp = 1300)
 @Composable
 internal fun BluetoothDisconnectedPreview() {
     AndroidMaterialTheme {
@@ -148,12 +148,13 @@ internal fun BluetoothDisconnectedPreview() {
             onRewind = {},
             onOpenSettings = {},
             onRequestMediaAccess = {},
+            onSelectWorkingMode = {},
             onAdvanced = {},
         )
     }
 }
 
-@Preview(name = "BT controls - connected + playing", showBackground = true, heightDp = 1300)
+@Preview(name = "BT controls - connected + playing", showBackground = true, heightDp = 1500)
 @Composable
 internal fun BluetoothConnectedPlayingPreview() {
     AndroidMaterialTheme {
@@ -173,12 +174,13 @@ internal fun BluetoothConnectedPlayingPreview() {
             onRewind = {},
             onOpenSettings = {},
             onRequestMediaAccess = {},
+            onSelectWorkingMode = {},
             onAdvanced = {},
         )
     }
 }
 
-@Preview(name = "BT controls - permission missing", showBackground = true, heightDp = 1300)
+@Preview(name = "BT controls - permission missing", showBackground = true, heightDp = 1500)
 @Composable
 internal fun BluetoothPermissionMissingPreview() {
     AndroidMaterialTheme {
@@ -198,6 +200,33 @@ internal fun BluetoothPermissionMissingPreview() {
             onRewind = {},
             onOpenSettings = {},
             onRequestMediaAccess = {},
+            onSelectWorkingMode = {},
+            onAdvanced = {},
+        )
+    }
+}
+
+@Preview(name = "BT controls - MP3 mode", showBackground = true, heightDp = 1500)
+@Composable
+internal fun BluetoothMp3ModePreview() {
+    AndroidMaterialTheme {
+        BluetoothControlsContent(
+            modifier = themedModifier,
+            state = PreviewFixtures.btMp3Mode,
+            snackbarHost = remember { SnackbarHostState() },
+            onRefresh = {},
+            onSetVolume = {},
+            onAdjustVolume = {},
+            onToggleMute = {},
+            onPlayPause = {},
+            onPrevious = {},
+            onNext = {},
+            onStop = {},
+            onFastForward = {},
+            onRewind = {},
+            onOpenSettings = {},
+            onRequestMediaAccess = {},
+            onSelectWorkingMode = {},
             onAdvanced = {},
         )
     }

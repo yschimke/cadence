@@ -47,6 +47,13 @@ class BluetoothControlsViewModel(
     fun openSystemBluetoothSettings() = controller.openSystemBluetoothSettings()
     fun requestMediaAccess() = controller.requestMediaAccess()
 
+    fun selectWorkingMode(mode: WorkingMode) {
+        viewModelScope.launch {
+            val result = controller.setWorkingMode(mode)
+            _lastCommandResult.value = "Working mode → ${mode.name}: $result"
+        }
+    }
+
     fun dispatch(command: AdvancedCommand) {
         viewModelScope.launch {
             val result = controller.dispatchAdvanced(command)
