@@ -17,17 +17,20 @@ concurrency:
   group: release-${{ github.ref_name }}
   cancel-in-progress: false
 
-# Notes:
-#   - APK is built unsigned. To produce a signed APK/AAB suitable for Play
-#     distribution, wire up a signingConfig in composeApp/build.gradle.kts
-#     that reads SHOKZ_KEYSTORE_PATH/PASSWORD/KEY_ALIAS/KEY_PASSWORD from
-#     env, then add a step here that decodes a base64 SIGNING_KEYSTORE
-#     secret to $SHOKZ_KEYSTORE_PATH before assembleRelease.
-#   - GitHub Packages publishing is wired in the root build.gradle.kts:
-#     any subproject that applies the `maven-publish` plugin and declares
-#     publications will be uploaded by the `publish` step below. Today no
-#     module does that — once a library module is extracted, no workflow
-#     change is needed.
+# Signing & Play upload:
+#   Required secrets for signed builds and Play upload (workflow no-ops them
+#   when absent so that re-running an old release without secrets still works):
+#     SIGNING_KEYSTORE              - base64 of the upload keystore (.jks)
+#     SHOKZ_KEYSTORE_PASSWORD       - keystore password
+#     SHOKZ_KEY_ALIAS               - key alias inside the keystore
+#     SHOKZ_KEY_PASSWORD            - key password
+#     PLAY_SERVICE_ACCOUNT_JSON     - service account JSON contents; presence
+#                                     also gates the Play upload step
+# GitHub Packages publishing is wired in the root build.gradle.kts:
+#   any subproject that applies the `maven-publish` plugin and declares
+#   publications will be uploaded by the `publishLibraries` step. Today no
+#   module does that — once a library module is extracted, no workflow
+#   change is needed.
 jobs:
   release:
     name: Build & publish release
@@ -35,6 +38,8 @@ jobs:
     timeout-minutes: 45
     env:
       TAG_NAME: ${{ github.ref_type == 'tag' && github.ref_name || inputs.tag }}
+      HAS_SIGNING_KEYSTORE: ${{ secrets.SIGNING_KEYSTORE != '' }}
+      HAS_PLAY_CREDENTIALS: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON != '' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -57,7 +62,21 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Assemble release artifacts
+      - name: Decode signing keystore
+        if: env.HAS_SIGNING_KEYSTORE == 'true'
+        env:
+          SIGNING_KEYSTORE: ${{ secrets.SIGNING_KEYSTORE }}
+        run: |
+          set -euo pipefail
+          keystore="${RUNNER_TEMP}/upload.jks"
+          printf '%s' "$SIGNING_KEYSTORE" | base64 -d > "$keystore"
+          echo "SHOKZ_KEYSTORE_PATH=$keystore" >> "$GITHUB_ENV"
+
+      - name: Assemble release
+        env:
+          SHOKZ_KEYSTORE_PASSWORD: ${{ secrets.SHOKZ_KEYSTORE_PASSWORD }}
+          SHOKZ_KEY_ALIAS: ${{ secrets.SHOKZ_KEY_ALIAS }}
+          SHOKZ_KEY_PASSWORD: ${{ secrets.SHOKZ_KEY_PASSWORD }}
         run: ./gradlew :composeApp:assembleRelease :composeApp:bundleRelease --stacktrace
 
       - name: Publish library artifacts to GitHub Packages
@@ -66,6 +85,15 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ./gradlew publishLibraries --stacktrace
 
+      - name: Publish to Play (internal track)
+        if: env.HAS_PLAY_CREDENTIALS == 'true' && env.HAS_SIGNING_KEYSTORE == 'true'
+        env:
+          ANDROID_PUBLISHER_CREDENTIALS: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+          SHOKZ_KEYSTORE_PASSWORD: ${{ secrets.SHOKZ_KEYSTORE_PASSWORD }}
+          SHOKZ_KEY_ALIAS: ${{ secrets.SHOKZ_KEY_ALIAS }}
+          SHOKZ_KEY_PASSWORD: ${{ secrets.SHOKZ_KEY_PASSWORD }}
+        run: ./gradlew :composeApp:publishBundle --stacktrace
+
       - name: Stage release assets
         id: stage
         run: |
@@ -73,6 +101,10 @@ jobs:
           mkdir -p _release
           version="${TAG_NAME#v}"
           shopt -s nullglob
+          # APKs land as composeApp-release.apk (signed) or
+          # composeApp-release-unsigned.apk (no signingConfig). Either way
+          # we publish it as shokz-<version>.apk; the suffix encodes signing
+          # state for transparency.
           for f in composeApp/build/outputs/apk/release/*.apk; do
             name=$(basename "$f" .apk)
             suffix=""

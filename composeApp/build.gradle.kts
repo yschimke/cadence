@@ -8,7 +8,19 @@ plugins {
     id("dev.zacsweers.metro").version(libs.versions.metro)
     id("com.squareup.wire").version(libs.versions.wire)
     id("ee.schimke.composeai.preview").version("0.7.0")
+    alias(libs.plugins.playPublisher)
 }
+
+val appVersionName = "0.1.0" // x-release-please-version
+
+// Pack MAJOR.MINOR.PATCH into a monotonic int. Caps at major < 22.
+val appVersionCode: Int = run {
+    val parts = appVersionName.split(".", "-").mapNotNull { it.toIntOrNull() }
+    val major = parts.getOrNull(0) ?: 0
+    val minor = parts.getOrNull(1) ?: 0
+    val patch = parts.getOrNull(2) ?: 0
+    major * 10_000 + minor * 100 + patch
+}.coerceAtLeast(1)
 
 composePreview {
     variant.set("debug")
@@ -69,8 +81,8 @@ android {
         applicationId = "ee.schimke.shokz"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 1
-        versionName = "0.1.0" // x-release-please-version
+        versionCode = appVersionCode
+        versionName = appVersionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -79,15 +91,36 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    val releaseKeystorePath = System.getenv("SHOKZ_KEYSTORE_PATH")
+    signingConfigs {
+        if (releaseKeystorePath != null) {
+            create("release") {
+                storeFile = file(releaseKeystorePath)
+                storePassword = System.getenv("SHOKZ_KEYSTORE_PASSWORD")
+                keyAlias = System.getenv("SHOKZ_KEY_ALIAS")
+                keyPassword = System.getenv("SHOKZ_KEY_PASSWORD")
+            }
+        }
+    }
     buildTypes {
         getByName("release") {
             isMinifyEnabled = true
             isShrinkResources = true
+            if (releaseKeystorePath != null) {
+                signingConfig = signingConfigs.getByName("release")
+            }
         }
     }
     buildFeatures {
         compose = true
     }
+}
+
+play {
+    track.set("internal")
+    defaultToAppBundles.set(true)
+    // Skip API calls in CI runs that build but don't publish (e.g. PRs).
+    enabled.set(System.getenv("ANDROID_PUBLISHER_CREDENTIALS") != null)
 }
 
 compatPatrouille {

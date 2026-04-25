@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform) apply false
     alias(libs.plugins.composeCompiler) apply false
     alias(libs.plugins.kotlinMultiplatform) apply false
+    alias(libs.plugins.playPublisher) apply false
 }
 
 // Wires the GitHub Packages Maven repository into any subproject that
@@ -18,7 +19,7 @@ plugins {
 // publication), it will publish on the next tag without further wiring.
 val githubRepository = providers.gradleProperty("github.repository")
     .orElse(providers.environmentVariable("GITHUB_REPOSITORY"))
-    .orElse("yschimke/shokz")
+    .orElse("yschimke/cadence")
 
 val publishLibraries = tasks.register("publishLibraries") {
     group = "publishing"

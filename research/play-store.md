@@ -203,6 +203,49 @@ the workflow YAML — that's the directory layout GPP expects.
   we generate a fresh one? If fresh, this is also the moment to
   decide on Play App Signing.
 
+## Implemented (2026-04-25)
+
+GPP 4.0.0 is now wired into `composeApp/build.gradle.kts` with a
+`play { track = "internal" }` block that no-ops when
+`ANDROID_PUBLISHER_CREDENTIALS` is unset. Trigger is `release-build.yml`
+on a `release: published` event from release-please (not a raw tag push,
+since release-please owns the tag lifecycle on this repo).
+
+Differences from the original sketch above:
+
+- **Trigger.** release-please creates the tag + GitHub Release on its own
+  cadence; `release-build.yml` already listened on `release: published`,
+  so the Play upload was bolted onto the existing job rather than a new
+  workflow.
+- **Versioning.** `versionName` is owned by release-please via
+  `// x-release-please-version`. `versionCode` is derived deterministically
+  from `versionName` (MAJOR\*10000 + MINOR\*100 + PATCH) — no git-history
+  read, no env var. Capped at major < 22 which is plenty.
+- **Signing.** `signingConfigs.release` reads `SHOKZ_KEYSTORE_PATH` /
+  `_PASSWORD` / `SHOKZ_KEY_ALIAS` / `SHOKZ_KEY_PASSWORD` from env. Local
+  builds without those env vars skip the signing config entirely (so
+  `:assembleRelease` still works for local profiling, just unsigned).
+- **Secrets.** `SIGNING_KEYSTORE` (base64 keystore),
+  `SHOKZ_KEYSTORE_PASSWORD`, `SHOKZ_KEY_ALIAS`, `SHOKZ_KEY_PASSWORD`,
+  `PLAY_SERVICE_ACCOUNT_JSON`. The Play upload step gates on both the
+  keystore and the credentials being present, so a release without them
+  configured still produces an unsigned APK on the GitHub release —
+  it just skips Play.
+
+What is **not** yet done — needs a human:
+
+- App `ee.schimke.shokz` reserved in Play Console + first manual upload
+  (Play won't accept an API-only first upload).
+- Service account created, granted Release Manager on the app, JSON
+  installed as `PLAY_SERVICE_ACCOUNT_JSON`. Wait 36h after granting
+  before the first run.
+- Upload keystore generated and registered for Play App Signing;
+  base64 → `SIGNING_KEYSTORE` secret.
+- Promotion internal → production stays manual in Play Console for now;
+  if/when we want it automated, add a workflow that runs
+  `:composeApp:promoteArtifact --from-track internal --to-track production`
+  on a separate trigger.
+
 ## Sources
 
 - [Triple-T/gradle-play-publisher releases](https://github.com/Triple-T/gradle-play-publisher/releases)
