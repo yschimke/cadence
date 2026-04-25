@@ -2,19 +2,13 @@
 
 package ee.schimke.cadence.files
 
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.navigation.toRoute
-import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.Inject
 import ee.schimke.cadence.DeviceFiles
-import ee.schimke.cadence.browser.BrowserViewModel
 import ee.schimke.cadence.data.DevicesRepo
 import ee.schimke.cadence.data.StorageManager
 import ee.schimke.cadence.data.Volume
@@ -34,47 +28,52 @@ import okio.Path.Companion.toPath
 @ViewModelKey(DeviceFilesViewModel::class)
 @Inject
 class DeviceFilesViewModel(
-    private val savedStateHandle: SavedStateHandle,
-    private val devicesRepo: DevicesRepo,
-    private val fileSystem: FileSystem,
-    private val storageManager: StorageManager,
+  private val savedStateHandle: SavedStateHandle,
+  private val devicesRepo: DevicesRepo,
+  private val fileSystem: FileSystem,
+  private val storageManager: StorageManager,
 ) : ViewModel() {
-    val route = savedStateHandle.toRoute<DeviceFiles>()
+  val route = savedStateHandle.toRoute<DeviceFiles>()
 
-    val uiState: StateFlow<UiState> = flow<UiState> {
+  val uiState: StateFlow<UiState> =
+    flow<UiState> {
         val device = devicesRepo.getDevice(route.id)
 
         if (device == null) {
-            emit(UiState.NotAvailable(route))
+          emit(UiState.NotAvailable(route))
         } else {
-            val volume = storageManager.getVolume(device.path.toPath())
+          val volume = storageManager.getVolume(device.path.toPath())
 
-            emit(UiState.Loaded(device, device.path.toPath(), fileSystem, volume))
+          emit(UiState.Loaded(device, device.path.toPath(), fileSystem, volume))
         }
-    }.stateIn(
+      }
+      .stateIn(
         viewModelScope,
         started = SharingStarted.WhileSubscribed(),
-        initialValue = UiState.Loading(route)
-    )
+        initialValue = UiState.Loading(route),
+      )
 
-    sealed class UiState {
-        abstract val name: String
+  sealed class UiState {
+    abstract val name: String
 
-        data class Loading(val route: DeviceFiles) : UiState() {
-            override val name: String
-                get() = route.id
-        }
-
-        data class NotAvailable(val route: DeviceFiles) : UiState() {
-            override val name: String
-                get() = route.id
-        }
-
-        data class Loaded(val device: Device, val root: Path, val fileSystem: FileSystem, val volume: Volume?) :
-            UiState() {
-            override val name: String
-                get() = device.name
-        }
+    data class Loading(val route: DeviceFiles) : UiState() {
+      override val name: String
+        get() = route.id
     }
-}
 
+    data class NotAvailable(val route: DeviceFiles) : UiState() {
+      override val name: String
+        get() = route.id
+    }
+
+    data class Loaded(
+      val device: Device,
+      val root: Path,
+      val fileSystem: FileSystem,
+      val volume: Volume?,
+    ) : UiState() {
+      override val name: String
+        get() = device.name
+    }
+  }
+}

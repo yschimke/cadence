@@ -11,14 +11,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 inline fun <reified VM : ViewModel> metroViewModel(
-    viewModelStoreOwner: ViewModelStoreOwner =
-        checkNotNull(LocalViewModelStoreOwner.current) {
-            "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-        },
-    key: String? = null,
+  viewModelStoreOwner: ViewModelStoreOwner =
+    checkNotNull(LocalViewModelStoreOwner.current) {
+      "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+    },
+  key: String? = null,
 ): VM {
-    return viewModel(viewModelStoreOwner, key, factory = metroViewModelProviderFactory())
+  return viewModel(viewModelStoreOwner, key, factory = metroViewModelProviderFactory())
 }
 
-@Composable
-expect fun metroViewModelProviderFactory(): ViewModelProvider.Factory
+@Composable expect fun metroViewModelProviderFactory(): ViewModelProvider.Factory

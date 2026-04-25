@@ -14,30 +14,22 @@ import io.ktor.http.Url
 
 @Composable
 fun BookmarksScreen(modifier: Modifier = Modifier, onNavigateTo: (Url) -> Unit) {
-    val viewModel = metroViewModel<BookmarksViewModel>()
+  val viewModel = metroViewModel<BookmarksViewModel>()
 
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+  val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    BookmarksScreen(modifier, uiState, onNavigateTo)
+  BookmarksScreen(modifier, uiState, onNavigateTo)
 }
 
 @Composable
 internal fun BookmarksScreen(
-    modifier: Modifier,
-    uiState: BookmarksViewModel.UiState,
-    onNavigateTo: (Url) -> Unit
+  modifier: Modifier,
+  uiState: BookmarksViewModel.UiState,
+  onNavigateTo: (Url) -> Unit,
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .safeContentPadding(),
-    ) {
-        if (uiState is BookmarksViewModel.Loaded) {
-            uiState.bookmarks.forEach {
-                Card(onClick = { onNavigateTo(Url(it.url)) }) {
-                    Text(it.name)
-                }
-            }
-        }
+  Column(modifier = modifier.fillMaxWidth().safeContentPadding()) {
+    if (uiState is BookmarksViewModel.Loaded) {
+      uiState.bookmarks.forEach { Card(onClick = { onNavigateTo(Url(it.url)) }) { Text(it.name) } }
     }
+  }
 }

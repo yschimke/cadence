@@ -16,52 +16,61 @@ import kotlinx.coroutines.launch
 @ContributesIntoMap(ViewModelScope::class)
 @ViewModelKey(BluetoothControlsViewModel::class)
 @Inject
-class BluetoothControlsViewModel(
-    private val controller: BluetoothController,
-) : ViewModel() {
+class BluetoothControlsViewModel(private val controller: BluetoothController) : ViewModel() {
 
-    val state: StateFlow<BluetoothState> = controller.state.stateIn(
-        viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = BluetoothState()
+  val state: StateFlow<BluetoothState> =
+    controller.state.stateIn(
+      viewModelScope,
+      started = SharingStarted.WhileSubscribed(5_000),
+      initialValue = BluetoothState(),
     )
 
-    private val _lastCommandResult = MutableStateFlow<String?>(null)
-    val lastCommandResult: StateFlow<String?> = _lastCommandResult.asStateFlow()
+  private val _lastCommandResult = MutableStateFlow<String?>(null)
+  val lastCommandResult: StateFlow<String?> = _lastCommandResult.asStateFlow()
 
-    fun refresh() = controller.refresh()
+  fun refresh() = controller.refresh()
 
-    fun setVolume(percent: Int) = controller.setVolume(percent)
-    fun adjustVolume(delta: Int) = controller.adjustVolume(delta)
-    fun toggleMute() = controller.toggleMute()
+  fun setVolume(percent: Int) = controller.setVolume(percent)
 
-    fun play() = controller.play()
-    fun pause() = controller.pause()
-    fun playPause() = controller.playPause()
-    fun next() = controller.next()
-    fun previous() = controller.previous()
-    fun stop() = controller.stop()
-    fun fastForward() = controller.fastForward()
-    fun rewind() = controller.rewind()
+  fun adjustVolume(delta: Int) = controller.adjustVolume(delta)
 
-    fun openSystemBluetoothSettings() = controller.openSystemBluetoothSettings()
-    fun requestMediaAccess() = controller.requestMediaAccess()
+  fun toggleMute() = controller.toggleMute()
 
-    fun selectWorkingMode(mode: WorkingMode) {
-        viewModelScope.launch {
-            val result = controller.setWorkingMode(mode)
-            _lastCommandResult.value = "Working mode → ${mode.name}: $result"
-        }
+  fun play() = controller.play()
+
+  fun pause() = controller.pause()
+
+  fun playPause() = controller.playPause()
+
+  fun next() = controller.next()
+
+  fun previous() = controller.previous()
+
+  fun stop() = controller.stop()
+
+  fun fastForward() = controller.fastForward()
+
+  fun rewind() = controller.rewind()
+
+  fun openSystemBluetoothSettings() = controller.openSystemBluetoothSettings()
+
+  fun requestMediaAccess() = controller.requestMediaAccess()
+
+  fun selectWorkingMode(mode: WorkingMode) {
+    viewModelScope.launch {
+      val result = controller.setWorkingMode(mode)
+      _lastCommandResult.value = "Working mode → ${mode.name}: $result"
     }
+  }
 
-    fun dispatch(command: AdvancedCommand) {
-        viewModelScope.launch {
-            val result = controller.dispatchAdvanced(command)
-            _lastCommandResult.value = "${command.label}: $result"
-        }
+  fun dispatch(command: AdvancedCommand) {
+    viewModelScope.launch {
+      val result = controller.dispatchAdvanced(command)
+      _lastCommandResult.value = "${command.label}: $result"
     }
+  }
 
-    fun consumeLastResult() {
-        _lastCommandResult.value = null
-    }
+  fun consumeLastResult() {
+    _lastCommandResult.value = null
+  }
 }

@@ -21,85 +21,69 @@ import kotlinx.serialization.Serializable
 
 @Composable
 fun App() {
-    val navController = rememberNavController()
+  val navController = rememberNavController()
 
-    NavHost(
-        navController,
-        startDestination = Home,
-        modifier = Modifier.fillMaxSize(),
-        popExitTransition = {
-            scaleOut(
-                targetScale = 0.9f,
-            )
-        },
-        popEnterTransition = {
-            EnterTransition.None
-        },
-    ) {
-        composable<Home> {
-            HomeScreen(
-                modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
-                onFileExplorer = { navController.navigate(Devices) },
-                onBookmarks = { navController.navigate(Bookmarks) },
-                onBluetoothControls = { navController.navigate(BluetoothControls) },
-                onFileSync = { navController.navigate(FileSync) },
-            )
-        }
-        composable<Devices> {
-            DevicesScreen(
-                modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
-                onDeviceClick = {
-                    navController.navigate(DeviceFiles(id = it.id))
-                })
-        }
-        composable<DeviceFiles> {
-            DeviceFilesScreen(
-                modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
-            )
-        }
-        composable<Browser> {
-            BrowserScreen(
-                modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
-            )
-        }
-        composable<Bookmarks> {
-            BookmarksScreen(
-                modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
-                onNavigateTo = {
-                    navController.navigate(Browser(it.toString()))
-                }
-            )
-        }
-        composable<BluetoothControls> {
-            BluetoothControlsScreen(
-                modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
-            )
-        }
-        composable<FileSync> {
-            FileSyncScreen(
-                modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
-            )
-        }
+  NavHost(
+    navController,
+    startDestination = Home,
+    modifier = Modifier.fillMaxSize(),
+    popExitTransition = { scaleOut(targetScale = 0.9f) },
+    popEnterTransition = { EnterTransition.None },
+  ) {
+    composable<Home> {
+      HomeScreen(
+        modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
+        onFileExplorer = { navController.navigate(Devices) },
+        onBookmarks = { navController.navigate(Bookmarks) },
+        onBluetoothControls = { navController.navigate(BluetoothControls) },
+        onFileSync = { navController.navigate(FileSync) },
+      )
     }
+    composable<Devices> {
+      DevicesScreen(
+        modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
+        onDeviceClick = { navController.navigate(DeviceFiles(id = it.id)) },
+      )
+    }
+    composable<DeviceFiles> {
+      DeviceFilesScreen(
+        modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize()
+      )
+    }
+    composable<Browser> {
+      BrowserScreen(
+        modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize()
+      )
+    }
+    composable<Bookmarks> {
+      BookmarksScreen(
+        modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
+        onNavigateTo = { navController.navigate(Browser(it.toString())) },
+      )
+    }
+    composable<BluetoothControls> {
+      BluetoothControlsScreen(
+        modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize()
+      )
+    }
+    composable<FileSync> {
+      FileSyncScreen(
+        modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize()
+      )
+    }
+  }
 }
 
-@Serializable
-data object Home
+@Serializable data object Home
 
-@Serializable
-data object Devices
+@Serializable data object Devices
 
-@Serializable
-data class DeviceFiles(val id: String)
+@Serializable data class DeviceFiles(val id: String)
 
-@Serializable
-data class Browser(val url: String?)
+@Serializable data class Browser(val url: String?)
 
-@Serializable
-data object Bookmarks
+@Serializable data object Bookmarks
 
-@Serializable
-data object BluetoothControls
+@Serializable data object BluetoothControls
 
-@Serializable
-data object FileSync
+@Serializable data object FileSync

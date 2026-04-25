@@ -14,33 +14,34 @@ import io.ktor.http.Url
 
 @Composable
 fun BrowserScreen(modifier: Modifier = Modifier) {
-    val viewModel = metroViewModel<BrowserViewModel>()
+  val viewModel = metroViewModel<BrowserViewModel>()
 
-    val route = viewModel.route
-    BrowserScreen(route, modifier)
+  val route = viewModel.route
+  BrowserScreen(route, modifier)
 }
 
 @Composable
 private fun BrowserScreen(route: Browser, modifier: Modifier = Modifier) {
-    val webViewState = rememberWebViewState(route.url ?: "about:blank").apply {
-        webSettings.androidWebSettings.domStorageEnabled = true
-        webSettings.androidWebSettings.safeBrowsingEnabled = false
+  val webViewState =
+    rememberWebViewState(route.url ?: "about:blank").apply {
+      webSettings.androidWebSettings.domStorageEnabled = true
+      webSettings.androidWebSettings.safeBrowsingEnabled = false
     }
 
-    val webViewNavigator = rememberWebViewNavigator()
+  val webViewNavigator = rememberWebViewNavigator()
 
-    val platformWebViewParams = getPlatformWebViewParams(shouldOverrideUrlLoadingFn = { url ->
-        false
-    })
+  val platformWebViewParams =
+    getPlatformWebViewParams(shouldOverrideUrlLoadingFn = { url -> false })
 
-    WebView(
-        modifier = modifier.fillMaxWidth()
-            .safeContentPadding(),
-        state = webViewState,
-        navigator = webViewNavigator,
-        platformWebViewParams = platformWebViewParams
-    )
+  WebView(
+    modifier = modifier.fillMaxWidth().safeContentPadding(),
+    state = webViewState,
+    navigator = webViewNavigator,
+    platformWebViewParams = platformWebViewParams,
+  )
 }
 
 @Composable
-expect fun getPlatformWebViewParams(shouldOverrideUrlLoadingFn: (Url) -> Boolean): PlatformWebViewParams?
+expect fun getPlatformWebViewParams(
+  shouldOverrideUrlLoadingFn: (Url) -> Boolean
+): PlatformWebViewParams?
