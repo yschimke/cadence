@@ -6,7 +6,6 @@ import android.content.Intent
 import androidx.annotation.Keep
 import androidx.core.app.AppComponentFactory
 import dev.zacsweers.metro.Provider
-import ee.schimke.cadence.CadenceApplication
 import kotlin.reflect.KClass
 
 /**
@@ -39,7 +38,7 @@ class MetroAppComponentFactory : AppComponentFactory() {
 
     override fun instantiateApplicationCompat(cl: ClassLoader, className: String): Application {
         val app = super.instantiateApplicationCompat(cl, className)
-        activityProviders = (app as CadenceApplication).appGraph.activityProviders
+        activityProviders = (app as AppGraphProvider).appGraph.activityProviders
         return app
     }
 

@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.hardware.usb.UsbDevice
 import android.hardware.usb.UsbManager
-import ee.schimke.cadence.CadenceApplication
+import ee.schimke.cadence.metro.AppGraphProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -20,7 +20,7 @@ class UsbAttachReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action != UsbManager.ACTION_USB_DEVICE_ATTACHED) return
         val device: UsbDevice? = intent.getParcelableExtra(UsbManager.EXTRA_DEVICE, UsbDevice::class.java)
-        val app = context.applicationContext as? CadenceApplication ?: return
+        val app = context.applicationContext as? AppGraphProvider ?: return
         val syncRepo = app.appGraph.syncRepo
 
         val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
