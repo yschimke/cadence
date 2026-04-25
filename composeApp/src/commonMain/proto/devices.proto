@@ -2,7 +2,7 @@ syntax = "proto3";
 
 import "google/protobuf/timestamp.proto";
 
-package ee.schimke.shokz.datastore.proto;
+package ee.schimke.cadence.datastore.proto;
 
 message Settings {
   repeated Device devices = 1;

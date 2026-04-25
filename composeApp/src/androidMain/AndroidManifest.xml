@@ -39,9 +39,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@android:style/Theme.Material.NoActionBar"
-        android:appComponentFactory="ee.schimke.shokz.metro.MetroAppComponentFactory"
+        android:appComponentFactory="ee.schimke.cadence.metro.MetroAppComponentFactory"
         tools:replace="android:appComponentFactory"
-        android:name=".ShokzApplication">
+        android:name=".CadenceApplication">
         <activity
             android:exported="true"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden|mnc|colorMode|density|fontScale|fontWeightAdjustment|keyboard|layoutDirection|locale|mcc|navigation|smallestScreenSize|touchscreen|uiMode"

@@ -6,6 +6,9 @@ xcuserdata
 !src/**/build/
 local.properties
 .idea
+*.jks
+*.keystore
+play-service-account*.json
 .DS_Store
 captures
 .externalNativeBuild

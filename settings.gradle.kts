@@ -1,4 +1,4 @@
-rootProject.name = "Shokz"
+rootProject.name = "Cadence"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
