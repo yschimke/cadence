@@ -34,6 +34,10 @@ dependencyResolutionManagement {
       mavenContent { includeGroupAndSubgroups("dev.zacsweers.metro") }
     }
     mavenCentral()
+    maven {
+      url = uri("https://jogamp.org/deployment/maven")
+      mavenContent { includeGroupAndSubgroups("org.jogamp") }
+    }
   }
 }
 
