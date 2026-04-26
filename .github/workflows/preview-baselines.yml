@@ -42,7 +42,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v6
 
       - name: Install compose-preview CLI
-        uses: yschimke/compose-ai-tools/.github/actions/install@v0.8.4
+        uses: yschimke/compose-ai-tools/.github/actions/install@v0.8.9
         with:
           version: "0.8.4"
 
