@@ -43,10 +43,9 @@ jobs:
         uses: gradle/actions/setup-gradle@v6
 
       - name: Install compose-preview CLI
-        run: |
-          set -euo pipefail
-          curl -fsSL https://raw.githubusercontent.com/yschimke/compose-ai-tools/main/scripts/install.sh | bash
-          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+        uses: yschimke/compose-ai-tools/.github/actions/install@v0.8.3
+        with:
+          version: "0.8.3"
 
       - name: Render previews
         run: compose-preview show --json --timeout 600 > _previews.json
