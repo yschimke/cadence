@@ -256,6 +256,7 @@ private class ManageCallbacks {
     val onSelectTargetDevice: (String) -> Unit = {}
     val onSetAutoSync: (Boolean) -> Unit = {}
     val onSetUsbMatch: (String) -> Unit = {}
+    val onSetThemeMode: (ee.schimke.cadence.datastore.proto.ThemeMode) -> Unit = {}
 }
 
 @Preview(name = "Manage - empty", showBackground = true, heightDp = 1500)

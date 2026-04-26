@@ -20,9 +20,10 @@ import kotlin.reflect.KClass
 interface AndroidAppGraph: AppGraph {
     /**
      * A multibinding map of activity classes to their providers accessible for
-     * [MetroAppComponentFactory].
+     * [MetroAppComponentFactory]. Activities live in the application module
+     * (e.g. `:composeApp`); the map may be empty during library-only compile.
      */
-    @Multibinds
+    @Multibinds(allowEmpty = true)
     abstract val activityProviders: Map<KClass<out Activity>, Provider<Activity>>
 
     val viewModelGraphFactory: AndroidViewModelGraph.Factory
