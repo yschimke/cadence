@@ -21,29 +21,29 @@
     },
     {
       "groupName": "Kotlin",
-      "matchPackagePrefixes": [
-        "org.jetbrains.kotlin",
-        "org.jetbrains.kotlinx"
+      "matchPackageNames": [
+        "/^org\\.jetbrains\\.kotlin($|[.:])/",
+        "/^org\\.jetbrains\\.kotlinx($|[.:])/"
       ]
     },
     {
       "groupName": "Compose Multiplatform",
-      "matchPackagePrefixes": [
-        "org.jetbrains.compose",
-        "org.jetbrains.androidx.lifecycle",
-        "org.jetbrains.androidx.navigation"
+      "matchPackageNames": [
+        "/^org\\.jetbrains\\.compose($|[.:])/",
+        "/^org\\.jetbrains\\.androidx\\.lifecycle($|[.:])/",
+        "/^org\\.jetbrains\\.androidx\\.navigation($|[.:])/"
       ]
     },
     {
       "groupName": "AndroidX",
-      "matchPackagePrefixes": [
-        "androidx."
+      "matchPackageNames": [
+        "/^androidx\\./"
       ]
     },
     {
       "groupName": "Ktor",
-      "matchPackagePrefixes": [
-        "io.ktor"
+      "matchPackageNames": [
+        "/^io\\.ktor($|[.:])/"
       ]
     },
     {
