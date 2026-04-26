@@ -117,7 +117,7 @@ fun FileSyncScreen(modifier: Modifier = Modifier) {
 }
 
 @Composable
-internal fun FileSyncContent(
+fun FileSyncContent(
   modifier: Modifier = Modifier,
   state: FileSyncViewModel.UiState,
   onAddLocalDirectory: () -> Unit,
