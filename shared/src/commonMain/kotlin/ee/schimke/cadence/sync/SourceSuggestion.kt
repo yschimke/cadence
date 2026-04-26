@@ -20,7 +20,7 @@ data class SourceSuggestion(
 
 /**
  * Curated catalogue of widely-used apps that register a SAF DocumentsProvider. Once installed, each
- * appears in the standard "Add directory" picker without any extra integration on Shokz' side.
+ * appears in the standard "Add directory" picker without any extra integration on the device side.
  */
 object SourceSuggestionsCatalogue {
   val all: List<SourceSuggestion> =

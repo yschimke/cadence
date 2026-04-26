@@ -10,6 +10,11 @@ local.properties
 play-service-account*.json
 .DS_Store
 captures
+*.pcap
+*.pcapng
+*.btsnoop
+btsnoop_hci.log
+bugreport*.zip
 .externalNativeBuild
 .cxx
 

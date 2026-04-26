@@ -74,7 +74,7 @@ class SyncForegroundService : Service() {
                     CHANNEL_ID,
                     "File sync",
                     NotificationManager.IMPORTANCE_LOW,
-                ).apply { description = "Progress of USB file sync to Shokz device" }
+                ).apply { description = "Progress of USB file sync to the connected device" }
             )
         }
     }
@@ -88,7 +88,7 @@ class SyncForegroundService : Service() {
 
     private fun buildNotification(text: String, max: Int = 0, current: Int = 0, indeterminate: Boolean = true): Notification {
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle("Syncing files to Shokz")
+            .setContentTitle("Syncing files")
             .setContentText(text)
             .setSmallIcon(android.R.drawable.stat_sys_upload)
             .setOngoing(true)

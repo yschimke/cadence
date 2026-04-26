@@ -1,93 +1,72 @@
-# Protocols — where control actually happens
+# Protocols — control-channel options
 
-Rolling map of known/plausible control surfaces and our current confidence.
+What the device exposes, and which surface a host-side library would
+target. Sourced entirely from public protocol specifications and the
+chip vendor's openly-published SDKs.
 
 ## USB
 
-**None.** USB is pure mass-storage (SCSI Bulk-Only, `05e3:0761`). See
-[usb.md](usb.md). No firmware files or config files exposed via the FAT32
-volume either. The library **will not** include a USB transport.
+Pure mass-storage (SCSI Bulk-Only). See [usb.md](usb.md). No firmware,
+config, or log files are surfaced via the FAT32 volume on the firmware
+revision observed. USB is therefore a *content* channel only (copy
+audio files in), not a control channel.
 
 ## Bluetooth — Classic audio / call
 
-Fully covered by standard profiles and BlueZ handles them natively:
+Standard profiles, handled natively by the host OS:
 
-- **A2DP Sink (UUID `0x110B`)** — audio streaming host → device. Library
-  consumers get this "for free" from the OS audio stack.
-- **AVRCP Controller + Target (`0x110E`/`0x110F`/`0x110C`)** — media keys,
-  track metadata, volume. Also handled by the OS.
-- **HFP (`0x111E`)** — voice calls + `battchg` CIND indicator. Battery via
-  `+CIEV: 7,N` on a 0-5 scale is **technically usable** but low-resolution
-  and timing-dependent. Not the right source for a user-facing battery %.
+- **A2DP Sink (UUID `0x110B`)** — audio streaming.
+- **AVRCP Controller + Target (`0x110E` / `0x110F` / `0x110C`)** —
+  media keys, track metadata, volume.
+- **HFP (`0x111E`)** — voice + the `battchg` CIND indicator (0–5
+  resolution, not the right source for a user-facing battery %).
 
-None of these are what the library is *for*. The library's job is the device
-control channel below.
+These are out of scope for an interop library.
 
-## Bluetooth — vendor control (the real target)
+## Bluetooth — vendor control channel
 
-**Protocol name: RCSP** (Jieli's "Remote Control Slave Protocol"). Source of
-truth: [`Jieli-Tech/iOS-JL_Bluetooth`](https://github.com/Jieli-Tech/iOS-JL_Bluetooth) — the
-vendor-published iOS SDK, which includes Swift source + `xcframework` that
-implement every opcode. Confirmed supported chip families per the SDK README:
-AC693X, AC697X, AC695X, AC707N, JL701N.
+The Jieli BT SoC family used in this device speaks **RCSP** (Jieli's
+"Remote Control Slave Protocol") on RFCOMM. The vendor publishes both
+an iOS SDK and a firmware SDK on GitHub under permissive licences:
 
-**Transport on OpenSwim Pro:**
+- [`Jieli-Tech/iOS-JL_Bluetooth`](https://github.com/Jieli-Tech/iOS-JL_Bluetooth)
+- [`Jieli-Tech/fw-AC63_BT_SDK`](https://github.com/Jieli-Tech/fw-AC63_BT_SDK)
 
-- RFCOMM over L2CAP
-- Channel **10** (discovered via SDP — do not hardcode)
-- Service UUID `0000fef0-0000-1000-8000-00805f9b34fb`, SDP service name `JL_SPP`
-- Classic BR/EDR only — there is no BLE / GATT equivalent on this device
+These are the canonical references; see [rcsp.md](rcsp.md) for the
+relevant subset of opcodes a client would target.
 
-A second SPP endpoint at RFCOMM channel **1** / UUID `0x1101` appears to be a
-legacy / test channel (likely speaks RCSP too).
+**Transport on this device family:** RFCOMM over L2CAP, channel
+discovered via SDP at connect time (do not hardcode), service UUID
+`0000fef0-0000-1000-8000-00805f9b34fb`, SDP service name `JL_SPP`.
+Classic BR/EDR only — no BLE / GATT equivalent.
 
-**Feature areas the SDK exposes** (i.e. things the library can target once we
-have opcode catalogue):
+## Feature areas the public SDK exposes
 
-- Battery level (live %, not 0-5 HFP scale)
-- Device info (model, firmware version, serial)
+(i.e. the opcode space a host-side library can target):
+
+- Battery level (live %)
+- Device info (model, firmware version)
 - EQ presets and custom EQ
 - Voice-prompt language / volume
 - Multipoint / TWS pairing state
 - Firmware OTA update
-- Button-mapping / gesture config
 - Auto-power-off timer
-- (Not applicable on OpenSwim Pro: ANC, hearing-aid fitting, watch faces, AI translation)
 
-**Auth:** SDK references a `JL_HashPair.xcframework`. Jieli devices typically
-negotiate a small hash-based handshake on SPP connect before accepting command
-packets. The specifics are inside that xcframework and/or in the Android app
-(`cn.com.aftershokz.app`). We do not yet know whether the OpenSwim Pro enforces
-it or accepts unauthenticated commands.
+## Authentication
 
-**RCSP packet framing: not yet documented here.** Needs extraction from one of:
+The chip vendor's SDK ships a `JL_HashPair.xcframework` for iOS. The
+public `JL_rcsp_api.h` shows the host-side auth function takes the
+BR/EDR link key + BD_ADDR — i.e. derived from the standard pairing
+secret rather than from a separate vendor key. Whether the device
+enforces it on every session, or accepts unauthenticated commands once
+paired, varies per firmware build and is best checked empirically
+against hardware the user owns.
 
-- `Jieli-Tech/iOS-JL_Bluetooth` Swift sources (cleanest — vendor-authored)
-- `Jieli-Tech/fw-AC63_BT_SDK` C firmware (ground truth, less ergonomic)
-- Decompile of the Shokz Android APK (`cn.com.aftershokz.app`)
-- Live RFCOMM sniff of the Shokz app talking to the headphones (Android btsnoop)
-
-See [next-steps.md](next-steps.md).
-
-## Prior-art inventory
+## Public prior art
 
 | Source | What's there |
 | --- | --- |
-| [`Jieli-Tech/iOS-JL_Bluetooth`](https://github.com/Jieli-Tech/iOS-JL_Bluetooth) | **Official Jieli iOS SDK, Swift source.** Covers RCSP framing, opcode catalogue, OTA, hash-pair. Primary reference. |
-| [`Jieli-Tech/fw-AC63_BT_SDK`](https://github.com/Jieli-Tech/fw-AC63_BT_SDK) | Official firmware SDK (C) for AC63xN, compatible with AC69 audio-less. Ground-truth for packet format and opcode numbers. |
-| [`kagaimiq/jielie`](https://github.com/kagaimiq/jielie) + [site](https://kagaimiq.github.io/jielie/) | Community RE: chip identification, u-boot/ISP protocol, programming interface. Less focused on runtime control protocol. |
-| [`kagaimiq/jl-uboot-tool`](https://github.com/kagaimiq/jl-uboot-tool) | Jieli bootloader/ISP tool — useful only if we ever want host-side firmware flashing via USB DFU (not applicable here: no DFU mode observed on USB). |
-| [`buzzcola3/JieLi-AC690X-Programming`](https://github.com/buzzcola3/JieLi-AC690X-Programming) / [`christian-kramer/JieLi-AC690X-Familiarization`](https://github.com/christian-kramer/JieLi-AC690X-Familiarization) | Older RE on AC690X. Some protocol bits, but superseded by vendor-published SDKs above. |
-| [Madushan 2025 blog](https://madushan.caas.lk/posts/2025-08-09-reverse-engineering-jieli-sdk/) | Write-up walking through the Jieli SDK structure. Good orientation before diving into sources. |
-| [Hackaday 2022](https://hackaday.com/2022/03/26/reverse-engineering-your-own-bluetooth-audio-module/) | Beginner-friendly RE of a cheap Jieli BT audio module. Context only. |
-
-## Shokz app
-
-- Android package: `cn.com.aftershokz.app` (current version 5.7.7 at time of
-  writing, [Play Store](https://play.google.com/store/apps/details?id=cn.com.aftershokz.app)).
-- iOS counterpart exists.
-- Likely embeds a build of `JL_Bluetooth` (iOS) / Jieli Android SDK plus
-  Shokz-specific UI. Decompiling the APK would confirm which RCSP opcodes
-  Shokz actually exercises vs the full SDK surface — useful if we want the
-  library to track "what the Shokz app supports" rather than "everything the
-  chip supports."
+| [`Jieli-Tech/iOS-JL_Bluetooth`](https://github.com/Jieli-Tech/iOS-JL_Bluetooth) | Vendor's iOS SDK, Swift source. Covers RCSP framing, opcode catalogue, OTA. |
+| [`Jieli-Tech/fw-AC63_BT_SDK`](https://github.com/Jieli-Tech/fw-AC63_BT_SDK) | Vendor's firmware SDK (C). Ground truth for packet format and opcode numbers. |
+| [`kagaimiq/jielie`](https://github.com/kagaimiq/jielie) | Community notes on chip identification and the u-boot/ISP interface. |
+| [Madushan 2025 blog](https://madushan.caas.lk/posts/2025-08-09-reverse-engineering-jieli-sdk/) | Walk-through of the Jieli SDK structure. |

@@ -27,12 +27,12 @@ internal object PreviewFixtures {
     val devices: List<Device> = listOf(
         Device(
             id = "dev-1",
-            name = "OpenSwim Pro",
+            name = "Headphones (sample)",
             path = "content://com.android.externalstorage.documents/tree/0000-0000%3A",
         ),
         Device(
             id = "dev-2",
-            name = "OpenRun Pro 2",
+            name = "Headphones (alt)",
             path = "content://com.android.externalstorage.documents/tree/1111-1111%3A",
         ),
     )
@@ -43,9 +43,9 @@ internal object PreviewFixtures {
             name = "/dev/bus/usb/001/005",
             deviceClass = 0,
             vendorId = 0x2FE3,
-            manufacturerName = "Shokz",
+            manufacturerName = "Sample Audio",
             productId = 0x0100,
-            productName = "OpenSwim Pro",
+            productName = "Headphones (sample)",
         ),
         UsbDevice(
             id = 1002,
@@ -73,9 +73,9 @@ internal object PreviewFixtures {
 
     val volume: Volume = Volume(
         uuid = "0000-0000",
-        volumeName = "SHOKZ",
+        volumeName = "SAMPLE",
         state = "mounted",
-        description = "Shokz OpenSwim Pro",
+        description = "Headphones (sample)",
         path = "/storage/0000-0000".toPath(),
         removable = true,
     )
@@ -86,8 +86,8 @@ internal object PreviewFixtures {
     // ---- Bluetooth fixtures ----------------------------------------------
 
     val connectedDevice = ConnectedDevice(
-        name = "OpenSwim Pro",
-        address = "A8:F5:E1:7A:60:72",
+        name = "Headphones (sample)",
+        address = "00:11:22:33:44:55",
         profileNames = listOf("A2DP", "HFP"),
         batteryPercent = 78,
         codec = "SBC",
