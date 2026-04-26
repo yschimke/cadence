@@ -42,9 +42,9 @@ jobs:
         uses: gradle/actions/setup-gradle@v6
 
       - name: Install compose-preview CLI
-        uses: yschimke/compose-ai-tools/.github/actions/install@v0.8.3
+        uses: yschimke/compose-ai-tools/.github/actions/install@v0.8.4
         with:
-          version: "0.8.3"
+          version: "0.8.4"
 
       - name: Render previews
         run: compose-preview show --json --timeout 600 > _previews.json
