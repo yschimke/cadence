@@ -17,6 +17,7 @@ import ee.schimke.cadence.devices.DevicesScreen
 import ee.schimke.cadence.files.DeviceFilesScreen
 import ee.schimke.cadence.home.HomeScreen
 import ee.schimke.cadence.sync.FileSyncScreen
+import ee.schimke.cadence.sync.ManageSyncScreen
 import kotlinx.serialization.Serializable
 
 @Composable
@@ -33,10 +34,11 @@ fun App() {
     composable<Home> {
       HomeScreen(
         modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
-        onFileExplorer = { navController.navigate(Devices) },
-        onBookmarks = { navController.navigate(Bookmarks) },
         onBluetoothControls = { navController.navigate(BluetoothControls) },
         onFileSync = { navController.navigate(FileSync) },
+        onManageSync = { navController.navigate(ManageSync) },
+        onBookmarks = { navController.navigate(Bookmarks) },
+        onFileExplorer = { navController.navigate(Devices) },
       )
     }
     composable<Devices> {
@@ -68,6 +70,13 @@ fun App() {
     }
     composable<FileSync> {
       FileSyncScreen(
+        modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
+        onClose = { navController.popBackStack() },
+        onManage = { navController.navigate(ManageSync) },
+      )
+    }
+    composable<ManageSync> {
+      ManageSyncScreen(
         modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize()
       )
     }
@@ -87,3 +96,5 @@ fun App() {
 @Serializable data object BluetoothControls
 
 @Serializable data object FileSync
+
+@Serializable data object ManageSync

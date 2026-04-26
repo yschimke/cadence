@@ -18,20 +18,26 @@ import ee.schimke.cadence.devices.DevicesViewModel
 import ee.schimke.cadence.files.DeviceFilesContent
 import ee.schimke.cadence.files.DeviceFilesViewModel
 import ee.schimke.cadence.home.HomeContent
-import ee.schimke.cadence.sync.FileSyncContent
+import ee.schimke.cadence.home.HomeViewModel
+import ee.schimke.cadence.sync.ManageSyncContent
 
 private val themedModifier
     @Composable get() = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)
 
-@Preview(name = "Home", showBackground = true)
+@Preview(name = "Home — empty", showBackground = true)
 @Composable
-internal fun HomeScreenPreview() {
+internal fun HomeEmptyPreview() {
     AndroidMaterialTheme {
         HomeContent(
-            onFileExplorer = {},
+            state = HomeViewModel.UiState(),
+            onRefreshProfile = {},
+            onToggleAutoRefresh = { _, _ -> },
+            onAddProfile = {},
+            onManageSync = {},
             onBookmarks = {},
+            onFileExplorer = {},
             onBluetoothControls = {},
-            onFileSync = {},
+            onSwitchToSync = {},
             modifier = themedModifier,
         )
     }
@@ -233,11 +239,11 @@ internal fun BluetoothMp3ModePreview() {
 }
 
 // ----------------------------------------------------------------------
-// File Sync
+// Manage sources & profiles (the deep configuration screen)
 
-private val syncCallbacks = SyncCallbacks()
+private val manageCallbacks = ManageCallbacks()
 
-private class SyncCallbacks {
+private class ManageCallbacks {
     val onAddLocalDirectory: () -> Unit = {}
     val onAddNfsShare: () -> Unit = {}
     val onDiscoverApps: () -> Unit = {}
@@ -250,102 +256,70 @@ private class SyncCallbacks {
     val onSelectTargetDevice: (String) -> Unit = {}
     val onSetAutoSync: (Boolean) -> Unit = {}
     val onSetUsbMatch: (String) -> Unit = {}
-    val onStartSync: () -> Unit = {}
-    val onCancelSync: () -> Unit = {}
 }
 
-@Preview(name = "File sync - empty", showBackground = true, heightDp = 1500)
+@Preview(name = "Manage - empty", showBackground = true, heightDp = 1500)
 @Composable
-internal fun FileSyncEmptyPreview() {
+internal fun ManageEmptyPreview() {
     AndroidMaterialTheme {
-        FileSyncContent(
+        ManageSyncContent(
             modifier = themedModifier,
             state = PreviewFixtures.fileSyncEmpty(),
-            onAddLocalDirectory = syncCallbacks.onAddLocalDirectory,
-            onAddNfsShare = syncCallbacks.onAddNfsShare,
-            onDiscoverApps = syncCallbacks.onDiscoverApps,
-            onRemoveSource = syncCallbacks.onRemoveSource,
-            onAddProfile = syncCallbacks.onAddProfile,
-            onDeleteProfile = syncCallbacks.onDeleteProfile,
-            onRefreshProfile = syncCallbacks.onRefreshProfile,
-            onToggleAutoRefresh = syncCallbacks.onToggleAutoRefresh,
-            onSelectTargetDevice = syncCallbacks.onSelectTargetDevice,
-            onSetAutoSync = syncCallbacks.onSetAutoSync,
-            onSetUsbMatch = syncCallbacks.onSetUsbMatch,
-            onStartSync = syncCallbacks.onStartSync,
-            onCancelSync = syncCallbacks.onCancelSync,
+            onAddLocalDirectory = manageCallbacks.onAddLocalDirectory,
+            onAddNfsShare = manageCallbacks.onAddNfsShare,
+            onDiscoverApps = manageCallbacks.onDiscoverApps,
+            onRemoveSource = manageCallbacks.onRemoveSource,
+            onAddProfile = manageCallbacks.onAddProfile,
+            onDeleteProfile = manageCallbacks.onDeleteProfile,
+            onRefreshProfile = manageCallbacks.onRefreshProfile,
+            onToggleAutoRefresh = manageCallbacks.onToggleAutoRefresh,
+            onSelectTargetDevice = manageCallbacks.onSelectTargetDevice,
+            onSetAutoSync = manageCallbacks.onSetAutoSync,
+            onSetUsbMatch = manageCallbacks.onSetUsbMatch,
         )
     }
 }
 
-@Preview(name = "File sync - populated", showBackground = true, heightDp = 1900)
+@Preview(name = "Manage - populated", showBackground = true, heightDp = 1900)
 @Composable
-internal fun FileSyncPopulatedPreview() {
+internal fun ManagePopulatedPreview() {
     AndroidMaterialTheme {
-        FileSyncContent(
+        ManageSyncContent(
             modifier = themedModifier,
             state = PreviewFixtures.fileSyncPopulated(),
-            onAddLocalDirectory = syncCallbacks.onAddLocalDirectory,
-            onAddNfsShare = syncCallbacks.onAddNfsShare,
-            onDiscoverApps = syncCallbacks.onDiscoverApps,
-            onRemoveSource = syncCallbacks.onRemoveSource,
-            onAddProfile = syncCallbacks.onAddProfile,
-            onDeleteProfile = syncCallbacks.onDeleteProfile,
-            onRefreshProfile = syncCallbacks.onRefreshProfile,
-            onToggleAutoRefresh = syncCallbacks.onToggleAutoRefresh,
-            onSelectTargetDevice = syncCallbacks.onSelectTargetDevice,
-            onSetAutoSync = syncCallbacks.onSetAutoSync,
-            onSetUsbMatch = syncCallbacks.onSetUsbMatch,
-            onStartSync = syncCallbacks.onStartSync,
-            onCancelSync = syncCallbacks.onCancelSync,
+            onAddLocalDirectory = manageCallbacks.onAddLocalDirectory,
+            onAddNfsShare = manageCallbacks.onAddNfsShare,
+            onDiscoverApps = manageCallbacks.onDiscoverApps,
+            onRemoveSource = manageCallbacks.onRemoveSource,
+            onAddProfile = manageCallbacks.onAddProfile,
+            onDeleteProfile = manageCallbacks.onDeleteProfile,
+            onRefreshProfile = manageCallbacks.onRefreshProfile,
+            onToggleAutoRefresh = manageCallbacks.onToggleAutoRefresh,
+            onSelectTargetDevice = manageCallbacks.onSelectTargetDevice,
+            onSetAutoSync = manageCallbacks.onSetAutoSync,
+            onSetUsbMatch = manageCallbacks.onSetUsbMatch,
         )
     }
 }
 
-@Preview(name = "File sync - refreshing", showBackground = true, heightDp = 1900)
+@Preview(name = "Manage - refreshing", showBackground = true, heightDp = 1900)
 @Composable
-internal fun FileSyncRefreshingPreview() {
+internal fun ManageRefreshingPreview() {
     AndroidMaterialTheme {
-        FileSyncContent(
+        ManageSyncContent(
             modifier = themedModifier,
             state = PreviewFixtures.fileSyncRefreshing(),
-            onAddLocalDirectory = syncCallbacks.onAddLocalDirectory,
-            onAddNfsShare = syncCallbacks.onAddNfsShare,
-            onDiscoverApps = syncCallbacks.onDiscoverApps,
-            onRemoveSource = syncCallbacks.onRemoveSource,
-            onAddProfile = syncCallbacks.onAddProfile,
-            onDeleteProfile = syncCallbacks.onDeleteProfile,
-            onRefreshProfile = syncCallbacks.onRefreshProfile,
-            onToggleAutoRefresh = syncCallbacks.onToggleAutoRefresh,
-            onSelectTargetDevice = syncCallbacks.onSelectTargetDevice,
-            onSetAutoSync = syncCallbacks.onSetAutoSync,
-            onSetUsbMatch = syncCallbacks.onSetUsbMatch,
-            onStartSync = syncCallbacks.onStartSync,
-            onCancelSync = syncCallbacks.onCancelSync,
-        )
-    }
-}
-
-@Preview(name = "File sync - syncing to headphones", showBackground = true, heightDp = 1900)
-@Composable
-internal fun FileSyncSyncingPreview() {
-    AndroidMaterialTheme {
-        FileSyncContent(
-            modifier = themedModifier,
-            state = PreviewFixtures.fileSyncSyncing(),
-            onAddLocalDirectory = syncCallbacks.onAddLocalDirectory,
-            onAddNfsShare = syncCallbacks.onAddNfsShare,
-            onDiscoverApps = syncCallbacks.onDiscoverApps,
-            onRemoveSource = syncCallbacks.onRemoveSource,
-            onAddProfile = syncCallbacks.onAddProfile,
-            onDeleteProfile = syncCallbacks.onDeleteProfile,
-            onRefreshProfile = syncCallbacks.onRefreshProfile,
-            onToggleAutoRefresh = syncCallbacks.onToggleAutoRefresh,
-            onSelectTargetDevice = syncCallbacks.onSelectTargetDevice,
-            onSetAutoSync = syncCallbacks.onSetAutoSync,
-            onSetUsbMatch = syncCallbacks.onSetUsbMatch,
-            onStartSync = syncCallbacks.onStartSync,
-            onCancelSync = syncCallbacks.onCancelSync,
+            onAddLocalDirectory = manageCallbacks.onAddLocalDirectory,
+            onAddNfsShare = manageCallbacks.onAddNfsShare,
+            onDiscoverApps = manageCallbacks.onDiscoverApps,
+            onRemoveSource = manageCallbacks.onRemoveSource,
+            onAddProfile = manageCallbacks.onAddProfile,
+            onDeleteProfile = manageCallbacks.onDeleteProfile,
+            onRefreshProfile = manageCallbacks.onRefreshProfile,
+            onToggleAutoRefresh = manageCallbacks.onToggleAutoRefresh,
+            onSelectTargetDevice = manageCallbacks.onSelectTargetDevice,
+            onSetAutoSync = manageCallbacks.onSetAutoSync,
+            onSetUsbMatch = manageCallbacks.onSetUsbMatch,
         )
     }
 }
