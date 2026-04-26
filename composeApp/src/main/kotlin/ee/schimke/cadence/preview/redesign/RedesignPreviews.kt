@@ -86,7 +86,7 @@ private fun syncReady(): FileSyncViewModel.UiState =
       ),
     devices =
       listOf(
-        Device(id = "dev-1", name = "OpenSwim Pro", path = ""),
+        Device(id = "dev-1", name = "Headphones (sample)", path = ""),
       ),
     preferences = SyncPreferences(target_device_id = "dev-1"),
     refresh = PreviewFixtures.refreshIdle,
