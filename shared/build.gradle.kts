@@ -7,7 +7,7 @@ plugins {
   id("com.gradleup.tapmoc").version(libs.versions.tapmoc)
   id("dev.zacsweers.metro").version(libs.versions.metro)
   id("com.squareup.wire").version(libs.versions.wire)
-  id("ee.schimke.composeai.preview").version("0.8.1")
+  id("ee.schimke.composeai.preview").version("0.8.4")
 }
 
 composePreview {
