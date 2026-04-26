@@ -1,3 +1,7 @@
+@file:OptIn(DelicateMetroGradleApi::class)
+
+import dev.zacsweers.metro.gradle.DelicateMetroGradleApi
+
 plugins {
   alias(libs.plugins.kotlinMultiplatform)
   alias(libs.plugins.androidKotlinMultiplatformLibrary)
@@ -61,7 +65,7 @@ kotlin {
 }
 
 tapmoc {
-  java(17)
+  java(21)
   kotlin(libs.versions.kotlin.get())
 }
 

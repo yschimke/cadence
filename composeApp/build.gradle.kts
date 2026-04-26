@@ -1,3 +1,6 @@
+@file:OptIn(DelicateMetroGradleApi::class)
+
+import dev.zacsweers.metro.gradle.DelicateMetroGradleApi
 import tapmoc.Severity
 
 plugins {
@@ -91,7 +94,7 @@ play {
 }
 
 tapmoc {
-  java(17)
+  java(21)
   kotlin(libs.versions.kotlin.get())
   checkDependencies()
   checkKotlinStdlibs(Severity.ERROR)
