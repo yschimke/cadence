@@ -68,6 +68,9 @@ android {
 dependencies {
   implementation(project(":shared"))
   implementation(libs.kotlinx.coroutines.android)
+  implementation(libs.androidx.activity.compose)
+  implementation(libs.androidx.core.splashscreen)
+  implementation(libs.androidx.lifecycle.viewmodel)
 
   // Compose deps used only by the preview composables in src/main/.../preview/.
   implementation(compose.runtime)
@@ -76,6 +79,7 @@ dependencies {
   implementation(compose.materialIconsExtended)
   implementation(compose.ui)
   implementation(compose.preview)
+  implementation(libs.androidx.ui.text.google.fonts)
   implementation(libs.ktor.client.core) // io.ktor.http.Url, used by BookmarksScreen previews
 }
 

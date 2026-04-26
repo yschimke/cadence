@@ -14,6 +14,18 @@ message Settings {
   repeated StagedFile staged_files = 4;
   SyncPreferences sync_preferences = 5;
   repeated SyncProfile sync_profiles = 6;
+  AppearancePreferences appearance = 7;
+}
+
+message AppearancePreferences {
+  ThemeMode theme_mode = 1;
+}
+
+enum ThemeMode {
+  // System dynamic colours + Roboto Flex typography (the default).
+  SYSTEM = 0;
+  // Cadence design system: Coastal Blue palette + Manrope/Inter typography.
+  CADENCE = 1;
 }
 
 message Device {

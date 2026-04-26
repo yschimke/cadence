@@ -34,6 +34,9 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -47,17 +50,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import ee.schimke.cadence.appearance.AppearanceViewModel
 import ee.schimke.cadence.datastore.proto.NetworkConstraint
 import ee.schimke.cadence.datastore.proto.SourceKind
 import ee.schimke.cadence.datastore.proto.SyncProfile
 import ee.schimke.cadence.datastore.proto.SyncSource
+import ee.schimke.cadence.datastore.proto.ThemeMode
 import ee.schimke.cadence.metro.metroViewModel
 
 @Composable
 fun ManageSyncScreen(modifier: Modifier = Modifier) {
   val viewModel = metroViewModel<FileSyncViewModel>()
+  val appearance = metroViewModel<AppearanceViewModel>()
   val state by viewModel.state.collectAsState()
   val suggestions by viewModel.suggestions.collectAsState()
+  val themeMode by appearance.themeMode.collectAsState()
   val launcher = rememberDirectorySourceLauncher { name, uri ->
     viewModel.addLocalDirectory(name, uri)
   }
@@ -96,6 +103,7 @@ fun ManageSyncScreen(modifier: Modifier = Modifier) {
   ManageSyncContent(
     modifier = modifier,
     state = state,
+    themeMode = themeMode,
     onAddLocalDirectory = launcher,
     onAddNfsShare = { showAddNfs = true },
     onDiscoverApps = {
@@ -110,6 +118,7 @@ fun ManageSyncScreen(modifier: Modifier = Modifier) {
     onSelectTargetDevice = viewModel::selectTargetDevice,
     onSetAutoSync = viewModel::setAutoSync,
     onSetUsbMatch = viewModel::setUsbMatch,
+    onSetThemeMode = appearance::setThemeMode,
   )
 }
 
@@ -117,6 +126,7 @@ fun ManageSyncScreen(modifier: Modifier = Modifier) {
 fun ManageSyncContent(
   modifier: Modifier = Modifier,
   state: FileSyncViewModel.UiState,
+  themeMode: ThemeMode = ThemeMode.SYSTEM,
   onAddLocalDirectory: () -> Unit,
   onAddNfsShare: () -> Unit,
   onDiscoverApps: () -> Unit,
@@ -128,12 +138,14 @@ fun ManageSyncContent(
   onSelectTargetDevice: (String) -> Unit,
   onSetAutoSync: (Boolean) -> Unit,
   onSetUsbMatch: (String) -> Unit,
+  onSetThemeMode: (ThemeMode) -> Unit = {},
 ) {
   LazyColumn(
     modifier = modifier.fillMaxWidth().safeContentPadding(),
     contentPadding = PaddingValues(16.dp),
     verticalArrangement = Arrangement.spacedBy(12.dp),
   ) {
+    item { AppearanceCard(themeMode = themeMode, onSetThemeMode = onSetThemeMode) }
     item {
       TargetDeviceCard(
         state = state,
@@ -206,6 +218,43 @@ fun ManageSyncContent(
 @Composable
 private fun Gap(width: Int) {
   Spacer(Modifier.width(width.dp))
+}
+
+@Composable
+private fun AppearanceCard(themeMode: ThemeMode, onSetThemeMode: (ThemeMode) -> Unit) {
+  ElevatedCard(modifier = Modifier.fillMaxWidth()) {
+    Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+      Text(
+        "Appearance",
+        style = MaterialTheme.typography.titleMedium,
+        fontWeight = FontWeight.SemiBold,
+      )
+      Text(
+        "System uses Android's dynamic colours and Roboto Flex. Cadence uses the " +
+          "Coastal Blue palette and Manrope/Inter typography.",
+        style = MaterialTheme.typography.bodySmall,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+      )
+      val options = listOf(ThemeMode.SYSTEM, ThemeMode.CADENCE)
+      SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
+        options.forEachIndexed { index, mode ->
+          SegmentedButton(
+            selected = mode == themeMode,
+            onClick = { onSetThemeMode(mode) },
+            shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
+            label = {
+              Text(
+                when (mode) {
+                  ThemeMode.SYSTEM -> "System"
+                  ThemeMode.CADENCE -> "Cadence"
+                }
+              )
+            },
+          )
+        }
+      }
+    }
+  }
 }
 
 @Composable
