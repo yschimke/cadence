@@ -32,6 +32,9 @@ class MetroAppComponentFactory : AppComponentFactory() {
         className: String,
         intent: Intent?,
     ): Activity {
+        if (!isReady()) {
+            return super.instantiateActivityCompat(cl, className, intent)
+        }
         return getInstance(cl, className, activityProviders)
             ?: super.instantiateActivityCompat(cl, className, intent)
     }
@@ -45,5 +48,9 @@ class MetroAppComponentFactory : AppComponentFactory() {
     // AppComponentFactory can be created multiple times
     companion object {
         private lateinit var activityProviders: Map<KClass<out Activity>, Provider<Activity>>
+
+        // Renderer harnesses (e.g. Robolectric) may instantiate activities before the
+        // Application object initialises this map; defer to the platform default in that case.
+        private fun isReady(): Boolean = ::activityProviders.isInitialized
     }
 }

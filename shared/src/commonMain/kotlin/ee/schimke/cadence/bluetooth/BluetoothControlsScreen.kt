@@ -96,7 +96,7 @@ fun BluetoothControlsScreen(modifier: Modifier = Modifier) {
 }
 
 @Composable
-internal fun BluetoothControlsContent(
+fun BluetoothControlsContent(
   modifier: Modifier = Modifier,
   state: BluetoothState,
   snackbarHost: SnackbarHostState,

@@ -12,3 +12,6 @@ play-service-account*.json
 captures
 .externalNativeBuild
 .cxx
+
+# compose-preview generated state
+.compose-preview-history/

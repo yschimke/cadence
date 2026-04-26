@@ -28,10 +28,7 @@ fun DeviceFilesScreen(modifier: Modifier = Modifier) {
 }
 
 @Composable
-internal fun DeviceFilesContent(
-  uiState: DeviceFilesViewModel.UiState,
-  modifier: Modifier = Modifier,
-) {
+fun DeviceFilesContent(uiState: DeviceFilesViewModel.UiState, modifier: Modifier = Modifier) {
   Column(
     modifier = modifier.fillMaxWidth().safeContentPadding(),
     horizontalAlignment = Alignment.CenterHorizontally,

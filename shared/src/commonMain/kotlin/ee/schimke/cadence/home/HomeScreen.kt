@@ -35,7 +35,7 @@ fun HomeScreen(
 }
 
 @Composable
-internal fun HomeContent(
+fun HomeContent(
   onFileExplorer: () -> Unit,
   onBookmarks: () -> Unit,
   onBluetoothControls: () -> Unit,

@@ -2,9 +2,18 @@ import tapmoc.Severity
 
 plugins {
   alias(libs.plugins.androidApplication)
+  alias(libs.plugins.composeMultiplatform)
+  alias(libs.plugins.composeCompiler)
   id("com.gradleup.tapmoc").version(libs.versions.tapmoc)
   id("dev.zacsweers.metro").version(libs.versions.metro)
   alias(libs.plugins.playPublisher)
+  id("ee.schimke.composeai.preview").version("0.8.6")
+}
+
+composePreview {
+  variant.set("debug")
+  sdkVersion.set(35)
+  enabled.set(true)
 }
 
 val appVersionName = "0.1.0" // x-release-please-version
@@ -59,6 +68,15 @@ android {
 dependencies {
   implementation(project(":shared"))
   implementation(libs.kotlinx.coroutines.android)
+
+  // Compose deps used only by the preview composables in src/main/.../preview/.
+  implementation(compose.runtime)
+  implementation(compose.foundation)
+  implementation(compose.material3)
+  implementation(compose.materialIconsExtended)
+  implementation(compose.ui)
+  implementation(compose.preview)
+  implementation(libs.ktor.client.core) // io.ktor.http.Url, used by BookmarksScreen previews
 }
 
 play {
