@@ -1,7 +1,7 @@
 [
   {
-    "id": "ee.schimke.cadence.preview.ScreenPreviewsKt.HomeScreenPreview_Home",
-    "sha": "1053c496a485b4dbea449c2e69131a39765be25df3ed9879130b0a6472dc38dc",
+    "id": "ee.schimke.cadence.preview.ScreenPreviewsKt.HomeEmptyPreview_Home \u2014 empty",
+    "sha": "96cbd66eb82a6579c165e1dfde963c40ba359ff81e46354551e2a19999676ab5",
     "before": null
   },
   {
@@ -60,48 +60,43 @@
     "before": null
   },
   {
-    "id": "ee.schimke.cadence.preview.ScreenPreviewsKt.FileSyncEmptyPreview_File sync - empty",
-    "sha": "0ba82640d8ffae2cac842b60c3faf75f0f811f6cde9909a005187840dbf1eeae",
+    "id": "ee.schimke.cadence.preview.ScreenPreviewsKt.ManageEmptyPreview_Manage - empty",
+    "sha": "03eb5885538b8a724d15b5dd480a2b6ab545961188737bc0edb3474c8bec1f1f",
     "before": null
   },
   {
-    "id": "ee.schimke.cadence.preview.ScreenPreviewsKt.FileSyncPopulatedPreview_File sync - populated",
-    "sha": "174e7ace002c5bff98634aab5432e736381bf51860f83593be42c4361235df9c",
+    "id": "ee.schimke.cadence.preview.ScreenPreviewsKt.ManagePopulatedPreview_Manage - populated",
+    "sha": "ad771e073425da3530274c3aa6a839aea1b92a41ff7ef9361da1255f84b1b7b1",
     "before": null
   },
   {
-    "id": "ee.schimke.cadence.preview.ScreenPreviewsKt.FileSyncRefreshingPreview_File sync - refreshing",
-    "sha": "7727a934f57106859fafe9ec2d2450b3a0fd1b114b42b640a04d9bac1b37d10e",
-    "before": null
-  },
-  {
-    "id": "ee.schimke.cadence.preview.ScreenPreviewsKt.FileSyncSyncingPreview_File sync - syncing to headphones",
-    "sha": "39e4ef2a760928c42aa8dc4bdb39789db2d31f217de2e362eaacaeb9d25e17bb",
+    "id": "ee.schimke.cadence.preview.ScreenPreviewsKt.ManageRefreshingPreview_Manage - refreshing",
+    "sha": "1d4a4d05371e1e87cfa99985a27adac9a69a99ae7dc36335c86f95627dc90e09",
     "before": null
   },
   {
     "id": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.CurateHomePreview_Redesign \u2014 Curate home",
-    "sha": "50b66796f39df4dd4498cfad8fa4781e63799ca89fad5b1720998a8023dd00d4",
+    "sha": "7fb1803411784429a279c6a3869f90d4e0dc7ee6a8d59e7c0e5f21151bf153e6",
     "before": null
   },
   {
     "id": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.CurateHomeUsbBannerPreview_Redesign \u2014 Curate home, USB banner",
-    "sha": "07838a01522702cbaaad2d95021ee79fa61744e5650f6d0c89cab957be6d9007",
+    "sha": "95fc183bf4cb4274dd9bdf96a4f58bcc44c287d511ef87809dc553093006fd1f",
     "before": null
   },
   {
     "id": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeReadyPreview_Redesign \u2014 Sync mode, ready",
-    "sha": "95e8c918500c7cff83554e16d59f4aef93ac2b7275d21480ed70956feca453a7",
+    "sha": "f347ab5bfda304af5d0fd52347f9375b10a8587af78b68868e25efe19d89bc58",
     "before": null
   },
   {
     "id": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeSyncingPreview_Redesign \u2014 Sync mode, syncing",
-    "sha": "f8bed5e086269a78b9ce4856ed841fc6f91d1e0ef5deabf8938b1613f0e00ab2",
+    "sha": "bd0ed669099f4d47bf2c448bec5e24c709c6863feabac607649dae3ac9ef870a",
     "before": null
   },
   {
     "id": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeDonePreview_Redesign \u2014 Sync mode, complete",
-    "sha": "b7d97c390d6ccdb172ce1c84a6cbb5589354e01531f62099907360eb2c89d119",
+    "sha": "e1d8d96066c248f9f81267fd3c51dc48ab4106df4048bde97714522302ea639e",
     "before": null
   }
 ]
