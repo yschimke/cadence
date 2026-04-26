@@ -69,7 +69,10 @@ jobs:
           mkdir -p _pr_renders/renders
           python3 - <<'PY'
           import json, hashlib, os, shutil
-          previews = json.load(open("_previews.json"))
+          raw = json.load(open("_previews.json"))
+          # compose-preview show --json emits {"schema": "...", "previews": [...]}
+          # on recent versions; older releases emitted a bare list.
+          previews = raw["previews"] if isinstance(raw, dict) else raw
           baselines = json.load(open("_baselines/baselines.json"))
           changed = []
           for entry in previews:

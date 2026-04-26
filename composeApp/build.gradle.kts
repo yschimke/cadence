@@ -4,10 +4,10 @@ plugins {
   alias(libs.plugins.androidApplication)
   alias(libs.plugins.composeMultiplatform)
   alias(libs.plugins.composeCompiler)
-  id("com.gradleup.tapmoc").version(libs.versions.tapmoc)
-  id("dev.zacsweers.metro").version(libs.versions.metro)
+  alias(libs.plugins.tapmoc)
+  alias(libs.plugins.metro)
   alias(libs.plugins.playPublisher)
-  id("ee.schimke.composeai.preview").version("0.8.6")
+  alias(libs.plugins.composePreview)
 }
 
 composePreview {
