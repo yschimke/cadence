@@ -14,10 +14,10 @@ permissions:
   contents: read
 
 jobs:
-  build:
-    name: Assemble & unit test
+  assemble:
+    name: Assemble debug APK
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v6
 
@@ -41,18 +41,76 @@ jobs:
       - name: Assemble debug APK
         run: ./gradlew :composeApp:assembleDebug --stacktrace
 
+  test:
+    name: Unit tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v4
+        with:
+          packages: >-
+            platform-tools
+            platforms;android-36
+            build-tools;36.0.0
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v6
+
       - name: Run unit tests
         run: ./gradlew :composeApp:testDebugUnitTest --stacktrace
+
+      - name: Upload test reports
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: test-reports
+          path: |
+            composeApp/build/reports/tests/
+            composeApp/build/test-results/
+          if-no-files-found: ignore
+
+  lint:
+    name: Android lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v4
+        with:
+          packages: >-
+            platform-tools
+            platforms;android-36
+            build-tools;36.0.0
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v6
 
       - name: Android lint
         run: ./gradlew :composeApp:lintDebug --stacktrace
 
-      - name: Upload reports
+      - name: Upload lint reports
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: build-reports
+          name: lint-reports
           path: |
-            composeApp/build/reports/
-            composeApp/build/test-results/
+            composeApp/build/reports/lint-results-*.html
+            composeApp/build/reports/lint-results-*.xml
           if-no-files-found: ignore
