@@ -1,3 +1,5 @@
+import tapmoc.Severity
+
 plugins {
   alias(libs.plugins.androidApplication)
   id("com.gradleup.tapmoc").version(libs.versions.tapmoc)
@@ -69,6 +71,8 @@ play {
 tapmoc {
   java(17)
   kotlin(libs.versions.kotlin.get())
+  checkDependencies()
+  checkKotlinStdlibs(Severity.ERROR)
 }
 
 metro {
