@@ -9,3 +9,6 @@
   `./gradlew :composeApp:assembleDebug`.
 - Format Kotlin via `./gradlew ktfmtFormat`. Pre-commit hook installs
   with `./gradlew installGitHooks`.
+- Keep PR titles in conventional-commits form
+  (`feat:`, `fix:`, `chore:`, `build:`, `ci:`, `docs:`, …); enforced
+  by `.github/workflows/pr-title.yml` and consumed by release-please.
