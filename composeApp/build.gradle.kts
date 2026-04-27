@@ -84,6 +84,10 @@ dependencies {
   implementation(compose.preview)
   implementation(libs.androidx.ui.text.google.fonts)
   implementation(libs.ktor.client.core) // io.ktor.http.Url, used by BookmarksScreen previews
+
+  androidTestImplementation(libs.junit)
+  androidTestImplementation(libs.androidx.test.junit)
+  androidTestImplementation(libs.androidx.runner)
 }
 
 play {
