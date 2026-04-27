@@ -1,5 +1,6 @@
 @file:OptIn(DelicateMetroGradleApi::class)
 
+import com.github.triplet.gradle.androidpublisher.ReleaseStatus
 import dev.zacsweers.metro.gradle.DelicateMetroGradleApi
 import tapmoc.Severity
 
@@ -99,6 +100,7 @@ dependencies {
 play {
   track.set("internal")
   defaultToAppBundles.set(true)
+  releaseStatus.set(ReleaseStatus.DRAFT)
   // Skip API calls in CI runs that build but don't publish (e.g. PRs).
   enabled.set(System.getenv("ANDROID_PUBLISHER_CREDENTIALS") != null)
 }
