@@ -1,0 +1,137 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag to build (e.g. v0.1.1)'
+        required: true
+
+permissions:
+  contents: write
+  packages: write
+
+concurrency:
+  group: release-${{ github.ref_name }}
+  cancel-in-progress: false
+
+# Signing & Play upload:
+#   Required secrets for signed builds and Play upload (workflow no-ops them
+#   when absent so that re-running an old release without secrets still works):
+#     SIGNING_KEYSTORE              - base64 of the upload keystore (.jks)
+#     CADENCE_KEYSTORE_PASSWORD     - keystore password
+#     CADENCE_KEY_ALIAS             - key alias inside the keystore
+#     CADENCE_KEY_PASSWORD          - key password
+#     PLAY_SERVICE_ACCOUNT_JSON     - service account JSON contents; presence
+#                                     also gates the Play upload step
+# GitHub Packages publishing is wired in the root build.gradle.kts:
+#   any subproject that applies the `maven-publish` plugin and declares
+#   publications will be uploaded by the `publishLibraries` step. Today no
+#   module does that — once a library module is extracted, no workflow
+#   change is needed.
+jobs:
+  release:
+    name: Build & publish release
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      TAG_NAME: ${{ github.ref_type == 'tag' && github.ref_name || inputs.tag }}
+      HAS_SIGNING_KEYSTORE: ${{ secrets.SIGNING_KEYSTORE != '' }}
+      HAS_PLAY_CREDENTIALS: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON != '' }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.ref_type == 'tag' && github.ref_name || inputs.tag }}
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v4
+        with:
+          packages: >-
+            platform-tools
+            platforms;android-36
+            build-tools;36.0.0
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v6
+
+      - name: Decode signing keystore
+        if: env.HAS_SIGNING_KEYSTORE == 'true'
+        env:
+          SIGNING_KEYSTORE: ${{ secrets.SIGNING_KEYSTORE }}
+        run: |
+          set -euo pipefail
+          keystore="${RUNNER_TEMP}/upload.jks"
+          printf '%s' "$SIGNING_KEYSTORE" | base64 -d > "$keystore"
+          echo "CADENCE_KEYSTORE_PATH=$keystore" >> "$GITHUB_ENV"
+
+      - name: Assemble release
+        env:
+          CADENCE_KEYSTORE_PASSWORD: ${{ secrets.CADENCE_KEYSTORE_PASSWORD }}
+          CADENCE_KEY_ALIAS: ${{ secrets.CADENCE_KEY_ALIAS }}
+          CADENCE_KEY_PASSWORD: ${{ secrets.CADENCE_KEY_PASSWORD }}
+        run: ./gradlew :composeApp:assembleRelease :composeApp:bundleRelease --stacktrace
+
+      - name: Publish library artifacts to GitHub Packages
+        env:
+          GITHUB_ACTOR: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: ./gradlew publishLibraries --stacktrace
+
+      - name: Publish to Play (internal track)
+        if: env.HAS_PLAY_CREDENTIALS == 'true' && env.HAS_SIGNING_KEYSTORE == 'true'
+        env:
+          ANDROID_PUBLISHER_CREDENTIALS: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+          CADENCE_KEYSTORE_PASSWORD: ${{ secrets.CADENCE_KEYSTORE_PASSWORD }}
+          CADENCE_KEY_ALIAS: ${{ secrets.CADENCE_KEY_ALIAS }}
+          CADENCE_KEY_PASSWORD: ${{ secrets.CADENCE_KEY_PASSWORD }}
+        run: ./gradlew :composeApp:publishBundle --stacktrace
+
+      - name: Stage release assets
+        id: stage
+        run: |
+          set -euo pipefail
+          mkdir -p _release
+          version="${TAG_NAME#v}"
+          shopt -s nullglob
+          # APKs land as composeApp-release.apk (signed) or
+          # composeApp-release-unsigned.apk (no signingConfig). Either way
+          # we publish it as cadence-<version>.apk; the suffix encodes signing
+          # state for transparency.
+          for f in composeApp/build/outputs/apk/release/*.apk; do
+            name=$(basename "$f" .apk)
+            suffix=""
+            case "$name" in
+              *-unsigned) suffix="-unsigned" ;;
+            esac
+            cp "$f" "_release/cadence-${version}${suffix}.apk"
+          done
+          for f in composeApp/build/outputs/bundle/release/*.aab; do
+            cp "$f" "_release/cadence-${version}.aab"
+          done
+          ls -la _release/
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
+
+      - name: Attach assets to GitHub release
+        if: github.event_name == 'push'
+        uses: softprops/action-gh-release@v3
+        with:
+          tag_name: ${{ env.TAG_NAME }}
+          files: |
+            _release/*.apk
+            _release/*.aab
+          fail_on_unmatched_files: true
+
+      - name: Upload workflow artifact
+        if: github.event_name != 'push'
+        uses: actions/upload-artifact@v7
+        with:
+          name: release-${{ steps.stage.outputs.version }}
+          path: _release/

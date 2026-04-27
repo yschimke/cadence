@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Genesys Logic USB-to-storage bridge used by the supported audio device. -->
+    <usb-device vendor-id="1507" product-id="1889" />
+</resources>

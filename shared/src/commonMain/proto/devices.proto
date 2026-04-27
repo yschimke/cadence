@@ -1,0 +1,113 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+package ee.schimke.cadence.datastore.proto;
+
+message Settings {
+  repeated Device devices = 1;
+  repeated Bookmark bookmarks = 2;
+  repeated SyncSource sync_sources = 3;
+  // Reserved: was a flat staged-files list, replaced by per-profile
+  // staging directories. Field number kept aside so older proto blobs
+  // are still skipped cleanly.
+  repeated StagedFile staged_files = 4;
+  SyncPreferences sync_preferences = 5;
+  repeated SyncProfile sync_profiles = 6;
+  AppearancePreferences appearance = 7;
+}
+
+message AppearancePreferences {
+  ThemeMode theme_mode = 1;
+}
+
+enum ThemeMode {
+  // System dynamic colours + Roboto Flex typography (the default).
+  SYSTEM = 0;
+  // Cadence design system: Coastal Blue palette + Manrope/Inter typography.
+  CADENCE = 1;
+}
+
+message Device {
+  string id = 1;
+  string name = 2;
+  string path = 3;
+}
+
+message Bookmark {
+  string name = 1;
+  string url = 2;
+  string favicon = 3;
+}
+
+message SyncSource {
+  string id = 1;
+  string name = 2;
+  SourceKind kind = 3;
+  // For LOCAL_DIRECTORY: SAF tree URI string. For NFS_SHARE: nfs://host/export.
+  string location = 4;
+  // Optional sub-path filter (relative to location).
+  string subpath = 5;
+}
+
+enum SourceKind {
+  LOCAL_DIRECTORY = 0;
+  NFS_SHARE = 1;
+}
+
+message StagedFile {
+  string id = 1;
+  string source_id = 2;
+  // Absolute resource locator (URI for SAF, NFS path for shares).
+  string source_uri = 3;
+  string display_name = 4;
+  // Relative target path written under the device root (e.g. "podcasts/episode.mp3").
+  string target_relative_path = 5;
+  int64 size_bytes = 6;
+  StagedStatus status = 7;
+  string error_message = 8;
+  int64 bytes_transferred = 9;
+}
+
+enum StagedStatus {
+  PENDING = 0;
+  IN_PROGRESS = 1;
+  COMPLETED = 2;
+  FAILED = 3;
+  SKIPPED = 4;
+}
+
+message SyncPreferences {
+  // Target device id files should be synced to (matches Device.id).
+  string target_device_id = 1;
+  // If true, automatically run the sync when matching USB device is attached.
+  bool auto_sync_on_usb = 2;
+  // Optional VID:PID pattern in form "VID:PID" for triggering auto-sync.
+  string usb_match = 3;
+}
+
+message SyncProfile {
+  string id = 1;
+  string name = 2;
+  // SyncSource.id values that feed this profile.
+  repeated string source_ids = 3;
+  // Sub-folder under the app staging root and (mirrored) on the device.
+  string staging_subpath = 4;
+  // Auto-refresh interval. 0 disables the periodic job even when auto_refresh is on.
+  int32 refresh_interval_minutes = 5;
+  NetworkConstraint network_constraint = 6;
+  // ISO-8601 timestamp of the last successful refresh; empty if never refreshed.
+  string last_refreshed_at = 7;
+  // Most recent refresh error, empty when the last run succeeded.
+  string last_error = 8;
+  // When true, WorkManager keeps this profile fresh in the background. By
+  // default the first profile created has this on; later profiles default to
+  // manual-only and can be toggled on as overrides.
+  bool auto_refresh = 9;
+}
+
+enum NetworkConstraint {
+  ANY = 0;
+  CONNECTED = 1;
+  UNMETERED = 2;
+}
