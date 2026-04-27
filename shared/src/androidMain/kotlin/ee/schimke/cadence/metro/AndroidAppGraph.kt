@@ -3,8 +3,6 @@ package ee.schimke.cadence.metro
 import android.app.Activity
 import android.app.Application
 import android.content.Context
-import dev.zacsweers.metro.AppScope
-import dev.zacsweers.metro.DependencyGraph
 import dev.zacsweers.metro.Multibinds
 import dev.zacsweers.metro.Provider
 import dev.zacsweers.metro.Provides
@@ -16,15 +14,14 @@ import ee.schimke.cadence.sync.SyncRepo
 import okio.FileSystem
 import kotlin.reflect.KClass
 
-@DependencyGraph(AppScope::class)
+/**
+ * Contract surface exposed by the Android app graph. The concrete
+ * `@DependencyGraph` lives in `:composeApp` so Metro can aggregate
+ * activity contributions (e.g. `MainActivity`) from the application module.
+ */
 interface AndroidAppGraph: AppGraph {
-    /**
-     * A multibinding map of activity classes to their providers accessible for
-     * [MetroAppComponentFactory]. Activities live in the application module
-     * (e.g. `:composeApp`); the map may be empty during library-only compile.
-     */
     @Multibinds(allowEmpty = true)
-    abstract val activityProviders: Map<KClass<out Activity>, Provider<Activity>>
+    val activityProviders: Map<KClass<out Activity>, Provider<Activity>>
 
     val viewModelGraphFactory: AndroidViewModelGraph.Factory
 
@@ -41,9 +38,4 @@ interface AndroidAppGraph: AppGraph {
 
     @Provides
     fun provideContext(application: Application): Context = application
-
-    @DependencyGraph.Factory
-    fun interface Factory {
-        fun create(@Provides application: Application): AndroidAppGraph
-    }
 }

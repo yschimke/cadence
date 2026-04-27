@@ -11,7 +11,6 @@ import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import androidx.core.content.getSystemService
-import dev.zacsweers.metro.createGraphFactory
 import ee.schimke.cadence.metro.AndroidAppGraph
 import ee.schimke.cadence.metro.AppGraphProvider
 import kotlinx.coroutines.CoroutineScope
@@ -59,11 +58,8 @@ class SyncForegroundService : Service() {
         super.onDestroy()
     }
 
-    private fun appGraph(): AndroidAppGraph {
-        val app = applicationContext as? AppGraphProvider
-            ?: return createGraphFactory<AndroidAppGraph.Factory>().create(application)
-        return app.appGraph
-    }
+    private fun appGraph(): AndroidAppGraph =
+        (applicationContext as AppGraphProvider).appGraph
 
     private fun ensureChannel() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
