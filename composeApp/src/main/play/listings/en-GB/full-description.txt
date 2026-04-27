@@ -1,0 +1,13 @@
+Cadence is a personal cycling and running companion app.
+
+This is a single-developer hobby project; you can read all the source
+code at https://github.com/yschimke/cadence.
+
+Notes:
+- The app does not collect, store, or transmit any personal data to
+  the developer.
+- No analytics, no advertising, no crash-reporting SDKs.
+- Settings and cached state stay on your device.
+
+Privacy policy: https://yschimke.github.io/cadence/privacy/
+Issues / feedback: https://github.com/yschimke/cadence/issues
