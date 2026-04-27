@@ -20,7 +20,7 @@ composePreview {
   enabled.set(true)
 }
 
-val appVersionName = "0.1.0" // x-release-please-version
+val appVersionName = "0.1.1" // x-release-please-version
 
 // Pack MAJOR.MINOR.PATCH into a monotonic int. Caps at major < 22.
 val appVersionCode: Int =
@@ -100,7 +100,7 @@ dependencies {
 play {
   track.set("internal")
   defaultToAppBundles.set(true)
-  releaseStatus.set(ReleaseStatus.DRAFT)
+  releaseStatus.set(ReleaseStatus.COMPLETED)
   // Skip API calls in CI runs that build but don't publish (e.g. PRs).
   enabled.set(System.getenv("ANDROID_PUBLISHER_CREDENTIALS") != null)
 }
