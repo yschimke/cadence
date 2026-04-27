@@ -6,12 +6,17 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -139,7 +144,11 @@ private fun SyncTopBar(done: Boolean, onClose: () -> Unit, onManage: () -> Unit)
     color =
       if (done) MaterialTheme.colorScheme.tertiaryContainer
       else MaterialTheme.colorScheme.primaryContainer,
-    modifier = Modifier.fillMaxWidth(),
+    modifier =
+      Modifier.fillMaxWidth()
+        .windowInsetsPadding(
+          WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal + WindowInsetsSides.Top)
+        ),
     tonalElevation = 2.dp,
   ) {
     Row(
@@ -332,7 +341,11 @@ private fun SyncCta(
   Surface(
     color = MaterialTheme.colorScheme.surface,
     tonalElevation = 4.dp,
-    modifier = Modifier.fillMaxWidth(),
+    modifier =
+      Modifier.fillMaxWidth()
+        .windowInsetsPadding(
+          WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal + WindowInsetsSides.Bottom)
+        ),
   ) {
     Row(modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
       if (running) {
@@ -351,7 +364,11 @@ private fun DoneCta(onClose: () -> Unit) {
   Surface(
     color = MaterialTheme.colorScheme.surface,
     tonalElevation = 4.dp,
-    modifier = Modifier.fillMaxWidth(),
+    modifier =
+      Modifier.fillMaxWidth()
+        .windowInsetsPadding(
+          WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal + WindowInsetsSides.Bottom)
+        ),
   ) {
     Row(modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
       Button(onClick = onClose, modifier = Modifier.weight(1f)) { Text("Done") }
