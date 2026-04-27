@@ -64,6 +64,15 @@ kotlin {
   }
 }
 
+// modernstorage-storage 1.0.0-alpha11 declares espresso-intents as a runtime
+// dependency, which drags androidx.test:runner onto the production classpath
+// and causes a strict-version collision with the catalog runner under AGP's
+// consistent resolution. Strip it everywhere — neither runtime code nor the
+// device-test source set (which uses espresso-core directly) needs it.
+configurations.configureEach {
+  exclude(group = "androidx.test.espresso", module = "espresso-intents")
+}
+
 tapmoc {
   java(21)
   kotlin(libs.versions.kotlin.get())
