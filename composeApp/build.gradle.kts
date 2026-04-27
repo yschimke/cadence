@@ -74,6 +74,12 @@ dependencies {
   implementation(libs.androidx.activity.compose)
   implementation(libs.androidx.core.splashscreen)
   implementation(libs.androidx.lifecycle.viewmodel)
+  // Required on the application module's classpath because the Metro
+  // dependency graph (CadenceAppGraph) is generated here and aggregates
+  // bindings whose types reference DataStore / okio / WorkManager / ktor.
+  implementation(libs.androidx.datastore)
+  implementation(libs.androidx.work.runtime)
+  implementation("com.squareup.okio:okio:3.17.0")
 
   // Compose deps used only by the preview composables in src/main/.../preview/.
   implementation(compose.runtime)
