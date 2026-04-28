@@ -33,9 +33,10 @@ import ee.schimke.cadence.theme.CadenceTheme
  * `compose-preview render --filter PlayStore`.
  *
  * Device specs are sized to Play Store screenshot rules (aspect ratio
- * between 16:9 and 9:16, 320–3840 px on either side). Pixel 8a's native
- * 1080×2400 (9:20) is outside the cap, so the phone spec uses a 9:16
- * viewport at the 8a's 420 dpi.
+ * between 16:9 and 9:16, 320–3840 px on either side). The phone target
+ * is `id:pixel_2` because its 1080×1920 panel is natively 9:16, which
+ * fits the cap without any viewport gymnastics. Modern Pixels (8a, 8,
+ * 9, …) all ship 9:20 panels that exceed the spec.
  *
  * Re-render workflow:
  * ```
@@ -64,8 +65,8 @@ import ee.schimke.cadence.theme.CadenceTheme
 /** Tag attached to every Play Store preview so tooling can filter by group. */
 private const val PLAY_STORE_GROUP = "Play Store"
 
-/** Pixel 8a viewport at the 8a's 420 dpi, capped to 9:16 — renders 1078×1918 px. */
-private const val PHONE_PIXEL_8A = "spec:width=411dp,height=731dp,dpi=420"
+/** Pixel 2 — natively 1080×1920 (9:16) at 420 dpi, fits Play Store's aspect cap. */
+private const val PHONE_PIXEL_2 = "id:pixel_2"
 
 /** 7" tablet portrait — renders 1200×1920 px. */
 private const val TABLET_7IN = "spec:width=600dp,height=960dp,dpi=320"
@@ -129,7 +130,7 @@ private fun syncReadyState(): FileSyncViewModel.UiState =
 @Preview(
   name = "Play Store · phone · Home (light)",
   group = PLAY_STORE_GROUP,
-  device = PHONE_PIXEL_8A,
+  device = PHONE_PIXEL_2,
   showBackground = true,
 )
 @Composable
@@ -141,7 +142,7 @@ internal fun PlayStorePhoneHomeLight() {
 @Preview(
   name = "Play Store · phone · Home (dark)",
   group = PLAY_STORE_GROUP,
-  device = PHONE_PIXEL_8A,
+  device = PHONE_PIXEL_2,
   showBackground = true,
 )
 @Composable
@@ -153,7 +154,7 @@ internal fun PlayStorePhoneHomeDark() {
 @Preview(
   name = "Play Store · phone · Sync",
   group = PLAY_STORE_GROUP,
-  device = PHONE_PIXEL_8A,
+  device = PHONE_PIXEL_2,
   showBackground = true,
 )
 @Composable
@@ -174,7 +175,7 @@ internal fun PlayStorePhoneSync() {
 @Preview(
   name = "Play Store · phone · Bluetooth",
   group = PLAY_STORE_GROUP,
-  device = PHONE_PIXEL_8A,
+  device = PHONE_PIXEL_2,
   showBackground = true,
 )
 @Composable
@@ -206,7 +207,7 @@ internal fun PlayStorePhoneBluetooth() {
 @Preview(
   name = "Play Store · phone · Manage",
   group = PLAY_STORE_GROUP,
-  device = PHONE_PIXEL_8A,
+  device = PHONE_PIXEL_2,
   showBackground = true,
 )
 @Composable
