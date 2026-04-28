@@ -1,137 +1,47 @@
 [
   {
-    "id": "ee.schimke.cadence.preview.ScreenPreviewsKt.HomeEmptyPreview_Home \u2014 empty",
-    "sha": "a38eaaee886ae7041e6fd3227200fd6af9cf568083e5b4ca570812c29c1df7df",
+    "id": "ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStorePhoneHomeLight_Play Store \u00b7 phone \u00b7 Home (light)",
+    "sha": "e338b1314c52a95c0153996884e490a368d0da31cbd42a48f13a39efa90942a1",
     "before": null
   },
   {
-    "id": "ee.schimke.cadence.preview.ScreenPreviewsKt.DevicesScreenLoadedPreview_Devices - loaded",
-    "sha": "5081129f68a65b3deaef4f53331a02cd31daa1ec845e3a84f78c640d768e1d49",
+    "id": "ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStorePhoneHomeDark_Play Store \u00b7 phone \u00b7 Home (dark)",
+    "sha": "92f93f7a5ffe2bc79ca1b8dadde33d3d66784ea3f2df1d00cb628f2e08877955",
     "before": null
   },
   {
-    "id": "ee.schimke.cadence.preview.ScreenPreviewsKt.DevicesScreenLoadingPreview_Devices - loading",
-    "sha": "76fcc8a7b7ce0659ee8aa0b00d71e0aa4023dcb678c5b6af0961bf23babeb0c6",
+    "id": "ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStorePhoneSync_Play Store \u00b7 phone \u00b7 Sync",
+    "sha": "c10b528a52bd692969e284c8c5b714aec304588f886bf6f8f79072468da2f863",
     "before": null
   },
   {
-    "id": "ee.schimke.cadence.preview.ScreenPreviewsKt.DevicesScreenEmptyPreview_Devices - empty",
-    "sha": "89638c39ac7b67a1c854a090fdc3f5974bc6500a7194de6391bba10026574169",
+    "id": "ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStorePhoneBluetooth_Play Store \u00b7 phone \u00b7 Bluetooth",
+    "sha": "3d625a9696754ee93ca21ba9591f8b1db769978dbebc08a4a86c894af2a725d2",
     "before": null
   },
   {
-    "id": "ee.schimke.cadence.preview.ScreenPreviewsKt.BookmarksScreenLoadedPreview_Bookmarks - loaded",
-    "sha": "d014eb6b229d04c276718461caff5e9a4db3362109e874e24a680821a134fad6",
+    "id": "ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStorePhoneManage_Play Store \u00b7 phone \u00b7 Manage",
+    "sha": "543349c7fb60886e750717992651d0abeb9f1394e5cbe78b1f2247431c0f69c4",
     "before": null
   },
   {
-    "id": "ee.schimke.cadence.preview.ScreenPreviewsKt.BookmarksScreenLoadingPreview_Bookmarks - loading",
-    "sha": "485486fbc1888e8270cde3f1a478356ca1dcfd5f7c39cf7d97241378f39c703e",
+    "id": "ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStoreSevenInchHomeLight_Play Store \u00b7 7\" tablet \u00b7 Home (light)",
+    "sha": "27b52b762455e2678e7e9fd2c1a0732e07272e57febbb85c3c3c829ac6bb7e2f",
     "before": null
   },
   {
-    "id": "ee.schimke.cadence.preview.ScreenPreviewsKt.DeviceFilesLoadingPreview_Device files - loading",
-    "sha": "f3a3d0c771e63443a4cecf182a45dd459859ecf1b1a1106daddf1b91934c99d3",
+    "id": "ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStoreSevenInchHomeDark_Play Store \u00b7 7\" tablet \u00b7 Home (dark)",
+    "sha": "8b3dee207415686ba1b6780ed0acb80b5de67796ce5edbd8e174b805596b3309",
     "before": null
   },
   {
-    "id": "ee.schimke.cadence.preview.ScreenPreviewsKt.DeviceFilesNotAvailablePreview_Device files - not available",
-    "sha": "7fde7cfb62eb0e5a171a26518d5a5a373fec275fac2590553853620d4f353e2f",
+    "id": "ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStoreTenInchHomeLight_Play Store \u00b7 10\" tablet \u00b7 Home (light)",
+    "sha": "ab5d85d159b0419a477b3ad92d38042b3aebec0f269911411c436b97a4c6510f",
     "before": null
   },
   {
-    "id": "ee.schimke.cadence.preview.ScreenPreviewsKt.BluetoothDisconnectedPreview_BT controls - disconnected",
-    "sha": "78c62c8bf96c7d9962579794ce754067c50a1a65694c9c6153c4919c196ae40b",
-    "before": null
-  },
-  {
-    "id": "ee.schimke.cadence.preview.ScreenPreviewsKt.BluetoothConnectedPlayingPreview_BT controls - connected + playing",
-    "sha": "20fd8ffb02f3e75ace4c2dbeaa19e1449aa7678e4492ae914a4b44d28ce8a48e",
-    "before": null
-  },
-  {
-    "id": "ee.schimke.cadence.preview.ScreenPreviewsKt.BluetoothPermissionMissingPreview_BT controls - permission missing",
-    "sha": "a1107c143d5b8b816b1bfe0fdcc7a1fa34f8a32387b24b105bb798895dd2046d",
-    "before": null
-  },
-  {
-    "id": "ee.schimke.cadence.preview.ScreenPreviewsKt.BluetoothMp3ModePreview_BT controls - MP3 mode",
-    "sha": "2b01f2b48d9e739dec6d7bca28f5100b79186706b5fa28b6f262ea628cc77fe7",
-    "before": null
-  },
-  {
-    "id": "ee.schimke.cadence.preview.ScreenPreviewsKt.ManageEmptyPreview_Manage - empty",
-    "sha": "e201f43be3c28f1cc209ae5b899de4dd4cb74da20c01d21b1595e4467fae2ec1",
-    "before": null
-  },
-  {
-    "id": "ee.schimke.cadence.preview.ScreenPreviewsKt.ManagePopulatedPreview_Manage - populated",
-    "sha": "94e55277f7a0c40f713648c24edb8d0bcf05b81514dd19de90b5da279ba31a79",
-    "before": null
-  },
-  {
-    "id": "ee.schimke.cadence.preview.ScreenPreviewsKt.ManageRefreshingPreview_Manage - refreshing",
-    "sha": "d0865f8cfcf208615a454d41bfea18bfd12fc537d7c8950097e9a8ac417cfec9",
-    "before": null
-  },
-  {
-    "id": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.CurateHomePreview_System \u2014 Curate home",
-    "sha": "b3dcdf8c20739f0f117d8e2b68d6bda541c73a520b2456221c8ba1086ddd9be6",
-    "before": null
-  },
-  {
-    "id": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.CurateHomeCadencePreview_Cadence \u2014 Curate home",
-    "sha": "a35907bb2bc8f04d15233c31802073db800e0455184134ac53a9693aebd5962c",
-    "before": null
-  },
-  {
-    "id": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.CurateHomeCadenceDarkPreview_Cadence dark \u2014 Curate home",
-    "sha": "ecf4928b2962c92bc736ffe80d5b3e8959f9d8218c73e21d5ed50306a5314d91",
-    "before": null
-  },
-  {
-    "id": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.CurateHomeUsbBannerPreview_System \u2014 Curate USB banner",
-    "sha": "911ab8b562de4d5872e5996ae348816ff641048964d0ffad3639126b54be9837",
-    "before": null
-  },
-  {
-    "id": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.CurateHomeUsbBannerCadencePreview_Cadence \u2014 Curate USB banner",
-    "sha": "b29c6b537fa599f167ffdf23121bc5a81aff1dc8d593d665c59188356060e5bf",
-    "before": null
-  },
-  {
-    "id": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeReadyPreview_System \u2014 Sync ready",
-    "sha": "28a528bf71d254faede10a2da02f58348f90d455b0f2aa09f88c122a1071cad1",
-    "before": null
-  },
-  {
-    "id": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeReadyCadencePreview_Cadence \u2014 Sync ready",
-    "sha": "8d09585314938be31978526c78564eabf13ea45ecf9ca4e8952b3dc64bce30fe",
-    "before": null
-  },
-  {
-    "id": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeReadyCadenceDarkPreview_Cadence dark \u2014 Sync ready",
-    "sha": "06491056d6053211ba10667ea5659c6d1166d69b60a620a205125120f1bd17bb",
-    "before": null
-  },
-  {
-    "id": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeSyncingPreview_System \u2014 Sync syncing",
-    "sha": "59e752296f66c512990d44cacbd13e78ab2adc296109e24a5a610f9fd7e29a69",
-    "before": null
-  },
-  {
-    "id": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeSyncingCadencePreview_Cadence \u2014 Sync syncing",
-    "sha": "336268e429ae77b2879c5cc02a752d6eff927ff01f1643756f4cdf19f0085469",
-    "before": null
-  },
-  {
-    "id": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeDonePreview_System \u2014 Sync complete",
-    "sha": "e75ad0462c5df44f04e29c9fea7c67b58b16fae831541431b00b0a4459432402",
-    "before": null
-  },
-  {
-    "id": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeDoneCadencePreview_Cadence \u2014 Sync complete",
-    "sha": "48fbf14e476527b76273b948bac8b94a1d18d91b240920dd55acdd88ac1c2c8b",
+    "id": "ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStoreTenInchHomeDark_Play Store \u00b7 10\" tablet \u00b7 Home (dark)",
+    "sha": "242b8d82f1aa031910515193d00be704ee9c297a42274bc89133bf8e6f632505",
     "before": null
   }
 ]
