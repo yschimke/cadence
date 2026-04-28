@@ -1,27 +1,21 @@
 #!/usr/bin/env bash
-# Pre-commit hook: format staged Kotlin files with ktfmt (Google style).
-# Installed by `./gradlew installGitHooks` (sets core.hooksPath = .githooks).
+# ktfmt check on staged Kotlin files. Bypass with `git commit --no-verify`.
 set -euo pipefail
 
 repo_root="$(git rev-parse --show-toplevel)"
 cd "$repo_root"
 
-# Collect staged Kotlin files (Added/Copied/Modified/Renamed), NUL-terminated.
-mapfile -d '' -t staged < <(
-  git diff --cached --name-only --diff-filter=ACMR -z -- '*.kt' '*.kts'
-)
-
-if [[ ${#staged[@]} -eq 0 ]]; then
+if ! git diff --cached --name-only --diff-filter=ACMR -z \
+    | tr '\0' '\n' \
+    | grep -qE '\.(kt|kts)$'; then
   exit 0
 fi
 
-# Run ktfmtCheck against the whole project. Fast on incremental builds; if
-# something is unformatted, the offending file paths are printed and we abort
-# the commit so the developer can run `./gradlew ktfmtFormat` and re-stage.
+echo "Running ktfmtCheck..."
 if ! ./gradlew --quiet ktfmtCheck; then
   echo
-  echo "ktfmt found formatting issues. Fix with:"
-  echo "    ./gradlew ktfmtFormat"
-  echo "then 'git add' the changes and re-commit."
+  echo "ktfmt check failed. Fix with:"
+  echo "  ./gradlew ktfmtFormat"
+  echo "Then re-stage and commit again."
   exit 1
 fi
