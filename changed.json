@@ -1,47 +1,122 @@
 [
   {
+    "id": "ee.schimke.cadence.preview.ScreenPreviewsKt.HomeEmptyPreview_Home \u2014 empty",
+    "sha": "bdb5b68625eb8fea42a03629b8fa35851c5f89a4678101b15b02872e7c1ad559",
+    "before": "a38eaaee886ae7041e6fd3227200fd6af9cf568083e5b4ca570812c29c1df7df"
+  },
+  {
+    "id": "ee.schimke.cadence.preview.ScreenPreviewsKt.BluetoothDisconnectedPreview_BT controls - disconnected",
+    "sha": "bc8c87fc21b534d7a92e7d2888d39d18b6c84951b691ae843ccf31015a36bb92",
+    "before": "78c62c8bf96c7d9962579794ce754067c50a1a65694c9c6153c4919c196ae40b"
+  },
+  {
+    "id": "ee.schimke.cadence.preview.ScreenPreviewsKt.BluetoothConnectedPlayingPreview_BT controls - connected + playing",
+    "sha": "fc084d78a497ff1815f5b60ce90be88bbff5d0ad6d4288cc8acbc4722200de90",
+    "before": "20fd8ffb02f3e75ace4c2dbeaa19e1449aa7678e4492ae914a4b44d28ce8a48e"
+  },
+  {
+    "id": "ee.schimke.cadence.preview.ScreenPreviewsKt.BluetoothPermissionMissingPreview_BT controls - permission missing",
+    "sha": "b6c0795e6270fa736dad2b912beb6f9f1a8739eac51ad91499aa2eb06efd33bd",
+    "before": "a1107c143d5b8b816b1bfe0fdcc7a1fa34f8a32387b24b105bb798895dd2046d"
+  },
+  {
+    "id": "ee.schimke.cadence.preview.ScreenPreviewsKt.BluetoothMp3ModePreview_BT controls - MP3 mode",
+    "sha": "b0dcaa591da8e05777eb830fafdf752519f57423555766e90ff180b828ec02b4",
+    "before": "2b01f2b48d9e739dec6d7bca28f5100b79186706b5fa28b6f262ea628cc77fe7"
+  },
+  {
+    "id": "ee.schimke.cadence.preview.ScreenPreviewsKt.ManagePopulatedPreview_Manage - populated",
+    "sha": "2fd7d9968a9f2cb29089a7f7db19c51756d6b2dafa539385d4e524d787afbbb8",
+    "before": "94e55277f7a0c40f713648c24edb8d0bcf05b81514dd19de90b5da279ba31a79"
+  },
+  {
+    "id": "ee.schimke.cadence.preview.ScreenPreviewsKt.ManageRefreshingPreview_Manage - refreshing",
+    "sha": "8349e97bf94b9fbeaafdbcf361404a65cbbfd268f9cc06b9c0433c1ad3d31bd3",
+    "before": "d0865f8cfcf208615a454d41bfea18bfd12fc537d7c8950097e9a8ac417cfec9"
+  },
+  {
     "id": "ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStorePhoneHomeLight_Play Store \u00b7 phone \u00b7 Home (light)",
-    "sha": "e338b1314c52a95c0153996884e490a368d0da31cbd42a48f13a39efa90942a1",
-    "before": null
+    "sha": "0346252dcc2282a9b2e529a3fee208108607057264002e67f075f344140b4314",
+    "before": "e338b1314c52a95c0153996884e490a368d0da31cbd42a48f13a39efa90942a1"
   },
   {
     "id": "ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStorePhoneHomeDark_Play Store \u00b7 phone \u00b7 Home (dark)",
-    "sha": "92f93f7a5ffe2bc79ca1b8dadde33d3d66784ea3f2df1d00cb628f2e08877955",
-    "before": null
+    "sha": "fc2390854e524ffaaf317384303cc607f1f5bb2f987adb639a21f98630b0c811",
+    "before": "92f93f7a5ffe2bc79ca1b8dadde33d3d66784ea3f2df1d00cb628f2e08877955"
   },
   {
     "id": "ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStorePhoneSync_Play Store \u00b7 phone \u00b7 Sync",
-    "sha": "c10b528a52bd692969e284c8c5b714aec304588f886bf6f8f79072468da2f863",
-    "before": null
+    "sha": "8c05b1235f9e78c8753b0a523784efb9d5bfa8b1bbb7101ab7e1c7ce5735c7f5",
+    "before": "c10b528a52bd692969e284c8c5b714aec304588f886bf6f8f79072468da2f863"
   },
   {
     "id": "ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStorePhoneBluetooth_Play Store \u00b7 phone \u00b7 Bluetooth",
-    "sha": "3d625a9696754ee93ca21ba9591f8b1db769978dbebc08a4a86c894af2a725d2",
-    "before": null
+    "sha": "dd97493576bfcad141ff98a7e56df4682b40ac75a533c724e15935fb5ad62313",
+    "before": "3d625a9696754ee93ca21ba9591f8b1db769978dbebc08a4a86c894af2a725d2"
   },
   {
     "id": "ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStorePhoneManage_Play Store \u00b7 phone \u00b7 Manage",
-    "sha": "543349c7fb60886e750717992651d0abeb9f1394e5cbe78b1f2247431c0f69c4",
-    "before": null
+    "sha": "de1d2b9c26e727cd005f6150b3be945203e0f826ce33da232c6fc92a6c31697e",
+    "before": "543349c7fb60886e750717992651d0abeb9f1394e5cbe78b1f2247431c0f69c4"
   },
   {
     "id": "ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStoreSevenInchHomeLight_Play Store \u00b7 7\" tablet \u00b7 Home (light)",
-    "sha": "27b52b762455e2678e7e9fd2c1a0732e07272e57febbb85c3c3c829ac6bb7e2f",
-    "before": null
+    "sha": "927cf88c3daa4bab0ba155d92af3e8787918c22e24e757cff8ad993626891ec9",
+    "before": "27b52b762455e2678e7e9fd2c1a0732e07272e57febbb85c3c3c829ac6bb7e2f"
   },
   {
     "id": "ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStoreSevenInchHomeDark_Play Store \u00b7 7\" tablet \u00b7 Home (dark)",
-    "sha": "8b3dee207415686ba1b6780ed0acb80b5de67796ce5edbd8e174b805596b3309",
-    "before": null
+    "sha": "0d1963db33ec9c927d0b26838cf90f5d7e183744a251dec22194a23c4336354c",
+    "before": "8b3dee207415686ba1b6780ed0acb80b5de67796ce5edbd8e174b805596b3309"
   },
   {
     "id": "ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStoreTenInchHomeLight_Play Store \u00b7 10\" tablet \u00b7 Home (light)",
-    "sha": "ab5d85d159b0419a477b3ad92d38042b3aebec0f269911411c436b97a4c6510f",
-    "before": null
+    "sha": "d7ada4c8f13876613502a788288f97e35c6cc8a949db524fef4fab364d6eeb7f",
+    "before": "ab5d85d159b0419a477b3ad92d38042b3aebec0f269911411c436b97a4c6510f"
   },
   {
     "id": "ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStoreTenInchHomeDark_Play Store \u00b7 10\" tablet \u00b7 Home (dark)",
-    "sha": "242b8d82f1aa031910515193d00be704ee9c297a42274bc89133bf8e6f632505",
-    "before": null
+    "sha": "6f01ed05209e893fb9adba602be8dd0381fbc5072d43610ef7f282317bbb12ed",
+    "before": "242b8d82f1aa031910515193d00be704ee9c297a42274bc89133bf8e6f632505"
+  },
+  {
+    "id": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.CurateHomePreview_System \u2014 Curate home",
+    "sha": "f22689928dd1b5d3ffcebd34be2e3449b3f1db9351730d3a27ce3eb94114cf5d",
+    "before": "b3dcdf8c20739f0f117d8e2b68d6bda541c73a520b2456221c8ba1086ddd9be6"
+  },
+  {
+    "id": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.CurateHomeCadencePreview_Cadence \u2014 Curate home",
+    "sha": "b706960b178cd3fa68f3cb9d536aec1284bbd601e6f4e8ef61b3764e07a5ee16",
+    "before": "a35907bb2bc8f04d15233c31802073db800e0455184134ac53a9693aebd5962c"
+  },
+  {
+    "id": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.CurateHomeCadenceDarkPreview_Cadence dark \u2014 Curate home",
+    "sha": "63d5eab8c1305977c25c39412df0045f2396a6b302dd375a7001c48e32922786",
+    "before": "ecf4928b2962c92bc736ffe80d5b3e8959f9d8218c73e21d5ed50306a5314d91"
+  },
+  {
+    "id": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.CurateHomeUsbBannerPreview_System \u2014 Curate USB banner",
+    "sha": "02ffaf51d9834218f7fa6f24f20f9ca926f55633eff98e9ec803a507e2ddd96d",
+    "before": "911ab8b562de4d5872e5996ae348816ff641048964d0ffad3639126b54be9837"
+  },
+  {
+    "id": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.CurateHomeUsbBannerCadencePreview_Cadence \u2014 Curate USB banner",
+    "sha": "5a85a790873309418c8e5031b7f94bf7ce166dd44b01de2c4d908becdc361e3d",
+    "before": "b29c6b537fa599f167ffdf23121bc5a81aff1dc8d593d665c59188356060e5bf"
+  },
+  {
+    "id": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeReadyPreview_System \u2014 Sync ready",
+    "sha": "e5e0a08a51e701714a8a6476354d84d9d2c7bc3628d9769df8c79b522068a309",
+    "before": "28a528bf71d254faede10a2da02f58348f90d455b0f2aa09f88c122a1071cad1"
+  },
+  {
+    "id": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeReadyCadencePreview_Cadence \u2014 Sync ready",
+    "sha": "b29bf66f5981842724835fea97229e51c19fb55225434565761241151f4a6fad",
+    "before": "8d09585314938be31978526c78564eabf13ea45ecf9ca4e8952b3dc64bce30fe"
+  },
+  {
+    "id": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeReadyCadenceDarkPreview_Cadence dark \u2014 Sync ready",
+    "sha": "1efe0ff61ad355c1c0c9406445e1cc3c89e90872cb61f3ad43c1d70038263394",
+    "before": "06491056d6053211ba10667ea5659c6d1166d69b60a620a205125120f1bd17bb"
   }
 ]
