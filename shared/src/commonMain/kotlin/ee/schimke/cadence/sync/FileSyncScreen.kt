@@ -259,8 +259,9 @@ private fun SyncReadyRow(
           fontWeight = FontWeight.SemiBold,
         )
         Text(
-          if (hasError) "Last refresh failed — fix in Curate"
-          else profile.last_refreshed_at.ifBlank { "Never refreshed" }.let { "Last refreshed $it" },
+          if (hasError) "Last refresh failed — retry from Home"
+          else if (profile.last_refreshed_at.isBlank()) "Never refreshed"
+          else "Last refreshed ${formatLastRefreshed(profile.last_refreshed_at)}",
           style = MaterialTheme.typography.bodySmall,
           color =
             if (hasError) MaterialTheme.colorScheme.error
