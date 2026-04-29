@@ -385,7 +385,7 @@ private fun WorkingModeCard(selected: WorkingMode, onSelect: (WorkingMode) -> Un
         }
       }
       Text(
-        "Selection is presentation-only until FUNCTION_CMD (0x0E) sub-opcodes are confirmed.",
+        "Switching modes is a preview right now — your selection won't change what the headphones do until firmware support lands.",
         style = MaterialTheme.typography.bodySmall,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
       )
@@ -430,7 +430,7 @@ private fun AdvancedCommandsCard(onAdvanced: (AdvancedCommand) -> Unit) {
             fontWeight = FontWeight.SemiBold,
           )
           Text(
-            "Vendor (RCSP) commands. Most require RFCOMM transport (research/rcsp.md).",
+            "Extra controls reported by your headphones. Most are previews until firmware support lands.",
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
           )

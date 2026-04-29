@@ -130,29 +130,12 @@ class AndroidBluetoothController(
 
     override suspend fun setWorkingMode(mode: WorkingMode): String {
         workingModeFlow.value = mode
-        return "Pending RCSP transport (opcode 0x0E sub-opcode unconfirmed)"
+        return "Preview only — firmware support not wired up yet"
     }
 
     override suspend fun dispatchAdvanced(command: AdvancedCommand): String = when (command) {
         AdvancedCommand.QueryBattery -> batteryFromConnected() ?: "Unknown — connect a device"
-        AdvancedCommand.PowerOff,
-        AdvancedCommand.Reboot,
-        AdvancedCommand.FactoryReset -> "Pending RCSP transport (opcode 0x0E)"
-        AdvancedCommand.EqFlat,
-        AdvancedCommand.EqVocal,
-        AdvancedCommand.EqBassBoost,
-        AdvancedCommand.EqTreble -> "Pending RCSP transport (opcode 0x08 SYS_INFO_SET)"
-        AdvancedCommand.ToggleSwimmingMode -> "Pending RCSP transport"
-        AdvancedCommand.VoicePromptToggle,
-        AdvancedCommand.LanguageEnglish,
-        AdvancedCommand.LanguageMandarin -> "Pending RCSP transport"
-        AdvancedCommand.EnterPairingMode,
-        AdvancedCommand.ClearPairList,
-        AdvancedCommand.ToggleMultipoint -> "Pending RCSP transport"
-        AdvancedCommand.QueryFirmware,
-        AdvancedCommand.QueryDeviceInfo,
-        AdvancedCommand.DumpLogs -> "Pending RCSP transport (opcode 0x07 SYS_INFO_GET)"
-        AdvancedCommand.StartOta -> "Pending RCSP transport (opcode 0xE1)"
+        else -> "Preview only — firmware support not wired up yet"
     }
 
     private fun batteryFromConnected(): String? {

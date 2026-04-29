@@ -384,9 +384,9 @@ private fun ProfileCard(
             else "Manual refresh only",
             style = MaterialTheme.typography.bodyMedium,
           )
-          val last = profile.last_refreshed_at.ifBlank { null }
           Text(
-            last?.let { "Last refreshed $it" } ?: "Never refreshed",
+            if (profile.last_refreshed_at.isBlank()) "Never refreshed"
+            else "Last refreshed ${formatLastRefreshed(profile.last_refreshed_at)}",
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
           )

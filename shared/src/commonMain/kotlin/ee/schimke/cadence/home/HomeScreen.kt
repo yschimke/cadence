@@ -17,8 +17,10 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -62,6 +64,7 @@ import androidx.compose.ui.unit.dp
 import ee.schimke.cadence.bluetooth.BluetoothState
 import ee.schimke.cadence.datastore.proto.SyncProfile
 import ee.schimke.cadence.metro.metroViewModel
+import ee.schimke.cadence.sync.formatLastRefreshed
 
 @Composable
 fun HomeScreen(
@@ -119,14 +122,18 @@ fun HomeContent(
       )
     }
     Box(modifier = Modifier.weight(1f).fillMaxWidth()) {
-      LazyColumn(
+      LazyVerticalGrid(
+        columns = GridCells.Adaptive(minSize = 360.dp),
         modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
       ) {
-        item { Spacer(Modifier.height(8.dp)) }
-        item { SectionLabel("Library") }
+        item(span = { GridItemSpan(maxLineSpan) }) { Spacer(Modifier.height(8.dp)) }
+        item(span = { GridItemSpan(maxLineSpan) }) { SectionLabel("Library") }
         if (state.profiles.isEmpty()) {
-          item { EmptyLibraryHint(onManageSync = onManageSync) }
+          item(span = { GridItemSpan(maxLineSpan) }) {
+            EmptyLibraryHint(onManageSync = onManageSync)
+          }
         } else {
           items(state.profiles, key = { it.id }) { profile ->
             val sourceNames =
@@ -141,7 +148,7 @@ fun HomeContent(
             )
           }
         }
-        item { Spacer(Modifier.height(72.dp)) }
+        item(span = { GridItemSpan(maxLineSpan) }) { Spacer(Modifier.height(72.dp)) }
       }
       FloatingActionButton(
         onClick = onAddProfile,
@@ -255,6 +262,7 @@ private fun SectionLabel(text: String) {
     text,
     style = MaterialTheme.typography.titleMedium,
     fontWeight = FontWeight.SemiBold,
+    color = MaterialTheme.colorScheme.onSurface,
     modifier = Modifier.padding(top = 4.dp),
   )
 }
@@ -320,7 +328,7 @@ private fun ProfileLibraryCard(
             buildString {
               append(profile.staging_subpath.ifBlank { "/" })
               append(" · ")
-              append(profile.last_refreshed_at.ifBlank { "never refreshed" }.takeLast(20))
+              append(formatLastRefreshed(profile.last_refreshed_at))
             },
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
