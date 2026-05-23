@@ -11,13 +11,6 @@ plugins {
   alias(libs.plugins.tapmoc)
   alias(libs.plugins.metro)
   alias(libs.plugins.playPublisher)
-  alias(libs.plugins.composePreview)
-}
-
-composePreview {
-  variant.set("debug")
-  sdkVersion.set(35)
-  enabled.set(true)
 }
 
 val appVersionName = "0.1.2" // x-release-please-version
