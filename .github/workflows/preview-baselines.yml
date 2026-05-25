@@ -39,7 +39,7 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v6
 
-      - uses: yschimke/compose-ai-tools/.github/actions/preview-baselines@v0.11.5
+      - uses: yschimke/compose-ai-tools/.github/actions/preview-baselines@v0.11.7
         with:
           cli-version: catalog
           catalog-key: composePreview
