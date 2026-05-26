@@ -1,20 +1,23 @@
-name: Preview Baselines
+name: Compose Preview
 
 on:
   push:
     branches: [main]
+  pull_request:
+    types: [opened, synchronize, reopened]
   workflow_dispatch:
 
 permissions:
   contents: write
+  pull-requests: write
 
 concurrency:
-  group: preview-baselines
-  cancel-in-progress: false
+  group: compose-preview-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
-  update:
-    name: Render baselines and update compose-preview/main
+  apply:
+    name: Render previews (baseline or PR comment, auto-selected)
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
@@ -39,7 +42,4 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v6
 
-      - uses: yschimke/compose-ai-tools/.github/actions/preview-baselines@v0.11.7
-        with:
-          cli-version: catalog
-          catalog-key: composePreview
+      - uses: yschimke/compose-ai-tools/.github/actions/apply@v0.11.10
