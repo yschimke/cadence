@@ -8,7 +8,7 @@ Browse inline; image URLs are pinned to the commit SHA on the baseline branch so
 
 ### `BluetoothConnectedPlayingPreview`
 
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/ScreenPreviewsKt.BluetoothConnectedPlayingPreview_BT_controls_-_connected_playing.a11y.png" width="400" />
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/BluetoothConnectedPlayingPreview_BT_controls_connected_playing.a11y.png" width="400" />
 
 | # | Level | Rule | Element | Message |
 |--:|---|---|---|---|
@@ -16,7 +16,7 @@ Browse inline; image URLs are pinned to the commit SHA on the baseline branch so
 
 ### `BluetoothDisconnectedPreview`
 
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/ScreenPreviewsKt.BluetoothDisconnectedPreview_BT_controls_-_disconnected.a11y.png" width="400" />
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/BluetoothDisconnectedPreview_BT_controls_disconnected.a11y.png" width="400" />
 
 | # | Level | Rule | Element | Message |
 |--:|---|---|---|---|
@@ -24,7 +24,7 @@ Browse inline; image URLs are pinned to the commit SHA on the baseline branch so
 
 ### `BluetoothMp3ModePreview`
 
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/ScreenPreviewsKt.BluetoothMp3ModePreview_BT_controls_-_MP3_mode.a11y.png" width="400" />
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/BluetoothMp3ModePreview_BT_controls_MP3_mode.a11y.png" width="400" />
 
 | # | Level | Rule | Element | Message |
 |--:|---|---|---|---|
@@ -32,43 +32,43 @@ Browse inline; image URLs are pinned to the commit SHA on the baseline branch so
 
 ### `BluetoothPermissionMissingPreview`
 
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/ScreenPreviewsKt.BluetoothPermissionMissingPreview_BT_controls_-_permission_missing.a11y.png" width="400" />
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/BluetoothPermissionMissingPreview_BT_controls_permission_missing.a11y.png" width="400" />
 
 _No findings._
 
 ### `BookmarksScreenLoadedPreview`
 
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/ScreenPreviewsKt.BookmarksScreenLoadedPreview_Bookmarks_-_loaded.a11y.png" width="400" />
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/BookmarksScreenLoadedPreview_Bookmarks_loaded.a11y.png" width="400" />
 
 _No findings._
 
 ### `BookmarksScreenLoadingPreview`
 
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/ScreenPreviewsKt.BookmarksScreenLoadingPreview_Bookmarks_-_loading.png" width="400" />
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/BookmarksScreenLoadingPreview_Bookmarks_loading.png" width="400" />
 
 _No findings._
 
 ### `CurateHomeCadenceDarkPreview`
 
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/redesign.RedesignPreviewsKt.CurateHomeCadenceDarkPreview_Cadence_dark_Curate_home.a11y.png" width="400" />
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/CurateHomeCadenceDarkPreview_Cadence_dark_Curate_home.a11y.png" width="400" />
 
 _No findings._
 
 ### `CurateHomeCadencePreview`
 
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/redesign.RedesignPreviewsKt.CurateHomeCadencePreview_Cadence_Curate_home.a11y.png" width="400" />
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/CurateHomeCadencePreview_Cadence_Curate_home.a11y.png" width="400" />
 
 _No findings._
 
 ### `CurateHomePreview`
 
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/redesign.RedesignPreviewsKt.CurateHomePreview_System_Curate_home.a11y.png" width="400" />
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/CurateHomePreview_System_Curate_home.a11y.png" width="400" />
 
 _No findings._
 
 ### `CurateHomeUsbBannerCadencePreview`
 
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/redesign.RedesignPreviewsKt.CurateHomeUsbBannerCadencePreview_Cadence_Curate_USB_banner.a11y.png" width="400" />
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/CurateHomeUsbBannerCadencePreview_Cadence_Curate_USB_banner.a11y.png" width="400" />
 
 | # | Level | Rule | Element | Message |
 |--:|---|---|---|---|
@@ -76,7 +76,7 @@ _No findings._
 
 ### `CurateHomeUsbBannerPreview`
 
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/redesign.RedesignPreviewsKt.CurateHomeUsbBannerPreview_System_Curate_USB_banner.a11y.png" width="400" />
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/CurateHomeUsbBannerPreview_System_Curate_USB_banner.a11y.png" width="400" />
 
 | # | Level | Rule | Element | Message |
 |--:|---|---|---|---|
@@ -84,25 +84,25 @@ _No findings._
 
 ### `DeviceFilesLoadingPreview`
 
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/ScreenPreviewsKt.DeviceFilesLoadingPreview_Device_files_-_loading.a11y.png" width="400" />
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/DeviceFilesLoadingPreview_Device_files_loading.a11y.png" width="400" />
 
 _No findings._
 
 ### `DeviceFilesNotAvailablePreview`
 
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/ScreenPreviewsKt.DeviceFilesNotAvailablePreview_Device_files_-_not_available.a11y.png" width="400" />
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/DeviceFilesNotAvailablePreview_Device_files_not_available.a11y.png" width="400" />
 
 _No findings._
 
 ### `DevicesScreenEmptyPreview`
 
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/ScreenPreviewsKt.DevicesScreenEmptyPreview_Devices_-_empty.a11y.png" width="400" />
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/DevicesScreenEmptyPreview_Devices_empty.a11y.png" width="400" />
 
 _No findings._
 
 ### `DevicesScreenLoadedPreview`
 
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/ScreenPreviewsKt.DevicesScreenLoadedPreview_Devices_-_loaded.a11y.png" width="400" />
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/DevicesScreenLoadedPreview_Devices_loaded.a11y.png" width="400" />
 
 | # | Level | Rule | Element | Message |
 |--:|---|---|---|---|
@@ -113,13 +113,13 @@ _No findings._
 
 ### `DevicesScreenLoadingPreview`
 
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/ScreenPreviewsKt.DevicesScreenLoadingPreview_Devices_-_loading.a11y.png" width="400" />
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/DevicesScreenLoadingPreview_Devices_loading.a11y.png" width="400" />
 
 _No findings._
 
 ### `HomeEmptyPreview`
 
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/ScreenPreviewsKt.HomeEmptyPreview_Home_empty.a11y.png" width="400" />
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/HomeEmptyPreview_Home_empty.a11y.png" width="400" />
 
 | # | Level | Rule | Element | Message |
 |--:|---|---|---|---|
@@ -127,31 +127,31 @@ _No findings._
 
 ### `ManageEmptyPreview`
 
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/ScreenPreviewsKt.ManageEmptyPreview_Manage_-_empty.a11y.png" width="400" />
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/ManageEmptyPreview_Manage_empty.a11y.png" width="400" />
 
 _No findings._
 
 ### `ManagePopulatedPreview`
 
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/ScreenPreviewsKt.ManagePopulatedPreview_Manage_-_populated.a11y.png" width="400" />
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/ManagePopulatedPreview_Manage_populated.a11y.png" width="400" />
 
 _No findings._
 
 ### `ManageRefreshingPreview`
 
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/ScreenPreviewsKt.ManageRefreshingPreview_Manage_-_refreshing.a11y.png" width="400" />
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/ManageRefreshingPreview_Manage_refreshing.a11y.png" width="400" />
 
 _No findings._
 
 ### `PlayStorePhoneBluetooth` · `pixel_2`
 
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/playstore.PlayStorePreviewsKt.PlayStorePhoneBluetooth_Play_Store_phone_Bluetooth.a11y.png" width="400" />
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/PlayStorePhoneBluetooth_Play_Store_phone_Bluetooth.a11y.png" width="400" />
 
 _No findings._
 
 ### `PlayStorePhoneHomeDark` · `pixel_2`
 
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/playstore.PlayStorePreviewsKt.PlayStorePhoneHomeDark_Play_Store_phone_Home_dark.a11y.png" width="400" />
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/PlayStorePhoneHomeDark_Play_Store_phone_Home_dark.a11y.png" width="400" />
 
 | # | Level | Rule | Element | Message |
 |--:|---|---|---|---|
@@ -161,7 +161,7 @@ _No findings._
 
 ### `PlayStorePhoneHomeLight` · `pixel_2`
 
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/playstore.PlayStorePreviewsKt.PlayStorePhoneHomeLight_Play_Store_phone_Home_light.a11y.png" width="400" />
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/PlayStorePhoneHomeLight_Play_Store_phone_Home_light.a11y.png" width="400" />
 
 | # | Level | Rule | Element | Message |
 |--:|---|---|---|---|
@@ -171,7 +171,7 @@ _No findings._
 
 ### `PlayStorePhoneManage` · `pixel_2`
 
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/playstore.PlayStorePreviewsKt.PlayStorePhoneManage_Play_Store_phone_Manage.a11y.png" width="400" />
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/PlayStorePhoneManage_Play_Store_phone_Manage.a11y.png" width="400" />
 
 | # | Level | Rule | Element | Message |
 |--:|---|---|---|---|
@@ -179,7 +179,7 @@ _No findings._
 
 ### `PlayStorePhoneSync` · `pixel_2`
 
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/playstore.PlayStorePreviewsKt.PlayStorePhoneSync_Play_Store_phone_Sync.a11y.png" width="400" />
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/PlayStorePhoneSync_Play_Store_phone_Sync.a11y.png" width="400" />
 
 | # | Level | Rule | Element | Message |
 |--:|---|---|---|---|
@@ -187,7 +187,7 @@ _No findings._
 
 ### `PlayStoreSevenInchHomeDark` · `spec:width=600dp,height=960dp,dpi=320`
 
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/playstore.PlayStorePreviewsKt.PlayStoreSevenInchHomeDark_Play_Store_7_tablet_Home_dark.a11y.png" width="400" />
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/PlayStoreSevenInchHomeDark_Play_Store_7_tablet_Home_dark.a11y.png" width="400" />
 
 | # | Level | Rule | Element | Message |
 |--:|---|---|---|---|
@@ -197,7 +197,7 @@ _No findings._
 
 ### `PlayStoreSevenInchHomeLight` · `spec:width=600dp,height=960dp,dpi=320`
 
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/playstore.PlayStorePreviewsKt.PlayStoreSevenInchHomeLight_Play_Store_7_tablet_Home_light.a11y.png" width="400" />
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/PlayStoreSevenInchHomeLight_Play_Store_7_tablet_Home_light.a11y.png" width="400" />
 
 | # | Level | Rule | Element | Message |
 |--:|---|---|---|---|
@@ -207,7 +207,7 @@ _No findings._
 
 ### `PlayStoreTenInchHomeDark` · `spec:width=800dp,height=1280dp,dpi=320`
 
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/playstore.PlayStorePreviewsKt.PlayStoreTenInchHomeDark_Play_Store_10_tablet_Home_dark.a11y.png" width="400" />
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/PlayStoreTenInchHomeDark_Play_Store_10_tablet_Home_dark.a11y.png" width="400" />
 
 | # | Level | Rule | Element | Message |
 |--:|---|---|---|---|
@@ -217,7 +217,7 @@ _No findings._
 
 ### `PlayStoreTenInchHomeLight` · `spec:width=800dp,height=1280dp,dpi=320`
 
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/playstore.PlayStorePreviewsKt.PlayStoreTenInchHomeLight_Play_Store_10_tablet_Home_light.a11y.png" width="400" />
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/PlayStoreTenInchHomeLight_Play_Store_10_tablet_Home_light.a11y.png" width="400" />
 
 | # | Level | Rule | Element | Message |
 |--:|---|---|---|---|
@@ -227,42 +227,42 @@ _No findings._
 
 ### `SyncModeDoneCadencePreview`
 
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/redesign.RedesignPreviewsKt.SyncModeDoneCadencePreview_Cadence_Sync_complete.a11y.png" width="400" />
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/SyncModeDoneCadencePreview_Cadence_Sync_complete.a11y.png" width="400" />
 
 _No findings._
 
 ### `SyncModeDonePreview`
 
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/redesign.RedesignPreviewsKt.SyncModeDonePreview_System_Sync_complete.a11y.png" width="400" />
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/SyncModeDonePreview_System_Sync_complete.a11y.png" width="400" />
 
 _No findings._
 
 ### `SyncModeReadyCadenceDarkPreview`
 
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/redesign.RedesignPreviewsKt.SyncModeReadyCadenceDarkPreview_Cadence_dark_Sync_ready.a11y.png" width="400" />
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/SyncModeReadyCadenceDarkPreview_Cadence_dark_Sync_ready.a11y.png" width="400" />
 
 _No findings._
 
 ### `SyncModeReadyCadencePreview`
 
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/redesign.RedesignPreviewsKt.SyncModeReadyCadencePreview_Cadence_Sync_ready.a11y.png" width="400" />
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/SyncModeReadyCadencePreview_Cadence_Sync_ready.a11y.png" width="400" />
 
 _No findings._
 
 ### `SyncModeReadyPreview`
 
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/redesign.RedesignPreviewsKt.SyncModeReadyPreview_System_Sync_ready.a11y.png" width="400" />
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/SyncModeReadyPreview_System_Sync_ready.a11y.png" width="400" />
 
 _No findings._
 
 ### `SyncModeSyncingCadencePreview`
 
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/redesign.RedesignPreviewsKt.SyncModeSyncingCadencePreview_Cadence_Sync_syncing.a11y.png" width="400" />
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/SyncModeSyncingCadencePreview_Cadence_Sync_syncing.a11y.png" width="400" />
 
 _No findings._
 
 ### `SyncModeSyncingPreview`
 
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/redesign.RedesignPreviewsKt.SyncModeSyncingPreview_System_Sync_syncing.a11y.png" width="400" />
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/SyncModeSyncingPreview_System_Sync_syncing.a11y.png" width="400" />
 
 _No findings._

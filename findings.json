@@ -1,8 +1,8 @@
 {
   "entries": [
     {
-      "annotatedBasename": "ScreenPreviewsKt.BluetoothConnectedPlayingPreview_BT_controls_-_connected_playing.a11y.png",
-      "cleanBasename": "ScreenPreviewsKt.BluetoothConnectedPlayingPreview_BT_controls_-_connected_playing.png",
+      "annotatedBasename": "BluetoothConnectedPlayingPreview_BT_controls_connected_playing.a11y.png",
+      "cleanBasename": "BluetoothConnectedPlayingPreview_BT_controls_connected_playing.png",
       "findings": [
         {
           "boundsInScreen": "84,2016,170,2142",
@@ -19,8 +19,8 @@
       "variant": ""
     },
     {
-      "annotatedBasename": "ScreenPreviewsKt.BluetoothDisconnectedPreview_BT_controls_-_disconnected.a11y.png",
-      "cleanBasename": "ScreenPreviewsKt.BluetoothDisconnectedPreview_BT_controls_-_disconnected.png",
+      "annotatedBasename": "BluetoothDisconnectedPreview_BT_controls_disconnected.a11y.png",
+      "cleanBasename": "BluetoothDisconnectedPreview_BT_controls_disconnected.png",
       "findings": [
         {
           "boundsInScreen": "185,3197,258,3398",
@@ -37,8 +37,8 @@
       "variant": ""
     },
     {
-      "annotatedBasename": "ScreenPreviewsKt.BluetoothMp3ModePreview_BT_controls_-_MP3_mode.a11y.png",
-      "cleanBasename": "ScreenPreviewsKt.BluetoothMp3ModePreview_BT_controls_-_MP3_mode.png",
+      "annotatedBasename": "BluetoothMp3ModePreview_BT_controls_MP3_mode.a11y.png",
+      "cleanBasename": "BluetoothMp3ModePreview_BT_controls_MP3_mode.png",
       "findings": [
         {
           "boundsInScreen": "84,2016,170,2142",
@@ -55,8 +55,8 @@
       "variant": ""
     },
     {
-      "annotatedBasename": "ScreenPreviewsKt.BluetoothPermissionMissingPreview_BT_controls_-_permission_missing.a11y.png",
-      "cleanBasename": "ScreenPreviewsKt.BluetoothPermissionMissingPreview_BT_controls_-_permission_missing.png",
+      "annotatedBasename": "BluetoothPermissionMissingPreview_BT_controls_permission_missing.a11y.png",
+      "cleanBasename": "BluetoothPermissionMissingPreview_BT_controls_permission_missing.png",
       "findings": [],
       "functionName": "BluetoothPermissionMissingPreview",
       "module": "composeApp",
@@ -65,8 +65,8 @@
       "variant": ""
     },
     {
-      "annotatedBasename": "ScreenPreviewsKt.BookmarksScreenLoadedPreview_Bookmarks_-_loaded.a11y.png",
-      "cleanBasename": "ScreenPreviewsKt.BookmarksScreenLoadedPreview_Bookmarks_-_loaded.png",
+      "annotatedBasename": "BookmarksScreenLoadedPreview_Bookmarks_loaded.a11y.png",
+      "cleanBasename": "BookmarksScreenLoadedPreview_Bookmarks_loaded.png",
       "findings": [],
       "functionName": "BookmarksScreenLoadedPreview",
       "module": "composeApp",
@@ -76,7 +76,7 @@
     },
     {
       "annotatedBasename": "",
-      "cleanBasename": "ScreenPreviewsKt.BookmarksScreenLoadingPreview_Bookmarks_-_loading.png",
+      "cleanBasename": "BookmarksScreenLoadingPreview_Bookmarks_loading.png",
       "findings": [],
       "functionName": "BookmarksScreenLoadingPreview",
       "module": "composeApp",
@@ -85,8 +85,8 @@
       "variant": ""
     },
     {
-      "annotatedBasename": "redesign.RedesignPreviewsKt.CurateHomeCadenceDarkPreview_Cadence_dark_Curate_home.a11y.png",
-      "cleanBasename": "redesign.RedesignPreviewsKt.CurateHomeCadenceDarkPreview_Cadence_dark_Curate_home.png",
+      "annotatedBasename": "CurateHomeCadenceDarkPreview_Cadence_dark_Curate_home.a11y.png",
+      "cleanBasename": "CurateHomeCadenceDarkPreview_Cadence_dark_Curate_home.png",
       "findings": [],
       "functionName": "CurateHomeCadenceDarkPreview",
       "module": "composeApp",
@@ -95,8 +95,8 @@
       "variant": ""
     },
     {
-      "annotatedBasename": "redesign.RedesignPreviewsKt.CurateHomeCadencePreview_Cadence_Curate_home.a11y.png",
-      "cleanBasename": "redesign.RedesignPreviewsKt.CurateHomeCadencePreview_Cadence_Curate_home.png",
+      "annotatedBasename": "CurateHomeCadencePreview_Cadence_Curate_home.a11y.png",
+      "cleanBasename": "CurateHomeCadencePreview_Cadence_Curate_home.png",
       "findings": [],
       "functionName": "CurateHomeCadencePreview",
       "module": "composeApp",
@@ -105,8 +105,8 @@
       "variant": ""
     },
     {
-      "annotatedBasename": "redesign.RedesignPreviewsKt.CurateHomePreview_System_Curate_home.a11y.png",
-      "cleanBasename": "redesign.RedesignPreviewsKt.CurateHomePreview_System_Curate_home.png",
+      "annotatedBasename": "CurateHomePreview_System_Curate_home.a11y.png",
+      "cleanBasename": "CurateHomePreview_System_Curate_home.png",
       "findings": [],
       "functionName": "CurateHomePreview",
       "module": "composeApp",
@@ -115,8 +115,8 @@
       "variant": ""
     },
     {
-      "annotatedBasename": "redesign.RedesignPreviewsKt.CurateHomeUsbBannerCadencePreview_Cadence_Curate_USB_banner.a11y.png",
-      "cleanBasename": "redesign.RedesignPreviewsKt.CurateHomeUsbBannerCadencePreview_Cadence_Curate_USB_banner.png",
+      "annotatedBasename": "CurateHomeUsbBannerCadencePreview_Cadence_Curate_USB_banner.a11y.png",
+      "cleanBasename": "CurateHomeUsbBannerCadencePreview_Cadence_Curate_USB_banner.png",
       "findings": [
         {
           "boundsInScreen": "128,3654,275,3675",
@@ -133,8 +133,8 @@
       "variant": ""
     },
     {
-      "annotatedBasename": "redesign.RedesignPreviewsKt.CurateHomeUsbBannerPreview_System_Curate_USB_banner.a11y.png",
-      "cleanBasename": "redesign.RedesignPreviewsKt.CurateHomeUsbBannerPreview_System_Curate_USB_banner.png",
+      "annotatedBasename": "CurateHomeUsbBannerPreview_System_Curate_USB_banner.a11y.png",
+      "cleanBasename": "CurateHomeUsbBannerPreview_System_Curate_USB_banner.png",
       "findings": [
         {
           "boundsInScreen": "128,3654,275,3675",
@@ -151,8 +151,8 @@
       "variant": ""
     },
     {
-      "annotatedBasename": "ScreenPreviewsKt.DeviceFilesLoadingPreview_Device_files_-_loading.a11y.png",
-      "cleanBasename": "ScreenPreviewsKt.DeviceFilesLoadingPreview_Device_files_-_loading.png",
+      "annotatedBasename": "DeviceFilesLoadingPreview_Device_files_loading.a11y.png",
+      "cleanBasename": "DeviceFilesLoadingPreview_Device_files_loading.png",
       "findings": [],
       "functionName": "DeviceFilesLoadingPreview",
       "module": "composeApp",
@@ -161,8 +161,8 @@
       "variant": ""
     },
     {
-      "annotatedBasename": "ScreenPreviewsKt.DeviceFilesNotAvailablePreview_Device_files_-_not_available.a11y.png",
-      "cleanBasename": "ScreenPreviewsKt.DeviceFilesNotAvailablePreview_Device_files_-_not_available.png",
+      "annotatedBasename": "DeviceFilesNotAvailablePreview_Device_files_not_available.a11y.png",
+      "cleanBasename": "DeviceFilesNotAvailablePreview_Device_files_not_available.png",
       "findings": [],
       "functionName": "DeviceFilesNotAvailablePreview",
       "module": "composeApp",
@@ -171,8 +171,8 @@
       "variant": ""
     },
     {
-      "annotatedBasename": "ScreenPreviewsKt.DevicesScreenEmptyPreview_Devices_-_empty.a11y.png",
-      "cleanBasename": "ScreenPreviewsKt.DevicesScreenEmptyPreview_Devices_-_empty.png",
+      "annotatedBasename": "DevicesScreenEmptyPreview_Devices_empty.a11y.png",
+      "cleanBasename": "DevicesScreenEmptyPreview_Devices_empty.png",
       "findings": [],
       "functionName": "DevicesScreenEmptyPreview",
       "module": "composeApp",
@@ -181,8 +181,8 @@
       "variant": ""
     },
     {
-      "annotatedBasename": "ScreenPreviewsKt.DevicesScreenLoadedPreview_Devices_-_loaded.a11y.png",
-      "cleanBasename": "ScreenPreviewsKt.DevicesScreenLoadedPreview_Devices_-_loaded.png",
+      "annotatedBasename": "DevicesScreenLoadedPreview_Devices_loaded.a11y.png",
+      "cleanBasename": "DevicesScreenLoadedPreview_Devices_loaded.png",
       "findings": [
         {
           "boundsInScreen": "0,236,317,254",
@@ -220,8 +220,8 @@
       "variant": ""
     },
     {
-      "annotatedBasename": "ScreenPreviewsKt.DevicesScreenLoadingPreview_Devices_-_loading.a11y.png",
-      "cleanBasename": "ScreenPreviewsKt.DevicesScreenLoadingPreview_Devices_-_loading.png",
+      "annotatedBasename": "DevicesScreenLoadingPreview_Devices_loading.a11y.png",
+      "cleanBasename": "DevicesScreenLoadingPreview_Devices_loading.png",
       "findings": [],
       "functionName": "DevicesScreenLoadingPreview",
       "module": "composeApp",
@@ -230,8 +230,8 @@
       "variant": ""
     },
     {
-      "annotatedBasename": "ScreenPreviewsKt.HomeEmptyPreview_Home_empty.a11y.png",
-      "cleanBasename": "ScreenPreviewsKt.HomeEmptyPreview_Home_empty.png",
+      "annotatedBasename": "HomeEmptyPreview_Home_empty.a11y.png",
+      "cleanBasename": "HomeEmptyPreview_Home_empty.png",
       "findings": [
         {
           "boundsInScreen": "128,296,275,317",
@@ -248,8 +248,8 @@
       "variant": ""
     },
     {
-      "annotatedBasename": "ScreenPreviewsKt.ManageEmptyPreview_Manage_-_empty.a11y.png",
-      "cleanBasename": "ScreenPreviewsKt.ManageEmptyPreview_Manage_-_empty.png",
+      "annotatedBasename": "ManageEmptyPreview_Manage_empty.a11y.png",
+      "cleanBasename": "ManageEmptyPreview_Manage_empty.png",
       "findings": [],
       "functionName": "ManageEmptyPreview",
       "module": "composeApp",
@@ -258,8 +258,8 @@
       "variant": ""
     },
     {
-      "annotatedBasename": "ScreenPreviewsKt.ManagePopulatedPreview_Manage_-_populated.a11y.png",
-      "cleanBasename": "ScreenPreviewsKt.ManagePopulatedPreview_Manage_-_populated.png",
+      "annotatedBasename": "ManagePopulatedPreview_Manage_populated.a11y.png",
+      "cleanBasename": "ManagePopulatedPreview_Manage_populated.png",
       "findings": [],
       "functionName": "ManagePopulatedPreview",
       "module": "composeApp",
@@ -268,8 +268,8 @@
       "variant": ""
     },
     {
-      "annotatedBasename": "ScreenPreviewsKt.ManageRefreshingPreview_Manage_-_refreshing.a11y.png",
-      "cleanBasename": "ScreenPreviewsKt.ManageRefreshingPreview_Manage_-_refreshing.png",
+      "annotatedBasename": "ManageRefreshingPreview_Manage_refreshing.a11y.png",
+      "cleanBasename": "ManageRefreshingPreview_Manage_refreshing.png",
       "findings": [],
       "functionName": "ManageRefreshingPreview",
       "module": "composeApp",
@@ -278,8 +278,8 @@
       "variant": ""
     },
     {
-      "annotatedBasename": "playstore.PlayStorePreviewsKt.PlayStorePhoneBluetooth_Play_Store_phone_Bluetooth.a11y.png",
-      "cleanBasename": "playstore.PlayStorePreviewsKt.PlayStorePhoneBluetooth_Play_Store_phone_Bluetooth.png",
+      "annotatedBasename": "PlayStorePhoneBluetooth_Play_Store_phone_Bluetooth.a11y.png",
+      "cleanBasename": "PlayStorePhoneBluetooth_Play_Store_phone_Bluetooth.png",
       "findings": [],
       "functionName": "PlayStorePhoneBluetooth",
       "module": "composeApp",
@@ -288,8 +288,8 @@
       "variant": "pixel_2"
     },
     {
-      "annotatedBasename": "playstore.PlayStorePreviewsKt.PlayStorePhoneHomeDark_Play_Store_phone_Home_dark.a11y.png",
-      "cleanBasename": "playstore.PlayStorePreviewsKt.PlayStorePhoneHomeDark_Play_Store_phone_Home_dark.png",
+      "annotatedBasename": "PlayStorePhoneHomeDark_Play_Store_phone_Home_dark.a11y.png",
+      "cleanBasename": "PlayStorePhoneHomeDark_Play_Store_phone_Home_dark.png",
       "findings": [
         {
           "boundsInScreen": "731,1145,868,1271",
@@ -320,8 +320,8 @@
       "variant": "pixel_2"
     },
     {
-      "annotatedBasename": "playstore.PlayStorePreviewsKt.PlayStorePhoneHomeLight_Play_Store_phone_Home_light.a11y.png",
-      "cleanBasename": "playstore.PlayStorePreviewsKt.PlayStorePhoneHomeLight_Play_Store_phone_Home_light.png",
+      "annotatedBasename": "PlayStorePhoneHomeLight_Play_Store_phone_Home_light.a11y.png",
+      "cleanBasename": "PlayStorePhoneHomeLight_Play_Store_phone_Home_light.png",
       "findings": [
         {
           "boundsInScreen": "731,1145,868,1271",
@@ -352,8 +352,8 @@
       "variant": "pixel_2"
     },
     {
-      "annotatedBasename": "playstore.PlayStorePreviewsKt.PlayStorePhoneManage_Play_Store_phone_Manage.a11y.png",
-      "cleanBasename": "playstore.PlayStorePreviewsKt.PlayStorePhoneManage_Play_Store_phone_Manage.png",
+      "annotatedBasename": "PlayStorePhoneManage_Play_Store_phone_Manage.a11y.png",
+      "cleanBasename": "PlayStorePhoneManage_Play_Store_phone_Manage.png",
       "findings": [
         {
           "boundsInScreen": "84,776,221,902",
@@ -370,8 +370,8 @@
       "variant": "pixel_2"
     },
     {
-      "annotatedBasename": "playstore.PlayStorePreviewsKt.PlayStorePhoneSync_Play_Store_phone_Sync.a11y.png",
-      "cleanBasename": "playstore.PlayStorePreviewsKt.PlayStorePhoneSync_Play_Store_phone_Sync.png",
+      "annotatedBasename": "PlayStorePhoneSync_Play_Store_phone_Sync.a11y.png",
+      "cleanBasename": "PlayStorePhoneSync_Play_Store_phone_Sync.png",
       "findings": [
         {
           "boundsInScreen": "85,641,211,767",
@@ -388,8 +388,8 @@
       "variant": "pixel_2"
     },
     {
-      "annotatedBasename": "playstore.PlayStorePreviewsKt.PlayStoreSevenInchHomeDark_Play_Store_7_tablet_Home_dark.a11y.png",
-      "cleanBasename": "playstore.PlayStorePreviewsKt.PlayStoreSevenInchHomeDark_Play_Store_7_tablet_Home_dark.png",
+      "annotatedBasename": "PlayStoreSevenInchHomeDark_Play_Store_7_tablet_Home_dark.a11y.png",
+      "cleanBasename": "PlayStoreSevenInchHomeDark_Play_Store_7_tablet_Home_dark.png",
       "findings": [
         {
           "boundsInScreen": "937,870,1041,966",
@@ -420,8 +420,8 @@
       "variant": "spec:width=600dp,height=960dp,dpi=320"
     },
     {
-      "annotatedBasename": "playstore.PlayStorePreviewsKt.PlayStoreSevenInchHomeLight_Play_Store_7_tablet_Home_light.a11y.png",
-      "cleanBasename": "playstore.PlayStorePreviewsKt.PlayStoreSevenInchHomeLight_Play_Store_7_tablet_Home_light.png",
+      "annotatedBasename": "PlayStoreSevenInchHomeLight_Play_Store_7_tablet_Home_light.a11y.png",
+      "cleanBasename": "PlayStoreSevenInchHomeLight_Play_Store_7_tablet_Home_light.png",
       "findings": [
         {
           "boundsInScreen": "937,870,1041,966",
@@ -452,8 +452,8 @@
       "variant": "spec:width=600dp,height=960dp,dpi=320"
     },
     {
-      "annotatedBasename": "playstore.PlayStorePreviewsKt.PlayStoreTenInchHomeDark_Play_Store_10_tablet_Home_dark.a11y.png",
-      "cleanBasename": "playstore.PlayStorePreviewsKt.PlayStoreTenInchHomeDark_Play_Store_10_tablet_Home_dark.png",
+      "annotatedBasename": "PlayStoreTenInchHomeDark_Play_Store_10_tablet_Home_dark.a11y.png",
+      "cleanBasename": "PlayStoreTenInchHomeDark_Play_Store_10_tablet_Home_dark.png",
       "findings": [
         {
           "boundsInScreen": "1337,486,1441,582",
@@ -484,8 +484,8 @@
       "variant": "spec:width=800dp,height=1280dp,dpi=320"
     },
     {
-      "annotatedBasename": "playstore.PlayStorePreviewsKt.PlayStoreTenInchHomeLight_Play_Store_10_tablet_Home_light.a11y.png",
-      "cleanBasename": "playstore.PlayStorePreviewsKt.PlayStoreTenInchHomeLight_Play_Store_10_tablet_Home_light.png",
+      "annotatedBasename": "PlayStoreTenInchHomeLight_Play_Store_10_tablet_Home_light.a11y.png",
+      "cleanBasename": "PlayStoreTenInchHomeLight_Play_Store_10_tablet_Home_light.png",
       "findings": [
         {
           "boundsInScreen": "1337,486,1441,582",
@@ -516,8 +516,8 @@
       "variant": "spec:width=800dp,height=1280dp,dpi=320"
     },
     {
-      "annotatedBasename": "redesign.RedesignPreviewsKt.SyncModeDoneCadencePreview_Cadence_Sync_complete.a11y.png",
-      "cleanBasename": "redesign.RedesignPreviewsKt.SyncModeDoneCadencePreview_Cadence_Sync_complete.png",
+      "annotatedBasename": "SyncModeDoneCadencePreview_Cadence_Sync_complete.a11y.png",
+      "cleanBasename": "SyncModeDoneCadencePreview_Cadence_Sync_complete.png",
       "findings": [],
       "functionName": "SyncModeDoneCadencePreview",
       "module": "composeApp",
@@ -526,8 +526,8 @@
       "variant": ""
     },
     {
-      "annotatedBasename": "redesign.RedesignPreviewsKt.SyncModeDonePreview_System_Sync_complete.a11y.png",
-      "cleanBasename": "redesign.RedesignPreviewsKt.SyncModeDonePreview_System_Sync_complete.png",
+      "annotatedBasename": "SyncModeDonePreview_System_Sync_complete.a11y.png",
+      "cleanBasename": "SyncModeDonePreview_System_Sync_complete.png",
       "findings": [],
       "functionName": "SyncModeDonePreview",
       "module": "composeApp",
@@ -536,8 +536,8 @@
       "variant": ""
     },
     {
-      "annotatedBasename": "redesign.RedesignPreviewsKt.SyncModeReadyCadenceDarkPreview_Cadence_dark_Sync_ready.a11y.png",
-      "cleanBasename": "redesign.RedesignPreviewsKt.SyncModeReadyCadenceDarkPreview_Cadence_dark_Sync_ready.png",
+      "annotatedBasename": "SyncModeReadyCadenceDarkPreview_Cadence_dark_Sync_ready.a11y.png",
+      "cleanBasename": "SyncModeReadyCadenceDarkPreview_Cadence_dark_Sync_ready.png",
       "findings": [],
       "functionName": "SyncModeReadyCadenceDarkPreview",
       "module": "composeApp",
@@ -546,8 +546,8 @@
       "variant": ""
     },
     {
-      "annotatedBasename": "redesign.RedesignPreviewsKt.SyncModeReadyCadencePreview_Cadence_Sync_ready.a11y.png",
-      "cleanBasename": "redesign.RedesignPreviewsKt.SyncModeReadyCadencePreview_Cadence_Sync_ready.png",
+      "annotatedBasename": "SyncModeReadyCadencePreview_Cadence_Sync_ready.a11y.png",
+      "cleanBasename": "SyncModeReadyCadencePreview_Cadence_Sync_ready.png",
       "findings": [],
       "functionName": "SyncModeReadyCadencePreview",
       "module": "composeApp",
@@ -556,8 +556,8 @@
       "variant": ""
     },
     {
-      "annotatedBasename": "redesign.RedesignPreviewsKt.SyncModeReadyPreview_System_Sync_ready.a11y.png",
-      "cleanBasename": "redesign.RedesignPreviewsKt.SyncModeReadyPreview_System_Sync_ready.png",
+      "annotatedBasename": "SyncModeReadyPreview_System_Sync_ready.a11y.png",
+      "cleanBasename": "SyncModeReadyPreview_System_Sync_ready.png",
       "findings": [],
       "functionName": "SyncModeReadyPreview",
       "module": "composeApp",
@@ -566,8 +566,8 @@
       "variant": ""
     },
     {
-      "annotatedBasename": "redesign.RedesignPreviewsKt.SyncModeSyncingCadencePreview_Cadence_Sync_syncing.a11y.png",
-      "cleanBasename": "redesign.RedesignPreviewsKt.SyncModeSyncingCadencePreview_Cadence_Sync_syncing.png",
+      "annotatedBasename": "SyncModeSyncingCadencePreview_Cadence_Sync_syncing.a11y.png",
+      "cleanBasename": "SyncModeSyncingCadencePreview_Cadence_Sync_syncing.png",
       "findings": [],
       "functionName": "SyncModeSyncingCadencePreview",
       "module": "composeApp",
@@ -576,8 +576,8 @@
       "variant": ""
     },
     {
-      "annotatedBasename": "redesign.RedesignPreviewsKt.SyncModeSyncingPreview_System_Sync_syncing.a11y.png",
-      "cleanBasename": "redesign.RedesignPreviewsKt.SyncModeSyncingPreview_System_Sync_syncing.png",
+      "annotatedBasename": "SyncModeSyncingPreview_System_Sync_syncing.a11y.png",
+      "cleanBasename": "SyncModeSyncingPreview_System_Sync_syncing.png",
       "findings": [],
       "functionName": "SyncModeSyncingPreview",
       "module": "composeApp",
