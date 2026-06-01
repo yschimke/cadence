@@ -27,6 +27,11 @@
       ]
     },
     {
+      "description": "Ignore kotlinx-datetime *-compat artifacts that keep the legacy 0.6.x API",
+      "matchPackageNames": ["org.jetbrains.kotlinx:kotlinx-datetime"],
+      "allowedVersions": "!/-compat$/"
+    },
+    {
       "groupName": "Compose Multiplatform",
       "matchPackageNames": [
         "/^org\\.jetbrains\\.compose($|[.:])/",
