@@ -15,6 +15,7 @@ androidx-ui-google-fonts = "1.11.2"
 androidx-work = "2.11.2"
 bonsaiCore = "1.2.0"
 compose-multiplatform = "1.11.0"
+composePreview = "0.13.4"
 composeWebviewMultiplatform = "2.0.3"
 coreSplashscreen = "1.2.0"
 datastore = "1.2.1"
@@ -49,6 +50,7 @@ androidx-material = { group = "com.google.android.material", name = "material", 
 androidx-runner = { module = "androidx.test:runner", version.ref = "runner" }
 androidx-test-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-junit" }
 androidx-ui-text-google-fonts = { module = "androidx.compose.ui:ui-text-google-fonts", version.ref = "androidx-ui-google-fonts" }
+androidx-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "androidx-ui-google-fonts" }
 androidx-work-runtime = { module = "androidx.work:work-runtime-ktx", version.ref = "androidx-work" }
 bonsai-core = { module = "cafe.adriel.bonsai:bonsai-core", version.ref = "bonsaiCore" }
 bonsai-file-system = { module = "cafe.adriel.bonsai:bonsai-file-system", version.ref = "bonsaiCore" }
@@ -71,6 +73,7 @@ androidKotlinMultiplatformLibrary = { id = "com.android.kotlin.multiplatform.lib
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
+composePreview = { id = "ee.schimke.composeai.preview", version.ref = "composePreview" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 ktfmt = { id = "com.ncorti.ktfmt.gradle", version.ref = "ktfmt" }
 metro = { id = "dev.zacsweers.metro", version.ref = "metro" }

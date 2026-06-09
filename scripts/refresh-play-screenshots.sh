@@ -9,7 +9,7 @@ set -euo pipefail
 
 cd "$(git rev-parse --show-toplevel)"
 
-./gradlew :composeApp:renderPreviews
+./gradlew :composeApp:composePreviewRenderAll
 
 RENDERS="composeApp/build/compose-previews/renders"
 GRAPHICS="composeApp/src/main/play/listings/en-GB/graphics"

@@ -8,6 +8,7 @@ plugins {
   alias(libs.plugins.androidApplication)
   alias(libs.plugins.composeMultiplatform)
   alias(libs.plugins.composeCompiler)
+  alias(libs.plugins.composePreview)
   alias(libs.plugins.tapmoc)
   alias(libs.plugins.metro)
   alias(libs.plugins.playPublisher)
@@ -85,6 +86,7 @@ dependencies {
   implementation(libs.androidx.ui.text.google.fonts)
   implementation(libs.ktor.client.core) // io.ktor.http.Url, used by BookmarksScreen previews
 
+  testImplementation(libs.androidx.ui.test.manifest)
   androidTestImplementation(libs.junit)
   androidTestImplementation(libs.androidx.test.junit)
   androidTestImplementation(libs.androidx.runner)
