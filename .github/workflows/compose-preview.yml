@@ -42,4 +42,4 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v6.1.1
 
-      - uses: yschimke/compose-ai-tools/.github/actions/apply@v0.13.4
+      - uses: yschimke/compose-ai-tools/.github/actions/apply@v0.14.0
