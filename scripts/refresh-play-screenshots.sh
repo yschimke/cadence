@@ -5,11 +5,14 @@
 #
 # Source of truth:
 # composeApp/src/main/kotlin/ee/schimke/cadence/preview/playstore/PlayStorePreviews.kt
+#
+# Requires the compose-preview CLI on PATH (https://github.com/yschimke/compose-ai-tools).
+# It auto-injects the Gradle plugin, so no build file applies it directly.
 set -euo pipefail
 
 cd "$(git rev-parse --show-toplevel)"
 
-./gradlew :composeApp:renderPreviews
+compose-preview render --module composeApp
 
 RENDERS="composeApp/build/compose-previews/renders"
 GRAPHICS="composeApp/src/main/play/listings/en-GB/graphics"
