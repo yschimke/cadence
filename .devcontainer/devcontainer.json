@@ -1,0 +1,11 @@
+{
+  "name": "coo.ee/env • android,android-cli,android-emulator,compose,java",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "features": {
+    "ghcr.io/anthropics/devcontainer-features/claude-code:1.0": {}
+  },
+  "postCreateCommand": "curl -fsSL https://env.coo.ee/android,android-cli,android-emulator,compose,java | bash",
+  "containerEnv": {
+    "COOEE_ALLOWED_DOMAINS": "*.jetbrains.com,api.adoptium.net,api.foojay.io,cache.nixos.org,central.sonatype.com,channels.nixos.org,dl.google.com,fonts.googleapis.com,fonts.gstatic.com,github.com,install.determinate.systems,jitpack.io,maven.google.com,objects.githubusercontent.com,packages.jetbrains.team,repo.gradle.org,services.gradle.org"
+  }
+}
