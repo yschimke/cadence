@@ -6,9 +6,6 @@
       "BASE": "mcr.microsoft.com/devcontainers/base:ubuntu"
     }
   },
-  "features": {
-    "ghcr.io/anthropics/devcontainer-features/claude-code:1.0": {}
-  },
   "runArgs": [
     "--cap-add=NET_ADMIN",
     "--cap-add=NET_RAW"
@@ -16,6 +13,6 @@
   "postCreateCommand": "curl -fsSL https://env.coo.ee/android,android-cli,android-emulator,compose,java | bash",
   "postStartCommand": "sudo /usr/local/bin/init-firewall.sh",
   "containerEnv": {
-    "COOEE_ALLOWED_DOMAINS": "api.adoptium.net,api.foojay.io,cache.nixos.org,central.sonatype.com,channels.nixos.org,coo.ee,dl.google.com,env.coo.ee,fonts.googleapis.com,fonts.gstatic.com,github.com,install.determinate.systems,jitpack.io,maven.google.com,objects.githubusercontent.com,packages.jetbrains.team,repo.gradle.org,services.gradle.org"
+    "COOEE_ALLOWED_DOMAINS": "api.adoptium.net,api.foojay.io,cache.nixos.org,central.sonatype.com,channels.nixos.org,dl.google.com,env.coo.ee,fonts.googleapis.com,fonts.gstatic.com,github.com,install.determinate.systems,jitpack.io,maven.google.com,objects.githubusercontent.com,packages.jetbrains.team,repo.gradle.org,services.gradle.org"
   }
 }
