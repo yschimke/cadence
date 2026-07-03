@@ -1,0 +1,119 @@
+{
+  "$comment": "Design-catalog spec for the Cadence design system. Code-led: it declares which @Preview composables (by function name) make up the published sticker sheet, their grouping, and captions. Consumed by @design-parity/catalog-export (via compose-ai-tools' scripts/design-artifacts/generate-design-catalog.mjs) over a `compose-preview bundle pack --module :composeApp` render to produce the importable design-artifacts/cadence bundle the public preview server serves at /cadence/. Each `preview` MUST equal the exact @Preview function name in :composeApp (ee.schimke.cadence.preview.ScreenPreviews).",
+  "system": "cadence",
+  "title": "Cadence",
+  "library": [
+    "androidx.compose.material3:material3",
+    "ee.schimke.cadence (CadenceTheme)"
+  ],
+  "module": "composeApp",
+  "modes": ["light", "dark"],
+  "breakpoints": [{ "size": "compact", "widthDp": 412 }],
+  "groups": [
+    {
+      "name": "Home",
+      "components": [
+        {
+          "componentId": "Home/Empty",
+          "preview": "HomeEmptyPreview",
+          "caption": "Home screen, empty state."
+        }
+      ]
+    },
+    {
+      "name": "Devices",
+      "components": [
+        {
+          "componentId": "Devices/Loaded",
+          "preview": "DevicesScreenLoadedPreview",
+          "caption": "Devices list, loaded."
+        },
+        {
+          "componentId": "Devices/Loading",
+          "preview": "DevicesScreenLoadingPreview",
+          "caption": "Devices list, loading."
+        },
+        {
+          "componentId": "Devices/Empty",
+          "preview": "DevicesScreenEmptyPreview",
+          "caption": "Devices list, empty state."
+        }
+      ]
+    },
+    {
+      "name": "Bookmarks",
+      "components": [
+        {
+          "componentId": "Bookmarks/Loaded",
+          "preview": "BookmarksScreenLoadedPreview",
+          "caption": "Bookmarks, loaded."
+        },
+        {
+          "componentId": "Bookmarks/Loading",
+          "preview": "BookmarksScreenLoadingPreview",
+          "caption": "Bookmarks, loading."
+        }
+      ]
+    },
+    {
+      "name": "Device files",
+      "components": [
+        {
+          "componentId": "DeviceFiles/Loading",
+          "preview": "DeviceFilesLoadingPreview",
+          "caption": "Device files, loading."
+        },
+        {
+          "componentId": "DeviceFiles/NotAvailable",
+          "preview": "DeviceFilesNotAvailablePreview",
+          "caption": "Device files, not available."
+        }
+      ]
+    },
+    {
+      "name": "Bluetooth",
+      "components": [
+        {
+          "componentId": "Bluetooth/Disconnected",
+          "preview": "BluetoothDisconnectedPreview",
+          "caption": "Bluetooth controls, disconnected."
+        },
+        {
+          "componentId": "Bluetooth/ConnectedPlaying",
+          "preview": "BluetoothConnectedPlayingPreview",
+          "caption": "Bluetooth controls, connected and playing."
+        },
+        {
+          "componentId": "Bluetooth/PermissionMissing",
+          "preview": "BluetoothPermissionMissingPreview",
+          "caption": "Bluetooth controls, permission missing."
+        },
+        {
+          "componentId": "Bluetooth/Mp3Mode",
+          "preview": "BluetoothMp3ModePreview",
+          "caption": "Bluetooth controls, MP3 mode."
+        }
+      ]
+    },
+    {
+      "name": "Manage",
+      "components": [
+        {
+          "componentId": "Manage/Empty",
+          "preview": "ManageEmptyPreview",
+          "caption": "Manage sync, empty."
+        },
+        {
+          "componentId": "Manage/Populated",
+          "preview": "ManagePopulatedPreview",
+          "caption": "Manage sync, populated (hosts the Appearance toggle)."
+        },
+        {
+          "componentId": "Manage/Refreshing",
+          "preview": "ManageRefreshingPreview",
+          "caption": "Manage sync, refreshing."
+        }
+      ]
+    }
+  ]
+}
