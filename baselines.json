@@ -1,4 +1,32 @@
 {
+  "composeApp/ee.schimke.cadence.preview.FoundationPreviewsKt.FoundationCadenceDarkPreview_Foundation \u2014 Cadence dark": {
+    "captureLabel": "",
+    "functionName": "FoundationCadenceDarkPreview",
+    "renderBasename": "FoundationCadenceDarkPreview_Foundation_Cadence_dark.png",
+    "sha256": "07352aafcb3ae5c7e77b6f08543f37c1d2b1603b3529f059a4fa163ca079b402",
+    "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/FoundationPreviews.kt"
+  },
+  "composeApp/ee.schimke.cadence.preview.FoundationPreviewsKt.FoundationCadenceLightPreview_Foundation \u2014 Cadence light": {
+    "captureLabel": "",
+    "functionName": "FoundationCadenceLightPreview",
+    "renderBasename": "FoundationCadenceLightPreview_Foundation_Cadence_light.png",
+    "sha256": "e5437dc7f1749f140d3ffedfeefb7a31367f380f07352e70776de0d0b71d7a94",
+    "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/FoundationPreviews.kt"
+  },
+  "composeApp/ee.schimke.cadence.preview.FoundationPreviewsKt.FoundationMaterial3DarkPreview_Foundation \u2014 Material 3 dark": {
+    "captureLabel": "",
+    "functionName": "FoundationMaterial3DarkPreview",
+    "renderBasename": "FoundationMaterial3DarkPreview_Foundation_Material_3_dark.png",
+    "sha256": "1353b484ab6a29b3ee3abb8ddd9779e10f911b48f9d60bf9746d0412b1fbfd00",
+    "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/FoundationPreviews.kt"
+  },
+  "composeApp/ee.schimke.cadence.preview.FoundationPreviewsKt.FoundationMaterial3LightPreview_Foundation \u2014 Material 3 light": {
+    "captureLabel": "",
+    "functionName": "FoundationMaterial3LightPreview",
+    "renderBasename": "FoundationMaterial3LightPreview_Foundation_Material_3_light.png",
+    "sha256": "0de824e8c37a721bcbcee01d4e24f50d1c9becdec24f293d166b796e1a752dc1",
+    "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/FoundationPreviews.kt"
+  },
   "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.BluetoothConnectedPlayingPreview_BT controls - connected + playing": {
     "captureLabel": "",
     "functionName": "BluetoothConnectedPlayingPreview",

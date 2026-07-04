@@ -6,6 +6,10 @@ Auto-generated from `main`. Browse inline or compare against PR branches.
 
 | Preview | Image |
 |---------|-------|
+| `FoundationCadenceDarkPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/FoundationCadenceDarkPreview_Foundation_Cadence_dark.png" width="150" /> |
+| `FoundationCadenceLightPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/FoundationCadenceLightPreview_Foundation_Cadence_light.png" width="150" /> |
+| `FoundationMaterial3DarkPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/FoundationMaterial3DarkPreview_Foundation_Material_3_dark.png" width="150" /> |
+| `FoundationMaterial3LightPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/FoundationMaterial3LightPreview_Foundation_Material_3_light.png" width="150" /> |
 | `BluetoothConnectedPlayingPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/BluetoothConnectedPlayingPreview_BT_controls_connected_playing.png" width="150" /> |
 | `BluetoothDisconnectedPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/BluetoothDisconnectedPreview_BT_controls_disconnected.png" width="150" /> |
 | `BluetoothMp3ModePreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/BluetoothMp3ModePreview_BT_controls_MP3_mode.png" width="150" /> |
