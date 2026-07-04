@@ -230,6 +230,46 @@
       "variant": ""
     },
     {
+      "annotatedBasename": "FoundationCadenceDarkPreview_Foundation_Cadence_dark.a11y.png",
+      "cleanBasename": "FoundationCadenceDarkPreview_Foundation_Cadence_dark.png",
+      "findings": [],
+      "functionName": "FoundationCadenceDarkPreview",
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.FoundationPreviewsKt.FoundationCadenceDarkPreview_Foundation \u2014 Cadence dark",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/FoundationPreviews.kt",
+      "variant": ""
+    },
+    {
+      "annotatedBasename": "FoundationCadenceLightPreview_Foundation_Cadence_light.a11y.png",
+      "cleanBasename": "FoundationCadenceLightPreview_Foundation_Cadence_light.png",
+      "findings": [],
+      "functionName": "FoundationCadenceLightPreview",
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.FoundationPreviewsKt.FoundationCadenceLightPreview_Foundation \u2014 Cadence light",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/FoundationPreviews.kt",
+      "variant": ""
+    },
+    {
+      "annotatedBasename": "FoundationMaterial3DarkPreview_Foundation_Material_3_dark.a11y.png",
+      "cleanBasename": "FoundationMaterial3DarkPreview_Foundation_Material_3_dark.png",
+      "findings": [],
+      "functionName": "FoundationMaterial3DarkPreview",
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.FoundationPreviewsKt.FoundationMaterial3DarkPreview_Foundation \u2014 Material 3 dark",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/FoundationPreviews.kt",
+      "variant": ""
+    },
+    {
+      "annotatedBasename": "FoundationMaterial3LightPreview_Foundation_Material_3_light.a11y.png",
+      "cleanBasename": "FoundationMaterial3LightPreview_Foundation_Material_3_light.png",
+      "findings": [],
+      "functionName": "FoundationMaterial3LightPreview",
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.FoundationPreviewsKt.FoundationMaterial3LightPreview_Foundation \u2014 Material 3 light",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/FoundationPreviews.kt",
+      "variant": ""
+    },
+    {
       "annotatedBasename": "HomeEmptyPreview_Home_empty.a11y.png",
       "cleanBasename": "HomeEmptyPreview_Home_empty.png",
       "findings": [

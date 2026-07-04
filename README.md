@@ -1,6 +1,6 @@
 # Accessibility Report
 
-_Auto-generated from `compose-preview/a11y/main`. 36 preview(s) across 1 module(s) · 10 error(s) · 14 warning(s) · 6 info._
+_Auto-generated from `compose-preview/a11y/main`. 40 preview(s) across 1 module(s) · 10 error(s) · 14 warning(s) · 6 info._
 
 Browse inline; image URLs are pinned to the commit SHA on the baseline branch so links keep resolving after merge.
 
@@ -114,6 +114,30 @@ _No findings._
 ### `DevicesScreenLoadingPreview`
 
 <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/DevicesScreenLoadingPreview_Devices_loading.a11y.png" width="400" />
+
+_No findings._
+
+### `FoundationCadenceDarkPreview`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/FoundationCadenceDarkPreview_Foundation_Cadence_dark.a11y.png" width="400" />
+
+_No findings._
+
+### `FoundationCadenceLightPreview`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/FoundationCadenceLightPreview_Foundation_Cadence_light.a11y.png" width="400" />
+
+_No findings._
+
+### `FoundationMaterial3DarkPreview`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/FoundationMaterial3DarkPreview_Foundation_Material_3_dark.a11y.png" width="400" />
+
+_No findings._
+
+### `FoundationMaterial3LightPreview`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/FoundationMaterial3LightPreview_Foundation_Material_3_light.a11y.png" width="400" />
 
 _No findings._
 
