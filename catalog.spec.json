@@ -11,6 +11,31 @@
   "breakpoints": [{ "size": "compact", "widthDp": 412 }],
   "groups": [
     {
+      "name": "Foundation",
+      "components": [
+        {
+          "componentId": "Theme/Cadence-Light",
+          "preview": "FoundationCadenceLightPreview",
+          "caption": "Cadence theme — colour roles, elevation and type (light)."
+        },
+        {
+          "componentId": "Theme/Cadence-Dark",
+          "preview": "FoundationCadenceDarkPreview",
+          "caption": "Cadence theme (dark)."
+        },
+        {
+          "componentId": "Theme/Material3-Light",
+          "preview": "FoundationMaterial3LightPreview",
+          "caption": "Material 3 baseline (untinted) reference (light)."
+        },
+        {
+          "componentId": "Theme/Material3-Dark",
+          "preview": "FoundationMaterial3DarkPreview",
+          "caption": "Material 3 baseline (dark)."
+        }
+      ]
+    },
+    {
       "name": "Home",
       "components": [
         {
