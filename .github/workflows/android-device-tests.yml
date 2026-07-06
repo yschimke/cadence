@@ -64,7 +64,7 @@ jobs:
 
       - name: Create AVD snapshot for caching
         if: steps.avd-cache.outputs.cache-hit != 'true'
-        uses: reactivecircus/android-emulator-runner@v2.37.0
+        uses: reactivecircus/android-emulator-runner@v2.38.0
         with:
           api-level: ${{ matrix.api-level }}
           target: ${{ matrix.target }}
@@ -75,7 +75,7 @@ jobs:
           script: echo "Generated AVD snapshot."
 
       - name: Run connectedDebugAndroidTest
-        uses: reactivecircus/android-emulator-runner@v2.37.0
+        uses: reactivecircus/android-emulator-runner@v2.38.0
         with:
           api-level: ${{ matrix.api-level }}
           target: ${{ matrix.target }}
