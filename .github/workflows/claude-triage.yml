@@ -32,7 +32,7 @@ jobs:
         with:
           # Full history so recent commits can be matched against issues.
           fetch-depth: 0
-      - uses: anthropics/claude-code-action@v1.0.163
+      - uses: anthropics/claude-code-action@v1.0.165
         with:
           # Bills the Claude subscription's included usage.
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
