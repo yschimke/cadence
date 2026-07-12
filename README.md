@@ -1,6 +1,6 @@
 # Accessibility Report
 
-_Auto-generated from `compose-preview/a11y/main`. 40 preview(s) across 1 module(s) · 10 error(s) · 14 warning(s) · 6 info._
+_Auto-generated from `compose-preview/a11y/main`. 40 preview(s) across 1 module(s) · 1 error(s) · 39 warning(s) · 19 info._
 
 Browse inline; image URLs are pinned to the commit SHA on the baseline branch so links keep resolving after merge.
 
@@ -10,25 +10,19 @@ Browse inline; image URLs are pinned to the commit SHA on the baseline branch so
 
 <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/BluetoothConnectedPlayingPreview_BT_controls_connected_playing.a11y.png" width="400" />
 
-| # | Level | Rule | Element | Message |
-|--:|---|---|---|---|
-| 1 | ERROR | TouchTargetSizeCheck | android.view.View | This item's width is 33dp. Consider making the width of this touch target 48dp or larger. |
+_No findings._
 
 ### `BluetoothDisconnectedPreview`
 
 <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/BluetoothDisconnectedPreview_BT_controls_disconnected.a11y.png" width="400" />
 
-| # | Level | Rule | Element | Message |
-|--:|---|---|---|---|
-| 1 | ERROR | TouchTargetSizeCheck | android.view.View | This item's width is 28dp. Consider making the width of this touch target 48dp or larger. |
+_No findings._
 
 ### `BluetoothMp3ModePreview`
 
 <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/BluetoothMp3ModePreview_BT_controls_MP3_mode.a11y.png" width="400" />
 
-| # | Level | Rule | Element | Message |
-|--:|---|---|---|---|
-| 1 | ERROR | TouchTargetSizeCheck | android.view.View | This item's width is 33dp. Consider making the width of this touch target 48dp or larger. |
+_No findings._
 
 ### `BluetoothPermissionMissingPreview`
 
@@ -52,19 +46,31 @@ _No findings._
 
 <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/CurateHomeCadenceDarkPreview_Cadence_dark_Curate_home.a11y.png" width="400" />
 
-_No findings._
+| # | Level | Rule | Element | Message |
+|--:|---|---|---|---|
+| 1 | WARNING | DuplicateSpeakableTextCheck | android.view.View | This clickable item's speakable text: "Off" is identical to that of 1 other item(s). |
+| 2 | WARNING | DuplicateSpeakableTextCheck | android.view.View | This clickable item's speakable text: "Refresh" is identical to that of 1 other item(s). |
+| 3 | INFO | DuplicateSpeakableTextCheck | android.widget.TextView | This non-clickable item's speakable text: "Auto" is identical to that of 2 other item(s). |
 
 ### `CurateHomeCadencePreview`
 
 <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/CurateHomeCadencePreview_Cadence_Curate_home.a11y.png" width="400" />
 
-_No findings._
+| # | Level | Rule | Element | Message |
+|--:|---|---|---|---|
+| 1 | WARNING | DuplicateSpeakableTextCheck | android.view.View | This clickable item's speakable text: "Off" is identical to that of 1 other item(s). |
+| 2 | WARNING | DuplicateSpeakableTextCheck | android.view.View | This clickable item's speakable text: "Refresh" is identical to that of 1 other item(s). |
+| 3 | INFO | DuplicateSpeakableTextCheck | android.widget.TextView | This non-clickable item's speakable text: "Auto" is identical to that of 2 other item(s). |
 
 ### `CurateHomePreview`
 
 <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/CurateHomePreview_System_Curate_home.a11y.png" width="400" />
 
-_No findings._
+| # | Level | Rule | Element | Message |
+|--:|---|---|---|---|
+| 1 | WARNING | DuplicateSpeakableTextCheck | android.view.View | This clickable item's speakable text: "Off" is identical to that of 1 other item(s). |
+| 2 | WARNING | DuplicateSpeakableTextCheck | android.view.View | This clickable item's speakable text: "Refresh" is identical to that of 1 other item(s). |
+| 3 | INFO | DuplicateSpeakableTextCheck | android.widget.TextView | This non-clickable item's speakable text: "Auto" is identical to that of 2 other item(s). |
 
 ### `CurateHomeUsbBannerCadencePreview`
 
@@ -72,7 +78,9 @@ _No findings._
 
 | # | Level | Rule | Element | Message |
 |--:|---|---|---|---|
-| 1 | ERROR | TouchTargetSizeCheck | android.view.View | This item's height is 8dp. Consider making the height of this touch target 32dp or larger. |
+| 1 | WARNING | DuplicateSpeakableTextCheck | android.view.View | This clickable item's speakable text: "Off" is identical to that of 1 other item(s). |
+| 2 | WARNING | DuplicateSpeakableTextCheck | android.view.View | This clickable item's speakable text: "Refresh" is identical to that of 1 other item(s). |
+| 3 | INFO | DuplicateSpeakableTextCheck | android.widget.TextView | This non-clickable item's speakable text: "Auto" is identical to that of 2 other item(s). |
 
 ### `CurateHomeUsbBannerPreview`
 
@@ -80,7 +88,9 @@ _No findings._
 
 | # | Level | Rule | Element | Message |
 |--:|---|---|---|---|
-| 1 | ERROR | TouchTargetSizeCheck | android.view.View | This item's height is 8dp. Consider making the height of this touch target 32dp or larger. |
+| 1 | WARNING | DuplicateSpeakableTextCheck | android.view.View | This clickable item's speakable text: "Off" is identical to that of 1 other item(s). |
+| 2 | WARNING | DuplicateSpeakableTextCheck | android.view.View | This clickable item's speakable text: "Refresh" is identical to that of 1 other item(s). |
+| 3 | INFO | DuplicateSpeakableTextCheck | android.widget.TextView | This non-clickable item's speakable text: "Auto" is identical to that of 2 other item(s). |
 
 ### `DeviceFilesLoadingPreview`
 
@@ -104,12 +114,7 @@ _No findings._
 
 <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/DevicesScreenLoadedPreview_Devices_loaded.a11y.png" width="400" />
 
-| # | Level | Rule | Element | Message |
-|--:|---|---|---|---|
-| 1 | ERROR | SpeakableTextPresentCheck | android.view.View | This item may not have a label readable by screen readers. |
-| 2 | ERROR | SpeakableTextPresentCheck | android.view.View | This item may not have a label readable by screen readers. |
-| 3 | ERROR | TouchTargetSizeCheck | android.view.View | This item's height is 7dp. Consider making the height of this touch target 48dp or larger. |
-| 4 | ERROR | TouchTargetSizeCheck | android.view.View | This item's height is 24dp. Consider making the height of this touch target 32dp or larger. |
+_No findings._
 
 ### `DevicesScreenLoadingPreview`
 
@@ -145,9 +150,7 @@ _No findings._
 
 <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/HomeEmptyPreview_Home_empty.a11y.png" width="400" />
 
-| # | Level | Rule | Element | Message |
-|--:|---|---|---|---|
-| 1 | ERROR | TouchTargetSizeCheck | android.view.View | This item's height is 8dp. Consider making the height of this touch target 32dp or larger. |
+_No findings._
 
 ### `ManageEmptyPreview`
 
@@ -159,13 +162,36 @@ _No findings._
 
 <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/ManagePopulatedPreview_Manage_populated.a11y.png" width="400" />
 
-_No findings._
+| # | Level | Rule | Element | Message |
+|--:|---|---|---|---|
+| 1 | INFO | DuplicateSpeakableTextCheck | android.widget.TextView | This non-clickable item's speakable text: "Manual refresh only" is identical to that of 1 other item(s). |
+| 2 | INFO | DuplicateSpeakableTextCheck | android.widget.TextView | This non-clickable item's speakable text: "NAS — Audiobooks" is identical to that of 1 other item(s). |
+| 3 | WARNING | DuplicateSpeakableTextCheck | android.view.View | This clickable item's speakable text: "Remove" is identical to that of 2 other item(s). |
+| 4 | WARNING | DuplicateSpeakableTextCheck | android.view.View | This clickable item's speakable text: "Off" is identical to that of 1 other item(s). |
+| 5 | WARNING | DuplicateSpeakableTextCheck | android.view.View | This clickable item's speakable text: "Refresh now" is identical to that of 2 other item(s). |
+| 6 | WARNING | DuplicateSpeakableTextCheck | android.view.View | This clickable item's speakable text: "Delete profile" is identical to that of 2 other item(s). |
+| 7 | WARNING | DuplicateSpeakableTextCheck | android.view.View | This clickable item's speakable text: "LOCAL" is identical to that of 1 other item(s). |
+| 8 | INFO | DuplicateSpeakableTextCheck | android.widget.TextView | This non-clickable item's speakable text: "Drive — Swim Mixes" is identical to that of 1 other item(s). |
+| 9 | INFO | DuplicateSpeakableTextCheck | android.widget.TextView | This non-clickable item's speakable text: "Podbean — staged" is identical to that of 1 other item(s). |
+| 10 | WARNING | DuplicateSpeakableTextCheck | android.view.View | This clickable item's speakable text: "On" is identical to that of 1 other item(s). |
 
 ### `ManageRefreshingPreview`
 
 <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/ManageRefreshingPreview_Manage_refreshing.a11y.png" width="400" />
 
-_No findings._
+| # | Level | Rule | Element | Message |
+|--:|---|---|---|---|
+| 1 | ERROR | TouchTargetSizeCheck | android.view.View | This item's height is 46dp. Consider making the height of this touch target 48dp or larger. |
+| 2 | INFO | DuplicateSpeakableTextCheck | android.widget.TextView | This non-clickable item's speakable text: "Manual refresh only" is identical to that of 1 other item(s). |
+| 3 | INFO | DuplicateSpeakableTextCheck | android.widget.TextView | This non-clickable item's speakable text: "NAS — Audiobooks" is identical to that of 1 other item(s). |
+| 4 | WARNING | DuplicateSpeakableTextCheck | android.view.View | This clickable item's speakable text: "Remove" is identical to that of 2 other item(s). |
+| 5 | WARNING | DuplicateSpeakableTextCheck | android.view.View | This clickable item's speakable text: "Off" is identical to that of 1 other item(s). |
+| 6 | WARNING | DuplicateSpeakableTextCheck | android.view.View | This clickable item's speakable text: "Refresh now" is identical to that of 2 other item(s). |
+| 7 | WARNING | DuplicateSpeakableTextCheck | android.view.View | This clickable item's speakable text: "Delete profile" is identical to that of 2 other item(s). |
+| 8 | WARNING | DuplicateSpeakableTextCheck | android.view.View | This clickable item's speakable text: "LOCAL" is identical to that of 1 other item(s). |
+| 9 | INFO | DuplicateSpeakableTextCheck | android.widget.TextView | This non-clickable item's speakable text: "Drive — Swim Mixes" is identical to that of 1 other item(s). |
+| 10 | INFO | DuplicateSpeakableTextCheck | android.widget.TextView | This non-clickable item's speakable text: "Podbean — staged" is identical to that of 1 other item(s). |
+| 11 | WARNING | DuplicateSpeakableTextCheck | android.view.View | This clickable item's speakable text: "On" is identical to that of 1 other item(s). |
 
 ### `PlayStorePhoneBluetooth` · `pixel_2`
 
@@ -265,19 +291,25 @@ _No findings._
 
 <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/SyncModeReadyCadenceDarkPreview_Cadence_dark_Sync_ready.a11y.png" width="400" />
 
-_No findings._
+| # | Level | Rule | Element | Message |
+|--:|---|---|---|---|
+| 1 | WARNING | DuplicateSpeakableTextCheck | android.widget.CheckBox | This clickable item's speakable text: "checked" is identical to that of 1 other item(s). |
 
 ### `SyncModeReadyCadencePreview`
 
 <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/SyncModeReadyCadencePreview_Cadence_Sync_ready.a11y.png" width="400" />
 
-_No findings._
+| # | Level | Rule | Element | Message |
+|--:|---|---|---|---|
+| 1 | WARNING | DuplicateSpeakableTextCheck | android.widget.CheckBox | This clickable item's speakable text: "checked" is identical to that of 1 other item(s). |
 
 ### `SyncModeReadyPreview`
 
 <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/main/renders/composeApp/SyncModeReadyPreview_System_Sync_ready.a11y.png" width="400" />
 
-_No findings._
+| # | Level | Rule | Element | Message |
+|--:|---|---|---|---|
+| 1 | WARNING | DuplicateSpeakableTextCheck | android.widget.CheckBox | This clickable item's speakable text: "checked" is identical to that of 1 other item(s). |
 
 ### `SyncModeSyncingCadencePreview`
 
