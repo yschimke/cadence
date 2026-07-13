@@ -43,7 +43,7 @@ jobs:
       # JDK 21 + Android SDK + Gradle, mirroring compose-preview.yml (the
       # :composeApp Robolectric render needs the Android SDK).
       - name: Set up JDK 21
-        uses: actions/setup-java@v5.4.0
+        uses: actions/setup-java@v5.5.0
         with:
           distribution: temurin
           java-version: 21
@@ -62,7 +62,7 @@ jobs:
       # Install the compose-preview CLI, pinned to the same release the render
       # path applies (apply@v0.16.43 in compose-preview.yml) so CLI and plugin
       # stay in lockstep.
-      - uses: yschimke/compose-ai-tools/.github/actions/install@v0.16.43
+      - uses: yschimke/compose-ai-tools/.github/actions/install@v0.16.44
         with:
           version: "0.16.43"
           github-token: ${{ github.token }}
