@@ -99,7 +99,11 @@ play {
 }
 
 tapmoc {
-  java(21)
+  // Java 17 bytecode (class-file v61) so the JDK-17 preview render daemon
+  // (Robolectric, preview.coo.ee) can load this module's classes; the build
+  // toolchain stays on JDK 21. v65 (JDK 21) bytecode throws
+  // UnsupportedClassVersionError in the render daemon.
+  java(17)
   kotlin(libs.versions.kotlin.get())
   checkDependencies()
   checkKotlinStdlibs(Severity.ERROR)
