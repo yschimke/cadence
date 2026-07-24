@@ -41,7 +41,10 @@ class MetroAppComponentFactory : AppComponentFactory() {
 
     override fun instantiateApplicationCompat(cl: ClassLoader, className: String): Application {
         val app = super.instantiateApplicationCompat(cl, className)
-        activityProviders = (app as AppGraphProvider).appGraph.activityProviders
+        // Renderer harnesses (e.g. Robolectric previews) may substitute a plain
+        // android.app.Application that doesn't expose the Metro graph; skip wiring
+        // the activity providers in that case rather than crashing on the cast.
+        (app as? AppGraphProvider)?.let { activityProviders = it.appGraph.activityProviders }
         return app
     }
 
