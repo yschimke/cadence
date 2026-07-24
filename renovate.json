@@ -62,6 +62,17 @@
     {
       "groupName": "GitHub Actions",
       "matchManagers": ["github-actions"]
+    },
+    {
+      "description": "compose-ai-tools ships the preview CLI, the ee.schimke.composeai Gradle plugin, and the reusable CI composite actions as a single release. Track it aggressively so CI always runs the latest renderer: one grouped PR (so the pinned action refs never skew apart from the catalog plugin pin), no weekly-window wait, and automerge once green.",
+      "matchPackageNames": [
+        "yschimke/compose-ai-tools",
+        "/^ee\\.schimke\\.composeai($|[.:])/"
+      ],
+      "groupName": "compose-ai-tools",
+      "schedule": ["at any time"],
+      "automerge": true,
+      "automergeType": "pr"
     }
   ]
 }
