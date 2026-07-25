@@ -65,21 +65,21 @@
       "cleanBasename": "CurateHomeCadenceDarkPreview_Cadence_dark_Curate_home.png",
       "findings": [
         {
-          "boundsInScreen": "705,1145,842,1271",
+          "boundsInScreen": "700,1158,837,1284",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"Off\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "84,641,396,767",
+          "boundsInScreen": "84,652,404,778",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"Refresh\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "895,685,966,722",
+          "boundsInScreen": "890,695,966,734",
           "level": "INFO",
           "message": "This non-clickable item's speakable text: \"Auto\" is identical to that of 2 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
@@ -97,21 +97,21 @@
       "cleanBasename": "CurateHomeCadencePreview_Cadence_Curate_home.png",
       "findings": [
         {
-          "boundsInScreen": "705,1145,842,1271",
+          "boundsInScreen": "700,1158,837,1284",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"Off\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "84,641,396,767",
+          "boundsInScreen": "84,652,404,778",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"Refresh\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "895,685,966,722",
+          "boundsInScreen": "890,695,966,734",
           "level": "INFO",
           "message": "This non-clickable item's speakable text: \"Auto\" is identical to that of 2 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
@@ -129,21 +129,21 @@
       "cleanBasename": "CurateHomePreview_System_Curate_home.png",
       "findings": [
         {
-          "boundsInScreen": "705,1179,842,1305",
+          "boundsInScreen": "707,1179,844,1305",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"Off\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "84,665,396,791",
+          "boundsInScreen": "84,665,392,791",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"Refresh\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "895,706,966,748",
+          "boundsInScreen": "897,706,966,748",
           "level": "INFO",
           "message": "This non-clickable item's speakable text: \"Auto\" is identical to that of 2 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
@@ -161,21 +161,21 @@
       "cleanBasename": "CurateHomeUsbBannerCadencePreview_Cadence_Curate_USB_banner.png",
       "findings": [
         {
-          "boundsInScreen": "705,1419,842,1545",
+          "boundsInScreen": "700,1490,837,1616",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"Off\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "84,915,396,1041",
+          "boundsInScreen": "84,984,404,1110",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"Refresh\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "895,959,966,996",
+          "boundsInScreen": "890,1027,966,1066",
           "level": "INFO",
           "message": "This non-clickable item's speakable text: \"Auto\" is identical to that of 2 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
@@ -193,21 +193,21 @@
       "cleanBasename": "CurateHomeUsbBannerPreview_System_Curate_USB_banner.png",
       "findings": [
         {
-          "boundsInScreen": "705,1464,842,1590",
+          "boundsInScreen": "707,1464,844,1590",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"Off\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "84,950,396,1076",
+          "boundsInScreen": "84,950,392,1076",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"Refresh\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "895,991,966,1033",
+          "boundsInScreen": "897,991,966,1033",
           "level": "INFO",
           "message": "This non-clickable item's speakable text: \"Auto\" is identical to that of 2 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
@@ -335,14 +335,14 @@
       "cleanBasename": "ManagePopulatedPreview_Manage_populated.png",
       "findings": [
         {
-          "boundsInScreen": "253,2307,582,2360",
+          "boundsInScreen": "253,2307,576,2360",
           "level": "INFO",
           "message": "This non-clickable item's speakable text: \"Manual refresh only\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.widget.TextView"
         },
         {
-          "boundsInScreen": "179,2754,461,2796",
+          "boundsInScreen": "179,2754,467,2796",
           "level": "INFO",
           "message": "This non-clickable item's speakable text: \"NAS \u2014 Audiobooks\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
@@ -363,7 +363,7 @@
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "84,1903,490,2029",
+          "boundsInScreen": "84,1903,485,2029",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"Refresh now\" is identical to that of 2 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
@@ -377,21 +377,21 @@
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "642,3923,840,4049",
+          "boundsInScreen": "644,3923,840,4049",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"LOCAL\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "179,2218,474,2260",
+          "boundsInScreen": "179,2218,480,2260",
           "level": "INFO",
           "message": "This non-clickable item's speakable text: \"Drive \u2014 Swim Mixes\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.widget.TextView"
         },
         {
-          "boundsInScreen": "179,1682,451,1724",
+          "boundsInScreen": "179,1682,459,1724",
           "level": "INFO",
           "message": "This non-clickable item's speakable text: \"Podbean \u2014 staged\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
@@ -423,14 +423,14 @@
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "253,2402,582,2455",
+          "boundsInScreen": "253,2402,576,2455",
           "level": "INFO",
           "message": "This non-clickable item's speakable text: \"Manual refresh only\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.widget.TextView"
         },
         {
-          "boundsInScreen": "179,2849,461,2891",
+          "boundsInScreen": "179,2849,467,2891",
           "level": "INFO",
           "message": "This non-clickable item's speakable text: \"NAS \u2014 Audiobooks\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
@@ -451,7 +451,7 @@
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "84,1998,490,2124",
+          "boundsInScreen": "84,1998,485,2124",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"Refresh now\" is identical to that of 2 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
@@ -465,21 +465,21 @@
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "642,4018,840,4144",
+          "boundsInScreen": "644,4018,840,4144",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"LOCAL\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "179,2313,474,2355",
+          "boundsInScreen": "179,2313,480,2355",
           "level": "INFO",
           "message": "This non-clickable item's speakable text: \"Drive \u2014 Swim Mixes\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.widget.TextView"
         },
         {
-          "boundsInScreen": "179,1682,451,1724",
+          "boundsInScreen": "179,1682,459,1724",
           "level": "INFO",
           "message": "This non-clickable item's speakable text: \"Podbean \u2014 staged\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
@@ -514,21 +514,21 @@
       "cleanBasename": "PlayStorePhoneHomeDark_Play_Store_phone_Home_dark.png",
       "findings": [
         {
-          "boundsInScreen": "731,1145,868,1271",
+          "boundsInScreen": "726,1158,863,1284",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"Off\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "84,641,396,767",
+          "boundsInScreen": "84,652,404,778",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"Refresh\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "921,685,992,722",
+          "boundsInScreen": "916,695,992,734",
           "level": "INFO",
           "message": "This non-clickable item's speakable text: \"Auto\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
@@ -546,21 +546,21 @@
       "cleanBasename": "PlayStorePhoneHomeLight_Play_Store_phone_Home_light.png",
       "findings": [
         {
-          "boundsInScreen": "731,1145,868,1271",
+          "boundsInScreen": "726,1158,863,1284",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"Off\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "84,641,396,767",
+          "boundsInScreen": "84,652,404,778",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"Refresh\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "921,685,992,722",
+          "boundsInScreen": "916,695,992,734",
           "level": "INFO",
           "message": "This non-clickable item's speakable text: \"Auto\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
@@ -578,7 +578,7 @@
       "cleanBasename": "PlayStorePhoneManage_Play_Store_phone_Manage.png",
       "findings": [
         {
-          "boundsInScreen": "84,776,221,902",
+          "boundsInScreen": "84,796,221,922",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"On\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
@@ -596,7 +596,7 @@
       "cleanBasename": "PlayStorePhoneSync_Play_Store_phone_Sync.png",
       "findings": [
         {
-          "boundsInScreen": "85,641,211,767",
+          "boundsInScreen": "85,650,211,776",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"checked\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
@@ -614,21 +614,21 @@
       "cleanBasename": "PlayStoreSevenInchHomeDark_Play_Store_7_tablet_Home_dark.png",
       "findings": [
         {
-          "boundsInScreen": "937,870,1041,966",
+          "boundsInScreen": "934,878,1038,974",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"Off\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "64,486,303,582",
+          "boundsInScreen": "64,493,310,589",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"Refresh\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "1081,520,1136,548",
+          "boundsInScreen": "1078,527,1136,556",
           "level": "INFO",
           "message": "This non-clickable item's speakable text: \"Auto\" is identical to that of 2 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
@@ -646,21 +646,21 @@
       "cleanBasename": "PlayStoreSevenInchHomeLight_Play_Store_7_tablet_Home_light.png",
       "findings": [
         {
-          "boundsInScreen": "937,870,1041,966",
+          "boundsInScreen": "934,878,1038,974",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"Off\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "64,486,303,582",
+          "boundsInScreen": "64,493,310,589",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"Refresh\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "1081,520,1136,548",
+          "boundsInScreen": "1078,527,1136,556",
           "level": "INFO",
           "message": "This non-clickable item's speakable text: \"Auto\" is identical to that of 2 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
@@ -678,21 +678,21 @@
       "cleanBasename": "PlayStoreTenInchHomeDark_Play_Store_10_tablet_Home_dark.png",
       "findings": [
         {
-          "boundsInScreen": "1337,486,1441,582",
+          "boundsInScreen": "1334,493,1438,589",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"Off\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "64,486,303,582",
+          "boundsInScreen": "64,493,310,589",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"Refresh\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "701,520,756,548",
+          "boundsInScreen": "698,527,756,556",
           "level": "INFO",
           "message": "This non-clickable item's speakable text: \"Auto\" is identical to that of 2 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
@@ -710,21 +710,21 @@
       "cleanBasename": "PlayStoreTenInchHomeLight_Play_Store_10_tablet_Home_light.png",
       "findings": [
         {
-          "boundsInScreen": "1337,486,1441,582",
+          "boundsInScreen": "1334,493,1438,589",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"Off\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "64,486,303,582",
+          "boundsInScreen": "64,493,310,589",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"Refresh\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "701,520,756,548",
+          "boundsInScreen": "698,527,756,556",
           "level": "INFO",
           "message": "This non-clickable item's speakable text: \"Auto\" is identical to that of 2 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
@@ -762,7 +762,7 @@
       "cleanBasename": "SyncModeReadyCadenceDarkPreview_Cadence_dark_Sync_ready.png",
       "findings": [
         {
-          "boundsInScreen": "85,641,211,767",
+          "boundsInScreen": "85,650,211,776",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"checked\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
@@ -780,7 +780,7 @@
       "cleanBasename": "SyncModeReadyCadencePreview_Cadence_Sync_ready.png",
       "findings": [
         {
-          "boundsInScreen": "85,641,211,767",
+          "boundsInScreen": "85,650,211,776",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"checked\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
