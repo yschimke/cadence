@@ -62,7 +62,7 @@ jobs:
       # Install the compose-preview CLI, pinned to the same release the render
       # path applies (apply@v0.17.19 in compose-preview.yml) so CLI and plugin
       # stay in lockstep.
-      - uses: yschimke/compose-ai-tools/.github/actions/install@v0.18.0
+      - uses: yschimke/compose-ai-tools/.github/actions/install@v0.18.1
         with:
           version: "0.17.19"
           github-token: ${{ github.token }}
