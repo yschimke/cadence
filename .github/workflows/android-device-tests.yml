@@ -27,7 +27,7 @@ jobs:
         arch: [x86_64]
 
     steps:
-      - uses: actions/checkout@v7.0.0
+      - uses: actions/checkout@v7.0.1
 
       - name: Enable KVM
         run: |
