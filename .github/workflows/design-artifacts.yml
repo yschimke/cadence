@@ -92,6 +92,17 @@ jobs:
             -o "$GITHUB_WORKSPACE/cadence-bundle.png"
 
       # Join the render to catalog.spec.json and write the importable bundle.
+      #
+      # `--publish-live-bundle` carries the executable render bundle onto the delivery
+      # branch under bundle/ and records liveBundle in catalog.json, so the preview
+      # server (preview.coo.ee) stands a render daemon up from it and re-renders the
+      # previews live (device / theme / knob controls) instead of replaying baked PNGs.
+      # Without it the delivery branch is baked-PNG only (ServeDegradation
+      # `catalog-baked-only`), which is why /cadence/ served snapshots. :composeApp is
+      # an Android/Robolectric render — the same backend the server already re-renders
+      # for compose-ai-tools' wear-m3. The step's internal `bundle externalize` is
+      # best-effort (try/caught in the driver), so an older CLI simply publishes a
+      # self-contained bundle rather than failing.
       - name: Generate importable catalog
         run: |
           set -euo pipefail
@@ -100,6 +111,7 @@ jobs:
             --renders "$GITHUB_WORKSPACE/cadence-bundle.png" \
             --out "$GITHUB_WORKSPACE/out" \
             --renderer "$(compose-preview --version | head -1)" \
+            --publish-live-bundle \
             --source-repo "${GITHUB_REPOSITORY}" \
             --source-ref main \
             --source-module :composeApp \
