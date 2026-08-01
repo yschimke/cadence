@@ -514,25 +514,11 @@
       "cleanBasename": "PlayStorePhoneHomeDark_Play_Store_phone_Home_dark.png",
       "findings": [
         {
-          "boundsInScreen": "726,1158,863,1284",
-          "level": "WARNING",
-          "message": "This clickable item's speakable text: \"Off\" is identical to that of 1 other item(s).",
-          "type": "DuplicateSpeakableTextCheck",
+          "boundsInScreen": "128,296,275,317",
+          "level": "ERROR",
+          "message": "This item's height is 8dp. Consider making the height of this touch target 32dp or larger.",
+          "type": "TouchTargetSizeCheck",
           "viewDescription": "android.view.View"
-        },
-        {
-          "boundsInScreen": "84,652,404,778",
-          "level": "WARNING",
-          "message": "This clickable item's speakable text: \"Refresh\" is identical to that of 1 other item(s).",
-          "type": "DuplicateSpeakableTextCheck",
-          "viewDescription": "android.view.View"
-        },
-        {
-          "boundsInScreen": "916,695,992,734",
-          "level": "INFO",
-          "message": "This non-clickable item's speakable text: \"Auto\" is identical to that of 1 other item(s).",
-          "type": "DuplicateSpeakableTextCheck",
-          "viewDescription": "android.widget.TextView"
         }
       ],
       "functionName": "PlayStorePhoneHomeDark",
@@ -546,25 +532,11 @@
       "cleanBasename": "PlayStorePhoneHomeLight_Play_Store_phone_Home_light.png",
       "findings": [
         {
-          "boundsInScreen": "726,1158,863,1284",
-          "level": "WARNING",
-          "message": "This clickable item's speakable text: \"Off\" is identical to that of 1 other item(s).",
-          "type": "DuplicateSpeakableTextCheck",
+          "boundsInScreen": "128,296,275,317",
+          "level": "ERROR",
+          "message": "This item's height is 8dp. Consider making the height of this touch target 32dp or larger.",
+          "type": "TouchTargetSizeCheck",
           "viewDescription": "android.view.View"
-        },
-        {
-          "boundsInScreen": "84,652,404,778",
-          "level": "WARNING",
-          "message": "This clickable item's speakable text: \"Refresh\" is identical to that of 1 other item(s).",
-          "type": "DuplicateSpeakableTextCheck",
-          "viewDescription": "android.view.View"
-        },
-        {
-          "boundsInScreen": "916,695,992,734",
-          "level": "INFO",
-          "message": "This non-clickable item's speakable text: \"Auto\" is identical to that of 1 other item(s).",
-          "type": "DuplicateSpeakableTextCheck",
-          "viewDescription": "android.widget.TextView"
         }
       ],
       "functionName": "PlayStorePhoneHomeLight",
@@ -576,15 +548,7 @@
     {
       "annotatedBasename": "PlayStorePhoneManage_Play_Store_phone_Manage.a11y.png",
       "cleanBasename": "PlayStorePhoneManage_Play_Store_phone_Manage.png",
-      "findings": [
-        {
-          "boundsInScreen": "84,796,221,922",
-          "level": "WARNING",
-          "message": "This clickable item's speakable text: \"On\" is identical to that of 1 other item(s).",
-          "type": "DuplicateSpeakableTextCheck",
-          "viewDescription": "android.view.View"
-        }
-      ],
+      "findings": [],
       "functionName": "PlayStorePhoneManage",
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStorePhoneManage_Play Store \u00b7 phone \u00b7 Manage",
@@ -594,15 +558,7 @@
     {
       "annotatedBasename": "PlayStorePhoneSync_Play_Store_phone_Sync.a11y.png",
       "cleanBasename": "PlayStorePhoneSync_Play_Store_phone_Sync.png",
-      "findings": [
-        {
-          "boundsInScreen": "85,650,211,776",
-          "level": "WARNING",
-          "message": "This clickable item's speakable text: \"checked\" is identical to that of 1 other item(s).",
-          "type": "DuplicateSpeakableTextCheck",
-          "viewDescription": "android.widget.CheckBox"
-        }
-      ],
+      "findings": [],
       "functionName": "PlayStorePhoneSync",
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStorePhoneSync_Play Store \u00b7 phone \u00b7 Sync",
@@ -614,25 +570,11 @@
       "cleanBasename": "PlayStoreSevenInchHomeDark_Play_Store_7_tablet_Home_dark.png",
       "findings": [
         {
-          "boundsInScreen": "934,878,1038,974",
-          "level": "WARNING",
-          "message": "This clickable item's speakable text: \"Off\" is identical to that of 1 other item(s).",
-          "type": "DuplicateSpeakableTextCheck",
+          "boundsInScreen": "176,237,288,240",
+          "level": "ERROR",
+          "message": "This item's height is 2dp. Consider making the height of this touch target 48dp or larger.",
+          "type": "TouchTargetSizeCheck",
           "viewDescription": "android.view.View"
-        },
-        {
-          "boundsInScreen": "64,493,310,589",
-          "level": "WARNING",
-          "message": "This clickable item's speakable text: \"Refresh\" is identical to that of 1 other item(s).",
-          "type": "DuplicateSpeakableTextCheck",
-          "viewDescription": "android.view.View"
-        },
-        {
-          "boundsInScreen": "1078,527,1136,556",
-          "level": "INFO",
-          "message": "This non-clickable item's speakable text: \"Auto\" is identical to that of 2 other item(s).",
-          "type": "DuplicateSpeakableTextCheck",
-          "viewDescription": "android.widget.TextView"
         }
       ],
       "functionName": "PlayStoreSevenInchHomeDark",
@@ -646,25 +588,11 @@
       "cleanBasename": "PlayStoreSevenInchHomeLight_Play_Store_7_tablet_Home_light.png",
       "findings": [
         {
-          "boundsInScreen": "934,878,1038,974",
-          "level": "WARNING",
-          "message": "This clickable item's speakable text: \"Off\" is identical to that of 1 other item(s).",
-          "type": "DuplicateSpeakableTextCheck",
+          "boundsInScreen": "176,237,288,240",
+          "level": "ERROR",
+          "message": "This item's height is 2dp. Consider making the height of this touch target 48dp or larger.",
+          "type": "TouchTargetSizeCheck",
           "viewDescription": "android.view.View"
-        },
-        {
-          "boundsInScreen": "64,493,310,589",
-          "level": "WARNING",
-          "message": "This clickable item's speakable text: \"Refresh\" is identical to that of 1 other item(s).",
-          "type": "DuplicateSpeakableTextCheck",
-          "viewDescription": "android.view.View"
-        },
-        {
-          "boundsInScreen": "1078,527,1136,556",
-          "level": "INFO",
-          "message": "This non-clickable item's speakable text: \"Auto\" is identical to that of 2 other item(s).",
-          "type": "DuplicateSpeakableTextCheck",
-          "viewDescription": "android.widget.TextView"
         }
       ],
       "functionName": "PlayStoreSevenInchHomeLight",
@@ -678,25 +606,11 @@
       "cleanBasename": "PlayStoreTenInchHomeDark_Play_Store_10_tablet_Home_dark.png",
       "findings": [
         {
-          "boundsInScreen": "1334,493,1438,589",
-          "level": "WARNING",
-          "message": "This clickable item's speakable text: \"Off\" is identical to that of 1 other item(s).",
-          "type": "DuplicateSpeakableTextCheck",
+          "boundsInScreen": "176,237,288,240",
+          "level": "ERROR",
+          "message": "This item's height is 2dp. Consider making the height of this touch target 48dp or larger.",
+          "type": "TouchTargetSizeCheck",
           "viewDescription": "android.view.View"
-        },
-        {
-          "boundsInScreen": "64,493,310,589",
-          "level": "WARNING",
-          "message": "This clickable item's speakable text: \"Refresh\" is identical to that of 1 other item(s).",
-          "type": "DuplicateSpeakableTextCheck",
-          "viewDescription": "android.view.View"
-        },
-        {
-          "boundsInScreen": "698,527,756,556",
-          "level": "INFO",
-          "message": "This non-clickable item's speakable text: \"Auto\" is identical to that of 2 other item(s).",
-          "type": "DuplicateSpeakableTextCheck",
-          "viewDescription": "android.widget.TextView"
         }
       ],
       "functionName": "PlayStoreTenInchHomeDark",
@@ -710,25 +624,11 @@
       "cleanBasename": "PlayStoreTenInchHomeLight_Play_Store_10_tablet_Home_light.png",
       "findings": [
         {
-          "boundsInScreen": "1334,493,1438,589",
-          "level": "WARNING",
-          "message": "This clickable item's speakable text: \"Off\" is identical to that of 1 other item(s).",
-          "type": "DuplicateSpeakableTextCheck",
+          "boundsInScreen": "176,237,288,240",
+          "level": "ERROR",
+          "message": "This item's height is 2dp. Consider making the height of this touch target 48dp or larger.",
+          "type": "TouchTargetSizeCheck",
           "viewDescription": "android.view.View"
-        },
-        {
-          "boundsInScreen": "64,493,310,589",
-          "level": "WARNING",
-          "message": "This clickable item's speakable text: \"Refresh\" is identical to that of 1 other item(s).",
-          "type": "DuplicateSpeakableTextCheck",
-          "viewDescription": "android.view.View"
-        },
-        {
-          "boundsInScreen": "698,527,756,556",
-          "level": "INFO",
-          "message": "This non-clickable item's speakable text: \"Auto\" is identical to that of 2 other item(s).",
-          "type": "DuplicateSpeakableTextCheck",
-          "viewDescription": "android.widget.TextView"
         }
       ],
       "functionName": "PlayStoreTenInchHomeLight",
