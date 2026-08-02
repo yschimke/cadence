@@ -13,6 +13,8 @@
   "prConcurrentLimit": 5,
   "prHourlyLimit": 0,
   "rangeStrategy": "pin",
+  "description": "Renovate merges automerge-eligible PRs itself rather than handing them to GitHub's native auto-merge (platformAutomerge). Native auto-merge only waits for the checks branch protection marks REQUIRED, so where they aren't marked it merges the moment the PR opens — ahead of CI. With platformAutomerge false, Renovate waits for every check on the branch to be green first. Same setting the shared github>yschimke/renovate-config preset carries; this config predates that preset and inlines config:recommended, so it has to say it itself.",
+  "platformAutomerge": false,
   "packageRules": [
     {
       "matchManagers": ["gradle", "gradle-wrapper"],
@@ -64,13 +66,15 @@
       "matchManagers": ["github-actions"]
     },
     {
-      "description": "compose-ai-tools ships the preview CLI, the ee.schimke.composeai Gradle plugin, and the reusable CI composite actions as a single release. Track it aggressively so CI always runs the latest renderer: one grouped PR (so the pinned action refs never skew apart from the catalog plugin pin) and no weekly-window wait. Deliberately NOT Renovate-automerged: scheduled-merge.yml owns the merge so its post-merge design-artifacts.yml dispatch fires and regenerates the catalog against the new renderer. Renovate/native automerge would merge the PR directly, bypass that dispatch (design-artifacts.yml has no push trigger), and leave the published catalog on the old renderer until the next weekly run. scheduled-merge still auto-merges this PR once it's green.",
+      "description": "compose-ai-tools ships the preview CLI, the ee.schimke.composeai Gradle plugin, and the reusable CI composite actions as a single release. Track it aggressively so CI always runs the latest renderer: one grouped PR (so the pinned action refs never skew apart from the catalog plugin pin), no weekly-window wait, and automerge as soon as CI is green — that is the whole point of pinning to a release that moves several times a day. Regenerating the published catalog against the new renderer no longer depends on WHO merges: design-artifacts.yml has a push trigger on main covering the pins this PR touches, so a Renovate merge (app token — raises `push`) republishes on its own, and scheduled-merge.yml still dispatches design-artifacts.yml explicitly for the merges it makes itself (GITHUB_TOKEN merges raise no `push` event).",
       "matchPackageNames": [
         "yschimke/compose-ai-tools",
         "/^ee\\.schimke\\.composeai($|[.:])/"
       ],
       "groupName": "compose-ai-tools",
-      "schedule": ["at any time"]
+      "schedule": ["at any time"],
+      "automerge": true,
+      "automergeSchedule": ["at any time"]
     }
   ]
 }
