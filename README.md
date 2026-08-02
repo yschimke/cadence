@@ -1,6 +1,6 @@
 # Accessibility Report
 
-_Auto-generated from `compose-preview/a11y/pr`. 40 preview(s) across 1 module(s) · 7 error(s) · 25 warning(s) · 13 info._
+_Auto-generated from `compose-preview/a11y/pr`. 40 preview(s) across 1 module(s) · 1 error(s) · 39 warning(s) · 19 info._
 
 Browse inline; image URLs are pinned to the commit SHA on the baseline branch so links keep resolving after merge.
 
@@ -205,7 +205,9 @@ _No findings._
 
 | # | Level | Rule | Element | Message |
 |--:|---|---|---|---|
-| 1 | ERROR | TouchTargetSizeCheck | android.view.View | This item's height is 8dp. Consider making the height of this touch target 32dp or larger. |
+| 1 | WARNING | DuplicateSpeakableTextCheck | android.view.View | This clickable item's speakable text: "Off" is identical to that of 1 other item(s). |
+| 2 | WARNING | DuplicateSpeakableTextCheck | android.view.View | This clickable item's speakable text: "Refresh" is identical to that of 1 other item(s). |
+| 3 | INFO | DuplicateSpeakableTextCheck | android.widget.TextView | This non-clickable item's speakable text: "Auto" is identical to that of 1 other item(s). |
 
 ### `PlayStorePhoneHomeLight` · `pixel_2`
 
@@ -213,19 +215,25 @@ _No findings._
 
 | # | Level | Rule | Element | Message |
 |--:|---|---|---|---|
-| 1 | ERROR | TouchTargetSizeCheck | android.view.View | This item's height is 8dp. Consider making the height of this touch target 32dp or larger. |
+| 1 | WARNING | DuplicateSpeakableTextCheck | android.view.View | This clickable item's speakable text: "Off" is identical to that of 1 other item(s). |
+| 2 | WARNING | DuplicateSpeakableTextCheck | android.view.View | This clickable item's speakable text: "Refresh" is identical to that of 1 other item(s). |
+| 3 | INFO | DuplicateSpeakableTextCheck | android.widget.TextView | This non-clickable item's speakable text: "Auto" is identical to that of 1 other item(s). |
 
 ### `PlayStorePhoneManage` · `pixel_2`
 
 <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/PlayStorePhoneManage_Play_Store_phone_Manage.a11y.png" width="400" />
 
-_No findings._
+| # | Level | Rule | Element | Message |
+|--:|---|---|---|---|
+| 1 | WARNING | DuplicateSpeakableTextCheck | android.view.View | This clickable item's speakable text: "On" is identical to that of 1 other item(s). |
 
 ### `PlayStorePhoneSync` · `pixel_2`
 
 <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/PlayStorePhoneSync_Play_Store_phone_Sync.a11y.png" width="400" />
 
-_No findings._
+| # | Level | Rule | Element | Message |
+|--:|---|---|---|---|
+| 1 | WARNING | DuplicateSpeakableTextCheck | android.widget.CheckBox | This clickable item's speakable text: "checked" is identical to that of 1 other item(s). |
 
 ### `PlayStoreSevenInchHomeDark` · `spec:width=600dp,height=960dp,dpi=320`
 
@@ -233,7 +241,9 @@ _No findings._
 
 | # | Level | Rule | Element | Message |
 |--:|---|---|---|---|
-| 1 | ERROR | TouchTargetSizeCheck | android.view.View | This item's height is 2dp. Consider making the height of this touch target 48dp or larger. |
+| 1 | WARNING | DuplicateSpeakableTextCheck | android.view.View | This clickable item's speakable text: "Off" is identical to that of 1 other item(s). |
+| 2 | WARNING | DuplicateSpeakableTextCheck | android.view.View | This clickable item's speakable text: "Refresh" is identical to that of 1 other item(s). |
+| 3 | INFO | DuplicateSpeakableTextCheck | android.widget.TextView | This non-clickable item's speakable text: "Auto" is identical to that of 2 other item(s). |
 
 ### `PlayStoreSevenInchHomeLight` · `spec:width=600dp,height=960dp,dpi=320`
 
@@ -241,7 +251,9 @@ _No findings._
 
 | # | Level | Rule | Element | Message |
 |--:|---|---|---|---|
-| 1 | ERROR | TouchTargetSizeCheck | android.view.View | This item's height is 2dp. Consider making the height of this touch target 48dp or larger. |
+| 1 | WARNING | DuplicateSpeakableTextCheck | android.view.View | This clickable item's speakable text: "Off" is identical to that of 1 other item(s). |
+| 2 | WARNING | DuplicateSpeakableTextCheck | android.view.View | This clickable item's speakable text: "Refresh" is identical to that of 1 other item(s). |
+| 3 | INFO | DuplicateSpeakableTextCheck | android.widget.TextView | This non-clickable item's speakable text: "Auto" is identical to that of 2 other item(s). |
 
 ### `PlayStoreTenInchHomeDark` · `spec:width=800dp,height=1280dp,dpi=320`
 
@@ -249,7 +261,9 @@ _No findings._
 
 | # | Level | Rule | Element | Message |
 |--:|---|---|---|---|
-| 1 | ERROR | TouchTargetSizeCheck | android.view.View | This item's height is 2dp. Consider making the height of this touch target 48dp or larger. |
+| 1 | WARNING | DuplicateSpeakableTextCheck | android.view.View | This clickable item's speakable text: "Off" is identical to that of 1 other item(s). |
+| 2 | WARNING | DuplicateSpeakableTextCheck | android.view.View | This clickable item's speakable text: "Refresh" is identical to that of 1 other item(s). |
+| 3 | INFO | DuplicateSpeakableTextCheck | android.widget.TextView | This non-clickable item's speakable text: "Auto" is identical to that of 2 other item(s). |
 
 ### `PlayStoreTenInchHomeLight` · `spec:width=800dp,height=1280dp,dpi=320`
 
@@ -257,7 +271,9 @@ _No findings._
 
 | # | Level | Rule | Element | Message |
 |--:|---|---|---|---|
-| 1 | ERROR | TouchTargetSizeCheck | android.view.View | This item's height is 2dp. Consider making the height of this touch target 48dp or larger. |
+| 1 | WARNING | DuplicateSpeakableTextCheck | android.view.View | This clickable item's speakable text: "Off" is identical to that of 1 other item(s). |
+| 2 | WARNING | DuplicateSpeakableTextCheck | android.view.View | This clickable item's speakable text: "Refresh" is identical to that of 1 other item(s). |
+| 3 | INFO | DuplicateSpeakableTextCheck | android.widget.TextView | This non-clickable item's speakable text: "Auto" is identical to that of 2 other item(s). |
 
 ### `SyncModeDoneCadencePreview`
 
