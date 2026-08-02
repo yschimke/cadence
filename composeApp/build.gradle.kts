@@ -73,7 +73,7 @@ dependencies {
   // bindings whose types reference DataStore / okio / WorkManager / ktor.
   implementation(libs.androidx.datastore)
   implementation(libs.androidx.work.runtime)
-  implementation("com.squareup.okio:okio:3.17.0")
+  implementation("com.squareup.okio:okio:3.18.1")
 
   // Compose deps used only by the preview composables in src/main/.../preview/.
   implementation(compose.runtime)
