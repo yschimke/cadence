@@ -92,12 +92,26 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v6.2.0
 
-      # Install the compose-preview CLI, pinned to the same release the render
-      # path applies (apply@v0.17.19 in compose-preview.yml) so CLI and plugin
-      # stay in lockstep.
+      # Install the compose-preview CLI. Deliberately no `version:` — the action
+      # defaults to `latest`, which is the only self-maintaining option here.
+      #
+      # It used to say version: "0.17.19", claiming lockstep with the plugin
+      # applied by compose-preview.yml. That claim rotted silently: Renovate
+      # tracks the action REF (bumped to v0.19.18 above, in the compose-ai-tools
+      # group) but cannot see a literal string in a workflow input, so the
+      # renderer producing the published catalog sat ~31 releases behind the
+      # plugin the render path actually applies — the CLI/plugin skew
+      # docs/RENDERER_COMPATIBILITY.md warns about, arrived at by accident.
+      #
+      # `latest` is safe because :composeApp does not apply the plugin from its
+      # build (there is no ee.schimke.composeai coordinate in
+      # gradle/libs.versions.toml at all) — the CLI injects it via --init-script,
+      # so it always carries a matching plugin and cannot skew against a stale
+      # pin. Same reasoning as homeassistant-remotecompose's `cli-version:
+      # latest`. If a pin is ever needed again, add the version to the version
+      # catalog and use version: catalog, so Renovate can see it.
       - uses: yschimke/compose-ai-tools/.github/actions/install@v0.19.18
         with:
-          version: "0.17.19"
           github-token: ${{ github.token }}
 
       # The export driver + its render helpers live in compose-ai-tools; check it
