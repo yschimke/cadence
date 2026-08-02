@@ -18,7 +18,7 @@ on:
   # main, instead of serving stale artifacts until Monday. The paths are the
   # render's inputs: the compose-ai-tools action pins (this file and
   # compose-preview.yml carry them — a compose-ai-tools release changes the
-  # renderer, so it changes the output), the Gradle version catalog (any
+  # renderer, so it changes the output), the Gradle dependency manifests (any
   # dependency the catalog renders against does the same), the spec that
   # decides what's in the sheet, and this file itself.
   #
@@ -30,7 +30,20 @@ on:
     branches:
       - main
     paths:
+      # Dependency manifests. The version catalog holds most pins, but
+      # Renovate's gradle manager also rewrites coords declared inline in a
+      # module build file — this repo hard-codes `com.squareup.okio:okio` in
+      # both composeApp/ and shared/ — and its gradle-wrapper manager rewrites
+      # gradle-wrapper.properties. Globbed rather than enumerating the modules
+      # the render actually pulls in: that list goes stale the moment a module
+      # is added, and the failure mode of missing one is a silently stale
+      # delivery branch, which is the exact bug this trigger exists to fix. An
+      # over-trigger just costs one spare render.
       - 'gradle/libs.versions.toml'
+      - 'gradle/wrapper/gradle-wrapper.properties'
+      - 'settings.gradle.kts'
+      - 'build.gradle.kts'
+      - '**/build.gradle.kts'
       - 'catalog.spec.json'
       - '.github/workflows/design-artifacts.yml'
       - '.github/workflows/compose-preview.yml'
