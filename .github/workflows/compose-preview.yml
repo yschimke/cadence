@@ -42,7 +42,7 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v6.3.0
 
-      - uses: yschimke/compose-ai-tools/.github/actions/apply@v1.32.0
+      - uses: yschimke/compose-ai-tools/.github/actions/apply@v1.33.0
         with:
           # Don't hard-gate the render on a preview that produces no PNG.
           #
