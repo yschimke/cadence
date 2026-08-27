@@ -515,7 +515,10 @@ private fun AddProfileDialog(
   onDismiss: () -> Unit,
   onConfirm:
     (
-      name: String, sourceIds: List<String>, intervalMinutes: Int, network: NetworkConstraint,
+      name: String,
+      sourceIds: List<String>,
+      intervalMinutes: Int,
+      network: NetworkConstraint,
     ) -> Unit,
 ) {
   var name by remember { mutableStateOf("") }

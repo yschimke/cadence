@@ -7,8 +7,8 @@ import dev.zacsweers.metro.Provides
 
 @DependencyGraph(AppScope::class)
 interface CadenceAppGraph : AndroidAppGraph {
-    @DependencyGraph.Factory
-    fun interface Factory {
-        fun create(@Provides application: Application): CadenceAppGraph
-    }
+  @DependencyGraph.Factory
+  fun interface Factory {
+    fun create(@Provides application: Application): CadenceAppGraph
+  }
 }

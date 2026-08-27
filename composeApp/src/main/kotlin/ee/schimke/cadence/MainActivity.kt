@@ -17,25 +17,19 @@ import ee.schimke.cadence.theme.CadenceThemeHost
 @ContributesIntoMap(AppScope::class, binding<Activity>())
 @ActivityKey(MainActivity::class)
 @Inject
-class MainActivity(
-    private val viewModelFactory: ViewModelProvider.Factory
-) : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        val splashScreen = installSplashScreen()
+class MainActivity(private val viewModelFactory: ViewModelProvider.Factory) : ComponentActivity() {
+  override fun onCreate(savedInstanceState: Bundle?) {
+    val splashScreen = installSplashScreen()
 
-        enableEdgeToEdge()
+    enableEdgeToEdge()
 
-        super.onCreate(savedInstanceState)
+    super.onCreate(savedInstanceState)
 
-        setContent {
-            CadenceThemeHost {
-                App()
-            }
-        }
+    setContent { CadenceThemeHost { App() } }
+  }
+
+  override val defaultViewModelProviderFactory: ViewModelProvider.Factory
+    get() {
+      return viewModelFactory
     }
-
-    override val defaultViewModelProviderFactory: ViewModelProvider.Factory
-        get() {
-            return viewModelFactory
-        }
 }

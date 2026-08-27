@@ -6,13 +6,13 @@ import androidx.compose.ui.graphics.Color
 
 /**
  * Cadence palette, three seeds from the swim/headphones visual world:
- *  - Coastal Blue (deep ocean / device body finish) → primary
- *  - Amber accent (warm action colour)              → secondary
- *  - Pool Aqua (sync-complete / safe states)        → tertiary
+ * - Coastal Blue (deep ocean / device body finish) → primary
+ * - Amber accent (warm action colour) → secondary
+ * - Pool Aqua (sync-complete / safe states) → tertiary
  *
- * Tonal roles below are derived from those seeds via Material 3 tonal palettes.
- * Light and dark schemes are tuned for the same hue family so switching modes
- * keeps the Cadence identity consistent.
+ * Tonal roles below are derived from those seeds via Material 3 tonal palettes. Light and dark
+ * schemes are tuned for the same hue family so switching modes keeps the Cadence identity
+ * consistent.
  */
 internal object CadencePalette {
   // Primary — Coastal Blue

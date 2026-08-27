@@ -17,18 +17,15 @@ import ee.schimke.cadence.sync.FileSyncViewModel
 import ee.schimke.cadence.theme.CadenceTheme
 
 /**
- * Redesigned home (Curate mode) and file sync (Sync mode) screens, rendered
- * against the production composables so previews track the real UI rather
- * than a parallel sketch.
+ * Redesigned home (Curate mode) and file sync (Sync mode) screens, rendered against the production
+ * composables so previews track the real UI rather than a parallel sketch.
  *
- * Each scene is rendered twice — once under [AndroidMaterialTheme] (system
- * dynamic colours + Roboto Flex) and once under [CadenceTheme] (Coastal
- * Blue palette + Manrope/Inter) — so the design-system difference is
- * visible at a glance.
+ * Each scene is rendered twice — once under [AndroidMaterialTheme] (system dynamic colours + Roboto
+ * Flex) and once under [CadenceTheme] (Coastal Blue palette + Manrope/Inter) — so the design-system
+ * difference is visible at a glance.
  */
 private val themedModifier
-  @Composable
-  get() = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)
+  @Composable get() = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)
 
 private val curateState =
   HomeViewModel.UiState(

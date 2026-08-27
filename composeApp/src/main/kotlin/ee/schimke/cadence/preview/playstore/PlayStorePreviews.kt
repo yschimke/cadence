@@ -22,44 +22,40 @@ import ee.schimke.cadence.theme.CadenceTheme
 /**
  * Canonical Play Store screenshot sources.
  *
- * Every `@Preview` in this file renders to a PNG that ships in the Play
- * Store listing under
- * `composeApp/src/main/play/listings/en-GB/graphics/`. Other previews in
- * sibling packages (`preview/`, `preview/redesign/`) are for design and
- * IDE iteration only and **must not** be reused for the listing.
+ * Every `@Preview` in this file renders to a PNG that ships in the Play Store listing under
+ * `composeApp/src/main/play/listings/en-GB/graphics/`. Other previews in sibling packages
+ * (`preview/`, `preview/redesign/`) are for design and IDE iteration only and **must not** be
+ * reused for the listing.
  *
- * Each preview is tagged with `group = "Play Store"` so they cluster in
- * the IDE preview pane and can be filtered on the command line via
- * `compose-preview render --filter PlayStore`.
+ * Each preview is tagged with `group = "Play Store"` so they cluster in the IDE preview pane and
+ * can be filtered on the command line via `compose-preview render --filter PlayStore`.
  *
- * Device specs are sized to Play Store screenshot rules (aspect ratio
- * between 16:9 and 9:16, 320–3840 px on either side). The phone target
- * is `id:pixel_2` because its 1080×1920 panel is natively 9:16, which
- * fits the cap without any viewport gymnastics. Modern Pixels (8a, 8,
- * 9, …) all ship 9:20 panels that exceed the spec.
+ * Device specs are sized to Play Store screenshot rules (aspect ratio between 16:9 and 9:16,
+ * 320–3840 px on either side). The phone target is `id:pixel_2` because its 1080×1920 panel is
+ * natively 9:16, which fits the cap without any viewport gymnastics. Modern Pixels (8a, 8, 9, …)
+ * all ship 9:20 panels that exceed the spec.
  *
  * Re-render workflow:
  * ```
  * ANDROID_HOME=/path/to/sdk compose-preview render --filter PlayStore
  * ```
  *
- * Then copy the PNGs from `composeApp/build/compose-previews/renders/` to
- * the destinations below. Filenames in each directory determine the order
- * Play Store displays them.
+ * Then copy the PNGs from `composeApp/build/compose-previews/renders/` to the destinations below.
+ * Filenames in each directory determine the order Play Store displays them.
  *
  * Listing destinations (managed by Gradle Play Publisher):
  *
- * | Preview function                | Listing path                                                         |
- * |---------------------------------|----------------------------------------------------------------------|
- * | [PlayStorePhoneHomeLight]       | `phone-screenshots/01-home-light.png`                                |
- * | [PlayStorePhoneHomeDark]        | `phone-screenshots/02-home-dark.png`                                 |
- * | [PlayStorePhoneSync]            | `phone-screenshots/03-sync.png`                                      |
- * | [PlayStorePhoneBluetooth]       | `phone-screenshots/04-bluetooth.png`                                 |
- * | [PlayStorePhoneManage]          | `phone-screenshots/05-manage.png`                                    |
- * | [PlayStoreSevenInchHomeLight]   | `seven-inch-screenshots/01-home-light.png`                           |
- * | [PlayStoreSevenInchHomeDark]    | `seven-inch-screenshots/02-home-dark.png`                            |
- * | [PlayStoreTenInchHomeLight]     | `ten-inch-screenshots/01-home-light.png`                             |
- * | [PlayStoreTenInchHomeDark]      | `ten-inch-screenshots/02-home-dark.png`                              |
+ * | Preview function              | Listing path                               |
+ * |-------------------------------|--------------------------------------------|
+ * | [PlayStorePhoneHomeLight]     | `phone-screenshots/01-home-light.png`      |
+ * | [PlayStorePhoneHomeDark]      | `phone-screenshots/02-home-dark.png`       |
+ * | [PlayStorePhoneSync]          | `phone-screenshots/03-sync.png`            |
+ * | [PlayStorePhoneBluetooth]     | `phone-screenshots/04-bluetooth.png`       |
+ * | [PlayStorePhoneManage]        | `phone-screenshots/05-manage.png`          |
+ * | [PlayStoreSevenInchHomeLight] | `seven-inch-screenshots/01-home-light.png` |
+ * | [PlayStoreSevenInchHomeDark]  | `seven-inch-screenshots/02-home-dark.png`  |
+ * | [PlayStoreTenInchHomeLight]   | `ten-inch-screenshots/01-home-light.png`   |
+ * | [PlayStoreTenInchHomeDark]    | `ten-inch-screenshots/02-home-dark.png`    |
  */
 
 /** Tag attached to every Play Store preview so tooling can filter by group. */
@@ -75,8 +71,7 @@ private const val TABLET_7IN = "spec:width=600dp,height=960dp,dpi=320"
 private const val TABLET_10IN = "spec:width=800dp,height=1280dp,dpi=320"
 
 private val themedModifier
-  @Composable
-  get() = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)
+  @Composable get() = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)
 
 private val homeState =
   HomeViewModel.UiState(

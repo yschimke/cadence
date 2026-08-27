@@ -9,11 +9,11 @@ import ee.schimke.cadence.datastore.proto.ThemeMode
 import ee.schimke.cadence.metro.metroViewModel
 
 /**
- * Reads the persisted appearance preference and wraps [content] in either the
- * system-dynamic Roboto Flex theme or the Cadence-branded theme.
+ * Reads the persisted appearance preference and wraps [content] in either the system-dynamic Roboto
+ * Flex theme or the Cadence-branded theme.
  *
- * Default is [ThemeMode.SYSTEM] so a fresh install keeps Material You behaviour;
- * switching is exposed as the "Appearance" row in `ManageSyncScreen`.
+ * Default is [ThemeMode.SYSTEM] so a fresh install keeps Material You behaviour; switching is
+ * exposed as the "Appearance" row in `ManageSyncScreen`.
  */
 @Composable
 fun CadenceThemeHost(content: @Composable () -> Unit) {

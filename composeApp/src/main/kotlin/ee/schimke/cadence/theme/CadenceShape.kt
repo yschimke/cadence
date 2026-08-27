@@ -5,12 +5,11 @@ import androidx.compose.material3.Shapes
 import androidx.compose.ui.unit.dp
 
 /**
- * Cadence shapes — slightly softer than Material 3 defaults so cards and pills
- * feel rounded enough to read as friendly without losing the technical edge.
+ * Cadence shapes — slightly softer than Material 3 defaults so cards and pills feel rounded enough
+ * to read as friendly without losing the technical edge.
  *
- * Shared between [CadenceTheme] and [AndroidMaterialTheme] (via the same
- * Material 3 [Shapes] type) so theme switching only swaps colour and type, not
- * geometry.
+ * Shared between [CadenceTheme] and [AndroidMaterialTheme] (via the same Material 3 [Shapes] type)
+ * so theme switching only swaps colour and type, not geometry.
  */
 internal val CadenceShapes: Shapes =
   Shapes(
