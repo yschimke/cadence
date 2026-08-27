@@ -13,8 +13,8 @@ import androidx.compose.ui.text.googlefonts.Font
 import androidx.compose.ui.text.googlefonts.GoogleFont
 
 /**
- * System-dynamic Material 3 theme — Material You colours from the device wallpaper
- * paired with **Roboto Flex** as the type stack.
+ * System-dynamic Material 3 theme — Material You colours from the device wallpaper paired with
+ * **Roboto Flex** as the type stack.
  *
  * This is the default app theme; the opt-in branded alternative is
  * [ee.schimke.cadence.theme.CadenceTheme].
@@ -39,10 +39,26 @@ private val RobotoFlexGoogleFont = GoogleFont("Roboto Flex")
 
 private val RobotoFlexFamily =
   FontFamily(
-    Font(googleFont = RobotoFlexGoogleFont, fontProvider = googleFontsProvider, weight = FontWeight.Normal),
-    Font(googleFont = RobotoFlexGoogleFont, fontProvider = googleFontsProvider, weight = FontWeight.Medium),
-    Font(googleFont = RobotoFlexGoogleFont, fontProvider = googleFontsProvider, weight = FontWeight.SemiBold),
-    Font(googleFont = RobotoFlexGoogleFont, fontProvider = googleFontsProvider, weight = FontWeight.Bold),
+    Font(
+      googleFont = RobotoFlexGoogleFont,
+      fontProvider = googleFontsProvider,
+      weight = FontWeight.Normal,
+    ),
+    Font(
+      googleFont = RobotoFlexGoogleFont,
+      fontProvider = googleFontsProvider,
+      weight = FontWeight.Medium,
+    ),
+    Font(
+      googleFont = RobotoFlexGoogleFont,
+      fontProvider = googleFontsProvider,
+      weight = FontWeight.SemiBold,
+    ),
+    Font(
+      googleFont = RobotoFlexGoogleFont,
+      fontProvider = googleFontsProvider,
+      weight = FontWeight.Bold,
+    ),
   )
 
 /** Roboto Flex applied to every Material 3 type role; sizes and tracking come from M3 defaults. */

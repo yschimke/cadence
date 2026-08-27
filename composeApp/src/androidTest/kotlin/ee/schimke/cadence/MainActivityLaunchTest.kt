@@ -8,10 +8,10 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class MainActivityLaunchTest {
-    @Test
-    fun launchesWithoutCrashing() {
-        ActivityScenario.launch(MainActivity::class.java).use { scenario ->
-            scenario.moveToState(Lifecycle.State.RESUMED)
-        }
+  @Test
+  fun launchesWithoutCrashing() {
+    ActivityScenario.launch(MainActivity::class.java).use { scenario ->
+      scenario.moveToState(Lifecycle.State.RESUMED)
     }
+  }
 }

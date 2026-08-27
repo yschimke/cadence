@@ -12,13 +12,13 @@ import ee.schimke.cadence.R
 
 /**
  * Cadence typography stack.
- *  - Manrope (geometric sans, humanist warmth) drives display/headline/title roles —
- *    the "athletic device, deliberate" voice that goes with the Coastal Blue palette.
- *  - Inter (workhorse UI sans) drives body/label roles — best-in-class legibility
- *    at small sizes, with tabular figures for sync progress numerals.
+ * - Manrope (geometric sans, humanist warmth) drives display/headline/title roles — the "athletic
+ *   device, deliberate" voice that goes with the Coastal Blue palette.
+ * - Inter (workhorse UI sans) drives body/label roles — best-in-class legibility at small sizes,
+ *   with tabular figures for sync progress numerals.
  *
- * Both load via Google Fonts downloadable provider, so previews and production
- * resolve the same ttfs without bundling them into the APK.
+ * Both load via Google Fonts downloadable provider, so previews and production resolve the same
+ * ttfs without bundling them into the APK.
  */
 private val googleFontsProvider =
   GoogleFont.Provider(
@@ -32,21 +32,58 @@ private val InterGoogleFont = GoogleFont("Inter")
 
 internal val ManropeFamily =
   FontFamily(
-    GFFont(googleFont = ManropeGoogleFont, fontProvider = googleFontsProvider, weight = FontWeight.Normal),
-    GFFont(googleFont = ManropeGoogleFont, fontProvider = googleFontsProvider, weight = FontWeight.Medium),
-    GFFont(googleFont = ManropeGoogleFont, fontProvider = googleFontsProvider, weight = FontWeight.SemiBold),
-    GFFont(googleFont = ManropeGoogleFont, fontProvider = googleFontsProvider, weight = FontWeight.Bold),
+    GFFont(
+      googleFont = ManropeGoogleFont,
+      fontProvider = googleFontsProvider,
+      weight = FontWeight.Normal,
+    ),
+    GFFont(
+      googleFont = ManropeGoogleFont,
+      fontProvider = googleFontsProvider,
+      weight = FontWeight.Medium,
+    ),
+    GFFont(
+      googleFont = ManropeGoogleFont,
+      fontProvider = googleFontsProvider,
+      weight = FontWeight.SemiBold,
+    ),
+    GFFont(
+      googleFont = ManropeGoogleFont,
+      fontProvider = googleFontsProvider,
+      weight = FontWeight.Bold,
+    ),
   )
 
 internal val InterFamily =
   FontFamily(
-    GFFont(googleFont = InterGoogleFont, fontProvider = googleFontsProvider, weight = FontWeight.Normal),
-    GFFont(googleFont = InterGoogleFont, fontProvider = googleFontsProvider, weight = FontWeight.Medium),
-    GFFont(googleFont = InterGoogleFont, fontProvider = googleFontsProvider, weight = FontWeight.SemiBold),
-    GFFont(googleFont = InterGoogleFont, fontProvider = googleFontsProvider, weight = FontWeight.Bold),
+    GFFont(
+      googleFont = InterGoogleFont,
+      fontProvider = googleFontsProvider,
+      weight = FontWeight.Normal,
+    ),
+    GFFont(
+      googleFont = InterGoogleFont,
+      fontProvider = googleFontsProvider,
+      weight = FontWeight.Medium,
+    ),
+    GFFont(
+      googleFont = InterGoogleFont,
+      fontProvider = googleFontsProvider,
+      weight = FontWeight.SemiBold,
+    ),
+    GFFont(
+      googleFont = InterGoogleFont,
+      fontProvider = googleFontsProvider,
+      weight = FontWeight.Bold,
+    ),
   )
 
-private fun displayStyle(size: Int, weight: FontWeight, lineHeight: Int, tracking: Double = 0.0): TextStyle =
+private fun displayStyle(
+  size: Int,
+  weight: FontWeight,
+  lineHeight: Int,
+  tracking: Double = 0.0,
+): TextStyle =
   TextStyle(
     fontFamily = ManropeFamily,
     fontWeight = weight,
@@ -56,7 +93,12 @@ private fun displayStyle(size: Int, weight: FontWeight, lineHeight: Int, trackin
     letterSpacing = tracking.sp,
   )
 
-private fun bodyStyle(size: Int, weight: FontWeight, lineHeight: Int, tracking: Double = 0.0): TextStyle =
+private fun bodyStyle(
+  size: Int,
+  weight: FontWeight,
+  lineHeight: Int,
+  tracking: Double = 0.0,
+): TextStyle =
   TextStyle(
     fontFamily = InterFamily,
     fontWeight = weight,
