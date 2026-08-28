@@ -1,7 +1,22 @@
 {
     "formatVersion": "compose-preview-history/v1",
-    "generatedFrom": "dd61e3b24c4c5d75f03d0f423052fdfef22c1e24",
+    "generatedFrom": "d13f649304b6bea7226f57bc774bbb295e0a0597",
     "previews": {
+        "composeApp/activity__MainActivity": {
+            "path": "renders/composeApp/activity__MainActivity.png",
+            "versions": [
+                {
+                    "blob": "8c0e0b2771f88c0b4a19170fa6d10925771ca4d5",
+                    "commit": "d13f649304b6bea7226f57bc774bbb295e0a0597",
+                    "date": "2026-08-28T21:53:10Z",
+                    "sourceSha": "aef09bcc",
+                    "commits": 1
+                }
+            ],
+            "observations": 1,
+            "unstable": false,
+            "flapCount": 0
+        },
         "composeApp/ee.schimke.cadence.preview.FoundationPreviewsKt.FoundationCadenceDarkPreview_Foundation — Cadence dark": {
             "path": "renders/composeApp/FoundationCadenceDarkPreview_Foundation_Cadence_dark-35bd3e32.png",
             "versions": [
