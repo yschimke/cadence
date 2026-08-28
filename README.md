@@ -2,21 +2,11 @@
 
 Auto-generated from `main`. Browse inline or compare against PR branches.
 
-> [!WARNING]
-> 1 preview(s) failed to render in the latest update (1 with no prior baseline to retain). See **Render Failures** below.
-
-## Render Failures
-
-The render task completed but no PNG was produced for these previews. Entries with a prior baseline keep their previous image; the rest are absent from the gallery until a successful render lands.
-
-| Preview | Module | Function | Source | Baseline |
-|---------|--------|----------|--------|----------|
-| `composeApp/activity__MainActivity` | composeApp | `MainActivity` | `—` | none |
-
 ## composeApp
 
 | Preview | Image |
 |---------|-------|
+| `MainActivity` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/activity__MainActivity.png" width="150" /> |
 | `FoundationCadenceDarkPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/FoundationCadenceDarkPreview_Foundation_Cadence_dark-35bd3e32.png" width="150" /> |
 | `FoundationCadenceLightPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/FoundationCadenceLightPreview_Foundation_Cadence_light-19184725.png" width="150" /> |
 | `FoundationMaterial3DarkPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/FoundationMaterial3DarkPreview_Foundation_Material_3_dark-8fbb7bd3.png" width="150" /> |
