@@ -110,7 +110,7 @@ jobs:
       # pin. Same reasoning as homeassistant-remotecompose's `cli-version:
       # latest`. If a pin is ever needed again, add the version to the version
       # catalog and use version: catalog, so Renovate can see it.
-      - uses: yschimke/compose-ai-tools/.github/actions/install@v1.60.1
+      - uses: yschimke/compose-ai-tools/.github/actions/install@v1.60.3
         with:
           github-token: ${{ github.token }}
 
