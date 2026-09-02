@@ -150,6 +150,15 @@ jobs:
       # for compose-ai-tools' wear-m3. The step's internal `bundle externalize` is
       # best-effort (try/caught in the driver), so an older CLI simply publishes a
       # self-contained bundle rather than failing.
+      #
+      # `--defer-figma-svg` keeps the pure editable vectors transient: they are produced
+      # for catalog generation and cover cropping, then stripped from the published tree
+      # and re-produced by the live daemon on request. Raster-backed hybrid SVGs stay
+      # static so their crop references remain self-contained. It drops the hundreds of
+      # coordinate-derived files this branch used to carry, which churned whenever an
+      # otherwise identical render was packed in a slightly different order
+      # (ported from yschimke/meshcore-mobile#461). It requires --publish-live-bundle,
+      # which is set above, and the driver checked out from compose-ai-tools@main.
       - name: Generate importable catalog
         run: |
           set -euo pipefail
@@ -159,6 +168,7 @@ jobs:
             --out "$GITHUB_WORKSPACE/out" \
             --renderer "$(compose-preview --version | head -1)" \
             --publish-live-bundle \
+            --defer-figma-svg \
             --source-repo "${GITHUB_REPOSITORY}" \
             --source-ref main \
             --source-module :composeApp \
