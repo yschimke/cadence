@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1050 2100" width="1050" height="2100" role="img" aria-label="Devices/Loaded layout wireframe">
+  <title>Devices/Loaded — layout wireframe (slots + tokens)</title>
+  <rect width="1050" height="2100" fill="#ffffff"/>
+  <g>
+    <rect x="0" y="0" width="1050" height="2100" fill="none" fill-opacity="0" stroke="#5B6470" stroke-width="1" stroke-opacity="0.5"/>
+  </g>
+  <g>
+    <rect x="0" y="0" width="1050" height="2100" fill="none" fill-opacity="0" stroke="#2E7D6B" stroke-width="1" stroke-opacity="0.5"/>
+  </g>
+  <g>
+    <rect x="0" y="0" width="1050" height="2100" fill="#FAF8FF" fill-opacity="1" stroke="#8E6BA8" stroke-width="1.5" stroke-opacity="1"/>
+    <text x="3" y="12" font-family="system-ui, sans-serif" font-size="9" fill="#8E6BA8">#FFFAF8FF  gap 5.0dp</text>
+  </g>
+  <g>
+    <rect x="449" y="0" width="153" height="63" fill="none" fill-opacity="0" stroke="#B0813B" stroke-width="1" stroke-opacity="0.5"/>
+  </g>
+  <g>
+    <path d="M31.5,76 H1018.5 A31.5,31.5 0 0 1 1050,107.5 V170.5 A31.5,31.5 0 0 1 1018.5,202 H31.5 A31.5,31.5 0 0 1 0,170.5 V107.5 A31.5,31.5 0 0 1 31.5,76 Z" fill="#F4F3FA" fill-opacity="1" stroke="#B0813B" stroke-width="1.5" stroke-opacity="1"/>
+    <text x="3" y="88" font-family="system-ui, sans-serif" font-size="9" fill="#B0813B">#FFF4F3FA</text>
+  </g>
+  <g>
+    <rect x="0" y="76" width="1050" height="126" fill="none" fill-opacity="0" stroke="#3B72A8" stroke-width="1" stroke-opacity="0.5"/>
+  </g>
+  <g>
+    <rect x="0" y="76" width="435" height="63" fill="none" fill-opacity="0" stroke="#A85B6B" stroke-width="1" stroke-opacity="0.5"/>
+  </g>
+  <g>
+    <path d="M31.5,215 H1018.5 A31.5,31.5 0 0 1 1050,246.5 V309.5 A31.5,31.5 0 0 1 1018.5,341 H31.5 A31.5,31.5 0 0 1 0,309.5 V246.5 A31.5,31.5 0 0 1 31.5,215 Z" fill="#F4F3FA" fill-opacity="1" stroke="#B0813B" stroke-width="1.5" stroke-opacity="1"/>
+    <text x="3" y="227" font-family="system-ui, sans-serif" font-size="9" fill="#B0813B">#FFF4F3FA</text>
+  </g>
+  <g>
+    <rect x="0" y="215" width="1050" height="126" fill="none" fill-opacity="0" stroke="#3B72A8" stroke-width="1" stroke-opacity="0.5"/>
+  </g>
+  <g>
+    <rect x="0" y="215" width="341" height="63" fill="none" fill-opacity="0" stroke="#A85B6B" stroke-width="1" stroke-opacity="0.5"/>
+  </g>
+  <g>
+    <path d="M349.5,365 H701.5 A52.5,52.5 0 0 1 754,417.5 V417.5 A52.5,52.5 0 0 1 701.5,470 H349.5 A52.5,52.5 0 0 1 297,417.5 V417.5 A52.5,52.5 0 0 1 349.5,365 Z" fill="#2A4174" fill-opacity="1" stroke="#B0813B" stroke-width="1.5" stroke-opacity="1"/>
+    <text x="300" y="377" font-family="system-ui, sans-serif" font-size="9" fill="#B0813B">#FF2A4174</text>
+  </g>
+  <g>
+    <rect x="360" y="386" width="331" height="63" fill="none" fill-opacity="0" stroke="#3B72A8" stroke-width="1" stroke-opacity="0.5"/>
+  </g>
+  <g>
+    <rect x="360" y="391" width="331" height="53" fill="none" fill-opacity="0" stroke="#A85B6B" stroke-width="1" stroke-opacity="0.5"/>
+  </g>
+  <g>
+    <rect x="354" y="493" width="342" height="63" fill="none" fill-opacity="0" stroke="#B0813B" stroke-width="1" stroke-opacity="0.5"/>
+  </g>
+  <g>
+    <path d="M31.5,569 H1018.5 A31.5,31.5 0 0 1 1050,600.5 V852.5 A31.5,31.5 0 0 1 1018.5,884 H31.5 A31.5,31.5 0 0 1 0,852.5 V600.5 A31.5,31.5 0 0 1 31.5,569 Z" fill="#F4F3FA" fill-opacity="1" stroke="#B0813B" stroke-width="1.5" stroke-opacity="1"/>
+    <text x="3" y="581" font-family="system-ui, sans-serif" font-size="9" fill="#B0813B">#FFF4F3FA</text>
+  </g>
+  <g>
+    <rect x="0" y="569" width="1050" height="315" fill="none" fill-opacity="0" stroke="#3B72A8" stroke-width="1" stroke-opacity="0.5"/>
+  </g>
+  <g>
+    <rect x="0" y="569" width="426" height="63" fill="none" fill-opacity="0" stroke="#A85B6B" stroke-width="1" stroke-opacity="0.5"/>
+  </g>
+  <g>
+    <rect x="0" y="632" width="1050" height="252" fill="none" fill-opacity="0" stroke="#A85B6B" stroke-width="1" stroke-opacity="0.5"/>
+  </g>
+  <g>
+    <path d="M31.5,897 H1018.5 A31.5,31.5 0 0 1 1050,928.5 V1180.5 A31.5,31.5 0 0 1 1018.5,1212 H31.5 A31.5,31.5 0 0 1 0,1180.5 V928.5 A31.5,31.5 0 0 1 31.5,897 Z" fill="#F4F3FA" fill-opacity="1" stroke="#B0813B" stroke-width="1.5" stroke-opacity="1"/>
+    <text x="3" y="909" font-family="system-ui, sans-serif" font-size="9" fill="#B0813B">#FFF4F3FA</text>
+  </g>
+  <g>
+    <rect x="0" y="897" width="1050" height="315" fill="none" fill-opacity="0" stroke="#3B72A8" stroke-width="1" stroke-opacity="0.5"/>
+  </g>
+  <g>
+    <rect x="0" y="897" width="426" height="63" fill="none" fill-opacity="0" stroke="#A85B6B" stroke-width="1" stroke-opacity="0.5"/>
+  </g>
+  <g>
+    <rect x="0" y="960" width="1050" height="252" fill="none" fill-opacity="0" stroke="#A85B6B" stroke-width="1" stroke-opacity="0.5"/>
+  </g>
+</svg>

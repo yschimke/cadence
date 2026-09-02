@@ -1,0 +1,5883 @@
+{
+  "schema": "design-parity-catalog/v1",
+  "system": "cadence",
+  "title": "Cadence",
+  "components": [
+    {
+      "componentId": "Theme/Cadence-Light",
+      "images": [
+        {
+          "variant": "ideal",
+          "path": "images/theme-cadence-light/ideal__default__light.png",
+          "state": "default",
+          "width": 1050,
+          "height": 850,
+          "theme": "light",
+          "livePreview": "https://preview.coo.ee/cadence/p/theme-cadence-light__ideal__default__light",
+          "previewId": "ee.schimke.cadence.preview.FoundationPreviewsKt.FoundationCadenceLightPreview_Foundation___Cadence_light",
+          "previewParams": {
+            "showBackground": true
+          },
+          "density": 2.625,
+          "figmaSvg": "https://preview.coo.ee/cadence/render/theme-cadence-light__ideal__default__light.svg"
+        }
+      ],
+      "greenlines": [],
+      "redlines": [
+        {
+          "bounds": {
+            "x": 42,
+            "y": 192,
+            "width": 143,
+            "height": 105
+          },
+          "cornerRadius": 8
+        },
+        {
+          "bounds": {
+            "x": 206,
+            "y": 192,
+            "width": 143,
+            "height": 105
+          },
+          "cornerRadius": 8
+        },
+        {
+          "bounds": {
+            "x": 370,
+            "y": 192,
+            "width": 143,
+            "height": 105
+          },
+          "cornerRadius": 8
+        },
+        {
+          "bounds": {
+            "x": 534,
+            "y": 192,
+            "width": 144,
+            "height": 105
+          },
+          "cornerRadius": 8
+        },
+        {
+          "bounds": {
+            "x": 699,
+            "y": 192,
+            "width": 144,
+            "height": 105
+          },
+          "cornerRadius": 8
+        },
+        {
+          "bounds": {
+            "x": 864,
+            "y": 192,
+            "width": 144,
+            "height": 105
+          },
+          "cornerRadius": 8
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 329,
+            "width": 147,
+            "height": 84
+          },
+          "cornerRadius": 6
+        },
+        {
+          "bounds": {
+            "x": 205,
+            "y": 329,
+            "width": 147,
+            "height": 84
+          },
+          "cornerRadius": 6
+        },
+        {
+          "bounds": {
+            "x": 368,
+            "y": 329,
+            "width": 148,
+            "height": 84
+          },
+          "cornerRadius": 6
+        },
+        {
+          "bounds": {
+            "x": 532,
+            "y": 329,
+            "width": 148,
+            "height": 84
+          },
+          "cornerRadius": 6
+        },
+        {
+          "bounds": {
+            "x": 696,
+            "y": 329,
+            "width": 148,
+            "height": 84
+          },
+          "cornerRadius": 6
+        },
+        {
+          "bounds": {
+            "x": 860,
+            "y": 329,
+            "width": 148,
+            "height": 84
+          },
+          "cornerRadius": 6
+        }
+      ],
+      "group": "Foundation",
+      "caption": "Cadence theme — colour roles, elevation and type (light).",
+      "wireframe": "wireframes/theme-cadence-light.svg",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/FoundationPreviews.kt",
+      "sourceModule": ":composeApp",
+      "bodyLine": 94,
+      "sourceDirectory": "composeApp",
+      "sourceFunction": "FoundationCadenceLightPreview"
+    },
+    {
+      "componentId": "Theme/Cadence-Dark",
+      "images": [
+        {
+          "variant": "ideal",
+          "path": "images/theme-cadence-dark/ideal__default__dark.png",
+          "state": "default",
+          "width": 1050,
+          "height": 850,
+          "theme": "dark",
+          "livePreview": "https://preview.coo.ee/cadence/p/theme-cadence-dark__ideal__default__dark",
+          "previewId": "ee.schimke.cadence.preview.FoundationPreviewsKt.FoundationCadenceDarkPreview_Foundation___Cadence_dark",
+          "previewParams": {
+            "showBackground": true
+          },
+          "density": 2.625,
+          "figmaSvg": "https://preview.coo.ee/cadence/render/theme-cadence-dark__ideal__default__dark.svg"
+        }
+      ],
+      "greenlines": [],
+      "redlines": [
+        {
+          "bounds": {
+            "x": 42,
+            "y": 192,
+            "width": 143,
+            "height": 105
+          },
+          "cornerRadius": 8
+        },
+        {
+          "bounds": {
+            "x": 206,
+            "y": 192,
+            "width": 143,
+            "height": 105
+          },
+          "cornerRadius": 8
+        },
+        {
+          "bounds": {
+            "x": 370,
+            "y": 192,
+            "width": 143,
+            "height": 105
+          },
+          "cornerRadius": 8
+        },
+        {
+          "bounds": {
+            "x": 534,
+            "y": 192,
+            "width": 144,
+            "height": 105
+          },
+          "cornerRadius": 8
+        },
+        {
+          "bounds": {
+            "x": 699,
+            "y": 192,
+            "width": 144,
+            "height": 105
+          },
+          "cornerRadius": 8
+        },
+        {
+          "bounds": {
+            "x": 864,
+            "y": 192,
+            "width": 144,
+            "height": 105
+          },
+          "cornerRadius": 8
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 329,
+            "width": 147,
+            "height": 84
+          },
+          "cornerRadius": 6
+        },
+        {
+          "bounds": {
+            "x": 205,
+            "y": 329,
+            "width": 147,
+            "height": 84
+          },
+          "cornerRadius": 6
+        },
+        {
+          "bounds": {
+            "x": 368,
+            "y": 329,
+            "width": 148,
+            "height": 84
+          },
+          "cornerRadius": 6
+        },
+        {
+          "bounds": {
+            "x": 532,
+            "y": 329,
+            "width": 148,
+            "height": 84
+          },
+          "cornerRadius": 6
+        },
+        {
+          "bounds": {
+            "x": 696,
+            "y": 329,
+            "width": 148,
+            "height": 84
+          },
+          "cornerRadius": 6
+        },
+        {
+          "bounds": {
+            "x": 860,
+            "y": 329,
+            "width": 148,
+            "height": 84
+          },
+          "cornerRadius": 6
+        }
+      ],
+      "group": "Foundation",
+      "caption": "Cadence theme (dark).",
+      "wireframe": "wireframes/theme-cadence-dark.svg",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/FoundationPreviews.kt",
+      "sourceModule": ":composeApp",
+      "bodyLine": 102,
+      "sourceDirectory": "composeApp",
+      "sourceFunction": "FoundationCadenceDarkPreview"
+    },
+    {
+      "componentId": "Theme/Material3-Light",
+      "images": [
+        {
+          "variant": "ideal",
+          "path": "images/theme-material3-light/ideal__default__light.png",
+          "state": "default",
+          "width": 1050,
+          "height": 854,
+          "theme": "light",
+          "livePreview": "https://preview.coo.ee/cadence/p/theme-material3-light__ideal__default__light",
+          "previewId": "ee.schimke.cadence.preview.FoundationPreviewsKt.FoundationMaterial3LightPreview_Foundation___Material_3_light",
+          "previewParams": {
+            "showBackground": true
+          },
+          "density": 2.625,
+          "figmaSvg": "https://preview.coo.ee/cadence/render/theme-material3-light__ideal__default__light.svg"
+        }
+      ],
+      "greenlines": [],
+      "redlines": [
+        {
+          "bounds": {
+            "x": 42,
+            "y": 190,
+            "width": 143,
+            "height": 105
+          },
+          "cornerRadius": 8
+        },
+        {
+          "bounds": {
+            "x": 206,
+            "y": 190,
+            "width": 143,
+            "height": 105
+          },
+          "cornerRadius": 8
+        },
+        {
+          "bounds": {
+            "x": 370,
+            "y": 190,
+            "width": 143,
+            "height": 105
+          },
+          "cornerRadius": 8
+        },
+        {
+          "bounds": {
+            "x": 534,
+            "y": 190,
+            "width": 144,
+            "height": 105
+          },
+          "cornerRadius": 8
+        },
+        {
+          "bounds": {
+            "x": 699,
+            "y": 190,
+            "width": 144,
+            "height": 105
+          },
+          "cornerRadius": 8
+        },
+        {
+          "bounds": {
+            "x": 864,
+            "y": 190,
+            "width": 144,
+            "height": 105
+          },
+          "cornerRadius": 8
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 327,
+            "width": 147,
+            "height": 84
+          },
+          "cornerRadius": 6
+        },
+        {
+          "bounds": {
+            "x": 205,
+            "y": 327,
+            "width": 147,
+            "height": 84
+          },
+          "cornerRadius": 6
+        },
+        {
+          "bounds": {
+            "x": 368,
+            "y": 327,
+            "width": 148,
+            "height": 84
+          },
+          "cornerRadius": 6
+        },
+        {
+          "bounds": {
+            "x": 532,
+            "y": 327,
+            "width": 148,
+            "height": 84
+          },
+          "cornerRadius": 6
+        },
+        {
+          "bounds": {
+            "x": 696,
+            "y": 327,
+            "width": 148,
+            "height": 84
+          },
+          "cornerRadius": 6
+        },
+        {
+          "bounds": {
+            "x": 860,
+            "y": 327,
+            "width": 148,
+            "height": 84
+          },
+          "cornerRadius": 6
+        }
+      ],
+      "group": "Foundation",
+      "caption": "Material 3 baseline (untinted) reference (light).",
+      "wireframe": "wireframes/theme-material3-light.svg",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/FoundationPreviews.kt",
+      "sourceModule": ":composeApp",
+      "bodyLine": 110,
+      "sourceDirectory": "composeApp",
+      "sourceFunction": "FoundationMaterial3LightPreview"
+    },
+    {
+      "componentId": "Theme/Material3-Dark",
+      "images": [
+        {
+          "variant": "ideal",
+          "path": "images/theme-material3-dark/ideal__default__dark.png",
+          "state": "default",
+          "width": 1050,
+          "height": 854,
+          "theme": "dark",
+          "livePreview": "https://preview.coo.ee/cadence/p/theme-material3-dark__ideal__default__dark",
+          "previewId": "ee.schimke.cadence.preview.FoundationPreviewsKt.FoundationMaterial3DarkPreview_Foundation___Material_3_dark",
+          "previewParams": {
+            "showBackground": true
+          },
+          "density": 2.625,
+          "figmaSvg": "https://preview.coo.ee/cadence/render/theme-material3-dark__ideal__default__dark.svg"
+        }
+      ],
+      "greenlines": [],
+      "redlines": [
+        {
+          "bounds": {
+            "x": 42,
+            "y": 190,
+            "width": 143,
+            "height": 105
+          },
+          "cornerRadius": 8
+        },
+        {
+          "bounds": {
+            "x": 206,
+            "y": 190,
+            "width": 143,
+            "height": 105
+          },
+          "cornerRadius": 8
+        },
+        {
+          "bounds": {
+            "x": 370,
+            "y": 190,
+            "width": 143,
+            "height": 105
+          },
+          "cornerRadius": 8
+        },
+        {
+          "bounds": {
+            "x": 534,
+            "y": 190,
+            "width": 144,
+            "height": 105
+          },
+          "cornerRadius": 8
+        },
+        {
+          "bounds": {
+            "x": 699,
+            "y": 190,
+            "width": 144,
+            "height": 105
+          },
+          "cornerRadius": 8
+        },
+        {
+          "bounds": {
+            "x": 864,
+            "y": 190,
+            "width": 144,
+            "height": 105
+          },
+          "cornerRadius": 8
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 327,
+            "width": 147,
+            "height": 84
+          },
+          "cornerRadius": 6
+        },
+        {
+          "bounds": {
+            "x": 205,
+            "y": 327,
+            "width": 147,
+            "height": 84
+          },
+          "cornerRadius": 6
+        },
+        {
+          "bounds": {
+            "x": 368,
+            "y": 327,
+            "width": 148,
+            "height": 84
+          },
+          "cornerRadius": 6
+        },
+        {
+          "bounds": {
+            "x": 532,
+            "y": 327,
+            "width": 148,
+            "height": 84
+          },
+          "cornerRadius": 6
+        },
+        {
+          "bounds": {
+            "x": 696,
+            "y": 327,
+            "width": 148,
+            "height": 84
+          },
+          "cornerRadius": 6
+        },
+        {
+          "bounds": {
+            "x": 860,
+            "y": 327,
+            "width": 148,
+            "height": 84
+          },
+          "cornerRadius": 6
+        }
+      ],
+      "group": "Foundation",
+      "caption": "Material 3 baseline (dark).",
+      "wireframe": "wireframes/theme-material3-dark.svg",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/FoundationPreviews.kt",
+      "sourceModule": ":composeApp",
+      "bodyLine": 118,
+      "sourceDirectory": "composeApp",
+      "sourceFunction": "FoundationMaterial3DarkPreview"
+    },
+    {
+      "componentId": "Home/Empty",
+      "images": [
+        {
+          "variant": "ideal",
+          "path": "images/home-empty/ideal__default.png",
+          "state": "default",
+          "width": 1050,
+          "height": 2100,
+          "livePreview": "https://preview.coo.ee/cadence/p/home-empty__ideal__default",
+          "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.HomeEmptyPreview_Home___empty",
+          "previewParams": {
+            "showBackground": true
+          },
+          "density": 2.625,
+          "figmaSvg": "https://preview.coo.ee/cadence/render/home-empty__ideal__default.svg"
+        }
+      ],
+      "greenlines": [
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 893,
+              "y": 43,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 893,
+            "y": 43,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 84,
+              "y": 613,
+              "width": 556,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 84,
+            "y": 613,
+            "width": 556,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 861,
+              "y": 1733,
+              "width": 147,
+              "height": 147
+            }
+          },
+          "bounds": {
+            "x": 861,
+            "y": 1733,
+            "width": 147,
+            "height": 147
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 745,
+              "y": 1959,
+              "width": 263,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 745,
+            "y": 1959,
+            "width": 263,
+            "height": 105
+          }
+        }
+      ],
+      "redlines": [
+        {
+          "bounds": {
+            "x": 437,
+            "y": 63,
+            "width": 219,
+            "height": 64
+          },
+          "cornerRadius": 12.19
+        },
+        {
+          "bounds": {
+            "x": 677,
+            "y": 63,
+            "width": 194,
+            "height": 64
+          },
+          "cornerRadius": 12.19
+        },
+        {
+          "bounds": {
+            "x": 893,
+            "y": 43,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 190,
+            "width": 966,
+            "height": 1732
+          },
+          "padding": {
+            "start": 16,
+            "top": 0,
+            "end": 16,
+            "bottom": 0
+          }
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 254,
+            "width": 966,
+            "height": 63
+          },
+          "label": "Library",
+          "padding": {
+            "start": 0,
+            "top": 4,
+            "end": 0,
+            "bottom": 0
+          }
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 349,
+            "width": 966,
+            "height": 421
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 613,
+            "width": 556,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 861,
+            "y": 1733,
+            "width": 147,
+            "height": 147
+          },
+          "role": "Button",
+          "padding": {
+            "start": 16,
+            "top": 16,
+            "end": 16,
+            "bottom": 16
+          },
+          "cornerRadius": 16
+        },
+        {
+          "bounds": {
+            "x": 745,
+            "y": 1959,
+            "width": 263,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        }
+      ],
+      "group": "Home",
+      "caption": "Home screen, empty state.",
+      "wireframe": "wireframes/home-empty.svg",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "sourceModule": ":composeApp",
+      "bodyLine": 29,
+      "sourceDirectory": "composeApp",
+      "sourceFunction": "HomeEmptyPreview"
+    },
+    {
+      "componentId": "Devices/Loaded",
+      "images": [
+        {
+          "variant": "ideal",
+          "path": "images/devices-loaded/ideal__default.png",
+          "state": "default",
+          "width": 1050,
+          "height": 2100,
+          "livePreview": "https://preview.coo.ee/cadence/p/devices-loaded__ideal__default",
+          "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.DevicesScreenLoadedPreview_Devices_-_loaded",
+          "previewParams": {
+            "showBackground": true
+          },
+          "density": 2.625,
+          "figmaSvg": "https://preview.coo.ee/cadence/render/devices-loaded__ideal__default.svg"
+        }
+      ],
+      "greenlines": [
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 297,
+              "y": 365,
+              "width": 457,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 297,
+            "y": 365,
+            "width": 457,
+            "height": 105
+          }
+        }
+      ],
+      "redlines": [
+        {
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 1050,
+            "height": 2100
+          },
+          "gap": 5
+        },
+        {
+          "bounds": {
+            "x": 0,
+            "y": 76,
+            "width": 1050,
+            "height": 126
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 0,
+            "y": 215,
+            "width": 1050,
+            "height": 126
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 297,
+            "y": 365,
+            "width": 457,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 0,
+            "y": 569,
+            "width": 1050,
+            "height": 315
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 0,
+            "y": 897,
+            "width": 1050,
+            "height": 315
+          },
+          "cornerRadius": 12
+        }
+      ],
+      "group": "Devices",
+      "caption": "Devices list, loaded.",
+      "wireframe": "wireframes/devices-loaded.svg",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "sourceModule": ":composeApp",
+      "bodyLine": 48,
+      "sourceDirectory": "composeApp",
+      "sourceFunction": "DevicesScreenLoadedPreview"
+    },
+    {
+      "componentId": "Devices/Loading",
+      "images": [
+        {
+          "variant": "ideal",
+          "path": "images/devices-loading/ideal__default.png",
+          "state": "default",
+          "width": 1050,
+          "height": 2100,
+          "livePreview": "https://preview.coo.ee/cadence/p/devices-loading__ideal__default",
+          "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.DevicesScreenLoadingPreview_Devices_-_loading",
+          "previewParams": {
+            "showBackground": true
+          },
+          "density": 2.625,
+          "figmaSvg": "https://preview.coo.ee/cadence/render/devices-loading__ideal__default.svg"
+        }
+      ],
+      "greenlines": [
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 297,
+              "y": 163,
+              "width": 457,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 297,
+            "y": 163,
+            "width": 457,
+            "height": 105
+          }
+        }
+      ],
+      "redlines": [
+        {
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 1050,
+            "height": 2100
+          },
+          "gap": 5
+        },
+        {
+          "bounds": {
+            "x": 297,
+            "y": 163,
+            "width": 457,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        }
+      ],
+      "group": "Devices",
+      "caption": "Devices list, loading.",
+      "wireframe": "wireframes/devices-loading.svg",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "sourceModule": ":composeApp",
+      "bodyLine": 65,
+      "sourceDirectory": "composeApp",
+      "sourceFunction": "DevicesScreenLoadingPreview"
+    },
+    {
+      "componentId": "Devices/Empty",
+      "images": [
+        {
+          "variant": "ideal",
+          "path": "images/devices-empty/ideal__default.png",
+          "state": "default",
+          "width": 1050,
+          "height": 2100,
+          "livePreview": "https://preview.coo.ee/cadence/p/devices-empty__ideal__default",
+          "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.DevicesScreenEmptyPreview_Devices_-_empty",
+          "previewParams": {
+            "showBackground": true
+          },
+          "density": 2.625,
+          "figmaSvg": "https://preview.coo.ee/cadence/render/devices-empty__ideal__default.svg"
+        }
+      ],
+      "greenlines": [
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 297,
+              "y": 87,
+              "width": 457,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 297,
+            "y": 87,
+            "width": 457,
+            "height": 105
+          }
+        }
+      ],
+      "redlines": [
+        {
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 1050,
+            "height": 2100
+          },
+          "gap": 5
+        },
+        {
+          "bounds": {
+            "x": 297,
+            "y": 87,
+            "width": 457,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        }
+      ],
+      "group": "Devices",
+      "caption": "Devices list, empty state.",
+      "wireframe": "wireframes/devices-empty.svg",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "sourceModule": ":composeApp",
+      "bodyLine": 78,
+      "sourceDirectory": "composeApp",
+      "sourceFunction": "DevicesScreenEmptyPreview"
+    },
+    {
+      "componentId": "Bookmarks/Loaded",
+      "images": [
+        {
+          "variant": "ideal",
+          "path": "images/bookmarks-loaded/ideal__default.png",
+          "state": "default",
+          "width": 1050,
+          "height": 2100,
+          "livePreview": "https://preview.coo.ee/cadence/p/bookmarks-loaded__ideal__default",
+          "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.BookmarksScreenLoadedPreview_Bookmarks_-_loaded",
+          "previewParams": {
+            "showBackground": true
+          },
+          "density": 2.625,
+          "figmaSvg": "https://preview.coo.ee/cadence/render/bookmarks-loaded__ideal__default.svg"
+        }
+      ],
+      "greenlines": [],
+      "redlines": [
+        {
+          "bounds": {
+            "x": 0,
+            "y": 32,
+            "width": 174,
+            "height": 63
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 0,
+            "y": 158,
+            "width": 243,
+            "height": 63
+          },
+          "cornerRadius": 12
+        }
+      ],
+      "group": "Bookmarks",
+      "caption": "Bookmarks, loaded.",
+      "wireframe": "wireframes/bookmarks-loaded.svg",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "sourceModule": ":composeApp",
+      "bodyLine": 91,
+      "sourceDirectory": "composeApp",
+      "sourceFunction": "BookmarksScreenLoadedPreview"
+    },
+    {
+      "componentId": "Bookmarks/Loading",
+      "images": [
+        {
+          "variant": "ideal",
+          "path": "images/bookmarks-loading/ideal__default.png",
+          "state": "default",
+          "width": 1050,
+          "height": 2100,
+          "livePreview": "https://preview.coo.ee/cadence/p/bookmarks-loading__ideal__default",
+          "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.BookmarksScreenLoadingPreview_Bookmarks_-_loading",
+          "previewParams": {
+            "showBackground": true
+          },
+          "density": 2.625,
+          "figmaSvg": "https://preview.coo.ee/cadence/render/bookmarks-loading__ideal__default.svg"
+        }
+      ],
+      "greenlines": [],
+      "redlines": [],
+      "group": "Bookmarks",
+      "caption": "Bookmarks, loading.",
+      "wireframe": "wireframes/bookmarks-loading.svg",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "sourceModule": ":composeApp",
+      "bodyLine": 103,
+      "sourceDirectory": "composeApp",
+      "sourceFunction": "BookmarksScreenLoadingPreview"
+    },
+    {
+      "componentId": "DeviceFiles/Loading",
+      "images": [
+        {
+          "variant": "ideal",
+          "path": "images/devicefiles-loading/ideal__default.png",
+          "state": "default",
+          "width": 1050,
+          "height": 2100,
+          "livePreview": "https://preview.coo.ee/cadence/p/devicefiles-loading__ideal__default",
+          "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.DeviceFilesLoadingPreview_Device_files_-_loading",
+          "previewParams": {
+            "showBackground": true
+          },
+          "density": 2.625,
+          "figmaSvg": "https://preview.coo.ee/cadence/render/devicefiles-loading__ideal__default.svg"
+        }
+      ],
+      "greenlines": [],
+      "redlines": [],
+      "group": "Device files",
+      "caption": "Device files, loading.",
+      "wireframe": "wireframes/devicefiles-loading.svg",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "sourceModule": ":composeApp",
+      "bodyLine": 115,
+      "sourceDirectory": "composeApp",
+      "sourceFunction": "DeviceFilesLoadingPreview"
+    },
+    {
+      "componentId": "DeviceFiles/NotAvailable",
+      "images": [
+        {
+          "variant": "ideal",
+          "path": "images/devicefiles-notavailable/ideal__default.png",
+          "state": "default",
+          "width": 1050,
+          "height": 2100,
+          "livePreview": "https://preview.coo.ee/cadence/p/devicefiles-notavailable__ideal__default",
+          "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.DeviceFilesNotAvailablePreview_Device_files_-_not_available",
+          "previewParams": {
+            "showBackground": true
+          },
+          "density": 2.625,
+          "figmaSvg": "https://preview.coo.ee/cadence/render/devicefiles-notavailable__ideal__default.svg"
+        }
+      ],
+      "greenlines": [],
+      "redlines": [],
+      "group": "Device files",
+      "caption": "Device files, not available.",
+      "wireframe": "wireframes/devicefiles-notavailable.svg",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "sourceModule": ":composeApp",
+      "bodyLine": 126,
+      "sourceDirectory": "composeApp",
+      "sourceFunction": "DeviceFilesNotAvailablePreview"
+    },
+    {
+      "componentId": "Bluetooth/Disconnected",
+      "images": [
+        {
+          "variant": "ideal",
+          "path": "images/bluetooth-disconnected/ideal__default.png",
+          "state": "default",
+          "width": 1050,
+          "height": 3413,
+          "livePreview": "https://preview.coo.ee/cadence/p/bluetooth-disconnected__ideal__default",
+          "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.BluetoothDisconnectedPreview_BT_controls_-_disconnected",
+          "previewParams": {
+            "showBackground": true
+          },
+          "density": 2.625,
+          "figmaSvg": "https://preview.coo.ee/cadence/render/bluetooth-disconnected__ideal__default.svg"
+        }
+      ],
+      "greenlines": [
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 778,
+              "y": 95,
+              "width": 188,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 778,
+            "y": 95,
+            "width": 188,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 84,
+              "y": 242,
+              "width": 882,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 84,
+            "y": 242,
+            "width": 882,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 84,
+              "y": 1188,
+              "width": 447,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 84,
+            "y": 1188,
+            "width": 447,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 113,
+              "y": 1430,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 113,
+            "y": 1430,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 257,
+              "y": 1430,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 257,
+            "y": 1430,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 401,
+              "y": 1430,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 401,
+            "y": 1430,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 545,
+              "y": 1430,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 545,
+            "y": 1430,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 689,
+              "y": 1430,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 689,
+            "y": 1430,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 833,
+              "y": 1430,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 833,
+            "y": 1430,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 84,
+              "y": 1756,
+              "width": 204,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 84,
+            "y": 1756,
+            "width": 204,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 309,
+              "y": 1745,
+              "width": 205,
+              "height": 148
+            }
+          },
+          "bounds": {
+            "x": 309,
+            "y": 1745,
+            "width": 205,
+            "height": 148
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 535,
+              "y": 1745,
+              "width": 205,
+              "height": 201
+            }
+          },
+          "bounds": {
+            "x": 535,
+            "y": 1745,
+            "width": 205,
+            "height": 201
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 761,
+              "y": 1745,
+              "width": 205,
+              "height": 148
+            }
+          },
+          "bounds": {
+            "x": 761,
+            "y": 1745,
+            "width": 205,
+            "height": 148
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 95,
+              "y": 2304,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 95,
+            "y": 2304,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 242,
+              "y": 2304,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 242,
+            "y": 2304,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 389,
+              "y": 2304,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 389,
+            "y": 2304,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 851,
+              "y": 2557,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 851,
+            "y": 2557,
+            "width": 105,
+            "height": 105
+          }
+        }
+      ],
+      "redlines": [
+        {
+          "bounds": {
+            "x": 42,
+            "y": 42,
+            "width": 966,
+            "height": 357
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 778,
+            "y": 95,
+            "width": 188,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 242,
+            "width": 882,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 431,
+            "width": 966,
+            "height": 441
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 523,
+            "y": 568,
+            "width": 443,
+            "height": 105
+          },
+          "role": "RadioButton",
+          "cornerRadius": 0
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 568,
+            "width": 442,
+            "height": 105
+          },
+          "role": "RadioButton",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 904,
+            "width": 966,
+            "height": 441
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 1188,
+            "width": 447,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 1377,
+            "width": 966,
+            "height": 210
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 113,
+            "y": 1430,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 257,
+            "y": 1430,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 401,
+            "y": 1430,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 545,
+            "y": 1430,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 689,
+            "y": 1430,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 833,
+            "y": 1430,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 1619,
+            "width": 966,
+            "height": 369
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 1756,
+            "width": 204,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 309,
+            "y": 1745,
+            "width": 205,
+            "height": 148
+          },
+          "role": "Button",
+          "cornerRadius": 28.19
+        },
+        {
+          "bounds": {
+            "x": 535,
+            "y": 1745,
+            "width": 205,
+            "height": 201
+          },
+          "role": "Button",
+          "cornerRadius": 38.29
+        },
+        {
+          "bounds": {
+            "x": 761,
+            "y": 1745,
+            "width": 205,
+            "height": 148
+          },
+          "role": "Button",
+          "cornerRadius": 28.19
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 2020,
+            "width": 966,
+            "height": 441
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 58,
+            "y": 2151,
+            "width": 934,
+            "height": 116
+          },
+          "padding": {
+            "start": 10,
+            "top": 0,
+            "end": 10,
+            "bottom": 0
+          }
+        },
+        {
+          "bounds": {
+            "x": 389,
+            "y": 2151,
+            "width": 11,
+            "height": 116
+          },
+          "cornerRadius": 2.1
+        },
+        {
+          "bounds": {
+            "x": 95,
+            "y": 2304,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 242,
+            "y": 2304,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 389,
+            "y": 2304,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 2493,
+            "width": 966,
+            "height": 231
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 851,
+            "y": 2557,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        }
+      ],
+      "group": "Bluetooth",
+      "caption": "Bluetooth controls, disconnected.",
+      "wireframe": "wireframes/bluetooth-disconnected.svg",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "sourceModule": ":composeApp",
+      "bodyLine": 140,
+      "sourceDirectory": "composeApp",
+      "sourceFunction": "BluetoothDisconnectedPreview"
+    },
+    {
+      "componentId": "Bluetooth/ConnectedPlaying",
+      "images": [
+        {
+          "variant": "ideal",
+          "path": "images/bluetooth-connectedplaying/ideal__default.png",
+          "state": "default",
+          "width": 1050,
+          "height": 3938,
+          "livePreview": "https://preview.coo.ee/cadence/p/bluetooth-connectedplaying__ideal__default",
+          "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.BluetoothConnectedPlayingPreview_BT_controls_-_connected___playing",
+          "previewParams": {
+            "showBackground": true
+          },
+          "density": 2.625,
+          "figmaSvg": "https://preview.coo.ee/cadence/render/bluetooth-connectedplaying__ideal__default.svg"
+        }
+      ],
+      "greenlines": [
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 778,
+              "y": 95,
+              "width": 188,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 778,
+            "y": 95,
+            "width": 188,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 84,
+              "y": 252,
+              "width": 174,
+              "height": 84
+            }
+          },
+          "bounds": {
+            "x": 84,
+            "y": 252,
+            "width": 174,
+            "height": 84
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 279,
+              "y": 252,
+              "width": 153,
+              "height": 84
+            }
+          },
+          "bounds": {
+            "x": 279,
+            "y": 252,
+            "width": 153,
+            "height": 84
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 84,
+              "y": 557,
+              "width": 882,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 84,
+            "y": 557,
+            "width": 882,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 113,
+              "y": 1945,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 113,
+            "y": 1945,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 257,
+              "y": 1945,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 257,
+            "y": 1945,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 401,
+              "y": 1945,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 401,
+            "y": 1945,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 545,
+              "y": 1945,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 545,
+            "y": 1945,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 689,
+              "y": 1945,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 689,
+            "y": 1945,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 833,
+              "y": 1945,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 833,
+            "y": 1945,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 84,
+              "y": 2271,
+              "width": 204,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 84,
+            "y": 2271,
+            "width": 204,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 309,
+              "y": 2260,
+              "width": 205,
+              "height": 148
+            }
+          },
+          "bounds": {
+            "x": 309,
+            "y": 2260,
+            "width": 205,
+            "height": 148
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 535,
+              "y": 2260,
+              "width": 205,
+              "height": 201
+            }
+          },
+          "bounds": {
+            "x": 535,
+            "y": 2260,
+            "width": 205,
+            "height": 201
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 761,
+              "y": 2260,
+              "width": 205,
+              "height": 148
+            }
+          },
+          "bounds": {
+            "x": 761,
+            "y": 2260,
+            "width": 205,
+            "height": 148
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 95,
+              "y": 2819,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 95,
+            "y": 2819,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 242,
+              "y": 2819,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 242,
+            "y": 2819,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 389,
+              "y": 2819,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 389,
+            "y": 2819,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 851,
+              "y": 3072,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 851,
+            "y": 3072,
+            "width": 105,
+            "height": 105
+          }
+        }
+      ],
+      "redlines": [
+        {
+          "bounds": {
+            "x": 42,
+            "y": 42,
+            "width": 966,
+            "height": 672
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 778,
+            "y": 95,
+            "width": 188,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 252,
+            "width": 174,
+            "height": 84
+          },
+          "role": "Button",
+          "cornerRadius": 8
+        },
+        {
+          "bounds": {
+            "x": 279,
+            "y": 252,
+            "width": 153,
+            "height": 84
+          },
+          "role": "Button",
+          "cornerRadius": 8
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 557,
+            "width": 882,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 746,
+            "width": 966,
+            "height": 441
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 523,
+            "y": 883,
+            "width": 443,
+            "height": 105
+          },
+          "role": "RadioButton",
+          "cornerRadius": 0
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 883,
+            "width": 442,
+            "height": 105
+          },
+          "role": "RadioButton",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 1219,
+            "width": 966,
+            "height": 641
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 58,
+            "y": 1634,
+            "width": 934,
+            "height": 116
+          },
+          "padding": {
+            "start": 10,
+            "top": 0,
+            "end": 10,
+            "bottom": 0
+          }
+        },
+        {
+          "bounds": {
+            "x": 343,
+            "y": 1634,
+            "width": 11,
+            "height": 116
+          },
+          "cornerRadius": 2.1
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 1892,
+            "width": 966,
+            "height": 210
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 113,
+            "y": 1945,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 257,
+            "y": 1945,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 401,
+            "y": 1945,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 545,
+            "y": 1945,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 689,
+            "y": 1945,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 833,
+            "y": 1945,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 2134,
+            "width": 966,
+            "height": 369
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 2271,
+            "width": 204,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 309,
+            "y": 2260,
+            "width": 205,
+            "height": 148
+          },
+          "role": "Button",
+          "cornerRadius": 28.19
+        },
+        {
+          "bounds": {
+            "x": 535,
+            "y": 2260,
+            "width": 205,
+            "height": 201
+          },
+          "role": "Button",
+          "cornerRadius": 38.29
+        },
+        {
+          "bounds": {
+            "x": 761,
+            "y": 2260,
+            "width": 205,
+            "height": 148
+          },
+          "role": "Button",
+          "cornerRadius": 28.19
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 2535,
+            "width": 966,
+            "height": 441
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 58,
+            "y": 2666,
+            "width": 934,
+            "height": 116
+          },
+          "padding": {
+            "start": 10,
+            "top": 0,
+            "end": 10,
+            "bottom": 0
+          }
+        },
+        {
+          "bounds": {
+            "x": 641,
+            "y": 2666,
+            "width": 11,
+            "height": 116
+          },
+          "cornerRadius": 2.1
+        },
+        {
+          "bounds": {
+            "x": 95,
+            "y": 2819,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 242,
+            "y": 2819,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 389,
+            "y": 2819,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 3008,
+            "width": 966,
+            "height": 231
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 851,
+            "y": 3072,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        }
+      ],
+      "group": "Bluetooth",
+      "caption": "Bluetooth controls, connected and playing.",
+      "wireframe": "wireframes/bluetooth-connectedplaying.svg",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "sourceModule": ":composeApp",
+      "bodyLine": 166,
+      "sourceDirectory": "composeApp",
+      "sourceFunction": "BluetoothConnectedPlayingPreview"
+    },
+    {
+      "componentId": "Bluetooth/PermissionMissing",
+      "images": [
+        {
+          "variant": "ideal",
+          "path": "images/bluetooth-permissionmissing/ideal__default.png",
+          "state": "default",
+          "width": 1050,
+          "height": 3938,
+          "livePreview": "https://preview.coo.ee/cadence/p/bluetooth-permissionmissing__ideal__default",
+          "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.BluetoothPermissionMissingPreview_BT_controls_-_permission_missing",
+          "previewParams": {
+            "showBackground": true
+          },
+          "density": 2.625,
+          "figmaSvg": "https://preview.coo.ee/cadence/render/bluetooth-permissionmissing__ideal__default.svg"
+        }
+      ],
+      "greenlines": [
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 778,
+              "y": 95,
+              "width": 188,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 778,
+            "y": 95,
+            "width": 188,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 84,
+              "y": 242,
+              "width": 882,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 84,
+            "y": 242,
+            "width": 882,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 84,
+              "y": 715,
+              "width": 353,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 84,
+            "y": 715,
+            "width": 353,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 84,
+              "y": 1661,
+              "width": 447,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 84,
+            "y": 1661,
+            "width": 447,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 113,
+              "y": 1903,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 113,
+            "y": 1903,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 257,
+              "y": 1903,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 257,
+            "y": 1903,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 401,
+              "y": 1903,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 401,
+            "y": 1903,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 545,
+              "y": 1903,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 545,
+            "y": 1903,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 689,
+              "y": 1903,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 689,
+            "y": 1903,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 833,
+              "y": 1903,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 833,
+            "y": 1903,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 84,
+              "y": 2229,
+              "width": 204,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 84,
+            "y": 2229,
+            "width": 204,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 309,
+              "y": 2218,
+              "width": 205,
+              "height": 148
+            }
+          },
+          "bounds": {
+            "x": 309,
+            "y": 2218,
+            "width": 205,
+            "height": 148
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 535,
+              "y": 2218,
+              "width": 205,
+              "height": 201
+            }
+          },
+          "bounds": {
+            "x": 535,
+            "y": 2218,
+            "width": 205,
+            "height": 201
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 761,
+              "y": 2218,
+              "width": 205,
+              "height": 148
+            }
+          },
+          "bounds": {
+            "x": 761,
+            "y": 2218,
+            "width": 205,
+            "height": 148
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 95,
+              "y": 2777,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 95,
+            "y": 2777,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 242,
+              "y": 2777,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 242,
+            "y": 2777,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 389,
+              "y": 2777,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 389,
+            "y": 2777,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 851,
+              "y": 3030,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 851,
+            "y": 3030,
+            "width": 105,
+            "height": 105
+          }
+        }
+      ],
+      "redlines": [
+        {
+          "bounds": {
+            "x": 42,
+            "y": 42,
+            "width": 966,
+            "height": 357
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 778,
+            "y": 95,
+            "width": 188,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 242,
+            "width": 882,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 431,
+            "width": 966,
+            "height": 441
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 715,
+            "width": 353,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 904,
+            "width": 966,
+            "height": 441
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 523,
+            "y": 1041,
+            "width": 443,
+            "height": 105
+          },
+          "role": "RadioButton",
+          "cornerRadius": 0
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 1041,
+            "width": 442,
+            "height": 105
+          },
+          "role": "RadioButton",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 1377,
+            "width": 966,
+            "height": 441
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 1661,
+            "width": 447,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 1850,
+            "width": 966,
+            "height": 210
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 113,
+            "y": 1903,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 257,
+            "y": 1903,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 401,
+            "y": 1903,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 545,
+            "y": 1903,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 689,
+            "y": 1903,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 833,
+            "y": 1903,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 2092,
+            "width": 966,
+            "height": 369
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 2229,
+            "width": 204,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 309,
+            "y": 2218,
+            "width": 205,
+            "height": 148
+          },
+          "role": "Button",
+          "cornerRadius": 28.19
+        },
+        {
+          "bounds": {
+            "x": 535,
+            "y": 2218,
+            "width": 205,
+            "height": 201
+          },
+          "role": "Button",
+          "cornerRadius": 38.29
+        },
+        {
+          "bounds": {
+            "x": 761,
+            "y": 2218,
+            "width": 205,
+            "height": 148
+          },
+          "role": "Button",
+          "cornerRadius": 28.19
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 2493,
+            "width": 966,
+            "height": 441
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 58,
+            "y": 2624,
+            "width": 934,
+            "height": 116
+          },
+          "padding": {
+            "start": 10,
+            "top": 0,
+            "end": 10,
+            "bottom": 0
+          }
+        },
+        {
+          "bounds": {
+            "x": 389,
+            "y": 2624,
+            "width": 11,
+            "height": 116
+          },
+          "cornerRadius": 2.1
+        },
+        {
+          "bounds": {
+            "x": 95,
+            "y": 2777,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 242,
+            "y": 2777,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 389,
+            "y": 2777,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 2966,
+            "width": 966,
+            "height": 231
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 851,
+            "y": 3030,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        }
+      ],
+      "group": "Bluetooth",
+      "caption": "Bluetooth controls, permission missing.",
+      "wireframe": "wireframes/bluetooth-permissionmissing.svg",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "sourceModule": ":composeApp",
+      "bodyLine": 192,
+      "sourceDirectory": "composeApp",
+      "sourceFunction": "BluetoothPermissionMissingPreview"
+    },
+    {
+      "componentId": "Bluetooth/Mp3Mode",
+      "images": [
+        {
+          "variant": "ideal",
+          "path": "images/bluetooth-mp3mode/ideal__default.png",
+          "state": "default",
+          "width": 1050,
+          "height": 3938,
+          "livePreview": "https://preview.coo.ee/cadence/p/bluetooth-mp3mode__ideal__default",
+          "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.BluetoothMp3ModePreview_BT_controls_-_MP3_mode",
+          "previewParams": {
+            "showBackground": true
+          },
+          "density": 2.625,
+          "figmaSvg": "https://preview.coo.ee/cadence/render/bluetooth-mp3mode__ideal__default.svg"
+        }
+      ],
+      "greenlines": [
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 778,
+              "y": 95,
+              "width": 188,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 778,
+            "y": 95,
+            "width": 188,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 84,
+              "y": 252,
+              "width": 174,
+              "height": 84
+            }
+          },
+          "bounds": {
+            "x": 84,
+            "y": 252,
+            "width": 174,
+            "height": 84
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 279,
+              "y": 252,
+              "width": 153,
+              "height": 84
+            }
+          },
+          "bounds": {
+            "x": 279,
+            "y": 252,
+            "width": 153,
+            "height": 84
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 84,
+              "y": 557,
+              "width": 882,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 84,
+            "y": 557,
+            "width": 882,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 113,
+              "y": 1819,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 113,
+            "y": 1819,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 257,
+              "y": 1819,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 257,
+            "y": 1819,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 401,
+              "y": 1819,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 401,
+            "y": 1819,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 545,
+              "y": 1819,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 545,
+            "y": 1819,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 689,
+              "y": 1819,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 689,
+            "y": 1819,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 833,
+              "y": 1819,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 833,
+            "y": 1819,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 84,
+              "y": 2145,
+              "width": 204,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 84,
+            "y": 2145,
+            "width": 204,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 309,
+              "y": 2134,
+              "width": 205,
+              "height": 148
+            }
+          },
+          "bounds": {
+            "x": 309,
+            "y": 2134,
+            "width": 205,
+            "height": 148
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 535,
+              "y": 2134,
+              "width": 205,
+              "height": 201
+            }
+          },
+          "bounds": {
+            "x": 535,
+            "y": 2134,
+            "width": 205,
+            "height": 201
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 761,
+              "y": 2134,
+              "width": 205,
+              "height": 148
+            }
+          },
+          "bounds": {
+            "x": 761,
+            "y": 2134,
+            "width": 205,
+            "height": 148
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 95,
+              "y": 2693,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 95,
+            "y": 2693,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 242,
+              "y": 2693,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 242,
+            "y": 2693,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 389,
+              "y": 2693,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 389,
+            "y": 2693,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 851,
+              "y": 2946,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 851,
+            "y": 2946,
+            "width": 105,
+            "height": 105
+          }
+        }
+      ],
+      "redlines": [
+        {
+          "bounds": {
+            "x": 42,
+            "y": 42,
+            "width": 966,
+            "height": 672
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 778,
+            "y": 95,
+            "width": 188,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 252,
+            "width": 174,
+            "height": 84
+          },
+          "role": "Button",
+          "cornerRadius": 8
+        },
+        {
+          "bounds": {
+            "x": 279,
+            "y": 252,
+            "width": 153,
+            "height": 84
+          },
+          "role": "Button",
+          "cornerRadius": 8
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 557,
+            "width": 882,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 746,
+            "width": 966,
+            "height": 441
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 883,
+            "width": 442,
+            "height": 105
+          },
+          "role": "RadioButton",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 523,
+            "y": 883,
+            "width": 443,
+            "height": 105
+          },
+          "role": "RadioButton",
+          "cornerRadius": 0
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 1219,
+            "width": 966,
+            "height": 515
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 58,
+            "y": 1508,
+            "width": 934,
+            "height": 116
+          },
+          "padding": {
+            "start": 10,
+            "top": 0,
+            "end": 10,
+            "bottom": 0
+          }
+        },
+        {
+          "bounds": {
+            "x": 343,
+            "y": 1508,
+            "width": 11,
+            "height": 116
+          },
+          "cornerRadius": 2.1
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 1766,
+            "width": 966,
+            "height": 210
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 113,
+            "y": 1819,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 257,
+            "y": 1819,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 401,
+            "y": 1819,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 545,
+            "y": 1819,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 689,
+            "y": 1819,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 833,
+            "y": 1819,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 2008,
+            "width": 966,
+            "height": 369
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 2145,
+            "width": 204,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 309,
+            "y": 2134,
+            "width": 205,
+            "height": 148
+          },
+          "role": "Button",
+          "cornerRadius": 28.19
+        },
+        {
+          "bounds": {
+            "x": 535,
+            "y": 2134,
+            "width": 205,
+            "height": 201
+          },
+          "role": "Button",
+          "cornerRadius": 38.29
+        },
+        {
+          "bounds": {
+            "x": 761,
+            "y": 2134,
+            "width": 205,
+            "height": 148
+          },
+          "role": "Button",
+          "cornerRadius": 28.19
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 2409,
+            "width": 966,
+            "height": 441
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 58,
+            "y": 2540,
+            "width": 934,
+            "height": 116
+          },
+          "padding": {
+            "start": 10,
+            "top": 0,
+            "end": 10,
+            "bottom": 0
+          }
+        },
+        {
+          "bounds": {
+            "x": 641,
+            "y": 2540,
+            "width": 11,
+            "height": 116
+          },
+          "cornerRadius": 2.1
+        },
+        {
+          "bounds": {
+            "x": 95,
+            "y": 2693,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 242,
+            "y": 2693,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 389,
+            "y": 2693,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 2882,
+            "width": 966,
+            "height": 231
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 851,
+            "y": 2946,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        }
+      ],
+      "group": "Bluetooth",
+      "caption": "Bluetooth controls, MP3 mode.",
+      "wireframe": "wireframes/bluetooth-mp3mode.svg",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "sourceModule": ":composeApp",
+      "bodyLine": 218,
+      "sourceDirectory": "composeApp",
+      "sourceFunction": "BluetoothMp3ModePreview"
+    },
+    {
+      "componentId": "Manage/Empty",
+      "images": [
+        {
+          "variant": "ideal",
+          "path": "images/manage-empty/ideal__default.png",
+          "state": "default",
+          "width": 1050,
+          "height": 3938,
+          "livePreview": "https://preview.coo.ee/cadence/p/manage-empty__ideal__default",
+          "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.ManageEmptyPreview_Manage_-_empty",
+          "previewParams": {
+            "showBackground": true
+          },
+          "density": 2.625
+        }
+      ],
+      "greenlines": [
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "switch",
+          "detail": {
+            "role": "switch",
+            "bounds": {
+              "x": 84,
+              "y": 830,
+              "width": 137,
+              "height": 84
+            }
+          },
+          "bounds": {
+            "x": 84,
+            "y": 830,
+            "width": 137,
+            "height": 84
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 84,
+              "y": 1156,
+              "width": 329,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 84,
+            "y": 1156,
+            "width": 329,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 705,
+              "y": 1388,
+              "width": 303,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 705,
+            "y": 1388,
+            "width": 303,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 406,
+              "y": 1789,
+              "width": 311,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 406,
+            "y": 1789,
+            "width": 311,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 738,
+              "y": 1789,
+              "width": 270,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 738,
+            "y": 1789,
+            "width": 270,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 620,
+              "y": 2121,
+              "width": 356,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 620,
+            "y": 2121,
+            "width": 356,
+            "height": 105
+          }
+        }
+      ],
+      "redlines": [
+        {
+          "bounds": {
+            "x": 42,
+            "y": 42,
+            "width": 966,
+            "height": 441
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 523,
+            "y": 326,
+            "width": 443,
+            "height": 105
+          },
+          "role": "RadioButton",
+          "cornerRadius": 0
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 326,
+            "width": 442,
+            "height": 105
+          },
+          "role": "RadioButton",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 515,
+            "width": 966,
+            "height": 798
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 641,
+            "width": 882,
+            "height": 147
+          },
+          "cornerRadius": 4
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 830,
+            "width": 137,
+            "height": 84
+          },
+          "role": "Switch",
+          "cornerRadius": 16
+        },
+        {
+          "bounds": {
+            "x": 105,
+            "y": 851,
+            "width": 42,
+            "height": 42
+          },
+          "cornerRadius": 8
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 956,
+            "width": 882,
+            "height": 168
+          },
+          "padding": {
+            "start": 0,
+            "top": 8,
+            "end": 0,
+            "bottom": 0
+          }
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 977,
+            "width": 882,
+            "height": 147
+          },
+          "cornerRadius": 4
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 1156,
+            "width": 329,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 705,
+            "y": 1388,
+            "width": 303,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 406,
+            "y": 1789,
+            "width": 311,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 738,
+            "y": 1789,
+            "width": 270,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 2009,
+            "width": 966,
+            "height": 327
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 620,
+            "y": 2121,
+            "width": 356,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        }
+      ],
+      "group": "Manage",
+      "caption": "Manage sync, empty.",
+      "wireframe": "wireframes/manage-empty.svg",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "sourceModule": ":composeApp",
+      "bodyLine": 266,
+      "sourceDirectory": "composeApp",
+      "sourceFunction": "ManageEmptyPreview"
+    },
+    {
+      "componentId": "Manage/Populated",
+      "images": [
+        {
+          "variant": "ideal",
+          "path": "images/manage-populated/ideal__default.png",
+          "state": "default",
+          "width": 1050,
+          "height": 4988,
+          "livePreview": "https://preview.coo.ee/cadence/p/manage-populated__ideal__default",
+          "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.ManagePopulatedPreview_Manage_-_populated",
+          "previewParams": {
+            "showBackground": true
+          },
+          "density": 2.625
+        }
+      ],
+      "greenlines": [
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "switch",
+          "detail": {
+            "role": "switch",
+            "bounds": {
+              "x": 84,
+              "y": 830,
+              "width": 137,
+              "height": 84
+            }
+          },
+          "bounds": {
+            "x": 84,
+            "y": 830,
+            "width": 137,
+            "height": 84
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 84,
+              "y": 1156,
+              "width": 329,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 84,
+            "y": 1156,
+            "width": 329,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 705,
+              "y": 1388,
+              "width": 303,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 705,
+            "y": 1388,
+            "width": 303,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 851,
+              "y": 1619,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 851,
+            "y": 1619,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "switch",
+          "detail": {
+            "role": "switch",
+            "bounds": {
+              "x": 84,
+              "y": 1776,
+              "width": 137,
+              "height": 84
+            }
+          },
+          "bounds": {
+            "x": 84,
+            "y": 1776,
+            "width": 137,
+            "height": 84
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 84,
+              "y": 1913,
+              "width": 401,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 84,
+            "y": 1913,
+            "width": 401,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 851,
+              "y": 2155,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 851,
+            "y": 2155,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "switch",
+          "detail": {
+            "role": "switch",
+            "bounds": {
+              "x": 84,
+              "y": 2312,
+              "width": 137,
+              "height": 84
+            }
+          },
+          "bounds": {
+            "x": 84,
+            "y": 2312,
+            "width": 137,
+            "height": 84
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 84,
+              "y": 2449,
+              "width": 401,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 84,
+            "y": 2449,
+            "width": 401,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 851,
+              "y": 2691,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 851,
+            "y": 2691,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "switch",
+          "detail": {
+            "role": "switch",
+            "bounds": {
+              "x": 84,
+              "y": 2854,
+              "width": 137,
+              "height": 84
+            }
+          },
+          "bounds": {
+            "x": 84,
+            "y": 2854,
+            "width": 137,
+            "height": 84
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 84,
+              "y": 2996,
+              "width": 401,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 84,
+            "y": 2996,
+            "width": 401,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 406,
+              "y": 3270,
+              "width": 311,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 406,
+            "y": 3270,
+            "width": 311,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 738,
+              "y": 3270,
+              "width": 270,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 738,
+            "y": 3270,
+            "width": 270,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 620,
+              "y": 3602,
+              "width": 356,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 620,
+            "y": 3602,
+            "width": 356,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 644,
+              "y": 3944,
+              "width": 196,
+              "height": 84
+            }
+          },
+          "bounds": {
+            "x": 644,
+            "y": 3944,
+            "width": 196,
+            "height": 84
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 851,
+              "y": 3934,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 851,
+            "y": 3934,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 644,
+              "y": 4249,
+              "width": 196,
+              "height": 84
+            }
+          },
+          "bounds": {
+            "x": 644,
+            "y": 4249,
+            "width": 196,
+            "height": 84
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 851,
+              "y": 4239,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 851,
+            "y": 4239,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 687,
+              "y": 4575,
+              "width": 153,
+              "height": 84
+            }
+          },
+          "bounds": {
+            "x": 687,
+            "y": 4575,
+            "width": 153,
+            "height": 84
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 851,
+              "y": 4565,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 851,
+            "y": 4565,
+            "width": 105,
+            "height": 105
+          }
+        }
+      ],
+      "redlines": [
+        {
+          "bounds": {
+            "x": 42,
+            "y": 42,
+            "width": 966,
+            "height": 441
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 523,
+            "y": 326,
+            "width": 443,
+            "height": 105
+          },
+          "role": "RadioButton",
+          "cornerRadius": 0
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 326,
+            "width": 442,
+            "height": 105
+          },
+          "role": "RadioButton",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 515,
+            "width": 966,
+            "height": 798
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 641,
+            "width": 882,
+            "height": 147
+          },
+          "cornerRadius": 4
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 830,
+            "width": 137,
+            "height": 84
+          },
+          "role": "Switch",
+          "cornerRadius": 16
+        },
+        {
+          "bounds": {
+            "x": 147,
+            "y": 841,
+            "width": 63,
+            "height": 63
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 956,
+            "width": 882,
+            "height": 168
+          },
+          "padding": {
+            "start": 0,
+            "top": 8,
+            "end": 0,
+            "bottom": 0
+          }
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 977,
+            "width": 882,
+            "height": 147
+          },
+          "cornerRadius": 4
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 1156,
+            "width": 329,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 705,
+            "y": 1388,
+            "width": 303,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 1566,
+            "width": 966,
+            "height": 504
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 851,
+            "y": 1619,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 1776,
+            "width": 137,
+            "height": 84
+          },
+          "role": "Switch",
+          "cornerRadius": 16
+        },
+        {
+          "bounds": {
+            "x": 147,
+            "y": 1787,
+            "width": 63,
+            "height": 63
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 1913,
+            "width": 401,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 2102,
+            "width": 966,
+            "height": 504
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 851,
+            "y": 2155,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 2312,
+            "width": 137,
+            "height": 84
+          },
+          "role": "Switch",
+          "cornerRadius": 16
+        },
+        {
+          "bounds": {
+            "x": 105,
+            "y": 2333,
+            "width": 42,
+            "height": 42
+          },
+          "cornerRadius": 8
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 2449,
+            "width": 401,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 2638,
+            "width": 966,
+            "height": 515
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 851,
+            "y": 2691,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 2854,
+            "width": 137,
+            "height": 84
+          },
+          "role": "Switch",
+          "cornerRadius": 16
+        },
+        {
+          "bounds": {
+            "x": 105,
+            "y": 2875,
+            "width": 42,
+            "height": 42
+          },
+          "cornerRadius": 8
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 2996,
+            "width": 401,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 406,
+            "y": 3270,
+            "width": 311,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 738,
+            "y": 3270,
+            "width": 270,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 3490,
+            "width": 966,
+            "height": 327
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 620,
+            "y": 3602,
+            "width": 356,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 3849,
+            "width": 966,
+            "height": 273
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 644,
+            "y": 3944,
+            "width": 196,
+            "height": 84
+          },
+          "role": "Button",
+          "cornerRadius": 8
+        },
+        {
+          "bounds": {
+            "x": 851,
+            "y": 3934,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 4154,
+            "width": 966,
+            "height": 273
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 644,
+            "y": 4249,
+            "width": 196,
+            "height": 84
+          },
+          "role": "Button",
+          "cornerRadius": 8
+        },
+        {
+          "bounds": {
+            "x": 851,
+            "y": 4239,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 4459,
+            "width": 966,
+            "height": 315
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 687,
+            "y": 4575,
+            "width": 153,
+            "height": 84
+          },
+          "role": "Button",
+          "cornerRadius": 8
+        },
+        {
+          "bounds": {
+            "x": 851,
+            "y": 4565,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        }
+      ],
+      "group": "Manage",
+      "caption": "Manage sync, populated (hosts the Appearance toggle).",
+      "wireframe": "wireframes/manage-populated.svg",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "sourceModule": ":composeApp",
+      "bodyLine": 288,
+      "sourceDirectory": "composeApp",
+      "sourceFunction": "ManagePopulatedPreview"
+    },
+    {
+      "componentId": "Manage/Refreshing",
+      "images": [
+        {
+          "variant": "ideal",
+          "path": "images/manage-refreshing/ideal__default.png",
+          "state": "default",
+          "width": 1050,
+          "height": 4988,
+          "livePreview": "https://preview.coo.ee/cadence/p/manage-refreshing__ideal__default",
+          "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.ManageRefreshingPreview_Manage_-_refreshing",
+          "previewParams": {
+            "showBackground": true
+          },
+          "density": 2.625
+        }
+      ],
+      "greenlines": [
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "switch",
+          "detail": {
+            "role": "switch",
+            "bounds": {
+              "x": 84,
+              "y": 830,
+              "width": 137,
+              "height": 84
+            }
+          },
+          "bounds": {
+            "x": 84,
+            "y": 830,
+            "width": 137,
+            "height": 84
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 84,
+              "y": 1156,
+              "width": 329,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 84,
+            "y": 1156,
+            "width": 329,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 705,
+              "y": 1388,
+              "width": 303,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 705,
+            "y": 1388,
+            "width": 303,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 851,
+              "y": 1619,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 851,
+            "y": 1619,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "switch",
+          "detail": {
+            "role": "switch",
+            "bounds": {
+              "x": 84,
+              "y": 1776,
+              "width": 137,
+              "height": 84
+            }
+          },
+          "bounds": {
+            "x": 84,
+            "y": 1776,
+            "width": 137,
+            "height": 84
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 84,
+              "y": 2008,
+              "width": 401,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 84,
+            "y": 2008,
+            "width": 401,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 851,
+              "y": 2250,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 851,
+            "y": 2250,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "switch",
+          "detail": {
+            "role": "switch",
+            "bounds": {
+              "x": 84,
+              "y": 2407,
+              "width": 137,
+              "height": 84
+            }
+          },
+          "bounds": {
+            "x": 84,
+            "y": 2407,
+            "width": 137,
+            "height": 84
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 84,
+              "y": 2544,
+              "width": 401,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 84,
+            "y": 2544,
+            "width": 401,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 851,
+              "y": 2786,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 851,
+            "y": 2786,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "switch",
+          "detail": {
+            "role": "switch",
+            "bounds": {
+              "x": 84,
+              "y": 2949,
+              "width": 137,
+              "height": 84
+            }
+          },
+          "bounds": {
+            "x": 84,
+            "y": 2949,
+            "width": 137,
+            "height": 84
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 84,
+              "y": 3091,
+              "width": 401,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 84,
+            "y": 3091,
+            "width": 401,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 406,
+              "y": 3365,
+              "width": 311,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 406,
+            "y": 3365,
+            "width": 311,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 738,
+              "y": 3365,
+              "width": 270,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 738,
+            "y": 3365,
+            "width": 270,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 620,
+              "y": 3697,
+              "width": 356,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 620,
+            "y": 3697,
+            "width": 356,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 644,
+              "y": 4039,
+              "width": 196,
+              "height": 84
+            }
+          },
+          "bounds": {
+            "x": 644,
+            "y": 4039,
+            "width": 196,
+            "height": 84
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 851,
+              "y": 4029,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 851,
+            "y": 4029,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 644,
+              "y": 4344,
+              "width": 196,
+              "height": 84
+            }
+          },
+          "bounds": {
+            "x": 644,
+            "y": 4344,
+            "width": 196,
+            "height": 84
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 851,
+              "y": 4334,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 851,
+            "y": 4334,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 687,
+              "y": 4670,
+              "width": 153,
+              "height": 84
+            }
+          },
+          "bounds": {
+            "x": 687,
+            "y": 4670,
+            "width": 153,
+            "height": 84
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 851,
+              "y": 4660,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 851,
+            "y": 4660,
+            "width": 105,
+            "height": 105
+          }
+        }
+      ],
+      "redlines": [
+        {
+          "bounds": {
+            "x": 42,
+            "y": 42,
+            "width": 966,
+            "height": 441
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 523,
+            "y": 326,
+            "width": 443,
+            "height": 105
+          },
+          "role": "RadioButton",
+          "cornerRadius": 0
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 326,
+            "width": 442,
+            "height": 105
+          },
+          "role": "RadioButton",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 515,
+            "width": 966,
+            "height": 798
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 641,
+            "width": 882,
+            "height": 147
+          },
+          "cornerRadius": 4
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 830,
+            "width": 137,
+            "height": 84
+          },
+          "role": "Switch",
+          "cornerRadius": 16
+        },
+        {
+          "bounds": {
+            "x": 147,
+            "y": 841,
+            "width": 63,
+            "height": 63
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 956,
+            "width": 882,
+            "height": 168
+          },
+          "padding": {
+            "start": 0,
+            "top": 8,
+            "end": 0,
+            "bottom": 0
+          }
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 977,
+            "width": 882,
+            "height": 147
+          },
+          "cornerRadius": 4
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 1156,
+            "width": 329,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 705,
+            "y": 1388,
+            "width": 303,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 1566,
+            "width": 966,
+            "height": 599
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 851,
+            "y": 1619,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 1776,
+            "width": 137,
+            "height": 84
+          },
+          "role": "Switch",
+          "cornerRadius": 16
+        },
+        {
+          "bounds": {
+            "x": 147,
+            "y": 1787,
+            "width": 63,
+            "height": 63
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 1876,
+            "width": 882,
+            "height": 63
+          },
+          "padding": {
+            "start": 0,
+            "top": 10,
+            "end": 0,
+            "bottom": 10
+          }
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 2008,
+            "width": 401,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 2197,
+            "width": 966,
+            "height": 504
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 851,
+            "y": 2250,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 2407,
+            "width": 137,
+            "height": 84
+          },
+          "role": "Switch",
+          "cornerRadius": 16
+        },
+        {
+          "bounds": {
+            "x": 105,
+            "y": 2428,
+            "width": 42,
+            "height": 42
+          },
+          "cornerRadius": 8
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 2544,
+            "width": 401,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 2733,
+            "width": 966,
+            "height": 515
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 851,
+            "y": 2786,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 2949,
+            "width": 137,
+            "height": 84
+          },
+          "role": "Switch",
+          "cornerRadius": 16
+        },
+        {
+          "bounds": {
+            "x": 105,
+            "y": 2970,
+            "width": 42,
+            "height": 42
+          },
+          "cornerRadius": 8
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 3091,
+            "width": 401,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 406,
+            "y": 3365,
+            "width": 311,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 738,
+            "y": 3365,
+            "width": 270,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 3585,
+            "width": 966,
+            "height": 327
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 620,
+            "y": 3697,
+            "width": 356,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 3944,
+            "width": 966,
+            "height": 273
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 644,
+            "y": 4039,
+            "width": 196,
+            "height": 84
+          },
+          "role": "Button",
+          "cornerRadius": 8
+        },
+        {
+          "bounds": {
+            "x": 851,
+            "y": 4029,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 4249,
+            "width": 966,
+            "height": 273
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 644,
+            "y": 4344,
+            "width": 196,
+            "height": 84
+          },
+          "role": "Button",
+          "cornerRadius": 8
+        },
+        {
+          "bounds": {
+            "x": 851,
+            "y": 4334,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 4554,
+            "width": 966,
+            "height": 315
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 687,
+            "y": 4670,
+            "width": 153,
+            "height": 84
+          },
+          "role": "Button",
+          "cornerRadius": 8
+        },
+        {
+          "bounds": {
+            "x": 851,
+            "y": 4660,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        }
+      ],
+      "group": "Manage",
+      "caption": "Manage sync, refreshing.",
+      "wireframe": "wireframes/manage-refreshing.svg",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "sourceModule": ":composeApp",
+      "bodyLine": 310,
+      "sourceDirectory": "composeApp",
+      "sourceFunction": "ManageRefreshingPreview"
+    }
+  ],
+  "library": [
+    "androidx.compose.material3:material3",
+    "ee.schimke.cadence (CadenceTheme)"
+  ],
+  "renderer": "compose-preview 1.63.0",
+  "generatedAt": "2026-09-02T11:48:21.041Z",
+  "liveBundle": {
+    "path": "bundle/",
+    "file": "cadence-bundle.png"
+  },
+  "liveBundles": [
+    {
+      "path": "bundle/",
+      "file": "cadence-bundle.png",
+      "module": ":composeApp",
+      "previewIdPrefix": ""
+    }
+  ],
+  "source": {
+    "repo": "yschimke/cadence",
+    "ref": "main",
+    "module": ":composeApp"
+  }
+}

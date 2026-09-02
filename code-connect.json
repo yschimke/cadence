@@ -1,0 +1,203 @@
+{
+  "system": "cadence",
+  "title": "Cadence",
+  "label": "Compose",
+  "source": {
+    "repo": "yschimke/cadence",
+    "ref": "main",
+    "module": ":composeApp"
+  },
+  "generatedAt": "2026-09-02T11:48:21.951Z",
+  "mappings": [
+    {
+      "componentId": "Theme/Cadence-Light",
+      "figmaLayerName": "Theme/Cadence-Light",
+      "componentName": "FoundationCadenceLightPreview",
+      "source": "https://github.com/yschimke/cadence/blob/main/composeApp/src/main/kotlin/ee/schimke/cadence/preview/FoundationPreviews.kt",
+      "label": "Compose",
+      "confidence": "preview-fallback",
+      "previewName": "FoundationCadenceLightPreview",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/theme-cadence-light__ideal__default__light.svg"
+    },
+    {
+      "componentId": "Theme/Cadence-Dark",
+      "figmaLayerName": "Theme/Cadence-Dark",
+      "componentName": "FoundationCadenceDarkPreview",
+      "source": "https://github.com/yschimke/cadence/blob/main/composeApp/src/main/kotlin/ee/schimke/cadence/preview/FoundationPreviews.kt",
+      "label": "Compose",
+      "confidence": "preview-fallback",
+      "previewName": "FoundationCadenceDarkPreview",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/theme-cadence-dark__ideal__default__dark.svg"
+    },
+    {
+      "componentId": "Theme/Material3-Light",
+      "figmaLayerName": "Theme/Material3-Light",
+      "componentName": "FoundationMaterial3LightPreview",
+      "source": "https://github.com/yschimke/cadence/blob/main/composeApp/src/main/kotlin/ee/schimke/cadence/preview/FoundationPreviews.kt",
+      "label": "Compose",
+      "confidence": "preview-fallback",
+      "previewName": "FoundationMaterial3LightPreview",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/theme-material3-light__ideal__default__light.svg"
+    },
+    {
+      "componentId": "Theme/Material3-Dark",
+      "figmaLayerName": "Theme/Material3-Dark",
+      "componentName": "FoundationMaterial3DarkPreview",
+      "source": "https://github.com/yschimke/cadence/blob/main/composeApp/src/main/kotlin/ee/schimke/cadence/preview/FoundationPreviews.kt",
+      "label": "Compose",
+      "confidence": "preview-fallback",
+      "previewName": "FoundationMaterial3DarkPreview",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/theme-material3-dark__ideal__default__dark.svg"
+    },
+    {
+      "componentId": "Home/Empty",
+      "figmaLayerName": "Home/Empty",
+      "componentName": "HomeEmptyPreview",
+      "source": "https://github.com/yschimke/cadence/blob/main/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "label": "Compose",
+      "confidence": "preview-fallback",
+      "previewName": "HomeEmptyPreview",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/home-empty__ideal__default.svg"
+    },
+    {
+      "componentId": "Devices/Loaded",
+      "figmaLayerName": "Devices/Loaded",
+      "componentName": "DevicesScreenLoadedPreview",
+      "source": "https://github.com/yschimke/cadence/blob/main/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "label": "Compose",
+      "confidence": "preview-fallback",
+      "previewName": "DevicesScreenLoadedPreview",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/devices-loaded__ideal__default.svg"
+    },
+    {
+      "componentId": "Devices/Loading",
+      "figmaLayerName": "Devices/Loading",
+      "componentName": "DevicesScreenLoadingPreview",
+      "source": "https://github.com/yschimke/cadence/blob/main/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "label": "Compose",
+      "confidence": "preview-fallback",
+      "previewName": "DevicesScreenLoadingPreview",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/devices-loading__ideal__default.svg"
+    },
+    {
+      "componentId": "Devices/Empty",
+      "figmaLayerName": "Devices/Empty",
+      "componentName": "DevicesScreenEmptyPreview",
+      "source": "https://github.com/yschimke/cadence/blob/main/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "label": "Compose",
+      "confidence": "preview-fallback",
+      "previewName": "DevicesScreenEmptyPreview",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/devices-empty__ideal__default.svg"
+    },
+    {
+      "componentId": "Bookmarks/Loaded",
+      "figmaLayerName": "Bookmarks/Loaded",
+      "componentName": "BookmarksScreenLoadedPreview",
+      "source": "https://github.com/yschimke/cadence/blob/main/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "label": "Compose",
+      "confidence": "preview-fallback",
+      "previewName": "BookmarksScreenLoadedPreview",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/bookmarks-loaded__ideal__default.svg"
+    },
+    {
+      "componentId": "Bookmarks/Loading",
+      "figmaLayerName": "Bookmarks/Loading",
+      "componentName": "BookmarksScreenLoadingPreview",
+      "source": "https://github.com/yschimke/cadence/blob/main/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "label": "Compose",
+      "confidence": "preview-fallback",
+      "previewName": "BookmarksScreenLoadingPreview",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/bookmarks-loading__ideal__default.svg"
+    },
+    {
+      "componentId": "DeviceFiles/Loading",
+      "figmaLayerName": "DeviceFiles/Loading",
+      "componentName": "DeviceFilesLoadingPreview",
+      "source": "https://github.com/yschimke/cadence/blob/main/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "label": "Compose",
+      "confidence": "preview-fallback",
+      "previewName": "DeviceFilesLoadingPreview",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/devicefiles-loading__ideal__default.svg"
+    },
+    {
+      "componentId": "DeviceFiles/NotAvailable",
+      "figmaLayerName": "DeviceFiles/NotAvailable",
+      "componentName": "DeviceFilesNotAvailablePreview",
+      "source": "https://github.com/yschimke/cadence/blob/main/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "label": "Compose",
+      "confidence": "preview-fallback",
+      "previewName": "DeviceFilesNotAvailablePreview",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/devicefiles-notavailable__ideal__default.svg"
+    },
+    {
+      "componentId": "Bluetooth/Disconnected",
+      "figmaLayerName": "Bluetooth/Disconnected",
+      "componentName": "BluetoothDisconnectedPreview",
+      "source": "https://github.com/yschimke/cadence/blob/main/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "label": "Compose",
+      "confidence": "preview-fallback",
+      "previewName": "BluetoothDisconnectedPreview",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/bluetooth-disconnected__ideal__default.svg"
+    },
+    {
+      "componentId": "Bluetooth/ConnectedPlaying",
+      "figmaLayerName": "Bluetooth/ConnectedPlaying",
+      "componentName": "BluetoothConnectedPlayingPreview",
+      "source": "https://github.com/yschimke/cadence/blob/main/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "label": "Compose",
+      "confidence": "preview-fallback",
+      "previewName": "BluetoothConnectedPlayingPreview",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/bluetooth-connectedplaying__ideal__default.svg"
+    },
+    {
+      "componentId": "Bluetooth/PermissionMissing",
+      "figmaLayerName": "Bluetooth/PermissionMissing",
+      "componentName": "BluetoothPermissionMissingPreview",
+      "source": "https://github.com/yschimke/cadence/blob/main/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "label": "Compose",
+      "confidence": "preview-fallback",
+      "previewName": "BluetoothPermissionMissingPreview",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/bluetooth-permissionmissing__ideal__default.svg"
+    },
+    {
+      "componentId": "Bluetooth/Mp3Mode",
+      "figmaLayerName": "Bluetooth/Mp3Mode",
+      "componentName": "BluetoothMp3ModePreview",
+      "source": "https://github.com/yschimke/cadence/blob/main/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "label": "Compose",
+      "confidence": "preview-fallback",
+      "previewName": "BluetoothMp3ModePreview",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/bluetooth-mp3mode__ideal__default.svg"
+    },
+    {
+      "componentId": "Manage/Empty",
+      "figmaLayerName": "Manage/Empty",
+      "componentName": "ManageEmptyPreview",
+      "source": "https://github.com/yschimke/cadence/blob/main/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "label": "Compose",
+      "confidence": "preview-fallback",
+      "previewName": "ManageEmptyPreview",
+      "figmaSvg": "figma/manage-empty.svg"
+    },
+    {
+      "componentId": "Manage/Populated",
+      "figmaLayerName": "Manage/Populated",
+      "componentName": "ManagePopulatedPreview",
+      "source": "https://github.com/yschimke/cadence/blob/main/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "label": "Compose",
+      "confidence": "preview-fallback",
+      "previewName": "ManagePopulatedPreview",
+      "figmaSvg": "figma/manage-populated.svg"
+    },
+    {
+      "componentId": "Manage/Refreshing",
+      "figmaLayerName": "Manage/Refreshing",
+      "componentName": "ManageRefreshingPreview",
+      "source": "https://github.com/yschimke/cadence/blob/main/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "label": "Compose",
+      "confidence": "preview-fallback",
+      "previewName": "ManageRefreshingPreview",
+      "figmaSvg": "figma/manage-refreshing.svg"
+    }
+  ]
+}
