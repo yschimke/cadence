@@ -32,7 +32,7 @@ navigationCompose = "2.9.2"
 playPublisher = "4.1.1"
 runner = "1.7.0"
 tapmoc = "0.4.2"
-wire = "6.4.6"
+wire = "6.4.7"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
