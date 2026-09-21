@@ -59,10 +59,10 @@ jobs:
         uses: actions/setup-java@v6.0.1
         with:
           distribution: temurin
-          java-version: 25
+          java-version: 25.0.4+7.0.LTS
 
       - name: Set up Android SDK
-        uses: android-actions/setup-android@v4.0.1
+        uses: android-actions/setup-android@v4.0.4
         with:
           packages: >-
             platform-tools
@@ -74,7 +74,7 @@ jobs:
         with:
           cache-read-only: true
 
-      - uses: anthropics/claude-code-action@v1.0.223
+      - uses: anthropics/claude-code-action@v1.0.231
         with:
           # Bills the Claude subscription's included usage (shared with
           # interactive Claude Code sessions) rather than per-token API spend.
