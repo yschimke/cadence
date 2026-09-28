@@ -46,7 +46,7 @@ customising the live render are two ends of one workflow.
 | Library | `androidx.compose.material3:material3`<br>`ee.schimke.cadence (CadenceTheme)` |
 | Renderer | compose-preview 2.28.3 |
 | Schema | `design-parity-catalog/v1` |
-| Generated | 2026-09-27 |
+| Generated | 2026-09-28 |
 
 ## Components by group
 
