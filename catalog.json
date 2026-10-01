@@ -5845,8 +5845,8 @@
     "androidx.compose.material3:material3",
     "ee.schimke.cadence (CadenceTheme)"
   ],
-  "renderer": "compose-preview 2.29.0",
-  "generatedAt": "2026-10-01T06:58:54.618Z",
+  "renderer": "compose-preview 2.31.0",
+  "generatedAt": "2026-10-01T19:46:41.136Z",
   "liveBundle": {
     "path": "bundle/",
     "file": "cadence-bundle.png"
