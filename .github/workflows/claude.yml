@@ -70,11 +70,11 @@ jobs:
             build-tools;36.0.0
 
       - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v6.3.0
+        uses: gradle/actions/setup-gradle@v6.4.0
         with:
           cache-read-only: true
 
-      - uses: anthropics/claude-code-action@v1.0.235
+      - uses: anthropics/claude-code-action@v1.0.241
         with:
           # Bills the Claude subscription's included usage (shared with
           # interactive Claude Code sessions) rather than per-token API spend.
