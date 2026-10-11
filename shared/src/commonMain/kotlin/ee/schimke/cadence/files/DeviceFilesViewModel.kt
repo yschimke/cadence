@@ -30,7 +30,7 @@ import okio.Path.Companion.toPath
 class DeviceFilesViewModel(
   private val savedStateHandle: SavedStateHandle,
   private val devicesRepo: DevicesRepo,
-  private val fileSystem: FileSystem,
+  private val fileSystem: FileSystem?,
   private val storageManager: StorageManager,
 ) : ViewModel() {
   val route = savedStateHandle.toRoute<DeviceFiles>()
@@ -69,7 +69,7 @@ class DeviceFilesViewModel(
     data class Loaded(
       val device: Device,
       val root: Path,
-      val fileSystem: FileSystem,
+      val fileSystem: FileSystem?,
       val volume: Volume?,
     ) : UiState() {
       override val name: String

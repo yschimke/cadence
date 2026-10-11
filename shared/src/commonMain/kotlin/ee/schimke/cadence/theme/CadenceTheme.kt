@@ -15,7 +15,7 @@ import androidx.compose.runtime.Composable
 fun CadenceTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
   MaterialTheme(
     colorScheme = if (darkTheme) CadenceDarkColors else CadenceLightColors,
-    typography = CadenceTypography,
+    typography = cadenceTypography(),
     shapes = CadenceShapes,
     content = content,
   )

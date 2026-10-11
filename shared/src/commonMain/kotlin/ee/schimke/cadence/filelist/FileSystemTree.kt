@@ -1,155 +1,56 @@
 package ee.schimke.cadence.filelist
 
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.BasicText
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.outlined.InsertDriveFile
-import androidx.compose.material.icons.filled.ChevronRight
-import androidx.compose.material.icons.filled.DriveFolderUpload
-import androidx.compose.material.icons.outlined.Folder
-import androidx.compose.material.icons.outlined.FolderOpen
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.State
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Text
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import cafe.adriel.bonsai.core.BonsaiStyle
-import cafe.adriel.bonsai.core.BonsaiStyle.Companion.DefaultNodeTextStyle
-import cafe.adriel.bonsai.core.node.Branch
-import cafe.adriel.bonsai.core.node.BranchNode
-import cafe.adriel.bonsai.core.node.Leaf
-import cafe.adriel.bonsai.core.node.Node
-import cafe.adriel.bonsai.core.tree.Tree
-import cafe.adriel.bonsai.core.tree.TreeScope
-import java.net.URLDecoder
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import io.ktor.http.decodeURLPart
 import okio.FileSystem
 import okio.Path
 
-@Composable
-fun cadenceFileSystemTree(
-  style: BonsaiStyle<Path> = CadenceBonsaiStyle(),
-  rootPath: Path,
-  fileSystem: FileSystem,
-  isRoot: Boolean = true,
-): Tree<Path> = Tree { CadenceFileSystemNode(style, rootPath, fileSystem, isRoot = isRoot) }
+data class DirectoryEntry(val path: Path, val directory: Boolean)
+
+expect suspend fun listDirectory(fileSystem: FileSystem?, path: Path): List<DirectoryEntry>
 
 @Composable
-fun TreeScope.CadenceFileSystemNode(
-  style: BonsaiStyle<Path>,
-  path: Path,
-  fileSystem: FileSystem,
-  isRoot: Boolean,
-) {
-  val isDirectory = rememberIsDirectory(fileSystem, path)
+fun FileTree(root: Path, fileSystem: FileSystem?, modifier: Modifier = Modifier) {
+  Column(modifier.verticalScroll(rememberScrollState())) { FileNode(root, true, fileSystem, 0) }
+}
 
-  val displayName = remember(path) { URLDecoder.decode(path.toString(), Charsets.UTF_8) }
-  val parts = remember(path) { displayName.split("/", ":").filter { it.isNotEmpty() } }
-
-  if (isRoot || isDirectory.value == true) {
-    Branch(
-      content = path,
-      name = parts.last(),
-      customIcon = { if (isRoot) style.RootNodeIcon(it) else style.DefaultNodeIcon(it) },
-      customName = { if (isRoot) style.RootNodeName(it) else style.DefaultNodeName(it) },
-    ) {
-      val children by rememberFileList(fileSystem, path)
-
-      if (children != null) {
-        children?.forEach { path ->
-          CadenceFileSystemNode(style = style, path, fileSystem, isRoot = false)
-        }
-      } else {
-        Leaf(content = "Loading...")
+@Composable
+private fun FileNode(path: Path, directory: Boolean, fileSystem: FileSystem?, depth: Int) {
+  var expanded by remember(path) { mutableStateOf(depth == 0) }
+  var children by remember(path) { mutableStateOf<List<DirectoryEntry>>(emptyList()) }
+  var error by remember(path) { mutableStateOf<String?>(null) }
+  LaunchedEffect(path, expanded) {
+    if (expanded && directory) {
+      try {
+        children = listDirectory(fileSystem, path)
+        error = null
+      } catch (e: Exception) {
+        error = e.message ?: "Cannot read directory"
       }
     }
-  } else {
-    Leaf(
-      content = path,
-      name = parts.last(),
-      customIcon = { style.DefaultNodeIcon(it) },
-      customName = { style.DefaultNodeName(it) },
-    )
   }
-}
-
-@Composable
-private fun rememberIsDirectory(fileSystem: FileSystem, path: Path): State<Boolean?> {
-  val result = remember { mutableStateOf<Boolean?>(null) }
-
-  LaunchedEffect(path) {
-    withContext(Dispatchers.IO) { result.value = fileSystem.metadata(path).isDirectory }
-  }
-
-  return result
-}
-
-@Composable
-private fun rememberFileList(fileSystem: FileSystem, path: Path): State<List<Path>?> {
-  val result = remember { mutableStateOf<List<Path>?>(null) }
-
-  LaunchedEffect(path) {
-    withContext(Dispatchers.IO) { result.value = fileSystem.listOrNull(path) }
-  }
-
-  return result
-}
-
-@Composable
-fun <T> BonsaiStyle<T>.DefaultNodeIcon(node: Node<T>) {
-  val (icon, colorFilter) =
-    if (node is BranchNode && node.isExpanded) {
-      this.nodeExpandedIcon(node) to this.nodeExpandedIconColorFilter
-    } else {
-      this.nodeCollapsedIcon(node) to this.nodeCollapsedIconColorFilter
-    }
-
-  if (icon != null) {
-    Image(painter = icon, colorFilter = colorFilter, contentDescription = node.name)
-  }
-}
-
-@Composable
-fun <T> BonsaiStyle<T>.RootNodeIcon(node: Node<T>) {
-  Image(Icons.Default.DriveFolderUpload, contentDescription = node.name)
-}
-
-@Composable
-fun <T> BonsaiStyle<T>.DefaultNodeName(node: Node<T>) {
-  BasicText(
-    text = node.name,
-    style = this.nodeNameTextStyle,
-    modifier = Modifier.padding(start = this.nodeNameStartPadding),
-  )
-}
-
-@Composable
-fun <T> BonsaiStyle<T>.RootNodeName(node: Node<T>) {
-  BasicText(
-    text = node.name,
-    style = this.nodeNameTextStyle.copy(fontSize = 20.sp, fontWeight = FontWeight.Bold),
-    modifier = Modifier.padding(start = this.nodeNameStartPadding),
-  )
-}
-
-fun CadenceBonsaiStyle(): BonsaiStyle<Path> =
-  BonsaiStyle(
-    nodeNameStartPadding = 4.dp,
-    nodeCollapsedIcon = { node ->
-      rememberVectorPainter(
-        if (node is BranchNode) Icons.Outlined.Folder
-        else Icons.AutoMirrored.Outlined.InsertDriveFile
-      )
+  Text(
+    (if (directory) (if (expanded) "▾ " else "▸ ") else "") + displayName(path),
+    Modifier.padding(start = (depth * 16).dp, top = 6.dp).clickable(enabled = directory) {
+      expanded = !expanded
     },
-    nodeExpandedIcon = { rememberVectorPainter(Icons.Outlined.FolderOpen) },
-    toggleIcon = { rememberVectorPainter(Icons.Default.ChevronRight) },
-    nodeNameTextStyle = DefaultNodeTextStyle.copy(fontSize = 15.sp),
   )
+  if (expanded) {
+    error?.let { Text(it) }
+    children.forEach { FileNode(it.path, it.directory, fileSystem, depth + 1) }
+  }
+}
+
+private fun displayName(path: Path): String {
+  if (!path.toString().startsWith("content:")) return path.name.ifEmpty { path.toString() }
+  return runCatching { path.name.decodeURLPart().substringAfterLast('/').substringAfterLast(':') }
+    .getOrDefault(path.name)
+}

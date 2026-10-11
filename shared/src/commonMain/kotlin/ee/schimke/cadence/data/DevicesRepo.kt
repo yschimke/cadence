@@ -1,6 +1,5 @@
 package ee.schimke.cadence.data
 
-import androidx.datastore.core.DataStore
 import dev.zacsweers.metro.Inject
 import ee.schimke.cadence.datastore.proto.Device
 import ee.schimke.cadence.datastore.proto.Settings
@@ -8,9 +7,17 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 
 @Inject
-class DevicesRepo(private val dataStore: DataStore<Settings>) {
+class DevicesRepo(private val dataStore: SettingsStore) {
   suspend fun addDevice(device: Device) {
-    dataStore.updateData { devices -> devices.copy(devices.devices + device) }
+    dataStore.updateData { settings ->
+      val existing = settings.devices.firstOrNull { it.path == device.path }
+      if (existing == null) settings.copy(devices = settings.devices + device)
+      else
+        settings.copy(
+          devices =
+            settings.devices.map { if (it.id == existing.id) it.copy(name = device.name) else it }
+        )
+    }
   }
 
   suspend fun getDevice(id: String): Device? {

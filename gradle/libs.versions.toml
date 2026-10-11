@@ -20,14 +20,16 @@ coreSplashscreen = "1.2.0"
 datastore = "1.2.1"
 documentfile = "1.1.0"
 junit = "4.13.2"
-kotlin = "2.4.20"
+kotlin = "2.4.21"
 kotlinxCoroutines = "1.11.0"
 kotlinxSerializationJson = "1.11.0"
 ktfmt = "0.27.0"
 ktorClientCore = "3.6.0"
 materialIconsCore = "1.7.3"
 metro = "1.4.5"
-modernstorageStorage = "1.0.0-alpha12"
+composeMaterial3 = "1.9.0"
+okio = "3.18.2"
+usb4java = "1.3.0"
 navigationCompose = "2.9.2"
 playPublisher = "4.1.1"
 runner = "1.7.0"
@@ -35,6 +37,10 @@ tapmoc = "0.4.2"
 wire = "7.1.0"
 
 [libraries]
+compose-material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "composeMaterial3" }
+okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
+usb4java = { module = "org.usb4java:usb4java", version.ref = "usb4java" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidx-appcompat" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "androidx-constraintlayout" }
@@ -44,6 +50,7 @@ androidx-datastore = { module = "androidx.datastore:datastore", version.ref = "d
 androidx-documentfile = { module = "androidx.documentfile:documentfile", version.ref = "documentfile" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidx-espresso-core" }
 androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
+androidx-lifecycle-viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "androidx-lifecycle" }
 androidx-material = { group = "com.google.android.material", name = "material", version.ref = "androidx-material" }
 androidx-runner = { module = "androidx.test:runner", version.ref = "runner" }
@@ -61,8 +68,6 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktorClientCore" }
 material-icons-core = { module = "org.jetbrains.compose.material:material-icons-core", version.ref = "materialIconsCore" }
 material-icons-extended = { module = "org.jetbrains.compose.material:material-icons-extended", version.ref = "materialIconsCore" }
-modernstorage-permissions = { module = "me.saket.modernstorage:modernstorage-permissions", version.ref = "modernstorageStorage" }
-modernstorage-storage = { module = "me.saket.modernstorage:modernstorage-storage", version.ref = "modernstorageStorage" }
 navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 
 [plugins]

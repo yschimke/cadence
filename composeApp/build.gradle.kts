@@ -72,12 +72,12 @@ dependencies {
   // bindings whose types reference DataStore / okio / WorkManager / ktor.
   implementation(libs.androidx.datastore)
   implementation(libs.androidx.work.runtime)
-  implementation("com.squareup.okio:okio:3.18.2")
+  implementation(libs.okio)
 
   // Compose deps used only by the preview composables in src/main/.../preview/.
   implementation(compose.runtime)
   implementation(compose.foundation)
-  implementation(compose.material3)
+  implementation(libs.compose.material3)
   implementation(compose.materialIconsExtended)
   implementation(compose.ui)
   implementation(compose.preview)
@@ -109,6 +109,6 @@ tapmoc {
 }
 
 metro {
-  debug.set(true)
+  debug.set(false)
   reportsDestination.set(layout.buildDirectory.dir("metro/reports"))
 }

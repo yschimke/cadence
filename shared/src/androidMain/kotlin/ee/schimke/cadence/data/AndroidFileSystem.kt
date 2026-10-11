@@ -13,9 +13,8 @@ import androidx.core.database.getLongOrNull
 import androidx.core.database.getStringOrNull
 import androidx.core.provider.DocumentsContractCompat
 import androidx.documentfile.provider.DocumentFile
-import com.google.modernstorage.storage.MetadataExtras
-import com.google.modernstorage.storage.toOkioPath
-import com.google.modernstorage.storage.toUri
+import ee.schimke.cadence.data.toOkioPath
+import ee.schimke.cadence.data.toUri
 import kotlinx.coroutines.suspendCancellableCoroutine
 import okio.FileHandle
 import okio.FileMetadata

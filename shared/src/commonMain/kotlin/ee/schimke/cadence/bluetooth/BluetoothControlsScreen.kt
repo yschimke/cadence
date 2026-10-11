@@ -468,5 +468,5 @@ private fun formatTime(ms: Long): String {
   val totalSec = ms / 1000
   val mins = totalSec / 60
   val secs = totalSec % 60
-  return "%d:%02d".format(mins, secs)
+  return "$mins:${secs.toString().padStart(2, '0')}"
 }

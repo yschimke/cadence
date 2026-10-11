@@ -1,7 +1,7 @@
 package ee.schimke.cadence.metro
 
 import android.content.Context
-import androidx.datastore.core.DataStore
+import ee.schimke.cadence.data.SettingsStore
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.Provides
 import dev.zacsweers.metro.SingleIn
@@ -13,7 +13,7 @@ interface AppGraph {
 
   @Provides
   @SingleIn(AppScope::class)
-  fun provideFilesDataStore(context: Context): DataStore<Settings> {
+  fun provideFilesDataStore(context: Context): SettingsStore {
     return createFilesDataStore { context.filesDir.resolve("devices-4.pb").toOkioPath() }
   }
 }

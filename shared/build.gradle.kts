@@ -23,35 +23,50 @@ kotlin {
       .configure { instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner" }
   }
 
+  jvm("desktop")
+  wasmJs {
+    browser { commonWebpackConfig { outputFileName = "cadence.js" } }
+    binaries.executable()
+  }
+
   sourceSets {
+    val jvmAndAndroidMain by creating {
+      dependsOn(commonMain.get())
+      dependencies { implementation(libs.androidx.datastore) }
+    }
+    androidMain.get().dependsOn(jvmAndAndroidMain)
+    val desktopMain by getting {
+      dependsOn(jvmAndAndroidMain)
+      dependencies {
+        implementation(compose.desktop.currentOs)
+        implementation(libs.usb4java)
+      }
+    }
+    commonTest.dependencies { implementation(libs.kotlin.test) }
     androidMain.dependencies {
+      implementation(libs.compose.webview.multiplatform)
       implementation(compose.preview)
       implementation(libs.androidx.activity.compose)
       implementation(libs.androidx.core.splashscreen)
-      implementation(libs.modernstorage.permissions)
-      implementation(libs.modernstorage.storage)
       implementation(libs.androidx.documentfile)
       implementation(libs.androidx.work.runtime)
     }
     commonMain.dependencies {
+      implementation(libs.kotlinx.coroutines.core)
       implementation(compose.runtime)
       implementation(compose.foundation)
-      implementation(compose.material3)
-      implementation(compose.material3AdaptiveNavigationSuite)
+      implementation(libs.compose.material3)
       implementation(libs.navigation.compose)
       implementation(compose.ui)
       implementation(compose.components.resources)
       implementation(compose.components.uiToolingPreview)
       implementation(libs.androidx.lifecycle.viewmodel)
+      implementation(libs.androidx.lifecycle.viewmodel.compose)
       implementation(libs.androidx.lifecycle.runtime.compose)
       implementation(libs.kotlinx.serialization.json)
-      implementation("com.squareup.okio:okio:3.18.2")
-      implementation(libs.androidx.datastore)
-      implementation(libs.bonsai.core)
-      implementation(libs.bonsai.file.system)
+      implementation(libs.okio)
       implementation(libs.material.icons.core)
       implementation(libs.material.icons.extended)
-      implementation(libs.compose.webview.multiplatform)
       implementation(libs.ktor.client.core)
     }
     getByName("androidDeviceTest").dependencies {
@@ -62,15 +77,6 @@ kotlin {
       implementation(libs.androidx.runner)
     }
   }
-}
-
-// modernstorage-storage 1.0.0-alpha11 declares espresso-intents as a runtime
-// dependency, which drags androidx.test:runner onto the production classpath
-// and causes a strict-version collision with the catalog runner under AGP's
-// consistent resolution. Strip it everywhere — neither runtime code nor the
-// device-test source set (which uses espresso-core directly) needs it.
-configurations.configureEach {
-  exclude(group = "androidx.test.espresso", module = "espresso-intents")
 }
 
 tapmoc {
@@ -89,6 +95,6 @@ wire {
 }
 
 metro {
-  debug.set(true)
+  debug.set(false)
   reportsDestination.set(layout.buildDirectory.dir("metro/reports"))
 }

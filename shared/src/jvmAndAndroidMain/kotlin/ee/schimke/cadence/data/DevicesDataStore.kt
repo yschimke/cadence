@@ -17,15 +17,24 @@ import okio.IOException
 import okio.Path
 
 /** Gets the singleton DataStore instance, creating it if necessary. */
-fun createFilesDataStore(producePath: () -> Path): DataStore<Settings> =
-  DataStoreFactory.create(
-    OkioStorage(
-      FileSystem.SYSTEM,
-      serializer = Settings.ADAPTER.toOkioSerializer(),
-      producePath = producePath,
-    ),
-    corruptionHandler = onCorrupt(produceNewData = { Settings() }),
+fun createFilesDataStore(producePath: () -> Path): SettingsStore =
+  DataStoreSettingsStore(
+    DataStoreFactory.create(
+      OkioStorage(
+        FileSystem.SYSTEM,
+        serializer = Settings.ADAPTER.toOkioSerializer(),
+        producePath = producePath,
+      ),
+      corruptionHandler = onCorrupt(produceNewData = { Settings() }),
+    )
   )
+
+private class DataStoreSettingsStore(private val store: DataStore<Settings>) : SettingsStore {
+  override val data = store.data
+
+  override suspend fun updateData(transform: suspend (Settings) -> Settings): Settings =
+    store.updateData(transform)
+}
 
 fun <T> onCorrupt(produceNewData: () -> T): ReplaceFileCorruptionHandler<T> {
   return ReplaceFileCorruptionHandler<T>({ produceNewData() })
