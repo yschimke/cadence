@@ -5846,7 +5846,7 @@
     "ee.schimke.cadence (CadenceTheme)"
   ],
   "renderer": "compose-preview 2.43.0",
-  "generatedAt": "2026-10-11T08:19:15.562Z",
+  "generatedAt": "2026-10-11T08:44:41.228Z",
   "liveBundle": {
     "path": "bundle/",
     "file": "bundle.png"
@@ -5862,7 +5862,7 @@
   "componentsFile": "components.json",
   "source": {
     "repo": "yschimke/cadence",
-    "ref": "ccc824cc108e6e165c154f29f9a8504f7ccd2d65",
+    "ref": "c422b628e0ff23b7c7dbff1c0418314cceb20527",
     "module": ":composeApp"
   }
 }

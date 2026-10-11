@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-10-11T08:19:16.942Z",
+  "generatedAt": "2026-10-11T08:44:42.816Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "c422b628e0ff23b7c7dbff1c0418314cceb20527",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.44.0 (#349)",
+        "at": "2026-10-11T08:22:26Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "ccc824cc108e6e165c154f29f9a8504f7ccd2d65",
         "subject": "ci: use the shared design-artifacts workflow (#348)",

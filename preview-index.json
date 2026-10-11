@@ -21,5 +21,30 @@
     "theme-material3-dark__ideal__default__dark",
     "theme-material3-light__ideal__default__light"
   ],
-  "revisions": []
+  "revisions": [
+    {
+      "commit": "31b1de461a49aa51ccb4827649fc5291badeb13e",
+      "previews": [
+        "bluetooth-connectedplaying__ideal__default",
+        "bluetooth-disconnected__ideal__default",
+        "bluetooth-mp3mode__ideal__default",
+        "bluetooth-permissionmissing__ideal__default",
+        "bookmarks-loaded__ideal__default",
+        "bookmarks-loading__ideal__default",
+        "devicefiles-loading__ideal__default",
+        "devicefiles-notavailable__ideal__default",
+        "devices-empty__ideal__default",
+        "devices-loaded__ideal__default",
+        "devices-loading__ideal__default",
+        "home-empty__ideal__default",
+        "manage-empty__ideal__default",
+        "manage-populated__ideal__default",
+        "manage-refreshing__ideal__default",
+        "theme-cadence-dark__ideal__default__dark",
+        "theme-cadence-light__ideal__default__light",
+        "theme-material3-dark__ideal__default__dark",
+        "theme-material3-light__ideal__default__light"
+      ]
+    }
+  ]
 }
