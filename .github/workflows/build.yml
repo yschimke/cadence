@@ -25,15 +25,15 @@ jobs:
         uses: actions/setup-java@v6.0.1
         with:
           distribution: temurin
-          java-version: 25.0.4+101.0.LTS
+          java-version: 21
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v4.0.4
         with:
           packages: >-
             platform-tools
-            platforms;android-36
-            build-tools;36.0.0
+            platforms;android-37.0
+            build-tools;37.0.0
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v6.4.0
@@ -52,15 +52,15 @@ jobs:
         uses: actions/setup-java@v6.0.1
         with:
           distribution: temurin
-          java-version: 25.0.4+101.0.LTS
+          java-version: 21
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v4.0.4
         with:
           packages: >-
             platform-tools
-            platforms;android-36
-            build-tools;36.0.0
+            platforms;android-37.0
+            build-tools;37.0.0
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v6.4.0
@@ -89,15 +89,15 @@ jobs:
         uses: actions/setup-java@v6.0.1
         with:
           distribution: temurin
-          java-version: 25.0.4+101.0.LTS
+          java-version: 21
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v4.0.4
         with:
           packages: >-
             platform-tools
-            platforms;android-36
-            build-tools;36.0.0
+            platforms;android-37.0
+            build-tools;37.0.0
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v6.4.0
@@ -114,3 +114,26 @@ jobs:
             composeApp/build/reports/lint-results-*.html
             composeApp/build/reports/lint-results-*.xml
           if-no-files-found: ignore
+
+  multiplatform:
+    name: Desktop and browser
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-java@v6.0.1
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: android-actions/setup-android@v4.0.4
+        with:
+          packages: platforms;android-37.0 build-tools;37.0.0
+      - uses: gradle/actions/setup-gradle@v6.4.0
+      - name: Build desktop and browser; test shared storage
+        run: ./gradlew :desktopApp:jvmJar :shared:desktopTest :shared:wasmJsBrowserDistribution --stacktrace
+      - name: Test browser USB and filesystem adapter
+        run: node --test tests/browser-platform.test.cjs
+      - uses: actions/upload-artifact@v7.0.1
+        with:
+          name: cadence-web
+          path: shared/build/dist/wasmJs/productionExecutable/

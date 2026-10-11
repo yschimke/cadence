@@ -1,0 +1,115 @@
+@file:OptIn(kotlin.time.ExperimentalTime::class)
+
+package ee.schimke.cadence.sync
+
+import ee.schimke.cadence.data.DevicesRepo
+import ee.schimke.cadence.datastore.proto.SourceKind
+import kotlin.time.Clock
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
+
+/** Same refresh/stage/copy workflow on desktop and the browser, using platform directory access. */
+class PortableRefresh(private val repo: SyncRepo, private val backend: DirectoryBackend) :
+  RefreshOrchestrator {
+  private val lock = Mutex()
+  override val progress = MutableStateFlow(RefreshProgress())
+
+  override suspend fun refresh(profileId: String) = lock.withLock {
+    val profile = requireNotNull(repo.getProfile(profileId)) { "Profile not found" }
+    progress.value =
+      RefreshProgress(running = true, profileId = profile.id, profileName = profile.name)
+    try {
+      val files =
+        profile.source_ids.flatMap { id ->
+          val source = requireNotNull(repo.getSource(id)) { "Source not found" }
+          require(source.kind == SourceKind.LOCAL_DIRECTORY) {
+            "Mount the NFS share and add it as a local directory on this platform."
+          }
+          backend.files(
+            if (source.subpath.isBlank()) source.location
+            else joinDirectory(source.location, source.subpath)
+          )
+        }
+      require(files.map { it.relativePath }.distinct().size == files.size) {
+        "Sources contain duplicate relative filenames. Use separate profiles."
+      }
+      val target = joinDirectory(backend.stagingRoot, profile.staging_subpath)
+      backend.clear(target)
+      progress.value = progress.value.copy(filesTotal = files.size)
+      files.forEachIndexed { index, file ->
+        currentCoroutineContext().ensureActive()
+        progress.value = progress.value.copy(currentFileName = file.relativePath)
+        backend.copy(file.location, joinDirectory(target, file.relativePath))
+        progress.value = progress.value.copy(filesCompleted = index + 1)
+      }
+      repo.recordRefreshSuccess(profile.id, Clock.System.now().toString())
+      progress.value = progress.value.copy(running = false, currentFileName = null)
+    } catch (e: CancellationException) {
+      progress.value = progress.value.copy(running = false)
+      throw e
+    } catch (e: Exception) {
+      val message = e.message ?: "Refresh failed"
+      progress.value = progress.value.copy(running = false, lastError = message)
+      repo.recordRefreshFailure(profile.id, message)
+      throw e
+    }
+  }
+}
+
+class PortableSync(
+  private val repo: SyncRepo,
+  private val devices: DevicesRepo,
+  private val backend: DirectoryBackend,
+  private val scope: CoroutineScope,
+) : SyncOrchestrator {
+  override val progress = MutableStateFlow(SyncProgress())
+  private var job: Job? = null
+
+  override suspend fun startSync(targetDeviceId: String?) {
+    if (job?.isActive == true) return
+    job = scope.launch {
+      progress.value = SyncProgress(running = true)
+      try {
+        val id =
+          targetDeviceId?.takeIf { it.isNotBlank() } ?: repo.preferences.first()?.target_device_id
+        val device =
+          requireNotNull(id?.let { devices.getDevice(it) }) {
+            "Select a mounted target directory in Devices, then choose it in Manage sync."
+          }
+        val plan =
+          repo.listProfiles().flatMap { profile ->
+            backend.files(joinDirectory(backend.stagingRoot, profile.staging_subpath)).map {
+              Triple(profile, it, joinDirectory(device.path, profile.staging_subpath))
+            }
+          }
+        require(plan.isNotEmpty()) { "Staging is empty — refresh a profile first" }
+        progress.value = progress.value.copy(filesTotal = plan.size)
+        plan.forEachIndexed { index, (profile, file, target) ->
+          ensureActive()
+          progress.value =
+            progress.value.copy(
+              currentProfileName = profile.name,
+              currentFileName = file.relativePath,
+              currentBytes = 0,
+              currentTotal = file.size,
+            )
+          backend.copy(file.location, joinDirectory(target, file.relativePath))
+          progress.value = progress.value.copy(filesCompleted = index + 1, currentBytes = file.size)
+        }
+        progress.value = progress.value.copy(running = false, currentFileName = null)
+      } catch (e: CancellationException) {
+        progress.value = progress.value.copy(running = false, lastError = "Sync cancelled")
+        throw e
+      } catch (e: Exception) {
+        progress.value =
+          progress.value.copy(running = false, lastError = e.message ?: "Sync failed")
+      }
+    }
+  }
+
+  override fun cancel() {
+    job?.cancel()
+  }
+}

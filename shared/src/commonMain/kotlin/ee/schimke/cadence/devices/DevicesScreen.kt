@@ -24,9 +24,13 @@ fun DevicesScreen(modifier: Modifier = Modifier, onDeviceClick: (Device) -> Unit
 
   val uiState by viewModel.uiState.collectAsState()
 
-  val permissionCheck = rememberFileExplorerOpenLauncher(onGranted = { viewModel.addDevice(it) })
+  val permissionCheck =
+    rememberFileExplorerOpenLauncher(onGranted = { name, path -> viewModel.addDevice(path, name) })
 
-  DevicesScreen(modifier, uiState, permissionCheck, onDeviceClick)
+  Column(modifier) {
+    ee.schimke.cadence.usb.UsbConnectionPanel(viewModel.usbManager)
+    DevicesScreen(Modifier, uiState, permissionCheck, onDeviceClick)
+  }
 }
 
 @Composable
@@ -69,4 +73,7 @@ fun DevicesScreen(
   }
 }
 
-@Composable expect fun rememberFileExplorerOpenLauncher(onGranted: (Path) -> Unit): () -> Unit
+@Composable
+expect fun rememberFileExplorerOpenLauncher(
+  onGranted: (name: String, path: Path) -> Unit
+): () -> Unit

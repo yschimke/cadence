@@ -4,53 +4,36 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.hardware.usb.UsbDevice
-import android.hardware.usb.UsbManager
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.binding
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.callbackFlow
 
-@ContributesBinding(AppScope::class, binding = binding<ee.schimke.cadence.usb.UsbManager>())
+@ContributesBinding(AppScope::class, binding = binding<UsbManager>())
 @Inject
-class AndroidUsbManager(
-    private val applicationContext: Context,
-) : ee.schimke.cadence.usb.UsbManager {
-    val usbManager = applicationContext.getSystemService(Context.USB_SERVICE) as UsbManager
-
-    fun registerListener() {
-        applicationContext.registerReceiver(object : BroadcastReceiver() {
-            override fun onReceive(
-                context: Context,
-                intent: Intent
-            ) {
-                val usbDevice =
-                    intent.getParcelableExtra(
-                        UsbManager.EXTRA_DEVICE,
-                        android.hardware.usb.UsbDevice::class.java
-                    )
-            }
-
-        }, IntentFilter().apply {
-            addAction(UsbManager.ACTION_USB_DEVICE_DETACHED)
-            addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED)
-        })
+class AndroidUsbManager(private val applicationContext: Context) : UsbManager {
+  private val manager = applicationContext.getSystemService(android.hardware.usb.UsbManager::class.java)
+  override val connection = MutableStateFlow(UsbConnection())
+  override fun requestConnection() {
+    connection.value = UsbConnection(message = "${manager.deviceList.size} USB device(s) attached. Select Manage New Device to grant access to a mounted storage directory.")
+  }
+  override fun disconnect() { connection.value = UsbConnection(message = "Directory permissions are managed by Android. Unplug the device to disconnect USB.") }
+  override fun listDevices(): Flow<List<UsbDevice>> = callbackFlow {
+    fun snapshot() = manager.deviceList.values.map {
+      UsbDevice(it.deviceId, it.deviceName, it.deviceClass, it.vendorId, it.manufacturerName, it.productId, it.productName)
     }
-
-    override fun listDevices(): Flow<List<ee.schimke.cadence.usb.UsbDevice>> = flow {
-        val deviceList: Map<String, UsbDevice> = usbManager.deviceList
-        emit(deviceList.values.map {
-            UsbDevice(
-                id = it.deviceId,
-                name = it.deviceName,
-                deviceClass = it.deviceClass,
-                vendorId = it.vendorId,
-                manufacturerName = it.manufacturerName,
-                productId = it.productId,
-                productName = it.productName
-            )
-        })
+    val listener = object : BroadcastReceiver() {
+      override fun onReceive(context: Context, intent: Intent) { trySend(snapshot()) }
     }
+    applicationContext.registerReceiver(listener, IntentFilter().apply {
+      addAction(android.hardware.usb.UsbManager.ACTION_USB_DEVICE_ATTACHED)
+      addAction(android.hardware.usb.UsbManager.ACTION_USB_DEVICE_DETACHED)
+    }, Context.RECEIVER_NOT_EXPORTED)
+    trySend(snapshot())
+    awaitClose { applicationContext.unregisterReceiver(listener) }
+  }
 }

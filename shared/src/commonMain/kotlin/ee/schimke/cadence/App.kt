@@ -3,12 +3,17 @@ package ee.schimke.cadence
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import ee.schimke.cadence.bluetooth.BluetoothControlsScreen
 import ee.schimke.cadence.bookmarks.BookmarksScreen
@@ -21,64 +26,71 @@ import ee.schimke.cadence.sync.ManageSyncScreen
 import kotlinx.serialization.Serializable
 
 @Composable
-fun App() {
+fun App(platformNotice: String? = null) {
   val navController = rememberNavController()
 
-  NavHost(
-    navController,
-    startDestination = Home,
-    modifier = Modifier.fillMaxSize(),
-    popExitTransition = { scaleOut(targetScale = 0.9f) },
-    popEnterTransition = { EnterTransition.None },
-  ) {
-    composable<Home> {
-      HomeScreen(
-        modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
-        onBluetoothControls = { navController.navigate(BluetoothControls) },
-        onFileSync = { navController.navigate(FileSync) },
-        onManageSync = { navController.navigate(ManageSync) },
-        onBookmarks = { navController.navigate(Bookmarks) },
-        onFileExplorer = { navController.navigate(Devices) },
-      )
+  val entry by navController.currentBackStackEntryAsState()
+  Column(Modifier.fillMaxSize()) {
+    platformNotice?.let { Text(it, style = MaterialTheme.typography.bodySmall) }
+    if (entry != null && navController.previousBackStackEntry != null) {
+      TextButton(onClick = { navController.popBackStack() }) { Text("Back") }
     }
-    composable<Devices> {
-      DevicesScreen(
-        modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
-        onDeviceClick = { navController.navigate(DeviceFiles(id = it.id)) },
-      )
-    }
-    composable<DeviceFiles> {
-      DeviceFilesScreen(
-        modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize()
-      )
-    }
-    composable<Browser> {
-      BrowserScreen(
-        modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize()
-      )
-    }
-    composable<Bookmarks> {
-      BookmarksScreen(
-        modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
-        onNavigateTo = { navController.navigate(Browser(it.toString())) },
-      )
-    }
-    composable<BluetoothControls> {
-      BluetoothControlsScreen(
-        modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize()
-      )
-    }
-    composable<FileSync> {
-      FileSyncScreen(
-        modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
-        onClose = { navController.popBackStack() },
-        onManage = { navController.navigate(ManageSync) },
-      )
-    }
-    composable<ManageSync> {
-      ManageSyncScreen(
-        modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize()
-      )
+    NavHost(
+      navController,
+      startDestination = Home,
+      modifier = Modifier.weight(1f),
+      popExitTransition = { scaleOut(targetScale = 0.9f) },
+      popEnterTransition = { EnterTransition.None },
+    ) {
+      composable<Home> {
+        HomeScreen(
+          modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
+          onBluetoothControls = { navController.navigate(BluetoothControls) },
+          onFileSync = { navController.navigate(FileSync) },
+          onManageSync = { navController.navigate(ManageSync) },
+          onBookmarks = { navController.navigate(Bookmarks) },
+          onFileExplorer = { navController.navigate(Devices) },
+        )
+      }
+      composable<Devices> {
+        DevicesScreen(
+          modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
+          onDeviceClick = { navController.navigate(DeviceFiles(id = it.id)) },
+        )
+      }
+      composable<DeviceFiles> {
+        DeviceFilesScreen(
+          modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize()
+        )
+      }
+      composable<Browser> {
+        BrowserScreen(
+          modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize()
+        )
+      }
+      composable<Bookmarks> {
+        BookmarksScreen(
+          modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
+          onNavigateTo = { navController.navigate(Browser(it.toString())) },
+        )
+      }
+      composable<BluetoothControls> {
+        BluetoothControlsScreen(
+          modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize()
+        )
+      }
+      composable<FileSync> {
+        FileSyncScreen(
+          modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
+          onClose = { navController.popBackStack() },
+          onManage = { navController.navigate(ManageSync) },
+        )
+      }
+      composable<ManageSync> {
+        ManageSyncScreen(
+          modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize()
+        )
+      }
     }
   }
 }

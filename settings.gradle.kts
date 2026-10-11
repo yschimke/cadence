@@ -11,10 +11,6 @@ pluginManagement {
         includeGroupAndSubgroups("com.google")
       }
     }
-    maven {
-      url = uri("https://oss.sonatype.org/content/repositories/snapshots/")
-      mavenContent { includeGroupAndSubgroups("dev.zacsweers.metro") }
-    }
     mavenCentral()
     gradlePluginPortal()
   }
@@ -29,10 +25,6 @@ dependencyResolutionManagement {
         includeGroupAndSubgroups("com.google")
       }
     }
-    maven {
-      url = uri("https://oss.sonatype.org/content/repositories/snapshots/")
-      mavenContent { includeGroupAndSubgroups("dev.zacsweers.metro") }
-    }
     mavenCentral()
     maven {
       url = uri("https://jogamp.org/deployment/maven")
@@ -43,4 +35,4 @@ dependencyResolutionManagement {
 
 include(":composeApp")
 
-include(":shared")
+include(":shared", ":desktopApp")

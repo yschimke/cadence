@@ -1,9 +1,8 @@
 package ee.schimke.cadence.sync
 
-import androidx.datastore.core.DataStore
 import dev.zacsweers.metro.Inject
+import ee.schimke.cadence.data.SettingsStore
 import ee.schimke.cadence.datastore.proto.NetworkConstraint
-import ee.schimke.cadence.datastore.proto.Settings
 import ee.schimke.cadence.datastore.proto.SourceKind
 import ee.schimke.cadence.datastore.proto.SyncPreferences
 import ee.schimke.cadence.datastore.proto.SyncProfile
@@ -16,7 +15,7 @@ import kotlinx.coroutines.flow.map
 
 @OptIn(ExperimentalUuidApi::class)
 @Inject
-class SyncRepo(private val dataStore: DataStore<Settings>) {
+class SyncRepo(private val dataStore: SettingsStore) {
 
   val sources: Flow<List<SyncSource>> = dataStore.data.map { it.sync_sources }
   val profiles: Flow<List<SyncProfile>> = dataStore.data.map { it.sync_profiles }
@@ -76,7 +75,10 @@ class SyncRepo(private val dataStore: DataStore<Settings>) {
           id = id,
           name = name.ifBlank { "Untitled" },
           source_ids = sourceIds,
-          staging_subpath = subpath,
+          staging_subpath =
+            if (settings.sync_profiles.any { it.staging_subpath == subpath })
+              "$subpath-${id.take(8)}"
+            else subpath,
           refresh_interval_minutes = refreshIntervalMinutes,
           network_constraint = networkConstraint,
           auto_refresh = isFirst,

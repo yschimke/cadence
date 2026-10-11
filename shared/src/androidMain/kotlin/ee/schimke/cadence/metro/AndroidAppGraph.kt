@@ -37,5 +37,8 @@ interface AndroidAppGraph: AppGraph {
     fun provideFileSystem(context: Context): FileSystem = AndroidFileSystem(context)
 
     @Provides
+    fun provideOptionalFileSystem(fileSystem: FileSystem): FileSystem? = fileSystem
+
+    @Provides
     fun provideContext(application: Application): Context = application
 }

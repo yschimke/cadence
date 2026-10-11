@@ -1,7 +1,7 @@
 package ee.schimke.cadence.data
 
 import android.content.Context
-import com.google.modernstorage.storage.toUri
+import ee.schimke.cadence.data.toUri
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Inject

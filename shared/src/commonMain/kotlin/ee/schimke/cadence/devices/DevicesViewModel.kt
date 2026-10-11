@@ -24,12 +24,16 @@ import okio.Path
 @ContributesIntoMap(ViewModelScope::class)
 @ViewModelKey(DevicesViewModel::class)
 @Inject
-class DevicesViewModel(private val devicesRepo: DevicesRepo, private val usbManager: UsbManager) :
+class DevicesViewModel(private val devicesRepo: DevicesRepo, val usbManager: UsbManager) :
   ViewModel() {
-  fun addDevice(path: Path) {
+  fun addDevice(path: Path, name: String = path.name) {
     viewModelScope.launch {
       devicesRepo.addDevice(
-        Device(id = Uuid.random().toString(), name = "Unknown", path = path.toString())
+        Device(
+          id = Uuid.random().toString(),
+          name = name.ifBlank { "Device" },
+          path = path.toString(),
+        )
       )
     }
   }

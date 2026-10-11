@@ -10,7 +10,7 @@ import com.multiplatform.webview.web.PlatformWebViewParams
 import io.ktor.http.Url
 
 @Composable
-actual fun getPlatformWebViewParams(shouldOverrideUrlLoadingFn: (Url) -> Boolean): PlatformWebViewParams? {
+fun getPlatformWebViewParams(shouldOverrideUrlLoadingFn: (Url) -> Boolean): PlatformWebViewParams? {
     return PlatformWebViewParams(
         client = object : AccompanistWebViewClient() {
             override fun onReceivedClientCertRequest(view: WebView, request: ClientCertRequest) {

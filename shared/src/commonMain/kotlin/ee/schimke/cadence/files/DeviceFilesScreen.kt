@@ -13,9 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import cafe.adriel.bonsai.core.Bonsai
-import cafe.adriel.bonsai.filesystem.FileSystemBonsaiStyle
-import ee.schimke.cadence.filelist.cadenceFileSystemTree
+import ee.schimke.cadence.filelist.FileTree
 import ee.schimke.cadence.metro.metroViewModel
 
 @Composable
@@ -47,9 +45,9 @@ fun DeviceFilesContent(uiState: DeviceFilesViewModel.UiState, modifier: Modifier
 
       val files = loaded
 
-      Bonsai(
-        cadenceFileSystemTree(rootPath = files.root, fileSystem = files.fileSystem),
-        style = FileSystemBonsaiStyle(),
+      FileTree(
+        root = files.root,
+        fileSystem = files.fileSystem,
         modifier = Modifier.fillMaxWidth().weight(1f).border(1.dp, Color.Black),
       )
     } else if (uiState is DeviceFilesViewModel.UiState.Loading) {

@@ -5,12 +5,12 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
-import com.google.modernstorage.storage.toOkioPath
+import ee.schimke.cadence.data.toOkioPath
 import okio.Path
 
 
 @Composable
-actual fun rememberFileExplorerOpenLauncher(onGranted: (Path) -> Unit): () -> Unit {
+actual fun rememberFileExplorerOpenLauncher(onGranted: (name: String, path: Path) -> Unit): () -> Unit {
     val context = LocalContext.current
     val contentResolver = context.contentResolver
 
@@ -38,7 +38,7 @@ actual fun rememberFileExplorerOpenLauncher(onGranted: (Path) -> Unit): () -> Un
                             or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
                 )
 
-                onGranted(uri.toOkioPath())
+                onGranted(androidx.documentfile.provider.DocumentFile.fromTreeUri(context, uri)?.name ?: "Device", uri.toOkioPath())
             }
         }
     )
