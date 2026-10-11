@@ -1,0 +1,459 @@
+{
+  "schema": "compose-preview-activity/v1",
+  "generatedAt": "2026-10-11T08:19:16.942Z",
+  "windowDays": 30,
+  "code": {
+    "repo": "yschimke/cadence",
+    "ref": "main",
+    "events": [
+      {
+        "sha": "ccc824cc108e6e165c154f29f9a8504f7ccd2d65",
+        "subject": "ci: use the shared design-artifacts workflow (#348)",
+        "at": "2026-10-11T08:55:23+01:00",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "c798f9242abac9ac297b7357bf7450f4754c71ba",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.43.0 (#347)",
+        "at": "2026-10-11T02:27:03Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "dab3ce1742d45315757f84e030306333dae144ef",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.42.0 (#346)",
+        "at": "2026-10-10T20:04:33Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "6119c2c4c9859c81df868c6ea9aaad651b2dc8d8",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.39.1 (#345)",
+        "at": "2026-10-10T02:33:55Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "0a5be3e94589d0fad21fe4a0e460654f31797462",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.38.0 (#344)",
+        "at": "2026-10-09T23:25:14Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "058e0971de85ca3a151d4821ce545f0b0f2f095d",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.37.0 (#343)",
+        "at": "2026-10-09T13:39:45Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "c5c592998c5badb50b6c51359fa8568a5999db0f",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.35.1 (#342)",
+        "at": "2026-10-08T00:18:52Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "ccb424a71b106f7dae21a202563384da2b283809",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.35.0 (#341)",
+        "at": "2026-10-06T14:00:05Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "a083fea46efc775fbd25a7ebc371464898d98452",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.34.1 (#340)",
+        "at": "2026-10-05T14:33:29Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "45021e1a1a861f94c1a71fa209a23fc15b719a43",
+        "subject": "chore(deps): update github actions (#338)",
+        "at": "2026-10-05T06:02:50Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "0104d165f7f91d0a064b5ef36deb519999a88b5a",
+        "subject": "chore(deps): update plugin com.squareup.wire to v7.1.0 (#339)",
+        "at": "2026-10-05T06:02:47Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "b6dca9f65ea7c0d6ba4f3d235b6d4b76943bff8a",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.34.0 (#337)",
+        "at": "2026-10-04T13:44:32Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "e7b44ba961f03cb95b2e648c7c5024e11868bae7",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.33.0 (#336)",
+        "at": "2026-10-03T15:49:03Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "29443576527fe3d8bdfb7566e5c455e20bd4d2e6",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.32.2 (#335)",
+        "at": "2026-10-03T05:22:19Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "c1667e7d3d9eb271627b936edc76a8a8cd698fb1",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.32.1 (#334)",
+        "at": "2026-10-02T20:35:58Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "5f9cd7166cde990cbff03146ad3b8e54c98c8673",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.32.0 (#333)",
+        "at": "2026-10-02T14:43:04Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "3c5658c6c02b0fdb986b1431aebccb26de63d2a3",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.31.0 (#332)",
+        "at": "2026-10-01T19:41:54Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "60f787906383df650f0f5cd2f835c262f58105e4",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.29.0 (#331)",
+        "at": "2026-10-01T06:54:13Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "189f314353ad19a39f92f3c9f126a27868b5ad46",
+        "subject": "chore(deps): update dependency dev.zacsweers.metro to v1.4.5 (#325)",
+        "at": "2026-09-28T16:54:17Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "b5bcbdc0795fef441a8bdec88fd02a622775da4e",
+        "subject": "chore(deps): update dependency org.jetbrains.compose to v1.12.1 (#326)",
+        "at": "2026-09-28T16:54:13Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "5216b96b3fd5880446938e92997e91fd53d8c2ae",
+        "subject": "chore(deps): update github actions (#327)",
+        "at": "2026-09-28T08:18:03Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "0e12309f1e98045803971fb4e9755c414a14af30",
+        "subject": "chore(deps): update plugin com.squareup.wire to v7 (#330)",
+        "at": "2026-09-28T08:18:00Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "4261dc7559f68d041c8f6eb7154f431b8435b1d5",
+        "subject": "chore(deps): update gradle to v9.8.0 (#328)",
+        "at": "2026-09-28T01:52:26Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "c305ba1271b03372ebaaadb2827faf6f6924245b",
+        "subject": "fix(deps): update androidx (#329)",
+        "at": "2026-09-28T01:52:22Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "ce7c33ac4d76111504872d174ff97c152b376b7b",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.28.3 (#324)",
+        "at": "2026-09-27T23:16:04Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "1ea0f82de8051d0ca910cc87e58caf9dd6933ce0",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.28.0 (#323)",
+        "at": "2026-09-27T17:09:16Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "a44a67791ae237740fb5ae763ef6589ae58dcb5d",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.27.0 (#322)",
+        "at": "2026-09-26T19:32:12Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "1390ef2a2b276df57a2408f14ccced3c0fa9edf7",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.26.0 (#321)",
+        "at": "2026-09-26T01:48:34Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "7cd313e6683ded8d0b2fa1327891c90cf351ea63",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.25.0 (#320)",
+        "at": "2026-09-25T11:17:51Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "89b0334ef5aa11abd8f2597d05ccde90c07b86f1",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.24.0 (#319)",
+        "at": "2026-09-25T05:53:41Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "084cd716088286f175a2142e3030d6647e51c770",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.22.0 (#318)",
+        "at": "2026-09-22T20:22:33Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "5bf5b2e40bdd4b718f3450f70dc0b41c152cf22d",
+        "subject": "chore(deps): update agp to v9.4.1 (#313)",
+        "at": "2026-09-21T19:05:33Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "19b974be5bb357c45a796ac887afc9c4b5145990",
+        "subject": "chore(deps): update dependency dev.zacsweers.metro to v1.4.4 (#314)",
+        "at": "2026-09-21T13:40:24Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "9de349daba20731723dfc7dfec555747e080d40e",
+        "subject": "chore(deps): update github actions (#315)",
+        "at": "2026-09-21T13:40:20Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "1064d47b227c4f9e3604a97a143d1ed7268619fb",
+        "subject": "fix(deps): update dependency io.ktor:ktor-client-core to v3.6.0 (#316)",
+        "at": "2026-09-21T06:48:28Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "365eca9d37169dca7131976fc215caae62810b8e",
+        "subject": "chore(deps): update dependency java-jdk to v25 (#317)",
+        "at": "2026-09-21T06:48:25Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "27367b94f00b1926315c53f00274761f15278e5e",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.21.1 (#312)",
+        "at": "2026-09-20T18:57:41Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "5f27646efe09ac945fe5ebc17c32f8292e81c4c5",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.20.0 (#311)",
+        "at": "2026-09-20T12:31:33Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "f5a60c6ef379895edbadc4884dac119827182f5d",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.19.0 (#310)",
+        "at": "2026-09-20T12:02:35Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "a6c919d0b6adab7c2bc505354282d49cd7c55ac5",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.18.1 (#309)",
+        "at": "2026-09-17T20:31:02Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "ce586726d301852dbb4ada8ad6bea10c255b6126",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.18.0 (#308)",
+        "at": "2026-09-17T01:36:33Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "faa6f40646a14555376426c488dac0bd01430cad",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.17.0 (#307)",
+        "at": "2026-09-16T17:29:43Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "f04486401b8323d9450bdd2d3180d7bbcddd833e",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.15.0 (#306)",
+        "at": "2026-09-15T20:22:17Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "14197c30db5f22edab56805dd830adcda350cb3c",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.14.1 (#305)",
+        "at": "2026-09-15T01:11:32Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "6b57f17db7516a03b971e7e55c5a07febf376b95",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.14.0 (#304)",
+        "at": "2026-09-14T22:38:32Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "d1505e8a381490f8417df44f22b3905b71e17c19",
+        "subject": "chore(deps): update dependency dev.zacsweers.metro to v1.4.3 (#299)",
+        "at": "2026-09-14T19:03:11Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "fc02815650ebd3fcf3d698ad1c2099ec38c51f22",
+        "subject": "chore(deps): update github actions (#300)",
+        "at": "2026-09-14T13:41:22Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "b268afdbb671fb089f9e5cf81af1184f52af5f0a",
+        "subject": "fix(deps): update dependency androidx.compose.ui:ui-text-google-fonts to v1.12.1 (#301)",
+        "at": "2026-09-14T13:41:18Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "9eebedb84c565cff7a914320f2ebe85c7d5f2898",
+        "subject": "fix(deps): update kotlin to v2.4.20 (#302)",
+        "at": "2026-09-14T06:46:15Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "6e8e967f746b5a72b0eef88f5fe6248d149d7e0f",
+        "subject": "chore(deps): update agp to v9.4.0 (#303)",
+        "at": "2026-09-14T06:46:12Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "9c9b20ee1bc178b46d0ed63c01742eb26ffcd0f0",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.13.1 (#298)",
+        "at": "2026-09-13T14:58:47Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "845c7eb461762913eb04db6ab436e5e71430f314",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.13.0 (#297)",
+        "at": "2026-09-12T18:09:03Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "b480d8f78dfe8c19d5d4ade5496b8c51ecefaa68",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.11.1 (#296)",
+        "at": "2026-09-12T12:17:38Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "487e7a0755ce5993d0fd12c8f167bb7f2ed9fc2c",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.11.0 (#295)",
+        "at": "2026-09-12T03:25:07Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "1a879a051b244286d039b1edde8d5a2fef8b358b",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.10.0 (#294)",
+        "at": "2026-09-11T21:50:41Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "6bb5ab507a00cef388dcb4824ac36bff8a67314f",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.9.0 (#293)",
+        "at": "2026-09-11T15:58:35Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      }
+    ]
+  }
+}

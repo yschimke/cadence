@@ -5845,16 +5845,16 @@
     "androidx.compose.material3:material3",
     "ee.schimke.cadence (CadenceTheme)"
   ],
-  "renderer": "compose-preview 2.34.1",
-  "generatedAt": "2026-10-05T14:42:32.685Z",
+  "renderer": "compose-preview 2.43.0",
+  "generatedAt": "2026-10-11T08:19:15.562Z",
   "liveBundle": {
     "path": "bundle/",
-    "file": "cadence-bundle.png"
+    "file": "bundle.png"
   },
   "liveBundles": [
     {
       "path": "bundle/",
-      "file": "cadence-bundle.png",
+      "file": "bundle.png",
       "module": ":composeApp",
       "previewIdPrefix": ""
     }
@@ -5862,7 +5862,7 @@
   "componentsFile": "components.json",
   "source": {
     "repo": "yschimke/cadence",
-    "ref": "main",
+    "ref": "ccc824cc108e6e165c154f29f9a8504f7ccd2d65",
     "module": ":composeApp"
   }
 }
