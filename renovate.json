@@ -1,80 +1,21 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended",
-    ":dependencyDashboard",
-    ":semanticCommits",
-    ":timezone(Europe/London)"
-  ],
-  "schedule": [
-    "before 6am on monday"
-  ],
-  "labels": ["dependencies"],
-  "prConcurrentLimit": 5,
-  "prHourlyLimit": 0,
-  "rangeStrategy": "pin",
-  "description": "Renovate merges automerge-eligible PRs itself rather than handing them to GitHub's native auto-merge (platformAutomerge). Native auto-merge only waits for the checks branch protection marks REQUIRED, so where they aren't marked it merges the moment the PR opens — ahead of CI. With platformAutomerge false, Renovate waits for every check on the branch to be green first. Same setting the shared github>yschimke/renovate-config preset carries; this config predates that preset and inlines config:recommended, so it has to say it itself.",
-  "platformAutomerge": false,
+  "extends": ["github>yschimke/renovate-config"],
   "packageRules": [
     {
+      "description": "Gradle patch and minor updates wait for a person here: the shared preset auto-lands them once CI is green, but this repository has always kept dependency bumps that reach the app build manual.",
       "matchManagers": ["gradle", "gradle-wrapper"],
       "matchUpdateTypes": ["patch", "minor"],
       "automerge": false
     },
     {
-      "groupName": "Kotlin",
-      "matchPackageNames": [
-        "/^org\\.jetbrains\\.kotlin($|[.:])/",
-        "/^org\\.jetbrains\\.kotlinx($|[.:])/"
-      ]
-    },
-    {
-      "description": "Ignore kotlinx-datetime *-compat artifacts that keep the legacy 0.6.x API",
-      "matchPackageNames": ["org.jetbrains.kotlinx:kotlinx-datetime"],
-      "allowedVersions": "!/-compat$/"
-    },
-    {
-      "groupName": "Compose Multiplatform",
-      "matchPackageNames": [
-        "/^org\\.jetbrains\\.compose($|[.:])/",
-        "/^org\\.jetbrains\\.androidx\\.lifecycle($|[.:])/",
-        "/^org\\.jetbrains\\.androidx\\.navigation($|[.:])/"
-      ]
-    },
-    {
-      "groupName": "AndroidX",
-      "matchPackageNames": [
-        "/^androidx\\./"
-      ]
-    },
-    {
-      "groupName": "Ktor",
-      "matchPackageNames": [
-        "/^io\\.ktor($|[.:])/"
-      ]
-    },
-    {
-      "groupName": "Android Gradle Plugin",
-      "matchPackageNames": [
-        "com.android.application",
-        "com.android.library",
-        "com.android.tools.build:gradle"
-      ]
-    },
-    {
-      "groupName": "GitHub Actions",
-      "matchManagers": ["github-actions"]
-    },
-    {
-      "description": "compose-ai-tools ships the preview CLI, the ee.schimke.composeai Gradle plugin, and the reusable CI composite actions as a single release. Track it aggressively so CI always runs the latest renderer: one grouped PR (so the pinned action refs never skew apart from the catalog plugin pin), no weekly-window wait, and automerge as soon as CI is green — that is the whole point of pinning to a release that moves several times a day. Regenerating the published catalog against the new renderer no longer depends on WHO merges: design-artifacts.yml has a push trigger on main covering the pins this PR touches, so a Renovate merge (app token — raises `push`) republishes on its own, and scheduled-merge.yml still dispatches design-artifacts.yml explicitly for the merges it makes itself (GITHUB_TOKEN merges raise no `push` event).",
+      "description": "compose-ai-tools ships the preview CLI, the ee.schimke.composeai Gradle plugin, and the reusable CI composite actions as a single release (the preset groups them). Track it aggressively so CI always runs the latest renderer: no weekly-window wait, and automerge as soon as CI is green. design-artifacts.yml has a push trigger on main covering the pins this PR touches, so a Renovate merge republishes the catalog on its own, and scheduled-merge.yml still dispatches design-artifacts.yml explicitly for the merges it makes itself (GITHUB_TOKEN merges raise no `push` event).",
       "matchPackageNames": [
         "yschimke/compose-ai-tools",
         "/^ee\\.schimke\\.composeai($|[.:])/"
       ],
-      "groupName": "compose-ai-tools",
       "schedule": ["at any time"],
-      "automerge": true,
-      "automergeSchedule": ["at any time"]
+      "automerge": true
     }
   ]
 }
