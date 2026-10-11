@@ -11,7 +11,7 @@
           "path": "images/theme-cadence-light/ideal__default__light.png",
           "state": "default",
           "width": 1050,
-          "height": 850,
+          "height": 793,
           "theme": "light",
           "livePreview": "https://preview.coo.ee/cadence/p/theme-cadence-light__ideal__default__light",
           "previewId": "ee.schimke.cadence.preview.FoundationPreviewsKt.FoundationCadenceLightPreview_Foundation___Cadence_light",
@@ -26,7 +26,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 192,
+            "y": 179,
             "width": 143,
             "height": 105
           },
@@ -35,7 +35,7 @@
         {
           "bounds": {
             "x": 206,
-            "y": 192,
+            "y": 179,
             "width": 143,
             "height": 105
           },
@@ -44,7 +44,7 @@
         {
           "bounds": {
             "x": 370,
-            "y": 192,
+            "y": 179,
             "width": 143,
             "height": 105
           },
@@ -53,7 +53,7 @@
         {
           "bounds": {
             "x": 534,
-            "y": 192,
+            "y": 179,
             "width": 144,
             "height": 105
           },
@@ -62,7 +62,7 @@
         {
           "bounds": {
             "x": 699,
-            "y": 192,
+            "y": 179,
             "width": 144,
             "height": 105
           },
@@ -71,7 +71,7 @@
         {
           "bounds": {
             "x": 864,
-            "y": 192,
+            "y": 179,
             "width": 144,
             "height": 105
           },
@@ -80,7 +80,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 329,
+            "y": 316,
             "width": 147,
             "height": 84
           },
@@ -89,7 +89,7 @@
         {
           "bounds": {
             "x": 205,
-            "y": 329,
+            "y": 316,
             "width": 147,
             "height": 84
           },
@@ -98,7 +98,7 @@
         {
           "bounds": {
             "x": 368,
-            "y": 329,
+            "y": 316,
             "width": 148,
             "height": 84
           },
@@ -107,7 +107,7 @@
         {
           "bounds": {
             "x": 532,
-            "y": 329,
+            "y": 316,
             "width": 148,
             "height": 84
           },
@@ -116,7 +116,7 @@
         {
           "bounds": {
             "x": 696,
-            "y": 329,
+            "y": 316,
             "width": 148,
             "height": 84
           },
@@ -125,7 +125,7 @@
         {
           "bounds": {
             "x": 860,
-            "y": 329,
+            "y": 316,
             "width": 148,
             "height": 84
           },
@@ -149,7 +149,7 @@
           "path": "images/theme-cadence-dark/ideal__default__dark.png",
           "state": "default",
           "width": 1050,
-          "height": 850,
+          "height": 793,
           "theme": "dark",
           "livePreview": "https://preview.coo.ee/cadence/p/theme-cadence-dark__ideal__default__dark",
           "previewId": "ee.schimke.cadence.preview.FoundationPreviewsKt.FoundationCadenceDarkPreview_Foundation___Cadence_dark",
@@ -164,7 +164,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 192,
+            "y": 179,
             "width": 143,
             "height": 105
           },
@@ -173,7 +173,7 @@
         {
           "bounds": {
             "x": 206,
-            "y": 192,
+            "y": 179,
             "width": 143,
             "height": 105
           },
@@ -182,7 +182,7 @@
         {
           "bounds": {
             "x": 370,
-            "y": 192,
+            "y": 179,
             "width": 143,
             "height": 105
           },
@@ -191,7 +191,7 @@
         {
           "bounds": {
             "x": 534,
-            "y": 192,
+            "y": 179,
             "width": 144,
             "height": 105
           },
@@ -200,7 +200,7 @@
         {
           "bounds": {
             "x": 699,
-            "y": 192,
+            "y": 179,
             "width": 144,
             "height": 105
           },
@@ -209,7 +209,7 @@
         {
           "bounds": {
             "x": 864,
-            "y": 192,
+            "y": 179,
             "width": 144,
             "height": 105
           },
@@ -218,7 +218,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 329,
+            "y": 316,
             "width": 147,
             "height": 84
           },
@@ -227,7 +227,7 @@
         {
           "bounds": {
             "x": 205,
-            "y": 329,
+            "y": 316,
             "width": 147,
             "height": 84
           },
@@ -236,7 +236,7 @@
         {
           "bounds": {
             "x": 368,
-            "y": 329,
+            "y": 316,
             "width": 148,
             "height": 84
           },
@@ -245,7 +245,7 @@
         {
           "bounds": {
             "x": 532,
-            "y": 329,
+            "y": 316,
             "width": 148,
             "height": 84
           },
@@ -254,7 +254,7 @@
         {
           "bounds": {
             "x": 696,
-            "y": 329,
+            "y": 316,
             "width": 148,
             "height": 84
           },
@@ -263,7 +263,7 @@
         {
           "bounds": {
             "x": 860,
-            "y": 329,
+            "y": 316,
             "width": 148,
             "height": 84
           },
@@ -5845,8 +5845,8 @@
     "androidx.compose.material3:material3",
     "ee.schimke.cadence (CadenceTheme)"
   ],
-  "renderer": "compose-preview 2.43.0",
-  "generatedAt": "2026-10-11T08:44:41.228Z",
+  "renderer": "compose-preview 2.47.0",
+  "generatedAt": "2026-10-11T16:48:23.089Z",
   "liveBundle": {
     "path": "bundle/",
     "file": "bundle.png"
@@ -5862,7 +5862,7 @@
   "componentsFile": "components.json",
   "source": {
     "repo": "yschimke/cadence",
-    "ref": "c422b628e0ff23b7c7dbff1c0418314cceb20527",
+    "ref": "fed18d8099e2fe3b79b604d151e0c955e352f0a8",
     "module": ":composeApp"
   }
 }

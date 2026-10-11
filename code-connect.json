@@ -4,16 +4,16 @@
   "label": "Compose",
   "source": {
     "repo": "yschimke/cadence",
-    "ref": "c422b628e0ff23b7c7dbff1c0418314cceb20527",
+    "ref": "fed18d8099e2fe3b79b604d151e0c955e352f0a8",
     "module": ":composeApp"
   },
-  "generatedAt": "2026-10-11T08:44:42.093Z",
+  "generatedAt": "2026-10-11T16:48:23.916Z",
   "mappings": [
     {
       "componentId": "Theme/Cadence-Light",
       "figmaLayerName": "Theme/Cadence-Light",
       "componentName": "FoundationCadenceLightPreview",
-      "source": "https://github.com/yschimke/cadence/blob/c422b628e0ff23b7c7dbff1c0418314cceb20527/composeApp/src/main/kotlin/ee/schimke/cadence/preview/FoundationPreviews.kt",
+      "source": "https://github.com/yschimke/cadence/blob/fed18d8099e2fe3b79b604d151e0c955e352f0a8/composeApp/src/main/kotlin/ee/schimke/cadence/preview/FoundationPreviews.kt",
       "label": "Compose",
       "confidence": "preview-fallback",
       "previewName": "FoundationCadenceLightPreview"
@@ -22,7 +22,7 @@
       "componentId": "Theme/Cadence-Dark",
       "figmaLayerName": "Theme/Cadence-Dark",
       "componentName": "FoundationCadenceDarkPreview",
-      "source": "https://github.com/yschimke/cadence/blob/c422b628e0ff23b7c7dbff1c0418314cceb20527/composeApp/src/main/kotlin/ee/schimke/cadence/preview/FoundationPreviews.kt",
+      "source": "https://github.com/yschimke/cadence/blob/fed18d8099e2fe3b79b604d151e0c955e352f0a8/composeApp/src/main/kotlin/ee/schimke/cadence/preview/FoundationPreviews.kt",
       "label": "Compose",
       "confidence": "preview-fallback",
       "previewName": "FoundationCadenceDarkPreview"
@@ -31,7 +31,7 @@
       "componentId": "Theme/Material3-Light",
       "figmaLayerName": "Theme/Material3-Light",
       "componentName": "FoundationMaterial3LightPreview",
-      "source": "https://github.com/yschimke/cadence/blob/c422b628e0ff23b7c7dbff1c0418314cceb20527/composeApp/src/main/kotlin/ee/schimke/cadence/preview/FoundationPreviews.kt",
+      "source": "https://github.com/yschimke/cadence/blob/fed18d8099e2fe3b79b604d151e0c955e352f0a8/composeApp/src/main/kotlin/ee/schimke/cadence/preview/FoundationPreviews.kt",
       "label": "Compose",
       "confidence": "preview-fallback",
       "previewName": "FoundationMaterial3LightPreview"
@@ -40,7 +40,7 @@
       "componentId": "Theme/Material3-Dark",
       "figmaLayerName": "Theme/Material3-Dark",
       "componentName": "FoundationMaterial3DarkPreview",
-      "source": "https://github.com/yschimke/cadence/blob/c422b628e0ff23b7c7dbff1c0418314cceb20527/composeApp/src/main/kotlin/ee/schimke/cadence/preview/FoundationPreviews.kt",
+      "source": "https://github.com/yschimke/cadence/blob/fed18d8099e2fe3b79b604d151e0c955e352f0a8/composeApp/src/main/kotlin/ee/schimke/cadence/preview/FoundationPreviews.kt",
       "label": "Compose",
       "confidence": "preview-fallback",
       "previewName": "FoundationMaterial3DarkPreview"
@@ -49,7 +49,7 @@
       "componentId": "Home/Empty",
       "figmaLayerName": "Home/Empty",
       "componentName": "HomeEmptyPreview",
-      "source": "https://github.com/yschimke/cadence/blob/c422b628e0ff23b7c7dbff1c0418314cceb20527/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "source": "https://github.com/yschimke/cadence/blob/fed18d8099e2fe3b79b604d151e0c955e352f0a8/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "label": "Compose",
       "confidence": "preview-fallback",
       "previewName": "HomeEmptyPreview"
@@ -58,7 +58,7 @@
       "componentId": "Devices/Loaded",
       "figmaLayerName": "Devices/Loaded",
       "componentName": "DevicesScreenLoadedPreview",
-      "source": "https://github.com/yschimke/cadence/blob/c422b628e0ff23b7c7dbff1c0418314cceb20527/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "source": "https://github.com/yschimke/cadence/blob/fed18d8099e2fe3b79b604d151e0c955e352f0a8/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "label": "Compose",
       "confidence": "preview-fallback",
       "previewName": "DevicesScreenLoadedPreview"
@@ -67,7 +67,7 @@
       "componentId": "Devices/Loading",
       "figmaLayerName": "Devices/Loading",
       "componentName": "DevicesScreenLoadingPreview",
-      "source": "https://github.com/yschimke/cadence/blob/c422b628e0ff23b7c7dbff1c0418314cceb20527/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "source": "https://github.com/yschimke/cadence/blob/fed18d8099e2fe3b79b604d151e0c955e352f0a8/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "label": "Compose",
       "confidence": "preview-fallback",
       "previewName": "DevicesScreenLoadingPreview"
@@ -76,7 +76,7 @@
       "componentId": "Devices/Empty",
       "figmaLayerName": "Devices/Empty",
       "componentName": "DevicesScreenEmptyPreview",
-      "source": "https://github.com/yschimke/cadence/blob/c422b628e0ff23b7c7dbff1c0418314cceb20527/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "source": "https://github.com/yschimke/cadence/blob/fed18d8099e2fe3b79b604d151e0c955e352f0a8/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "label": "Compose",
       "confidence": "preview-fallback",
       "previewName": "DevicesScreenEmptyPreview"
@@ -85,7 +85,7 @@
       "componentId": "Bookmarks/Loaded",
       "figmaLayerName": "Bookmarks/Loaded",
       "componentName": "BookmarksScreenLoadedPreview",
-      "source": "https://github.com/yschimke/cadence/blob/c422b628e0ff23b7c7dbff1c0418314cceb20527/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "source": "https://github.com/yschimke/cadence/blob/fed18d8099e2fe3b79b604d151e0c955e352f0a8/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "label": "Compose",
       "confidence": "preview-fallback",
       "previewName": "BookmarksScreenLoadedPreview"
@@ -94,7 +94,7 @@
       "componentId": "Bookmarks/Loading",
       "figmaLayerName": "Bookmarks/Loading",
       "componentName": "BookmarksScreenLoadingPreview",
-      "source": "https://github.com/yschimke/cadence/blob/c422b628e0ff23b7c7dbff1c0418314cceb20527/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "source": "https://github.com/yschimke/cadence/blob/fed18d8099e2fe3b79b604d151e0c955e352f0a8/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "label": "Compose",
       "confidence": "preview-fallback",
       "previewName": "BookmarksScreenLoadingPreview"
@@ -103,7 +103,7 @@
       "componentId": "DeviceFiles/Loading",
       "figmaLayerName": "DeviceFiles/Loading",
       "componentName": "DeviceFilesLoadingPreview",
-      "source": "https://github.com/yschimke/cadence/blob/c422b628e0ff23b7c7dbff1c0418314cceb20527/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "source": "https://github.com/yschimke/cadence/blob/fed18d8099e2fe3b79b604d151e0c955e352f0a8/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "label": "Compose",
       "confidence": "preview-fallback",
       "previewName": "DeviceFilesLoadingPreview"
@@ -112,7 +112,7 @@
       "componentId": "DeviceFiles/NotAvailable",
       "figmaLayerName": "DeviceFiles/NotAvailable",
       "componentName": "DeviceFilesNotAvailablePreview",
-      "source": "https://github.com/yschimke/cadence/blob/c422b628e0ff23b7c7dbff1c0418314cceb20527/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "source": "https://github.com/yschimke/cadence/blob/fed18d8099e2fe3b79b604d151e0c955e352f0a8/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "label": "Compose",
       "confidence": "preview-fallback",
       "previewName": "DeviceFilesNotAvailablePreview"
@@ -121,7 +121,7 @@
       "componentId": "Bluetooth/Disconnected",
       "figmaLayerName": "Bluetooth/Disconnected",
       "componentName": "BluetoothDisconnectedPreview",
-      "source": "https://github.com/yschimke/cadence/blob/c422b628e0ff23b7c7dbff1c0418314cceb20527/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "source": "https://github.com/yschimke/cadence/blob/fed18d8099e2fe3b79b604d151e0c955e352f0a8/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "label": "Compose",
       "confidence": "preview-fallback",
       "previewName": "BluetoothDisconnectedPreview"
@@ -130,7 +130,7 @@
       "componentId": "Bluetooth/ConnectedPlaying",
       "figmaLayerName": "Bluetooth/ConnectedPlaying",
       "componentName": "BluetoothConnectedPlayingPreview",
-      "source": "https://github.com/yschimke/cadence/blob/c422b628e0ff23b7c7dbff1c0418314cceb20527/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "source": "https://github.com/yschimke/cadence/blob/fed18d8099e2fe3b79b604d151e0c955e352f0a8/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "label": "Compose",
       "confidence": "preview-fallback",
       "previewName": "BluetoothConnectedPlayingPreview"
@@ -139,7 +139,7 @@
       "componentId": "Bluetooth/PermissionMissing",
       "figmaLayerName": "Bluetooth/PermissionMissing",
       "componentName": "BluetoothPermissionMissingPreview",
-      "source": "https://github.com/yschimke/cadence/blob/c422b628e0ff23b7c7dbff1c0418314cceb20527/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "source": "https://github.com/yschimke/cadence/blob/fed18d8099e2fe3b79b604d151e0c955e352f0a8/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "label": "Compose",
       "confidence": "preview-fallback",
       "previewName": "BluetoothPermissionMissingPreview"
@@ -148,7 +148,7 @@
       "componentId": "Bluetooth/Mp3Mode",
       "figmaLayerName": "Bluetooth/Mp3Mode",
       "componentName": "BluetoothMp3ModePreview",
-      "source": "https://github.com/yschimke/cadence/blob/c422b628e0ff23b7c7dbff1c0418314cceb20527/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "source": "https://github.com/yschimke/cadence/blob/fed18d8099e2fe3b79b604d151e0c955e352f0a8/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "label": "Compose",
       "confidence": "preview-fallback",
       "previewName": "BluetoothMp3ModePreview"
@@ -157,7 +157,7 @@
       "componentId": "Manage/Empty",
       "figmaLayerName": "Manage/Empty",
       "componentName": "ManageEmptyPreview",
-      "source": "https://github.com/yschimke/cadence/blob/c422b628e0ff23b7c7dbff1c0418314cceb20527/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "source": "https://github.com/yschimke/cadence/blob/fed18d8099e2fe3b79b604d151e0c955e352f0a8/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "label": "Compose",
       "confidence": "preview-fallback",
       "previewName": "ManageEmptyPreview"
@@ -166,7 +166,7 @@
       "componentId": "Manage/Populated",
       "figmaLayerName": "Manage/Populated",
       "componentName": "ManagePopulatedPreview",
-      "source": "https://github.com/yschimke/cadence/blob/c422b628e0ff23b7c7dbff1c0418314cceb20527/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "source": "https://github.com/yschimke/cadence/blob/fed18d8099e2fe3b79b604d151e0c955e352f0a8/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "label": "Compose",
       "confidence": "preview-fallback",
       "previewName": "ManagePopulatedPreview"
@@ -175,7 +175,7 @@
       "componentId": "Manage/Refreshing",
       "figmaLayerName": "Manage/Refreshing",
       "componentName": "ManageRefreshingPreview",
-      "source": "https://github.com/yschimke/cadence/blob/c422b628e0ff23b7c7dbff1c0418314cceb20527/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "source": "https://github.com/yschimke/cadence/blob/fed18d8099e2fe3b79b604d151e0c955e352f0a8/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "label": "Compose",
       "confidence": "preview-fallback",
       "previewName": "ManageRefreshingPreview"
