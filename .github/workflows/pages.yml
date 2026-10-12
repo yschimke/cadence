@@ -32,7 +32,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@v6.4.0
       - name: Build production Wasm app
         run: ./gradlew :shared:wasmJsBrowserDistribution --stacktrace
-      - uses: actions/configure-pages@v5
+      - uses: actions/configure-pages@v6
       - name: Render existing documentation
         uses: actions/jekyll-build-pages@v1
         with:
@@ -50,7 +50,7 @@ jobs:
           test -f _public/app/cadence.js
           test -f _public/privacy/index.html
           touch _public/.nojekyll
-      - uses: actions/upload-pages-artifact@v4
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: _public
 
@@ -66,5 +66,5 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/deploy-pages@v4
+      - uses: actions/deploy-pages@v5
         id: deployment
