@@ -11,7 +11,7 @@ permissions:
 
 concurrency:
   group: pages-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   build:
@@ -40,15 +40,19 @@ jobs:
           destination: ./_site
       - name: Add browser app
         run: |
-          mkdir -p _site/app
-          cp -R shared/build/dist/wasmJs/productionExecutable/. _site/app/
-          test -f _site/app/index.html
-          test -f _site/app/cadence.js
-          test -f _site/privacy.html
-          touch _site/.nojekyll
+          # Jekyll's Docker action writes root-owned output; stage a writable copy.
+          mkdir -p _public
+          cp -R _site/. _public/
+          mkdir -p _public/app
+          cp -R shared/build/dist/wasmJs/productionExecutable/. _public/app/
+          test -f _public/index.html
+          test -f _public/app/index.html
+          test -f _public/app/cadence.js
+          test -f _public/privacy/index.html
+          touch _public/.nojekyll
       - uses: actions/upload-pages-artifact@v4
         with:
-          path: _site
+          path: _public
 
   deploy:
     needs: build
