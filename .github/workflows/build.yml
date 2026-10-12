@@ -137,3 +137,7 @@ jobs:
         with:
           name: cadence-web
           path: shared/build/dist/wasmJs/productionExecutable/
+
+  desktop-installers:
+    name: Desktop installers
+    uses: ./.github/workflows/desktop-package.yml

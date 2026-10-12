@@ -1,0 +1,68 @@
+name: Publish browser app and docs
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      pages: read
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-java@v6.0.1
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: android-actions/setup-android@v4.0.4
+        with:
+          packages: platforms;android-37.0 build-tools;37.0.0
+      - uses: gradle/actions/setup-gradle@v6.4.0
+      - name: Build production Wasm app
+        run: ./gradlew :shared:wasmJsBrowserDistribution --stacktrace
+      - uses: actions/configure-pages@v5
+        id: pages
+      - name: Render existing documentation
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./docs
+          destination: ./_site
+          baseurl: ${{ steps.pages.outputs.base_path }}
+      - name: Add browser app
+        run: |
+          mkdir -p _site/app
+          cp -R shared/build/dist/wasmJs/productionExecutable/. _site/app/
+          test -f _site/app/index.html
+          test -f _site/app/cadence.js
+          test -f _site/privacy.html
+          touch _site/.nojekyll
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    # Only main publishes; PRs and feature-branch dispatches build for validation.
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/deploy-pages@v4
+        id: deployment
