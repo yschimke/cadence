@@ -14,6 +14,10 @@
         {
           "type": "generic",
           "path": "composeApp/build.gradle.kts"
+        },
+        {
+          "type": "generic",
+          "path": "desktopApp/build.gradle.kts"
         }
       ]
     }

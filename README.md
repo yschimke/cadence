@@ -19,6 +19,32 @@ Use JDK 21 and an Android SDK with API 37 (`platforms;android-37.0`) and build t
 
 Serve the production directory over HTTPS (localhost is allowed for development). Open it in a browser with WebAssembly GC support. USB and writable directory selection require browser support independently of Wasm support; Chrome or Edge on desktop is the supported file-management route. The UI explains missing capabilities.
 
+## Published builds
+
+After the publishing workflows merge into `main`, the production browser app is
+served at [yschimke.github.io/cadence/app/](https://yschimke.github.io/cadence/app/).
+Every push to `main` rebuilds it. The Pages workflow renders `docs/` with Jekyll
+and places the Wasm bundle under `app/`, retaining the existing privacy URL.
+PRs build the same Pages artifact without deploying it.
+
+The repository's Pages source is configured for **GitHub Actions**. Merging the
+publishing workflow triggers its first deployment; the existing site stays
+visible until that deployment succeeds. To retry, run **Publish browser app and
+docs** on `main` from the Actions tab.
+
+The next [GitHub release](https://github.com/yschimke/cadence/releases/latest)
+includes Android APK/AAB files and self-contained desktop installers:
+Linux x64 DEB, Windows x64 MSI, and macOS Intel/Apple Silicon DMGs. Installers
+bundle Java, so users do not need a JDK. Names include the version, OS and
+architecture. Desktop packaging also runs on PRs, uploading `desktop-*`
+workflow artifacts; manually dispatching **Release** builds artifacts without
+changing the public release. Existing releases are not backfilled automatically.
+
+Desktop installers are currently unsigned and macOS builds are not notarized;
+Windows/macOS may require an explicit OS approval to open them. Mounted-folder
+sync is available on Apple Silicon even if usb4java's native discovery library
+cannot load. Physical USB and each OS installation still require manual checks.
+
 ## Manage USB audio
 
 1. Plug in the device and let the OS mount its FAT32 volume.

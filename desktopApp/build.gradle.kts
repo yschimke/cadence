@@ -4,6 +4,8 @@ plugins {
   alias(libs.plugins.composeCompiler)
 }
 
+val desktopVersion = "0.1.2" // x-release-please-version
+
 kotlin {
   jvm()
   sourceSets {
@@ -25,7 +27,19 @@ compose.desktop {
         org.jetbrains.compose.desktop.application.dsl.TargetFormat.Deb,
       )
       packageName = "Cadence"
-      packageVersion = "0.1.2"
+      // CI passes the release tag; release-please keeps the local default in sync.
+      packageVersion = providers.gradleProperty("desktopVersion").getOrElse(desktopVersion)
+      // Include modules loaded through reflection by storage, networking and Compose.
+      includeAllModules = true
+      description = "Manage audio on mounted USB storage"
+      vendor = "Yuri Schimke"
+      linux { packageName = "cadence" }
+      macOS { bundleID = "ee.schimke.cadence" }
+      windows {
+        menu = true
+        shortcut = true
+        upgradeUuid = "a82a09d9-e668-46c5-9928-8c6e2bc8f91e"
+      }
     }
   }
 }
