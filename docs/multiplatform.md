@@ -68,3 +68,9 @@ The unpublished-stable modernstorage dependency is removed: Cadence already owne
 On Linux with JDK 21 and Android SDK 37, the combined `:composeApp:assembleDebug`, `:desktopApp:jvmJar`, `:shared:desktopTest`, `:shared:wasmJsBrowserDistribution`, and `ktfmtCheck` invocation passes. Five Kotlin tests cover relative path validation, staged sync, source collisions, and profile isolation. Seven Node tests cover WebUSB discovery/permissions and browser directory copies.
 
 The native desktop app starts and renders under Xvfb with software rendering. The production Wasm bundle starts in Chromium without JavaScript errors; UI smoke tests verify a real canvas click retains user activation for the mocked WebUSB chooser, reports protected mass storage, and shows unsupported-browser directory feedback. USB descriptors, browser chooser results and file handles are fixtures in automated tests. No physical headphone, Android emulator, macOS, Windows or ARM runtime was available in this session; installer builds are now checked by a Linux/Windows/macOS CI matrix, while installation and those hardware/OS combinations still require manual verification.
+
+macOS installer metadata uses the release version with its major increased by one
+(for example, release `0.1.3` uses package version `1.1.3`). JDK 21's `jpackage`
+requires a positive first component in `CFBundleVersion`; applying the offset to
+every release preserves upgrade ordering when Cadence reaches `1.x`. Release tags
+and downloaded installer filenames continue to use Cadence's release version.

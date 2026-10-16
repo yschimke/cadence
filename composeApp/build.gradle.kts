@@ -1,8 +1,8 @@
 @file:OptIn(DelicateMetroGradleApi::class)
 
 import com.github.triplet.gradle.androidpublisher.ReleaseStatus
+import com.gradleup.tapmoc.Severity
 import dev.zacsweers.metro.gradle.DelicateMetroGradleApi
-import tapmoc.Severity
 
 plugins {
   alias(libs.plugins.androidApplication)
@@ -75,12 +75,12 @@ dependencies {
   implementation(libs.okio)
 
   // Compose deps used only by the preview composables in src/main/.../preview/.
-  implementation(compose.runtime)
-  implementation(compose.foundation)
+  implementation(libs.compose.runtime)
+  implementation(libs.compose.foundation)
   implementation(libs.compose.material3)
-  implementation(compose.materialIconsExtended)
-  implementation(compose.ui)
-  implementation(compose.preview)
+  implementation(libs.material.icons.extended)
+  implementation(libs.compose.ui)
+  implementation(libs.compose.ui.tooling.preview)
   implementation(libs.androidx.ui.text.google.fonts)
   implementation(libs.ktor.client.core) // io.ktor.http.Url, used by BookmarksScreen previews
 

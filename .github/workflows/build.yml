@@ -22,10 +22,10 @@ jobs:
       - uses: actions/checkout@v7.0.1
 
       - name: Set up JDK 21
-        uses: actions/setup-java@v6.0.1
+        uses: actions/setup-java@v6.1.0
         with:
           distribution: temurin
-          java-version: 21
+          java-version: 21.0.12+8.0.LTS
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v4.0.4
@@ -49,10 +49,10 @@ jobs:
       - uses: actions/checkout@v7.0.1
 
       - name: Set up JDK 21
-        uses: actions/setup-java@v6.0.1
+        uses: actions/setup-java@v6.1.0
         with:
           distribution: temurin
-          java-version: 21
+          java-version: 21.0.12+8.0.LTS
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v4.0.4
@@ -70,7 +70,7 @@ jobs:
 
       - name: Upload test reports
         if: always()
-        uses: actions/upload-artifact@v7.0.1
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: test-reports
           path: |
@@ -86,10 +86,10 @@ jobs:
       - uses: actions/checkout@v7.0.1
 
       - name: Set up JDK 21
-        uses: actions/setup-java@v6.0.1
+        uses: actions/setup-java@v6.1.0
         with:
           distribution: temurin
-          java-version: 21
+          java-version: 21.0.12+8.0.LTS
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v4.0.4
@@ -107,7 +107,7 @@ jobs:
 
       - name: Upload lint reports
         if: always()
-        uses: actions/upload-artifact@v7.0.1
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: lint-reports
           path: |
@@ -121,10 +121,10 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v7.0.1
-      - uses: actions/setup-java@v6.0.1
+      - uses: actions/setup-java@v6.1.0
         with:
           distribution: temurin
-          java-version: 21
+          java-version: 21.0.12+8.0.LTS
       - uses: android-actions/setup-android@v4.0.4
         with:
           packages: platforms;android-37.0 build-tools;37.0.0
@@ -133,7 +133,7 @@ jobs:
         run: ./gradlew :desktopApp:jvmJar :shared:desktopTest :shared:wasmJsBrowserDistribution --stacktrace
       - name: Test browser USB and filesystem adapter
         run: node --test tests/browser-platform.test.cjs
-      - uses: actions/upload-artifact@v7.0.1
+      - uses: actions/upload-artifact@v7.0.2
         with:
           name: cadence-web
           path: shared/build/dist/wasmJs/productionExecutable/
