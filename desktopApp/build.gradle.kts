@@ -5,6 +5,7 @@ plugins {
 }
 
 val desktopVersion = "0.1.2" // x-release-please-version
+val distributionVersion = providers.gradleProperty("desktopVersion").getOrElse(desktopVersion)
 
 kotlin {
   jvm()
@@ -28,13 +29,21 @@ compose.desktop {
       )
       packageName = "Cadence"
       // CI passes the release tag; release-please keeps the local default in sync.
-      packageVersion = providers.gradleProperty("desktopVersion").getOrElse(desktopVersion)
+      packageVersion = distributionVersion
       // Include modules loaded through reflection by storage, networking and Compose.
       includeAllModules = true
       description = "Manage audio on mounted USB storage"
       vendor = "Yuri Schimke"
       linux { packageName = "cadence" }
-      macOS { bundleID = "ee.schimke.cadence" }
+      macOS {
+        bundleID = "ee.schimke.cadence"
+        // JDK 21 jpackage rejects a zero major in CFBundleVersion. Offset every
+        // release major so 0.x packages build and upgrades remain monotonic.
+        packageVersion =
+          distributionVersion.split(".").let { parts ->
+            listOf((parts[0].toInt() + 1).toString(), parts[1], parts[2]).joinToString(".")
+          }
+      }
       windows {
         menu = true
         shortcut = true
