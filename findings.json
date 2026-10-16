@@ -1,85 +1,91 @@
 {
   "entries": [
     {
-      "annotatedBasename": "BluetoothConnectedPlayingPreview_BT_controls_connected_playing.a11y.png",
-      "cleanBasename": "BluetoothConnectedPlayingPreview_BT_controls_connected_playing.png",
+      "annotatedBasename": "BluetoothConnectedPlayingPreview_BT_controls_connected_playing-45366603.a11y.png",
+      "cleanBasename": "BluetoothConnectedPlayingPreview_BT_controls_connected_playing-45366603.png",
       "findings": [],
       "functionName": "BluetoothConnectedPlayingPreview",
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.BluetoothConnectedPlayingPreview_BT controls - connected + playing",
+      "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "variant": ""
     },
     {
-      "annotatedBasename": "BluetoothDisconnectedPreview_BT_controls_disconnected.a11y.png",
-      "cleanBasename": "BluetoothDisconnectedPreview_BT_controls_disconnected.png",
+      "annotatedBasename": "BluetoothDisconnectedPreview_BT_controls_disconnected-42332e99.a11y.png",
+      "cleanBasename": "BluetoothDisconnectedPreview_BT_controls_disconnected-42332e99.png",
       "findings": [],
       "functionName": "BluetoothDisconnectedPreview",
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.BluetoothDisconnectedPreview_BT controls - disconnected",
+      "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "variant": ""
     },
     {
-      "annotatedBasename": "BluetoothMp3ModePreview_BT_controls_MP3_mode.a11y.png",
-      "cleanBasename": "BluetoothMp3ModePreview_BT_controls_MP3_mode.png",
+      "annotatedBasename": "BluetoothMp3ModePreview_BT_controls_MP3_mode-f13f654e.a11y.png",
+      "cleanBasename": "BluetoothMp3ModePreview_BT_controls_MP3_mode-f13f654e.png",
       "findings": [],
       "functionName": "BluetoothMp3ModePreview",
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.BluetoothMp3ModePreview_BT controls - MP3 mode",
+      "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "variant": ""
     },
     {
-      "annotatedBasename": "BluetoothPermissionMissingPreview_BT_controls_permission_missing.a11y.png",
-      "cleanBasename": "BluetoothPermissionMissingPreview_BT_controls_permission_missing.png",
+      "annotatedBasename": "BluetoothPermissionMissingPreview_BT_controls_permission_missing-a7ac699a.a11y.png",
+      "cleanBasename": "BluetoothPermissionMissingPreview_BT_controls_permission_missing-a7ac699a.png",
       "findings": [],
       "functionName": "BluetoothPermissionMissingPreview",
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.BluetoothPermissionMissingPreview_BT controls - permission missing",
+      "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "variant": ""
     },
     {
-      "annotatedBasename": "BookmarksScreenLoadedPreview_Bookmarks_loaded.a11y.png",
-      "cleanBasename": "BookmarksScreenLoadedPreview_Bookmarks_loaded.png",
+      "annotatedBasename": "BookmarksScreenLoadedPreview_Bookmarks_loaded-d8723d62.a11y.png",
+      "cleanBasename": "BookmarksScreenLoadedPreview_Bookmarks_loaded-d8723d62.png",
       "findings": [],
       "functionName": "BookmarksScreenLoadedPreview",
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.BookmarksScreenLoadedPreview_Bookmarks - loaded",
+      "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "variant": ""
     },
     {
       "annotatedBasename": "",
-      "cleanBasename": "BookmarksScreenLoadingPreview_Bookmarks_loading.png",
+      "cleanBasename": "BookmarksScreenLoadingPreview_Bookmarks_loading-38d27511.png",
       "findings": [],
       "functionName": "BookmarksScreenLoadingPreview",
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.BookmarksScreenLoadingPreview_Bookmarks - loading",
+      "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "variant": ""
     },
     {
-      "annotatedBasename": "CurateHomeCadenceDarkPreview_Cadence_dark_Curate_home.a11y.png",
-      "cleanBasename": "CurateHomeCadenceDarkPreview_Cadence_dark_Curate_home.png",
+      "annotatedBasename": "CurateHomeCadenceDarkPreview_Cadence_dark_Curate_home-01c6d2f7.a11y.png",
+      "cleanBasename": "CurateHomeCadenceDarkPreview_Cadence_dark_Curate_home-01c6d2f7.png",
       "findings": [
         {
-          "boundsInScreen": "700,1158,837,1284",
+          "boundsInScreen": "705,1145,842,1271",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"Off\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "84,652,404,778",
+          "boundsInScreen": "84,641,396,767",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"Refresh\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "890,695,966,734",
+          "boundsInScreen": "895,685,966,722",
           "level": "INFO",
           "message": "This non-clickable item's speakable text: \"Auto\" is identical to that of 2 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
@@ -89,29 +95,30 @@
       "functionName": "CurateHomeCadenceDarkPreview",
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.CurateHomeCadenceDarkPreview_Cadence dark \u2014 Curate home",
+      "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/redesign/RedesignPreviews.kt",
       "variant": ""
     },
     {
-      "annotatedBasename": "CurateHomeCadencePreview_Cadence_Curate_home.a11y.png",
-      "cleanBasename": "CurateHomeCadencePreview_Cadence_Curate_home.png",
+      "annotatedBasename": "CurateHomeCadencePreview_Cadence_Curate_home-a520f211.a11y.png",
+      "cleanBasename": "CurateHomeCadencePreview_Cadence_Curate_home-a520f211.png",
       "findings": [
         {
-          "boundsInScreen": "700,1158,837,1284",
+          "boundsInScreen": "705,1145,842,1271",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"Off\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "84,652,404,778",
+          "boundsInScreen": "84,641,396,767",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"Refresh\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "890,695,966,734",
+          "boundsInScreen": "895,685,966,722",
           "level": "INFO",
           "message": "This non-clickable item's speakable text: \"Auto\" is identical to that of 2 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
@@ -121,12 +128,13 @@
       "functionName": "CurateHomeCadencePreview",
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.CurateHomeCadencePreview_Cadence \u2014 Curate home",
+      "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/redesign/RedesignPreviews.kt",
       "variant": ""
     },
     {
-      "annotatedBasename": "CurateHomePreview_System_Curate_home.a11y.png",
-      "cleanBasename": "CurateHomePreview_System_Curate_home.png",
+      "annotatedBasename": "CurateHomePreview_System_Curate_home-6b9b8560.a11y.png",
+      "cleanBasename": "CurateHomePreview_System_Curate_home-6b9b8560.png",
       "findings": [
         {
           "boundsInScreen": "707,1179,844,1305",
@@ -153,29 +161,30 @@
       "functionName": "CurateHomePreview",
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.CurateHomePreview_System \u2014 Curate home",
+      "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/redesign/RedesignPreviews.kt",
       "variant": ""
     },
     {
-      "annotatedBasename": "CurateHomeUsbBannerCadencePreview_Cadence_Curate_USB_banner.a11y.png",
-      "cleanBasename": "CurateHomeUsbBannerCadencePreview_Cadence_Curate_USB_banner.png",
+      "annotatedBasename": "CurateHomeUsbBannerCadencePreview_Cadence_Curate_USB_banner-b45966b7.a11y.png",
+      "cleanBasename": "CurateHomeUsbBannerCadencePreview_Cadence_Curate_USB_banner-b45966b7.png",
       "findings": [
         {
-          "boundsInScreen": "700,1490,837,1616",
+          "boundsInScreen": "705,1419,842,1545",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"Off\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "84,984,404,1110",
+          "boundsInScreen": "84,915,396,1041",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"Refresh\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "890,1027,966,1066",
+          "boundsInScreen": "895,959,966,996",
           "level": "INFO",
           "message": "This non-clickable item's speakable text: \"Auto\" is identical to that of 2 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
@@ -185,12 +194,13 @@
       "functionName": "CurateHomeUsbBannerCadencePreview",
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.CurateHomeUsbBannerCadencePreview_Cadence \u2014 Curate USB banner",
+      "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/redesign/RedesignPreviews.kt",
       "variant": ""
     },
     {
-      "annotatedBasename": "CurateHomeUsbBannerPreview_System_Curate_USB_banner.a11y.png",
-      "cleanBasename": "CurateHomeUsbBannerPreview_System_Curate_USB_banner.png",
+      "annotatedBasename": "CurateHomeUsbBannerPreview_System_Curate_USB_banner-8427ae83.a11y.png",
+      "cleanBasename": "CurateHomeUsbBannerPreview_System_Curate_USB_banner-8427ae83.png",
       "findings": [
         {
           "boundsInScreen": "707,1464,844,1590",
@@ -217,122 +227,134 @@
       "functionName": "CurateHomeUsbBannerPreview",
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.CurateHomeUsbBannerPreview_System \u2014 Curate USB banner",
+      "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/redesign/RedesignPreviews.kt",
       "variant": ""
     },
     {
-      "annotatedBasename": "DeviceFilesLoadingPreview_Device_files_loading.a11y.png",
-      "cleanBasename": "DeviceFilesLoadingPreview_Device_files_loading.png",
+      "annotatedBasename": "DeviceFilesLoadingPreview_Device_files_loading-86a4c3d8.a11y.png",
+      "cleanBasename": "DeviceFilesLoadingPreview_Device_files_loading-86a4c3d8.png",
       "findings": [],
       "functionName": "DeviceFilesLoadingPreview",
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.DeviceFilesLoadingPreview_Device files - loading",
+      "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "variant": ""
     },
     {
-      "annotatedBasename": "DeviceFilesNotAvailablePreview_Device_files_not_available.a11y.png",
-      "cleanBasename": "DeviceFilesNotAvailablePreview_Device_files_not_available.png",
+      "annotatedBasename": "DeviceFilesNotAvailablePreview_Device_files_not_available-713d5491.a11y.png",
+      "cleanBasename": "DeviceFilesNotAvailablePreview_Device_files_not_available-713d5491.png",
       "findings": [],
       "functionName": "DeviceFilesNotAvailablePreview",
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.DeviceFilesNotAvailablePreview_Device files - not available",
+      "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "variant": ""
     },
     {
-      "annotatedBasename": "DevicesScreenEmptyPreview_Devices_empty.a11y.png",
-      "cleanBasename": "DevicesScreenEmptyPreview_Devices_empty.png",
+      "annotatedBasename": "DevicesScreenEmptyPreview_Devices_empty-af5a9e1c.a11y.png",
+      "cleanBasename": "DevicesScreenEmptyPreview_Devices_empty-af5a9e1c.png",
       "findings": [],
       "functionName": "DevicesScreenEmptyPreview",
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.DevicesScreenEmptyPreview_Devices - empty",
+      "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "variant": ""
     },
     {
-      "annotatedBasename": "DevicesScreenLoadedPreview_Devices_loaded.a11y.png",
-      "cleanBasename": "DevicesScreenLoadedPreview_Devices_loaded.png",
+      "annotatedBasename": "DevicesScreenLoadedPreview_Devices_loaded-cfb106a7.a11y.png",
+      "cleanBasename": "DevicesScreenLoadedPreview_Devices_loaded-cfb106a7.png",
       "findings": [],
       "functionName": "DevicesScreenLoadedPreview",
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.DevicesScreenLoadedPreview_Devices - loaded",
+      "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "variant": ""
     },
     {
-      "annotatedBasename": "DevicesScreenLoadingPreview_Devices_loading.a11y.png",
-      "cleanBasename": "DevicesScreenLoadingPreview_Devices_loading.png",
+      "annotatedBasename": "DevicesScreenLoadingPreview_Devices_loading-8e171a67.a11y.png",
+      "cleanBasename": "DevicesScreenLoadingPreview_Devices_loading-8e171a67.png",
       "findings": [],
       "functionName": "DevicesScreenLoadingPreview",
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.DevicesScreenLoadingPreview_Devices - loading",
+      "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "variant": ""
     },
     {
-      "annotatedBasename": "FoundationCadenceDarkPreview_Foundation_Cadence_dark.a11y.png",
-      "cleanBasename": "FoundationCadenceDarkPreview_Foundation_Cadence_dark.png",
+      "annotatedBasename": "FoundationCadenceDarkPreview_Foundation_Cadence_dark-35bd3e32.a11y.png",
+      "cleanBasename": "FoundationCadenceDarkPreview_Foundation_Cadence_dark-35bd3e32.png",
       "findings": [],
       "functionName": "FoundationCadenceDarkPreview",
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.FoundationPreviewsKt.FoundationCadenceDarkPreview_Foundation \u2014 Cadence dark",
+      "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/FoundationPreviews.kt",
       "variant": ""
     },
     {
-      "annotatedBasename": "FoundationCadenceLightPreview_Foundation_Cadence_light.a11y.png",
-      "cleanBasename": "FoundationCadenceLightPreview_Foundation_Cadence_light.png",
+      "annotatedBasename": "FoundationCadenceLightPreview_Foundation_Cadence_light-19184725.a11y.png",
+      "cleanBasename": "FoundationCadenceLightPreview_Foundation_Cadence_light-19184725.png",
       "findings": [],
       "functionName": "FoundationCadenceLightPreview",
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.FoundationPreviewsKt.FoundationCadenceLightPreview_Foundation \u2014 Cadence light",
+      "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/FoundationPreviews.kt",
       "variant": ""
     },
     {
-      "annotatedBasename": "FoundationMaterial3DarkPreview_Foundation_Material_3_dark.a11y.png",
-      "cleanBasename": "FoundationMaterial3DarkPreview_Foundation_Material_3_dark.png",
+      "annotatedBasename": "FoundationMaterial3DarkPreview_Foundation_Material_3_dark-8fbb7bd3.a11y.png",
+      "cleanBasename": "FoundationMaterial3DarkPreview_Foundation_Material_3_dark-8fbb7bd3.png",
       "findings": [],
       "functionName": "FoundationMaterial3DarkPreview",
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.FoundationPreviewsKt.FoundationMaterial3DarkPreview_Foundation \u2014 Material 3 dark",
+      "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/FoundationPreviews.kt",
       "variant": ""
     },
     {
-      "annotatedBasename": "FoundationMaterial3LightPreview_Foundation_Material_3_light.a11y.png",
-      "cleanBasename": "FoundationMaterial3LightPreview_Foundation_Material_3_light.png",
+      "annotatedBasename": "FoundationMaterial3LightPreview_Foundation_Material_3_light-8a361022.a11y.png",
+      "cleanBasename": "FoundationMaterial3LightPreview_Foundation_Material_3_light-8a361022.png",
       "findings": [],
       "functionName": "FoundationMaterial3LightPreview",
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.FoundationPreviewsKt.FoundationMaterial3LightPreview_Foundation \u2014 Material 3 light",
+      "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/FoundationPreviews.kt",
       "variant": ""
     },
     {
-      "annotatedBasename": "HomeEmptyPreview_Home_empty.a11y.png",
-      "cleanBasename": "HomeEmptyPreview_Home_empty.png",
+      "annotatedBasename": "HomeEmptyPreview_Home_empty-571e68af.a11y.png",
+      "cleanBasename": "HomeEmptyPreview_Home_empty-571e68af.png",
       "findings": [],
       "functionName": "HomeEmptyPreview",
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.HomeEmptyPreview_Home \u2014 empty",
+      "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "variant": ""
     },
     {
-      "annotatedBasename": "ManageEmptyPreview_Manage_empty.a11y.png",
-      "cleanBasename": "ManageEmptyPreview_Manage_empty.png",
+      "annotatedBasename": "ManageEmptyPreview_Manage_empty-55c57410.a11y.png",
+      "cleanBasename": "ManageEmptyPreview_Manage_empty-55c57410.png",
       "findings": [],
       "functionName": "ManageEmptyPreview",
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.ManageEmptyPreview_Manage - empty",
+      "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "variant": ""
     },
     {
-      "annotatedBasename": "ManagePopulatedPreview_Manage_populated.a11y.png",
-      "cleanBasename": "ManagePopulatedPreview_Manage_populated.png",
+      "annotatedBasename": "ManagePopulatedPreview_Manage_populated-41ab32cd.a11y.png",
+      "cleanBasename": "ManagePopulatedPreview_Manage_populated-41ab32cd.png",
       "findings": [
         {
           "boundsInScreen": "253,2307,576,2360",
@@ -408,12 +430,13 @@
       "functionName": "ManagePopulatedPreview",
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.ManagePopulatedPreview_Manage - populated",
+      "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "variant": ""
     },
     {
-      "annotatedBasename": "ManageRefreshingPreview_Manage_refreshing.a11y.png",
-      "cleanBasename": "ManageRefreshingPreview_Manage_refreshing.png",
+      "annotatedBasename": "ManageRefreshingPreview_Manage_refreshing-fe8bc7dc.a11y.png",
+      "cleanBasename": "ManageRefreshingPreview_Manage_refreshing-fe8bc7dc.png",
       "findings": [
         {
           "boundsInScreen": "84,1755,221,1876",
@@ -496,39 +519,41 @@
       "functionName": "ManageRefreshingPreview",
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.ManageRefreshingPreview_Manage - refreshing",
+      "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "variant": ""
     },
     {
-      "annotatedBasename": "PlayStorePhoneBluetooth_Play_Store_phone_Bluetooth.a11y.png",
-      "cleanBasename": "PlayStorePhoneBluetooth_Play_Store_phone_Bluetooth.png",
+      "annotatedBasename": "PlayStorePhoneBluetooth_Play_Store_phone_Bluetooth-37d78602.a11y.png",
+      "cleanBasename": "PlayStorePhoneBluetooth_Play_Store_phone_Bluetooth-37d78602.png",
       "findings": [],
       "functionName": "PlayStorePhoneBluetooth",
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStorePhoneBluetooth_Play Store \u00b7 phone \u00b7 Bluetooth",
+      "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/playstore/PlayStorePreviews.kt",
       "variant": "pixel_2"
     },
     {
-      "annotatedBasename": "PlayStorePhoneHomeDark_Play_Store_phone_Home_dark.a11y.png",
-      "cleanBasename": "PlayStorePhoneHomeDark_Play_Store_phone_Home_dark.png",
+      "annotatedBasename": "PlayStorePhoneHomeDark_Play_Store_phone_Home_dark-aef8b2b7.a11y.png",
+      "cleanBasename": "PlayStorePhoneHomeDark_Play_Store_phone_Home_dark-aef8b2b7.png",
       "findings": [
         {
-          "boundsInScreen": "726,1158,863,1284",
+          "boundsInScreen": "731,1145,868,1271",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"Off\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "84,652,404,778",
+          "boundsInScreen": "84,641,396,767",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"Refresh\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "916,695,992,734",
+          "boundsInScreen": "921,685,992,722",
           "level": "INFO",
           "message": "This non-clickable item's speakable text: \"Auto\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
@@ -538,29 +563,30 @@
       "functionName": "PlayStorePhoneHomeDark",
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStorePhoneHomeDark_Play Store \u00b7 phone \u00b7 Home (dark)",
+      "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/playstore/PlayStorePreviews.kt",
       "variant": "pixel_2"
     },
     {
-      "annotatedBasename": "PlayStorePhoneHomeLight_Play_Store_phone_Home_light.a11y.png",
-      "cleanBasename": "PlayStorePhoneHomeLight_Play_Store_phone_Home_light.png",
+      "annotatedBasename": "PlayStorePhoneHomeLight_Play_Store_phone_Home_light-a1bae343.a11y.png",
+      "cleanBasename": "PlayStorePhoneHomeLight_Play_Store_phone_Home_light-a1bae343.png",
       "findings": [
         {
-          "boundsInScreen": "726,1158,863,1284",
+          "boundsInScreen": "731,1145,868,1271",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"Off\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "84,652,404,778",
+          "boundsInScreen": "84,641,396,767",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"Refresh\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "916,695,992,734",
+          "boundsInScreen": "921,685,992,722",
           "level": "INFO",
           "message": "This non-clickable item's speakable text: \"Auto\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
@@ -570,15 +596,16 @@
       "functionName": "PlayStorePhoneHomeLight",
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStorePhoneHomeLight_Play Store \u00b7 phone \u00b7 Home (light)",
+      "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/playstore/PlayStorePreviews.kt",
       "variant": "pixel_2"
     },
     {
-      "annotatedBasename": "PlayStorePhoneManage_Play_Store_phone_Manage.a11y.png",
-      "cleanBasename": "PlayStorePhoneManage_Play_Store_phone_Manage.png",
+      "annotatedBasename": "PlayStorePhoneManage_Play_Store_phone_Manage-5865e3ea.a11y.png",
+      "cleanBasename": "PlayStorePhoneManage_Play_Store_phone_Manage-5865e3ea.png",
       "findings": [
         {
-          "boundsInScreen": "84,796,221,922",
+          "boundsInScreen": "84,776,221,902",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"On\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
@@ -588,15 +615,16 @@
       "functionName": "PlayStorePhoneManage",
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStorePhoneManage_Play Store \u00b7 phone \u00b7 Manage",
+      "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/playstore/PlayStorePreviews.kt",
       "variant": "pixel_2"
     },
     {
-      "annotatedBasename": "PlayStorePhoneSync_Play_Store_phone_Sync.a11y.png",
-      "cleanBasename": "PlayStorePhoneSync_Play_Store_phone_Sync.png",
+      "annotatedBasename": "PlayStorePhoneSync_Play_Store_phone_Sync-aa8cb5dd.a11y.png",
+      "cleanBasename": "PlayStorePhoneSync_Play_Store_phone_Sync-aa8cb5dd.png",
       "findings": [
         {
-          "boundsInScreen": "85,650,211,776",
+          "boundsInScreen": "85,641,211,767",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"checked\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
@@ -606,29 +634,30 @@
       "functionName": "PlayStorePhoneSync",
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStorePhoneSync_Play Store \u00b7 phone \u00b7 Sync",
+      "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/playstore/PlayStorePreviews.kt",
       "variant": "pixel_2"
     },
     {
-      "annotatedBasename": "PlayStoreSevenInchHomeDark_Play_Store_7_tablet_Home_dark.a11y.png",
-      "cleanBasename": "PlayStoreSevenInchHomeDark_Play_Store_7_tablet_Home_dark.png",
+      "annotatedBasename": "PlayStoreSevenInchHomeDark_Play_Store_7_tablet_Home_dark-79090521.a11y.png",
+      "cleanBasename": "PlayStoreSevenInchHomeDark_Play_Store_7_tablet_Home_dark-79090521.png",
       "findings": [
         {
-          "boundsInScreen": "934,878,1038,974",
+          "boundsInScreen": "937,870,1041,966",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"Off\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "64,493,310,589",
+          "boundsInScreen": "64,486,303,582",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"Refresh\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "1078,527,1136,556",
+          "boundsInScreen": "1081,520,1136,548",
           "level": "INFO",
           "message": "This non-clickable item's speakable text: \"Auto\" is identical to that of 2 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
@@ -638,29 +667,30 @@
       "functionName": "PlayStoreSevenInchHomeDark",
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStoreSevenInchHomeDark_Play Store \u00b7 7_ tablet \u00b7 Home (dark)",
+      "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/playstore/PlayStorePreviews.kt",
       "variant": "spec:width=600dp,height=960dp,dpi=320"
     },
     {
-      "annotatedBasename": "PlayStoreSevenInchHomeLight_Play_Store_7_tablet_Home_light.a11y.png",
-      "cleanBasename": "PlayStoreSevenInchHomeLight_Play_Store_7_tablet_Home_light.png",
+      "annotatedBasename": "PlayStoreSevenInchHomeLight_Play_Store_7_tablet_Home_light-59744afc.a11y.png",
+      "cleanBasename": "PlayStoreSevenInchHomeLight_Play_Store_7_tablet_Home_light-59744afc.png",
       "findings": [
         {
-          "boundsInScreen": "934,878,1038,974",
+          "boundsInScreen": "937,870,1041,966",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"Off\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "64,493,310,589",
+          "boundsInScreen": "64,486,303,582",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"Refresh\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "1078,527,1136,556",
+          "boundsInScreen": "1081,520,1136,548",
           "level": "INFO",
           "message": "This non-clickable item's speakable text: \"Auto\" is identical to that of 2 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
@@ -670,29 +700,30 @@
       "functionName": "PlayStoreSevenInchHomeLight",
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStoreSevenInchHomeLight_Play Store \u00b7 7_ tablet \u00b7 Home (light)",
+      "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/playstore/PlayStorePreviews.kt",
       "variant": "spec:width=600dp,height=960dp,dpi=320"
     },
     {
-      "annotatedBasename": "PlayStoreTenInchHomeDark_Play_Store_10_tablet_Home_dark.a11y.png",
-      "cleanBasename": "PlayStoreTenInchHomeDark_Play_Store_10_tablet_Home_dark.png",
+      "annotatedBasename": "PlayStoreTenInchHomeDark_Play_Store_10_tablet_Home_dark-91cf4524.a11y.png",
+      "cleanBasename": "PlayStoreTenInchHomeDark_Play_Store_10_tablet_Home_dark-91cf4524.png",
       "findings": [
         {
-          "boundsInScreen": "1334,493,1438,589",
+          "boundsInScreen": "1337,486,1441,582",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"Off\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "64,493,310,589",
+          "boundsInScreen": "64,486,303,582",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"Refresh\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "698,527,756,556",
+          "boundsInScreen": "701,520,756,548",
           "level": "INFO",
           "message": "This non-clickable item's speakable text: \"Auto\" is identical to that of 2 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
@@ -702,29 +733,30 @@
       "functionName": "PlayStoreTenInchHomeDark",
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStoreTenInchHomeDark_Play Store \u00b7 10_ tablet \u00b7 Home (dark)",
+      "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/playstore/PlayStorePreviews.kt",
       "variant": "spec:width=800dp,height=1280dp,dpi=320"
     },
     {
-      "annotatedBasename": "PlayStoreTenInchHomeLight_Play_Store_10_tablet_Home_light.a11y.png",
-      "cleanBasename": "PlayStoreTenInchHomeLight_Play_Store_10_tablet_Home_light.png",
+      "annotatedBasename": "PlayStoreTenInchHomeLight_Play_Store_10_tablet_Home_light-536fa195.a11y.png",
+      "cleanBasename": "PlayStoreTenInchHomeLight_Play_Store_10_tablet_Home_light-536fa195.png",
       "findings": [
         {
-          "boundsInScreen": "1334,493,1438,589",
+          "boundsInScreen": "1337,486,1441,582",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"Off\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "64,493,310,589",
+          "boundsInScreen": "64,486,303,582",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"Refresh\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
           "viewDescription": "android.view.View"
         },
         {
-          "boundsInScreen": "698,527,756,556",
+          "boundsInScreen": "701,520,756,548",
           "level": "INFO",
           "message": "This non-clickable item's speakable text: \"Auto\" is identical to that of 2 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
@@ -734,35 +766,38 @@
       "functionName": "PlayStoreTenInchHomeLight",
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStoreTenInchHomeLight_Play Store \u00b7 10_ tablet \u00b7 Home (light)",
+      "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/playstore/PlayStorePreviews.kt",
       "variant": "spec:width=800dp,height=1280dp,dpi=320"
     },
     {
-      "annotatedBasename": "SyncModeDoneCadencePreview_Cadence_Sync_complete.a11y.png",
-      "cleanBasename": "SyncModeDoneCadencePreview_Cadence_Sync_complete.png",
+      "annotatedBasename": "SyncModeDoneCadencePreview_Cadence_Sync_complete-cee01b92.a11y.png",
+      "cleanBasename": "SyncModeDoneCadencePreview_Cadence_Sync_complete-cee01b92.png",
       "findings": [],
       "functionName": "SyncModeDoneCadencePreview",
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeDoneCadencePreview_Cadence \u2014 Sync complete",
+      "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/redesign/RedesignPreviews.kt",
       "variant": ""
     },
     {
-      "annotatedBasename": "SyncModeDonePreview_System_Sync_complete.a11y.png",
-      "cleanBasename": "SyncModeDonePreview_System_Sync_complete.png",
+      "annotatedBasename": "SyncModeDonePreview_System_Sync_complete-ad6b67b3.a11y.png",
+      "cleanBasename": "SyncModeDonePreview_System_Sync_complete-ad6b67b3.png",
       "findings": [],
       "functionName": "SyncModeDonePreview",
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeDonePreview_System \u2014 Sync complete",
+      "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/redesign/RedesignPreviews.kt",
       "variant": ""
     },
     {
-      "annotatedBasename": "SyncModeReadyCadenceDarkPreview_Cadence_dark_Sync_ready.a11y.png",
-      "cleanBasename": "SyncModeReadyCadenceDarkPreview_Cadence_dark_Sync_ready.png",
+      "annotatedBasename": "SyncModeReadyCadenceDarkPreview_Cadence_dark_Sync_ready-994ca7c7.a11y.png",
+      "cleanBasename": "SyncModeReadyCadenceDarkPreview_Cadence_dark_Sync_ready-994ca7c7.png",
       "findings": [
         {
-          "boundsInScreen": "85,650,211,776",
+          "boundsInScreen": "85,641,211,767",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"checked\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
@@ -772,15 +807,16 @@
       "functionName": "SyncModeReadyCadenceDarkPreview",
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeReadyCadenceDarkPreview_Cadence dark \u2014 Sync ready",
+      "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/redesign/RedesignPreviews.kt",
       "variant": ""
     },
     {
-      "annotatedBasename": "SyncModeReadyCadencePreview_Cadence_Sync_ready.a11y.png",
-      "cleanBasename": "SyncModeReadyCadencePreview_Cadence_Sync_ready.png",
+      "annotatedBasename": "SyncModeReadyCadencePreview_Cadence_Sync_ready-761b47d7.a11y.png",
+      "cleanBasename": "SyncModeReadyCadencePreview_Cadence_Sync_ready-761b47d7.png",
       "findings": [
         {
-          "boundsInScreen": "85,650,211,776",
+          "boundsInScreen": "85,641,211,767",
           "level": "WARNING",
           "message": "This clickable item's speakable text: \"checked\" is identical to that of 1 other item(s).",
           "type": "DuplicateSpeakableTextCheck",
@@ -790,12 +826,13 @@
       "functionName": "SyncModeReadyCadencePreview",
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeReadyCadencePreview_Cadence \u2014 Sync ready",
+      "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/redesign/RedesignPreviews.kt",
       "variant": ""
     },
     {
-      "annotatedBasename": "SyncModeReadyPreview_System_Sync_ready.a11y.png",
-      "cleanBasename": "SyncModeReadyPreview_System_Sync_ready.png",
+      "annotatedBasename": "SyncModeReadyPreview_System_Sync_ready-7ce1a9c8.a11y.png",
+      "cleanBasename": "SyncModeReadyPreview_System_Sync_ready-7ce1a9c8.png",
       "findings": [
         {
           "boundsInScreen": "85,655,211,781",
@@ -808,28 +845,32 @@
       "functionName": "SyncModeReadyPreview",
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeReadyPreview_System \u2014 Sync ready",
+      "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/redesign/RedesignPreviews.kt",
       "variant": ""
     },
     {
-      "annotatedBasename": "SyncModeSyncingCadencePreview_Cadence_Sync_syncing.a11y.png",
-      "cleanBasename": "SyncModeSyncingCadencePreview_Cadence_Sync_syncing.png",
+      "annotatedBasename": "SyncModeSyncingCadencePreview_Cadence_Sync_syncing-fcc2be13.a11y.png",
+      "cleanBasename": "SyncModeSyncingCadencePreview_Cadence_Sync_syncing-fcc2be13.png",
       "findings": [],
       "functionName": "SyncModeSyncingCadencePreview",
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeSyncingCadencePreview_Cadence \u2014 Sync syncing",
+      "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/redesign/RedesignPreviews.kt",
       "variant": ""
     },
     {
-      "annotatedBasename": "SyncModeSyncingPreview_System_Sync_syncing.a11y.png",
-      "cleanBasename": "SyncModeSyncingPreview_System_Sync_syncing.png",
+      "annotatedBasename": "SyncModeSyncingPreview_System_Sync_syncing-fc646ecb.a11y.png",
+      "cleanBasename": "SyncModeSyncingPreview_System_Sync_syncing-fc646ecb.png",
       "findings": [],
       "functionName": "SyncModeSyncingPreview",
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeSyncingPreview_System \u2014 Sync syncing",
+      "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/redesign/RedesignPreviews.kt",
       "variant": ""
     }
-  ]
+  ],
+  "scope": "changed-previews"
 }
