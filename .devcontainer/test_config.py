@@ -16,7 +16,7 @@ class DevcontainerConfigTest(unittest.TestCase):
                  if line.strip() and not line.lstrip().startswith('#')}
         env_hosts = set(CONFIG['containerEnv']['COOEE_ALLOWED_DOMAINS'].split(','))
         self.assertEqual(hosts, env_hosts)
-        self.assertLessEqual({'repo.maven.apache.org', 'plugins.gradle.org',
+        self.assertLessEqual({'repo.maven.apache.org', 'plugins.gradle.org', 'plugins-artifacts.gradle.org',
                               'oss.sonatype.org', 'jogamp.org'}, hosts)
 
     def test_failed_download_fails_provisioning(self):
