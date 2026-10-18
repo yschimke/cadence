@@ -48,6 +48,9 @@ jobs:
     steps:
       - uses: actions/checkout@v7.0.1
 
+      - name: Check devcontainer configuration
+        run: python3 .devcontainer/test_config.py
+
       - name: Set up JDK 21
         uses: actions/setup-java@v6.1.0
         with:
