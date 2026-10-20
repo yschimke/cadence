@@ -42,7 +42,7 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v6.4.0
 
-      - uses: yschimke/compose-ai-tools/.github/actions/apply@v2.70.2
+      - uses: yschimke/compose-ai-tools/.github/actions/apply@v2.70.4
         with:
           # Keep CLI and plugin aligned: 2.64.3 ships the 2.64.2 plugin, but
           # the install action still probes for a plugin matching the CLI version.
