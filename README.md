@@ -82,3 +82,6 @@ NODE_PATH=/tmp/cadence-smoke/node_modules node tests/wasm-smoke.cjs
 ```
 
 Physical USB permissions, filesystem drivers, and real headphone firmware still need a hardware smoke test. Automated tests cover path validation, staging/copy behavior, chooser activation, cancellation/disconnects, and unsupported-browser handling.
+
+Android internal-track releases, store listings, and Firebase setup are documented in
+[Play publishing](docs/play-publishing.md).

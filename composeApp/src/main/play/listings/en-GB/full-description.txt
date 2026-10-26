@@ -1,13 +1,18 @@
-Cadence is a personal cycling and running companion app.
+Cadence helps you manage audio on USB storage and prepare podcasts for
+headphones. Choose source folders, create sync profiles, and copy audio
+to your selected device. Import public podcast feeds, prepare sections,
+and track listening progress locally. Optional cloud metadata sync is
+available when configured.
 
-This is a single-developer hobby project; you can read all the source
-code at https://github.com/yschimke/cadence.
+This is a single-developer hobby project. Source code is available at
+https://github.com/yschimke/cadence.
 
-Notes:
-- The app does not collect, store, or transmit any personal data to
-  the developer.
-- No analytics, no advertising, no crash-reporting SDKs.
-- Settings and cached state stay on your device.
+Android builds configured for Google Play use Firebase Analytics and
+Crashlytics to understand app usage and diagnose crashes. Diagnostic data
+can include app interactions, installation identifiers, device and app
+information, and crash stack traces. No advertising is included. We do
+not add message contents, contacts, audio files, or account credentials
+to analytics events or crash reports.
 
 Privacy policy: https://yschimke.github.io/cadence/privacy/
 Issues / feedback: https://github.com/yschimke/cadence/issues
