@@ -46,7 +46,10 @@ an authorized browser session, even without a supported public integration.
 Manual playlist membership and smart-playlist filter rules must be distinguished;
 a rules response alone is not a resolved episode list. Live web requests still
 need to be inspected: this session's browser received Pocket Casts' 403 page before
-login. No authenticated account read is claimed from source inspection alone.
+login. No authenticated account read is claimed from source inspection alone. A
+[passive browser helper and test procedure](pocketcasts-browser-import.md) is
+available for the one-way experiment; it keeps credentials in the browser and
+exports only explicitly captured manual-playlist metadata.
 
 **Recommendation:** investigate one-way browser-session export first; for a durable
 account integration, ask Pocket Casts for an authorized integration providing
