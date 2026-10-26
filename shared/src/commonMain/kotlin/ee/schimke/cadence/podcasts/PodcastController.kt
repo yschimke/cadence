@@ -58,6 +58,7 @@ class PodcastController(val platform: PodcastPlatform) {
     )
   val status = MutableStateFlow("Loading library…")
   val busy = MutableStateFlow(false)
+  val signedIn = MutableStateFlow(false)
   private val lock = Mutex()
   private var token = ""
   private var authenticatedUser = ""
@@ -104,7 +105,7 @@ class PodcastController(val platform: PodcastPlatform) {
   }
 
   private fun publish() {
-    val ready = state.value.readySectionIds.isNotEmpty()
+    val ready = state.value.readyForDevice()
     platform.publishStatus(
       status.value + " · Last import: " + state.value.library.lastBackendSync,
       ready,
@@ -119,6 +120,7 @@ class PodcastController(val platform: PodcastPlatform) {
         library =
           state.value.library.copy(
             playlist = snapshot,
+            feedUrl = "",
             manifests = emptyList(),
             lastBackendSync = Clock.System.now().toString(),
           ),
@@ -143,7 +145,7 @@ class PodcastController(val platform: PodcastPlatform) {
         else episode.copy(positionMs = advancedPosition(previous, old.completions))
       }
     importSnapshot(podcastJson.encodeToString(snapshot.copy(episodes = episodes)))
-    save(state.value.copy(feedUrl = url))
+    save(state.value.copy(library = state.value.library.copy(feedUrl = url)))
   }
 
   suspend fun configure(config: Segmentation) {
@@ -257,9 +259,7 @@ class PodcastController(val platform: PodcastPlatform) {
       throw PodcastProblem(
         "Use a publishable/anon key. Service-role and secret keys must never be installed in the app."
       )
-    token = ""
-    authenticatedUser = ""
-    authenticatedUrl = ""
+    signOut()
     save(
       state.value.copy(
         cloudUrl = url.trimEnd('/'),
@@ -271,6 +271,7 @@ class PodcastController(val platform: PodcastPlatform) {
   }
 
   suspend fun signIn(email: String, password: String) {
+    signOut()
     val local = state.value
     val body = buildJsonObject {
       put("email", email)
@@ -293,12 +294,22 @@ class PodcastController(val platform: PodcastPlatform) {
     // A new account must pull before writing over an existing account document.
     if (local.cloudUserId != authenticatedUser)
       save(local.copy(cloudUserId = authenticatedUser, cloudRevision = 0))
+    signedIn.value = true
+  }
+
+  fun signOut() {
+    token = ""
+    authenticatedUser = ""
+    authenticatedUrl = ""
+    signedIn.value = false
+    status.value = "Signed out · local library retained"
   }
 
   private suspend fun rpc(name: String, body: String = "{}"): String {
     val local = state.value
     require(
-      token.isNotBlank() &&
+      signedIn.value &&
+        token.isNotBlank() &&
         authenticatedUser == local.cloudUserId &&
         authenticatedUrl == local.cloudUrl
     )

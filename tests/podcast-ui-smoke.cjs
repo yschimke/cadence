@@ -4,7 +4,7 @@ const fs = require('node:fs');
 const assert = require('node:assert/strict');
 (async () => {
  const browser = await chromium.launch({ headless: true, args: ['--no-sandbox'] });
- const page = await browser.newPage({ viewport: { width: 1100, height: 1800 } });
+ const page = await browser.newPage({ viewport: { width: 1100, height: 2000 } });
  page.setDefaultTimeout(20000);
  async function tap(locator) {
   await locator.waitFor();
@@ -47,6 +47,11 @@ const assert = require('node:assert/strict');
   await tap(page.getByRole('button', { name: 'Podcast sync', exact: true }));
   await page.waitForFunction(() => JSON.parse(localStorage.getItem('cadence-podcasts-v1'))?.readySectionIds?.length === 1);
   assert.equal((await page.evaluate(() => JSON.parse(localStorage.getItem('cadence-podcasts-v1')))).library.completions.length, 1);
+  await page.emulateMedia({ colorScheme: 'dark' });
+  await page.waitForTimeout(300);
+  await page.screenshot({ path: '/tmp/cadence-after-dark.png' });
+  await page.emulateMedia({ colorScheme: 'light' });
+  await page.waitForTimeout(300);
   await page.setViewportSize({ width: 390, height: 844 });
   await page.screenshot({ path: '/tmp/cadence-after-mobile.png' });
   assert.deepEqual(errors, []);

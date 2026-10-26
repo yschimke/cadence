@@ -104,6 +104,12 @@ class PodcastTest {
       podcastJson.encodeToString(PlaylistSnapshot(name = "Wanted", episodes = listOf(episode)))
     )
     controller.prepare()
+    assertTrue(controller.state.value.readyForDevice())
+    val partial =
+      controller.state.value.copy(
+        readySectionIds = setOf(controller.state.value.readySectionIds.first())
+      )
+    assertFalse(partial.readyForDevice())
     val section = controller.state.value.library.manifests.single().sections.last()
     controller.markPlayed(section)
     controller.markPlayed(section)
@@ -139,23 +145,29 @@ class PodcastTest {
   fun cloudSendsOnlyMetadataAndRequiresRevisionMatch() = runBlocking {
     val platform = FakePlatform()
     val controller = PodcastController(platform)
-    controller.importSnapshot(
-      podcastJson.encodeToString(PlaylistSnapshot(name = "Wanted", episodes = listOf(episode)))
-    )
+    platform.feedSnapshot = PlaylistSnapshot(name = "Wanted", episodes = listOf(episode))
+    controller.importRss("https://example.com/feed.xml")
     controller.prepare()
     controller.setTarget("private-local-usb-path")
     controller.configureCloud("https://example.supabase.co", "publishable-test-key")
     controller.signIn("fixture@example.com", "fixture-password")
     controller.pushCloud()
+    assertTrue(platform.lastPush.contains("https://example.com/feed.xml"))
     assertFalse(platform.lastPush.contains("private-local-usb-path"))
     assertFalse(platform.lastPush.contains("readySectionIds"))
     assertFalse(platform.lastPush.contains("fixture-password"))
     assertEquals(1L, controller.state.value.cloudRevision)
+    assertTrue(controller.signedIn.value)
     platform.rejectPush = true
     controller.run { pushCloud() }
     assertEquals(1L, controller.state.value.cloudRevision)
     assertEquals("private-local-usb-path", controller.state.value.target)
     assertEquals(2, controller.state.value.readySectionIds.size)
+    controller.signOut()
+    assertFalse(controller.signedIn.value)
+    assertEquals("private-local-usb-path", controller.state.value.target)
+    assertFailsWith<IllegalArgumentException> { controller.pushCloud() }
+    Unit
   }
 
   @Test
@@ -199,6 +211,20 @@ class PodcastTest {
     Unit
   }
 
+  @Test
+  fun deviceManifestOmitsUrlsEvenWhenProviderIdsContainThem() {
+    val source = episode.copy(id = "https://publisher.example/private-id?access=example-only")
+    val config = Segmentation(false)
+    val manifest =
+      deviceManifest(
+        PodcastLibrary(manifests = listOf(Manifest(source, config, segment(source, config))))
+      )
+    val encoded = podcastJson.encodeToString(manifest)
+    assertFalse(encoded.contains("https://"))
+    assertFalse(encoded.contains("access="))
+    assertEquals(source.key, manifest.episodes.single().episodeKey)
+  }
+
   private class FakePlatform : PodcastPlatform {
     override val splitFormats = setOf("mp3", "m4a")
     override val description = "Fixture"
@@ -208,6 +234,7 @@ class PodcastTest {
     var rejectPush = false
     var lastPush = ""
     var remoteDocument: CloudDocument? = null
+    var feedSnapshot: PlaylistSnapshot? = null
     val files = mutableSetOf<String>()
 
     override suspend fun readState() = saved
@@ -227,7 +254,7 @@ class PodcastTest {
       exported = true
     }
 
-    override suspend fun rss(url: String): PlaylistSnapshot = error("not used")
+    override suspend fun rss(url: String): PlaylistSnapshot = requireNotNull(feedSnapshot)
 
     override suspend fun request(
       url: String,
