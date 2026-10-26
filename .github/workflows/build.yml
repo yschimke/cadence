@@ -137,7 +137,7 @@ jobs:
       - name: Build desktop and browser; test shared storage
         run: ./gradlew :desktopApp:jvmJar :shared:desktopTest :shared:wasmJsBrowserDistribution --stacktrace
       - name: Test browser USB and filesystem adapter
-        run: node --test tests/browser-platform.test.cjs
+        run: node --test tests/browser-platform.test.cjs tests/pocketcasts-browser-export.test.cjs
       - name: Test cloud metadata isolation and revision conflicts
         run: |
           npm install --prefix "$RUNNER_TEMP/cadence-cloud-tests" @electric-sql/pglite@0.5.11
