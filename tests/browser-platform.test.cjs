@@ -81,7 +81,11 @@ function fileHandle(name, contents) {
  handle.getFile = async () => new Blob([handle.contents]);
  handle.createWritable = async () => {
   const chunks = [];
-  return new WritableStream({ write(chunk) { chunks.push(chunk); }, close() { handle.contents = Buffer.concat(chunks.map(chunk => Buffer.from(chunk))).toString(); } });
+  const stream = new WritableStream({ write(chunk) { chunks.push(chunk); }, close() { handle.contents = Buffer.concat(chunks.map(chunk => Buffer.from(chunk))).toString(); } });
+  // FileSystemWritableFileStream supports direct write/close as well as pipeTo.
+  stream.write = async chunk => { const writer = stream.getWriter(); try { await writer.write(chunk); } finally { writer.releaseLock(); } };
+  stream.close = async () => { const writer = stream.getWriter(); try { await writer.close(); } finally { writer.releaseLock(); } };
+  return stream;
  };
  return handle;
 }
@@ -121,4 +125,36 @@ test('browser copies a staged snapshot through directory handles and preserves u
  // Expired permission must fail with a recoverable message, rather than prompt outside a click.
  source.queryPermission = async () => 'prompt';
  await assert.rejects(api.call('files', { root: sourceKey }), /permission expired/);
+});
+
+test('podcast requests require HTTPS and never send ambient cookies or follow redirects', async () => {
+ const calls = [];
+ const { api } = environment({ URL, fetch: async (url, options) => { calls.push({ url, options }); return { ok: true, text: async () => 'fixture' }; } });
+ await assert.rejects(api.call('podcastRequest', { url: 'http://example.com', method: 'GET' }), /HTTPS/);
+ await assert.rejects(api.call('podcastRequest', { url: 'https://user:password@example.com', method: 'GET' }), /HTTPS/);
+ assert.equal(await api.call('podcastRequest', { url: 'https://example.com', method: 'GET' }), 'fixture');
+ assert.equal(calls[0].options.credentials, 'omit');
+ assert.equal(calls[0].options.redirect, 'error');
+});
+
+test('podcast export writes only the owned folder, refuses collisions and rejects traversal', async () => {
+ const opfs = directoryHandle('opfs'); const target = directoryHandle('usb');
+ target.children.set('keep.mp3', fileHandle('keep.mp3', 'unrelated'));
+ const privateRoot = await opfs.getDirectoryHandle('.cadence-podcasts', { create: true });
+ const podcasts = await privateRoot.getDirectoryHandle('audio', { create: true });
+ const name = 'episode-000000000000-' + 'a'.repeat(64) + '.mp3'; podcasts.children.set(name, fileHandle(name, 'prepared audio'));
+ const { api } = environment({ navigator: { storage: { getDirectory: async () => opfs } },
+  indexedDB: memoryIndexedDb(), crypto: { randomUUID: () => 'usb' }, showDirectoryPicker: async () => target });
+ const selected = await new Promise((resolve, reject) => api.pickDirectory(s => resolve(JSON.parse(s)), reject));
+ const args = { target: selected.location, files: [name], manifest: '{"schema":1}' };
+ await assert.rejects(api.call('clear', { root: 'opfs:staging/.cadence-podcasts' }), /Reserved/);
+ await api.call('podcastExport', args);
+ const folder = target.children.get('Cadence').children.get('podcasts');
+ assert.equal(folder.children.get(name).contents, 'prepared audio');
+ assert.equal(folder.children.get('.cadence-owner').contents, 'cadence-podcasts-v1');
+ assert.equal(target.children.get('keep.mp3').contents, 'unrelated');
+ await assert.rejects(api.call('podcastExport', { ...args, files: ['../escape.mp3'] }), /Invalid podcast filename/);
+ folder.children.delete('.cadence-owner');
+ await assert.rejects(api.call('podcastExport', args), /not owned/);
+ assert.equal(target.children.get('keep.mp3').contents, 'unrelated');
 });

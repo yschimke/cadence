@@ -132,10 +132,16 @@ jobs:
         with:
           packages: platforms;android-37.0 build-tools;37.0.0
       - uses: gradle/actions/setup-gradle@v6.4.0
+      - name: Install audio preparation test dependency
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
       - name: Build desktop and browser; test shared storage
         run: ./gradlew :desktopApp:jvmJar :shared:desktopTest :shared:wasmJsBrowserDistribution --stacktrace
       - name: Test browser USB and filesystem adapter
         run: node --test tests/browser-platform.test.cjs
+      - name: Test cloud metadata isolation and revision conflicts
+        run: |
+          npm install --prefix "$RUNNER_TEMP/cadence-cloud-tests" @electric-sql/pglite@0.5.11
+          NODE_PATH="$RUNNER_TEMP/cadence-cloud-tests/node_modules" node tests/cloud-persistence.test.cjs
       - uses: actions/upload-artifact@v7.0.2
         with:
           name: cadence-web
