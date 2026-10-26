@@ -151,6 +151,7 @@ fun advancedPosition(episode: Episode, completions: List<Completion>): Long {
 data class PodcastLibrary(
   val schema: Int = 1,
   val playlist: PlaylistSnapshot? = null,
+  val feedUrl: String = "",
   val config: Segmentation = Segmentation(),
   val manifests: List<Manifest> = emptyList(),
   val completions: List<Completion> = emptyList(),
@@ -159,6 +160,7 @@ data class PodcastLibrary(
   fun validate() {
     require(schema == 1)
     config.validate()
+    require(feedUrl.isBlank() || feedUrl.startsWith("https://"))
     playlist?.validate()
     manifests.forEach { manifest ->
       require(manifest.sections == segment(manifest.episode, manifest.config)) {
@@ -182,7 +184,6 @@ data class LocalPodcastState(
   // These fields are device-local, never uploaded as cross-device readiness.
   val readySectionIds: Set<String> = emptySet(),
   val target: String = "",
-  val feedUrl: String = "",
   val copiedSectionIds: Set<String> = emptySet(),
   val cloudUrl: String = "",
   val cloudKey: String = "",
@@ -282,7 +283,7 @@ class RssBackend(private val platform: PodcastPlatform, private val feedUrl: Str
 @Serializable
 data class DeviceEpisode(
   val backend: String,
-  val id: String,
+  val episodeKey: String,
   val title: String,
   val audioVersion: String,
   val sections: List<Section>,
@@ -296,7 +297,7 @@ fun deviceManifest(library: PodcastLibrary): DeviceManifest =
       library.manifests.map {
         DeviceEpisode(
           it.episode.backend,
-          it.episode.id,
+          it.episode.key,
           it.episode.title,
           it.episode.audioVersion,
           it.sections,
@@ -312,4 +313,9 @@ fun validateAudioFileName(name: String) {
   ) {
     "Invalid podcast filename"
   }
+}
+
+fun LocalPodcastState.readyForDevice(): Boolean {
+  val sections = library.manifests.flatMap { it.sections }
+  return sections.isNotEmpty() && sections.all { it.id in readySectionIds }
 }

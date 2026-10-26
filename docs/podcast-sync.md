@@ -9,9 +9,8 @@ desktop and browser experience. Existing directory profiles remain available.
 
 The implementation supports public podcast RSS enclosures and Cadence JSON
 snapshots. It does **not** log into Pocket Casts or claim that an import is a live
-Pocket Casts account sync. No supported third-party API for reading a user's
-playlist/filter, exporting media and conditionally writing episode positions
-was verified. The adapter advertises those capabilities as unavailable.
+Pocket Casts account sync. No supported third-party API covering playlist/filter reads, media export and
+conditional position writes was verified. The adapter advertises those capabilities as unavailable.
 
 Pocket Casts' own apps synchronize positions, Up Next and other account state.
 That does not establish third-party access. Its documented integrations expose
@@ -31,11 +30,32 @@ Sources checked 2026-10-26:
 [documented integrations](https://support.pocketcasts.com/knowledge-base/third-party-integration/),
 [web/desktop lists](https://support.pocketcasts.com/knowledge-base/desktop-app/).
 
-**Recommendation:** ask Pocket Casts for an authorized integration providing
+### Read-only web-session investigation
+
+Pocket Casts' current [playlist documentation](https://support.pocketcasts.com/knowledge-base/playlists/)
+confirms manual playlists on the web, but states there is no playlist sharing/export
+link. A playlist RSS feed is therefore not a documented route. This does not mean
+its internal account APIs are inaccessible from the user's own signed-in browser.
+
+The published [Android service contract](https://github.com/Automattic/pocket-casts-android/blob/main/modules/services/servers/src/main/java/au/com/shiftyjelly/pocketcasts/servers/sync/SyncService.kt)
+exposes read endpoints `/user/playlist/list`, `/user/podcast/episodes` and
+`/user/episodes`. Its [protobuf schema](https://github.com/Automattic/pocket-casts-android/blob/main/modules/services/protobuf/src/main/proto/sync_api.proto)
+contains playlist episode order/membership and episode URL, duration and playback
+position fields. These are promising for an experimental **one-way import** from
+an authorized browser session, even without a supported public integration.
+Manual playlist membership and smart-playlist filter rules must be distinguished;
+a rules response alone is not a resolved episode list. Live web requests still
+need to be inspected: this session's browser received Pocket Casts' 403 page before
+login. No authenticated account read is claimed from source inspection alone.
+
+**Recommendation:** investigate one-way browser-session export first; for a durable
+account integration, ask Pocket Casts for an authorized integration providing
 playlist membership, episode IDs, enclosure access, position reads, and
 conditional/idempotent position writes. Use public RSS in the meantime. Cadence
 must not reuse private app credentials or reverse-engineered account endpoints
-as though they were a supported public API. Live account behavior remains an
+as though they were a supported public API. An explicitly user-authorized
+experimental browser import must be labelled as such and keep credentials inside
+that browser session. Live account behavior remains an
 external blocker, not a hidden experimental login feature.
 
 | Backend | Selection/positions | Exportable audio | Implemented |
@@ -174,8 +194,10 @@ Desktop also rejects symlinks in the owned path. Directory selection grants
 filesystem access; USB discovery does not grant a mount path or access to the
 protected mass-storage interface.
 
-The device receives audio and `cadence-manifest.json` with episode identifiers and
-timeline ranges. Account credentials, cloud settings and enclosure download URLs
+The device receives audio and `cadence-manifest.json` with opaque episode keys and
+timeline ranges. The app/cloud library maps those keys back to original backend
+episode IDs; raw provider IDs are omitted from USB because RSS GUID fallbacks can
+contain private URLs. Account credentials, cloud settings and enclosure download URLs
 are omitted. The manifest is written last. Desktop uses temporary files before
 replace; browser writes use File System Access commit semantics. SAF cannot
 promise atomic replacement: unplugging may leave a partial file, and the app
@@ -193,7 +215,7 @@ Firebase would also work, but its platform SDK differences add integration work
 for Kotlin/Wasm; a bespoke server would add hosting/auth maintenance. Supabase is
 a recommendation and optional adapter, not a provisioned service.
 
-The document includes the listening list, segmentation configuration, source
+The document includes the listening list, RSS feed selection, segmentation configuration, source
 positions, manifests, played-section acknowledgements and last import timestamp.
 Device mount paths, directory permissions, available-file IDs and copied-file IDs
 stay local. Restoring a manifest on another device never claims its audio is
@@ -212,6 +234,7 @@ Setup (requires the project owner's action; not performed by this change):
 3. In each Cadence app, enter the HTTPS project URL and **publishable/anon** key.
    Never use a service-role or secret key. Sign in with the same account. Passwords
    and access tokens are memory-only, with no token logging or cloud serialization.
+   Sign out discards the in-memory session while retaining the local library.
    Sign in again after restarting or token expiry. No refresh token is persisted.
 4. **Save to cloud** creates a document at revision 1. Another device signs in and
    chooses **Restore cloud configuration & merge played sections**, then prepares
@@ -286,16 +309,19 @@ suite; `:composeApp:assembleDebugAndroidTest` compiles it without that broken ta
 
 ### Session verification record (2026-10-26)
 
-- Passed: 15 shared desktop tests, including actual FFmpeg MP3/M4A clipping and
-  cloud restore/revision behavior; no skipped tests.
+- Passed: 16 shared desktop tests, including actual FFmpeg MP3/M4A clipping and
+  cloud restore/revision behavior and URL-free USB manifests; no skipped tests.
 - Passed: Android debug APK and app instrumentation APK assembly, Android lint,
   desktop JAR, production Wasm distribution, and `ktfmtCheck`.
 - Passed: nine browser adapter tests; local PGlite/Postgres auth isolation/CAS
   checks; the new podcast browser smoke and existing USB/unsupported-browser smoke.
 - Android unit-test task reported `NO-SOURCE`; it is not counted as executed tests.
 - Not run locally: connected Android codec/widget/SAF tests, physical headphone
-  playback/copying, live cloud Auth/REST. The app's existing CI instrumentation
-  workflow will run the added Media3 test on an API-34 emulator.
+  playback/copying, live cloud Auth/REST.
+- Passed in the first PR CI run: `Media3ClippingTest` on an API-34 emulator, with
+  one codec test and one app-launch test, zero failures and zero skipped tests.
+  [Instrumentation run/report](https://github.com/yschimke/cadence/actions/runs/40303267743)
+  at commit `43eca08`; this does not replace a physical-headphone check.
 
 Before is the published main app; after images are from the locally built
 production Wasm app using generated test audio. The mobile image is a responsive
@@ -307,4 +333,5 @@ browser render, not a claim of an Android device screenshot.
 
 [Prepared sections and acknowledgement](podcast-sync/after-sections.png) ·
 [Imported snapshot](podcast-sync/after-podcast.png) ·
-[Mobile-width browser](podcast-sync/after-mobile.png)
+[Mobile-width browser](podcast-sync/after-mobile.png) ·
+[Dark theme](podcast-sync/after-dark.png)
