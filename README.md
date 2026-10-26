@@ -45,6 +45,10 @@ Windows/macOS may require an explicit OS approval to open them. Mounted-folder
 sync is available on Apple Silicon even if usb4java's native discovery library
 cannot load. Physical USB and each OS installation still require manual checks.
 
+## Podcasts → headphones
+
+Open **Podcast sync** on the home screen to import public RSS or a selected-episode snapshot, prepare timeline sections, mark sections played locally, and copy audio into an owned headphone folder. Android uses Media3 AAC/M4A clipping; desktop uses FFmpeg MP3/M4A; browser preparation is unsplit. Optional Supabase metadata sync supports cross-device configuration and listening continuity without uploading audio. Pocket Casts account access and backend position writes require a supported provider API and remain explicitly unavailable. See [setup, capabilities, cloud choices and verification](docs/podcast-sync.md).
+
 ## Manage USB audio
 
 1. Plug in the device and let the OS mount its FAT32 volume.

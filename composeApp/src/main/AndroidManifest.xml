@@ -82,6 +82,10 @@
                 <action android:name="android.hardware.usb.action.USB_DEVICE_DETACHED" />
             </intent-filter>
         </receiver>
+        <receiver android:name="ee.schimke.cadence.podcasts.PodcastSyncWidget" android:exported="false" android:label="Podcast sync">
+            <intent-filter><action android:name="android.appwidget.action.APPWIDGET_UPDATE" /></intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/podcast_sync_widget" />
+        </receiver>
     </application>
 
 </manifest>

@@ -21,6 +21,7 @@ import ee.schimke.cadence.browser.BrowserScreen
 import ee.schimke.cadence.devices.DevicesScreen
 import ee.schimke.cadence.files.DeviceFilesScreen
 import ee.schimke.cadence.home.HomeScreen
+import ee.schimke.cadence.podcasts.*
 import ee.schimke.cadence.sync.FileSyncScreen
 import ee.schimke.cadence.sync.ManageSyncScreen
 import kotlinx.serialization.Serializable
@@ -28,6 +29,7 @@ import kotlinx.serialization.Serializable
 @Composable
 fun App(platformNotice: String? = null) {
   val navController = rememberNavController()
+  val podcasts = rememberPodcastController()
 
   val entry by navController.currentBackStackEntryAsState()
   Column(Modifier.fillMaxSize()) {
@@ -45,6 +47,7 @@ fun App(platformNotice: String? = null) {
       composable<Home> {
         HomeScreen(
           modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
+          onPodcastSync = { navController.navigate(Podcasts) },
           onBluetoothControls = { navController.navigate(BluetoothControls) },
           onFileSync = { navController.navigate(FileSync) },
           onManageSync = { navController.navigate(ManageSync) },
@@ -52,6 +55,7 @@ fun App(platformNotice: String? = null) {
           onFileExplorer = { navController.navigate(Devices) },
         )
       }
+      composable<Podcasts> { PodcastScreen(podcasts) }
       composable<Devices> {
         DevicesScreen(
           modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
@@ -110,3 +114,5 @@ fun App(platformNotice: String? = null) {
 @Serializable data object FileSync
 
 @Serializable data object ManageSync
+
+@Serializable data object Podcasts

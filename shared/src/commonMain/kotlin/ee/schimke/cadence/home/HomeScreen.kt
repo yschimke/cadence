@@ -74,12 +74,14 @@ fun HomeScreen(
   onBookmarks: () -> Unit,
   onFileExplorer: () -> Unit,
   modifier: Modifier = Modifier,
+  onPodcastSync: () -> Unit = {},
 ) {
   val viewModel = metroViewModel<HomeViewModel>()
   val state by viewModel.state.collectAsState()
 
   HomeContent(
     state = state,
+    onPodcastSync = onPodcastSync,
     onRefreshProfile = viewModel::refreshNow,
     onToggleAutoRefresh = viewModel::toggleAutoRefresh,
     onAddProfile = onManageSync,
@@ -104,6 +106,7 @@ fun HomeContent(
   onBluetoothControls: () -> Unit,
   onSwitchToSync: () -> Unit,
   modifier: Modifier = Modifier,
+  onPodcastSync: () -> Unit = {},
 ) {
   val usbConnected = state.attachedDevice != null
   Column(modifier = modifier.fillMaxSize()) {
@@ -129,6 +132,15 @@ fun HomeContent(
         horizontalArrangement = Arrangement.spacedBy(12.dp),
       ) {
         item(span = { GridItemSpan(maxLineSpan) }) { Spacer(Modifier.height(8.dp)) }
+        item(span = { GridItemSpan(maxLineSpan) }) {
+          ElevatedCard(Modifier.fillMaxWidth()) {
+            Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+              Text("Podcasts → headphones", style = MaterialTheme.typography.titleLarge)
+              Text("Import your listening list, prepare audio sections, then copy to USB.")
+              OutlinedButton(onClick = onPodcastSync) { Text("Podcast sync") }
+            }
+          }
+        }
         item(span = { GridItemSpan(maxLineSpan) }) { SectionLabel("Library") }
         if (state.profiles.isEmpty()) {
           item(span = { GridItemSpan(maxLineSpan) }) {

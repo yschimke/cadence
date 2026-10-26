@@ -44,6 +44,7 @@ kotlin {
     }
     commonTest.dependencies { implementation(libs.kotlin.test) }
     androidMain.dependencies {
+      implementation(libs.media3.transformer)
       implementation(libs.compose.webview.multiplatform)
       implementation(libs.compose.ui.tooling.preview)
       implementation(libs.androidx.activity.compose)

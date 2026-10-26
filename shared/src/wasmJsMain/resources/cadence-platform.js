@@ -45,10 +45,12 @@
   function parts(path) {
     const [key, ...segments] = path.split('/');
     if (segments.some(s => !s || s === '.' || s === '..' || /[\\:]/.test(s))) throw new Error('Invalid relative path');
+    if (key === 'opfs:staging' && segments[0] === '.cadence-podcasts') throw new Error('Reserved podcast storage');
     return { key, segments };
   }
   async function rootHandle(key, write = false) {
     if (key === 'opfs:staging') return navigator.storage.getDirectory();
+    if (key === 'opfs:podcasts') return (await navigator.storage.getDirectory()).getDirectoryHandle('.cadence-podcasts', { create: true });
     let handle = handles.get(key) || await storedHandle(key);
     if (!handle) throw new Error('Directory is unavailable. Choose it again in the directory picker.');
     handles.set(key, handle);
@@ -85,6 +87,20 @@
     }
     await walk(dir, '');
     return result.sort((a, b) => a.relativePath.localeCompare(b.relativePath));
+  }
+  function podcastFileName(name) {
+    if (!/^[a-zA-Z0-9_-]{1,60}-[0-9]{12}-[a-f0-9]{64}\.(mp3|m4a|ogg|opus|flac|wav)$/.test(name)) throw new Error('Invalid podcast filename');
+    return name;
+  }
+  async function podcastFile(name, create = false) {
+    return fileHandle('opfs:podcasts/audio/' + podcastFileName(name), create);
+  }
+  async function podcastFetch(url, options = {}) {
+    const parsed = new URL(url);
+    if (parsed.protocol !== 'https:' || parsed.username || parsed.password) throw new Error('HTTPS required');
+    const response = await fetch(url, { ...options, credentials: 'omit', redirect: 'error' });
+    if (!response.ok) throw new Error('Podcast HTTP ' + response.status);
+    return response;
   }
   async function usbSnapshot() {
     const devices = usbAvailable() ? await navigator.usb.getDevices() : [];
@@ -137,6 +153,75 @@
     },
     async call(op, args) {
       switch (op) {
+        case 'podcastRead': return localStorage.getItem('cadence-podcasts-v1');
+        case 'podcastSave': localStorage.setItem('cadence-podcasts-v1', args.state); return true;
+        case 'podcastRequest': {
+          const response = await podcastFetch(args.url, { method: args.method, headers: args.headers, body: args.body });
+          const text = await response.text();
+          if (text.length > 8000000) throw new Error('Response too large');
+          return text;
+        }
+        case 'podcastRss': {
+          const response = await podcastFetch(args.url);
+          const text = await response.text();
+          if (text.length > 8000000 || /<!DOCTYPE/i.test(text)) throw new Error('Invalid feed');
+          const xml = new DOMParser().parseFromString(text, 'application/xml');
+          if (xml.querySelector('parsererror')) throw new Error('Invalid feed');
+          const field = (node, name) => node.getElementsByTagName(name)[0]?.textContent?.trim() || '';
+          const episodes = Array.from(xml.getElementsByTagName('item')).slice(0, 1000).map(item => {
+            const enclosure = item.getElementsByTagName('enclosure')[0];
+            if (!enclosure) throw new Error('Missing enclosure');
+            const audioUrl = enclosure.getAttribute('url');
+            const type = enclosure.getAttribute('type')?.split(';')[0];
+            return { id: field(item, 'guid') || audioUrl, title: field(item, 'title'), audioUrl,
+              duration: field(item, 'itunes:duration'), length: enclosure.getAttribute('length') || '',
+              extension: type === 'audio/mp4' || type === 'audio/x-m4a' ? 'm4a' : type === 'audio/ogg' ? 'ogg' : type === 'audio/flac' ? 'flac' : 'mp3' };
+          });
+          return { name: field(xml.getElementsByTagName('channel')[0], 'title') || 'RSS podcast', episodes };
+        }
+        case 'podcastAvailable': {
+          try { return (await (await podcastFile(args.fileName)).getFile()).size > 0; }
+          catch (e) { if (e.name === 'NotFoundError') return false; throw e; }
+        }
+        case 'podcastDownload': {
+          const response = await podcastFetch(args.url);
+          const type = response.headers.get('content-type')?.split(';')[0];
+          if (!type || (!type.startsWith('audio/') && type !== 'application/octet-stream')) throw new Error('Not audio');
+          if (Number(response.headers.get('content-length')) > 2000000000) throw new Error('Audio exceeds 2 GB');
+          const file = await podcastFile(args.fileName, true);
+          const writer = await file.createWritable();
+          let bytes = 0;
+          const limit = new TransformStream({ transform(chunk, controller) {
+            bytes += chunk.byteLength; if (bytes > 2000000000) throw new Error('Audio exceeds 2 GB'); controller.enqueue(chunk);
+          }, flush() { if (!bytes) throw new Error('Empty audio'); } });
+          try {
+            await response.body.pipeThrough(limit).pipeTo(writer);
+            if (!bytes) throw new Error('Empty audio');
+          } catch (e) { try { await writer.abort(); } catch (_) {} throw e; }
+          return true;
+        }
+        case 'podcastExport': {
+          args.files.forEach(podcastFileName);
+          const folder = await directory(args.target + '/Cadence/podcasts', true);
+          let marker;
+          try { marker = await folder.getFileHandle('.cadence-owner'); }
+          catch (e) { if (e.name !== 'NotFoundError') throw e; }
+          if (!marker) {
+            for await (const entry of folder.entries()) throw new Error('Existing folder is not owned by Cadence');
+            marker = await folder.getFileHandle('.cadence-owner', { create: true });
+            const writer = await marker.createWritable(); await writer.write('cadence-podcasts-v1'); await writer.close();
+          } else if (await (await marker.getFile()).text() !== 'cadence-podcasts-v1') throw new Error('Invalid ownership marker');
+          for (const name of args.files) {
+            const source = await (await podcastFile(name)).getFile();
+            if (!source.size) throw new Error('Audio not prepared');
+            const destination = await folder.getFileHandle(name, { create: true });
+            const writer = await destination.createWritable();
+            await source.stream().pipeTo(writer);
+          }
+          const manifest = await folder.getFileHandle('cadence-manifest.json', { create: true });
+          const writer = await manifest.createWritable(); await writer.write(args.manifest); await writer.close();
+          return true;
+        }
         case 'files': return (await list(args.root, true)).filter(f => !f.directory);
         case 'entries': return list(args.root, false);
         case 'copy': {
