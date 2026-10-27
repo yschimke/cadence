@@ -1,0 +1,88 @@
+{
+  "captures": {
+    "phone-screenshots/01-library.png": {
+      "capturedAt": "2026-10-27T20:45:17.701338+00:00",
+      "device": "sdk_gphone64_x86_64",
+      "dimensions": [
+        1008,
+        1792
+      ],
+      "package": "ee.schimke.cadence",
+      "scenario": "Running Cadence library in Cadence appearance; fresh local setup with no headphones or personal audio.",
+      "sdk": "35",
+      "sha256": "707e5629ae169917e626efb3c354d9bd21c9a08341b3a9c9be334121fd82f073",
+      "source": "adb-screencap",
+      "sourceRevision": "b2b1014b5d3501319b0172b98eabdeec6e92d7ac"
+    },
+    "phone-screenshots/02-sources-and-profiles.png": {
+      "capturedAt": "2026-10-27T20:45:33.095097+00:00",
+      "device": "sdk_gphone64_x86_64",
+      "dimensions": [
+        1008,
+        1792
+      ],
+      "package": "ee.schimke.cadence",
+      "scenario": "Running sources and sync profile setup in Cadence appearance; fresh local configuration, no personal audio or headphones.",
+      "sdk": "35",
+      "sha256": "00280454d7603b3fe5ce66e7889dd6a835ba4200f31577919364e80fa7906356",
+      "source": "adb-screencap",
+      "sourceRevision": "b2b1014b5d3501319b0172b98eabdeec6e92d7ac"
+    },
+    "seven-inch-screenshots/01-library.png": {
+      "capturedAt": "2026-10-27T20:44:29.712798+00:00",
+      "device": "sdk_gphone64_x86_64",
+      "dimensions": [
+        1000,
+        1600
+      ],
+      "package": "ee.schimke.cadence",
+      "scenario": "Running Cadence library in Cadence appearance; fresh local setup with no headphones or personal audio.",
+      "sdk": "35",
+      "sha256": "1cc1dbcbc3416b79d60e4b508166bfa2091f1157aa5083f01336a0d2ea9834da",
+      "source": "adb-screencap",
+      "sourceRevision": "b2b1014b5d3501319b0172b98eabdeec6e92d7ac"
+    },
+    "seven-inch-screenshots/02-sources-and-profiles.png": {
+      "capturedAt": "2026-10-27T20:44:44.125423+00:00",
+      "device": "sdk_gphone64_x86_64",
+      "dimensions": [
+        1000,
+        1600
+      ],
+      "package": "ee.schimke.cadence",
+      "scenario": "Running sources and sync profile setup in Cadence appearance; fresh local configuration, no personal audio or headphones.",
+      "sdk": "35",
+      "sha256": "5140daa3b93c673a6364c233076dfc39fe89306eb933b6c9014b9c863836868d",
+      "source": "adb-screencap",
+      "sourceRevision": "b2b1014b5d3501319b0172b98eabdeec6e92d7ac"
+    },
+    "ten-inch-screenshots/01-library.png": {
+      "capturedAt": "2026-10-27T20:44:54.508509+00:00",
+      "device": "sdk_gphone64_x86_64",
+      "dimensions": [
+        1120,
+        1792
+      ],
+      "package": "ee.schimke.cadence",
+      "scenario": "Running Cadence library in Cadence appearance; fresh local setup with no headphones or personal audio.",
+      "sdk": "35",
+      "sha256": "5e73f20dc5df459c24d73f9943e1d4827d7c84a9f88f92929e4ba916eaabb3f8",
+      "source": "adb-screencap",
+      "sourceRevision": "b2b1014b5d3501319b0172b98eabdeec6e92d7ac"
+    },
+    "ten-inch-screenshots/02-sources-and-profiles.png": {
+      "capturedAt": "2026-10-27T20:45:08.602519+00:00",
+      "device": "sdk_gphone64_x86_64",
+      "dimensions": [
+        1120,
+        1792
+      ],
+      "package": "ee.schimke.cadence",
+      "scenario": "Running sources and sync profile setup in Cadence appearance; fresh local configuration, no personal audio or headphones.",
+      "sdk": "35",
+      "sha256": "8221e6f6b800be5a8b214b1cce0b234ad8ef35a25254cb28dd747fe5d10896b3",
+      "source": "adb-screencap",
+      "sourceRevision": "b2b1014b5d3501319b0172b98eabdeec6e92d7ac"
+    }
+  }
+}

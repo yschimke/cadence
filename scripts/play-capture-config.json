@@ -1,0 +1,10 @@
+{
+  "graphics": "composeApp/src/main/play/listings/en-GB/graphics",
+  "package": "ee.schimke.cadence",
+  "wearPackage": null,
+  "slots": {
+    "phone-screenshots": 2,
+    "seven-inch-screenshots": 2,
+    "ten-inch-screenshots": 2
+  }
+}
