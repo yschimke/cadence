@@ -18,6 +18,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 
 /**
  * Snapshot of actual on-device preparation; tapping opens Cadence. No fictitious background sync.
@@ -62,6 +64,12 @@ class PodcastSyncWidget : AppWidgetProvider() {
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
+    /**
+     * One update at a time, each reading the status once it holds the lock: a capture that started
+     * earlier can't finish later and leave an older status on screen.
+     */
+    private val updates = Mutex()
+
     fun updateAll(context: Context) {
       val manager = AppWidgetManager.getInstance(context)
       val ids = manager.getAppWidgetIds(ComponentName(context, PodcastSyncWidget::class.java))
@@ -95,7 +103,7 @@ class PodcastSyncWidget : AppWidgetProvider() {
       context: Context,
       manager: AppWidgetManager,
       ids: IntArray,
-    ) {
+    ): Unit = updates.withLock {
       val prefs = prefs(context)
       val ready = prefs.getBoolean("ready", false)
       val status = prefs.getString("status", null) ?: "Open Cadence to sync podcasts"
