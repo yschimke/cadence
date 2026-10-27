@@ -51,6 +51,7 @@ kotlin {
       implementation(libs.androidx.core.splashscreen)
       implementation(libs.androidx.documentfile)
       implementation(libs.androidx.work.runtime)
+      implementation(libs.rc.widget.launcher)
     }
     commonMain.dependencies {
       implementation(libs.kotlinx.coroutines.core)
