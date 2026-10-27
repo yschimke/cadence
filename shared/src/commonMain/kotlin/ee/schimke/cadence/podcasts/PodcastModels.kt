@@ -109,6 +109,8 @@ fun segment(episode: Episode, config: Segmentation): List<Section> {
       }
     }
   require(ranges.size <= 10_000) { "Too many sections" }
+  // Only the untouched whole file keeps the source format; any clipped range is re-encoded.
+  val whole = ranges.size == 1 && ranges[0] == 0L to episode.durationMs
   return ranges.map { (start, end) ->
     val id = digest("${episode.key}|${episode.audioVersion}|$start|$end")
     val title =
@@ -120,7 +122,7 @@ fun segment(episode: Episode, config: Segmentation): List<Section> {
       episode.audioVersion,
       start,
       end,
-      "$name.${if (ranges.size > 1) config.chunkFormat else episode.extension}",
+      "$name.${if (whole) episode.extension else config.chunkFormat}",
     )
   }
 }

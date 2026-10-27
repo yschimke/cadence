@@ -44,8 +44,16 @@ class PodcastTest {
 
   @Test
   fun skippingListenedAudioStartsAtThePositionAndKeepsChunkBoundaries() {
-    val rest = segment(episode, Segmentation(skipListened = true))
+    val rest = segment(episode, Segmentation(skipListened = true, chunkFormat = "m4a"))
     assertEquals(listOf(1_800_000L to 3_600_000L), rest.map { it.startMs to it.endMs })
+    // A single clipped section is re-encoded, so it takes the chunk format, not the source's.
+    assertTrue(rest.single().fileName.endsWith(".m4a"))
+    assertTrue(
+      segment(episode.copy(positionMs = 0), Segmentation(skipListened = true, chunkFormat = "m4a"))
+        .single()
+        .fileName
+        .endsWith(".mp3")
+    )
     // Same section identity as the second half of a split, so earlier acknowledgements still apply.
     assertEquals(segment(episode, Segmentation()).last().id, rest.single().id)
     val chunks = segment(episode, Segmentation(chunkMinutes = 10, skipListened = true))
