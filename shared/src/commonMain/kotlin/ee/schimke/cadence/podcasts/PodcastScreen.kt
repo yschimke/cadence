@@ -3,11 +3,13 @@ package ee.schimke.cadence.podcasts
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -227,21 +229,19 @@ fun PodcastScreen(controller: PodcastController) {
           ElevatedCard {
             Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
               Text("Prepare audio", style = MaterialTheme.typography.titleLarge)
-              Row {
-                Checkbox(
-                  library.config.splitAtPosition,
-                  { value -> action { configure(library.config.copy(splitAtPosition = value)) } },
-                  enabled = !busy,
-                )
-                Text("Split at imported playback position")
+              LabeledCheckbox(
+                "Split at imported playback position",
+                library.config.splitAtPosition,
+                enabled = !busy,
+              ) { value ->
+                action { configure(library.config.copy(splitAtPosition = value)) }
               }
-              Row {
-                Checkbox(
-                  library.config.skipListened,
-                  { value -> action { configure(library.config.copy(skipListened = value)) } },
-                  enabled = !busy && controller.platform.splitFormats.isNotEmpty(),
-                )
-                Text("Skip what you've already heard")
+              LabeledCheckbox(
+                "Skip what you've already heard",
+                library.config.skipListened,
+                enabled = !busy && controller.platform.splitFormats.isNotEmpty(),
+              ) { value ->
+                action { configure(library.config.copy(skipListened = value)) }
               }
               OutlinedTextField(
                 chunks,
@@ -302,6 +302,10 @@ fun PodcastScreen(controller: PodcastController) {
                 TextButton(
                   enabled = !busy && position > episode.positionMs && position != sent,
                   onClick = { action { sendPosition(episode.key) } },
+                  modifier =
+                    Modifier.semantics {
+                      contentDescription = "Send position for ${episode.title}"
+                    },
                 ) {
                   Text("Send position")
                 }
@@ -322,7 +326,15 @@ fun PodcastScreen(controller: PodcastController) {
                 "${formatTime(section.startMs)}–${formatTime(section.endMs)}" +
                   if (section.id in local.readySectionIds) " · Ready" else " · Not downloaded"
               )
-              TextButton(enabled = !busy && !played, onClick = { action { markPlayed(section) } }) {
+              TextButton(
+                enabled = !busy && !played,
+                onClick = { action { markPlayed(section) } },
+                modifier =
+                  Modifier.semantics {
+                    contentDescription =
+                      "Mark ${formatTime(section.startMs)} to ${formatTime(section.endMs)} of ${manifest.episode.title} played"
+                  },
+              ) {
                 Text(if (played) "Played locally" else "Mark played")
               }
             }
@@ -409,6 +421,25 @@ fun PodcastScreen(controller: PodcastController) {
         item { Spacer(Modifier.height(24.dp)) }
       }
     }
+  }
+}
+
+/** The whole row toggles, so the label is the checkbox's accessible name. */
+@Composable
+private fun LabeledCheckbox(
+  label: String,
+  checked: Boolean,
+  enabled: Boolean,
+  onChange: (Boolean) -> Unit,
+) {
+  Row(
+    Modifier.fillMaxWidth()
+      .toggleable(checked, enabled = enabled, role = Role.Checkbox, onValueChange = onChange),
+    verticalAlignment = Alignment.CenterVertically,
+  ) {
+    Checkbox(checked, onCheckedChange = null, enabled = enabled)
+    Spacer(Modifier.width(12.dp))
+    Text(label)
   }
 }
 
