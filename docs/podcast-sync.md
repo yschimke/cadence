@@ -44,9 +44,10 @@ contains playlist episode order/membership and episode URL, duration and playbac
 position fields. These are promising for an experimental **one-way import** from
 an authorized browser session, even without a supported public integration.
 Manual playlist membership and smart-playlist filter rules must be distinguished;
-a rules response alone is not a resolved episode list. Live web requests still
-need to be inspected: this session's browser received Pocket Casts' 403 page before
-login. No authenticated account read is claimed from source inspection alone. A
+a rules response alone is not a resolved episode list. A signed-in web player was
+observed on 2026-10-27 to use `GET /user/playlists` and per-episode
+`POST /user/episode` instead, with the same JSON fields; manual-playlist order
+and positions captured from them matched the player. A
 [passive browser helper and test procedure](pocketcasts-browser-import.md) is
 available for the one-way experiment; it keeps credentials in the browser and
 exports only explicitly captured manual-playlist metadata.
