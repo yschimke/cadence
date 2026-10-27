@@ -20,3 +20,7 @@ bugreport*.zip
 
 # compose-preview generated state
 .compose-preview-history/
+
+# Local Firebase app configuration (injected from a secret in release CI).
+google-services.json
+firebase-debug.log*

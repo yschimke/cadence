@@ -5,41 +5,50 @@ permalink: /privacy/
 
 # Cadence — Privacy Policy
 
-_Last updated: 2026-04-27_
+_Last updated: 2026-10-26_
 
-Cadence is built and maintained by Yuri Schimke (`yuri@schimke.ee`).
-Source code: <https://github.com/yschimke/cadence>.
+Cadence for Android (`ee.schimke.cadence`) is built and maintained by Yuri Schimke
+(`yuri@schimke.ee`). Source: <https://github.com/yschimke/cadence>.
 
-## Data we collect
+## App data
 
-**None.** The app does not collect, store, or transmit any personal
-information to us or to any third party. Anything the app needs to
-function (settings, cached state, etc.) stays on your device.
+Cadence helps you manage audio on USB storage and prepare podcasts for
+headphones. Choose source folders, create sync profiles, and copy audio
+to your selected device. Import public podcast feeds, prepare sections,
+and track listening progress locally. Optional cloud metadata sync is
+available when configured.
+
+Settings and cached app state are stored on your device. Data needed for
+features you choose is exchanged with the devices, feeds, or services you
+connect to. We do not add message contents, contacts, audio files, file
+contents, or account credentials to analytics events or crash reports.
+
+## Crash reports and analytics
+
+Android Google Play builds configured with Firebase use Google Firebase
+Analytics and Crashlytics. These services send app interactions, installation
+identifiers, app and device information, and diagnostic information such as
+crash stack traces to Google to help us understand usage and fix failures.
+Analytics events can also appear as breadcrumbs in crash reports. We do not
+include advertising SDKs. Source builds without Firebase configuration do
+not include these SDKs. This integration applies to the Android phone app;
+it does not add Firebase to desktop, browser, or Wear OS builds.
+
+See [Google's Firebase privacy information](https://firebase.google.com/support/privacy)
+for details about how Firebase handles data and retention.
 
 ## Permissions
 
-The app requests Android permissions only as needed for its declared
-functionality. None of these permissions are used to send data to the
-developer.
-
-## Crash reports & analytics
-
-The app does not include any crash-reporting, analytics, or
-advertising SDKs.
+Android permissions support the features you use, including Bluetooth,
+USB access, notifications, and background device operations. Those
+permissions are not used to attach your content to analytics or crash reports.
 
 ## Children
 
-The app is not directed at children under 13 and does not knowingly
-collect data from them.
+The app is not directed at children under 13.
 
-## Contact
+## Contact and changes
 
-- Questions: `yuri@schimke.ee`
-- Issues: <https://github.com/yschimke/cadence/issues>
-
-## Changes
-
-This policy may be updated from time to time. Material changes will be
-reflected by an updated "Last updated" date above and will be visible
-in the file's
+For privacy questions contact `yuri@schimke.ee`, or report an issue at
+<https://github.com/yschimke/cadence/issues>. Policy changes are recorded in
 [git history](https://github.com/yschimke/cadence/commits/main/docs/privacy.md).
