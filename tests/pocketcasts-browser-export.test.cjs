@@ -85,3 +85,18 @@ test('a malformed or unrecognized response leaves original network behavior inta
  await assert.rejects(context.cadencePocket.snapshot('unknown'), /not captured/);
  assert.equal(context.cadencePocket.status().unsupportedResponses, 1);
 });
+
+test('reads the web player flow: /user/playlists then one /user/episode per member, hiding archived', async () => {
+ const member = id => ({ uuid: id, title: id, url: `https://publisher.example/${id}.mp3`, fileType: 'audio/mpeg', duration: 600, playedUpTo: 0, isDeleted: false });
+ const playlist = showArchived => json({ playlists: [{ uuid: 'swim', title: 'Swim', manual: true, showArchived, episodeOrder: ['a', 'b', 'c'],
+  episodes: ['a', 'b', 'c'].map(id => ({ episode: id, podcast: 'p', title: id, url: `https://publisher.example/${id}.mp3` })) }] });
+ for (const showArchived of [false, true]) {
+  const { context, calls } = install([playlist(showArchived), json({ ...member('a'), playedUpTo: 120 }), json({ ...member('b'), isDeleted: true }), json(member('c'))]);
+  await request(context, '/user/playlists');
+  for (let i = 0; i < 3; i++) await request(context, '/user/episode');
+  const snapshot = await context.cadencePocket.snapshot('swim');
+  assert.deepEqual(Array.from(snapshot.episodes, e => e.id), showArchived ? ['a', 'b', 'c'] : ['a', 'c']);
+  assert.equal(snapshot.episodes[0].positionMs, 120000);
+  assert.equal(calls.length, 4);
+ }
+});

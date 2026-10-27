@@ -2,10 +2,9 @@
 
 This is a user-authorized browser-session investigation tool, not a supported
 Pocket Casts public API integration. Its JSON/protobuf parsers are tested against
-synthetic responses using the published Android protocol. **Live authenticated
-web-player behavior has not yet been verified**: the session browser receives a
-Pocket Casts 403 page before login. Browser endpoint/schema differences may need
-adjustment after observing a real account.
+synthetic responses using the published Android protocol, plus the web-player
+flow observed in a signed-in account on 2026-10-27 (below). Smart playlists and
+write-back remain unverified.
 
 Pocket Casts' current [playlist documentation](https://support.pocketcasts.com/knowledge-base/playlists/)
 says there is no playlist sharing/export link. No playlist RSS route was found.
@@ -23,6 +22,30 @@ provide a concrete lead:
 | `/user/podcast/episodes` | Per-podcast episode positions/state in the JSON response |
 | Public podcast cache responses | Titles, duration and enclosure metadata; no account position |
 
+### Observed web-player flow (2026-10-27)
+
+The web player at `pocketcasts.com` does not use the Android routes above. A
+passive capture in a signed-in account (endpoint paths and JSON key shapes only)
+showed:
+
+| Request | Observed response |
+| --- | --- |
+| `GET /user/playlists` (on first opening **Playlists**) | `{playlists: [...]}` with `manual`, `showArchived`, `episodeOrder` (UUID strings) and `episodes` (`episode`, `podcast`, `title`, `url`, …) — the same JSON shape as the Android list. Smart playlists have empty `episodeOrder`/`episodes`. |
+| `POST /user/episode` with `{uuid}`, once per manual-playlist member | One episode object: `url`, `duration` and `playedUpTo` (seconds), `fileType`, `title`, `playingStatus`, `isDeleted` |
+| `GET podcast-api.pocketcasts.com/podcast/full/{uuid}` | Public podcast metadata; not needed for export |
+
+Opening a playlist or episode detail afterwards issues no further account
+requests; the app reuses what it already loaded. Install the helper on the
+Podcasts page **before** first opening Playlists, or reload and do so.
+
+The web player hides members whose `/user/episode` `isDeleted` is `true` as
+"archived" unless the playlist's `showArchived` is set, and the helper does the
+same. For a 4-episode manual playlist with one archived member, the helper's
+order and positions matched the player: duration − `playedUpTo` gave the
+remaining minutes it displays for each visible episode (50, 39 and 48).
+The player's header total ("2 hours 49 minutes") did not match either sum and
+is unexplained.
+
 The helper observes these responses when the web player itself receives them.
 It does **not** issue or replay API requests, access auth/session storage, inspect
 request headers, log raw responses or change playback/playlist state. It does not
@@ -36,9 +59,10 @@ the page is reloaded.
 2. Review [the helper source](../tools/pocketcasts-browser-export.js). In that
    Pocket Casts tab, open DevTools **Sources → Snippets**, create a snippet,
    paste the source, and run it. It refuses to install outside Pocket Casts.
-3. Navigate within the web player to **Playlists**, then open your **manual**
-   playlist and episode details so the app requests membership and current episode
-   data. Do not press Play or change account state for this investigation.
+3. Run it from the **Podcasts** page of a freshly loaded tab, then open
+   **Playlists**. That first visit loads membership and each manual member's
+   current position. If Playlists was already opened in this tab, reload and
+   repeat. Do not press Play or change account state for this investigation.
 4. In the console, run:
 
    ```js
@@ -105,7 +129,9 @@ Verification:
 node --test tests/pocketcasts-browser-export.test.cjs
 ```
 
-Tests cover passive JSON capture/order/positions, protobuf membership and zero
+Tests cover passive JSON capture/order/positions, the observed web-player
+`/user/playlists` + `/user/episode` flow with archived members, protobuf membership and zero
 position, no credential access/extra requests, rejection of unresolved smart rules
 and incomplete metadata, malformed payload isolation, and restoring the original
-fetch implementation. They are parser/recorder tests, not live-account evidence.
+fetch implementation. They are parser/recorder tests; the live-account evidence is
+the observation above.

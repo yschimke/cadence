@@ -12,7 +12,10 @@
   const playlists = new Map(), episodes = new Map(), pending = new Set();
   const observed = new Map(); let failures = 0;
   const decoder = new TextDecoder(), encoder = new TextEncoder();
-  const readPaths = new Set(['/user/playlist/list', '/user/episodes', '/user/podcast/episodes']);
+  // /user/playlists and /user/episode are what the web player requests (observed 2026-10-27);
+  // the others are the Android app's routes.
+  const readPaths = new Set(['/user/playlists', '/user/episode', '/user/playlist/list', '/user/episodes', '/user/podcast/episodes']);
+  const playlistPaths = new Set(['/user/playlists', '/user/playlist/list']);
   function classify(value) {
     try {
       const url = new URL(value, location.href);
@@ -69,7 +72,8 @@
     if (typeof order === 'string') order = order.split(',').map(x => x.trim()).filter(Boolean);
     if (!Array.isArray(order) || !order.length) order = members;
     const ids = order.map(memberId).filter(x => typeof x === 'string' && x);
-    playlists.set(id, { id, title: value.title || 'Pocket Casts playlist', manual: unwrap(value.manual) === true, ids: [...new Set(ids)] });
+    playlists.set(id, { id, title: value.title || 'Pocket Casts playlist', manual: unwrap(value.manual) === true,
+      showArchived: unwrap(value.showArchived) === true, ids: [...new Set(ids)] });
     for (const member of members) rememberEpisode({ uuid: memberId(member), title: unwrap(member.title), url: unwrap(member.url) });
   }
   function rememberEpisode(value, cache = false) {
@@ -80,6 +84,8 @@
       title: value.title, url: value.url, duration: value.duration,
       position: cache ? undefined : value.playedUpTo ?? value.played_up_to,
       fileType: value.fileType ?? value.file_type,
+      // The web player hides a member whose /user/episode isDeleted is true as "archived".
+      archived: cache ? undefined : value.isDeleted ?? value.is_deleted,
     })) if (candidate !== undefined && candidate !== null) next[key] = candidate;
     if (!cache && (value.playedUpTo !== undefined || value.played_up_to !== undefined)) next.positionObservedAt = new Date().toISOString();
     episodes.set(id, next);
@@ -90,12 +96,13 @@
     const json = /json/i.test(contentType || '') || prefix.startsWith('{') || prefix.startsWith('[');
     if (json) {
       const body = JSON.parse(decoder.decode(bytes));
-      if (endpoint.path === '/user/playlist/list') for (const playlist of body.playlists || []) rememberPlaylist(playlist);
+      if (playlistPaths.has(endpoint.path)) for (const playlist of body.playlists || []) rememberPlaylist(playlist);
+      else if (endpoint.path === '/user/episode') rememberEpisode(body);
       else for (const episode of body.episodes || body.podcast?.episodes || []) rememberEpisode(episode, endpoint.cache);
     } else {
-      if (endpoint.cache || endpoint.path === '/user/podcast/episodes') throw new Error('Unknown binary response');
+      if (endpoint.cache || endpoint.path === '/user/podcast/episodes' || endpoint.path === '/user/episode') throw new Error('Unknown binary response');
       const fields = protobuf(bytes);
-      if (endpoint.path === '/user/playlist/list') {
+      if (playlistPaths.has(endpoint.path)) {
         for (const raw of fields.get(1) || []) {
           const p = protobuf(raw);
           rememberPlaylist({ uuid: text(first(p, 1)), title: text(first(p, 3)), manual: wrapped(p, 12), isDeleted: wrapped(p, 2),
@@ -159,10 +166,11 @@
     const playlist = playlists.get(playlistId);
     if (!playlist) throw new Error('Playlist not captured. Open it in the web player after installing the recorder.');
     if (!playlist.manual) throw new Error('Smart playlist rules are not resolved episode membership. Choose a manual playlist for this exporter.');
-    if (!playlist.ids.length || playlist.ids.length > 1000) throw new Error('Empty or oversized playlist.');
+    const ids = playlist.showArchived ? playlist.ids : playlist.ids.filter(id => episodes.get(id)?.archived !== true);
+    if (!ids.length || ids.length > 1000) throw new Error('Empty or oversized playlist.');
     const result = [];
-    for (let index = 0; index < playlist.ids.length; index++) {
-      const episode = episodes.get(playlist.ids[index]);
+    for (let index = 0; index < ids.length; index++) {
+      const episode = episodes.get(ids[index]);
       const incomplete = !episode?.url || !episode?.title || !Number.isFinite(episode.duration) || episode.duration <= 0 || !Number.isFinite(episode.position) || !episode.positionObservedAt;
       if (incomplete) throw new Error(`Episode ${index + 1} needs metadata/current position. Open its details in Pocket Casts, then retry.`);
       const url = new URL(episode.url);
