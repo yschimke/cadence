@@ -43,6 +43,22 @@ class PodcastTest {
   }
 
   @Test
+  fun skippingListenedAudioStartsAtThePositionAndKeepsChunkBoundaries() {
+    val rest = segment(episode, Segmentation(skipListened = true))
+    assertEquals(listOf(1_800_000L to 3_600_000L), rest.map { it.startMs to it.endMs })
+    // Same section identity as the second half of a split, so earlier acknowledgements still apply.
+    assertEquals(segment(episode, Segmentation()).last().id, rest.single().id)
+    val chunks = segment(episode, Segmentation(chunkMinutes = 10, skipListened = true))
+    assertEquals(3, chunks.size)
+    assertEquals(1_800_000L, chunks.first().startMs)
+    assertEquals(1, segment(episode.copy(positionMs = 0), Segmentation(skipListened = true)).size)
+    assertEquals(
+      0L,
+      segment(episode.copy(positionMs = 0), Segmentation(skipListened = true)).single().startMs,
+    )
+  }
+
+  @Test
   fun irregularPositionChunksRemainContiguousAndShortTailIsKept() {
     val sections =
       segment(episode.copy(durationMs = 3_601_000, positionMs = 1_821_000), Segmentation(true, 5))
@@ -100,6 +116,7 @@ class PodcastTest {
   fun roundTripRestoresMappingAndRechecksLocalFiles() = runBlocking {
     val platform = FakePlatform()
     val controller = PodcastController(platform)
+    controller.configure(Segmentation(skipListened = false)) // Two sections: before and after.
     controller.importSnapshot(
       podcastJson.encodeToString(PlaylistSnapshot(name = "Wanted", episodes = listOf(episode)))
     )
@@ -145,7 +162,11 @@ class PodcastTest {
   fun cloudSendsOnlyMetadataAndRequiresRevisionMatch() = runBlocking {
     val platform = FakePlatform()
     val controller = PodcastController(platform)
-    platform.feedSnapshot = PlaylistSnapshot(name = "Wanted", episodes = listOf(episode))
+    platform.feed =
+      RssFeed(
+        "Wanted",
+        listOf(RssItem("episode-1", "An hour", episode.audioUrl, "3600", "10", "audio/mpeg")),
+      )
     controller.importRss("https://example.com/feed.xml")
     controller.prepare()
     controller.setTarget("private-local-usb-path")
@@ -162,7 +183,8 @@ class PodcastTest {
     controller.run { pushCloud() }
     assertEquals(1L, controller.state.value.cloudRevision)
     assertEquals("private-local-usb-path", controller.state.value.target)
-    assertEquals(2, controller.state.value.readySectionIds.size)
+    // RSS has no account position, so the episode is one unsplit section.
+    assertEquals(1, controller.state.value.readySectionIds.size)
     controller.signOut()
     assertFalse(controller.signedIn.value)
     assertEquals("private-local-usb-path", controller.state.value.target)
@@ -212,6 +234,45 @@ class PodcastTest {
   }
 
   @Test
+  fun rssKeepsNewestUsableItemsAndSkipsBrokenOnes() = runBlocking {
+    fun item(n: Int, duration: String = "60", url: String = "https://example.com/$n.mp3") =
+      RssItem("guid-$n", "Episode $n", url, duration, "100", "audio/mp4")
+    val feed =
+      RssFeed(
+        "Show",
+        listOf(
+          item(1, duration = ""),
+          item(2, url = "http://example.com/2.mp3"),
+          item(3, url = ""),
+          item(4),
+          item(4),
+          item(5, duration = "1:02:03"),
+          item(6),
+          item(7),
+        ),
+      )
+    val imported = rssSnapshot("https://example.com/feed", feed, latest = 3)
+    assertEquals(
+      listOf("Episode 4", "Episode 5", "Episode 6"),
+      imported.snapshot.episodes.map { it.title },
+    )
+    assertEquals(4, imported.skipped)
+    assertEquals(3_723_000L, imported.snapshot.episodes[1].durationMs)
+    assertEquals("m4a", imported.snapshot.episodes[0].extension)
+    assertFailsWith<PodcastProblem> {
+      rssSnapshot("https://example.com/feed", RssFeed("", listOf(item(1, ""))), 3)
+    }
+    assertFailsWith<IllegalArgumentException> { rssSnapshot("https://example.com/feed", feed, 0) }
+
+    val platform = FakePlatform().apply { this.feed = feed }
+    val controller = PodcastController(platform)
+    controller.run { importRss("https://example.com/feed", 2) }
+    assertEquals(2, controller.state.value.library.playlist!!.episodes.size)
+    assertEquals(2, controller.state.value.library.feedLatest)
+    assertTrue(controller.status.value.contains("skipped"), controller.status.value)
+  }
+
+  @Test
   fun deviceManifestOmitsUrlsEvenWhenProviderIdsContainThem() {
     val source = episode.copy(id = "https://publisher.example/private-id?access=example-only")
     val config = Segmentation(false)
@@ -234,7 +295,7 @@ class PodcastTest {
     var rejectPush = false
     var lastPush = ""
     var remoteDocument: CloudDocument? = null
-    var feedSnapshot: PlaylistSnapshot? = null
+    var feed: RssFeed? = null
     val files = mutableSetOf<String>()
 
     override suspend fun readState() = saved
@@ -254,7 +315,7 @@ class PodcastTest {
       exported = true
     }
 
-    override suspend fun rss(url: String): PlaylistSnapshot = requireNotNull(feedSnapshot)
+    override suspend fun rss(url: String): RssFeed = requireNotNull(feed)
 
     override suspend fun request(
       url: String,

@@ -29,10 +29,11 @@ const assert = require('node:assert/strict');
    backend: 'fixture', id: 'tone', title: 'Two second test tone', audioUrl: 'https://cadence.invalid/tone.mp3',
    durationMs: 2000, positionMs: 1000, revision: 'position-v1', audioVersion: 'tone-v1', extension: 'mp3'
   }] };
-  await tap(page.getByRole('textbox').nth(1));
+  await tap(page.getByRole('checkbox', { name: 'Paste export' }).or(page.getByRole('button', { name: 'Paste export' })).first());
+  await tap(page.getByRole('textbox', { name: 'Export or snapshot' }).first());
   await page.keyboard.press('ControlOrMeta+A'); await page.keyboard.insertText(JSON.stringify(snapshot));
   await page.screenshot({path:'/tmp/cadence-input-inspect.png'});
-  await tap(page.getByRole('button', { name: 'Import snapshot', exact: true }));
+  await tap(page.getByRole('button', { name: 'Import', exact: true }));
   await page.waitForFunction(() => JSON.parse(localStorage.getItem('cadence-podcasts-v1'))?.library.playlist?.name === 'Headphone test');
   await page.screenshot({ path: '/tmp/cadence-after-podcast.png' });
   await tap(page.getByRole('button', { name: 'Download & prepare', exact: true }));

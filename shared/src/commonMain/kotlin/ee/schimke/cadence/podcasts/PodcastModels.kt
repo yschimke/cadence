@@ -58,6 +58,8 @@ data class Segmentation(
   val splitAtPosition: Boolean = true,
   val chunkMinutes: Int = 0,
   val chunkFormat: String = "mp3",
+  // Leave out audio before the imported position. Defaults off so stored manifests stay valid.
+  val skipListened: Boolean = false,
 ) {
   fun validate() {
     require(chunkFormat in listOf("mp3", "m4a"))
@@ -75,14 +77,23 @@ data class Section(
   val fileName: String,
 )
 
+/** `m:ss` or `h:mm:ss`. */
+fun formatTime(ms: Long): String {
+  val seconds = ms / 1000
+  val h = seconds / 3600
+  val m = seconds / 60 % 60
+  val s = (seconds % 60).toString().padStart(2, '0')
+  return if (h > 0) "$h:${m.toString().padStart(2, '0')}:$s" else "$m:$s"
+}
+
 fun digest(value: String): String = value.encodeUtf8().sha256().hex()
 
 fun segment(episode: Episode, config: Segmentation): List<Section> {
   episode.validate()
   config.validate()
-  val boundaries = mutableListOf(0L)
-  if (config.splitAtPosition && episode.positionMs > 0 && episode.positionMs < episode.durationMs)
-    boundaries += episode.positionMs
+  val resumable = episode.positionMs > 0 && episode.positionMs < episode.durationMs
+  val boundaries = mutableListOf(if (config.skipListened && resumable) episode.positionMs else 0L)
+  if (config.splitAtPosition && resumable && !config.skipListened) boundaries += episode.positionMs
   boundaries += episode.durationMs
   val ranges =
     boundaries.zipWithNext().flatMap { (start, end) ->
@@ -152,6 +163,7 @@ data class PodcastLibrary(
   val schema: Int = 1,
   val playlist: PlaylistSnapshot? = null,
   val feedUrl: String = "",
+  val feedLatest: Int = 3,
   val config: Segmentation = Segmentation(),
   val manifests: List<Manifest> = emptyList(),
   val completions: List<Completion> = emptyList(),
@@ -161,6 +173,7 @@ data class PodcastLibrary(
     require(schema == 1)
     config.validate()
     require(feedUrl.isBlank() || feedUrl.startsWith("https://"))
+    require(feedLatest in 1..MAX_FEED_EPISODES)
     playlist?.validate()
     manifests.forEach { manifest ->
       require(manifest.sections == segment(manifest.episode, manifest.config)) {
@@ -189,6 +202,10 @@ data class LocalPodcastState(
   val cloudKey: String = "",
   val cloudRevision: Long = 0,
   val cloudUserId: String = "",
+  // Server and user only; the password is held in memory for the app session.
+  val gpodder: GpodderAccount = GpodderAccount(),
+  // Positions this device sent to the source, by episode key, for the status shown per episode.
+  val sentPositions: Map<String, Long> = emptyMap(),
 )
 
 /** Capability checks precede any authentication, download or write. */
@@ -255,21 +272,94 @@ fun rssDurationMs(value: String): Long {
   return (seconds * 1000).toLong()
 }
 
+/** Raw `<item>` fields as written in the feed; [rssSnapshot] decides which are usable. */
+data class RssItem(
+  val guid: String,
+  val title: String,
+  val audioUrl: String,
+  val duration: String,
+  val length: String,
+  val type: String,
+)
+
+data class RssFeed(val name: String, val items: List<RssItem>)
+
+data class RssImport(val snapshot: PlaylistSnapshot, val skipped: Int)
+
+const val MAX_FEED_CHARS = 40_000_000
+
+fun rssExtension(type: String): String =
+  when (type.substringBefore(';').trim().lowercase()) {
+    "audio/mp4",
+    "audio/x-m4a",
+    "audio/m4a",
+    "audio/aac" -> "m4a"
+    "audio/ogg" -> "ogg"
+    "audio/opus" -> "opus"
+    "audio/flac" -> "flac"
+    "audio/wav",
+    "audio/x-wav" -> "wav"
+    else -> "mp3"
+  }
+
+/**
+ * Keeps the newest [latest] usable items in feed order. Feeds publish newest first; items without
+ * an HTTPS enclosure or a readable duration are skipped rather than failing the whole feed.
+ */
+fun rssSnapshot(url: String, feed: RssFeed, latest: Int): RssImport {
+  require(latest in 1..MAX_FEED_EPISODES) { "Choose 1–$MAX_FEED_EPISODES episodes" }
+  var skipped = 0
+  val episodes = mutableListOf<Episode>()
+  val seen = mutableSetOf<String>()
+  for (item in feed.items) {
+    if (episodes.size == latest) break
+    val episode = runCatching {
+      Episode(
+          "rss",
+          "$url#${item.guid.ifBlank { item.audioUrl }}",
+          item.title.ifBlank { "Untitled episode" },
+          item.audioUrl,
+          rssDurationMs(item.duration),
+          revision = "rss",
+          audioVersion = digest(item.audioUrl + "|" + item.length),
+          extension = rssExtension(item.type),
+        )
+        .also { it.validate() }
+    }
+      .getOrNull()
+    if (episode == null || !seen.add(episode.key)) skipped++ else episodes += episode
+  }
+  if (episodes.isEmpty())
+    throw PodcastProblem(
+      "No downloadable episodes found. Items need an HTTPS audio enclosure and an itunes:duration."
+    )
+  val snapshot = PlaylistSnapshot(name = feed.name.ifBlank { "RSS podcast" }, episodes = episodes)
+  snapshot.validate()
+  return RssImport(snapshot, skipped)
+}
+
+const val MAX_FEED_EPISODES = 50
+
 /**
  * A supported read-only backend for public downloadable podcast enclosures. RSS has no account
  * positions.
  */
-class RssBackend(private val platform: PodcastPlatform, private val feedUrl: String) :
-  PodcastBackend {
+class RssBackend(
+  private val platform: PodcastPlatform,
+  private val feedUrl: String,
+  private val latest: Int,
+) : PodcastBackend {
   override val id = "rss"
   override val capabilities =
     BackendCapabilities(true, true, false, "Public RSS enclosures; positions are local to Cadence")
 
   override suspend fun playlists() = listOf(feedUrl)
 
-  override suspend fun snapshot(playlist: String): PlaylistSnapshot {
+  override suspend fun snapshot(playlist: String): PlaylistSnapshot = read(playlist).snapshot
+
+  suspend fun read(playlist: String = feedUrl): RssImport {
     require(playlist == feedUrl)
-    return platform.rss(feedUrl)
+    return rssSnapshot(feedUrl, platform.rss(feedUrl), latest)
   }
 
   override suspend fun writePosition(
