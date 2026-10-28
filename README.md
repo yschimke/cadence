@@ -1,6 +1,6 @@
 # Accessibility Report
 
-_Auto-generated from `compose-preview/a11y/pr`. 2 preview(s) across 1 module(s) · 2 error(s) · 0 warning(s) · 0 info._
+_Auto-generated from `compose-preview/a11y/pr`. 3 preview(s) across 1 module(s) · 3 error(s) · 0 warning(s) · 0 info._
 
 Browse inline; image URLs are pinned to the commit SHA on the baseline branch so links keep resolving after merge.
 
@@ -9,6 +9,14 @@ Browse inline; image URLs are pinned to the commit SHA on the baseline branch so
 ### `PodcastImportedPreview`
 
 <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/PodcastImportedPreview_Podcast_sync_imported-8403888a.a11y.png" width="400" />
+
+| # | Level | Rule | Element | Message |
+|--:|---|---|---|---|
+| 1 | ERROR | TouchTargetSizeCheck | android.view.View | This item's height is 32dp. Consider making the height of this touch target 48dp or larger. |
+
+### `PodcastPocketCastsPreview`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/PodcastPocketCastsPreview_Podcast_sync_Pocket_Casts_signed_in-f21c2e65.a11y.png" width="400" />
 
 | # | Level | Rule | Element | Message |
 |--:|---|---|---|---|
