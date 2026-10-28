@@ -17,8 +17,10 @@ import ee.schimke.cadence.devices.DevicesScreen
 import ee.schimke.cadence.devices.DevicesViewModel
 import ee.schimke.cadence.files.DeviceFilesContent
 import ee.schimke.cadence.files.DeviceFilesViewModel
+import ee.schimke.cadence.home.HomeActions
 import ee.schimke.cadence.home.HomeContent
 import ee.schimke.cadence.home.HomeViewModel
+import ee.schimke.cadence.podcasts.LocalPodcastState
 import ee.schimke.cadence.sync.ManageSyncContent
 
 private val themedModifier
@@ -30,14 +32,37 @@ internal fun HomeEmptyPreview() {
   AndroidMaterialTheme {
     HomeContent(
       state = HomeViewModel.UiState(),
-      onRefreshProfile = {},
-      onToggleAutoRefresh = { _, _ -> },
-      onAddProfile = {},
-      onManageSync = {},
-      onBookmarks = {},
-      onFileExplorer = {},
-      onBluetoothControls = {},
-      onSwitchToSync = {},
+      podcasts = LocalPodcastState(),
+      actions = HomeActions(),
+      suggestions = PreviewFixtures.suggestions,
+      modifier = themedModifier,
+    )
+  }
+}
+
+@Preview(name = "Home — library", showBackground = true, heightDp = 1400)
+@Composable
+internal fun HomeLibraryPreview() {
+  AndroidMaterialTheme {
+    HomeContent(
+      state = PreviewFixtures.libraryState,
+      podcasts = PreviewFixtures.podcastState,
+      actions = HomeActions(),
+      canRefreshPodcasts = true,
+      modifier = themedModifier,
+    )
+  }
+}
+
+@Preview(name = "Home — headphones connected", showBackground = true, heightDp = 900)
+@Composable
+internal fun HomeHeadphonesPreview() {
+  AndroidMaterialTheme {
+    HomeContent(
+      state =
+        PreviewFixtures.libraryState.copy(attachedDevice = PreviewFixtures.usbDevices.first()),
+      podcasts = PreviewFixtures.podcastState,
+      actions = HomeActions(),
       modifier = themedModifier,
     )
   }
@@ -258,7 +283,6 @@ private class ManageCallbacks {
   val onSelectTargetDevice: (String) -> Unit = {}
   val onSetAutoSync: (Boolean) -> Unit = {}
   val onSetUsbMatch: (String) -> Unit = {}
-  val onSetThemeMode: (ee.schimke.cadence.datastore.proto.ThemeMode) -> Unit = {}
 }
 
 @Preview(name = "Manage - empty", showBackground = true, heightDp = 1500)

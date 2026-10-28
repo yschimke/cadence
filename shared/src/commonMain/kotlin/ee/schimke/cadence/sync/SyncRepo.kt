@@ -13,6 +13,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
+/** The profile folders join when added from the library. */
+const val LIBRARY_PROFILE = "Library"
+
 @OptIn(ExperimentalUuidApi::class)
 @Inject
 class SyncRepo(private val dataStore: SettingsStore) {
@@ -21,7 +24,11 @@ class SyncRepo(private val dataStore: SettingsStore) {
   val profiles: Flow<List<SyncProfile>> = dataStore.data.map { it.sync_profiles }
   val preferences: Flow<SyncPreferences?> = dataStore.data.map { it.sync_preferences }
 
-  suspend fun addLocalDirectorySource(name: String, treeUri: String, subpath: String = "") {
+  suspend fun addLocalDirectorySource(
+    name: String,
+    treeUri: String,
+    subpath: String = "",
+  ): SyncSource {
     val source =
       SyncSource(
         id = Uuid.random().toString(),
@@ -31,6 +38,19 @@ class SyncRepo(private val dataStore: SettingsStore) {
         subpath = subpath,
       )
     dataStore.updateData { it.copy(sync_sources = it.sync_sources + source) }
+    return source
+  }
+
+  /**
+   * Adds a folder to the library: the first profile, created as "Library" on first use, so people
+   * who never open profile management have exactly one. Returns that profile's id.
+   */
+  suspend fun addFolderToLibrary(name: String, treeUri: String): String {
+    val source = addLocalDirectorySource(name, treeUri)
+    val library = profiles.first().firstOrNull()
+    if (library == null) return addProfile(LIBRARY_PROFILE, listOf(source.id)).id
+    updateProfile(library.id) { it.copy(source_ids = it.source_ids + source.id) }
+    return library.id
   }
 
   suspend fun addNfsSource(name: String, host: String, exportPath: String) {

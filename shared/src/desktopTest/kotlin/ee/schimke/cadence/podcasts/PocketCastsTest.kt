@@ -91,6 +91,16 @@ class PocketCastsTest {
     assertEquals(listOf("e2", "e1"), playlist.episodes.map { it.id })
     assertTrue(platform.headers.all { it == "Bearer a1" })
 
+    // The library remembers where it came from, so it can refresh from there.
+    assertEquals(PodcastSourceKind.PocketCasts, controller.state.value.library.source)
+    assertEquals("manual", controller.state.value.library.sourceList)
+    assertTrue(controller.canRefresh)
+    controller.refreshSource()
+    assertEquals("Commute", controller.state.value.library.playlist!!.name)
+    controller.removeSource()
+    assertNull(controller.state.value.library.playlist)
+    assertTrue(controller.state.value.pocketCasts.signedIn)
+
     controller.signOutPocketCasts()
     assertFalse(controller.state.value.pocketCasts.signedIn)
     assertTrue(controller.pocketCastsLists.value.isEmpty())

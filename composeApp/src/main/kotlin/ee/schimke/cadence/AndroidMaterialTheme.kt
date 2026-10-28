@@ -16,12 +16,14 @@ import androidx.compose.ui.text.googlefonts.GoogleFont
  * System-dynamic Material 3 theme — Material You colours from the device wallpaper paired with
  * **Roboto Flex** as the type stack.
  *
- * This is the default app theme; the opt-in branded alternative is
- * [ee.schimke.cadence.theme.CadenceTheme].
+ * This is the only app theme.
  */
 @Composable
-fun AndroidMaterialTheme(content: @Composable () -> Unit) {
-  val isDark = isSystemInDarkTheme()
+fun AndroidMaterialTheme(
+  darkTheme: Boolean = isSystemInDarkTheme(),
+  content: @Composable () -> Unit,
+) {
+  val isDark = darkTheme
   val colorScheme =
     if (isDark) dynamicDarkColorScheme(LocalContext.current)
     else dynamicLightColorScheme(LocalContext.current)

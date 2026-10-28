@@ -83,7 +83,7 @@ the page is reloaded.
    ```
 
    This downloads `cadence-pocketcasts.json` locally. Paste its JSON into
-   Cadence's **Import episodes → Paste export**, then prepare and copy audio normally. Before
+   Cadence's **Add source → Podcasts → Overcast or a saved export**, then prepare and copy audio normally. Before
    relying on it, compare at least one episode's duration and imported position
    with the web player. The published protocol uses seconds; the snapshot uses
    milliseconds. Its revision is a browser capture revision, not a server CAS

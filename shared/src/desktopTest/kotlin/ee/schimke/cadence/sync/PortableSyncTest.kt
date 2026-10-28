@@ -25,6 +25,35 @@ class PortableSyncTest {
   }
 
   @Test
+  fun foldersAddedFromTheLibraryShareOneProfileAndListTheirFiles() = runBlocking {
+    val root = Files.createTempDirectory("cadence-library").toFile()
+    try {
+      val swim = root.resolve("swim").apply { mkdirs() }
+      swim.resolve("Intervals").mkdirs()
+      swim.resolve("Intervals/Set 1.mp3").writeText("one")
+      val books = root.resolve("books").apply { mkdirs() }
+      books.resolve("Chapter 1.mp3").writeText("chapter")
+      val repo = SyncRepo(Store())
+      val library = repo.addFolderToLibrary("Swim", swim.path)
+      assertEquals(library, repo.addFolderToLibrary("Books", books.path))
+      val profile = repo.listProfiles().single()
+      assertEquals(LIBRARY_PROFILE, profile.name)
+      assertEquals(2, profile.source_ids.size)
+      assertTrue(profile.auto_refresh)
+
+      val browser =
+        PortableSourceBrowser(repo, DesktopDirectoryBackend(root.resolve("staging").path))
+      val items = browser.browse(profile.source_ids.first())
+      assertEquals(listOf("Intervals/Set 1.mp3"), items.map { it.relativePath })
+      assertEquals("Set 1.mp3", items.single().displayName)
+      assertEquals(3, items.single().sizeBytes)
+      assertTrue(browser.browse("missing").isEmpty())
+    } finally {
+      root.deleteRecursively()
+    }
+  }
+
+  @Test
   fun refreshStagesAndSyncsMountedVolume() = runBlocking {
     val root = Files.createTempDirectory("cadence-sync").toFile()
     try {

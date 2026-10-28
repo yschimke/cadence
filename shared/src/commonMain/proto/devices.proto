@@ -17,6 +17,7 @@ message Settings {
   AppearancePreferences appearance = 7;
 }
 
+// Unused: the app always follows dynamic Material 3. Kept so stored settings still parse.
 message AppearancePreferences {
   ThemeMode theme_mode = 1;
 }

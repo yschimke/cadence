@@ -12,7 +12,6 @@ import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.binding
 import ee.schimke.cadence.metro.ActivityKey
-import ee.schimke.cadence.theme.CadenceThemeHost
 
 @ContributesIntoMap(AppScope::class, binding<Activity>())
 @ActivityKey(MainActivity::class)
@@ -25,7 +24,7 @@ class MainActivity(private val viewModelFactory: ViewModelProvider.Factory) : Co
 
     super.onCreate(savedInstanceState)
 
-    setContent { CadenceThemeHost { App() } }
+    setContent { AndroidMaterialTheme { App() } }
   }
 
   override val defaultViewModelProviderFactory: ViewModelProvider.Factory

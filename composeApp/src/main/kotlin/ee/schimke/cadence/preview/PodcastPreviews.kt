@@ -101,20 +101,32 @@ private fun controller(prepared: Boolean): PodcastController {
 @Preview(name = "Podcast sync — imported", showBackground = true, heightDp = 1400)
 @Composable
 internal fun PodcastImportedPreview() {
-  AndroidMaterialTheme { PodcastScreen(remember { controller(prepared = false) }) }
+  AndroidMaterialTheme {
+    PodcastScreen(remember { controller(prepared = false) }, onChangeSource = {})
+  }
 }
 
 @Preview(name = "Podcast sync — prepared", showBackground = true, heightDp = 1800)
 @Composable
 internal fun PodcastPreparedPreview() {
-  AndroidMaterialTheme { PodcastScreen(remember { controller(prepared = true) }) }
+  AndroidMaterialTheme {
+    PodcastScreen(remember { controller(prepared = true) }, onChangeSource = {})
+  }
 }
 
-@Preview(name = "Podcast sync — Pocket Casts signed in", showBackground = true, heightDp = 1000)
+@Preview(name = "Add podcasts", showBackground = true, heightDp = 700)
+@Composable
+internal fun AddPodcastsPreview() {
+  AndroidMaterialTheme {
+    AddPodcastsScreen(remember { PodcastController(PreviewPodcastPlatform) }, onDone = {})
+  }
+}
+
+@Preview(name = "Add podcasts — Pocket Casts signed in", showBackground = true, heightDp = 1000)
 @Composable
 internal fun PodcastPocketCastsPreview() {
   AndroidMaterialTheme {
-    PodcastScreen(
+    AddPodcastsScreen(
       remember {
         PodcastController(PreviewPodcastPlatform).apply {
           state.value =
@@ -128,9 +140,10 @@ internal fun PodcastPocketCastsPreview() {
               PocketCastsList(POCKET_CASTS_IN_PROGRESS, "In progress"),
               PocketCastsList("commute", "Commute"),
             )
-          status.value = "Signed in to Pocket Casts as listener@example.com"
         }
-      }
+      },
+      onDone = {},
+      initialProvider = PodcastProvider.PocketCasts,
     )
   }
 }
