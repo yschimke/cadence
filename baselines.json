@@ -39,6 +39,22 @@
     "sha256": "bef30e4f06f9fefe79c5626c947afa9ce4883047b1a103155b7a748039629511",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/FoundationPreviews.kt"
   },
+  "composeApp/ee.schimke.cadence.preview.PodcastPreviewsKt.PodcastImportedPreview_Podcast sync \u2014 imported": {
+    "captureLabel": "",
+    "functionName": "PodcastImportedPreview",
+    "module": "composeApp",
+    "renderBasename": "PodcastImportedPreview_Podcast_sync_imported-8403888a.png",
+    "sha256": "7621a5e30e717cf71b5e8c74508d4d9bca6998ce9200e7908b5aa31fcdcbb964",
+    "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastPreviews.kt"
+  },
+  "composeApp/ee.schimke.cadence.preview.PodcastPreviewsKt.PodcastPreparedPreview_Podcast sync \u2014 prepared": {
+    "captureLabel": "",
+    "functionName": "PodcastPreparedPreview",
+    "module": "composeApp",
+    "renderBasename": "PodcastPreparedPreview_Podcast_sync_prepared-2db5b8ad.png",
+    "sha256": "9f9e90c9bfcb33f78d7cfc86e144c7b944fe9b360935a014c32387a9d88aec96",
+    "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastPreviews.kt"
+  },
   "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.BluetoothConnectedPlayingPreview_BT controls - connected + playing": {
     "captureLabel": "",
     "functionName": "BluetoothConnectedPlayingPreview",
