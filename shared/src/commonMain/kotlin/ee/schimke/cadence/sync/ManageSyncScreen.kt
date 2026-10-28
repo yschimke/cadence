@@ -169,7 +169,7 @@ fun ManageSyncContent(
         )
       }
     }
-    items(state.profiles, key = { it.id }) { profile ->
+    items(state.profiles, key = { it.id }, contentType = { "profile" }) { profile ->
       ProfileCard(
         profile = profile,
         sources = state.sources,
@@ -201,7 +201,7 @@ fun ManageSyncContent(
         )
       }
     }
-    items(state.sources, key = { it.id }) { source ->
+    items(state.sources, key = { it.id }, contentType = { "source" }) { source ->
       SourceCard(source = source, onRemove = { onRemoveSource(source.id) })
     }
   }
@@ -508,7 +508,7 @@ private fun AddProfileDialog(
         )
         Text("Sources", style = MaterialTheme.typography.titleSmall)
         LazyColumn(modifier = Modifier.heightIn(max = 200.dp)) {
-          items(availableSources, key = { it.id }) { source ->
+          items(availableSources, key = { it.id }, contentType = { "source" }) { source ->
             Row(verticalAlignment = Alignment.CenterVertically) {
               Checkbox(
                 checked = selected.value.contains(source.id),
@@ -623,7 +623,8 @@ private fun SourceSuggestionsDialog(
             modifier = Modifier.fillMaxWidth().heightIn(max = 420.dp),
             verticalArrangement = Arrangement.spacedBy(6.dp),
           ) {
-            items(suggestions, key = { it.packageName }) { suggestion ->
+            items(suggestions, key = { it.packageName }, contentType = { "suggestion" }) {
+              suggestion ->
               SourceSuggestionRow(suggestion = suggestion, onSelect = onSelect)
             }
           }

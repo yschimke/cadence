@@ -113,7 +113,7 @@ fun FileSyncContent(
           else -> {
             if (state.profiles.isNotEmpty()) {
               item { SectionLabel("Ready to sync") }
-              items(state.profiles, key = { it.id }) { profile ->
+              items(state.profiles, key = { it.id }, contentType = { "profile" }) { profile ->
                 SyncReadyRow(
                   profile = profile,
                   checked = checkedIds.contains(profile.id),
