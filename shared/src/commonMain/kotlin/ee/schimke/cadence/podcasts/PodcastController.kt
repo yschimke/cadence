@@ -65,6 +65,8 @@ class PodcastController(val platform: PodcastPlatform) {
   val status = MutableStateFlow("Loading library…")
   val busy = MutableStateFlow(false)
   val signedIn = MutableStateFlow(false)
+  // Set once the saved library, including any Pocket Casts session, has been read.
+  val loaded = MutableStateFlow(false)
   private val lock = Mutex()
   private var token = ""
   private var authenticatedUser = ""
@@ -107,6 +109,7 @@ class PodcastController(val platform: PodcastPlatform) {
       state.value = restored
     }
     recheckReady()
+    loaded.value = true
     status.value = "Library loaded"
   }
 

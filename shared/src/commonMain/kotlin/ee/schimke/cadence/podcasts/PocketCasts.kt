@@ -147,6 +147,12 @@ private fun pocketCastsExtension(episode: PocketCastsEpisode): String? =
       .lowercase()
       .takeIf { it in listOf("mp3", "m4a", "ogg", "opus", "flac", "wav") }
 
+internal fun pocketCastsUsable(episode: PocketCastsEpisode) =
+  episode.uuid.isNotBlank() &&
+    episode.url.startsWith("https://") &&
+    episode.durationSeconds > 0 &&
+    pocketCastsExtension(episode) != null
+
 /** Keeps playable episodes in order, up to [limit]; the second value counts skipped ones. */
 fun pocketCastsSnapshot(
   name: String,
@@ -160,12 +166,7 @@ fun pocketCastsSnapshot(
       .mapNotNull { episode ->
         val durationMs = (episode.durationSeconds * 1000).toLong()
         val extension = pocketCastsExtension(episode)
-        if (
-          episode.uuid.isBlank() ||
-            !episode.url.startsWith("https://") ||
-            durationMs <= 0 ||
-            extension == null
-        ) {
+        if (!pocketCastsUsable(episode) || durationMs <= 0 || extension == null) {
           skipped++
           return@mapNotNull null
         }
@@ -226,22 +227,34 @@ suspend fun readPocketCasts(
   limit: Int,
 ): Pair<PlaylistSnapshot, Int> {
   require(limit in 1..MAX_FEED_EPISODES)
+  suspend fun details(uuid: String) =
+    reader.episode(uuid)?.let(::pocketCastsEpisodes)?.firstOrNull()
+  // Reads in order until enough are usable, so skipped and archived episodes don't use up the
+  // count. Unusable ones are kept so the import can say how many were skipped.
+  suspend fun gather(
+    count: Int,
+    episode: suspend (Int) -> PocketCastsEpisode?,
+  ): List<PocketCastsEpisode> = buildList {
+    var usable = 0
+    for (index in 0 until minOf(count, 1000)) {
+      if (usable >= limit) break
+      val next = episode(index) ?: continue
+      add(next)
+      if (pocketCastsUsable(next)) usable++
+    }
+  }
   suspend fun members(uuids: List<String>, showArchived: Boolean) =
-    uuids
-      .asSequence()
-      .take(limit * 2)
-      .toList()
-      .mapNotNull { uuid -> reader.episode(uuid)?.let(::pocketCastsEpisodes)?.firstOrNull() }
-      .filter { showArchived || !it.archived }
+    gather(uuids.size) { index -> details(uuids[index])?.takeIf { showArchived || !it.archived } }
   return when (list) {
     POCKET_CASTS_UP_NEXT -> {
       val body =
         reader.upNext() ?: throw PodcastProblem("Up Next isn't available from this sign-in")
       // Fill in what Up Next leaves out, such as the length of an episode not started yet.
+      val upNext = pocketCastsUpNext(body)
       val episodes =
-        pocketCastsUpNext(body).take(limit * 2).map { episode ->
-          if (episode.durationSeconds > 0 && pocketCastsExtension(episode) != null) episode
-          else reader.episode(episode.uuid)?.let(::pocketCastsEpisodes)?.firstOrNull() ?: episode
+        gather(upNext.size) { index ->
+          val entry = upNext[index]
+          if (pocketCastsUsable(entry)) entry else details(entry.uuid) ?: entry
         }
       pocketCastsSnapshot("Pocket Casts Up Next", episodes, limit)
     }
@@ -288,7 +301,7 @@ class PocketCastsApi(
       send(path, method, body)
     } catch (e: PodcastProblem) {
       // The access token lasts an hour and may be revoked early; refresh once and retry.
-      if (session.refreshToken.isBlank()) throw e
+      if (e.status !in listOf(401, 403) || session.refreshToken.isBlank()) throw e
       refresh()
       send(path, method, body)
     }
@@ -310,9 +323,11 @@ class PocketCastsApi(
           mapOf("Content-Type" to "application/json"),
           body.toString(),
         )
-      } catch (_: Exception) {
+      } catch (e: PodcastProblem) {
+        // Only a refusal ends the session; an outage keeps it for the next attempt.
+        if (e.status !in 400..499) throw e
         onSession(PocketCastsSession())
-        throw PodcastProblem("Your Pocket Casts sign-in expired. Sign in again.")
+        throw PodcastProblem("Your Pocket Casts sign-in expired. Sign in again.", e.status)
       }
     session = pocketCastsSession(response, now(), session)
     onSession(session)

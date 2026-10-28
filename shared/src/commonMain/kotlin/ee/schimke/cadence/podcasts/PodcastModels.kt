@@ -398,7 +398,10 @@ fun deviceManifest(library: PodcastLibrary): DeviceManifest =
       }
   )
 
-class PodcastProblem(message: String) : Exception(message)
+/**
+ * A failure safe to show as-is. [status] is the HTTP status when the server refused the request.
+ */
+class PodcastProblem(message: String, val status: Int = 0) : Exception(message)
 
 fun validateAudioFileName(name: String) {
   require(

@@ -112,12 +112,36 @@ class PocketCastsTest {
     assertEquals("a2", controller.state.value.pocketCasts.accessToken)
     assertTrue("\"a2\"" in platform.saved!!)
 
+    // An outage while refreshing keeps the session for the next attempt.
+    platform.validToken = "a3"
+    platform.refreshes = false
+    platform.outage = true
+    assertFails { controller.refreshPocketCastsLists() }
+    assertEquals("a2", controller.state.value.pocketCasts.accessToken)
+
     // A rejected refresh signs out rather than retrying forever.
+    platform.outage = false
     platform.validToken = "a3"
     platform.refreshes = false
     assertFailsWith<PodcastProblem> { controller.refreshPocketCastsLists() }
     assertFalse(controller.state.value.pocketCasts.signedIn)
     Unit
+  }
+
+  @Test
+  fun skippedAndArchivedMembersDontUseUpTheEpisodeCount() = runBlocking {
+    val platform = ApiPlatform()
+    val archived = (1..6).map { "a$it" }
+    platform.extraEpisodes = archived.associateWith { episode(it, 600, 0, isDeleted = true) }
+    platform.playlistsBody =
+      """{"playlists":[{"uuid":"manual","title":"Commute","manual":true,"showArchived":false,"episodeOrder":${(archived + listOf("e4", "e2", "e1")).map { "\"$it\"" }}}]}"""
+    val controller = PodcastController(platform)
+    controller.signInPocketCasts("listener@example.com", "secret")
+    controller.importPocketCasts("manual", 2)
+    assertEquals(
+      listOf("e2", "e1"),
+      controller.state.value.library.playlist!!.episodes.map { it.id },
+    )
   }
 
   @Test
@@ -155,9 +179,12 @@ class PocketCastsTest {
     var saved: String? = null
     var validToken = "a1"
     var refreshes = true
+    var outage = false
+    var playlistsBody = playlists
     val bodies = mutableMapOf<String, String>()
     val headers = mutableListOf<String>()
     val episodeReads = mutableListOf<String>()
+    var extraEpisodes = mapOf<String, String>()
 
     override suspend fun readState() = saved
 
@@ -180,20 +207,21 @@ class PocketCastsTest {
         "/user/token" ->
           if (refreshes)
             return """{"accessToken":"$validToken","tokenType":"Bearer","expiresIn":3600}"""
-          else throw PodcastProblem("The server refused the sign-in.")
+          else if (outage) error("Connection reset")
+          else throw PodcastProblem("The server rejected the request (HTTP 400).", 400)
       }
       val auth = headers.getValue("Authorization")
-      if (auth != "Bearer $validToken") throw PodcastProblem("The server refused the sign-in.")
+      if (auth != "Bearer $validToken") throw PodcastProblem("The server refused the sign-in.", 401)
       this.headers += auth
       return when (path) {
         "/up_next/list" -> upNext
         "/user/in_progress" -> inProgress
-        "/user/playlists" -> playlists.also { assertEquals("GET", method) }
+        "/user/playlists" -> playlistsBody.also { assertEquals("GET", method) }
         "/user/episode" -> {
           val uuid =
             Json.parseToJsonElement(body!!).jsonObject.getValue("uuid").jsonPrimitive.content
           episodeReads += uuid
-          episodes.getValue(uuid)
+          extraEpisodes[uuid] ?: episodes.getValue(uuid)
         }
         else -> error("Unexpected $path")
       }

@@ -69,9 +69,12 @@ fun PodcastScreen(controller: PodcastController) {
   }
   // Loads lists for a session saved earlier; signing in loads them itself, so this isn't keyed on
   // the session (a second load queued behind a failed sign-in would hide its message).
-  LaunchedEffect(source, controller) {
+  val loaded by controller.loaded.collectAsState()
+  LaunchedEffect(source, loaded) {
     if (
-      source == ImportSource.PocketCasts && local.pocketCasts.signedIn && pocketCastsLists.isEmpty()
+      source == ImportSource.PocketCasts &&
+        controller.state.value.pocketCasts.signedIn &&
+        controller.pocketCastsLists.value.isEmpty()
     )
       controller.run { refreshPocketCastsLists() }
   }
