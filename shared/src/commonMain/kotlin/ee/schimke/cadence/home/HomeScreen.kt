@@ -206,15 +206,15 @@ fun HomeContent(
     ) {
       if (playlist != null)
         item(key = "podcasts") { PodcastSection(podcasts, canRefreshPodcasts, actions) }
-      items(state.sources, key = { it.id }) { source ->
+      items(state.sources, key = { it.id }, contentType = { "source" }) { source ->
+        // One scan of the profiles per source instead of three.
+        val profile = state.profileFor(source)
         FolderSection(
           source = source,
           contents = state.contents[source.id] ?: HomeViewModel.SourceContents(loading = true),
-          lastRefreshed = state.profileFor(source)?.last_refreshed_at.orEmpty(),
-          refreshing =
-            state.refresh.running && state.refresh.profileId == state.profileFor(source)?.id,
-          onRefresh =
-            state.profileFor(source)?.let { profile -> { actions.onRefreshFolder(profile.id) } },
+          lastRefreshed = profile?.last_refreshed_at.orEmpty(),
+          refreshing = state.refresh.running && state.refresh.profileId == profile?.id,
+          onRefresh = profile?.let { { actions.onRefreshFolder(it.id) } },
           onRemove = { actions.onRemoveSource(source.id) },
         )
       }

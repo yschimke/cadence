@@ -457,7 +457,7 @@ fun PodcastScreen(
               }
           }
       }
-      items(playlist.episodes, key = { it.key }) { episode ->
+      items(playlist.episodes, key = { it.key }, contentType = { "episode" }) { episode ->
         EpisodeCard(
           episode,
           library.manifests.firstOrNull { it.episode.key == episode.key },
