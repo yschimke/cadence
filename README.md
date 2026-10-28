@@ -7,11 +7,11 @@ Auto-generated from `main`. Browse inline or compare against PR branches.
 | Preview | Image |
 |---------|-------|
 | `MainActivity` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/activity__MainActivity.png" width="150" /> |
-| `FoundationCadenceDarkPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/FoundationCadenceDarkPreview_Foundation_Cadence_dark-35bd3e32.png" width="150" /> |
-| `FoundationCadenceLightPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/FoundationCadenceLightPreview_Foundation_Cadence_light-19184725.png" width="150" /> |
 | `FoundationMaterial3DarkPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/FoundationMaterial3DarkPreview_Foundation_Material_3_dark-8fbb7bd3.png" width="150" /> |
 | `FoundationMaterial3LightPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/FoundationMaterial3LightPreview_Foundation_Material_3_light-8a361022.png" width="150" /> |
+| `AddPodcastsPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/AddPodcastsPreview_Add_podcasts-e09ca4b7.png" width="150" /> |
 | `PodcastImportedPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/PodcastImportedPreview_Podcast_sync_imported-8403888a.png" width="150" /> |
+| `PodcastPocketCastsPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/PodcastPocketCastsPreview_Add_podcasts_Pocket_Casts_signed_in-cd7341fe.png" width="150" /> |
 | `PodcastPreparedPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/PodcastPreparedPreview_Podcast_sync_prepared-2db5b8ad.png" width="150" /> |
 | `BluetoothConnectedPlayingPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/BluetoothConnectedPlayingPreview_BT_controls_connected_playing-45366603.png" width="150" /> |
 | `BluetoothDisconnectedPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/BluetoothDisconnectedPreview_BT_controls_disconnected-42332e99.png" width="150" /> |
@@ -25,6 +25,8 @@ Auto-generated from `main`. Browse inline or compare against PR branches.
 | `DevicesScreenLoadedPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/DevicesScreenLoadedPreview_Devices_loaded-cfb106a7.png" width="150" /> |
 | `DevicesScreenLoadingPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/DevicesScreenLoadingPreview_Devices_loading-8e171a67.png" width="150" /> |
 | `HomeEmptyPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HomeEmptyPreview_Home_empty-571e68af.png" width="150" /> |
+| `HomeHeadphonesPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HomeHeadphonesPreview_Home_headphones_connected-71a28d46.png" width="150" /> |
+| `HomeLibraryPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HomeLibraryPreview_Home_library-7701225c.png" width="150" /> |
 | `ManageEmptyPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/ManageEmptyPreview_Manage_empty-55c57410.png" width="150" /> |
 | `ManagePopulatedPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/ManagePopulatedPreview_Manage_populated-41ab32cd.png" width="150" /> |
 | `ManageRefreshingPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/ManageRefreshingPreview_Manage_refreshing-fe8bc7dc.png" width="150" /> |
@@ -37,16 +39,8 @@ Auto-generated from `main`. Browse inline or compare against PR branches.
 | `PlayStoreSevenInchHomeLight` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/PlayStoreSevenInchHomeLight_Play_Store_7_tablet_Home_light-59744afc.png" width="150" /> |
 | `PlayStoreTenInchHomeDark` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/PlayStoreTenInchHomeDark_Play_Store_10_tablet_Home_dark-91cf4524.png" width="150" /> |
 | `PlayStoreTenInchHomeLight` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/PlayStoreTenInchHomeLight_Play_Store_10_tablet_Home_light-536fa195.png" width="150" /> |
-| `CurateHomeCadenceDarkPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/CurateHomeCadenceDarkPreview_Cadence_dark_Curate_home-01c6d2f7.png" width="150" /> |
-| `CurateHomeCadencePreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/CurateHomeCadencePreview_Cadence_Curate_home-a520f211.png" width="150" /> |
-| `CurateHomePreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/CurateHomePreview_System_Curate_home-6b9b8560.png" width="150" /> |
-| `CurateHomeUsbBannerCadencePreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/CurateHomeUsbBannerCadencePreview_Cadence_Curate_USB_banner-b45966b7.png" width="150" /> |
-| `CurateHomeUsbBannerPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/CurateHomeUsbBannerPreview_System_Curate_USB_banner-8427ae83.png" width="150" /> |
-| `SyncModeDoneCadencePreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/SyncModeDoneCadencePreview_Cadence_Sync_complete-cee01b92.png" width="150" /> |
-| `SyncModeDonePreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/SyncModeDonePreview_System_Sync_complete-ad6b67b3.png" width="150" /> |
-| `SyncModeReadyCadenceDarkPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/SyncModeReadyCadenceDarkPreview_Cadence_dark_Sync_ready-994ca7c7.png" width="150" /> |
-| `SyncModeReadyCadencePreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/SyncModeReadyCadencePreview_Cadence_Sync_ready-761b47d7.png" width="150" /> |
-| `SyncModeReadyPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/SyncModeReadyPreview_System_Sync_ready-7ce1a9c8.png" width="150" /> |
-| `SyncModeSyncingCadencePreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/SyncModeSyncingCadencePreview_Cadence_Sync_syncing-fcc2be13.png" width="150" /> |
-| `SyncModeSyncingPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/SyncModeSyncingPreview_System_Sync_syncing-fc646ecb.png" width="150" /> |
+| `SyncModeDonePreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/SyncModeDonePreview_Sync_complete-7dc4927b.png" width="150" /> |
+| `SyncModeReadyDarkPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/SyncModeReadyDarkPreview_Sync_ready_dark-de653549.png" width="150" /> |
+| `SyncModeReadyPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/SyncModeReadyPreview_Sync_ready-ce4e5f0a.png" width="150" /> |
+| `SyncModeSyncingPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/SyncModeSyncingPreview_Sync_syncing-34770d66.png" width="150" /> |
 
