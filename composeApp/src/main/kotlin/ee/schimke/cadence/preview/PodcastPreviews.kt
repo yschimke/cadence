@@ -109,3 +109,28 @@ internal fun PodcastImportedPreview() {
 internal fun PodcastPreparedPreview() {
   AndroidMaterialTheme { PodcastScreen(remember { controller(prepared = true) }) }
 }
+
+@Preview(name = "Podcast sync — Pocket Casts signed in", showBackground = true, heightDp = 1000)
+@Composable
+internal fun PodcastPocketCastsPreview() {
+  AndroidMaterialTheme {
+    PodcastScreen(
+      remember {
+        PodcastController(PreviewPodcastPlatform).apply {
+          state.value =
+            LocalPodcastState(
+              pocketCasts =
+                PocketCastsSession("preview", "preview", Long.MAX_VALUE, "listener@example.com")
+            )
+          pocketCastsLists.value =
+            listOf(
+              PocketCastsList(POCKET_CASTS_UP_NEXT, "Up Next"),
+              PocketCastsList(POCKET_CASTS_IN_PROGRESS, "In progress"),
+              PocketCastsList("commute", "Commute"),
+            )
+          status.value = "Signed in to Pocket Casts as listener@example.com"
+        }
+      }
+    )
+  }
+}

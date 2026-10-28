@@ -14,6 +14,8 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import ee.schimke.cadence.devices.rememberFileExplorerOpenLauncher
 import kotlinx.coroutines.launch
 
@@ -36,12 +38,21 @@ fun PodcastScreen(controller: PodcastController) {
     scope.launch { controller.run(block) }
   }
   var snapshot by rememberSaveable { mutableStateOf("") }
-  var source by rememberSaveable { mutableStateOf(ImportSource.Rss) }
+  var source by rememberSaveable {
+    mutableStateOf(
+      if (controller.platform.pocketCastsApi) ImportSource.PocketCasts else ImportSource.Rss
+    )
+  }
   var latest by rememberSaveable { mutableStateOf(local.library.feedLatest) }
   var flavor by rememberSaveable { mutableStateOf(local.gpodder.flavor) }
   var server by rememberSaveable { mutableStateOf(local.gpodder.server) }
   var user by rememberSaveable { mutableStateOf(local.gpodder.user) }
   var gpodderPassword by remember { mutableStateOf("") }
+  val pocketCastsLists by controller.pocketCastsLists.collectAsState()
+  var pocketCastsList by rememberSaveable { mutableStateOf(POCKET_CASTS_UP_NEXT) }
+  var pocketCastsWeb by rememberSaveable { mutableStateOf(false) }
+  var pocketCastsEmail by rememberSaveable { mutableStateOf(local.pocketCasts.email) }
+  var pocketCastsPassword by remember { mutableStateOf("") }
   var rss by rememberSaveable { mutableStateOf("") }
   var chunks by rememberSaveable { mutableStateOf(local.library.config.chunkMinutes.toString()) }
   var url by rememberSaveable { mutableStateOf(local.cloudUrl) }
@@ -56,8 +67,48 @@ fun PodcastScreen(controller: PodcastController) {
     url = local.cloudUrl
     key = local.cloudKey
   }
+  // Loads lists for a session saved earlier; signing in loads them itself, so this isn't keyed on
+  // the session (a second load queued behind a failed sign-in would hide its message).
+  LaunchedEffect(source, controller) {
+    if (
+      source == ImportSource.PocketCasts && local.pocketCasts.signedIn && pocketCastsLists.isEmpty()
+    )
+      controller.run { refreshPocketCastsLists() }
+  }
   LaunchedEffect(library.feedUrl) { if (library.feedUrl.isNotBlank()) rss = library.feedUrl }
   LaunchedEffect(library.config.chunkMinutes) { chunks = library.config.chunkMinutes.toString() }
+  if (pocketCastsWeb)
+    Dialog(
+      onDismissRequest = { pocketCastsWeb = false },
+      properties = DialogProperties(usePlatformDefaultWidth = false),
+    ) {
+      Surface(Modifier.fillMaxSize()) {
+        Column {
+          Row(
+            Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+          ) {
+            Text(
+              "Sign in to Pocket Casts",
+              Modifier.weight(1f),
+              style = MaterialTheme.typography.titleMedium,
+            )
+            TextButton(onClick = { pocketCastsWeb = false }) { Text("Cancel") }
+          }
+          PocketCastsWebSignIn(
+            onCookie = {
+              pocketCastsWeb = false
+              action { usePocketCastsCookie(it) }
+            },
+            onCapture = {
+              pocketCastsWeb = false
+              action { usePocketCastsCapture(it) }
+            },
+            modifier = Modifier.weight(1f).fillMaxWidth(),
+          )
+        }
+      }
+    }
   Surface(Modifier.fillMaxSize()) {
     Column {
       Text(
@@ -82,7 +133,7 @@ fun PodcastScreen(controller: PodcastController) {
           ElevatedCard {
             Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
               Text("Import episodes", style = MaterialTheme.typography.titleLarge)
-              Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+              FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 ImportSource.entries.forEach {
                   FilterChip(source == it, { source = it }, label = { Text(it.label) })
                 }
@@ -95,6 +146,89 @@ fun PodcastScreen(controller: PodcastController) {
                 }
               }
               when (source) {
+                ImportSource.PocketCasts ->
+                  when {
+                    !controller.platform.pocketCastsApi ->
+                      Text(
+                        "Pocket Casts only accepts requests from its own website, so the web version of Cadence can't sign in. Use the Android or desktop app."
+                      )
+                    local.pocketCasts.signedIn || pocketCastsLists.isNotEmpty() -> {
+                      Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(
+                          if (local.pocketCasts.signedIn)
+                            "Signed in" +
+                              local.pocketCasts.email
+                                .takeIf { it.isNotBlank() }
+                                ?.let { " as $it" }
+                                .orEmpty()
+                          else "Read from the Pocket Casts web player",
+                          Modifier.weight(1f),
+                        )
+                        TextButton(enabled = !busy, onClick = { action { signOutPocketCasts() } }) {
+                          Text("Sign out")
+                        }
+                      }
+                      FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        pocketCastsLists.forEach {
+                          FilterChip(
+                            pocketCastsList == it.id,
+                            { pocketCastsList = it.id },
+                            label = { Text(it.title) },
+                          )
+                        }
+                      }
+                      Button(
+                        enabled = !busy && pocketCastsLists.any { it.id == pocketCastsList },
+                        onClick = { action { importPocketCasts(pocketCastsList, latest) } },
+                      ) {
+                        Text("Import from Pocket Casts")
+                      }
+                    }
+                    else -> {
+                      Text(
+                        "Your Up Next, in-progress episodes and playlists, with your listening positions. This uses Pocket Casts' web player API, which isn't public and may change."
+                      )
+                      if (pocketCastsWebSignIn)
+                        Button(enabled = !busy, onClick = { pocketCastsWeb = true }) {
+                          Text("Sign in on pocketcasts.com")
+                        }
+                      OutlinedTextField(
+                        pocketCastsEmail,
+                        { pocketCastsEmail = it },
+                        label = { Text("Pocket Casts email") },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth(),
+                      )
+                      OutlinedTextField(
+                        pocketCastsPassword,
+                        { pocketCastsPassword = it },
+                        label = { Text("Password") },
+                        singleLine = true,
+                        visualTransformation = PasswordVisualTransformation(),
+                        modifier = Modifier.fillMaxWidth(),
+                      )
+                      OutlinedButton(
+                        enabled =
+                          !busy &&
+                            pocketCastsEmail.isNotBlank() &&
+                            pocketCastsPassword.isNotBlank(),
+                        onClick = {
+                          val password = pocketCastsPassword
+                          pocketCastsPassword = ""
+                          action { signInPocketCasts(pocketCastsEmail, password) }
+                        },
+                      ) {
+                        Text("Sign in with password")
+                      }
+                      Text(
+                        if (pocketCastsWebSignIn)
+                          "Google blocks its sign-in inside apps. If you use Continue with Google, set a Pocket Casts password with Forgot password first."
+                        else
+                          "Accounts created with Google or Apple have no password until you set one with Forgot password on pocketcasts.com.",
+                        style = MaterialTheme.typography.bodySmall,
+                      )
+                    }
+                  }
                 ImportSource.Rss -> {
                   Text("The newest episodes of a public podcast feed. Starts from the beginning.")
                   OutlinedTextField(
@@ -444,6 +578,7 @@ private fun LabeledCheckbox(
 }
 
 private enum class ImportSource(val label: String) {
+  PocketCasts("Pocket Casts"),
   Rss("RSS feed"),
   Gpodder("gpodder"),
   Paste("Paste export"),

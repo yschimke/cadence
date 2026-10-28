@@ -37,6 +37,10 @@ interface PodcastPlatform {
   suspend fun export(sections: List<Section>, target: String, manifest: String)
 
   fun publishStatus(status: String, ready: Boolean) {}
+
+  /** False in the browser, where Pocket Casts only accepts API calls from its own site. */
+  val pocketCastsApi: Boolean
+    get() = true
 }
 
 @Composable expect fun rememberPodcastPlatform(): PodcastPlatform
@@ -66,6 +70,9 @@ class PodcastController(val platform: PodcastPlatform) {
   private var authenticatedUser = ""
   private var authenticatedUrl = ""
   private var gpodderPassword = ""
+  val pocketCastsLists = MutableStateFlow<List<PocketCastsList>>(emptyList())
+  // Set when the web view could only capture the player's own responses, not its token.
+  private var pocketCastsCapture: PocketCastsCapture? = null
   // A successful action's summary, shown instead of the generic "Saved".
   private var notice: String? = null
 
@@ -212,6 +219,63 @@ class PodcastController(val platform: PodcastPlatform) {
       skipped,
       account.server.substringAfter("https://").substringBefore('/'),
     )
+  }
+
+  private fun pocketCastsReader(): PocketCastsReader =
+    pocketCastsCapture
+      ?: PocketCastsApi(platform, state.value.pocketCasts, ::nowMs) {
+        save(state.value.copy(pocketCasts = it))
+        if (!it.signedIn) pocketCastsLists.value = emptyList()
+      }
+
+  suspend fun signInPocketCasts(email: String, password: String) {
+    if (email.isBlank() || password.isBlank())
+      throw PodcastProblem("Enter your Pocket Casts email and password")
+    usePocketCasts(PocketCastsApi.signIn(platform, email.trim(), password, nowMs()))
+  }
+
+  /** The `auth` cookie the Pocket Casts web player sets after signing in, URL-decoded. */
+  suspend fun usePocketCastsCookie(cookie: String) {
+    usePocketCasts(pocketCastsSession(cookie, nowMs()))
+  }
+
+  private suspend fun usePocketCasts(session: PocketCastsSession) {
+    pocketCastsCapture = null
+    save(state.value.copy(pocketCasts = session))
+    refreshPocketCastsLists()
+    notice =
+      "Signed in to Pocket Casts" + if (session.email.isNotBlank()) " as ${session.email}" else ""
+  }
+
+  /** Falls back to the responses the web player loaded when its token isn't readable. */
+  suspend fun usePocketCastsCapture(json: String) {
+    val capture = PocketCastsCapture(json)
+    if (capture.empty) throw PodcastProblem("Pocket Casts didn't load any playlists yet")
+    pocketCastsCapture = capture
+    refreshPocketCastsLists()
+    if (pocketCastsLists.value.isEmpty())
+      throw PodcastProblem("No manual playlists were loaded. Open Playlists in Pocket Casts.")
+    notice = "Read ${count(pocketCastsLists.value.size, "list")} from the Pocket Casts web player"
+  }
+
+  suspend fun refreshPocketCastsLists() {
+    pocketCastsLists.value = readPocketCastsLists(pocketCastsReader())
+  }
+
+  suspend fun importPocketCasts(list: String, latest: Int = state.value.library.feedLatest) {
+    val (snapshot, skipped) = readPocketCasts(pocketCastsReader(), list, latest)
+    importSnapshot(podcastJson.encodeToString(snapshot))
+    save(state.value.copy(library = state.value.library.copy(feedLatest = latest)))
+    notice =
+      "Imported ${count(snapshot.episodes.size, "episode")} from ${snapshot.name}" +
+        if (skipped > 0) " · skipped $skipped without HTTPS audio or a known length" else ""
+  }
+
+  suspend fun signOutPocketCasts() {
+    pocketCastsCapture = null
+    pocketCastsLists.value = emptyList()
+    save(state.value.copy(pocketCasts = PocketCastsSession()))
+    notice = "Signed out of Pocket Casts"
   }
 
   /**
@@ -478,5 +542,7 @@ class PodcastController(val platform: PodcastPlatform) {
     recheckReady()
   }
 }
+
+private fun nowMs() = Clock.System.now().toEpochMilliseconds()
 
 private fun count(n: Int, noun: String) = "$n $noun" + if (n == 1) "" else "s"

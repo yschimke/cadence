@@ -208,6 +208,7 @@ data class LocalPodcastState(
   val gpodder: GpodderAccount = GpodderAccount(),
   // Positions this device sent to the source, by episode key, for the status shown per episode.
   val sentPositions: Map<String, Long> = emptyMap(),
+  val pocketCasts: PocketCastsSession = PocketCastsSession(),
 )
 
 /** Capability checks precede any authentication, download or write. */
@@ -242,7 +243,7 @@ object PocketCastsBackend : PodcastBackend {
       false,
       false,
       false,
-      "Pocket Casts has no verified supported third-party playlist/download/position-write API. Import an explicit snapshot with authorized HTTPS audio; positions remain local. This is not a Pocket Casts export format.",
+      "Pocket Casts has no public API. Cadence reads Up Next, in-progress episodes and manual playlists through its private web-player API (see PocketCastsApi); positions are not written back.",
     )
 
   override suspend fun playlists(): List<String> = error(capabilities.explanation)

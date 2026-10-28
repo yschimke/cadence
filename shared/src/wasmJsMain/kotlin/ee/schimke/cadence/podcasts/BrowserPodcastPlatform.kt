@@ -23,6 +23,7 @@ class BrowserPodcastPlatform : PodcastPlatform {
     }
 
   override val splitFormats = emptySet<String>()
+  override val pocketCastsApi = false
   override val description =
     "Web: unsplit downloads to browser storage. Feed/audio servers must allow CORS. USB copies require HTTPS and Chrome/Edge desktop's writable directory picker. Safari, Firefox and mobile browsers do not support this USB workflow."
 

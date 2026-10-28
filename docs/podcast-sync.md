@@ -5,66 +5,56 @@ preparing local files; then copying those prepared files to a mounted headphone
 volume. The **Podcast sync** card on the home screen opens the shared Android,
 desktop and browser experience. Existing directory profiles remain available.
 
-## Sources, and the Pocket Casts blocker
+## Sources
 
-The implementation supports public podcast RSS enclosures and Cadence JSON
-snapshots. It does **not** log into Pocket Casts or claim that an import is a live
-Pocket Casts account sync. No supported third-party API covering playlist/filter reads, media export and
-conditional position writes was verified. The adapter advertises those capabilities as unavailable.
+Cadence imports from Pocket Casts, public RSS feeds, gpodder-compatible servers,
+Overcast exports and Cadence JSON snapshots.
 
-Pocket Casts' own apps synchronize positions, Up Next and other account state.
-That does not establish third-party access. Its documented integrations expose
-playback intents, shortcuts and subscription links, rather than a general data
-API. Its web/desktop New Releases, In Progress and Starred lists also differ from
-mobile smart playlists. An OPML subscription export cannot represent the user's
-selected episodes and current positions.
+### Pocket Casts (private web-player API)
 
-Pocket Casts also supports manual playlists and renamed filters to smart playlists
-in its own apps; the [official Android changelog](https://github.com/Automattic/pocket-casts-android/blob/main/CHANGELOG.md)
-records those features. They do not constitute a public third-party integration.
-Its [OPML export](https://support.pocketcasts.com/knowledge-base/exporting-an-opml/)
-exports subscriptions rather than selected-episode timelines.
+Pocket Casts has no supported third-party API. Cadence uses the private API its
+own web player calls, observed in a signed-in account on 2026-10-28. It can
+change without notice, and using it may not be permitted by Pocket Casts' terms.
 
-Sources checked 2026-10-26:
-[account sync](https://support.pocketcasts.com/knowledge-base/pocket-casts-sync/),
-[documented integrations](https://support.pocketcasts.com/knowledge-base/third-party-integration/),
-[web/desktop lists](https://support.pocketcasts.com/knowledge-base/desktop-app/).
+| Request | Used for |
+| --- | --- |
+| `POST /user/login_pocket_casts` `{email, password, scope: "webplayer"}` | Password sign-in; returns `accessToken`, `refreshToken`, `expiresIn` (3600 s) |
+| `POST /user/token` `{grant_type: "refresh_token", refresh_token, scope}` | Refreshing an expired access token |
+| `POST /up_next/list` | Up Next order; `episodeSync` carries `duration` and `playedUpTo` for started episodes |
+| `POST /user/in_progress` | In-progress episodes with `url`, `duration`, `playedUpTo`, `fileType` |
+| `GET /user/playlists` | Playlists; manual ones list members in `episodeOrder` |
+| `POST /user/episode` `{uuid}` | One episode, for playlist members and Up Next entries without a length |
 
-### Read-only web-session investigation
+All requests send `Authorization: Bearer <accessToken>`. The API answers
+cross-origin requests only from `https://pocketcasts.com`, so the browser build
+of Cadence can't call it; Android and desktop can. There is no bot challenge on
+the API itself.
 
-Pocket Casts' current [playlist documentation](https://support.pocketcasts.com/knowledge-base/playlists/)
-confirms manual playlists on the web, but states there is no playlist sharing/export
-link. A playlist RSS feed is therefore not a documented route. This does not mean
-its internal account APIs are inaccessible from the user's own signed-in browser.
+Signing in:
 
-The published [Android service contract](https://github.com/Automattic/pocket-casts-android/blob/main/modules/services/servers/src/main/java/au/com/shiftyjelly/pocketcasts/servers/sync/SyncService.kt)
-exposes read endpoints `/user/playlist/list`, `/user/podcast/episodes` and
-`/user/episodes`. Its [protobuf schema](https://github.com/Automattic/pocket-casts-android/blob/main/modules/services/protobuf/src/main/proto/sync_api.proto)
-contains playlist episode order/membership and episode URL, duration and playback
-position fields. These are promising for an experimental **one-way import** from
-an authorized browser session, even without a supported public integration.
-Manual playlist membership and smart-playlist filter rules must be distinguished;
-a rules response alone is not a resolved episode list. A signed-in web player was
-observed on 2026-10-27 to use `GET /user/playlists` and per-episode
-`POST /user/episode` instead, with the same JSON fields; manual-playlist order
-and positions captured from them matched the player. A
-[passive browser helper and test procedure](pocketcasts-browser-import.md) is
-available for the one-way experiment; it keeps credentials in the browser and
-exports only explicitly captured manual-playlist metadata.
+- **Android: Sign in on pocketcasts.com** opens the web player's own sign-in page
+  in a WebView. After sign-in the player stores its tokens in a script-readable
+  `auth` cookie (`{accessToken, refreshToken, tokenType, expiresIn}`); Cadence
+  reads it through `CookieManager` and from then on calls the API itself. If no
+  token can be read, Cadence falls back to recording the account responses the
+  player loads while it opens **Playlists**, and imports manual playlists from
+  those. Google rejects sign-in from embedded WebViews, so accounts that only
+  use **Continue with Google** need a Pocket Casts password.
+- **Sign in with password** (Android and desktop) calls the sign-in endpoint
+  directly.
 
-**Recommendation:** investigate one-way browser-session export first; for a durable
-account integration, ask Pocket Casts for an authorized integration providing
-playlist membership, episode IDs, enclosure access, position reads, and
-conditional/idempotent position writes. Use public RSS in the meantime. Cadence
-must not reuse private app credentials or reverse-engineered account endpoints
-as though they were a supported public API. An explicitly user-authorized
-experimental browser import must be labelled as such and keep credentials inside
-that browser session. Live account behavior remains an
-external blocker, not a hidden experimental login feature.
+The tokens are saved with the local library (`library.json` in app storage) so
+later imports don't ask again; **Sign out** deletes them. Smart playlists are
+returned without members and aren't offered. Archived playlist members are left
+out unless the playlist shows archived episodes, as in the player. Position
+write-back to Pocket Casts isn't implemented.
+
+The earlier [passive browser helper](pocketcasts-browser-import.md) still works
+for the browser build: run it in your own Pocket Casts tab and paste its export.
 
 | Backend | Selection/positions | Exportable audio | Implemented |
 | --- | --- | --- | --- |
-| Pocket Casts | Own-app sync exists; third-party access unverified | Public podcast enclosures may be independently accessible | Experimental passive browser helper producing a snapshot |
+| Pocket Casts | Up Next, in progress and manual playlists, with positions | Episode enclosure URLs from the account | Private web-player API (Android/desktop); passive browser helper on web |
 | Public RSS | Newest 1–50 feed items; no account position service | HTTPS, unencrypted enclosures with permission to download | Feed import/refresh, download and preparation |
 | gpodder API v2 (gpodder.net, oPodSync) and Nextcloud GPodder Sync | Unfinished episodes and positions (no queue); used by AntennaPod, Kasts, gPodder | Enclosures resolved from each show's public feed | Import; explicit **Send position** with a re-read conflict check |
 | Overcast | "All data" OPML has per-episode `progress` (seconds) and `played`; no queue or durations | Enclosures resolved from each show's public feed | Paste-import of the export file |
@@ -121,6 +111,9 @@ OPML is rejected with a pointer to the All data export.
 
 1. Open **Podcast sync** and choose a source under **Import episodes**, and how
    many episodes (1–50, default 3):
+   - **Pocket Casts**: sign in, then choose Up Next, In progress or a manual
+     playlist. Episodes without HTTPS audio or a known length are skipped and
+     counted.
    - **RSS feed**: the newest episodes of a public HTTPS feed. Items without an
      HTTPS enclosure or `itunes:duration` are skipped and counted. RSS has no
      account position, so first import starts at zero; refresh retains Cadence's
