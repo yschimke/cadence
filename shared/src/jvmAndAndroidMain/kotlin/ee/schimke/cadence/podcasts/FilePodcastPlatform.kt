@@ -57,8 +57,10 @@ abstract class FilePodcastPlatform(protected val root: File) : PodcastPlatform {
             401,
             403 ->
               throw PodcastProblem(
-                "Sign in again or check the cloud project's authentication and row policies."
+                "The server refused the sign-in. Check the user name and password (or the cloud project's row policies) and sign in again."
               )
+            404 ->
+              throw PodcastProblem("Not found (HTTP 404). Check the server URL and server type.")
             409 ->
               throw PodcastProblem(
                 "Cloud revision conflict. Restore cloud configuration, reapply local settings, and save again."
@@ -100,54 +102,81 @@ abstract class FilePodcastPlatform(protected val root: File) : PodcastPlatform {
     }
   }
 
+  /**
+   * Opens a public GET, following at most five HTTPS redirects. No account headers are sent, so a
+   * redirect cannot leak credentials. The caller must disconnect the returned connection.
+   */
+  protected fun openPublic(url: String): HttpURLConnection {
+    var location = url
+    repeat(6) {
+      val conn = connection(location)
+      val code = conn.responseCode
+      if (code !in listOf(301, 302, 303, 307, 308)) {
+        if (code == 200) return conn
+        conn.disconnect()
+        throw PodcastProblem("The server answered HTTP $code. Check the URL is public.")
+      }
+      val next = conn.getHeaderField("Location")
+      conn.disconnect()
+      location = URI(location).resolve(requireNotNull(next)).toString()
+    }
+    throw PodcastProblem("Too many redirects")
+  }
+
+  protected suspend fun feedText(url: String): String =
+    withContext(Dispatchers.IO) {
+      val conn = openPublic(url)
+      try {
+        conn.inputStream.bufferedReader().use { reader ->
+          val text = StringBuilder()
+          val buffer = CharArray(64 * 1024)
+          while (true) {
+            val count = reader.read(buffer)
+            if (count < 0) break
+            text.append(buffer, 0, count)
+            if (text.length > MAX_FEED_CHARS) throw PodcastProblem("Feed is larger than 40 MB")
+          }
+          text.toString()
+        }
+      } finally {
+        conn.disconnect()
+      }
+    }
+
   protected open suspend fun download(episode: Episode, destination: File) =
     withContext(Dispatchers.IO) {
       episode.validate()
       destination.parentFile!!.mkdirs()
       val temp = File(destination.parentFile, destination.name + ".part")
       try {
-        var location = episode.audioUrl
-        var downloaded = false
-        for (attempt in 0..5) {
-          val conn = connection(location)
-          try {
-            val code = conn.responseCode
-            if (code in listOf(301, 302, 303, 307, 308)) {
-              location =
-                URI(location).resolve(requireNotNull(conn.getHeaderField("Location"))).toString()
-              continue
-            }
-            require(code == 200)
-            require(
-              conn.contentType?.substringBefore(';')?.let {
-                it.startsWith("audio/") || it == "application/octet-stream"
-              } == true
-            ) {
-              "Not downloadable audio"
-            }
-            var count = 0L
-            conn.inputStream.use { source ->
-              temp.outputStream().use { output ->
-                val buffer = ByteArray(64 * 1024)
-                while (true) {
-                  val read = source.read(buffer)
-                  if (read < 0) break
-                  count += read
-                  require(count <= 2_000_000_000L) { "Audio exceeds 2 GB limit" }
-                  output.write(buffer, 0, read)
-                }
-                output.fd.sync()
-              }
-            }
-            require(count > 0 && (conn.contentLengthLong < 0 || conn.contentLengthLong == count))
-            replacePodcastFile(temp, destination)
-            downloaded = true
-            break
-          } finally {
-            conn.disconnect()
+        val conn = openPublic(episode.audioUrl)
+        try {
+          require(
+            conn.contentType?.substringBefore(';')?.let {
+              it.startsWith("audio/") || it == "application/octet-stream"
+            } == true
+          ) {
+            "Not downloadable audio"
           }
+          var count = 0L
+          conn.inputStream.use { source ->
+            temp.outputStream().use { output ->
+              val buffer = ByteArray(64 * 1024)
+              while (true) {
+                val read = source.read(buffer)
+                if (read < 0) break
+                count += read
+                require(count <= 2_000_000_000L) { "Audio exceeds 2 GB limit" }
+                output.write(buffer, 0, read)
+              }
+              output.fd.sync()
+            }
+          }
+          require(count > 0 && (conn.contentLengthLong < 0 || conn.contentLengthLong == count))
+          replacePodcastFile(temp, destination)
+        } finally {
+          conn.disconnect()
         }
-        check(downloaded)
       } finally {
         temp.delete()
       }
@@ -156,8 +185,8 @@ abstract class FilePodcastPlatform(protected val root: File) : PodcastPlatform {
   override suspend fun available(section: Section): Boolean =
     withContext(Dispatchers.IO) { audio(section).let { it.isFile && it.length() > 0 } }
 
-  override suspend fun rss(url: String): PlaylistSnapshot {
-    val text = request(url)
+  override suspend fun rss(url: String): RssFeed {
+    val text = feedText(url)
     val factory =
       DocumentBuilderFactory.newInstance().apply {
         setFeature("http://apache.org/xml/features/disallow-doctype-decl", true)
@@ -167,40 +196,30 @@ abstract class FilePodcastPlatform(protected val root: File) : PodcastPlatform {
         isExpandEntityReferences = false
       }
     val document = factory.newDocumentBuilder().parse(text.byteInputStream())
+    val channel = document.getElementsByTagName("channel").item(0) as? Element
+    fun Element.child(name: String) =
+      (0 until childNodes.length)
+        .map { childNodes.item(it) }
+        .firstOrNull { it is Element && it.tagName == name }
+        ?.textContent
+        ?.trim()
+        .orEmpty()
     val items = document.getElementsByTagName("item")
-    val episodes =
-      (0 until items.length).take(1000).map { index ->
+    return RssFeed(
+      channel?.child("title").orEmpty(),
+      (0 until items.length).map { index ->
         val item = items.item(index) as Element
-        fun field(name: String) =
-          item.getElementsByTagName(name).item(0)?.textContent?.trim().orEmpty()
-        val enclosure =
-          item.getElementsByTagName("enclosure").item(0) as? Element ?: error("Missing enclosure")
-        val audioUrl = enclosure.getAttribute("url")
-        val duration = rssDurationMs(field("itunes:duration"))
-        val id = field("guid").ifBlank { audioUrl }
-        Episode(
-          "rss",
-          "$url#$id",
-          field("title"),
-          audioUrl,
-          duration,
-          revision = "rss",
-          audioVersion = digest(audioUrl + "|" + enclosure.getAttribute("length")),
-          extension =
-            when (enclosure.getAttribute("type").substringBefore(';')) {
-              "audio/mp4",
-              "audio/x-m4a" -> "m4a"
-              "audio/ogg" -> "ogg"
-              "audio/flac" -> "flac"
-              else -> "mp3"
-            },
+        val enclosure = item.getElementsByTagName("enclosure").item(0) as? Element
+        RssItem(
+          item.child("guid"),
+          item.child("title"),
+          enclosure?.getAttribute("url").orEmpty(),
+          item.child("itunes:duration"),
+          enclosure?.getAttribute("length").orEmpty(),
+          enclosure?.getAttribute("type").orEmpty(),
         )
-      }
-    val name =
-      document.getElementsByTagName("channel").item(0)?.let {
-        (it as Element).getElementsByTagName("title").item(0)?.textContent
-      } ?: "RSS podcast"
-    return PlaylistSnapshot(name = name, episodes = episodes).also { it.validate() }
+      },
+    )
   }
 }
 

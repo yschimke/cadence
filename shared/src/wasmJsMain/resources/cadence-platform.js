@@ -95,10 +95,17 @@
   async function podcastFile(name, create = false) {
     return fileHandle('opfs:podcasts/audio/' + podcastFileName(name), create);
   }
-  async function podcastFetch(url, options = {}) {
+  // Account requests (with headers) never follow redirects. Public feed/media GETs carry no
+  // credentials, so they follow redirects as podcast tracking prefixes require; the browser still
+  // enforces CORS at every hop and the final URL must remain HTTPS.
+  async function podcastFetch(url, options = {}, follow = false) {
     const parsed = new URL(url);
     if (parsed.protocol !== 'https:' || parsed.username || parsed.password) throw new Error('HTTPS required');
-    const response = await fetch(url, { ...options, credentials: 'omit', redirect: 'error' });
+    let response;
+    try { response = await fetch(url, { ...options, credentials: 'omit', redirect: follow ? 'follow' : 'error' }); }
+    // fetch rejects with TypeError for CORS refusals and network failures alike; neither exposes details.
+    catch (e) { if (e instanceof TypeError) throw new Error('Podcast blocked'); throw e; }
+    if (follow && new URL(response.url).protocol !== 'https:') throw new Error('HTTPS required');
     if (!response.ok) throw new Error('Podcast HTTP ' + response.status);
     return response;
   }
@@ -162,29 +169,25 @@
           return text;
         }
         case 'podcastRss': {
-          const response = await podcastFetch(args.url);
+          const response = await podcastFetch(args.url, {}, true);
           const text = await response.text();
-          if (text.length > 8000000 || /<!DOCTYPE/i.test(text)) throw new Error('Invalid feed');
+          if (text.length > 40000000 || /<!DOCTYPE/i.test(text)) throw new Error('Invalid feed');
           const xml = new DOMParser().parseFromString(text, 'application/xml');
           if (xml.querySelector('parsererror')) throw new Error('Invalid feed');
-          const field = (node, name) => node.getElementsByTagName(name)[0]?.textContent?.trim() || '';
-          const episodes = Array.from(xml.getElementsByTagName('item')).slice(0, 1000).map(item => {
+          const child = (node, name) => Array.from(node?.children || []).find(c => c.tagName === name)?.textContent?.trim() || '';
+          const items = Array.from(xml.getElementsByTagName('item')).map(item => {
             const enclosure = item.getElementsByTagName('enclosure')[0];
-            if (!enclosure) throw new Error('Missing enclosure');
-            const audioUrl = enclosure.getAttribute('url');
-            const type = enclosure.getAttribute('type')?.split(';')[0];
-            return { id: field(item, 'guid') || audioUrl, title: field(item, 'title'), audioUrl,
-              duration: field(item, 'itunes:duration'), length: enclosure.getAttribute('length') || '',
-              extension: type === 'audio/mp4' || type === 'audio/x-m4a' ? 'm4a' : type === 'audio/ogg' ? 'ogg' : type === 'audio/flac' ? 'flac' : 'mp3' };
+            return { guid: child(item, 'guid'), title: child(item, 'title'), audioUrl: enclosure?.getAttribute('url') || '',
+              duration: child(item, 'itunes:duration'), length: enclosure?.getAttribute('length') || '', type: enclosure?.getAttribute('type') || '' };
           });
-          return { name: field(xml.getElementsByTagName('channel')[0], 'title') || 'RSS podcast', episodes };
+          return { name: child(xml.getElementsByTagName('channel')[0], 'title'), items };
         }
         case 'podcastAvailable': {
           try { return (await (await podcastFile(args.fileName)).getFile()).size > 0; }
           catch (e) { if (e.name === 'NotFoundError') return false; throw e; }
         }
         case 'podcastDownload': {
-          const response = await podcastFetch(args.url);
+          const response = await podcastFetch(args.url, {}, true);
           const type = response.headers.get('content-type')?.split(';')[0];
           if (!type || (!type.startsWith('audio/') && type !== 'application/octet-stream')) throw new Error('Not audio');
           if (Number(response.headers.get('content-length')) > 2000000000) throw new Error('Audio exceeds 2 GB');

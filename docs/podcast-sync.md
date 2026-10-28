@@ -5,7 +5,7 @@ preparing local files; then copying those prepared files to a mounted headphone
 volume. The **Podcast sync** card on the home screen opens the shared Android,
 desktop and browser experience. Existing directory profiles remain available.
 
-## What works, and the Pocket Casts blocker
+## Sources, and the Pocket Casts blocker
 
 The implementation supports public podcast RSS enclosures and Cadence JSON
 snapshots. It does **not** log into Pocket Casts or claim that an import is a live
@@ -64,8 +64,10 @@ external blocker, not a hidden experimental login feature.
 
 | Backend | Selection/positions | Exportable audio | Implemented |
 | --- | --- | --- | --- |
-| Pocket Casts | Own-app sync exists; third-party access unverified | Public podcast enclosures may be independently accessible | Capability-gated adapter; manual snapshot input only |
-| Public RSS | Feed items; no account position service | HTTPS, unencrypted enclosures with permission to download | Feed import/refresh, download and preparation |
+| Pocket Casts | Own-app sync exists; third-party access unverified | Public podcast enclosures may be independently accessible | Experimental passive browser helper producing a snapshot |
+| Public RSS | Newest 1–50 feed items; no account position service | HTTPS, unencrypted enclosures with permission to download | Feed import/refresh, download and preparation |
+| gpodder API v2 (gpodder.net, oPodSync) and Nextcloud GPodder Sync | Unfinished episodes and positions (no queue); used by AntennaPod, Kasts, gPodder | Enclosures resolved from each show's public feed | Import; explicit **Send position** with a re-read conflict check |
+| Overcast | "All data" OPML has per-episode `progress` (seconds) and `played`; no queue or durations | Enclosures resolved from each show's public feed | Paste-import of the export file |
 | Cadence JSON snapshot | Explicit selected episodes, positions and revisions | Authorized HTTPS enclosure supplied by user | Import, validation, preparation |
 | Spotify | OAuth playlist metadata and some resume-point reads | API forbids facilitating content downloads; previews are not full episodes | No export adapter |
 | Audible | Vendor account and compatible-device flows | Protected vendor downloads require supported devices | No export or DRM conversion adapter |
@@ -76,22 +78,63 @@ can be imported independently through its publisher's RSS feed; this is not an
 export of Spotify audio. Audible's
 [AudibleSync workflow](https://help.audible.com/s/article/listen-with-audiblesync?language=en_US)
 is Windows-specific and limited to supported devices. Cadence does not decrypt
-or repackage protected audio. Audiobookshelf and gPodder-compatible servers are
-reasonable future backend candidates, but no credentials/server were supplied
-and no adapter for them is claimed here.
+or repackage protected audio. Apple Podcasts, YouTube Music, Castro and Player FM
+offer no export with positions. AntennaPod's database export (SQLite) has the
+queue order and positions in milliseconds and is a candidate for a future file
+import; today AntennaPod users can sync to a gpodder/Nextcloud server instead.
+
+### Sources that only report positions
+
+gpodder and Overcast identify an episode by its show's feed URL and the enclosure
+URL that app played, without the title, duration or current enclosure that a
+download needs. Cadence fetches each show's public feed once and matches the item
+by GUID, then exact enclosure URL, then the enclosure file name (tracking prefixes
+such as Podtrac change over time). It refuses an episode when the feed no longer
+lists it, or when the length the other app measured differs from the feed's
+`itunes:duration` by more than 2% (minimum 30 s): different audio, for example
+re-inserted ads, would put the position in the wrong place. Skipped episodes are
+counted in the import message.
+
+**gpodder.** Cadence reads `GET /api/2/episodes/{user}.json?since=0&aggregated=true`
+(Nextcloud: `GET /index.php/apps/gpoddersync/episode_action?since=0`) with HTTP
+Basic auth, keeps the latest `play` action per episode (action names are
+case-insensitive; Nextcloud uses `-1` for unset) and lists episodes with a
+position more than 30 s before the end, most recently played first. gpodder has
+no queue. **Send position** uploads one `play` action (`started`, `position`,
+`total` in seconds) to `POST /api/2/episodes/{user}.json` or
+`/index.php/apps/gpoddersync/episode_action/create`, using the feed and enclosure
+URLs the other app reported so it recognises the episode. gpodder has no
+conditional write, so Cadence re-reads first and refuses if the episode moved
+since import (or since its own last send); a write racing between that read and
+the upload can still be lost. The password (use a Nextcloud app password) is held
+in memory for the app session and never saved or uploaded. The web app can only
+reach servers that allow cross-origin requests with credentials, which gpodder.net
+and default Nextcloud installs do not; use desktop or Android.
+
+**Overcast.** Overcast has no API. Its **Account → Export OPML (All data)** file
+lists episodes under each feed with `progress` (seconds), `played` and
+`userUpdatedDate`. Cadence imports unplayed episodes with progress, most recently
+updated first. Paste the file contents into **Paste export**. A subscriptions-only
+OPML is rejected with a pointer to the All data export.
 
 ## Use the workflow
 
-1. Open **Podcast sync**. Enter a public HTTPS RSS feed and choose **Sync RSS to
-   app**, or paste a Cadence snapshot below. RSS items must include enclosure URLs
-   and `itunes:duration`; a feed missing durations needs an explicit snapshot.
-   RSS has no account position, so first import starts at zero. Refresh retains
-   Cadence's contiguous position for the same episode/audio version.
+1. Open **Podcast sync** and choose a source under **Import episodes**, and how
+   many episodes (1–50, default 3):
+   - **RSS feed**: the newest episodes of a public HTTPS feed. Items without an
+     HTTPS enclosure or `itunes:duration` are skipped and counted. RSS has no
+     account position, so first import starts at zero; refresh retains Cadence's
+     contiguous position for the same episode/audio version. Feeds may redirect
+     and be up to 40 MB.
+   - **gpodder**: unfinished episodes from a gpodder-compatible account.
+   - **Paste export**: Overcast's All data OPML, a Pocket Casts helper export or a
+     Cadence snapshot.
 2. Choose splitting at the imported position, an optional chunk duration
    (1–120 minutes; 0 disables chunks), and chunk format. Turn off both splitting
    options to retain the original unsplit file. Choose **Download & prepare**.
 3. Review the generated sections. **Mark played** records a durable local
-   acknowledgement. It does not claim the backend was updated.
+   acknowledgement. For gpodder imports, **Send position** then uploads the
+   listened-to position; other sources keep it in Cadence.
 4. Connect the headphones, let the OS mount the storage volume, and use
    **Choose headphone volume**. Choose the volume root, not an existing music
    folder. Then **Copy prepared audio to USB**.
@@ -182,10 +225,12 @@ automatically advance the new revision.
 `PodcastBackend` separates playlist enumeration, snapshot reads, capability flags
 and conditional/idempotent position writes. A future write-capable adapter must
 use `expectedRevision` and a stable `operationId`, re-read on conflict, and expose
-rewinds/reset decisions rather than overwrite them. This release has no verified
-write-capable provider: acknowledgements remain local/cloud metadata, and the UI
-says **Backend writes unavailable**. Mobile backend position writes are therefore
-an external integration blocker, not a completed feature.
+rewinds/reset decisions rather than overwrite them. gpodder is the only source
+that accepts positions, and only by explicit **Send position**: it has no
+conditional write, so Cadence re-reads and compares before uploading (see above);
+it is not a compare-and-set. It was tested against recorded protocol responses,
+not a live server. Other sources keep acknowledgements as local/cloud metadata,
+and the UI says the source does not accept updates.
 
 ## Safe device folder ownership
 
@@ -326,6 +371,31 @@ suite; `:composeApp:assembleDebugAndroidTest` compiles it without that broken ta
   one codec test and one app-launch test, zero failures and zero skipped tests.
   [Instrumentation run/report](https://github.com/yschimke/cadence/actions/runs/40303267743)
   at commit `43eca08`; this does not replace a physical-headphone check.
+
+### Session verification record (2026-10-27): sources and real feeds
+
+- Live desktop run (not checked in) against public feeds: NPR Planet Money, The
+  Daily (301 from art19, 20 MB Simplecast feed), Ask a Spaceman (302 from
+  libsyn), Lex Fridman. All imported the newest episodes. Previously the 8 MB
+  limit and the refusal of feed redirects failed every one of these. One
+  33 MB NPR episode downloaded through four tracking redirects and copied to a
+  temporary volume's `Cadence/podcasts`, leaving an existing `Music/` file intact.
+- Production web build in a browser: imported The Daily and Tech Won't Save Us,
+  and downloaded the latter's 44,626,678-byte episode (its declared length)
+  through tracking redirects to browser storage. Web can read only servers that
+  allow CORS at every hop: of seven sampled hosts, Megaphone, Blubrry,
+  Buzzsprout, Transistor and Omny worked; a libsyn and an Anchor enclosure
+  chain, NPR's feed and Acast's feed refuse cross-origin reads, and The Daily's
+  audio passes a tracker without CORS. These show a CORS-specific message; use
+  desktop or Android for them. USB copy on web needs the OS folder picker and
+  was not exercised.
+- gpodder, Nextcloud GPodder and Overcast parsing, feed matching, length
+  mismatch refusal and the send-position conflict check are covered by
+  `PodcastSourcesTest` with recorded response shapes. No live gpodder server or
+  Overcast export was available, so those are protocol tests, not live checks.
+- Rendered `PodcastImportedPreview` and `PodcastPreparedPreview`.
+- FFmpeg was not installed on this machine, so `realAudioClippingAndOwnedFolderExport`
+  failed to start locally; CI installs FFmpeg.
 
 Before is the published main app; after images are from the locally built
 production Wasm app using generated test audio. The mobile image is a responsive

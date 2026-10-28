@@ -82,8 +82,8 @@ the page is reloaded.
    await cadencePocket.download('playlist-id-from-list')
    ```
 
-   This downloads `cadence-pocketcasts.json` locally. Import its JSON using
-   Cadence's **Import snapshot**, then prepare and copy audio normally. Before
+   This downloads `cadence-pocketcasts.json` locally. Paste its JSON into
+   Cadence's **Import episodes → Paste export**, then prepare and copy audio normally. Before
    relying on it, compare at least one episode's duration and imported position
    with the web player. The published protocol uses seconds; the snapshot uses
    milliseconds. Its revision is a browser capture revision, not a server CAS

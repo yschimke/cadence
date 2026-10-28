@@ -9,6 +9,19 @@ import kotlinx.serialization.json.*
 actual fun rememberPodcastPlatform(): PodcastPlatform = remember { BrowserPodcastPlatform() }
 
 class BrowserPodcastPlatform : PodcastPlatform {
+  private suspend fun call(op: String, args: String): String =
+    try {
+      browserCall(op, args)
+    } catch (e: Exception) {
+      if (e.message?.endsWith("Podcast blocked") == true)
+        throw PodcastProblem(
+          "This server doesn't let web apps read it (CORS), or the network is offline. Use the desktop or Android app for this source."
+        )
+      if (e.message?.endsWith("Podcast HTTP 404") == true)
+        throw PodcastProblem("Not found (HTTP 404). Check the server URL and server type.")
+      throw e
+    }
+
   override val splitFormats = emptySet<String>()
   override val description =
     "Web: unsplit downloads to browser storage. Feed/audio servers must allow CORS. USB copies require HTTPS and Chrome/Edge desktop's writable directory picker. Safari, Firefox and mobile browsers do not support this USB workflow."
@@ -34,7 +47,7 @@ class BrowserPodcastPlatform : PodcastPlatform {
     }
     val response =
       try {
-        browserCall("podcastRequest", args.toString())
+        call("podcastRequest", args.toString())
       } catch (e: Exception) {
         if (e.message?.endsWith("Podcast HTTP 409") == true)
           throw PodcastProblem(
@@ -45,41 +58,37 @@ class BrowserPodcastPlatform : PodcastPlatform {
             e.message?.endsWith("Podcast HTTP 403") == true
         )
           throw PodcastProblem(
-            "Sign in again or check the cloud project's authentication and row policies."
+            "The server refused the sign-in. Check the user name and password (or the cloud project's row policies) and sign in again."
           )
         throw e
       }
     return Json.parseToJsonElement(response).jsonPrimitive.content
   }
 
-  override suspend fun rss(url: String): PlaylistSnapshot {
-    val raw =
-      Json.parseToJsonElement(browserCall("podcastRss", browserArgs("url" to url))).jsonObject
-    val episodes =
-      raw.getValue("episodes").jsonArray.map { node ->
+  override suspend fun rss(url: String): RssFeed {
+    val raw = Json.parseToJsonElement(call("podcastRss", browserArgs("url" to url))).jsonObject
+    return RssFeed(
+      raw.getValue("name").jsonPrimitive.content,
+      raw.getValue("items").jsonArray.map { node ->
         val item = node.jsonObject
         fun field(name: String) = item.getValue(name).jsonPrimitive.content
-        val audio = field("audioUrl")
-        Episode(
-          "rss",
-          "$url#${field("id")}",
+        RssItem(
+          field("guid"),
           field("title"),
-          audio,
-          rssDurationMs(field("duration")),
-          revision = "rss",
-          audioVersion = digest(audio + "|" + field("length")),
-          extension = field("extension"),
+          field("audioUrl"),
+          field("duration"),
+          field("length"),
+          field("type"),
         )
-      }
-    return PlaylistSnapshot(name = raw.getValue("name").jsonPrimitive.content, episodes = episodes)
-      .also { it.validate() }
+      },
+    )
   }
 
   override suspend fun prepare(episode: Episode, sections: List<Section>) {
     require(
       sections.size == 1 && sections[0].startMs == 0L && sections[0].endMs == episode.durationMs
     )
-    browserCall(
+    call(
       "podcastDownload",
       browserArgs("url" to episode.audioUrl, "fileName" to sections.single().fileName),
     )

@@ -29,7 +29,7 @@ open class AndroidPodcastPlatform(private val context: Context) : FilePodcastPla
   override val splitFormats = setOf("m4a")
   override val description = "Android: HTTPS downloads, Media3 AAC/M4A chunks and USB copying through the system document picker. The OS must expose the headphone volume. No raw USB block access. Keep the app open while syncing."
 
-  override suspend fun rss(url: String) = parseAndroidRss(request(url), url)
+  override suspend fun rss(url: String) = parseAndroidRss(feedText(url))
 
   override suspend fun prepare(episode: Episode, sections: List<Section>) {
     val whole = sections.size == 1 && sections[0].startMs == 0L && sections[0].endMs == episode.durationMs
