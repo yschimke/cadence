@@ -59,6 +59,7 @@ fun main() {
 
         override fun open(suggestion: SourceSuggestion) {}
       },
+      PortableSourceBrowser(repo, backend),
     )
   removeBootMessage()
   ComposeViewport {

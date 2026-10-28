@@ -8,16 +8,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import ee.schimke.cadence.AndroidMaterialTheme
 import ee.schimke.cadence.bluetooth.BluetoothControlsContent
 import ee.schimke.cadence.datastore.proto.Device
 import ee.schimke.cadence.datastore.proto.SyncPreferences
+import ee.schimke.cadence.home.HomeActions
 import ee.schimke.cadence.home.HomeContent
-import ee.schimke.cadence.home.HomeViewModel
 import ee.schimke.cadence.preview.PreviewFixtures
 import ee.schimke.cadence.sync.FileSyncContent
 import ee.schimke.cadence.sync.FileSyncViewModel
 import ee.schimke.cadence.sync.ManageSyncContent
-import ee.schimke.cadence.theme.CadenceTheme
 
 /**
  * Canonical Play Store screenshot sources.
@@ -73,32 +73,13 @@ private const val TABLET_10IN = "spec:width=800dp,height=1280dp,dpi=320"
 private val themedModifier
   @Composable get() = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)
 
-private val homeState =
-  HomeViewModel.UiState(
-    profiles =
-      listOf(
-        PreviewFixtures.podcastsProfile,
-        PreviewFixtures.swimProfile,
-        PreviewFixtures.audiobooksProfile,
-      ),
-    sources = PreviewFixtures.sources,
-    preferences = SyncPreferences(),
-    bluetooth = PreviewFixtures.btConnectedPlaying,
-    attachedDevice = null,
-  )
-
 @Composable
 private fun HomeScene() {
   HomeContent(
-    state = homeState,
-    onRefreshProfile = {},
-    onToggleAutoRefresh = { _, _ -> },
-    onAddProfile = {},
-    onManageSync = {},
-    onBookmarks = {},
-    onFileExplorer = {},
-    onBluetoothControls = {},
-    onSwitchToSync = {},
+    state = PreviewFixtures.libraryState.copy(bluetooth = PreviewFixtures.btConnectedPlaying),
+    podcasts = PreviewFixtures.podcastState,
+    actions = HomeActions(),
+    canRefreshPodcasts = true,
     modifier = themedModifier,
   )
 }
@@ -130,7 +111,7 @@ private fun syncReadyState(): FileSyncViewModel.UiState =
 )
 @Composable
 internal fun PlayStorePhoneHomeLight() {
-  CadenceTheme(darkTheme = false) { HomeScene() }
+  AndroidMaterialTheme(darkTheme = false) { HomeScene() }
 }
 
 /** Play Store phone screenshot 2/5 → `phone-screenshots/02-home-dark.png`. */
@@ -142,7 +123,7 @@ internal fun PlayStorePhoneHomeLight() {
 )
 @Composable
 internal fun PlayStorePhoneHomeDark() {
-  CadenceTheme(darkTheme = true) { HomeScene() }
+  AndroidMaterialTheme(darkTheme = true) { HomeScene() }
 }
 
 /** Play Store phone screenshot 3/5 → `phone-screenshots/03-sync.png`. */
@@ -154,7 +135,7 @@ internal fun PlayStorePhoneHomeDark() {
 )
 @Composable
 internal fun PlayStorePhoneSync() {
-  CadenceTheme(darkTheme = false) {
+  AndroidMaterialTheme(darkTheme = false) {
     FileSyncContent(
       state = syncReadyState(),
       onStartSync = {},
@@ -175,7 +156,7 @@ internal fun PlayStorePhoneSync() {
 )
 @Composable
 internal fun PlayStorePhoneBluetooth() {
-  CadenceTheme(darkTheme = false) {
+  AndroidMaterialTheme(darkTheme = false) {
     BluetoothControlsContent(
       modifier = themedModifier,
       state = PreviewFixtures.btConnectedPlaying,
@@ -207,7 +188,7 @@ internal fun PlayStorePhoneBluetooth() {
 )
 @Composable
 internal fun PlayStorePhoneManage() {
-  CadenceTheme(darkTheme = false) {
+  AndroidMaterialTheme(darkTheme = false) {
     ManageSyncContent(
       modifier = themedModifier,
       state = PreviewFixtures.fileSyncPopulated(),
@@ -238,7 +219,7 @@ internal fun PlayStorePhoneManage() {
 )
 @Composable
 internal fun PlayStoreSevenInchHomeLight() {
-  CadenceTheme(darkTheme = false) { HomeScene() }
+  AndroidMaterialTheme(darkTheme = false) { HomeScene() }
 }
 
 /** Play Store 7" tablet screenshot 2/2 → `seven-inch-screenshots/02-home-dark.png`. */
@@ -250,7 +231,7 @@ internal fun PlayStoreSevenInchHomeLight() {
 )
 @Composable
 internal fun PlayStoreSevenInchHomeDark() {
-  CadenceTheme(darkTheme = true) { HomeScene() }
+  AndroidMaterialTheme(darkTheme = true) { HomeScene() }
 }
 
 // ---- 10" tablet -----------------------------------------------------------
@@ -265,7 +246,7 @@ internal fun PlayStoreSevenInchHomeDark() {
 )
 @Composable
 internal fun PlayStoreTenInchHomeLight() {
-  CadenceTheme(darkTheme = false) { HomeScene() }
+  AndroidMaterialTheme(darkTheme = false) { HomeScene() }
 }
 
 /** Play Store 10" tablet screenshot 2/2 → `ten-inch-screenshots/02-home-dark.png`. */
@@ -277,5 +258,5 @@ internal fun PlayStoreTenInchHomeLight() {
 )
 @Composable
 internal fun PlayStoreTenInchHomeDark() {
-  CadenceTheme(darkTheme = true) { HomeScene() }
+  AndroidMaterialTheme(darkTheme = true) { HomeScene() }
 }

@@ -12,6 +12,14 @@ import ee.schimke.cadence.datastore.proto.SourceKind
 import ee.schimke.cadence.datastore.proto.SyncPreferences
 import ee.schimke.cadence.datastore.proto.SyncProfile
 import ee.schimke.cadence.datastore.proto.SyncSource
+import ee.schimke.cadence.home.HomeViewModel
+import ee.schimke.cadence.podcasts.Episode
+import ee.schimke.cadence.podcasts.LocalPodcastState
+import ee.schimke.cadence.podcasts.POCKET_CASTS_UP_NEXT
+import ee.schimke.cadence.podcasts.PlaylistSnapshot
+import ee.schimke.cadence.podcasts.PodcastLibrary
+import ee.schimke.cadence.podcasts.PodcastSourceKind
+import ee.schimke.cadence.sync.BrowsedItem
 import ee.schimke.cadence.sync.FileSyncViewModel
 import ee.schimke.cadence.sync.RefreshProgress
 import ee.schimke.cadence.sync.SourceSuggestion
@@ -303,4 +311,68 @@ internal object PreviewFixtures {
   fun fileSyncSyncing(): FileSyncViewModel.UiState = fileSyncPopulated().copy(sync = syncRunning)
 
   fun fileSyncDone(): FileSyncViewModel.UiState = fileSyncPopulated().copy(sync = syncDone)
+
+  // ---- Library fixtures -------------------------------------------------
+
+  private fun file(source: String, path: String, megabytes: Long) =
+    BrowsedItem(source, path.substringAfterLast('/'), "", megabytes * 1_000_000, path)
+
+  val libraryContents: Map<String, HomeViewModel.SourceContents> =
+    mapOf(
+      "src-podbean" to
+        HomeViewModel.SourceContents(
+          listOf(
+            file("src-podbean", "Morning Briefing/2026-10-28.mp3", 38),
+            file("src-podbean", "Morning Briefing/2026-10-27.mp3", 41),
+            file("src-podbean", "Tides/412 Tides of the Pacific.mp3", 74),
+          )
+        ),
+      "src-drive-swim" to
+        HomeViewModel.SourceContents(
+          (1..8).map { file("src-drive-swim", "Intervals/Set $it.mp3", 9L + it) }
+        ),
+      "src-nas" to
+        HomeViewModel.SourceContents(
+          error = "Can't read this folder. Add it again to restore access."
+        ),
+    )
+
+  val libraryState =
+    HomeViewModel.UiState(
+      profiles = listOf(podcastsProfile, swimProfile, audiobooksProfile),
+      sources = sources,
+      contents = libraryContents,
+    )
+
+  private fun episode(id: String, title: String, minutes: Long, heard: Long) =
+    Episode(
+      "pocket-casts",
+      id,
+      title,
+      "https://cdn.example/$id.mp3",
+      minutes * 60_000,
+      heard * 60_000,
+      "pocketcasts:${heard * 60_000}",
+      "v1",
+    )
+
+  val podcastState =
+    LocalPodcastState(
+      library =
+        PodcastLibrary(
+          playlist =
+            PlaylistSnapshot(
+              name = "Pocket Casts Up Next",
+              episodes =
+                listOf(
+                  episode("e1", "412 — Tides of the Pacific", 52, 21),
+                  episode("e2", "Lighthouses of the North Sea", 45, 5),
+                  episode("e3", "Why the ocean is salty", 38, 0),
+                ),
+            ),
+          source = PodcastSourceKind.PocketCasts,
+          sourceList = POCKET_CASTS_UP_NEXT,
+          lastBackendSync = "2026-10-28T08:15:00Z",
+        )
+    )
 }

@@ -23,11 +23,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import ee.schimke.cadence.theme.CadenceTheme
 
 // A theme-foundation showcase: colour roles, a tonal-elevation strip and a type
-// ramp rendered as a single tile, for the custom CadenceTheme and the untinted
-// Material 3 baseline (light + dark each). Published in the design catalog so
+// ramp rendered as a single tile, for the untinted Material 3 baseline (light +
+// dark), which desktop and the browser use; Android uses dynamic colour. Published in the design
+// catalog so
 // the theme foundations sit alongside the screens and components that use them.
 
 @Composable
@@ -86,22 +86,6 @@ private fun ThemeFoundation(title: String, tagline: String) {
         Text("LABEL", style = MaterialTheme.typography.labelLarge, color = cs.primary)
       }
     }
-  }
-}
-
-@Preview(name = "Foundation — Cadence light", showBackground = true)
-@Composable
-internal fun FoundationCadenceLightPreview() {
-  CadenceTheme(darkTheme = false) {
-    ThemeFoundation("Cadence", "Light · Coastal Blue · Manrope / Inter")
-  }
-}
-
-@Preview(name = "Foundation — Cadence dark", showBackground = true)
-@Composable
-internal fun FoundationCadenceDarkPreview() {
-  CadenceTheme(darkTheme = true) {
-    ThemeFoundation("Cadence", "Dark · Coastal Blue · Manrope / Inter")
   }
 }
 

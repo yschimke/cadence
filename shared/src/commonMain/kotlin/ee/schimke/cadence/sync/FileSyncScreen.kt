@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
@@ -44,6 +45,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import ee.schimke.cadence.datastore.proto.SyncProfile
@@ -245,12 +248,20 @@ private fun SyncReadyRow(
 ) {
   val hasError = profile.last_error.isNotBlank()
   ElevatedCard(modifier = Modifier.fillMaxWidth()) {
-    Row(modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
-      Checkbox(
-        checked = checked && !hasError,
-        onCheckedChange = onCheckedChange,
-        enabled = !hasError,
-      )
+    // The whole row toggles, so the profile name is the checkbox's accessible name.
+    Row(
+      modifier =
+        Modifier.fillMaxWidth()
+          .toggleable(
+            checked && !hasError,
+            enabled = !hasError,
+            role = Role.Checkbox,
+            onValueChange = onCheckedChange,
+          )
+          .padding(16.dp),
+      verticalAlignment = Alignment.CenterVertically,
+    ) {
+      Checkbox(checked = checked && !hasError, onCheckedChange = null, enabled = !hasError)
       Spacer(Modifier.width(8.dp))
       Column(Modifier.weight(1f)) {
         Text(

@@ -54,13 +54,18 @@ abstract class FilePodcastPlatform(protected val root: File) : PodcastPlatform {
             conn.outputStream.use { it.write(body.toByteArray()) }
           }
           when (conn.responseCode) {
+            400 -> throw PodcastProblem("The server rejected the request (HTTP 400).", 400)
             401,
             403 ->
               throw PodcastProblem(
-                "The server refused the sign-in. Check the user name and password (or the cloud project's row policies) and sign in again."
+                "The server refused the sign-in. Check the user name and password (or the cloud project's row policies) and sign in again.",
+                conn.responseCode,
               )
             404 ->
-              throw PodcastProblem("Not found (HTTP 404). Check the server URL and server type.")
+              throw PodcastProblem(
+                "Not found (HTTP 404). Check the server URL and server type.",
+                404,
+              )
             409 ->
               throw PodcastProblem(
                 "Cloud revision conflict. Restore cloud configuration, reapply local settings, and save again."

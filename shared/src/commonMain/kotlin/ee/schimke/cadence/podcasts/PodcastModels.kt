@@ -160,10 +160,23 @@ fun advancedPosition(episode: Episode, completions: List<Completion>): Long {
   return position
 }
 
+/** Where the current playlist came from, so it can be refreshed from the same place. */
+@Serializable
+enum class PodcastSourceKind {
+  PocketCasts,
+  Rss,
+  Gpodder,
+  Overcast,
+  Snapshot,
+}
+
 @Serializable
 data class PodcastLibrary(
   val schema: Int = 1,
   val playlist: PlaylistSnapshot? = null,
+  val source: PodcastSourceKind? = null,
+  // The Pocket Casts list (Up Next, In progress or a playlist id) for a Pocket Casts source.
+  val sourceList: String = "",
   val feedUrl: String = "",
   val feedLatest: Int = 3,
   val config: Segmentation = Segmentation(),
@@ -208,6 +221,7 @@ data class LocalPodcastState(
   val gpodder: GpodderAccount = GpodderAccount(),
   // Positions this device sent to the source, by episode key, for the status shown per episode.
   val sentPositions: Map<String, Long> = emptyMap(),
+  val pocketCasts: PocketCastsSession = PocketCastsSession(),
 )
 
 /** Capability checks precede any authentication, download or write. */
@@ -242,7 +256,7 @@ object PocketCastsBackend : PodcastBackend {
       false,
       false,
       false,
-      "Pocket Casts has no verified supported third-party playlist/download/position-write API. Import an explicit snapshot with authorized HTTPS audio; positions remain local. This is not a Pocket Casts export format.",
+      "Pocket Casts has no public API. Cadence reads Up Next, in-progress episodes and manual playlists through its private web-player API (see PocketCastsApi); positions are not written back.",
     )
 
   override suspend fun playlists(): List<String> = error(capabilities.explanation)
@@ -397,7 +411,10 @@ fun deviceManifest(library: PodcastLibrary): DeviceManifest =
       }
   )
 
-class PodcastProblem(message: String) : Exception(message)
+/**
+ * A failure safe to show as-is. [status] is the HTTP status when the server refused the request.
+ */
+class PodcastProblem(message: String, val status: Int = 0) : Exception(message)
 
 fun validateAudioFileName(name: String) {
   require(

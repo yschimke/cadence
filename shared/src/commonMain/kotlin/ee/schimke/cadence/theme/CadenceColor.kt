@@ -1,18 +1,13 @@
 package ee.schimke.cadence.theme
 
-import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.Color
 
 /**
- * Cadence palette, three seeds from the swim/headphones visual world:
+ * Fixed colours for surfaces that can't follow the app's dynamic Material 3 theme, such as the home
+ * screen widget. Cadence palette, three seeds from the swim/headphones visual world:
  * - Coastal Blue (deep ocean / device body finish) → primary
  * - Amber accent (warm action colour) → secondary
  * - Pool Aqua (sync-complete / safe states) → tertiary
- *
- * Tonal roles below are derived from those seeds via Material 3 tonal palettes. Light and dark
- * schemes are tuned for the same hue family so switching modes keeps the Cadence identity
- * consistent.
  */
 internal object CadencePalette {
   // Primary — Coastal Blue
@@ -51,52 +46,3 @@ internal object CadencePalette {
   val GreyVariant80 = Color(0xFFC0C8CF)
   val GreyVariant90 = Color(0xFFDDE3EA)
 }
-
-internal val CadenceLightColors =
-  lightColorScheme(
-    primary = CadencePalette.Blue40,
-    onPrimary = Color.White,
-    primaryContainer = CadencePalette.Blue90,
-    onPrimaryContainer = CadencePalette.Blue10,
-    secondary = CadencePalette.Orange40,
-    onSecondary = Color.White,
-    secondaryContainer = CadencePalette.Orange90,
-    onSecondaryContainer = CadencePalette.Orange10,
-    tertiary = CadencePalette.Aqua40,
-    onTertiary = Color.White,
-    tertiaryContainer = CadencePalette.Aqua90,
-    onTertiaryContainer = CadencePalette.Aqua20,
-    error = CadencePalette.Red40,
-    onError = Color.White,
-    errorContainer = CadencePalette.Red90,
-    background = CadencePalette.Grey99,
-    onBackground = CadencePalette.Grey10,
-    surface = CadencePalette.Grey99,
-    onSurface = CadencePalette.Grey10,
-    surfaceVariant = CadencePalette.GreyVariant90,
-    onSurfaceVariant = CadencePalette.GreyVariant30,
-  )
-
-internal val CadenceDarkColors =
-  darkColorScheme(
-    primary = CadencePalette.Blue80,
-    onPrimary = CadencePalette.Blue20,
-    primaryContainer = CadencePalette.Blue20,
-    onPrimaryContainer = CadencePalette.Blue90,
-    secondary = CadencePalette.Orange80,
-    onSecondary = CadencePalette.Orange20,
-    secondaryContainer = CadencePalette.Orange30,
-    onSecondaryContainer = CadencePalette.Orange90,
-    tertiary = CadencePalette.Aqua80,
-    onTertiary = CadencePalette.Aqua20,
-    tertiaryContainer = CadencePalette.Aqua20,
-    onTertiaryContainer = CadencePalette.Aqua90,
-    error = CadencePalette.Red80,
-    errorContainer = Color(0xFF93000A),
-    background = CadencePalette.Grey10,
-    onBackground = CadencePalette.Grey90,
-    surface = CadencePalette.Grey10,
-    onSurface = CadencePalette.Grey90,
-    surfaceVariant = CadencePalette.GreyVariant30,
-    onSurfaceVariant = CadencePalette.GreyVariant80,
-  )
