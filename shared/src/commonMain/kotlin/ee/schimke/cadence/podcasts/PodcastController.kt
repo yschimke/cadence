@@ -27,7 +27,8 @@ interface PodcastPlatform {
     body: String? = null,
   ): String
 
-  suspend fun rss(url: String): PlaylistSnapshot
+  /** Fetches and parses a public feed, following HTTPS redirects without credentials. */
+  suspend fun rss(url: String): RssFeed
 
   suspend fun prepare(episode: Episode, sections: List<Section>)
 
@@ -51,6 +52,7 @@ class PodcastController(val platform: PodcastPlatform) {
             config =
               Segmentation(
                 splitAtPosition = platform.splitFormats.isNotEmpty(),
+                skipListened = platform.splitFormats.isNotEmpty(),
                 chunkFormat = if ("mp3" in platform.splitFormats) "mp3" else "m4a",
               )
           )
@@ -63,14 +65,18 @@ class PodcastController(val platform: PodcastPlatform) {
   private var token = ""
   private var authenticatedUser = ""
   private var authenticatedUrl = ""
+  private var gpodderPassword = ""
+  // A successful action's summary, shown instead of the generic "Saved".
+  private var notice: String? = null
 
   suspend fun run(action: suspend PodcastController.() -> Unit) = lock.withLock {
     busy.value = true
     try {
       status.value = "Working…"
       publish()
+      notice = null
       action()
-      status.value = "Saved"
+      status.value = notice ?: "Saved"
     } catch (e: CancellationException) {
       status.value = "Cancelled · last saved library retained"
       throw e
@@ -130,9 +136,9 @@ class PodcastController(val platform: PodcastPlatform) {
     )
   }
 
-  suspend fun importRss(url: String) {
-    require(url.startsWith("https://"))
-    val snapshot = RssBackend(platform, url).snapshot(url)
+  suspend fun importRss(url: String, latest: Int = state.value.library.feedLatest) {
+    if (!url.startsWith("https://")) throw PodcastProblem("Enter an HTTPS feed URL")
+    val (snapshot, skipped) = RssBackend(platform, url, latest).read()
     // RSS carries no account position; retain this app's position for matching enclosure versions.
     val old = state.value.library
     val episodes =
@@ -145,7 +151,106 @@ class PodcastController(val platform: PodcastPlatform) {
         else episode.copy(positionMs = advancedPosition(previous, old.completions))
       }
     importSnapshot(podcastJson.encodeToString(snapshot.copy(episodes = episodes)))
-    save(state.value.copy(library = state.value.library.copy(feedUrl = url)))
+    save(state.value.copy(library = state.value.library.copy(feedUrl = url, feedLatest = latest)))
+    notice =
+      "Imported the latest ${count(episodes.size, "episode")} of ${snapshot.name}" +
+        if (skipped > 0) " · skipped $skipped without HTTPS audio or duration" else ""
+  }
+
+  /** Detects a Cadence snapshot (JSON) or an Overcast "All data" OPML export. */
+  suspend fun importText(text: String, latest: Int = state.value.library.feedLatest) {
+    val trimmed = text.trim()
+    when {
+      trimmed.startsWith("{") -> {
+        importSnapshot(trimmed)
+        notice = "Imported ${count(state.value.library.playlist?.episodes?.size ?: 0, "episode")}"
+      }
+      trimmed.contains("<opml", ignoreCase = true) -> {
+        val (snapshot, skipped) =
+          resolveProgress(
+            platform,
+            "overcast",
+            "Overcast in progress",
+            overcastProgress(trimmed, latest),
+          )
+        importResolved(snapshot, skipped, "Overcast")
+      }
+      else ->
+        throw PodcastProblem(
+          "Paste a Cadence snapshot (JSON) or an Overcast All data export (OPML)."
+        )
+    }
+  }
+
+  private suspend fun importResolved(snapshot: PlaylistSnapshot, skipped: Int, source: String) {
+    importSnapshot(podcastJson.encodeToString(snapshot))
+    notice =
+      "Imported ${count(snapshot.episodes.size, "in-progress episode")} from $source" +
+        if (skipped > 0) " · skipped $skipped not found in their feeds or with changed audio"
+        else ""
+  }
+
+  /** Reads unfinished episodes from a gpodder-compatible server; the password stays in memory. */
+  suspend fun importGpodder(
+    account: GpodderAccount,
+    password: String,
+    latest: Int = state.value.library.feedLatest,
+  ) {
+    account.validate()
+    if (password.isBlank()) throw PodcastProblem("Enter the sync password or app password")
+    val body = platform.request(account.actionsUrl(), headers = account.headers(password))
+    gpodderPassword = password
+    save(state.value.copy(gpodder = account))
+    val progress = gpodderProgress(gpodderPlays(body), latest)
+    if (progress.isEmpty())
+      throw PodcastProblem(
+        "No unfinished episodes on this account. Play something in your podcast app first."
+      )
+    val (snapshot, skipped) = resolveProgress(platform, "gpodder", "gpodder in progress", progress)
+    importResolved(
+      snapshot,
+      skipped,
+      account.server.substringAfter("https://").substringBefore('/'),
+    )
+  }
+
+  /**
+   * Sends the locally advanced position back to the gpodder account. gpodder has no conditional
+   * write, so this re-reads the episode first and refuses if another app moved it since import.
+   */
+  suspend fun sendPosition(episodeKey: String) {
+    val manifest =
+      state.value.library.manifests.firstOrNull { it.episode.key == episodeKey }
+        ?: throw PodcastProblem("Prepare the episode first")
+    val episode = manifest.episode
+    if (episode.backend != "gpodder") throw PodcastProblem("Only gpodder imports accept positions")
+    val account = state.value.gpodder
+    if (gpodderPassword.isBlank()) throw PodcastProblem("Import from gpodder again to sign in")
+    val position = advancedPosition(episode, state.value.library.completions)
+    if (position <= episode.positionMs) throw PodcastProblem("Mark sections played first")
+    val (podcast, audio) = episode.id.split(' ', limit = 2)
+    val current =
+      gpodderPlays(
+          platform.request(account.actionsUrl(), headers = account.headers(gpodderPassword))
+        )
+        .firstOrNull { it.podcast == podcast && it.episode == audio }
+    val unchanged = current?.let { "gpodder:${it.timestamp}:${it.position}" } == episode.revision
+    // A later send from this device is also expected state.
+    val ownSend =
+      state.value.sentPositions[episodeKey]?.let { current?.position == it / 1000 } == true
+    if (!unchanged && !ownSend)
+      throw PodcastProblem(
+        "This episode moved in another app since import. Import again before sending a position."
+      )
+    platform.request(
+      account.uploadUrl(),
+      "POST",
+      account.headers(gpodderPassword),
+      gpodderUpload(episode, position, gpodderTimestamp(Clock.System.now().toString())),
+    )
+    save(state.value.copy(sentPositions = state.value.sentPositions + (episodeKey to position)))
+    notice =
+      "Sent ${formatTime(position)} to ${account.server.substringAfter("https://").substringBefore('/')}"
   }
 
   suspend fun configure(config: Segmentation) {
@@ -166,15 +271,23 @@ class PodcastController(val platform: PodcastPlatform) {
     val manifests =
       playlist.episodes.map { Manifest(it, library.config, segment(it, library.config)) }
     if (
-      manifests.any { m -> m.sections.size > 1 && m.config.chunkFormat !in platform.splitFormats }
+      manifests.any { m ->
+        (m.sections.size > 1 || m.sections.first().startMs > 0) &&
+          m.config.chunkFormat !in platform.splitFormats
+      }
     )
       throw PodcastProblem(
         "Choose a supported chunk format: Android uses M4A, desktop supports MP3/M4A, web requires unsplit audio."
       )
     // Publish the manifest and readiness only after every audio file is committed.
-    manifests.forEach { platform.prepare(it.episode, it.sections) }
+    manifests.forEachIndexed { index, manifest ->
+      status.value = "Downloading ${index + 1} of ${manifests.size}: ${manifest.episode.title}"
+      publish()
+      platform.prepare(manifest.episode, manifest.sections)
+    }
     val sections = manifests.flatMap { it.sections }
     require(sections.all { platform.available(it) })
+    notice = "Ready: ${count(manifests.size, "episode")} in ${count(sections.size, "file")}"
     save(
       state.value.copy(
         library = library.copy(manifests = manifests),
@@ -226,6 +339,8 @@ class PodcastController(val platform: PodcastPlatform) {
       podcastJson.encodeToString(deviceManifest(state.value.library)),
     )
     save(state.value.copy(copiedSectionIds = sections.map { it.id }.toSet()))
+    notice =
+      "Copied ${count(sections.size, "file")} to the headphones. Eject the volume before unplugging."
   }
 
   private suspend fun recheckReady() {
@@ -297,6 +412,10 @@ class PodcastController(val platform: PodcastPlatform) {
     signedIn.value = true
   }
 
+  fun forgetGpodderPassword() {
+    gpodderPassword = ""
+  }
+
   fun signOut() {
     token = ""
     authenticatedUser = ""
@@ -359,3 +478,5 @@ class PodcastController(val platform: PodcastPlatform) {
     recheckReady()
   }
 }
+
+private fun count(n: Int, noun: String) = "$n $noun" + if (n == 1) "" else "s"

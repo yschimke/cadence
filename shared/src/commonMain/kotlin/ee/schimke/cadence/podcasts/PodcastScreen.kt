@@ -3,10 +3,13 @@ package ee.schimke.cadence.podcasts
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -33,6 +36,12 @@ fun PodcastScreen(controller: PodcastController) {
     scope.launch { controller.run(block) }
   }
   var snapshot by rememberSaveable { mutableStateOf("") }
+  var source by rememberSaveable { mutableStateOf(ImportSource.Rss) }
+  var latest by rememberSaveable { mutableStateOf(local.library.feedLatest) }
+  var flavor by rememberSaveable { mutableStateOf(local.gpodder.flavor) }
+  var server by rememberSaveable { mutableStateOf(local.gpodder.server) }
+  var user by rememberSaveable { mutableStateOf(local.gpodder.user) }
+  var gpodderPassword by remember { mutableStateOf("") }
   var rss by rememberSaveable { mutableStateOf("") }
   var chunks by rememberSaveable { mutableStateOf(local.library.config.chunkMinutes.toString()) }
   var url by rememberSaveable { mutableStateOf(local.cloudUrl) }
@@ -47,7 +56,7 @@ fun PodcastScreen(controller: PodcastController) {
     url = local.cloudUrl
     key = local.cloudKey
   }
-  LaunchedEffect(library.feedUrl) { rss = library.feedUrl }
+  LaunchedEffect(library.feedUrl) { if (library.feedUrl.isNotBlank()) rss = library.feedUrl }
   LaunchedEffect(library.config.chunkMinutes) { chunks = library.config.chunkMinutes.toString() }
   Surface(Modifier.fillMaxSize()) {
     Column {
@@ -72,55 +81,167 @@ fun PodcastScreen(controller: PodcastController) {
         item {
           ElevatedCard {
             Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-              Text("Pocket Casts", style = MaterialTheme.typography.titleLarge)
-              Text(PocketCastsBackend.capabilities.explanation)
-              Text(
-                "Spotify and Audible audio export are unavailable. Public podcast RSS with downloadable audio is supported below."
-              )
-              OutlinedTextField(
-                rss,
-                { rss = it },
-                label = { Text("Public RSS feed (HTTPS)") },
-                modifier = Modifier.fillMaxWidth(),
-              )
-              Button(enabled = !busy && rss.isNotBlank(), onClick = { action { importRss(rss) } }) {
-                Text("Sync RSS to app")
+              Text("Import episodes", style = MaterialTheme.typography.titleLarge)
+              Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                ImportSource.entries.forEach {
+                  FilterChip(source == it, { source = it }, label = { Text(it.label) })
+                }
               }
-              OutlinedTextField(
-                snapshot,
-                { snapshot = it },
-                label = { Text("Playlist snapshot JSON (see setup guide)") },
-                maxLines = 5,
-                modifier =
-                  Modifier.fillMaxWidth().semantics {
-                    contentDescription = "Playlist snapshot JSON (see setup guide)"
-                  },
-              )
-              OutlinedButton(
-                enabled = !busy && snapshot.isNotBlank(),
-                onClick = { action { importSnapshot(snapshot) } },
-              ) {
-                Text("Import snapshot")
+              Row(verticalAlignment = Alignment.CenterVertically) {
+                Text("Episodes: $latest", Modifier.weight(1f))
+                TextButton(enabled = latest > 1, onClick = { latest-- }) { Text("Fewer") }
+                TextButton(enabled = latest < MAX_FEED_EPISODES, onClick = { latest++ }) {
+                  Text("More")
+                }
               }
-              Text("Last backend import: ${library.lastBackendSync}")
+              when (source) {
+                ImportSource.Rss -> {
+                  Text("The newest episodes of a public podcast feed. Starts from the beginning.")
+                  OutlinedTextField(
+                    rss,
+                    { rss = it },
+                    label = { Text("Podcast RSS feed (HTTPS)") },
+                    singleLine = true,
+                    modifier = Modifier.fillMaxWidth(),
+                  )
+                  Button(
+                    enabled = !busy && rss.isNotBlank(),
+                    onClick = { action { importRss(rss.trim(), latest) } },
+                  ) {
+                    Text("Import from feed")
+                  }
+                }
+                ImportSource.Gpodder -> {
+                  Text(
+                    "Unfinished episodes and positions from apps that sync with gpodder.net, oPodSync or Nextcloud GPodder Sync, such as AntennaPod, Kasts and gPodder."
+                  )
+                  Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    GpodderFlavor.entries.forEach {
+                      FilterChip(
+                        flavor == it,
+                        { flavor = it },
+                        label = {
+                          Text(if (it == GpodderFlavor.Nextcloud) "Nextcloud" else "gpodder API")
+                        },
+                      )
+                    }
+                  }
+                  OutlinedTextField(
+                    server,
+                    { server = it },
+                    label = {
+                      Text(
+                        if (flavor == GpodderFlavor.Nextcloud) "Nextcloud URL (HTTPS)"
+                        else "Server URL, e.g. https://gpodder.net"
+                      )
+                    },
+                    singleLine = true,
+                    modifier = Modifier.fillMaxWidth(),
+                  )
+                  OutlinedTextField(
+                    user,
+                    { user = it },
+                    label = { Text("User name") },
+                    singleLine = true,
+                  )
+                  OutlinedTextField(
+                    gpodderPassword,
+                    { gpodderPassword = it },
+                    label = {
+                      Text(
+                        if (flavor == GpodderFlavor.Nextcloud) "App password · memory only"
+                        else "Password · memory only"
+                      )
+                    },
+                    singleLine = true,
+                    visualTransformation = PasswordVisualTransformation(),
+                  )
+                  Button(
+                    enabled =
+                      !busy &&
+                        server.isNotBlank() &&
+                        user.isNotBlank() &&
+                        gpodderPassword.isNotBlank(),
+                    onClick = {
+                      val password = gpodderPassword
+                      gpodderPassword = ""
+                      action {
+                        importGpodder(
+                          GpodderAccount(flavor, server.trim(), user.trim()),
+                          password,
+                          latest,
+                        )
+                      }
+                    },
+                  ) {
+                    Text("Import in-progress episodes")
+                  }
+                }
+                ImportSource.Paste -> {
+                  Text(
+                    "Paste Overcast's All data export (Account → Export OPML), a Pocket Casts helper export, or a Cadence snapshot."
+                  )
+                  OutlinedTextField(
+                    snapshot,
+                    { snapshot = it },
+                    label = { Text("Export or snapshot") },
+                    maxLines = 5,
+                    modifier =
+                      Modifier.fillMaxWidth().semantics {
+                        contentDescription = "Export or snapshot"
+                      },
+                  )
+                  Button(
+                    enabled = !busy && snapshot.isNotBlank(),
+                    onClick = { action { importText(snapshot, latest) } },
+                  ) {
+                    Text("Import")
+                  }
+                }
+              }
               Text(
-                library.playlist?.let { "${it.name} · ${it.episodes.size} episodes" }
-                  ?: "No playlist imported"
+                "Spotify, Apple Podcasts and Audible do not allow audio export.",
+                style = MaterialTheme.typography.bodySmall,
               )
             }
           }
+        }
+        library.playlist?.let { playlist ->
+          item {
+            Text(
+              "${playlist.name} · ${playlist.episodes.size} episodes",
+              style = MaterialTheme.typography.titleMedium,
+            )
+            Text(
+              "Imported ${library.lastBackendSync.take(16).replace('T', ' ')}",
+              style = MaterialTheme.typography.bodySmall,
+            )
+          }
+          if (library.manifests.isEmpty())
+            items(playlist.episodes, key = { "imported-" + it.key }) { episode ->
+              Text(
+                "${episode.title} · ${formatTime(episode.positionMs)} of ${formatTime(episode.durationMs)}",
+                style = MaterialTheme.typography.bodyMedium,
+              )
+            }
         }
         item {
           ElevatedCard {
             Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
               Text("Prepare audio", style = MaterialTheme.typography.titleLarge)
-              Row {
-                Checkbox(
-                  library.config.splitAtPosition,
-                  { value -> action { configure(library.config.copy(splitAtPosition = value)) } },
-                  enabled = !busy,
-                )
-                Text("Split at imported playback position")
+              LabeledCheckbox(
+                "Split at imported playback position",
+                library.config.splitAtPosition,
+                enabled = !busy,
+              ) { value ->
+                action { configure(library.config.copy(splitAtPosition = value)) }
+              }
+              LabeledCheckbox(
+                "Skip what you've already heard",
+                library.config.skipListened,
+                enabled = !busy && controller.platform.splitFormats.isNotEmpty(),
+              ) { value ->
+                action { configure(library.config.copy(skipListened = value)) }
               }
               OutlinedTextField(
                 chunks,
@@ -165,10 +286,35 @@ fun PodcastScreen(controller: PodcastController) {
         }
         library.manifests.forEach { manifest ->
           item(key = manifest.episode.key) {
-            Text(manifest.episode.title, style = MaterialTheme.typography.titleMedium)
-            Text(
-              "Local contiguous position: ${advancedPosition(manifest.episode, library.completions) / 1000}s / ${manifest.episode.durationMs / 1000}s · Backend writes unavailable"
-            )
+            val episode = manifest.episode
+            val position = advancedPosition(episode, library.completions)
+            Text(episode.title, style = MaterialTheme.typography.titleMedium)
+            Text("Listened to ${formatTime(position)} of ${formatTime(episode.durationMs)}")
+            if (episode.backend == "gpodder") {
+              val sent = local.sentPositions[episode.key]
+              Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                  if (sent != null) "Sent ${formatTime(sent)} to gpodder"
+                  else "Your other apps still show ${formatTime(episode.positionMs)}",
+                  Modifier.weight(1f),
+                  style = MaterialTheme.typography.bodySmall,
+                )
+                TextButton(
+                  enabled = !busy && position > episode.positionMs && position != sent,
+                  onClick = { action { sendPosition(episode.key) } },
+                  modifier =
+                    Modifier.semantics {
+                      contentDescription = "Send position for ${episode.title}"
+                    },
+                ) {
+                  Text("Send position")
+                }
+              }
+            } else
+              Text(
+                "Position stays in Cadence; ${episode.backend} does not accept updates",
+                style = MaterialTheme.typography.bodySmall,
+              )
           }
           items(manifest.sections, key = { it.id }) { section ->
             val played =
@@ -177,10 +323,18 @@ fun PodcastScreen(controller: PodcastController) {
               }
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
               Text(
-                "${section.startMs / 1000}s–${section.endMs / 1000}s" +
+                "${formatTime(section.startMs)}–${formatTime(section.endMs)}" +
                   if (section.id in local.readySectionIds) " · Ready" else " · Not downloaded"
               )
-              TextButton(enabled = !busy && !played, onClick = { action { markPlayed(section) } }) {
+              TextButton(
+                enabled = !busy && !played,
+                onClick = { action { markPlayed(section) } },
+                modifier =
+                  Modifier.semantics {
+                    contentDescription =
+                      "Mark ${formatTime(section.startMs)} to ${formatTime(section.endMs)} of ${manifest.episode.title} played"
+                  },
+              ) {
                 Text(if (played) "Played locally" else "Mark played")
               }
             }
@@ -268,4 +422,29 @@ fun PodcastScreen(controller: PodcastController) {
       }
     }
   }
+}
+
+/** The whole row toggles, so the label is the checkbox's accessible name. */
+@Composable
+private fun LabeledCheckbox(
+  label: String,
+  checked: Boolean,
+  enabled: Boolean,
+  onChange: (Boolean) -> Unit,
+) {
+  Row(
+    Modifier.fillMaxWidth()
+      .toggleable(checked, enabled = enabled, role = Role.Checkbox, onValueChange = onChange),
+    verticalAlignment = Alignment.CenterVertically,
+  ) {
+    Checkbox(checked, onCheckedChange = null, enabled = enabled)
+    Spacer(Modifier.width(12.dp))
+    Text(label)
+  }
+}
+
+private enum class ImportSource(val label: String) {
+  Rss("RSS feed"),
+  Gpodder("gpodder"),
+  Paste("Paste export"),
 }
