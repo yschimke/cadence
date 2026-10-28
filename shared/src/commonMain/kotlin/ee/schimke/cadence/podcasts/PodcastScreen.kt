@@ -570,7 +570,9 @@ private fun LabeledCheckbox(
   onChange: (Boolean) -> Unit,
 ) {
   Row(
+    // A null onCheckedChange drops the checkbox's own touch size, so the row keeps 48dp.
     Modifier.fillMaxWidth()
+      .heightIn(min = 48.dp)
       .toggleable(checked, enabled = enabled, role = Role.Checkbox, onValueChange = onChange),
     verticalAlignment = Alignment.CenterVertically,
   ) {
