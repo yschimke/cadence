@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.1.4](https://github.com/yschimke/cadence/compare/v0.1.3...v0.1.4) (2026-10-28)
+
+
+### Features
+
+* import podcasts from gpodder, Nextcloud, Overcast and RSS ([#403](https://github.com/yschimke/cadence/issues/403)) ([3bb2d71](https://github.com/yschimke/cadence/commit/3bb2d71a55a098187a1a2838a05f786f67136eb0))
+
+
+### Bug Fixes
+
+* read the Pocket Casts web player's playlist and episode endpoints ([#400](https://github.com/yschimke/cadence/issues/400)) ([a22ab86](https://github.com/yschimke/cadence/commit/a22ab86b5c08fbc569352f113ca9b3c73eb6a9cc))
+
 ## [0.1.3](https://github.com/yschimke/cadence/compare/v0.1.2...v0.1.3) (2026-10-27)
 
 
