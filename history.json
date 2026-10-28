@@ -1,10 +1,17 @@
 {
     "formatVersion": "compose-preview-history/v1",
-    "generatedFrom": "1916666e911ee2b9ffc3a960fc5db1a9a907de26",
+    "generatedFrom": "c4e524338e8e19bf7084573b6e54388573fbb148",
     "previews": {
         "composeApp/activity__MainActivity": {
             "path": "renders/composeApp/activity__MainActivity.png",
             "versions": [
+                {
+                    "blob": "31efa0684c7c3159b1db2c866fc258cbfa07ff86",
+                    "commit": "c4e524338e8e19bf7084573b6e54388573fbb148",
+                    "date": "2026-10-28T09:59:21Z",
+                    "sourceSha": "468a53d3",
+                    "commits": 1
+                },
                 {
                     "blob": "a6354a054cab218bd845010474a89e16eb4aeeee",
                     "commit": "d55ccc45b433a9ce531aa7f16b4546058baea74b",
@@ -34,51 +41,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 4,
-            "unstable": false,
-            "flapCount": 0
-        },
-        "composeApp/ee.schimke.cadence.preview.FoundationPreviewsKt.FoundationCadenceDarkPreview_Foundation — Cadence dark": {
-            "path": "renders/composeApp/FoundationCadenceDarkPreview_Foundation_Cadence_dark-35bd3e32.png",
-            "versions": [
-                {
-                    "blob": "dd8fd9ca1f5b7250f8924e34a018ae42b22872d5",
-                    "commit": "a7a550e1c26571d661e9f5d7f11aae1d105ec143",
-                    "date": "2026-10-16T09:49:35Z",
-                    "sourceSha": "19ee3d1e",
-                    "commits": 1
-                },
-                {
-                    "blob": "0456d7666d14ee3356b343e710aae09e75a940ac",
-                    "commit": "dd61e3b24c4c5d75f03d0f423052fdfef22c1e24",
-                    "date": "2026-08-14T20:54:04Z",
-                    "sourceSha": "bb276312",
-                    "commits": 1
-                }
-            ],
-            "observations": 2,
-            "unstable": false,
-            "flapCount": 0
-        },
-        "composeApp/ee.schimke.cadence.preview.FoundationPreviewsKt.FoundationCadenceLightPreview_Foundation — Cadence light": {
-            "path": "renders/composeApp/FoundationCadenceLightPreview_Foundation_Cadence_light-19184725.png",
-            "versions": [
-                {
-                    "blob": "dd8fd9ca1f5b7250f8924e34a018ae42b22872d5",
-                    "commit": "a7a550e1c26571d661e9f5d7f11aae1d105ec143",
-                    "date": "2026-10-16T09:49:35Z",
-                    "sourceSha": "19ee3d1e",
-                    "commits": 1
-                },
-                {
-                    "blob": "44aa19b6297fb4beaef32a48f725a05a33cf8690",
-                    "commit": "dd61e3b24c4c5d75f03d0f423052fdfef22c1e24",
-                    "date": "2026-08-14T20:54:04Z",
-                    "sourceSha": "bb276312",
-                    "commits": 1
-                }
-            ],
-            "observations": 2,
+            "observations": 5,
             "unstable": false,
             "flapCount": 0
         },
@@ -126,14 +89,51 @@
             "unstable": false,
             "flapCount": 0
         },
+        "composeApp/ee.schimke.cadence.preview.PodcastPreviewsKt.AddPodcastsPreview_Add podcasts": {
+            "path": "renders/composeApp/AddPodcastsPreview_Add_podcasts-e09ca4b7.png",
+            "versions": [
+                {
+                    "blob": "76041ad25427619ea16d522ef6ab9acd407e995e",
+                    "commit": "c4e524338e8e19bf7084573b6e54388573fbb148",
+                    "date": "2026-10-28T09:59:21Z",
+                    "sourceSha": "468a53d3",
+                    "commits": 1
+                }
+            ],
+            "observations": 1,
+            "unstable": false,
+            "flapCount": 0
+        },
         "composeApp/ee.schimke.cadence.preview.PodcastPreviewsKt.PodcastImportedPreview_Podcast sync — imported": {
             "path": "renders/composeApp/PodcastImportedPreview_Podcast_sync_imported-8403888a.png",
             "versions": [
+                {
+                    "blob": "5ce389c839c8f88edafd661c8b64623f81f1efa4",
+                    "commit": "c4e524338e8e19bf7084573b6e54388573fbb148",
+                    "date": "2026-10-28T09:59:21Z",
+                    "sourceSha": "468a53d3",
+                    "commits": 1
+                },
                 {
                     "blob": "e1eaf49f9274a99cf503eea53a8b11517fbfbb20",
                     "commit": "1916666e911ee2b9ffc3a960fc5db1a9a907de26",
                     "date": "2026-10-28T06:21:43Z",
                     "sourceSha": "3bb2d71a",
+                    "commits": 1
+                }
+            ],
+            "observations": 2,
+            "unstable": false,
+            "flapCount": 0
+        },
+        "composeApp/ee.schimke.cadence.preview.PodcastPreviewsKt.PodcastPocketCastsPreview_Add podcasts — Pocket Casts signed in": {
+            "path": "renders/composeApp/PodcastPocketCastsPreview_Add_podcasts_Pocket_Casts_signed_in-cd7341fe.png",
+            "versions": [
+                {
+                    "blob": "b953efe092779e81c5227c8d50d5ada216bac39f",
+                    "commit": "c4e524338e8e19bf7084573b6e54388573fbb148",
+                    "date": "2026-10-28T09:59:21Z",
+                    "sourceSha": "468a53d3",
                     "commits": 1
                 }
             ],
@@ -420,6 +420,36 @@
             "unstable": false,
             "flapCount": 0
         },
+        "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.HomeHeadphonesPreview_Home — headphones connected": {
+            "path": "renders/composeApp/HomeHeadphonesPreview_Home_headphones_connected-71a28d46.png",
+            "versions": [
+                {
+                    "blob": "5a6fbc882a98d739ac47c524f121311b670b8e1a",
+                    "commit": "c4e524338e8e19bf7084573b6e54388573fbb148",
+                    "date": "2026-10-28T09:59:21Z",
+                    "sourceSha": "468a53d3",
+                    "commits": 1
+                }
+            ],
+            "observations": 1,
+            "unstable": false,
+            "flapCount": 0
+        },
+        "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.HomeLibraryPreview_Home — library": {
+            "path": "renders/composeApp/HomeLibraryPreview_Home_library-7701225c.png",
+            "versions": [
+                {
+                    "blob": "5ce389c839c8f88edafd661c8b64623f81f1efa4",
+                    "commit": "c4e524338e8e19bf7084573b6e54388573fbb148",
+                    "date": "2026-10-28T09:59:21Z",
+                    "sourceSha": "468a53d3",
+                    "commits": 1
+                }
+            ],
+            "observations": 1,
+            "unstable": false,
+            "flapCount": 0
+        },
         "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.ManageEmptyPreview_Manage - empty": {
             "path": "renders/composeApp/ManageEmptyPreview_Manage_empty-55c57410.png",
             "versions": [
@@ -684,267 +714,63 @@
             "unstable": false,
             "flapCount": 0
         },
-        "composeApp/ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.CurateHomeCadenceDarkPreview_Cadence dark — Curate home": {
-            "path": "renders/composeApp/CurateHomeCadenceDarkPreview_Cadence_dark_Curate_home-01c6d2f7.png",
-            "versions": [
-                {
-                    "blob": "0935841eb6beb6056a1720869d731915fe4597c0",
-                    "commit": "a7a550e1c26571d661e9f5d7f11aae1d105ec143",
-                    "date": "2026-10-16T09:49:35Z",
-                    "sourceSha": "19ee3d1e",
-                    "commits": 1
-                },
-                {
-                    "blob": "91bdb966c0e2125c1a6419b739e7d7833c36d6ed",
-                    "commit": "dd61e3b24c4c5d75f03d0f423052fdfef22c1e24",
-                    "date": "2026-08-14T20:54:04Z",
-                    "sourceSha": "bb276312",
-                    "commits": 1
-                }
-            ],
-            "observations": 2,
-            "unstable": false,
-            "flapCount": 0
-        },
-        "composeApp/ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.CurateHomeCadencePreview_Cadence — Curate home": {
-            "path": "renders/composeApp/CurateHomeCadencePreview_Cadence_Curate_home-a520f211.png",
-            "versions": [
-                {
-                    "blob": "0935841eb6beb6056a1720869d731915fe4597c0",
-                    "commit": "a7a550e1c26571d661e9f5d7f11aae1d105ec143",
-                    "date": "2026-10-16T09:49:35Z",
-                    "sourceSha": "19ee3d1e",
-                    "commits": 1
-                },
-                {
-                    "blob": "38aea6d52dfb79dbef07badacb352c1d7c690ba5",
-                    "commit": "dd61e3b24c4c5d75f03d0f423052fdfef22c1e24",
-                    "date": "2026-08-14T20:54:04Z",
-                    "sourceSha": "bb276312",
-                    "commits": 1
-                }
-            ],
-            "observations": 2,
-            "unstable": false,
-            "flapCount": 0
-        },
-        "composeApp/ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.CurateHomePreview_System — Curate home": {
-            "path": "renders/composeApp/CurateHomePreview_System_Curate_home-6b9b8560.png",
-            "versions": [
-                {
-                    "blob": "0935841eb6beb6056a1720869d731915fe4597c0",
-                    "commit": "a7a550e1c26571d661e9f5d7f11aae1d105ec143",
-                    "date": "2026-10-16T09:49:35Z",
-                    "sourceSha": "19ee3d1e",
-                    "commits": 1
-                },
-                {
-                    "blob": "ba8b98b302e9231b4cc5cc7bf496c2d34c8e0eed",
-                    "commit": "dd61e3b24c4c5d75f03d0f423052fdfef22c1e24",
-                    "date": "2026-08-14T20:54:04Z",
-                    "sourceSha": "bb276312",
-                    "commits": 1
-                }
-            ],
-            "observations": 2,
-            "unstable": false,
-            "flapCount": 0
-        },
-        "composeApp/ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.CurateHomeUsbBannerCadencePreview_Cadence — Curate USB banner": {
-            "path": "renders/composeApp/CurateHomeUsbBannerCadencePreview_Cadence_Curate_USB_banner-b45966b7.png",
-            "versions": [
-                {
-                    "blob": "5ce389c839c8f88edafd661c8b64623f81f1efa4",
-                    "commit": "a7a550e1c26571d661e9f5d7f11aae1d105ec143",
-                    "date": "2026-10-16T09:49:35Z",
-                    "sourceSha": "19ee3d1e",
-                    "commits": 1
-                },
-                {
-                    "blob": "267729edfe49c6f9129c57c3acd44332b2795567",
-                    "commit": "dd61e3b24c4c5d75f03d0f423052fdfef22c1e24",
-                    "date": "2026-08-14T20:54:04Z",
-                    "sourceSha": "bb276312",
-                    "commits": 1
-                }
-            ],
-            "observations": 2,
-            "unstable": false,
-            "flapCount": 0
-        },
-        "composeApp/ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.CurateHomeUsbBannerPreview_System — Curate USB banner": {
-            "path": "renders/composeApp/CurateHomeUsbBannerPreview_System_Curate_USB_banner-8427ae83.png",
-            "versions": [
-                {
-                    "blob": "5ce389c839c8f88edafd661c8b64623f81f1efa4",
-                    "commit": "a7a550e1c26571d661e9f5d7f11aae1d105ec143",
-                    "date": "2026-10-16T09:49:35Z",
-                    "sourceSha": "19ee3d1e",
-                    "commits": 1
-                },
-                {
-                    "blob": "95b294fc236fd808b82842b6db06b9de20be387c",
-                    "commit": "dd61e3b24c4c5d75f03d0f423052fdfef22c1e24",
-                    "date": "2026-08-14T20:54:04Z",
-                    "sourceSha": "bb276312",
-                    "commits": 1
-                }
-            ],
-            "observations": 2,
-            "unstable": false,
-            "flapCount": 0
-        },
-        "composeApp/ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeDoneCadencePreview_Cadence — Sync complete": {
-            "path": "renders/composeApp/SyncModeDoneCadencePreview_Cadence_Sync_complete-cee01b92.png",
+        "composeApp/ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeDonePreview_Sync complete": {
+            "path": "renders/composeApp/SyncModeDonePreview_Sync_complete-7dc4927b.png",
             "versions": [
                 {
                     "blob": "b953efe092779e81c5227c8d50d5ada216bac39f",
-                    "commit": "a7a550e1c26571d661e9f5d7f11aae1d105ec143",
-                    "date": "2026-10-16T09:49:35Z",
-                    "sourceSha": "19ee3d1e",
-                    "commits": 1
-                },
-                {
-                    "blob": "d28fabc1fefcc29182bb08d715b6052f02f4d22f",
-                    "commit": "dd61e3b24c4c5d75f03d0f423052fdfef22c1e24",
-                    "date": "2026-08-14T20:54:04Z",
-                    "sourceSha": "bb276312",
+                    "commit": "c4e524338e8e19bf7084573b6e54388573fbb148",
+                    "date": "2026-10-28T09:59:21Z",
+                    "sourceSha": "468a53d3",
                     "commits": 1
                 }
             ],
-            "observations": 2,
+            "observations": 1,
             "unstable": false,
             "flapCount": 0
         },
-        "composeApp/ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeDonePreview_System — Sync complete": {
-            "path": "renders/composeApp/SyncModeDonePreview_System_Sync_complete-ad6b67b3.png",
-            "versions": [
-                {
-                    "blob": "b953efe092779e81c5227c8d50d5ada216bac39f",
-                    "commit": "a7a550e1c26571d661e9f5d7f11aae1d105ec143",
-                    "date": "2026-10-16T09:49:35Z",
-                    "sourceSha": "19ee3d1e",
-                    "commits": 1
-                },
-                {
-                    "blob": "ac0779cfea238cfe66eef57ae330b7d79b27e0a3",
-                    "commit": "dd61e3b24c4c5d75f03d0f423052fdfef22c1e24",
-                    "date": "2026-08-14T20:54:04Z",
-                    "sourceSha": "bb276312",
-                    "commits": 1
-                }
-            ],
-            "observations": 2,
-            "unstable": false,
-            "flapCount": 0
-        },
-        "composeApp/ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeReadyCadenceDarkPreview_Cadence dark — Sync ready": {
-            "path": "renders/composeApp/SyncModeReadyCadenceDarkPreview_Cadence_dark_Sync_ready-994ca7c7.png",
+        "composeApp/ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeReadyDarkPreview_Sync ready (dark)": {
+            "path": "renders/composeApp/SyncModeReadyDarkPreview_Sync_ready_dark-de653549.png",
             "versions": [
                 {
                     "blob": "068bf7630c2f83bad619b604fc9d53f1869ae397",
-                    "commit": "a7a550e1c26571d661e9f5d7f11aae1d105ec143",
-                    "date": "2026-10-16T09:49:35Z",
-                    "sourceSha": "19ee3d1e",
-                    "commits": 1
-                },
-                {
-                    "blob": "4f993775a119af0cbb6b87a1aa9477d1066b5c83",
-                    "commit": "dd61e3b24c4c5d75f03d0f423052fdfef22c1e24",
-                    "date": "2026-08-14T20:54:04Z",
-                    "sourceSha": "bb276312",
+                    "commit": "c4e524338e8e19bf7084573b6e54388573fbb148",
+                    "date": "2026-10-28T09:59:21Z",
+                    "sourceSha": "468a53d3",
                     "commits": 1
                 }
             ],
-            "observations": 2,
+            "observations": 1,
             "unstable": false,
             "flapCount": 0
         },
-        "composeApp/ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeReadyCadencePreview_Cadence — Sync ready": {
-            "path": "renders/composeApp/SyncModeReadyCadencePreview_Cadence_Sync_ready-761b47d7.png",
+        "composeApp/ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeReadyPreview_Sync ready": {
+            "path": "renders/composeApp/SyncModeReadyPreview_Sync_ready-ce4e5f0a.png",
             "versions": [
                 {
                     "blob": "068bf7630c2f83bad619b604fc9d53f1869ae397",
-                    "commit": "a7a550e1c26571d661e9f5d7f11aae1d105ec143",
-                    "date": "2026-10-16T09:49:35Z",
-                    "sourceSha": "19ee3d1e",
-                    "commits": 1
-                },
-                {
-                    "blob": "6aec2b8d08827b3b8de8dda3fe6234cae25a4e08",
-                    "commit": "dd61e3b24c4c5d75f03d0f423052fdfef22c1e24",
-                    "date": "2026-08-14T20:54:04Z",
-                    "sourceSha": "bb276312",
+                    "commit": "c4e524338e8e19bf7084573b6e54388573fbb148",
+                    "date": "2026-10-28T09:59:21Z",
+                    "sourceSha": "468a53d3",
                     "commits": 1
                 }
             ],
-            "observations": 2,
+            "observations": 1,
             "unstable": false,
             "flapCount": 0
         },
-        "composeApp/ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeReadyPreview_System — Sync ready": {
-            "path": "renders/composeApp/SyncModeReadyPreview_System_Sync_ready-7ce1a9c8.png",
-            "versions": [
-                {
-                    "blob": "068bf7630c2f83bad619b604fc9d53f1869ae397",
-                    "commit": "a7a550e1c26571d661e9f5d7f11aae1d105ec143",
-                    "date": "2026-10-16T09:49:35Z",
-                    "sourceSha": "19ee3d1e",
-                    "commits": 1
-                },
-                {
-                    "blob": "b9edcbd244836d5e2c3106e13f4f435864f74552",
-                    "commit": "dd61e3b24c4c5d75f03d0f423052fdfef22c1e24",
-                    "date": "2026-08-14T20:54:04Z",
-                    "sourceSha": "bb276312",
-                    "commits": 1
-                }
-            ],
-            "observations": 2,
-            "unstable": false,
-            "flapCount": 0
-        },
-        "composeApp/ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeSyncingCadencePreview_Cadence — Sync syncing": {
-            "path": "renders/composeApp/SyncModeSyncingCadencePreview_Cadence_Sync_syncing-fcc2be13.png",
+        "composeApp/ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeSyncingPreview_Sync syncing": {
+            "path": "renders/composeApp/SyncModeSyncingPreview_Sync_syncing-34770d66.png",
             "versions": [
                 {
                     "blob": "a6c6e2003caeb9f16496826c9ca7ec9c013a245e",
-                    "commit": "a7a550e1c26571d661e9f5d7f11aae1d105ec143",
-                    "date": "2026-10-16T09:49:35Z",
-                    "sourceSha": "19ee3d1e",
-                    "commits": 1
-                },
-                {
-                    "blob": "f1900e3b5a402ff41abd1469ad99d6c056d77e97",
-                    "commit": "dd61e3b24c4c5d75f03d0f423052fdfef22c1e24",
-                    "date": "2026-08-14T20:54:04Z",
-                    "sourceSha": "bb276312",
+                    "commit": "c4e524338e8e19bf7084573b6e54388573fbb148",
+                    "date": "2026-10-28T09:59:21Z",
+                    "sourceSha": "468a53d3",
                     "commits": 1
                 }
             ],
-            "observations": 2,
-            "unstable": false,
-            "flapCount": 0
-        },
-        "composeApp/ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeSyncingPreview_System — Sync syncing": {
-            "path": "renders/composeApp/SyncModeSyncingPreview_System_Sync_syncing-fc646ecb.png",
-            "versions": [
-                {
-                    "blob": "a6c6e2003caeb9f16496826c9ca7ec9c013a245e",
-                    "commit": "a7a550e1c26571d661e9f5d7f11aae1d105ec143",
-                    "date": "2026-10-16T09:49:35Z",
-                    "sourceSha": "19ee3d1e",
-                    "commits": 1
-                },
-                {
-                    "blob": "7deb558dd7102032390c010ba7c5d805a408c892",
-                    "commit": "dd61e3b24c4c5d75f03d0f423052fdfef22c1e24",
-                    "date": "2026-08-14T20:54:04Z",
-                    "sourceSha": "bb276312",
-                    "commits": 1
-                }
-            ],
-            "observations": 2,
+            "observations": 1,
             "unstable": false,
             "flapCount": 0
         }
