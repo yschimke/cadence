@@ -1,6 +1,6 @@
 {
     "formatVersion": "compose-preview-history/v1",
-    "generatedFrom": "d55ccc45b433a9ce531aa7f16b4546058baea74b",
+    "generatedFrom": "1916666e911ee2b9ffc3a960fc5db1a9a907de26",
     "previews": {
         "composeApp/activity__MainActivity": {
             "path": "renders/composeApp/activity__MainActivity.png",
@@ -123,6 +123,36 @@
                 }
             ],
             "observations": 2,
+            "unstable": false,
+            "flapCount": 0
+        },
+        "composeApp/ee.schimke.cadence.preview.PodcastPreviewsKt.PodcastImportedPreview_Podcast sync — imported": {
+            "path": "renders/composeApp/PodcastImportedPreview_Podcast_sync_imported-8403888a.png",
+            "versions": [
+                {
+                    "blob": "e1eaf49f9274a99cf503eea53a8b11517fbfbb20",
+                    "commit": "1916666e911ee2b9ffc3a960fc5db1a9a907de26",
+                    "date": "2026-10-28T06:21:43Z",
+                    "sourceSha": "3bb2d71a",
+                    "commits": 1
+                }
+            ],
+            "observations": 1,
+            "unstable": false,
+            "flapCount": 0
+        },
+        "composeApp/ee.schimke.cadence.preview.PodcastPreviewsKt.PodcastPreparedPreview_Podcast sync — prepared": {
+            "path": "renders/composeApp/PodcastPreparedPreview_Podcast_sync_prepared-2db5b8ad.png",
+            "versions": [
+                {
+                    "blob": "eb8504a779097441dfcd114a4dec7f1e98607acc",
+                    "commit": "1916666e911ee2b9ffc3a960fc5db1a9a907de26",
+                    "date": "2026-10-28T06:21:43Z",
+                    "sourceSha": "3bb2d71a",
+                    "commits": 1
+                }
+            ],
+            "observations": 1,
             "unstable": false,
             "flapCount": 0
         },
