@@ -4,7 +4,7 @@ plugins {
   alias(libs.plugins.composeCompiler)
 }
 
-val desktopVersion = "0.1.4" // x-release-please-version
+val desktopVersion = "0.1.5" // x-release-please-version
 val distributionVersion = providers.gradleProperty("desktopVersion").getOrElse(desktopVersion)
 
 kotlin {
