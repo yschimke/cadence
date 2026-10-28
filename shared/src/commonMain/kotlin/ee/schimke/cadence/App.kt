@@ -4,10 +4,22 @@ import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.only
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -34,28 +46,56 @@ fun App(platformNotice: String? = null) {
   val entry by navController.currentBackStackEntryAsState()
   Column(Modifier.fillMaxSize()) {
     platformNotice?.let { Text(it, style = MaterialTheme.typography.bodySmall) }
-    if (entry != null && navController.previousBackStackEntry != null) {
-      TextButton(onClick = { navController.popBackStack() }) { Text("Back") }
+    val nested = entry != null && navController.previousBackStackEntry != null
+    if (nested) {
+      // Takes the status bar inset here, so screens below don't add it again.
+      Surface(Modifier.fillMaxWidth()) {
+        Row(
+          Modifier.windowInsetsPadding(
+            WindowInsets.safeDrawing.only(WindowInsetsSides.Top + WindowInsetsSides.Horizontal)
+          )
+        ) {
+          IconButton(onClick = { navController.popBackStack() }) {
+            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+          }
+        }
+      }
     }
     NavHost(
       navController,
       startDestination = Home,
-      modifier = Modifier.weight(1f),
+      modifier =
+        Modifier.weight(1f)
+          .then(
+            if (nested)
+              Modifier.consumeWindowInsets(WindowInsets.safeDrawing.only(WindowInsetsSides.Top))
+            else Modifier
+          ),
       popExitTransition = { scaleOut(targetScale = 0.9f) },
       popEnterTransition = { EnterTransition.None },
     ) {
       composable<Home> {
         HomeScreen(
+          podcasts = podcasts,
           modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
-          onPodcastSync = { navController.navigate(Podcasts) },
+          onAddPodcasts = { navController.navigate(AddPodcasts) },
+          onOpenPodcasts = { navController.navigate(Podcasts) },
+          onCopyToHeadphones = { navController.navigate(FileSync) },
           onBluetoothControls = { navController.navigate(BluetoothControls) },
-          onFileSync = { navController.navigate(FileSync) },
-          onManageSync = { navController.navigate(ManageSync) },
+          onManageSources = { navController.navigate(ManageSync) },
           onBookmarks = { navController.navigate(Bookmarks) },
           onFileExplorer = { navController.navigate(Devices) },
         )
       }
-      composable<Podcasts> { PodcastScreen(podcasts) }
+      composable<Podcasts> {
+        PodcastScreen(podcasts, onChangeSource = { navController.navigate(AddPodcasts) })
+      }
+      composable<AddPodcasts> {
+        AddPodcastsScreen(
+          podcasts,
+          onDone = { navController.popBackStack(Home, inclusive = false) },
+        )
+      }
       composable<Devices> {
         DevicesScreen(
           modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
@@ -116,3 +156,5 @@ fun App(platformNotice: String? = null) {
 @Serializable data object ManageSync
 
 @Serializable data object Podcasts
+
+@Serializable data object AddPodcasts

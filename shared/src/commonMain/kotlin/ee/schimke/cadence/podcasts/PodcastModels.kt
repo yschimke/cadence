@@ -160,10 +160,23 @@ fun advancedPosition(episode: Episode, completions: List<Completion>): Long {
   return position
 }
 
+/** Where the current playlist came from, so it can be refreshed from the same place. */
+@Serializable
+enum class PodcastSourceKind {
+  PocketCasts,
+  Rss,
+  Gpodder,
+  Overcast,
+  Snapshot,
+}
+
 @Serializable
 data class PodcastLibrary(
   val schema: Int = 1,
   val playlist: PlaylistSnapshot? = null,
+  val source: PodcastSourceKind? = null,
+  // The Pocket Casts list (Up Next, In progress or a playlist id) for a Pocket Casts source.
+  val sourceList: String = "",
   val feedUrl: String = "",
   val feedLatest: Int = 3,
   val config: Segmentation = Segmentation(),

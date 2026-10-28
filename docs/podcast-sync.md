@@ -2,8 +2,9 @@
 
 Cadence has two separate operations: importing a listening list/positions and
 preparing local files; then copying those prepared files to a mounted headphone
-volume. The **Podcast sync** card on the home screen opens the shared Android,
-desktop and browser experience. Existing directory profiles remain available.
+volume. Podcasts are added from the library home screen (**Add source →
+Podcasts**) and appear there alongside folders; tapping them opens the episode
+view.
 
 ## Sources
 
@@ -104,33 +105,39 @@ and default Nextcloud installs do not; use desktop or Android.
 **Overcast.** Overcast has no API. Its **Account → Export OPML (All data)** file
 lists episodes under each feed with `progress` (seconds), `played` and
 `userUpdatedDate`. Cadence imports unplayed episodes with progress, most recently
-updated first. Paste the file contents into **Paste export**. A subscriptions-only
+updated first. Paste the file contents into **Overcast or a saved export**. A subscriptions-only
 OPML is rejected with a pointer to the All data export.
 
 ## Use the workflow
 
-1. Open **Podcast sync** and choose a source under **Import episodes**, and how
-   many episodes (1–50, default 3):
+1. On the library screen choose **Add source → Podcasts**, then one service and
+   how many episodes (1–50, default 3):
    - **Pocket Casts**: sign in, then choose Up Next, In progress or a manual
      playlist. Episodes without HTTPS audio or a known length are skipped and
      counted.
-   - **RSS feed**: the newest episodes of a public HTTPS feed. Items without an
-     HTTPS enclosure or `itunes:duration` are skipped and counted. RSS has no
-     account position, so first import starts at zero; refresh retains Cadence's
-     contiguous position for the same episode/audio version. Feeds may redirect
-     and be up to 40 MB.
-   - **gpodder**: unfinished episodes from a gpodder-compatible account.
-   - **Paste export**: Overcast's All data OPML, a Pocket Casts helper export or a
-     Cadence snapshot.
-2. Choose splitting at the imported position, an optional chunk duration
-   (1–120 minutes; 0 disables chunks), and chunk format. Turn off both splitting
-   options to retain the original unsplit file. Choose **Download & prepare**.
-3. Review the generated sections. **Mark played** records a durable local
-   acknowledgement. For gpodder imports, **Send position** then uploads the
-   listened-to position; other sources keep it in Cadence.
-4. Connect the headphones, let the OS mount the storage volume, and use
-   **Choose headphone volume**. Choose the volume root, not an existing music
-   folder. Then **Copy prepared audio to USB**.
+   - **Podcast feed**: the newest episodes of a public HTTPS feed. Items without
+     an HTTPS enclosure or `itunes:duration` are skipped and counted. RSS has no
+     account position, so first import starts at zero; refresh retains
+     Cadence's contiguous position for the same episode/audio version. Feeds may
+     redirect and be up to 40 MB.
+   - **gpodder or Nextcloud**: unfinished episodes from a gpodder-compatible
+     account.
+   - **Overcast or a saved export**: Overcast's All data OPML, a Pocket Casts
+     helper export or a Cadence snapshot.
+
+   Adding returns to the library. The episodes' overflow menu offers
+   **Refresh** (Pocket Casts, feeds, and gpodder while its password is held)
+   and **Remove**.
+2. Tap the episodes to open them and choose **Download**. By default Cadence
+   skips what you've already heard; **Audio options** controls that, splitting
+   at your position, part length (1–120 minutes; 0 keeps each episode whole)
+   and the part format.
+3. **Mark played** records a durable local acknowledgement. For gpodder imports,
+   **Send … to your other apps** uploads the listened-to position; other
+   sources keep it in Cadence.
+4. Connect the headphones, let the OS mount the storage volume, and choose
+   **Copy to headphones**. The first time, pick the volume root, not an
+   existing music folder.
 
 A 60-minute episode at 30 minutes produces `[0,30)` and `[30,60)` sections. With
 five-minute chunks, each side is subdivided. Irregular boundaries and short tails

@@ -78,7 +78,8 @@ class PodcastController(val platform: PodcastPlatform) {
   // A successful action's summary, shown instead of the generic "Saved".
   private var notice: String? = null
 
-  suspend fun run(action: suspend PodcastController.() -> Unit) = lock.withLock {
+  /** Runs [action] and reports it in [status]; returns whether it succeeded. */
+  suspend fun run(action: suspend PodcastController.() -> Unit): Boolean = lock.withLock {
     busy.value = true
     try {
       status.value = "Working…"
@@ -86,16 +87,19 @@ class PodcastController(val platform: PodcastPlatform) {
       notice = null
       action()
       status.value = notice ?: "Saved"
+      true
     } catch (e: CancellationException) {
       status.value = "Cancelled · last saved library retained"
       throw e
     } catch (e: PodcastProblem) {
       status.value = e.message ?: "Operation failed"
+      false
     } catch (_: Exception) {
       // Network exceptions can contain signed enclosure URLs or credentials. Never surface raw
       // errors.
       status.value =
         "Operation failed. Check network, permissions, configuration and supported formats. Previous library is preserved."
+      false
     } finally {
       busy.value = false
       publish()
@@ -103,14 +107,22 @@ class PodcastController(val platform: PodcastPlatform) {
   }
 
   suspend fun load() {
-    platform.readState()?.let { stored ->
-      val restored = podcastJson.decodeFromString<LocalPodcastState>(stored)
-      restored.library.validate()
-      state.value = restored
+    try {
+      platform.readState()?.let { stored ->
+        val restored = podcastJson.decodeFromString<LocalPodcastState>(stored)
+        restored.library.validate()
+        // Settings saved elsewhere, or before a format was supported here, may not apply.
+        state.value =
+          restored.copy(
+            library = restored.library.copy(config = supported(restored.library.config))
+          )
+      }
+      recheckReady()
+      status.value = "Library loaded"
+    } finally {
+      // Even an unreadable library counts as loaded, so the home screen can offer to start over.
+      loaded.value = true
     }
-    recheckReady()
-    loaded.value = true
-    status.value = "Library loaded"
   }
 
   private suspend fun save(next: LocalPodcastState) {
@@ -161,7 +173,16 @@ class PodcastController(val platform: PodcastPlatform) {
         else episode.copy(positionMs = advancedPosition(previous, old.completions))
       }
     importSnapshot(podcastJson.encodeToString(snapshot.copy(episodes = episodes)))
-    save(state.value.copy(library = state.value.library.copy(feedUrl = url, feedLatest = latest)))
+    save(
+      state.value.copy(
+        library =
+          state.value.library.copy(
+            feedUrl = url,
+            feedLatest = latest,
+            source = PodcastSourceKind.Rss,
+          )
+      )
+    )
     notice =
       "Imported the latest ${count(episodes.size, "episode")} of ${snapshot.name}" +
         if (skipped > 0) " · skipped $skipped without HTTPS audio or duration" else ""
@@ -173,6 +194,7 @@ class PodcastController(val platform: PodcastPlatform) {
     when {
       trimmed.startsWith("{") -> {
         importSnapshot(trimmed)
+        setSource(PodcastSourceKind.Snapshot)
         notice = "Imported ${count(state.value.library.playlist?.episodes?.size ?: 0, "episode")}"
       }
       trimmed.contains("<opml", ignoreCase = true) -> {
@@ -184,6 +206,7 @@ class PodcastController(val platform: PodcastPlatform) {
             overcastProgress(trimmed, latest),
           )
         importResolved(snapshot, skipped, "Overcast")
+        setSource(PodcastSourceKind.Overcast)
       }
       else ->
         throw PodcastProblem(
@@ -222,6 +245,52 @@ class PodcastController(val platform: PodcastPlatform) {
       skipped,
       account.server.substringAfter("https://").substringBefore('/'),
     )
+    setSource(PodcastSourceKind.Gpodder)
+  }
+
+  private suspend fun setSource(kind: PodcastSourceKind, list: String = "") {
+    save(state.value.copy(library = state.value.library.copy(source = kind, sourceList = list)))
+  }
+
+  /** Whether [refreshSource] can run without asking for anything. */
+  val canRefresh: Boolean
+    get() =
+      when (state.value.library.source) {
+        PodcastSourceKind.PocketCasts -> state.value.pocketCasts.signedIn
+        PodcastSourceKind.Rss -> state.value.library.feedUrl.isNotBlank()
+        PodcastSourceKind.Gpodder -> gpodderPassword.isNotBlank()
+        else -> false
+      }
+
+  /** Imports again from wherever the current playlist came from. */
+  suspend fun refreshSource() {
+    val library = state.value.library
+    when (library.source) {
+      PodcastSourceKind.PocketCasts -> importPocketCasts(library.sourceList, library.feedLatest)
+      PodcastSourceKind.Rss -> importRss(library.feedUrl, library.feedLatest)
+      PodcastSourceKind.Gpodder ->
+        if (gpodderPassword.isBlank())
+          throw PodcastProblem("Enter your gpodder password again to refresh")
+        else importGpodder(state.value.gpodder, gpodderPassword, library.feedLatest)
+      else -> throw PodcastProblem("Import a new export to update these episodes")
+    }
+  }
+
+  /** Forgets the imported episodes and prepared sections; sign-ins and settings stay. */
+  suspend fun removeSource() {
+    save(
+      state.value.copy(
+        library =
+          PodcastLibrary(
+            config = state.value.library.config,
+            feedLatest = state.value.library.feedLatest,
+          ),
+        readySectionIds = emptySet(),
+        copiedSectionIds = emptySet(),
+        sentPositions = emptyMap(),
+      )
+    )
+    notice = "Removed podcasts"
   }
 
   private fun pocketCastsReader(): PocketCastsReader =
@@ -268,7 +337,16 @@ class PodcastController(val platform: PodcastPlatform) {
   suspend fun importPocketCasts(list: String, latest: Int = state.value.library.feedLatest) {
     val (snapshot, skipped) = readPocketCasts(pocketCastsReader(), list, latest)
     importSnapshot(podcastJson.encodeToString(snapshot))
-    save(state.value.copy(library = state.value.library.copy(feedLatest = latest)))
+    save(
+      state.value.copy(
+        library =
+          state.value.library.copy(
+            feedLatest = latest,
+            source = PodcastSourceKind.PocketCasts,
+            sourceList = list,
+          )
+      )
+    )
     notice =
       "Imported ${count(snapshot.episodes.size, "episode")} from ${snapshot.name}" +
         if (skipped > 0) " · skipped $skipped without HTTPS audio or a known length" else ""
@@ -320,11 +398,25 @@ class PodcastController(val platform: PodcastPlatform) {
       "Sent ${formatTime(position)} to ${account.server.substringAfter("https://").substringBefore('/')}"
   }
 
+  /**
+   * What this platform can prepare: the browser copies whole episodes only, and Android encodes
+   * only M4A, so settings it can't honour are switched rather than failing at download time.
+   */
+  fun supported(config: Segmentation): Segmentation {
+    val formats = platform.splitFormats
+    return when {
+      formats.isEmpty() ->
+        config.copy(splitAtPosition = false, skipListened = false, chunkMinutes = 0)
+      config.chunkFormat !in formats -> config.copy(chunkFormat = formats.sorted().first())
+      else -> config
+    }
+  }
+
   suspend fun configure(config: Segmentation) {
     config.validate()
     save(
       state.value.copy(
-        library = state.value.library.copy(config = config, manifests = emptyList()),
+        library = state.value.library.copy(config = supported(config), manifests = emptyList()),
         readySectionIds = emptySet(),
         copiedSectionIds = emptySet(),
       )

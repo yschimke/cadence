@@ -116,6 +116,7 @@ class DesktopServices : AutoCloseable {
 
         override fun open(suggestion: SourceSuggestion) {}
       },
+      PortableSourceBrowser(repo, backend),
     )
 
   override fun close() {

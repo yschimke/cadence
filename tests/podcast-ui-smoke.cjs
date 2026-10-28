@@ -21,22 +21,24 @@ const assert = require('node:assert/strict');
    headers: { 'access-control-allow-origin': '*' }
   }); });
   await page.goto(process.env.CADENCE_WEB_URL || 'http://127.0.0.1:8765');
-  await page.getByRole('button', { name: 'Podcast sync', exact: true }).waitFor();
+  await page.getByText('Add your first source', { exact: true }).waitFor();
   await page.screenshot({ path: '/tmp/cadence-after-home.png', clip: {x:0,y:0,width:1100,height:800} });
-  await tap(page.getByRole('button', { name: 'Podcast sync', exact: true }));
+  await tap(page.getByText('Podcasts', { exact: true }).first());
+  await tap(page.getByText('Overcast or a saved export', { exact: true }));
   await page.waitForTimeout(500);
   const snapshot = { schema: 1, name: 'Headphone test', episodes: [{
    backend: 'fixture', id: 'tone', title: 'Two second test tone', audioUrl: 'https://cadence.invalid/tone.mp3',
    durationMs: 2000, positionMs: 1000, revision: 'position-v1', audioVersion: 'tone-v1', extension: 'mp3'
   }] };
-  await tap(page.getByRole('checkbox', { name: 'Paste export' }).or(page.getByRole('button', { name: 'Paste export' })).first());
-  await tap(page.getByRole('textbox', { name: 'Export or snapshot' }).first());
+  await tap(page.getByRole('textbox', { name: 'Export' }).first());
   await page.keyboard.press('ControlOrMeta+A'); await page.keyboard.insertText(JSON.stringify(snapshot));
   await page.screenshot({path:'/tmp/cadence-input-inspect.png'});
-  await tap(page.getByRole('button', { name: 'Import', exact: true }));
+  await tap(page.getByRole('button', { name: 'Add', exact: true }));
   await page.waitForFunction(() => JSON.parse(localStorage.getItem('cadence-podcasts-v1'))?.library.playlist?.name === 'Headphone test');
+  // Adding returns to the library, which now lists the episode.
+  await tap(page.getByText('Headphone test', { exact: true }));
   await page.screenshot({ path: '/tmp/cadence-after-podcast.png' });
-  await tap(page.getByRole('button', { name: 'Download & prepare', exact: true }));
+  await tap(page.getByRole('button', { name: 'Download', exact: true }));
   await page.waitForFunction(() => JSON.parse(localStorage.getItem('cadence-podcasts-v1'))?.readySectionIds?.length === 1);
   const state = await page.evaluate(() => JSON.parse(localStorage.getItem('cadence-podcasts-v1')));
   assert.equal(state.library.manifests[0].sections[0].startMs, 0);
@@ -45,7 +47,7 @@ const assert = require('node:assert/strict');
   await page.waitForFunction(() => JSON.parse(localStorage.getItem('cadence-podcasts-v1'))?.library.completions?.length === 1);
   await page.screenshot({ path: '/tmp/cadence-after-sections.png' });
   await page.reload();
-  await tap(page.getByRole('button', { name: 'Podcast sync', exact: true }));
+  await tap(page.getByText('Headphone test', { exact: true }));
   await page.waitForFunction(() => JSON.parse(localStorage.getItem('cadence-podcasts-v1'))?.readySectionIds?.length === 1);
   assert.equal((await page.evaluate(() => JSON.parse(localStorage.getItem('cadence-podcasts-v1')))).library.completions.length, 1);
   await page.emulateMedia({ colorScheme: 'dark' });

@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Cloud
@@ -34,9 +35,6 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonDefaults
-import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -48,23 +46,22 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import ee.schimke.cadence.appearance.AppearanceViewModel
 import ee.schimke.cadence.datastore.proto.NetworkConstraint
 import ee.schimke.cadence.datastore.proto.SourceKind
 import ee.schimke.cadence.datastore.proto.SyncProfile
 import ee.schimke.cadence.datastore.proto.SyncSource
-import ee.schimke.cadence.datastore.proto.ThemeMode
 import ee.schimke.cadence.metro.metroViewModel
 
 @Composable
 fun ManageSyncScreen(modifier: Modifier = Modifier) {
   val viewModel = metroViewModel<FileSyncViewModel>()
-  val appearance = metroViewModel<AppearanceViewModel>()
   val state by viewModel.state.collectAsState()
   val suggestions by viewModel.suggestions.collectAsState()
-  val themeMode by appearance.themeMode.collectAsState()
   val launcher = rememberDirectorySourceLauncher { name, uri ->
     viewModel.addLocalDirectory(name, uri)
   }
@@ -103,7 +100,6 @@ fun ManageSyncScreen(modifier: Modifier = Modifier) {
   ManageSyncContent(
     modifier = modifier,
     state = state,
-    themeMode = themeMode,
     onAddLocalDirectory = launcher,
     onAddNfsShare = { showAddNfs = true },
     onDiscoverApps = {
@@ -118,7 +114,6 @@ fun ManageSyncScreen(modifier: Modifier = Modifier) {
     onSelectTargetDevice = viewModel::selectTargetDevice,
     onSetAutoSync = viewModel::setAutoSync,
     onSetUsbMatch = viewModel::setUsbMatch,
-    onSetThemeMode = appearance::setThemeMode,
   )
 }
 
@@ -126,7 +121,6 @@ fun ManageSyncScreen(modifier: Modifier = Modifier) {
 fun ManageSyncContent(
   modifier: Modifier = Modifier,
   state: FileSyncViewModel.UiState,
-  themeMode: ThemeMode = ThemeMode.SYSTEM,
   onAddLocalDirectory: () -> Unit,
   onAddNfsShare: () -> Unit,
   onDiscoverApps: () -> Unit,
@@ -138,14 +132,12 @@ fun ManageSyncContent(
   onSelectTargetDevice: (String) -> Unit,
   onSetAutoSync: (Boolean) -> Unit,
   onSetUsbMatch: (String) -> Unit,
-  onSetThemeMode: (ThemeMode) -> Unit = {},
 ) {
   LazyColumn(
     modifier = modifier.fillMaxWidth().safeContentPadding(),
     contentPadding = PaddingValues(16.dp),
     verticalArrangement = Arrangement.spacedBy(12.dp),
   ) {
-    item { AppearanceCard(themeMode = themeMode, onSetThemeMode = onSetThemeMode) }
     item {
       TargetDeviceCard(
         state = state,
@@ -218,43 +210,6 @@ fun ManageSyncContent(
 @Composable
 private fun Gap(width: Int) {
   Spacer(Modifier.width(width.dp))
-}
-
-@Composable
-private fun AppearanceCard(themeMode: ThemeMode, onSetThemeMode: (ThemeMode) -> Unit) {
-  ElevatedCard(modifier = Modifier.fillMaxWidth()) {
-    Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-      Text(
-        "Appearance",
-        style = MaterialTheme.typography.titleMedium,
-        fontWeight = FontWeight.SemiBold,
-      )
-      Text(
-        "System uses Android's dynamic colours and Roboto Flex. Cadence uses the " +
-          "Coastal Blue palette and Manrope/Inter typography.",
-        style = MaterialTheme.typography.bodySmall,
-        color = MaterialTheme.colorScheme.onSurfaceVariant,
-      )
-      val options = listOf(ThemeMode.SYSTEM, ThemeMode.CADENCE)
-      SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
-        options.forEachIndexed { index, mode ->
-          SegmentedButton(
-            selected = mode == themeMode,
-            onClick = { onSetThemeMode(mode) },
-            shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
-            label = {
-              Text(
-                when (mode) {
-                  ThemeMode.SYSTEM -> "System"
-                  ThemeMode.CADENCE -> "Cadence"
-                }
-              )
-            },
-          )
-        }
-      }
-    }
-  }
 }
 
 @Composable
@@ -370,11 +325,17 @@ private fun ProfileCard(
           )
         }
         IconButton(onClick = onDelete) {
-          Icon(Icons.Filled.Close, contentDescription = "Delete profile")
+          Icon(Icons.Filled.Close, contentDescription = "Delete ${profile.name}")
         }
       }
-      Row(verticalAlignment = Alignment.CenterVertically) {
-        Switch(checked = profile.auto_refresh, onCheckedChange = onToggleAuto)
+      // The whole row toggles, so the description is the switch's name and the target is 48dp.
+      Row(
+        Modifier.fillMaxWidth()
+          .heightIn(min = 48.dp)
+          .toggleable(profile.auto_refresh, role = Role.Switch, onValueChange = onToggleAuto),
+        verticalAlignment = Alignment.CenterVertically,
+      ) {
+        Switch(checked = profile.auto_refresh, onCheckedChange = null)
         Gap(12)
         Column(Modifier.weight(1f)) {
           Text(
@@ -415,7 +376,11 @@ private fun ProfileCard(
         }
       }
       Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        OutlinedButton(onClick = onRefreshNow, enabled = !isCurrentlyRefreshing) {
+        OutlinedButton(
+          onClick = onRefreshNow,
+          enabled = !isCurrentlyRefreshing,
+          modifier = Modifier.semantics { contentDescription = "Refresh ${profile.name} now" },
+        ) {
           Icon(Icons.Filled.Refresh, contentDescription = null)
           Gap(4)
           Text("Refresh now")
@@ -456,11 +421,14 @@ private fun SourceCard(source: SyncSource, onRemove: () -> Unit) {
           )
         }
       }
-      AssistChip(
-        onClick = {},
-        label = { Text(if (source.kind == SourceKind.LOCAL_DIRECTORY) "LOCAL" else "NFS") },
+      Text(
+        if (source.kind == SourceKind.LOCAL_DIRECTORY) "Folder" else "NFS",
+        style = MaterialTheme.typography.labelMedium,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
       )
-      IconButton(onClick = onRemove) { Icon(Icons.Filled.Close, contentDescription = "Remove") }
+      IconButton(onClick = onRemove) {
+        Icon(Icons.Filled.Close, contentDescription = "Remove ${source.name.ifBlank { "source" }}")
+      }
     }
   }
 }
