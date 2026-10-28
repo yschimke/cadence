@@ -111,7 +111,11 @@ class PodcastController(val platform: PodcastPlatform) {
       platform.readState()?.let { stored ->
         val restored = podcastJson.decodeFromString<LocalPodcastState>(stored)
         restored.library.validate()
-        state.value = restored
+        // Settings saved elsewhere, or before a format was supported here, may not apply.
+        state.value =
+          restored.copy(
+            library = restored.library.copy(config = supported(restored.library.config))
+          )
       }
       recheckReady()
       status.value = "Library loaded"
@@ -394,11 +398,25 @@ class PodcastController(val platform: PodcastPlatform) {
       "Sent ${formatTime(position)} to ${account.server.substringAfter("https://").substringBefore('/')}"
   }
 
+  /**
+   * What this platform can prepare: the browser copies whole episodes only, and Android encodes
+   * only M4A, so settings it can't honour are switched rather than failing at download time.
+   */
+  fun supported(config: Segmentation): Segmentation {
+    val formats = platform.splitFormats
+    return when {
+      formats.isEmpty() ->
+        config.copy(splitAtPosition = false, skipListened = false, chunkMinutes = 0)
+      config.chunkFormat !in formats -> config.copy(chunkFormat = formats.sorted().first())
+      else -> config
+    }
+  }
+
   suspend fun configure(config: Segmentation) {
     config.validate()
     save(
       state.value.copy(
-        library = state.value.library.copy(config = config, manifests = emptyList()),
+        library = state.value.library.copy(config = supported(config), manifests = emptyList()),
         readySectionIds = emptySet(),
         copiedSectionIds = emptySet(),
       )

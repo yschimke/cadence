@@ -437,15 +437,25 @@ fun PodcastScreen(
             }
         }
         if (prepared)
-          Text(
-            if (local.target.isBlank()) "You'll pick the headphones' storage first."
-            else
-              "Copies to ${local.target.substringAfterLast('/')}" +
-                if (local.copiedSectionIds.isNotEmpty()) " · last copy complete" else "",
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            modifier = Modifier.padding(top = 4.dp),
-          )
+          Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+              if (local.target.isBlank()) "You'll pick the headphones' storage first."
+              else
+                "Copies to ${local.target.substringAfterLast('/')}" +
+                  if (local.copiedSectionIds.isNotEmpty()) " · last copy complete" else "",
+              Modifier.weight(1f),
+              style = MaterialTheme.typography.bodySmall,
+              color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            if (local.target.isNotBlank())
+              TextButton(
+                enabled = !busy,
+                onClick = selectTarget,
+                modifier = Modifier.semantics { contentDescription = "Change where copies go" },
+              ) {
+                Text("Change")
+              }
+          }
       }
       items(playlist.episodes, key = { it.key }) { episode ->
         EpisodeCard(

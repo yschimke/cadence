@@ -294,8 +294,38 @@ class PodcastTest {
     assertEquals(source.key, manifest.episodes.single().episodeKey)
   }
 
-  private class FakePlatform : PodcastPlatform {
-    override val splitFormats = setOf("mp3", "m4a")
+  @Test
+  fun savedSettingsAreMatchedToWhatThePlatformCanPrepare() = runBlocking {
+    val stored =
+      podcastJson.encodeToString(
+        LocalPodcastState(
+          library =
+            PodcastLibrary(
+              config =
+                Segmentation(
+                  splitAtPosition = true,
+                  chunkMinutes = 15,
+                  chunkFormat = "mp3",
+                  skipListened = true,
+                )
+            )
+        )
+      )
+    // Android encodes only M4A.
+    val android = PodcastController(FakePlatform(setOf("m4a")).apply { saved = stored })
+    android.load()
+    assertEquals("m4a", android.state.value.library.config.chunkFormat)
+    assertEquals(15, android.state.value.library.config.chunkMinutes)
+    // The browser copies whole episodes only.
+    val web = PodcastController(FakePlatform(emptySet()).apply { saved = stored })
+    web.load()
+    assertEquals(Segmentation(false, 0, "mp3", false), web.state.value.library.config)
+    web.configure(Segmentation(splitAtPosition = true))
+    assertFalse(web.state.value.library.config.splitAtPosition)
+  }
+
+  private class FakePlatform(override val splitFormats: Set<String> = setOf("mp3", "m4a")) :
+    PodcastPlatform {
     override val description = "Fixture"
     var saved: String? = null
     var failPreparation = false

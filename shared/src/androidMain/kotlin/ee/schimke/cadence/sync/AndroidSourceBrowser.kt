@@ -7,6 +7,8 @@ import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.binding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import ee.schimke.cadence.datastore.proto.SourceKind
 import ee.schimke.cadence.datastore.proto.SyncSource
 
@@ -17,9 +19,10 @@ class AndroidSourceBrowser(
     private val syncRepo: SyncRepo,
 ) : SourceBrowser {
 
-    override suspend fun browse(sourceId: String): List<BrowsedItem> {
-        val source = syncRepo.getSource(sourceId) ?: return emptyList()
-        return when (source.kind) {
+    // DocumentFile queries block on the storage provider, which may be a slow cloud app.
+    override suspend fun browse(sourceId: String): List<BrowsedItem> = withContext(Dispatchers.IO) {
+        val source = syncRepo.getSource(sourceId) ?: return@withContext emptyList()
+        when (source.kind) {
             SourceKind.LOCAL_DIRECTORY -> browseTreeUri(source)
             SourceKind.NFS_SHARE -> emptyList()
         }
