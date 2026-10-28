@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Cloud
@@ -45,6 +46,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import ee.schimke.cadence.datastore.proto.NetworkConstraint
@@ -321,11 +325,17 @@ private fun ProfileCard(
           )
         }
         IconButton(onClick = onDelete) {
-          Icon(Icons.Filled.Close, contentDescription = "Delete profile")
+          Icon(Icons.Filled.Close, contentDescription = "Delete ${profile.name}")
         }
       }
-      Row(verticalAlignment = Alignment.CenterVertically) {
-        Switch(checked = profile.auto_refresh, onCheckedChange = onToggleAuto)
+      // The whole row toggles, so the description is the switch's name and the target is 48dp.
+      Row(
+        Modifier.fillMaxWidth()
+          .heightIn(min = 48.dp)
+          .toggleable(profile.auto_refresh, role = Role.Switch, onValueChange = onToggleAuto),
+        verticalAlignment = Alignment.CenterVertically,
+      ) {
+        Switch(checked = profile.auto_refresh, onCheckedChange = null)
         Gap(12)
         Column(Modifier.weight(1f)) {
           Text(
@@ -366,7 +376,11 @@ private fun ProfileCard(
         }
       }
       Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        OutlinedButton(onClick = onRefreshNow, enabled = !isCurrentlyRefreshing) {
+        OutlinedButton(
+          onClick = onRefreshNow,
+          enabled = !isCurrentlyRefreshing,
+          modifier = Modifier.semantics { contentDescription = "Refresh ${profile.name} now" },
+        ) {
           Icon(Icons.Filled.Refresh, contentDescription = null)
           Gap(4)
           Text("Refresh now")
@@ -407,11 +421,14 @@ private fun SourceCard(source: SyncSource, onRemove: () -> Unit) {
           )
         }
       }
-      AssistChip(
-        onClick = {},
-        label = { Text(if (source.kind == SourceKind.LOCAL_DIRECTORY) "LOCAL" else "NFS") },
+      Text(
+        if (source.kind == SourceKind.LOCAL_DIRECTORY) "Folder" else "NFS",
+        style = MaterialTheme.typography.labelMedium,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
       )
-      IconButton(onClick = onRemove) { Icon(Icons.Filled.Close, contentDescription = "Remove") }
+      IconButton(onClick = onRemove) {
+        Icon(Icons.Filled.Close, contentDescription = "Remove ${source.name.ifBlank { "source" }}")
+      }
     }
   }
 }
