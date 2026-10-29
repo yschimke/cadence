@@ -25,11 +25,11 @@ jobs:
       - uses: actions/setup-java@v6.1.0
         with:
           distribution: temurin
-          java-version: 21.0.12+101.0.LTS
+          java-version: 21.0.13+9.0.LTS
       - uses: android-actions/setup-android@v4.0.4
         with:
           packages: platforms;android-37.0 build-tools;37.0.0
-      - uses: gradle/actions/setup-gradle@v6.4.0
+      - uses: gradle/actions/setup-gradle@v6.4.1
       - name: Build production Wasm app
         # wasmoApp packages the same build for Wasmo (docs/wasmo-app.md); building it here checks
         # the packaging on every PR, while releases attach it.
