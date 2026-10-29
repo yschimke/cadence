@@ -59,6 +59,8 @@ class HomeViewModel(
       Library(profiles, sources, prefs ?: SyncPreferences(), contents)
     }
 
+  private val bluetoothSupported = bluetoothController.supported
+
   val state: StateFlow<UiState> =
     combine(
         library,
@@ -73,6 +75,7 @@ class HomeViewModel(
           contents = library.contents,
           refresh = refresh,
           bluetooth = bt,
+          bluetoothSupported = bluetoothSupported,
           attachedDevice = usbDevices.firstMatchOrNull(library.preferences.usb_match),
           loaded = true,
         )
@@ -154,6 +157,7 @@ class HomeViewModel(
     val contents: Map<String, SourceContents> = emptyMap(),
     val refresh: RefreshProgress = RefreshProgress(),
     val bluetooth: BluetoothState = BluetoothState(),
+    val bluetoothSupported: Boolean = false,
     val attachedDevice: UsbDevice? = null,
     // False until saved sources have been read, so an existing library never flashes as empty.
     val loaded: Boolean = false,

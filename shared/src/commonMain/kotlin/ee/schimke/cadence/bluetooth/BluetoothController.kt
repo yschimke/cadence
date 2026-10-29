@@ -3,6 +3,11 @@ package ee.schimke.cadence.bluetooth
 import kotlinx.coroutines.flow.Flow
 
 interface BluetoothController {
+  /**
+   * False where classic-audio control cannot run (desktop, browser): the UI hides every BT entry.
+   */
+  val supported: Boolean
+
   val state: Flow<BluetoothState>
 
   fun refresh()

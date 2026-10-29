@@ -56,6 +56,8 @@ class AndroidBluetoothController(
     private val refreshTrigger = MutableStateFlow(0L)
     private val workingModeFlow = MutableStateFlow(WorkingMode.Bluetooth)
 
+    override val supported = true
+
     override val state: Flow<BluetoothState> = combine(
         connectionFlow(),
         volumeFlow(),

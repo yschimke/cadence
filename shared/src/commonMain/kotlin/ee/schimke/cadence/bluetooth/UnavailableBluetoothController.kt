@@ -4,6 +4,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 /** Classic audio controls need OS integration; browsers cannot use RFCOMM through Web Bluetooth. */
 class UnavailableBluetoothController : BluetoothController {
+  override val supported = false
+
   override val state = MutableStateFlow(BluetoothState())
 
   override fun refresh() {}
