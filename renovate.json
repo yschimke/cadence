@@ -1,6 +1,8 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["github>yschimke/renovate-config"],
+  "description": "`platformAutomerge` hands the merge of an automerging PR to GitHub's native auto-merge, which lands it the moment the Protect Main ruleset's required checks pass, instead of on Renovate's next run (about hourly). Safe because the required set builds, tests and renders previews (yschimke/renovate-config repo-policy: Assemble, Unit tests and Render previews); native auto-merge waits only on required checks, so it would not be safe on a repository whose ruleset required nothing.",
+  "platformAutomerge": true,
   "packageRules": [
     {
       "description": "Gradle patch and minor updates wait for a person here: the shared preset auto-lands them once CI is green, but this repository has always kept dependency bumps that reach the app build manual.",
