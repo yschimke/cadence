@@ -18,6 +18,10 @@ concurrency:
 jobs:
   apply:
     name: Render previews (baseline or PR comment, auto-selected)
+    # Skip on release-please PRs: they only bump the manifest, CHANGELOG and
+    # version lines, all of which main's push CI already built. Matches the
+    # bot-authored PR (or a bot dispatch); humans and main always run it.
+    if: ${{ !(startsWith(github.head_ref || github.ref_name, 'release-please--') && (github.event.pull_request.user.login || github.actor) == 'github-actions[bot]') }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
@@ -42,7 +46,11 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v6.4.0
 
-      - uses: yschimke/compose-ai-tools/.github/actions/apply@v2.74.1
+      - name: Record render start
+        run: echo "RENDER_STARTED=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_ENV"
+
+      - id: apply
+        uses: yschimke/compose-ai-tools/.github/actions/apply@v2.74.1
         with:
           # Keep CLI and plugin aligned: 2.64.3 ships the 2.64.2 plugin, but
           # the install action still probes for a plugin matching the CLI version.
@@ -61,3 +69,39 @@ jobs:
           # the preview-diff comment's "Render Failures" section, so a genuine
           # regression is still visible — just not a CI gate.
           missing-renders: warn
+          # No notification previews here: the pipeline only fails to find
+          # `composePreviewRenderAll` for them and is skipped, ~25s a run.
+          skip: notifications
+          # Post "No visual changes detected" rather than nothing, so a clean
+          # UI PR is distinguishable from one whose render never reported.
+          comment-on-empty-diff: 'true'
+
+      # A render that dies before the comparison (a Gradle or AGP break, as on
+      # the AGP 9.5 bumps) leaves only a red check: the action posts nothing,
+      # and a stale diff from an earlier push can still sit on the PR. Say so
+      # in the sticky comment, unless this run already updated it. The next
+      # successful run overwrites it through the same marker.
+      - name: Report a failed render on the PR
+        if: failure() && steps.apply.outcome == 'failure' && github.event_name == 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
+          SHA: ${{ github.event.pull_request.head.sha }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/attempts/${{ github.run_attempt }}
+        run: |
+          set -euo pipefail
+          read -r id updated < <(gh api --paginate "repos/$REPO/issues/$PR/comments" \
+            --jq '.[] | select(.user.login == "github-actions[bot]" and (.body | startswith("<!-- preview-diff -->"))) | [.id, .updated_at] | @tsv' | tail -1) || true
+          if [ -n "${updated:-}" ] && [[ ! "$updated" < "$RENDER_STARTED" ]]; then
+            echo "This run already updated the preview-diff comment; leaving it."
+            exit 0
+          fi
+          body=$(printf '%s\n' "<!-- preview-diff -->" "## Preview Changes" "" \
+            "> [!CAUTION]" \
+            "> The preview render failed at ${SHA:0:8}, so this PR has no preview diff for that commit. See [the run]($RUN_URL); re-running the job retries it.")
+          if [ -n "${id:-}" ]; then
+            gh api -X PATCH "repos/$REPO/issues/comments/$id" -f body="$body" >/dev/null
+          else
+            gh api "repos/$REPO/issues/$PR/comments" -f body="$body" >/dev/null
+          fi
