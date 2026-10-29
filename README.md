@@ -15,6 +15,7 @@ Use JDK 21 and an Android SDK with API 37 (`platforms;android-37.0`) and build t
 ./gradlew :desktopApp:createDistributable       # desktop bundle for the current OS
 ./gradlew :shared:wasmJsBrowserDevelopmentRun   # browser dev server; open its printed localhost URL
 ./gradlew :shared:wasmJsBrowserDistribution     # production website in shared/build/dist/wasmJs/productionExecutable
+./gradlew :shared:wasmoApp                     # the website as an installable Wasmo app (docs/wasmo-app.md)
 ```
 
 Serve the production directory over HTTPS (localhost is allowed for development). Open it in a browser with WebAssembly GC support. USB and writable directory selection require browser support independently of Wasm support; Chrome or Edge on desktop is the supported file-management route. The UI explains missing capabilities.

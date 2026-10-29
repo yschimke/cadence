@@ -18,6 +18,10 @@
         {
           "type": "generic",
           "path": "desktopApp/build.gradle.kts"
+        },
+        {
+          "type": "generic",
+          "path": "shared/build.gradle.kts"
         }
       ]
     }
