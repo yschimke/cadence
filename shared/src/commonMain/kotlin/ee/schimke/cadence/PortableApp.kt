@@ -17,6 +17,7 @@ import ee.schimke.cadence.metro.*
 fun PortableApp(
   factory: PortableViewModelFactory,
   navController: NavHostController = rememberNavController(),
+  topBarOverflow: (@Composable (dismiss: () -> Unit) -> Unit)? = null,
 ) {
   val owner = remember {
     object : ViewModelStoreOwner {
@@ -31,7 +32,7 @@ fun PortableApp(
     MaterialTheme(
       colorScheme = if (isSystemInDarkTheme()) darkColorScheme() else lightColorScheme()
     ) {
-      App(navController)
+      App(navController, topBarOverflow)
     }
   }
 }

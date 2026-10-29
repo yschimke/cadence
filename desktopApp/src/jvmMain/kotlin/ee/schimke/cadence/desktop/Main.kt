@@ -1,9 +1,17 @@
 package ee.schimke.cadence.desktop
 
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.input.key.Key
-import androidx.compose.ui.input.key.KeyShortcut
-import androidx.compose.ui.window.*
+import androidx.compose.ui.input.key.KeyEvent
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.isCtrlPressed
+import androidx.compose.ui.input.key.isMetaPressed
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.type
+import androidx.compose.ui.window.Window
+import androidx.compose.ui.window.application
 import androidx.navigation.compose.rememberNavController
 import ee.schimke.cadence.AddPodcasts
 import ee.schimke.cadence.Bookmarks
@@ -18,60 +26,101 @@ import java.net.URI
 fun main() = application {
   val services = remember { DesktopServices() }
   DisposableEffect(services) { onDispose { services.close() } }
-  Window(onCloseRequest = ::exitApplication, title = "Cadence") {
-    val navController = rememberNavController()
-    MenuBar {
-      Menu("File", mnemonic = 'F') {
-        Item(
-          "Add folder…",
-          shortcut = primary(Key.O),
-          onClick = { navController.navigate(ManageSync) },
+  val navController = rememberNavController()
+  Window(
+    onCloseRequest = ::exitApplication,
+    title = "Cadence",
+    onPreviewKeyEvent = { event ->
+      if (event.type != KeyEventType.KeyDown || !event.isPrimary()) false
+      else
+        when (event.key) {
+          Key.R -> {
+            services.refreshAllProfiles()
+            true
+          }
+          Key.Comma -> {
+            navController.navigate(ManageSync)
+            true
+          }
+          Key.One -> {
+            navController.popBackStack(Home, inclusive = false)
+            true
+          }
+          Key.Two -> {
+            navController.navigate(Devices)
+            true
+          }
+          Key.Three -> {
+            navController.navigate(Bookmarks)
+            true
+          }
+          Key.N -> {
+            navController.navigate(AddPodcasts)
+            true
+          }
+          Key.Q -> {
+            exitApplication()
+            true
+          }
+          else -> false
+        }
+    },
+  ) {
+    PortableApp(
+      factory = services.factory,
+      navController = navController,
+      topBarOverflow = { dismiss ->
+        DropdownMenuItem(
+          text = { Text("Add podcasts") },
+          onClick = {
+            dismiss()
+            navController.navigate(AddPodcasts)
+          },
         )
-        Item(
-          "Add podcasts…",
-          shortcut = primary(Key.N),
-          onClick = { navController.navigate(AddPodcasts) },
+        DropdownMenuItem(
+          text = { Text("Manage sources") },
+          onClick = {
+            dismiss()
+            navController.navigate(ManageSync)
+          },
         )
-        Separator()
-        Item("Quit Cadence", shortcut = primary(Key.Q), onClick = ::exitApplication)
-      }
-      Menu("View", mnemonic = 'V') {
-        Item(
-          "Library",
-          shortcut = primary(Key.One),
-          onClick = { navController.popBackStack(Home, inclusive = false) },
+        DropdownMenuItem(
+          text = { Text("Refresh now") },
+          onClick = {
+            dismiss()
+            services.refreshAllProfiles()
+          },
         )
-        Item(
-          "File explorer",
-          shortcut = primary(Key.Two),
-          onClick = { navController.navigate(Devices) },
+        DropdownMenuItem(
+          text = { Text("Project on GitHub") },
+          onClick = {
+            dismiss()
+            openUrl("https://github.com/yschimke/cadence")
+          },
         )
-        Item(
-          "Bookmarks",
-          shortcut = primary(Key.Three),
-          onClick = { navController.navigate(Bookmarks) },
+        DropdownMenuItem(
+          text = { Text("Report an issue") },
+          onClick = {
+            dismiss()
+            openUrl("https://github.com/yschimke/cadence/issues")
+          },
         )
-        Separator()
-        Item(
-          "Manage sources",
-          shortcut = primary(Key.Comma),
-          onClick = { navController.navigate(ManageSync) },
+        DropdownMenuItem(
+          text = { Text("Quit Cadence") },
+          onClick = {
+            dismiss()
+            exitApplication()
+          },
         )
-        Item("Refresh now", shortcut = primary(Key.R), onClick = services::refreshAllProfiles)
-      }
-      Menu("Help", mnemonic = 'H') {
-        Item("Project on GitHub", onClick = { openUrl("https://github.com/yschimke/cadence") })
-        Item("Report an issue", onClick = { openUrl("https://github.com/yschimke/cadence/issues") })
-      }
-    }
-    PortableApp(services.factory, navController)
+      },
+    )
   }
 }
 
 private val isMac = System.getProperty("os.name").orEmpty().contains("mac", ignoreCase = true)
 
-private fun primary(key: Key): KeyShortcut =
-  if (isMac) KeyShortcut(key, meta = true) else KeyShortcut(key, ctrl = true)
+/** Cmd on macOS, Ctrl everywhere else. */
+private fun KeyEvent.isPrimary(): Boolean = if (isMac) isMetaPressed else isCtrlPressed
 
 private fun openUrl(url: String) {
   if (Desktop.isDesktopSupported()) runCatching { Desktop.getDesktop().browse(URI(url)) }
