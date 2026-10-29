@@ -7,6 +7,7 @@ title: Cadence
 Cadence manages audio on USB storage on Android, desktop, and in your browser.
 
 - [Open the browser app](app/)
+- [Install it on your Wasmo](wasmo-app.md)
 - [Download Android and desktop releases](https://github.com/yschimke/cadence/releases/latest)
 - [Setup and usage](https://github.com/yschimke/cadence#readme)
 - [Privacy policy](privacy/)

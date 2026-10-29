@@ -133,7 +133,7 @@ jobs:
           CADENCE_KEYSTORE_PASSWORD: ${{ secrets.CADENCE_KEYSTORE_PASSWORD }}
           CADENCE_KEY_ALIAS: ${{ secrets.CADENCE_KEY_ALIAS }}
           CADENCE_KEY_PASSWORD: ${{ secrets.CADENCE_KEY_PASSWORD }}
-        run: ./gradlew :composeApp:assembleRelease :composeApp:bundleRelease --stacktrace
+        run: ./gradlew :composeApp:assembleRelease :composeApp:bundleRelease :shared:wasmoApp --stacktrace
 
       - name: Publish library artifacts to GitHub Packages
         env:
@@ -195,6 +195,10 @@ jobs:
           for f in composeApp/build/outputs/bundle/release/*.aab; do
             cp "$f" "_release/cadence-${version}.aab"
           done
+          # The browser build as an installable Wasmo app. Unversioned so
+          # releases/latest/download/cadence.wasmo is a stable install URL;
+          # see docs/wasmo-app.md.
+          cp shared/build/wasmo/cadence.wasmo _release/cadence.wasmo
           ls -la _release/
           echo "version=${version}" >> "$GITHUB_OUTPUT"
 
@@ -206,6 +210,7 @@ jobs:
           files: |
             _release/*.apk
             _release/*.aab
+            _release/cadence.wasmo
           fail_on_unmatched_files: true
 
       - name: Upload workflow artifact
