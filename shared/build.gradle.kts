@@ -120,10 +120,15 @@ val wasmoAppDirectory =
     // visitor (Wasmo serves www-public/ first) and sends the owner on to app.html.
     into("www") {
       from(tasks.named("wasmJsBrowserDistribution"))
-      from("wasmo/wasm-mime-fallback.js")
+      from("wasmo/wasm-mime-fallback.js", "wasmo/cadence-backend.js")
       filesMatching("index.html") {
         filter { line ->
           line
+            // cadence-backend.js seeds settings from the Wasmo install, then loads cadence.js.
+            .replace(
+              "<script src=\"cadence.js\"></script>",
+              "<script src=\"cadence-backend.js\"></script>",
+            )
             .replace(
               "<script src=\"cadence-platform.js\">",
               "<script src=\"wasm-mime-fallback.js\"></script><script src=\"cadence-platform.js\">",

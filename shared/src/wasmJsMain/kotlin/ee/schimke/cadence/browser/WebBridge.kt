@@ -47,7 +47,10 @@ external fun connectBrowserUsb(ok: (String) -> Unit, fail: (String) -> Unit)
 
 @JsFun("() => localStorage.getItem('cadence-settings-v1')") external fun readSettings(): String?
 
-@JsFun("(data) => localStorage.setItem('cadence-settings-v1',data)")
+// cadenceStorage is set only by the .wasmo build, which shares settings through its Wasmo.
+@JsFun(
+  "(data) => { localStorage.setItem('cadence-settings-v1',data); globalThis.cadenceStorage?.changed('cadence-settings-v1',data); }"
+)
 external fun writeSettings(data: String)
 
 @JsFun(
