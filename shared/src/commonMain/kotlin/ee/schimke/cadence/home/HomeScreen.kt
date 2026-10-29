@@ -256,7 +256,7 @@ private fun LibraryTopBar(state: HomeViewModel.UiState, actions: HomeActions) {
             )
           }
         item("Manage sources", actions.onManageSources)()
-        if (state.bluetooth.connectedDevice == null)
+        if (state.bluetoothSupported && state.bluetooth.connectedDevice == null)
           item("Bluetooth controls", actions.onBluetoothControls)()
         item("File explorer", actions.onFileExplorer)()
         item("Bookmarks", actions.onBookmarks)()

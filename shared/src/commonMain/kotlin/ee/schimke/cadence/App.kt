@@ -19,7 +19,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -39,13 +38,12 @@ import ee.schimke.cadence.sync.ManageSyncScreen
 import kotlinx.serialization.Serializable
 
 @Composable
-fun App(platformNotice: String? = null) {
+fun App() {
   val navController = rememberNavController()
   val podcasts = rememberPodcastController()
 
   val entry by navController.currentBackStackEntryAsState()
   Column(Modifier.fillMaxSize()) {
-    platformNotice?.let { Text(it, style = MaterialTheme.typography.bodySmall) }
     val nested = entry != null && navController.previousBackStackEntry != null
     if (nested) {
       // Takes the status bar inset here, so screens below don't add it again.

@@ -69,9 +69,6 @@ fun main() {
         scope.cancel()
       }
     }
-    PortableApp(
-      factory,
-      "Browser: refresh and sync are manual while this tab is open. USB file access uses a mounted directory. Bluetooth controls and network constraints require Android.",
-    )
+    PortableApp(factory)
   }
 }

@@ -12,7 +12,7 @@ import ee.schimke.cadence.metro.*
 
 /** Desktop and browser have no wallpaper colours, so they use the Material 3 baseline scheme. */
 @Composable
-fun PortableApp(factory: PortableViewModelFactory, notice: String) {
+fun PortableApp(factory: PortableViewModelFactory) {
   val owner = remember {
     object : ViewModelStoreOwner {
       override val viewModelStore = ViewModelStore()
@@ -26,7 +26,7 @@ fun PortableApp(factory: PortableViewModelFactory, notice: String) {
     MaterialTheme(
       colorScheme = if (isSystemInDarkTheme()) darkColorScheme() else lightColorScheme()
     ) {
-      App(notice)
+      App()
     }
   }
 }
