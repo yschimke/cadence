@@ -8,11 +8,16 @@ import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import ee.schimke.cadence.metro.*
 
 /** Desktop and browser have no wallpaper colours, so they use the Material 3 baseline scheme. */
 @Composable
-fun PortableApp(factory: PortableViewModelFactory) {
+fun PortableApp(
+  factory: PortableViewModelFactory,
+  navController: NavHostController = rememberNavController(),
+) {
   val owner = remember {
     object : ViewModelStoreOwner {
       override val viewModelStore = ViewModelStore()
@@ -26,7 +31,7 @@ fun PortableApp(factory: PortableViewModelFactory) {
     MaterialTheme(
       colorScheme = if (isSystemInDarkTheme()) darkColorScheme() else lightColorScheme()
     ) {
-      App()
+      App(navController)
     }
   }
 }

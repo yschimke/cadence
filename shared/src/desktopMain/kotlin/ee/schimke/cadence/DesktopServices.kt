@@ -119,6 +119,11 @@ class DesktopServices : AutoCloseable {
       PortableSourceBrowser(repo, backend),
     )
 
+  /** Menu-driven refresh: run every registered profile once, through the usual scheduler. */
+  fun refreshAllProfiles() {
+    scope.launch { repo.profiles.first().forEach { scheduler.runNow(it.id) } }
+  }
+
   override fun close() {
     scope.cancel()
   }

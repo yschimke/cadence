@@ -13,6 +13,7 @@ kotlin {
     jvmMain.dependencies {
       implementation(projects.shared)
       implementation(libs.androidx.lifecycle.viewmodel)
+      implementation(libs.navigation.compose)
       implementation(compose.desktop.currentOs)
     }
   }

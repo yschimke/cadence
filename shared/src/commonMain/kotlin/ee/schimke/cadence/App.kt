@@ -22,6 +22,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -38,8 +39,7 @@ import ee.schimke.cadence.sync.ManageSyncScreen
 import kotlinx.serialization.Serializable
 
 @Composable
-fun App() {
-  val navController = rememberNavController()
+fun App(navController: NavHostController = rememberNavController()) {
   val podcasts = rememberPodcastController()
 
   val entry by navController.currentBackStackEntryAsState()
