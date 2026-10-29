@@ -161,7 +161,11 @@
     async call(op, args) {
       switch (op) {
         case 'podcastRead': return localStorage.getItem('cadence-podcasts-v1');
-        case 'podcastSave': localStorage.setItem('cadence-podcasts-v1', args.state); return true;
+        case 'podcastSave':
+          localStorage.setItem('cadence-podcasts-v1', args.state);
+          // Set only by the .wasmo build, which shares the library through its Wasmo.
+          globalThis.cadenceStorage?.changed('cadence-podcasts-v1', args.state);
+          return true;
         case 'podcastRequest': {
           const response = await podcastFetch(args.url, { method: args.method, headers: args.headers, body: args.body });
           const text = await response.text();

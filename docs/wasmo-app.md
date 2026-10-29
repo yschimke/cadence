@@ -20,7 +20,8 @@ cadence.wasmo/
   www/                     # the wasmJsBrowserDistribution output, served to the owner only
     app.html               # the dist's index.html, renamed; + wasm-mime-fallback.js and the
                            #   manifest/icon links
-    cadence.js, cadence-platform.js, *.wasm, composeResources/…
+    cadence-backend.js     # shares settings through the install's kv service, then loads cadence.js
+    cadence.js, cadence-platform.js, *.wasm
     assets/icon.png        # launcher icon
   www-public/              # shared/wasmo/www-public/, served to everyone
     index.html             # landing page: sends the owner to /app.html, explains installing
@@ -44,14 +45,38 @@ The app page links `manifest.webmanifest`, so once open the owner can **Install 
 browser. The manifest and its icons sit in `www-public/` because browsers fetch a manifest without
 credentials, which the owner-only `www/` would answer with 404. There is no service worker.
 
-## Storage and browser capabilities
+## Sharing settings across browsers
 
-There is no `app.wasm` and no server-side state. Cadence keeps everything where the static web
-build already does: settings in `localStorage`, chosen directory handles in IndexedDB and staged
-audio in the origin-private file system. All of it belongs to the install's origin, so it is per
-browser and changes if the app is reinstalled under another name. Wasmo's per-install key-value
-service (`/api/wasmo/v1/kv`) is not used: a fork-based Wasmo only enables it for install names on
-its operator's allow-list.
+There is no `app.wasm`. On a Wasmo that enables its per-install services for this install name
+(the fork's `WASMO_SERVICE_APPS` allow-list, as for Terrazzo), the owner's settings follow them
+to every browser they open Cadence in. The `.wasmo` build's `app.html` loads
+`shared/wasmo/cadence-backend.js` in place of `cadence.js`:
+
+1. It probes `/api/wasmo/v1/capabilities` (one longer retry if the Wasmo doesn't answer).
+2. With `kv` and `kvImport`, it reads the install's values and seeds `localStorage` with them
+   before the app starts, so the app's synchronous reads see the shared values. The first browser
+   on an empty install uploads what it has with `POST kv/import`, which only an empty install
+   accepts; if another browser got there first, its values win.
+3. The app reports each write through `globalThis.cadenceStorage.changed` (set only by this
+   script; the static web build has none) and the script `PUT`s it. A failed write stays queued,
+   is retried with the next change or when the browser reconnects, and shows a notice.
+4. If the install's values can't be read, the page offers a reload rather than starting from this
+   browser's copy, which would fork the owner's settings.
+
+| Kept on the Wasmo (`kv`) | Kept per browser |
+| --- | --- |
+| `settings`: the whole settings proto (devices, sources, sync profiles and preferences, bookmarks) | Chosen folder handles (IndexedDB): the browser grants them to itself only |
+| `podcasts`: the podcast library and gpodder server/user | Staged audio (origin-private file system): too large for `kv`'s 1 MiB per install |
+| | Pocket Casts tokens and Cadence cloud keys: Wasmo's generic settings must not hold credentials |
+| | Download target, readiness and positions sent from this device |
+
+A profile or source that refers to a folder picked in another browser asks for the folder to be
+chosen again here. Settings are read once at startup; two browsers open at the same time don't see
+each other's changes until a reload, and the last write wins. `kv` takes values up to 256 KiB; a
+podcast library larger than that stays in the browser, with a notice.
+
+Without the service (hosted wasmo.com, or an install name not on the list) the page keeps
+everything in the browser, as the static web build does, and says so in a dismissible notice.
 
 Each install is a top-level HTTPS page on its own origin, which is what WebUSB and the File System
 Access directory picker need ([multiplatform.md](multiplatform.md#usb-and-browser-restrictions)).
@@ -68,7 +93,8 @@ choice.
    `https://github.com/yschimke/cadence/releases/latest/download/cadence.wasmo`.
    To host it yourself instead, serve `shared/build/wasmo/cadence.wasmo` from any HTTPS URL Wasmo
    can reach.
-2. In Wasmo, choose **Install App**, paste the URL, and name it `cadence`.
+2. In Wasmo, choose **Install App**, paste the URL, and name it `cadence` (or whichever name the
+   operator lists in `WASMO_SERVICE_APPS`; other names work but keep settings in the browser).
 3. Open it from the launcher, or `https://cadence-<computer>.wasmo.com/`.
 
 The **Wasmo server**, not your browser, fetches the URL, so it must be reachable from wherever
