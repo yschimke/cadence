@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.1.5](https://github.com/yschimke/cadence/compare/v0.1.4...v0.1.5) (2026-10-28)
+
+
+### Features
+
+* content-first library home with one way to add sources ([#405](https://github.com/yschimke/cadence/issues/405)) ([468a53d](https://github.com/yschimke/cadence/commit/468a53d327f583414714068b2d316b0e895b4ffb))
+* sign in to Pocket Casts and import Up Next, in progress and playlists ([#404](https://github.com/yschimke/cadence/issues/404)) ([04ec3c8](https://github.com/yschimke/cadence/commit/04ec3c88b553fd817b44b0cea122872fd126e82e))
+
+
+### Bug Fixes
+
+* **deps:** update dependency ee.schimke.composeai:rc-widget-launcher to v2.21.0 ([#407](https://github.com/yschimke/cadence/issues/407)) ([1ceaf83](https://github.com/yschimke/cadence/commit/1ceaf839c2911fb1d8e2633fb53b5d046c278bea))
+
+
+### Performance Improvements
+
+* **compose:** add contentType to lazy list items and dedupe profile lookup ([#408](https://github.com/yschimke/cadence/issues/408)) ([d0c509b](https://github.com/yschimke/cadence/commit/d0c509ba627a075652736517ea3964e9fb1953e7))
+
 ## [0.1.4](https://github.com/yschimke/cadence/compare/v0.1.3...v0.1.4) (2026-10-28)
 
 
