@@ -13,6 +13,9 @@ kotlin {
     jvmMain.dependencies {
       implementation(projects.shared)
       implementation(libs.androidx.lifecycle.viewmodel)
+      implementation(libs.navigation.compose)
+      implementation(libs.compose.material3)
+      implementation(libs.kotlinx.coroutines.swing)
       implementation(compose.desktop.currentOs)
     }
   }

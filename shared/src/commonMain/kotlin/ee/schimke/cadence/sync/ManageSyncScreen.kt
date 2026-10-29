@@ -183,7 +183,7 @@ fun ManageSyncContent(
       SectionHeader(
         title = "Sources",
         subtitle =
-          "Pick any folder reachable through Android's system file picker — local, cloud, SMB, etc.",
+          "Pick any folder reachable through the system file picker — local, cloud, SMB, etc.",
         trailing = {
           OutlinedButton(onClick = onAddLocalDirectory) { Text("Add source") }
           Gap(8)
@@ -288,9 +288,15 @@ private fun TargetDeviceCard(
         onValueChange = { matchEditing = it.uppercase().take(9) },
         label = { Text("USB match (VID:PID, optional)") },
         placeholder = { Text("05E3:0761") },
+        supportingText = {
+          Text("Leave blank to auto-sync on any USB. Only used while Auto-sync is on.")
+        },
         modifier = Modifier.fillMaxWidth(),
       )
-      TextButton(onClick = { onSetUsbMatch(matchEditing.trim()) }) { Text("Save USB match") }
+      val dirty = matchEditing.trim() != state.preferences.usb_match.trim()
+      TextButton(enabled = dirty, onClick = { onSetUsbMatch(matchEditing.trim()) }) {
+        Text(if (dirty) "Save USB match" else "USB match saved")
+      }
     }
   }
 }

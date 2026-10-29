@@ -4,24 +4,29 @@ import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.safeDrawing
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -37,27 +42,38 @@ import ee.schimke.cadence.sync.FileSyncScreen
 import ee.schimke.cadence.sync.ManageSyncScreen
 import kotlinx.serialization.Serializable
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun App() {
-  val navController = rememberNavController()
+fun App(
+  navController: NavHostController = rememberNavController(),
+  topBarOverflow: (@Composable (dismiss: () -> Unit) -> Unit)? = null,
+) {
   val podcasts = rememberPodcastController()
 
   val entry by navController.currentBackStackEntryAsState()
   Column(Modifier.fillMaxSize()) {
     val nested = entry != null && navController.previousBackStackEntry != null
+    // Home screen draws its own top bar — only show the shared one on nested destinations.
     if (nested) {
-      // Takes the status bar inset here, so screens below don't add it again.
-      Surface(Modifier.fillMaxWidth()) {
-        Row(
-          Modifier.windowInsetsPadding(
-            WindowInsets.safeDrawing.only(WindowInsetsSides.Top + WindowInsetsSides.Horizontal)
-          )
-        ) {
+      TopAppBar(
+        title = { Text(destinationTitle(entry?.destination?.route)) },
+        navigationIcon = {
           IconButton(onClick = { navController.popBackStack() }) {
             Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
           }
-        }
-      }
+        },
+        actions = {
+          if (topBarOverflow != null) {
+            var open by remember { mutableStateOf(false) }
+            IconButton(onClick = { open = true }) {
+              Icon(Icons.Filled.MoreVert, contentDescription = "More")
+            }
+            DropdownMenu(expanded = open, onDismissRequest = { open = false }) {
+              topBarOverflow { open = false }
+            }
+          }
+        },
+      )
     }
     NavHost(
       navController,
@@ -156,3 +172,21 @@ fun App() {
 @Serializable data object Podcasts
 
 @Serializable data object AddPodcasts
+
+private fun destinationTitle(route: String?): String {
+  if (route == null) return "Cadence"
+  val leaf = route.substringAfterLast('.')
+  return when {
+    leaf.startsWith("Home") -> "Cadence"
+    leaf.startsWith("Devices") -> "Devices"
+    leaf.startsWith("DeviceFiles") -> "Files"
+    leaf.startsWith("Browser") -> "Browser"
+    leaf.startsWith("Bookmarks") -> "Bookmarks"
+    leaf.startsWith("BluetoothControls") -> "Bluetooth"
+    leaf.startsWith("FileSync") -> "Copy to headphones"
+    leaf.startsWith("ManageSync") -> "Manage sources"
+    leaf.startsWith("Podcasts") -> "Podcasts"
+    leaf.startsWith("AddPodcasts") -> "Add podcasts"
+    else -> "Cadence"
+  }
+}
