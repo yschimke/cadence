@@ -29,14 +29,17 @@ class GoogleDriveManifestStore(
   override suspend fun load(deviceId: String): SyncManifest {
     val remote = runCatching {
       drive.downloadByName(fileName(deviceId))
-    }.getOrNull()?.let { runCatching { json.decodeFromString<SyncManifest>(it) }.getOrNull() }
+    }
+      .getOrNull()
+      ?.let { runCatching { json.decodeFromString<SyncManifest>(it) }.getOrNull() }
     if (remote != null) return remote
     return local.load(deviceId)
   }
 
-  override suspend fun record(deviceId: String, relPath: String, entry: ManifestEntry) {
+  override suspend fun recordAll(deviceId: String, entries: Map<String, ManifestEntry>) {
+    if (entries.isEmpty()) return
     writeLock.withLock {
-      local.record(deviceId, relPath, entry)
+      local.recordAll(deviceId, entries)
       runCatching {
         val merged = local.load(deviceId)
         drive.uploadOrReplace(fileName(deviceId), json.encodeToString(merged))
