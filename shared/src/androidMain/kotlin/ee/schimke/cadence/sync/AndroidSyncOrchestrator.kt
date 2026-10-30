@@ -68,13 +68,14 @@ class AndroidSyncOrchestrator(
                 ?: return@launch reportError("Cannot open device tree URI")
 
             var completed = 0
-            val touchedProfileIds = mutableSetOf<String>()
+            val fullySyncedProfileIds = mutableSetOf<String>()
             for ((profile, entries) in plan) {
                 if (!isActive) break
                 _progress.value = _progress.value.copy(currentProfileName = profile.name)
                 val profileRootSegments = profile.staging_subpath.split('/').filter { it.isNotBlank() }
                 val profileRoot = ensureDirectories(rootDoc, profileRootSegments)
-                var profileHadSuccess = false
+                var profileAnyFailure = false
+                var profileAnySuccess = false
                 for (entry in entries) {
                     if (!isActive) break
                     _progress.value = _progress.value.copy(
@@ -83,19 +84,24 @@ class AndroidSyncOrchestrator(
                         currentTotal = entry.sizeBytes,
                     )
                     runCatching { copyOne(entry, profileRoot) }
-                        .onSuccess { profileHadSuccess = true }
+                        .onSuccess {
+                            profileAnySuccess = true
+                            completed++
+                            _progress.value = _progress.value.copy(filesCompleted = completed)
+                        }
                         .onFailure {
+                            profileAnyFailure = true
                             _progress.value = _progress.value.copy(
                                 lastError = "${entry.relativePath}: ${it.message ?: it.javaClass.simpleName}",
                             )
                         }
-                    completed++
-                    _progress.value = _progress.value.copy(filesCompleted = completed)
                 }
-                if (profileHadSuccess) touchedProfileIds += profile.id
+                // Only mark a profile synced when every file in it landed; a partial run leaves
+                // last_synced_at as-is so the Copy screen keeps showing "new content ready".
+                if (profileAnySuccess && !profileAnyFailure) fullySyncedProfileIds += profile.id
             }
             val syncedAt = java.time.Instant.now().toString()
-            touchedProfileIds.forEach { syncRepo.recordSyncSuccess(it, syncedAt) }
+            fullySyncedProfileIds.forEach { syncRepo.recordSyncSuccess(it, syncedAt) }
             _progress.value = _progress.value.copy(running = false, currentFileName = null, currentProfileName = null)
         }
     }
