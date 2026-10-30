@@ -56,6 +56,7 @@ import ee.schimke.cadence.metro.metroViewModel
 fun FileSyncScreen(modifier: Modifier = Modifier, onClose: () -> Unit, onManage: () -> Unit) {
   val viewModel = metroViewModel<FileSyncViewModel>()
   val state by viewModel.state.collectAsState()
+  val addFolder = rememberDirectorySourceLauncher(viewModel::addFolderToLibrary)
 
   FileSyncContent(
     modifier = modifier,
@@ -64,6 +65,7 @@ fun FileSyncScreen(modifier: Modifier = Modifier, onClose: () -> Unit, onManage:
     onCancelSync = viewModel::cancelSync,
     onClose = onClose,
     onManage = onManage,
+    onAddFolder = addFolder,
   )
 }
 
@@ -75,6 +77,7 @@ fun FileSyncContent(
   onCancelSync: () -> Unit,
   onClose: () -> Unit,
   onManage: () -> Unit,
+  onAddFolder: () -> Unit = {},
 ) {
   val sync = state.sync
   val device = state.devices.firstOrNull { it.id == state.preferences.target_device_id }
@@ -94,16 +97,24 @@ fun FileSyncContent(
       ) {
         item { Spacer(Modifier.height(8.dp)) }
         item {
+          val freshCount = syncableProfiles.count { it.last_refreshed_at > it.last_synced_at }
+          val copied = sync.filesCompleted - sync.filesSkipped
           SyncDeviceHero(
             label = deviceLabel,
             secondary =
               when {
-                done -> "${sync.filesCompleted} files landed · safe to disconnect"
+                done && copied == 0 && sync.filesSkipped > 0 ->
+                  "Already up to date · safe to disconnect"
+                done -> "$copied files landed · safe to disconnect"
                 sync.running -> "Syncing — don't unplug"
-                state.profiles.isEmpty() -> "No profiles yet — open Manage to add one"
-                else -> "Connected · ${syncableProfiles.size} profiles ready"
+                state.refresh.running ->
+                  "Updating staging${state.refresh.profileName?.let { " · $it" } ?: ""}"
+                state.profiles.isEmpty() -> "No profiles yet — add one to copy anything"
+                freshCount > 0 ->
+                  "$freshCount profile${if (freshCount == 1) "" else "s"} with new content"
+                else -> "Nothing new since last sync"
               },
-            running = sync.running,
+            running = sync.running || state.refresh.running,
             done = done,
           )
         }
@@ -131,9 +142,11 @@ fun FileSyncContent(
     if (!done) {
       SyncCta(
         running = sync.running,
+        hasProfiles = state.profiles.isNotEmpty(),
         readyCount = checkedIds.intersect(syncableProfiles.map { it.id }.toSet()).size,
         onStartSync = onStartSync,
         onCancelSync = onCancelSync,
+        onAddFolder = onAddFolder,
       )
     } else {
       DoneCta(onClose = onClose)
@@ -240,6 +253,19 @@ private fun SyncDeviceHero(label: String, secondary: String, running: Boolean, d
   }
 }
 
+private fun profileReadyLabel(profile: SyncProfile, hasError: Boolean): String {
+  if (hasError) return "Last refresh failed — retry from Home"
+  val synced = profile.last_synced_at
+  val refreshed = profile.last_refreshed_at
+  return when {
+    synced.isNotBlank() && refreshed > synced ->
+      "New content ready · last copied ${formatLastRefreshed(synced)}"
+    synced.isNotBlank() -> "Up to date · last copied ${formatLastRefreshed(synced)}"
+    refreshed.isNotBlank() -> "Ready to copy · staged ${formatLastRefreshed(refreshed)}"
+    else -> "Never refreshed"
+  }
+}
+
 @Composable
 private fun SyncReadyRow(
   profile: SyncProfile,
@@ -270,9 +296,7 @@ private fun SyncReadyRow(
           fontWeight = FontWeight.SemiBold,
         )
         Text(
-          if (hasError) "Last refresh failed — retry from Home"
-          else if (profile.last_refreshed_at.isBlank()) "Never refreshed"
-          else "Last refreshed ${formatLastRefreshed(profile.last_refreshed_at)}",
+          profileReadyLabel(profile, hasError),
           style = MaterialTheme.typography.bodySmall,
           color =
             if (hasError) MaterialTheme.colorScheme.error
@@ -330,8 +354,14 @@ private fun SyncDoneSummary(progress: SyncProgress) {
         style = MaterialTheme.typography.titleMedium,
         fontWeight = FontWeight.SemiBold,
       )
+      val copied = progress.filesCompleted - progress.filesSkipped
       Text(
-        "${progress.filesCompleted} files copied to your headphones.",
+        when {
+          copied == 0 && progress.filesSkipped > 0 ->
+            "Nothing new — ${progress.filesSkipped} files already on your headphones."
+          progress.filesSkipped == 0 -> "$copied files copied to your headphones."
+          else -> "$copied files copied · ${progress.filesSkipped} already up to date."
+        },
         style = MaterialTheme.typography.bodyMedium,
       )
       Text(
@@ -346,9 +376,11 @@ private fun SyncDoneSummary(progress: SyncProgress) {
 @Composable
 private fun SyncCta(
   running: Boolean,
+  hasProfiles: Boolean,
   readyCount: Int,
   onStartSync: () -> Unit,
   onCancelSync: () -> Unit,
+  onAddFolder: () -> Unit,
 ) {
   Surface(
     color = MaterialTheme.colorScheme.surface,
@@ -362,9 +394,11 @@ private fun SyncCta(
     Row(modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
       if (running) {
         OutlinedButton(onClick = onCancelSync, modifier = Modifier.weight(1f)) { Text("Cancel") }
+      } else if (!hasProfiles) {
+        Button(onClick = onAddFolder, modifier = Modifier.weight(1f)) { Text("Add a folder") }
       } else {
         Button(onClick = onStartSync, enabled = readyCount > 0, modifier = Modifier.weight(1f)) {
-          Text(if (readyCount == 0) "Nothing to sync" else "Sync now ($readyCount profiles)")
+          Text(if (readyCount == 0) "Nothing selected" else "Sync now ($readyCount profiles)")
         }
       }
     }

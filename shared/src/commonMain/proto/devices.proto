@@ -105,6 +105,8 @@ message SyncProfile {
   // default the first profile created has this on; later profiles default to
   // manual-only and can be toggled on as overrides.
   bool auto_refresh = 9;
+  // ISO-8601 timestamp of the last successful device sync; empty if never synced.
+  string last_synced_at = 10;
 }
 
 enum NetworkConstraint {

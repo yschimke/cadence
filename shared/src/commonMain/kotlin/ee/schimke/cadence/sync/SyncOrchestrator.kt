@@ -22,6 +22,7 @@ data class SyncProgress(
   val currentBytes: Long = 0,
   val currentTotal: Long = 0,
   val filesCompleted: Int = 0,
+  val filesSkipped: Int = 0,
   val filesTotal: Int = 0,
   val lastError: String? = null,
 )

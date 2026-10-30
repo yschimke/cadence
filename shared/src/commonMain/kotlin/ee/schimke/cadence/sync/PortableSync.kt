@@ -86,8 +86,10 @@ class PortableSync(
           }
         require(plan.isNotEmpty()) { "Staging is empty — refresh a profile first" }
         progress.value = progress.value.copy(filesTotal = plan.size)
+        val touchedProfileIds = mutableSetOf<String>()
         plan.forEachIndexed { index, (profile, file, target) ->
           ensureActive()
+          val targetPath = joinDirectory(target, file.relativePath)
           progress.value =
             progress.value.copy(
               currentProfileName = profile.name,
@@ -95,9 +97,23 @@ class PortableSync(
               currentBytes = 0,
               currentTotal = file.size,
             )
-          backend.copy(file.location, joinDirectory(target, file.relativePath))
-          progress.value = progress.value.copy(filesCompleted = index + 1, currentBytes = file.size)
+          val existing = backend.size(targetPath)
+          if (existing != null && existing == file.size) {
+            progress.value =
+              progress.value.copy(
+                filesCompleted = index + 1,
+                filesSkipped = progress.value.filesSkipped + 1,
+                currentBytes = file.size,
+              )
+          } else {
+            backend.copy(file.location, targetPath)
+            progress.value =
+              progress.value.copy(filesCompleted = index + 1, currentBytes = file.size)
+          }
+          touchedProfileIds += profile.id
         }
+        val syncedAt = Clock.System.now().toString()
+        touchedProfileIds.forEach { repo.recordSyncSuccess(it, syncedAt) }
         progress.value = progress.value.copy(running = false, currentFileName = null)
       } catch (e: CancellationException) {
         progress.value = progress.value.copy(running = false, lastError = "Sync cancelled")
