@@ -60,7 +60,7 @@ import ee.schimke.cadence.metro.metroViewModel
 @Composable
 fun ManageSyncScreen(modifier: Modifier = Modifier) {
   val viewModel = metroViewModel<FileSyncViewModel>()
-  val state by viewModel.state.collectAsState()
+  val state by viewModel.state
   val suggestions by viewModel.suggestions.collectAsState()
   val launcher = rememberDirectorySourceLauncher { name, uri ->
     viewModel.addLocalDirectory(name, uri)

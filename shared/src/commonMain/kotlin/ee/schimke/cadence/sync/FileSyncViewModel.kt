@@ -1,5 +1,10 @@
 package ee.schimke.cadence.sync
 
+import androidx.appstate.transform.transform
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.zacsweers.metro.ContributesIntoMap
@@ -12,13 +17,11 @@ import ee.schimke.cadence.datastore.proto.SyncProfile
 import ee.schimke.cadence.datastore.proto.SyncSource
 import ee.schimke.cadence.metro.ViewModelKey
 import ee.schimke.cadence.metro.ViewModelScope
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 @ContributesIntoMap(ViewModelScope::class)
@@ -36,30 +39,22 @@ class FileSyncViewModel(
   private val _suggestions = MutableStateFlow<List<SourceSuggestion>>(emptyList())
   val suggestions: StateFlow<List<SourceSuggestion>> = _suggestions.asStateFlow()
 
-  private val baseFlow =
-    combine(
-      syncRepo.sources,
-      syncRepo.profiles,
-      devicesRepo.devices.map { it.devices },
-      syncRepo.preferences,
-    ) { sources, profiles, devices, prefs ->
-      BasePart(sources, profiles, devices, prefs ?: SyncPreferences())
-    }
+  // Built once, outside the transform: collectAsState keys on the Flow instance, so a flow created
+  // inside the composable would be re-subscribed on every recomposition (e.g. each sync progress
+  // tick).
+  private val devices = devicesRepo.devices.map { it.devices }
 
-  val state: StateFlow<UiState> =
-    baseFlow
-      .combine(refreshOrchestrator.progress) { base, refresh -> base to refresh }
-      .combine(orchestrator.progress) { (base, refresh), syncProgress ->
-        UiState(
-          sources = base.sources,
-          profiles = base.profiles,
-          devices = base.devices,
-          preferences = base.preferences,
-          refresh = refresh,
-          sync = syncProgress,
-        )
-      }
-      .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), UiState())
+  val state: State<UiState> =
+    transform(initialValue = UiState(), scope = viewModelScope) {
+      fileSyncUiState(
+        sources = syncRepo.sources,
+        profiles = syncRepo.profiles,
+        devices = devices,
+        preferences = syncRepo.preferences,
+        refresh = refreshOrchestrator.progress,
+        sync = orchestrator.progress,
+      )
+    }
 
   fun addLocalDirectory(name: String, treeUri: String) {
     viewModelScope.launch { syncRepo.addLocalDirectorySource(name, treeUri) }
@@ -132,13 +127,6 @@ class FileSyncViewModel(
     sourceSuggestions.open(suggestion)
   }
 
-  private data class BasePart(
-    val sources: List<SyncSource>,
-    val profiles: List<SyncProfile>,
-    val devices: List<Device>,
-    val preferences: SyncPreferences,
-  )
-
   data class UiState(
     val sources: List<SyncSource> = emptyList(),
     val profiles: List<SyncProfile> = emptyList(),
@@ -146,5 +134,34 @@ class FileSyncViewModel(
     val preferences: SyncPreferences = SyncPreferences(),
     val refresh: RefreshProgress = RefreshProgress(),
     val sync: SyncProgress = SyncProgress(),
+  )
+}
+
+/**
+ * Presenter for [FileSyncViewModel.UiState], run headlessly by `transform`. Each upstream flow is
+ * collected as Compose state, so the returned value is recomputed whenever any of them emits.
+ */
+@Composable
+internal fun fileSyncUiState(
+  sources: Flow<List<SyncSource>>,
+  profiles: Flow<List<SyncProfile>>,
+  devices: Flow<List<Device>>,
+  preferences: Flow<SyncPreferences?>,
+  refresh: Flow<RefreshProgress>,
+  sync: Flow<SyncProgress>,
+): FileSyncViewModel.UiState {
+  val sourceList by sources.collectAsState(emptyList())
+  val profileList by profiles.collectAsState(emptyList())
+  val deviceList by devices.collectAsState(emptyList())
+  val prefs by preferences.collectAsState(null)
+  val refreshProgress by refresh.collectAsState(RefreshProgress())
+  val syncProgress by sync.collectAsState(SyncProgress())
+  return FileSyncViewModel.UiState(
+    sources = sourceList,
+    profiles = profileList,
+    devices = deviceList,
+    preferences = prefs ?: SyncPreferences(),
+    refresh = refreshProgress,
+    sync = syncProgress,
   )
 }
