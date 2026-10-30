@@ -14,23 +14,33 @@ class GoogleOAuthConfigLoader(
   private val configFile: Path,
   private val fs: FileSystem = FileSystem.SYSTEM,
   private val env: (String) -> String? = ::systemEnv,
+  private val bundled: OAuthConfig? = null,
 ) {
   private val json = Json { ignoreUnknownKeys = true }
 
+  /**
+   * Resolve credentials in priority order: user-set env vars, then a user-provided JSON file, then
+   * [bundled] credentials baked into the release build. Returns null when none produced both halves
+   * — the UI nudges the user to set them up in that case.
+   */
   fun load(): OAuthConfig? {
     val envClient = env("CADENCE_GOOGLE_CLIENT_ID")?.takeIf { it.isNotBlank() }
     val envSecret = env("CADENCE_GOOGLE_CLIENT_SECRET")?.takeIf { it.isNotBlank() }
     if (envClient != null && envSecret != null) {
       return OAuthConfig(clientId = envClient, clientSecret = envSecret)
     }
-    if (!fs.exists(configFile)) return null
-    val text = fs.source(configFile).buffer().use { it.readUtf8() }
-    val parsed =
-      runCatching { json.decodeFromString<GoogleOAuthFile>(text) }.getOrNull() ?: return null
-    val id = parsed.clientId?.trim().orEmpty()
-    val secret = parsed.clientSecret?.trim().orEmpty()
-    if (id.isEmpty() || secret.isEmpty()) return null
-    return OAuthConfig(clientId = id, clientSecret = secret)
+    if (fs.exists(configFile)) {
+      val text = fs.source(configFile).buffer().use { it.readUtf8() }
+      val parsed = runCatching { json.decodeFromString<GoogleOAuthFile>(text) }.getOrNull()
+      if (parsed != null) {
+        val id = parsed.clientId?.trim().orEmpty()
+        val secret = parsed.clientSecret?.trim().orEmpty()
+        if (id.isNotEmpty() && secret.isNotEmpty()) {
+          return OAuthConfig(clientId = id, clientSecret = secret)
+        }
+      }
+    }
+    return bundled
   }
 
   @kotlinx.serialization.Serializable

@@ -19,7 +19,9 @@ import okio.FileSystem
 import okio.Path
 import okio.Path.Companion.toPath
 
-class DesktopServices : AutoCloseable {
+class DesktopServices(
+  private val bundledOAuth: ee.schimke.cadence.sync.google.OAuthConfig? = null
+) : AutoCloseable {
   private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
   private val root = (System.getProperty("user.home") + "/.cadence").toPath()
 
@@ -34,7 +36,8 @@ class DesktopServices : AutoCloseable {
   private val hostId = HostId(store)
   private val localManifest = FileManifestStore(root / "manifests")
 
-  private val oauthConfigLoader = GoogleOAuthConfigLoader(root / "google-oauth.json")
+  private val oauthConfigLoader =
+    GoogleOAuthConfigLoader(configFile = root / "google-oauth.json", bundled = bundledOAuth)
   private val googleAccountStore = GoogleAccountStore(root / "google-auth.json")
   private val googleAccounts =
     GoogleAccountRepo(
