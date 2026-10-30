@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.Inject
+import ee.schimke.cadence.UseAppStateTransform
 import ee.schimke.cadence.data.DevicesRepo
 import ee.schimke.cadence.datastore.proto.Device
 import ee.schimke.cadence.datastore.proto.NetworkConstraint
@@ -20,9 +21,12 @@ import ee.schimke.cadence.metro.ViewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 @ContributesIntoMap(ViewModelScope::class)
@@ -45,23 +49,53 @@ class FileSyncViewModel(
   // tick).
   private val devices = devicesRepo.devices.map { it.devices }
 
-  val state: State<UiState> =
-    // Main, like the stateIn it replaced: transform defaults to Dispatchers.Default, which put the
-    // first loaded frame on a background thread and left the screen blank until it landed.
-    transform(
-      initialValue = UiState(),
-      scope = viewModelScope,
-      dispatcher = Dispatchers.Main.immediate,
-    ) {
-      fileSyncUiState(
-        sources = syncRepo.sources,
-        profiles = syncRepo.profiles,
-        devices = devices,
-        preferences = syncRepo.preferences,
-        refresh = refreshOrchestrator.progress,
-        sync = orchestrator.progress,
-      )
+  private val transformState: State<UiState>? =
+    if (UseAppStateTransform) {
+      // Main, like the stateIn it replaced: transform defaults to Dispatchers.Default.
+      transform(
+        initialValue = UiState(),
+        scope = viewModelScope,
+        dispatcher = Dispatchers.Main.immediate,
+      ) {
+        fileSyncUiState(
+          sources = syncRepo.sources,
+          profiles = syncRepo.profiles,
+          devices = devices,
+          preferences = syncRepo.preferences,
+          refresh = refreshOrchestrator.progress,
+          sync = orchestrator.progress,
+        )
+      }
+    } else {
+      null
     }
+
+  private val legacyState: StateFlow<UiState> by lazy {
+    val baseFlow =
+      combine(syncRepo.sources, syncRepo.profiles, devices, syncRepo.preferences) {
+        sources,
+        profiles,
+        devices,
+        prefs ->
+        BasePart(sources, profiles, devices, prefs ?: SyncPreferences())
+      }
+    baseFlow
+      .combine(refreshOrchestrator.progress) { base, refresh -> base to refresh }
+      .combine(orchestrator.progress) { (base, refresh), syncProgress ->
+        UiState(
+          sources = base.sources,
+          profiles = base.profiles,
+          devices = base.devices,
+          preferences = base.preferences,
+          refresh = refresh,
+          sync = syncProgress,
+        )
+      }
+      .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), UiState())
+  }
+
+  /** The screen state, from the path [UseAppStateTransform] selects. */
+  @Composable fun collectState(): State<UiState> = transformState ?: legacyState.collectAsState()
 
   fun addLocalDirectory(name: String, treeUri: String) {
     viewModelScope.launch { syncRepo.addLocalDirectorySource(name, treeUri) }
@@ -133,6 +167,13 @@ class FileSyncViewModel(
   fun openSuggestion(suggestion: SourceSuggestion) {
     sourceSuggestions.open(suggestion)
   }
+
+  private data class BasePart(
+    val sources: List<SyncSource>,
+    val profiles: List<SyncProfile>,
+    val devices: List<Device>,
+    val preferences: SyncPreferences,
+  )
 
   data class UiState(
     val sources: List<SyncSource> = emptyList(),

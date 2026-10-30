@@ -54,7 +54,7 @@ import ee.schimke.cadence.metro.metroViewModel
 @Composable
 fun FileSyncScreen(modifier: Modifier = Modifier, onClose: () -> Unit, onManage: () -> Unit) {
   val viewModel = metroViewModel<FileSyncViewModel>()
-  val state by viewModel.state
+  val state by viewModel.collectState()
   val addFolder = rememberDirectorySourceLauncher(viewModel::addFolderToLibrary)
 
   FileSyncContent(
