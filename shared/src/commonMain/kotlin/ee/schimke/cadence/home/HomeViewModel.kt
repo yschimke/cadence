@@ -29,6 +29,7 @@ import ee.schimke.cadence.sync.SyncRepo
 import ee.schimke.cadence.usb.UsbDevice
 import ee.schimke.cadence.usb.UsbManager
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -60,7 +61,13 @@ class HomeViewModel(
   private val usbDevices = usbManager.listDevices()
 
   val state: State<UiState> =
-    transform(initialValue = UiState(), scope = viewModelScope) {
+    // Main, like the stateIn it replaced: transform defaults to Dispatchers.Default, which put the
+    // first loaded frame on a background thread and left the screen blank until it landed.
+    transform(
+      initialValue = UiState(),
+      scope = viewModelScope,
+      dispatcher = Dispatchers.Main.immediate,
+    ) {
       homeUiState(
         profiles = syncRepo.profiles,
         sources = syncRepo.sources,

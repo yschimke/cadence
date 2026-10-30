@@ -17,6 +17,7 @@ import ee.schimke.cadence.datastore.proto.SyncProfile
 import ee.schimke.cadence.datastore.proto.SyncSource
 import ee.schimke.cadence.metro.ViewModelKey
 import ee.schimke.cadence.metro.ViewModelScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -45,7 +46,13 @@ class FileSyncViewModel(
   private val devices = devicesRepo.devices.map { it.devices }
 
   val state: State<UiState> =
-    transform(initialValue = UiState(), scope = viewModelScope) {
+    // Main, like the stateIn it replaced: transform defaults to Dispatchers.Default, which put the
+    // first loaded frame on a background thread and left the screen blank until it landed.
+    transform(
+      initialValue = UiState(),
+      scope = viewModelScope,
+      dispatcher = Dispatchers.Main.immediate,
+    ) {
       fileSyncUiState(
         sources = syncRepo.sources,
         profiles = syncRepo.profiles,
