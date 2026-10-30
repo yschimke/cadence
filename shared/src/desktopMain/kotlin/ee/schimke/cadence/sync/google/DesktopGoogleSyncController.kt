@@ -4,10 +4,10 @@ import ee.schimke.cadence.sync.SyncRepo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 class DesktopGoogleSyncController(
   private val accounts: GoogleAccountRepo,
@@ -18,15 +18,17 @@ class DesktopGoogleSyncController(
   override val state: StateFlow<GoogleSyncState> = _state
 
   init {
-    combine(accounts.account, accounts.config, syncRepo.preferences) { account, config, prefs ->
-        _state.value.copy(
-          configured = config != null,
-          signedInEmail = account?.email,
-          enabled = prefs?.cross_device_sync_enabled == true,
-        )
-      }
-      .onEach { _state.value = it }
-      .launchIn(scope)
+    scope.launch {
+      val sources =
+        combine(accounts.account, accounts.config, syncRepo.preferences) { account, config, prefs ->
+          _state.value.copy(
+            configured = config != null,
+            signedInEmail = account?.email,
+            enabled = prefs?.cross_device_sync_enabled == true,
+          )
+        }
+      sources.collect { _state.value = it }
+    }
   }
 
   override suspend fun signIn() {

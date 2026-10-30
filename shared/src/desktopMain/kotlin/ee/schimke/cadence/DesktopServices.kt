@@ -45,8 +45,18 @@ class DesktopServices : AutoCloseable {
     )
   val googleSync: GoogleSyncController = DesktopGoogleSyncController(googleAccounts, repo, scope)
 
+  private val devicesRepoForDrive = DevicesRepo(store)
   private val driveManifest =
-    GoogleDriveManifestStore(local = localManifest, accounts = googleAccounts)
+    GoogleDriveManifestStore(
+      local = localManifest,
+      accounts = googleAccounts,
+      // Share the manifest by device name (slugified) when it's non-blank, so two hosts that both
+      // auto-detect the same Cadence stick as "Cadence" land on the same Drive file; otherwise
+      // fall back to the local id (per-host unique, so each host writes its own file).
+      sharedKeyFor = { id ->
+        devicesRepoForDrive.getDevice(id)?.name?.slugify()?.takeIf { it.isNotBlank() } ?: id
+      },
+    )
   private val manifest: ManifestStore = SwitchingManifestStore {
     // Hot-check prefs on every call so the user's toggle takes effect immediately.
     if (googleSync.state.value.enabled && googleSync.state.value.signedIn) driveManifest
@@ -150,3 +160,6 @@ class DesktopServices : AutoCloseable {
     scope.cancel()
   }
 }
+
+private fun String.slugify(): String =
+  lowercase().map { if (it.isLetterOrDigit()) it else '-' }.joinToString("").trim('-')

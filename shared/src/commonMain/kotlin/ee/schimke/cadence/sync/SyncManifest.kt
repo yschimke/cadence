@@ -34,6 +34,12 @@ interface ManifestStore {
    * write path and batch IO accordingly — PortableSync calls it once per device per sync run.
    */
   suspend fun recordAll(deviceId: String, entries: Map<String, ManifestEntry>)
+
+  /**
+   * End-of-sync hook. Remote-backed stores use it to re-push the local manifest so a failed upload
+   * from an earlier run is retried even when a later sync skipped every file. Default is a no-op.
+   */
+  suspend fun syncRemote(deviceId: String) {}
 }
 
 /** The default used anywhere a real backend isn't wired up yet (wasm/android for now). */
