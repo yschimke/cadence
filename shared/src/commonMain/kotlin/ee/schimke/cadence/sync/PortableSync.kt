@@ -131,6 +131,9 @@ class PortableSync(
           touchedProfileIds += profile.id
         }
         if (pendingManifest.isNotEmpty()) manifest.recordAll(device.id, pendingManifest)
+        // Always nudge the backend to flush, so a previous run's failed Drive upload gets another
+        // chance even when every file this run was skip-if-same.
+        manifest.syncRemote(device.id)
         val syncedAt = Clock.System.now().toString()
         touchedProfileIds.forEach { repo.recordSyncSuccess(it, syncedAt) }
         progress.value = progress.value.copy(running = false, currentFileName = null)

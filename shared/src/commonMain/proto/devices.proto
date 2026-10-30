@@ -88,6 +88,9 @@ message SyncPreferences {
   bool auto_sync_on_usb = 2;
   // Optional VID:PID pattern in form "VID:PID" for triggering auto-sync.
   string usb_match = 3;
+  // When true (and the host is signed in to Google), sync writes are mirrored to a Drive-backed
+  // manifest so other hosts can see what's already on each device.
+  bool cross_device_sync_enabled = 4;
 }
 
 message SyncProfile {

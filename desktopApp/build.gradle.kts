@@ -7,13 +7,49 @@ plugins {
 val desktopVersion = "0.1.6" // x-release-please-version
 val distributionVersion = providers.gradleProperty("desktopVersion").getOrElse(desktopVersion)
 
+// Google OAuth credentials baked into release builds. CI passes
+// `-PcadenceGoogleClientId=...` / `-PcadenceGoogleClientSecret=...` from GitHub secrets so end
+// users don't need their own Google Cloud project. Dev builds leave them empty; the
+// Cross-device sync card then shows the self-build setup instructions.
+val bundledGoogleClientId = providers.gradleProperty("cadenceGoogleClientId").getOrElse("")
+val bundledGoogleClientSecret = providers.gradleProperty("cadenceGoogleClientSecret").getOrElse("")
+
+val generateBuildConfig =
+  tasks.register("generateBuildConfig") {
+    val outDir = layout.buildDirectory.dir("generated/source/buildConfig/jvmMain/kotlin")
+    val id = bundledGoogleClientId
+    val secret = bundledGoogleClientSecret
+    inputs.property("googleClientId", id)
+    inputs.property("googleClientSecret", secret)
+    outputs.dir(outDir)
+    doLast {
+      val file = outDir.get().file("ee/schimke/cadence/desktop/BuildConfig.kt").asFile
+      file.parentFile.mkdirs()
+      file.writeText(
+        """
+        package ee.schimke.cadence.desktop
+
+        /** Generated from gradle properties. Empty strings mean "not bundled by this build". */
+        internal object BuildConfig {
+          const val GOOGLE_CLIENT_ID: String = "${id.replace("\"", "\\\"")}"
+          const val GOOGLE_CLIENT_SECRET: String = "${secret.replace("\"", "\\\"")}"
+        }
+        """
+          .trimIndent() + "\n"
+      )
+    }
+  }
+
 kotlin {
   jvm()
   sourceSets {
-    jvmMain.dependencies {
-      implementation(projects.shared)
-      implementation(libs.androidx.lifecycle.viewmodel)
-      implementation(compose.desktop.currentOs)
+    jvmMain {
+      kotlin.srcDir(generateBuildConfig.map { it.outputs.files.singleFile })
+      dependencies {
+        implementation(projects.shared)
+        implementation(libs.androidx.lifecycle.viewmodel)
+        implementation(compose.desktop.currentOs)
+      }
     }
   }
 }
