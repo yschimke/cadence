@@ -1,10 +1,17 @@
 {
     "formatVersion": "compose-preview-history/v1",
-    "generatedFrom": "5469f9fa17ab89ae1b5d256caef2e390dc335332",
+    "generatedFrom": "a53752c4dfe0ea4123d80aa97863246a30ab5571",
     "previews": {
         "composeApp/activity__MainActivity": {
             "path": "renders/composeApp/activity__MainActivity.png",
             "versions": [
+                {
+                    "blob": "31efa0684c7c3159b1db2c866fc258cbfa07ff86",
+                    "commit": "a53752c4dfe0ea4123d80aa97863246a30ab5571",
+                    "date": "2026-10-30T18:40:41Z",
+                    "sourceSha": "b7dd5280",
+                    "commits": 1
+                },
                 {
                     "blob": "81522ba1c47976e188006ab9efdef39905bc1d4c",
                     "commit": "5469f9fa17ab89ae1b5d256caef2e390dc335332",
@@ -48,9 +55,9 @@
                     "commits": 1
                 }
             ],
-            "observations": 6,
+            "observations": 7,
             "unstable": false,
-            "flapCount": 0
+            "flapCount": 1
         },
         "composeApp/ee.schimke.cadence.preview.FoundationPreviewsKt.FoundationMaterial3DarkPreview_Foundation — Material 3 dark": {
             "path": "renders/composeApp/FoundationMaterial3DarkPreview_Foundation_Material_3_dark-8fbb7bd3.png",
