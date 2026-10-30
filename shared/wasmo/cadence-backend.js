@@ -27,17 +27,61 @@
 
   const isJson = (response) => /^application\/json(?:\s*;|$)/i.test(response.headers.get('content-type') ?? '');
 
-  // 'kv' when the install has the service; otherwise why not: 'not-enabled' or 'unavailable'.
+  // mode is 'kv' when the install has the service; otherwise why not: 'not-enabled' or
+  // 'unavailable'. pocketCasts is whether the Wasmo keeps a Pocket Casts sign-in for it.
   async function probe(timeoutMs) {
     try {
       const response = await request('capabilities', { timeoutMs });
-      if (response.status >= 500) return 'unavailable';
-      if (response.status !== 200 || !isJson(response)) return 'not-enabled';
+      if (response.status >= 500) return { mode: 'unavailable' };
+      if (response.status !== 200 || !isJson(response)) return { mode: 'not-enabled' };
       const caps = await response.json().catch(() => null);
-      return caps?.api === 1 && caps.kv === true && caps.kvImport === true ? 'kv' : 'not-enabled';
+      if (caps?.api !== 1 || caps.kv !== true || caps.kvImport !== true) return { mode: 'not-enabled' };
+      return { mode: 'kv', pocketCasts: caps.pocketCasts === true };
     } catch {
-      return 'unavailable';
+      return { mode: 'unavailable' };
     }
+  }
+
+  // Pocket Casts answers cross-origin calls only from its own site, so the Wasmo signs in and makes
+  // a fixed set of read calls for the owner. Failures throw "Pocket Casts <status> <code>", which
+  // the app turns into messages; status 0 means the Wasmo didn't answer.
+  function pocketCasts() {
+    async function send(method, path, body) {
+      let response;
+      try {
+        response = await request(path, {
+          method,
+          headers: body === undefined ? {} : { 'Content-Type': 'application/json' },
+          body: body === undefined ? undefined : JSON.stringify(body),
+          // A call may refresh the token and retry, each up to the Wasmo's 10 s deadline.
+          timeoutMs: 35000,
+        });
+      } catch {
+        throw new Error('Pocket Casts 0 unreachable');
+      }
+      const text = await response.text();
+      if (!response.ok) {
+        let code = 'error';
+        try { code = JSON.parse(text).error ?? code; } catch {}
+        throw new Error(`Pocket Casts ${response.status} ${code}`);
+      }
+      return text;
+    }
+    return {
+      async session() {
+        const status = JSON.parse(await send('GET', 'pocketcasts/session'));
+        return status.signedIn ? (status.email ?? '') : null;
+      },
+      async signIn(email, password) {
+        return JSON.parse(await send('PUT', 'pocketcasts/session', { email, password })).email ?? email;
+      },
+      call(path, method, body) {
+        return send('POST', 'pocketcasts/call', body == null ? { path } : { path, body: JSON.parse(body) });
+      },
+      async signOut() {
+        await send('DELETE', 'pocketcasts/session', {});
+      },
+    };
   }
 
   async function readRemote() {
@@ -157,9 +201,10 @@
   }
 
   (async () => {
-    let mode = await probe(3000);
+    let caps = await probe(3000);
     // A backend that is starting up or briefly overloaded gets one longer second chance.
-    if (mode === 'unavailable') mode = await probe(6000);
+    if (caps.mode === 'unavailable') caps = await probe(6000);
+    const mode = caps.mode;
     if (mode === 'kv') {
       try {
         await seed();
@@ -177,6 +222,7 @@
         },
       };
       addEventListener('online', () => { if (pending.size) save(); });
+      if (caps.pocketCasts) globalThis.cadencePocketCasts = pocketCasts();
     } else {
       showNotice(mode === 'not-enabled'
         ? 'This Wasmo isn’t sharing Cadence’s settings between your browsers. Install the app under the name your Wasmo enables for it (usually “cadence”). Until then, they’re saved in this browser only.'

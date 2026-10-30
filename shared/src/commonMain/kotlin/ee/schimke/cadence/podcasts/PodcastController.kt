@@ -38,9 +38,16 @@ interface PodcastPlatform {
 
   fun publishStatus(status: String, ready: Boolean) {}
 
-  /** False in the browser, where Pocket Casts only accepts API calls from its own site. */
+  /**
+   * False in the browser, where Pocket Casts only accepts API calls from its own site, unless a
+   * [pocketCastsServer] makes them.
+   */
   val pocketCastsApi: Boolean
     get() = true
+
+  /** Set where a server keeps the Pocket Casts sign-in and makes the calls. */
+  val pocketCastsServer: PocketCastsServer?
+    get() = null
 }
 
 @Composable expect fun rememberPodcastPlatform(): PodcastPlatform
@@ -116,6 +123,19 @@ class PodcastController(val platform: PodcastPlatform) {
           restored.copy(
             library = restored.library.copy(config = supported(restored.library.config))
           )
+      }
+      platform.pocketCastsServer?.let { server ->
+        // The server's sign-in is the one that counts; another browser may have changed it. If it
+        // can't be reached, the last known state stays until a call says otherwise.
+        runCatching { server.session() }
+          .onSuccess { email ->
+            state.value =
+              state.value.copy(
+                pocketCasts =
+                  if (email == null) PocketCastsSession()
+                  else PocketCastsSession(email = email, server = true)
+              )
+          }
       }
       recheckReady()
       status.value = "Library loaded"
@@ -295,6 +315,12 @@ class PodcastController(val platform: PodcastPlatform) {
 
   private fun pocketCastsReader(): PocketCastsReader =
     pocketCastsCapture
+      ?: platform.pocketCastsServer?.let { server ->
+        PocketCastsServerReader(server) {
+          save(state.value.copy(pocketCasts = PocketCastsSession()))
+          pocketCastsLists.value = emptyList()
+        }
+      }
       ?: PocketCastsApi(platform, state.value.pocketCasts, ::nowMs) {
         save(state.value.copy(pocketCasts = it))
         if (!it.signedIn) pocketCastsLists.value = emptyList()
@@ -303,7 +329,12 @@ class PodcastController(val platform: PodcastPlatform) {
   suspend fun signInPocketCasts(email: String, password: String) {
     if (email.isBlank() || password.isBlank())
       throw PodcastProblem("Enter your Pocket Casts email and password")
-    usePocketCasts(PocketCastsApi.signIn(platform, email.trim(), password, nowMs()))
+    val server = platform.pocketCastsServer
+    usePocketCasts(
+      if (server != null)
+        PocketCastsSession(email = server.signIn(email.trim(), password), server = true)
+      else PocketCastsApi.signIn(platform, email.trim(), password, nowMs())
+    )
   }
 
   /** The `auth` cookie the Pocket Casts web player sets after signing in, URL-decoded. */
@@ -353,6 +384,7 @@ class PodcastController(val platform: PodcastPlatform) {
   }
 
   suspend fun signOutPocketCasts() {
+    platform.pocketCastsServer?.signOut()
     pocketCastsCapture = null
     pocketCastsLists.value = emptyList()
     save(state.value.copy(pocketCasts = PocketCastsSession()))

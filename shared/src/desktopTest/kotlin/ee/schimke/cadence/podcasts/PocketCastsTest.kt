@@ -183,7 +183,69 @@ class PocketCastsTest {
     Unit
   }
 
-  private inner class ApiPlatform : PodcastPlatform {
+  @Test
+  fun aServerKeepsTheSignInForEveryBrowser() = runBlocking {
+    val server = FakeServer()
+    val first = PodcastController(ApiPlatform(server))
+    first.load()
+    assertFalse(first.state.value.pocketCasts.signedIn)
+    first.signInPocketCasts("listener@example.com", "secret")
+    assertEquals(
+      PocketCastsSession(email = "listener@example.com", server = true),
+      first.state.value.pocketCasts,
+    )
+    assertEquals(
+      listOf("Up Next", "In progress", "Commute"),
+      first.pocketCastsLists.value.map { it.title },
+    )
+    first.importPocketCasts(POCKET_CASTS_UP_NEXT, 5)
+    assertEquals(listOf("e1", "e2"), first.state.value.library.playlist!!.episodes.map { it.id })
+
+    // Another browser is signed in as soon as it loads, with no tokens of its own.
+    val second = PodcastController(ApiPlatform(server))
+    second.load()
+    assertTrue(second.state.value.pocketCasts.signedIn)
+    assertEquals("listener@example.com", second.state.value.pocketCasts.email)
+
+    // When the server loses the sign-in, the browser says so and stops offering lists.
+    server.email = null
+    assertFailsWith<PodcastProblem> { first.refreshPocketCastsLists() }
+    assertFalse(first.state.value.pocketCasts.signedIn)
+    assertTrue(first.pocketCastsLists.value.isEmpty())
+
+    server.email = "listener@example.com"
+    second.signOutPocketCasts()
+    assertNull(server.email)
+    assertFalse(second.state.value.pocketCasts.signedIn)
+    Unit
+  }
+
+  /** Holds the sign-in and calls through an [ApiPlatform], as a Wasmo would. */
+  private inner class FakeServer : PocketCastsServer {
+    var email: String? = null
+    private val api = ApiPlatform()
+
+    override suspend fun session() = email
+
+    override suspend fun signIn(email: String, password: String) = email.also { this.email = it }
+
+    override suspend fun call(path: String, method: String, body: String?): String {
+      if (email == null) throw PodcastProblem("Sign in to Pocket Casts again", 401)
+      return api.request(
+        POCKET_CASTS_API + path,
+        method,
+        mapOf("Authorization" to "Bearer a1"),
+        body,
+      )
+    }
+
+    override suspend fun signOut() {
+      email = null
+    }
+  }
+
+  private inner class ApiPlatform(override val pocketCastsServer: PocketCastsServer? = null) :
+    PodcastPlatform {
     override val splitFormats = setOf("mp3", "m4a")
     override val description = "Fixture"
     var saved: String? = null

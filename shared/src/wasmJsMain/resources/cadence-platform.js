@@ -166,6 +166,11 @@
           // Set only by the .wasmo build, which shares the library through its Wasmo.
           globalThis.cadenceStorage?.changed('cadence-podcasts-v1', args.state);
           return true;
+        // Set only by the .wasmo build, on a Wasmo that keeps the Pocket Casts sign-in.
+        case 'pocketCastsSession': return globalThis.cadencePocketCasts.session();
+        case 'pocketCastsSignIn': return globalThis.cadencePocketCasts.signIn(args.email, args.password);
+        case 'pocketCastsCall': return globalThis.cadencePocketCasts.call(args.path, args.method, args.body ?? null);
+        case 'pocketCastsSignOut': await globalThis.cadencePocketCasts.signOut(); return true;
         case 'podcastRequest': {
           const response = await podcastFetch(args.url, { method: args.method, headers: args.headers, body: args.body });
           const text = await response.text();

@@ -1,3 +1,5 @@
+@file:OptIn(kotlin.js.ExperimentalWasmJsInterop::class)
+
 package ee.schimke.cadence.podcasts
 
 import androidx.compose.runtime.*
@@ -7,6 +9,56 @@ import kotlinx.serialization.json.*
 
 @Composable
 actual fun rememberPodcastPlatform(): PodcastPlatform = remember { BrowserPodcastPlatform() }
+
+// Set by the .wasmo build's cadence-backend.js before the app starts.
+@JsFun("() => globalThis.cadencePocketCasts != null")
+private external fun wasmoPocketCasts(): Boolean
+
+/** The Wasmo keeps the sign-in and makes the calls; see docs/wasmo-app.md. */
+private class WasmoPocketCasts : PocketCastsServer {
+  private suspend fun call(op: String, args: String): JsonElement =
+    try {
+      Json.parseToJsonElement(browserCall(op, args))
+    } catch (e: IllegalStateException) {
+      val (status, code) =
+        Regex("Pocket Casts (\\d+) ([a-z-]+)").find(e.message.orEmpty())?.destructured ?: throw e
+      throw PodcastProblem(
+        when {
+          code == "pocketcasts-sign-in-failed" ->
+            "Pocket Casts refused the sign-in. Check your email and password."
+          status == "401" -> "Sign in to Pocket Casts again"
+          status == "0" -> "Your Wasmo didn't answer. Check your connection and try again."
+          code == "busy" -> "Your Wasmo is busy. Try again."
+          else -> "Pocket Casts didn't answer your Wasmo ($code). Try again later."
+        },
+        status.toInt(),
+      )
+    }
+
+  override suspend fun session() = call("pocketCastsSession", "{}").jsonPrimitive.contentOrNull
+
+  override suspend fun signIn(email: String, password: String) =
+    call("pocketCastsSignIn", browserArgs("email" to email, "password" to password))
+      .jsonPrimitive
+      .content
+
+  override suspend fun call(path: String, method: String, body: String?) =
+    call(
+        "pocketCastsCall",
+        buildJsonObject {
+          put("path", path)
+          put("method", method)
+          body?.let { put("body", it) }
+        }
+          .toString(),
+      )
+      .jsonPrimitive
+      .content
+
+  override suspend fun signOut() {
+    call("pocketCastsSignOut", "{}")
+  }
+}
 
 class BrowserPodcastPlatform : PodcastPlatform {
   private suspend fun call(op: String, args: String): String =
@@ -23,7 +75,9 @@ class BrowserPodcastPlatform : PodcastPlatform {
     }
 
   override val splitFormats = emptySet<String>()
-  override val pocketCastsApi = false
+  override val pocketCastsServer: PocketCastsServer? =
+    if (wasmoPocketCasts()) WasmoPocketCasts() else null
+  override val pocketCastsApi = pocketCastsServer != null
   override val description =
     "Web: unsplit downloads to browser storage. Feed/audio servers must allow CORS. USB copies require HTTPS and Chrome/Edge desktop's writable directory picker. Safari, Firefox and mobile browsers do not support this USB workflow."
 

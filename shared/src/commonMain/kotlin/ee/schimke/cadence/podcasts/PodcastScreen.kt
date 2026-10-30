@@ -238,6 +238,11 @@ private fun PocketCastsForm(
     "Cadence reads your account through the Pocket Casts web player, which isn't a public API and may change.",
     style = MaterialTheme.typography.bodyMedium,
   )
+  if (controller.platform.pocketCastsServer != null)
+    Text(
+      "Your Wasmo signs in and keeps the sign-in, so Cadence is signed in on every browser you open it in. Your password isn't stored.",
+      style = MaterialTheme.typography.bodyMedium,
+    )
   if (pocketCastsWebSignIn)
     Button(enabled = !busy, onClick = { web = true }) { Text("Sign in on pocketcasts.com") }
   OutlinedTextField(
