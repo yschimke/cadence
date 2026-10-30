@@ -22,7 +22,7 @@ if (firebaseEnabled) {
   apply(plugin = "com.google.firebase.crashlytics")
 }
 
-val appVersionName = "0.1.5" // x-release-please-version
+val appVersionName = "0.1.6" // x-release-please-version
 
 // Pack MAJOR.MINOR.PATCH into a monotonic int. Caps at major < 22.
 val appVersionCode: Int = run {

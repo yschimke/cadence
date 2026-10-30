@@ -105,7 +105,7 @@ metro {
 
 // The Wasm web build as a Wasmo app (static resources only); see docs/wasmo-app.md. The directory
 // form installs in Wasmo's dev mode; the archive is the distributable .wasmo file.
-val appVersion = "0.1.5" // x-release-please-version
+val appVersion = "0.1.6" // x-release-please-version
 val wasmoVersion =
   appVersion.split(".").map(String::toLong).let { (major, minor, patch) ->
     major * 1_000_000 + minor * 1_000 + patch
