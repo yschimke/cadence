@@ -5,6 +5,12 @@ import ee.schimke.cadence.data.*
 import ee.schimke.cadence.datastore.proto.SyncProfile
 import ee.schimke.cadence.metro.PortableViewModelFactory
 import ee.schimke.cadence.sync.*
+import ee.schimke.cadence.sync.google.DesktopGoogleSyncController
+import ee.schimke.cadence.sync.google.GoogleAccountRepo
+import ee.schimke.cadence.sync.google.GoogleAccountStore
+import ee.schimke.cadence.sync.google.GoogleOAuthConfigLoader
+import ee.schimke.cadence.sync.google.GoogleOAuthFlow
+import ee.schimke.cadence.sync.google.GoogleSyncController
 import ee.schimke.cadence.usb.DesktopUsbManager
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collectLatest
@@ -26,7 +32,26 @@ class DesktopServices : AutoCloseable {
   private val backend = DesktopDirectoryBackend((root / "sync-staging").toString())
   private val refresh = PortableRefresh(repo, backend)
   private val hostId = HostId(store)
-  private val manifest = FileManifestStore(root / "manifests")
+  private val localManifest = FileManifestStore(root / "manifests")
+
+  private val oauthConfigLoader = GoogleOAuthConfigLoader(root / "google-oauth.json")
+  private val googleAccountStore = GoogleAccountStore(root / "google-auth.json")
+  private val googleAccounts =
+    GoogleAccountRepo(
+      store = googleAccountStore,
+      flowFactory = { GoogleOAuthFlow(it) },
+      configProvider = { oauthConfigLoader.load() },
+      scope = scope,
+    )
+  val googleSync: GoogleSyncController = DesktopGoogleSyncController(googleAccounts, repo, scope)
+
+  private val driveManifest =
+    GoogleDriveManifestStore(local = localManifest, accounts = googleAccounts)
+  private val manifest: ManifestStore = SwitchingManifestStore {
+    // Hot-check prefs on every call so the user's toggle takes effect immediately.
+    if (googleSync.state.value.enabled && googleSync.state.value.signedIn) driveManifest
+    else localManifest
+  }
   private val sync = PortableSync(repo, DevicesRepo(store), backend, scope, manifest, hostId)
   private val scheduler =
     object : RefreshScheduler {

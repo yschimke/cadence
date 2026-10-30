@@ -146,6 +146,7 @@ fun ManageSyncContent(
         onSetUsbMatch = onSetUsbMatch,
       )
     }
+    item { CrossDeviceSyncCard() }
     item {
       SectionHeader(
         title = "Sync profiles",
