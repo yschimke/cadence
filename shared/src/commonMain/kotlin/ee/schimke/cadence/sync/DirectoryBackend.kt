@@ -10,11 +10,22 @@ interface DirectoryBackend {
 
   suspend fun clear(root: String)
 
-  /** Size in bytes if the file exists at [path], else null. Used to skip unchanged copies. */
-  suspend fun size(path: String): Long? = null
+  /**
+   * Size + last-modified-millis for [path], or null if it doesn't exist. Used to skip copies when
+   * the target already matches the source. Returning null falls back to always-copy.
+   */
+  suspend fun metadata(path: String): FileMetadata? = null
 }
 
-data class DirectoryFile(val location: String, val relativePath: String, val size: Long)
+/** [lastModifiedMillis] is 0 when the backend can't read it. */
+data class FileMetadata(val size: Long, val lastModifiedMillis: Long)
+
+data class DirectoryFile(
+  val location: String,
+  val relativePath: String,
+  val size: Long,
+  val lastModifiedMillis: Long = 0,
+)
 
 /** Reject traversal before joining data from settings or external directory listings. */
 fun safeRelativePath(path: String): String {

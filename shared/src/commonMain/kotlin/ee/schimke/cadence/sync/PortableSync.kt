@@ -97,8 +97,13 @@ class PortableSync(
               currentBytes = 0,
               currentTotal = file.size,
             )
-          val existing = backend.size(targetPath)
-          if (existing != null && existing == file.size) {
+          val existing = backend.metadata(targetPath)
+          val unchanged =
+            existing != null &&
+              existing.size == file.size &&
+              file.lastModifiedMillis > 0 &&
+              existing.lastModifiedMillis >= file.lastModifiedMillis
+          if (unchanged) {
             progress.value =
               progress.value.copy(
                 filesCompleted = index + 1,
