@@ -25,12 +25,20 @@ data class ManifestEntry(
 interface ManifestStore {
   suspend fun load(deviceId: String): SyncManifest
 
-  suspend fun record(deviceId: String, relPath: String, entry: ManifestEntry)
+  /** Convenience wrapper around [recordAll] for a single entry. */
+  suspend fun record(deviceId: String, relPath: String, entry: ManifestEntry) =
+    recordAll(deviceId, mapOf(relPath to entry))
+
+  /**
+   * Merge [entries] into the manifest for [deviceId]. Backends should treat this as the primary
+   * write path and batch IO accordingly — PortableSync calls it once per device per sync run.
+   */
+  suspend fun recordAll(deviceId: String, entries: Map<String, ManifestEntry>)
 }
 
 /** The default used anywhere a real backend isn't wired up yet (wasm/android for now). */
 class NoOpManifestStore : ManifestStore {
   override suspend fun load(deviceId: String) = SyncManifest(deviceId)
 
-  override suspend fun record(deviceId: String, relPath: String, entry: ManifestEntry) {}
+  override suspend fun recordAll(deviceId: String, entries: Map<String, ManifestEntry>) {}
 }

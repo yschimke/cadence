@@ -70,6 +70,48 @@ class FileManifestStoreTest {
     }
   }
 
+  @Test
+  fun recordAllBatchesWritesIntoOneFile() = runBlocking {
+    val root = Files.createTempDirectory("cadence-manifest").toFile()
+    try {
+      val store = FileManifestStore(root.toOkioPath())
+      val batch =
+        (1..100).associate { i ->
+          "track-$i.mp3" to
+            ManifestEntry(
+              size = i.toLong(),
+              lastModifiedMillis = i.toLong(),
+              hostId = "host-a",
+              syncedAt = "2026-10-30T07:00:00Z",
+            )
+        }
+      store.recordAll("device-1", batch)
+      assertEquals(100, store.load("device-1").entries.size)
+    } finally {
+      root.deleteRecursively()
+    }
+  }
+
+  @Test
+  fun corruptManifestIsQuarantinedAndSurfaced() = runBlocking {
+    val root = Files.createTempDirectory("cadence-manifest").toFile()
+    try {
+      val store = FileManifestStore(root.toOkioPath())
+      // Simulate a corrupt file on disk — bypass the store so we land invalid JSON.
+      val target = root.resolve("device-1.json")
+      target.writeText("{ this is not valid json")
+      val error = assertFailsWith<IllegalStateException> { store.load("device-1") }
+      assertTrue(error.message?.contains("corrupt") == true, error.message)
+      // Original has been renamed; a fresh load now sees an empty manifest but no data was wiped
+      // under us during the failing read.
+      assertEquals(0, store.load("device-1").entries.size)
+      val quarantined = root.listFiles().orEmpty().filter { it.name.contains(".corrupt-") }
+      assertEquals(1, quarantined.size, "corrupt file preserved for recovery")
+    } finally {
+      root.deleteRecursively()
+    }
+  }
+
   private fun entry(hostId: String) =
     ManifestEntry(size = 1, lastModifiedMillis = 0, hostId = hostId, syncedAt = "")
 }

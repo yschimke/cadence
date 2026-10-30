@@ -89,6 +89,10 @@ class PortableSync(
         require(plan.isNotEmpty()) { "Staging is empty — refresh a profile first" }
         progress.value = progress.value.copy(filesTotal = plan.size)
         val touchedProfileIds = mutableSetOf<String>()
+        // Collect manifest writes in memory and flush once per run so a large library doesn't
+        // rewrite the sidecar on every file (O(N) IO instead of O(N²)).
+        val pendingManifest = mutableMapOf<String, ManifestEntry>()
+        val resolvedHostId = hostId?.get() ?: ""
         plan.forEachIndexed { index, (profile, file, target) ->
           ensureActive()
           val targetPath = joinDirectory(target, file.relativePath)
@@ -114,22 +118,19 @@ class PortableSync(
               )
           } else {
             backend.copy(file.location, targetPath)
-            manifest.record(
-              deviceId = device.id,
-              relPath = joinDirectory(profile.staging_subpath, file.relativePath),
-              entry =
-                ManifestEntry(
-                  size = file.size,
-                  lastModifiedMillis = file.lastModifiedMillis,
-                  hostId = hostId?.get() ?: "",
-                  syncedAt = Clock.System.now().toString(),
-                ),
-            )
+            pendingManifest[joinDirectory(profile.staging_subpath, file.relativePath)] =
+              ManifestEntry(
+                size = file.size,
+                lastModifiedMillis = file.lastModifiedMillis,
+                hostId = resolvedHostId,
+                syncedAt = Clock.System.now().toString(),
+              )
             progress.value =
               progress.value.copy(filesCompleted = index + 1, currentBytes = file.size)
           }
           touchedProfileIds += profile.id
         }
+        if (pendingManifest.isNotEmpty()) manifest.recordAll(device.id, pendingManifest)
         val syncedAt = Clock.System.now().toString()
         touchedProfileIds.forEach { repo.recordSyncSuccess(it, syncedAt) }
         progress.value = progress.value.copy(running = false, currentFileName = null)
