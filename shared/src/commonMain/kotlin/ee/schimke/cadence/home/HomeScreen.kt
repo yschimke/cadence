@@ -112,7 +112,7 @@ fun HomeScreen(
   modifier: Modifier = Modifier,
 ) {
   val viewModel = metroViewModel<HomeViewModel>()
-  val state by viewModel.state.collectAsState()
+  val state by viewModel.state
   val suggestions by viewModel.suggestions.collectAsState()
   val podcastState by podcasts.state.collectAsState()
   val podcastsLoaded by podcasts.loaded.collectAsState()
