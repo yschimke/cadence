@@ -63,6 +63,8 @@ class PortableSync(
   private val devices: DevicesRepo,
   private val backend: DirectoryBackend,
   private val scope: CoroutineScope,
+  private val manifest: ManifestStore = NoOpManifestStore(),
+  private val hostId: HostId? = null,
 ) : SyncOrchestrator {
   override val progress = MutableStateFlow(SyncProgress())
   private var job: Job? = null
@@ -112,6 +114,17 @@ class PortableSync(
               )
           } else {
             backend.copy(file.location, targetPath)
+            manifest.record(
+              deviceId = device.id,
+              relPath = joinDirectory(profile.staging_subpath, file.relativePath),
+              entry =
+                ManifestEntry(
+                  size = file.size,
+                  lastModifiedMillis = file.lastModifiedMillis,
+                  hostId = hostId?.get() ?: "",
+                  syncedAt = Clock.System.now().toString(),
+                ),
+            )
             progress.value =
               progress.value.copy(filesCompleted = index + 1, currentBytes = file.size)
           }

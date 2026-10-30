@@ -25,7 +25,9 @@ class DesktopServices : AutoCloseable {
   private val repo = SyncRepo(store)
   private val backend = DesktopDirectoryBackend((root / "sync-staging").toString())
   private val refresh = PortableRefresh(repo, backend)
-  private val sync = PortableSync(repo, DevicesRepo(store), backend, scope)
+  private val hostId = HostId(store)
+  private val manifest = FileManifestStore(root / "manifests")
+  private val sync = PortableSync(repo, DevicesRepo(store), backend, scope, manifest, hostId)
   private val scheduler =
     object : RefreshScheduler {
       private val jobs = mutableMapOf<String, Job>()
