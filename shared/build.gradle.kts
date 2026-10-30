@@ -44,7 +44,10 @@ kotlin {
         implementation(libs.usb4java)
       }
     }
-    commonTest.dependencies { implementation(libs.kotlin.test) }
+    commonTest.dependencies {
+      implementation(libs.kotlin.test)
+      implementation(libs.appstate.transform.testing)
+    }
     androidMain.dependencies {
       implementation(libs.media3.transformer)
       implementation(libs.compose.webview.multiplatform)
@@ -58,6 +61,7 @@ kotlin {
     commonMain.dependencies {
       implementation(libs.kotlinx.coroutines.core)
       implementation(libs.compose.runtime)
+      implementation(libs.appstate.transform)
       implementation(libs.compose.foundation)
       implementation(libs.compose.material3)
       implementation(libs.navigation.compose)

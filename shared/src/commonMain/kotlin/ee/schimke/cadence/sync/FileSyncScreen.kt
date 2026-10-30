@@ -37,7 +37,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -55,7 +54,7 @@ import ee.schimke.cadence.metro.metroViewModel
 @Composable
 fun FileSyncScreen(modifier: Modifier = Modifier, onClose: () -> Unit, onManage: () -> Unit) {
   val viewModel = metroViewModel<FileSyncViewModel>()
-  val state by viewModel.state.collectAsState()
+  val state by viewModel.state
   val addFolder = rememberDirectorySourceLauncher(viewModel::addFolderToLibrary)
 
   FileSyncContent(
