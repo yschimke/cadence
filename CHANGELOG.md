@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.1.7](https://github.com/yschimke/cadence/compare/v0.1.6...v0.1.7) (2026-10-30)
+
+
+### Features
+
+* **podcasts:** sign in to Pocket Casts through the Wasmo ([#426](https://github.com/yschimke/cadence/issues/426)) ([87a8e94](https://github.com/yschimke/cadence/commit/87a8e94746d2f0b13b1bca9f4b3c938e68453922))
+* **sync:** daily-run UX sweep — skip-if-same + last-synced + Add folder ([#421](https://github.com/yschimke/cadence/issues/421)) ([8744ed4](https://github.com/yschimke/cadence/commit/8744ed41ad1c82af1d582d17e4bf4c2bac958b34))
+
+
+### Bug Fixes
+
+* **sync:** require same mtime for skip + record sync success on Android ([#423](https://github.com/yschimke/cadence/issues/423)) ([d62924e](https://github.com/yschimke/cadence/commit/d62924ec038db12b918e4bae5cbc6f3fbd8e4c0d))
+
 ## [0.1.6](https://github.com/yschimke/cadence/compare/v0.1.5...v0.1.6) (2026-10-30)
 
 
