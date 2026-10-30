@@ -67,13 +67,31 @@ to every browser they open Cadence in. The `.wasmo` build's `app.html` loads
 | --- | --- |
 | `settings`: the whole settings proto (devices, sources, sync profiles and preferences, bookmarks) | Chosen folder handles (IndexedDB): the browser grants them to itself only |
 | `podcasts`: the podcast library and gpodder server/user | Staged audio (origin-private file system): too large for `kv`'s 1 MiB per install |
-| | Pocket Casts tokens and Cadence cloud keys: Wasmo's generic settings must not hold credentials |
+| | Cadence cloud keys: Wasmo's generic settings must not hold credentials |
 | | Download target, readiness and positions sent from this device |
 
 A profile or source that refers to a folder picked in another browser asks for the folder to be
 chosen again here. Settings are read once at startup; two browsers open at the same time don't see
 each other's changes until a reload, and the last write wins. `kv` takes values up to 256 KiB; a
 podcast library larger than that stays in the browser, with a notice.
+
+### Pocket Casts
+
+Pocket Casts' private API answers cross-origin requests only from `https://pocketcasts.com`, so
+the browser can't call it (see [podcast-sync.md](podcast-sync.md#pocket-casts-private-web-player-api)).
+A Wasmo that advertises `pocketCasts: true` signs in for the owner and makes Cadence's read calls
+itself: the fork's private
+[Pocket Casts service](https://github.com/yschimke/wasmo/blob/deploy/apps/services/POCKET-CASTS.md)
+keeps the refresh token sealed with the same keys as Home Assistant sessions, never stores the
+password, and forwards only Up Next, In progress, playlists and single episodes, to
+`api.pocketcasts.com` only. The script exposes it as `globalThis.cadencePocketCasts`, and the
+browser build then offers Pocket Casts with password sign-in. Because the Wasmo keeps the sign-in,
+every browser Cadence opens in is signed in; the browser keeps only the email and holds no tokens.
+A sign-in the Wasmo loses (a refused refresh, or sign-out elsewhere) asks for the password again.
+
+The trade-off: the password passes through the Wasmo once, the operator's keys and database
+together can use the account, and the calls come from the server's address rather than the
+browser's, against an unsupported API.
 
 Without the service (hosted wasmo.com, or an install name not on the list) the page keeps
 everything in the browser, as the static web build does, and says so in a dismissible notice.

@@ -28,7 +28,9 @@ change without notice, and using it may not be permitted by Pocket Casts' terms.
 
 All requests send `Authorization: Bearer <accessToken>`. The API answers
 cross-origin requests only from `https://pocketcasts.com`, so the browser build
-of Cadence can't call it; Android and desktop can. There is no bot challenge on
+of Cadence can't call it; Android and desktop can. On a Wasmo that keeps the
+sign-in, the browser build calls it through the Wasmo instead
+([wasmo-app.md](wasmo-app.md#pocket-casts)). There is no bot challenge on
 the API itself.
 
 Signing in:

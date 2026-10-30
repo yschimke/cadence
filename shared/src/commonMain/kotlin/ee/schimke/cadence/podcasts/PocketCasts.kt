@@ -12,16 +12,37 @@ const val POCKET_CASTS_API = "https://api.pocketcasts.com"
 const val POCKET_CASTS_UP_NEXT = "up-next"
 const val POCKET_CASTS_IN_PROGRESS = "in-progress"
 
-/** Bearer and refresh tokens, kept with the local library so later imports don't ask again. */
+/**
+ * Bearer and refresh tokens, kept with the local library so later imports don't ask again. With a
+ * [PocketCastsServer] the tokens stay on the server and only [server] and [email] are kept.
+ */
 @Serializable
 data class PocketCastsSession(
   val accessToken: String = "",
   val refreshToken: String = "",
   val expiresAtMs: Long = 0,
   val email: String = "",
+  val server: Boolean = false,
 ) {
   val signedIn
-    get() = accessToken.isNotBlank()
+    get() = accessToken.isNotBlank() || server
+}
+
+/**
+ * Pocket Casts through a server that keeps the sign-in and makes the calls: the browser build on a
+ * Wasmo, where Pocket Casts refuses the browser's own cross-origin requests.
+ */
+interface PocketCastsServer {
+  /** The signed-in email, blank if unknown, or null when signed out. */
+  suspend fun session(): String?
+
+  /** Signs in and returns the account's email. */
+  suspend fun signIn(email: String, password: String): String
+
+  /** One of the account reads; a [PodcastProblem] with status 401 means sign in again. */
+  suspend fun call(path: String, method: String, body: String?): String
+
+  suspend fun signOut()
 }
 
 /** Reads the sign-in, refresh and `auth` cookie responses, which share one shape. */
@@ -276,13 +297,56 @@ suspend fun readPocketCasts(
   }
 }
 
+/** The account reads, over whatever sends one: the API itself or a [PocketCastsServer]. */
+abstract class PocketCastsCalls : PocketCastsReader {
+  protected abstract suspend fun call(
+    path: String,
+    method: String = "POST",
+    body: String? = "{}",
+  ): String
+
+  override suspend fun upNext() =
+    call(
+      "/up_next/list",
+      body = buildJsonObject {
+          put("version", 2)
+          put("model", "webplayer")
+          put("showPlayStatus", true)
+          put("serverModified", 0)
+        }
+          .toString(),
+    )
+
+  override suspend fun inProgress() = call("/user/in_progress")
+
+  override suspend fun playlists() = call("/user/playlists", "GET", null)
+
+  override suspend fun episode(uuid: String) =
+    call("/user/episode", body = buildJsonObject { put("uuid", uuid) }.toString())
+}
+
+/** Reads through a [PocketCastsServer]; [onSignedOut] runs when it has lost the sign-in. */
+class PocketCastsServerReader(
+  private val server: PocketCastsServer,
+  private val onSignedOut: suspend () -> Unit,
+) : PocketCastsCalls() {
+  override suspend fun call(path: String, method: String, body: String?): String =
+    try {
+      server.call(path, method, body)
+    } catch (e: PodcastProblem) {
+      if (e.status != 401) throw e
+      onSignedOut()
+      throw PodcastProblem("Your Pocket Casts sign-in expired. Sign in again.", e.status)
+    }
+}
+
 /** Calls the API with the bearer token, refreshing it when it expires. */
 class PocketCastsApi(
   private val platform: PodcastPlatform,
   private var session: PocketCastsSession,
   private val now: () -> Long,
   private val onSession: suspend (PocketCastsSession) -> Unit,
-) : PocketCastsReader {
+) : PocketCastsCalls() {
   private suspend fun send(path: String, method: String, body: String?) =
     platform.request(
       POCKET_CASTS_API + path,
@@ -294,7 +358,7 @@ class PocketCastsApi(
       body,
     )
 
-  private suspend fun call(path: String, method: String = "POST", body: String? = "{}"): String {
+  override suspend fun call(path: String, method: String, body: String?): String {
     if (!session.signedIn) throw PodcastProblem("Sign in to Pocket Casts first")
     if (now() > session.expiresAtMs - 60_000) refresh()
     return try {
@@ -332,25 +396,6 @@ class PocketCastsApi(
     session = pocketCastsSession(response, now(), session)
     onSession(session)
   }
-
-  override suspend fun upNext() =
-    call(
-      "/up_next/list",
-      body = buildJsonObject {
-          put("version", 2)
-          put("model", "webplayer")
-          put("showPlayStatus", true)
-          put("serverModified", 0)
-        }
-          .toString(),
-    )
-
-  override suspend fun inProgress() = call("/user/in_progress")
-
-  override suspend fun playlists() = call("/user/playlists", "GET", null)
-
-  override suspend fun episode(uuid: String) =
-    call("/user/episode", body = buildJsonObject { put("uuid", uuid) }.toString())
 
   companion object {
     suspend fun signIn(
