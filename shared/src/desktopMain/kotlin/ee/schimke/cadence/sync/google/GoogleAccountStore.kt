@@ -37,8 +37,6 @@ class GoogleAccountStore(private val path: Path, private val fs: FileSystem = Fi
   }
 
   suspend fun clear() {
-    withContext(Dispatchers.IO) {
-      lock.withLock { fs.delete(path, mustExist = false) }
-    }
+    withContext(Dispatchers.IO) { lock.withLock { fs.delete(path, mustExist = false) } }
   }
 }
