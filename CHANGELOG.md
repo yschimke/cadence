@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.1.6](https://github.com/yschimke/cadence/compare/v0.1.5...v0.1.6) (2026-10-30)
+
+
+### Features
+
+* drop platform notice and hide Bluetooth where unsupported ([#410](https://github.com/yschimke/cadence/issues/410)) ([18ec4a3](https://github.com/yschimke/cadence/commit/18ec4a31d834d719912a64f919b98573362720fb))
+* package the browser app as an installable Wasmo app ([#417](https://github.com/yschimke/cadence/issues/417)) ([d763627](https://github.com/yschimke/cadence/commit/d7636278abfdd09f72fc188f980a42beeff275d4))
+* share Cadence's settings across browsers on Wasmo ([#418](https://github.com/yschimke/cadence/issues/418)) ([6926d69](https://github.com/yschimke/cadence/commit/6926d69791c0529072a36cd58addcc64350b8708))
+
+
+### Bug Fixes
+
+* **deps:** update dependency io.ktor:ktor-client-core to v3.6.1 ([#416](https://github.com/yschimke/cadence/issues/416)) ([d085c8f](https://github.com/yschimke/cadence/commit/d085c8f2f7f92eab2f37d20f5b8e0dbded2dfcb8))
+
 ## [0.1.5](https://github.com/yschimke/cadence/compare/v0.1.4...v0.1.5) (2026-10-28)
 
 
