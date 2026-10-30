@@ -20,10 +20,12 @@ class DesktopDirectoryBackend(override val stagingRoot: String) : DirectoryBacke
         .listRecursively(base, followSymlinks = false)
         .filter { fs.metadata(it).isRegularFile && fs.metadata(it).symlinkTarget == null }
         .map {
+          val md = fs.metadata(it)
           DirectoryFile(
-            it.toString(),
-            it.relativeTo(base).toString().replace('\\', '/'),
-            fs.metadata(it).size ?: 0,
+            location = it.toString(),
+            relativePath = it.relativeTo(base).toString().replace('\\', '/'),
+            size = md.size ?: 0,
+            lastModifiedMillis = md.lastModifiedAtMillis ?: 0,
           )
         }
         .toList()
@@ -46,10 +48,14 @@ class DesktopDirectoryBackend(override val stagingRoot: String) : DirectoryBacke
       }
     }
 
-  override suspend fun size(path: String): Long? =
+  override suspend fun metadata(path: String): FileMetadata? =
     withContext(Dispatchers.IO) {
       val target = path.toPath()
-      if (!fs.exists(target)) null else fs.metadata(target).size
+      if (!fs.exists(target)) null
+      else {
+        val md = fs.metadata(target)
+        FileMetadata(size = md.size ?: 0, lastModifiedMillis = md.lastModifiedAtMillis ?: 0)
+      }
     }
 
   override suspend fun clear(root: String) =

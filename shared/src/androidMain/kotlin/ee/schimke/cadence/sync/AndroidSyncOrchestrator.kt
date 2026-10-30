@@ -68,11 +68,13 @@ class AndroidSyncOrchestrator(
                 ?: return@launch reportError("Cannot open device tree URI")
 
             var completed = 0
+            val touchedProfileIds = mutableSetOf<String>()
             for ((profile, entries) in plan) {
                 if (!isActive) break
                 _progress.value = _progress.value.copy(currentProfileName = profile.name)
                 val profileRootSegments = profile.staging_subpath.split('/').filter { it.isNotBlank() }
                 val profileRoot = ensureDirectories(rootDoc, profileRootSegments)
+                var profileHadSuccess = false
                 for (entry in entries) {
                     if (!isActive) break
                     _progress.value = _progress.value.copy(
@@ -81,6 +83,7 @@ class AndroidSyncOrchestrator(
                         currentTotal = entry.sizeBytes,
                     )
                     runCatching { copyOne(entry, profileRoot) }
+                        .onSuccess { profileHadSuccess = true }
                         .onFailure {
                             _progress.value = _progress.value.copy(
                                 lastError = "${entry.relativePath}: ${it.message ?: it.javaClass.simpleName}",
@@ -89,7 +92,10 @@ class AndroidSyncOrchestrator(
                     completed++
                     _progress.value = _progress.value.copy(filesCompleted = completed)
                 }
+                if (profileHadSuccess) touchedProfileIds += profile.id
             }
+            val syncedAt = java.time.Instant.now().toString()
+            touchedProfileIds.forEach { syncRepo.recordSyncSuccess(it, syncedAt) }
             _progress.value = _progress.value.copy(running = false, currentFileName = null, currentProfileName = null)
         }
     }
