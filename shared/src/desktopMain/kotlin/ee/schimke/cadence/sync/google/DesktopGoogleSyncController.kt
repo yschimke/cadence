@@ -18,18 +18,20 @@ class DesktopGoogleSyncController(
   override val state: StateFlow<GoogleSyncState> = _state
 
   init {
-    scope.launch {
-      val sources =
-        combine(accounts.account, accounts.config, syncRepo.preferences) { account, config, prefs ->
-          _state.value.copy(
-            configured = config != null,
-            signedInEmail = account?.email,
-            enabled = prefs?.cross_device_sync_enabled == true,
-          )
-        }
-      sources.collect { _state.value = it }
-    }
+    val sources = combine(accounts.account, accounts.config, syncRepo.preferences, ::projectState)
+    scope.launch { sources.collect { _state.value = it } }
   }
+
+  private fun projectState(
+    account: GoogleAccount?,
+    config: OAuthConfig?,
+    prefs: ee.schimke.cadence.datastore.proto.SyncPreferences?,
+  ): GoogleSyncState =
+    _state.value.copy(
+      configured = config != null,
+      signedInEmail = account?.email,
+      enabled = prefs?.cross_device_sync_enabled == true,
+    )
 
   override suspend fun signIn() {
     runBusy {

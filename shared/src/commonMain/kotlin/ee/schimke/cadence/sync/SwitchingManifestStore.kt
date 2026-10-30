@@ -8,7 +8,11 @@ package ee.schimke.cadence.sync
 class SwitchingManifestStore(private val chooser: () -> ManifestStore) : ManifestStore {
   override suspend fun load(deviceId: String) = chooser().load(deviceId)
 
-  override suspend fun record(deviceId: String, relPath: String, entry: ManifestEntry) {
-    chooser().record(deviceId, relPath, entry)
+  override suspend fun recordAll(deviceId: String, entries: Map<String, ManifestEntry>) {
+    chooser().recordAll(deviceId, entries)
+  }
+
+  override suspend fun syncRemote(deviceId: String) {
+    chooser().syncRemote(deviceId)
   }
 }

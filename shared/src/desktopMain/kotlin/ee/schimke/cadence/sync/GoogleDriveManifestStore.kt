@@ -28,10 +28,7 @@ class GoogleDriveManifestStore(
   private val drive: GoogleDriveClient =
     GoogleDriveClient(tokenProvider = { accounts.accessToken() }),
 ) : ManifestStore {
-  private val json = Json {
-    prettyPrint = true
-    ignoreUnknownKeys = true
-  }
+  private val json = Json { ignoreUnknownKeys = true }
   private val writeLock = Mutex()
   // deviceId → true means the remote copy may be behind the local one.
   private val dirty = mutableSetOf<String>()
@@ -39,7 +36,9 @@ class GoogleDriveManifestStore(
   override suspend fun load(deviceId: String): SyncManifest {
     val remote = runCatching {
       drive.downloadByName(fileName(deviceId))
-    }.getOrNull()?.let { runCatching { json.decodeFromString<SyncManifest>(it) }.getOrNull() }
+    }
+      .getOrNull()
+      ?.let { runCatching { json.decodeFromString<SyncManifest>(it) }.getOrNull() }
     if (remote != null) return remote
     return local.load(deviceId)
   }

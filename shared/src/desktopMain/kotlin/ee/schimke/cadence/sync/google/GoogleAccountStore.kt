@@ -15,10 +15,7 @@ import okio.buffer
  * machine. A platform secret store is a follow-up.
  */
 class GoogleAccountStore(private val path: Path, private val fs: FileSystem = FileSystem.SYSTEM) {
-  private val json = Json {
-    ignoreUnknownKeys = true
-    prettyPrint = true
-  }
+  private val json = Json { ignoreUnknownKeys = true }
   private val lock = Mutex()
 
   suspend fun load(): GoogleAccount? =
