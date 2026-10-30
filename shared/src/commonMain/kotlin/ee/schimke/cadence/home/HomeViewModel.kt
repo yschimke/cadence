@@ -5,12 +5,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.Inject
+import ee.schimke.cadence.UseAppStateTransform
 import ee.schimke.cadence.bluetooth.BluetoothController
 import ee.schimke.cadence.bluetooth.BluetoothState
 import ee.schimke.cadence.datastore.proto.SyncPreferences
@@ -32,10 +31,13 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 @ContributesIntoMap(ViewModelScope::class)
@@ -51,7 +53,7 @@ class HomeViewModel(
   usbManager: UsbManager,
 ) : ViewModel() {
 
-  private var contents by mutableStateOf<Map<String, SourceContents>>(emptyMap())
+  private val contents = MutableStateFlow<Map<String, SourceContents>>(emptyMap())
   private val _suggestions = MutableStateFlow<List<SourceSuggestion>>(emptyList())
   /** Apps that can provide files, for the "Files from an app" option. Empty off Android. */
   val suggestions: StateFlow<List<SourceSuggestion>> = _suggestions.asStateFlow()
@@ -60,25 +62,61 @@ class HomeViewModel(
   // listDevices() builds a new callbackFlow (and USB receiver) per call.
   private val usbDevices = usbManager.listDevices()
 
-  val state: State<UiState> =
-    // Main, like the stateIn it replaced: transform defaults to Dispatchers.Default, which put the
-    // first loaded frame on a background thread and left the screen blank until it landed.
-    transform(
-      initialValue = UiState(),
-      scope = viewModelScope,
-      dispatcher = Dispatchers.Main.immediate,
-    ) {
-      homeUiState(
-        profiles = syncRepo.profiles,
-        sources = syncRepo.sources,
-        preferences = syncRepo.preferences,
-        contents = contents,
-        refresh = refreshOrchestrator.progress,
-        bluetooth = bluetoothController.state,
-        bluetoothSupported = bluetoothController.supported,
-        usbDevices = usbDevices,
-      )
+  private val transformState: State<UiState>? =
+    if (UseAppStateTransform) {
+      // Main, like the stateIn it replaced: transform defaults to Dispatchers.Default.
+      transform(
+        initialValue = UiState(),
+        scope = viewModelScope,
+        dispatcher = Dispatchers.Main.immediate,
+      ) {
+        homeUiState(
+          profiles = syncRepo.profiles,
+          sources = syncRepo.sources,
+          preferences = syncRepo.preferences,
+          contents = contents.collectAsState().value,
+          refresh = refreshOrchestrator.progress,
+          bluetooth = bluetoothController.state,
+          bluetoothSupported = bluetoothController.supported,
+          usbDevices = usbDevices,
+        )
+      }
+    } else {
+      null
     }
+
+  private val legacyState: StateFlow<UiState> by lazy {
+    val library =
+      combine(syncRepo.profiles, syncRepo.sources, syncRepo.preferences, contents) {
+        profiles,
+        sources,
+        prefs,
+        contents ->
+        Library(profiles, sources, prefs ?: SyncPreferences(), contents)
+      }
+    combine(
+        library,
+        refreshOrchestrator.progress,
+        bluetoothController.state,
+        usbDevices,
+      ) { library, refresh, bt, usbDevices ->
+        UiState(
+          profiles = library.profiles,
+          sources = library.sources,
+          preferences = library.preferences,
+          contents = library.contents,
+          refresh = refresh,
+          bluetooth = bt,
+          bluetoothSupported = bluetoothController.supported,
+          attachedDevice = usbDevices.firstMatchOrNull(library.preferences.usb_match),
+          loaded = true,
+        )
+      }
+      .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), UiState())
+  }
+
+  /** The screen state, from the path [UseAppStateTransform] selects. */
+  @Composable fun collectState(): State<UiState> = transformState ?: legacyState.collectAsState()
 
   init {
     // List each source when it's added; a refresh can change the files, so list again after one.
@@ -87,23 +125,24 @@ class HomeViewModel(
         .map { sources -> sources.map { it.id } }
         .distinctUntilChanged()
         .collect { ids ->
-          contents = contents.filterKeys { it in ids }
-          ids.filter { it !in contents }.forEach { list(it) }
+          contents.value = contents.value.filterKeys { it in ids }
+          ids.filter { it !in contents.value }.forEach { list(it) }
         }
     }
     viewModelScope.launch {
       refreshOrchestrator.progress
         .map { it.running }
         .distinctUntilChanged()
-        .collect { running -> if (!running) contents.keys.forEach { list(it) } }
+        .collect { running -> if (!running) contents.value.keys.forEach { list(it) } }
     }
     viewModelScope.launch { _suggestions.value = suggestionsProvider.list() }
   }
 
   private fun list(sourceId: String) {
     viewModelScope.launch {
-      contents += sourceId to (contents[sourceId] ?: SourceContents()).copy(loading = true)
-      contents +=
+      contents.value +=
+        sourceId to (contents.value[sourceId] ?: SourceContents()).copy(loading = true)
+      contents.value +=
         sourceId to
           try {
             SourceContents(items = browser.browse(sourceId))
@@ -133,6 +172,13 @@ class HomeViewModel(
   fun openSuggestion(suggestion: SourceSuggestion) {
     suggestionsProvider.open(suggestion)
   }
+
+  private data class Library(
+    val profiles: List<SyncProfile>,
+    val sources: List<SyncSource>,
+    val preferences: SyncPreferences,
+    val contents: Map<String, SourceContents>,
+  )
 
   data class SourceContents(
     val items: List<BrowsedItem> = emptyList(),
