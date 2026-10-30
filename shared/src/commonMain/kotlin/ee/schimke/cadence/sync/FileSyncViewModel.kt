@@ -65,6 +65,11 @@ class FileSyncViewModel(
     viewModelScope.launch { syncRepo.addLocalDirectorySource(name, treeUri) }
   }
 
+  /** One-tap first-run path: adds the folder to a Library profile and stages it. */
+  fun addFolderToLibrary(name: String, treeUri: String) {
+    viewModelScope.launch { refreshScheduler.runNow(syncRepo.addFolderToLibrary(name, treeUri)) }
+  }
+
   fun addNfsShare(name: String, host: String, exportPath: String) {
     viewModelScope.launch { syncRepo.addNfsSource(name, host, exportPath) }
   }

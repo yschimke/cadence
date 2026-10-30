@@ -9,6 +9,9 @@ interface DirectoryBackend {
   suspend fun copy(source: String, target: String)
 
   suspend fun clear(root: String)
+
+  /** Size in bytes if the file exists at [path], else null. Used to skip unchanged copies. */
+  suspend fun size(path: String): Long? = null
 }
 
 data class DirectoryFile(val location: String, val relativePath: String, val size: Long)

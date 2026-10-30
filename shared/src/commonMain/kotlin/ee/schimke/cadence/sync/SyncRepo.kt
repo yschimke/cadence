@@ -135,6 +135,10 @@ class SyncRepo(private val dataStore: SettingsStore) {
     updateProfile(id) { it.copy(last_error = error) }
   }
 
+  suspend fun recordSyncSuccess(id: String, isoTimestamp: String) {
+    updateProfile(id) { it.copy(last_synced_at = isoTimestamp) }
+  }
+
   suspend fun updatePreferences(transform: (SyncPreferences) -> SyncPreferences) {
     dataStore.updateData { settings ->
       settings.copy(sync_preferences = transform(settings.sync_preferences ?: SyncPreferences()))

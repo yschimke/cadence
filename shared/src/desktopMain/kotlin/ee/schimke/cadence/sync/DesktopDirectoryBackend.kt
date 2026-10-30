@@ -46,6 +46,12 @@ class DesktopDirectoryBackend(override val stagingRoot: String) : DirectoryBacke
       }
     }
 
+  override suspend fun size(path: String): Long? =
+    withContext(Dispatchers.IO) {
+      val target = path.toPath()
+      if (!fs.exists(target)) null else fs.metadata(target).size
+    }
+
   override suspend fun clear(root: String) =
     withContext(Dispatchers.IO) {
       val path = root.toPath().normalized()
