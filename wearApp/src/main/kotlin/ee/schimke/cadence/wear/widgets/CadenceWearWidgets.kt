@@ -75,7 +75,7 @@ import androidx.wear.compose.remote.material3.RemoteMaterialTheme
 import androidx.wear.compose.remote.material3.RemoteProgressIndicatorDefaults
 import androidx.wear.compose.remote.material3.RemoteText
 import ee.schimke.cadence.swim.LaneColors
-import ee.schimke.cadence.swim.SwimClock
+import ee.schimke.cadence.swim.LocalSwimClock
 import ee.schimke.cadence.swim.SwimLaneProgress
 import ee.schimke.cadence.swim.SwimLap
 import ee.schimke.cadence.swim.WaterColors
@@ -311,7 +311,7 @@ private fun TransportButton(
             colors = if (enabled) WaterColors.Pool else WaterColors.Night,
             level = 0.42f,
             bubbles = if (rippling) 4 else 0,
-            clock = if (rippling) SwimClock else 1.1f.rf,
+            clock = if (rippling) LocalSwimClock.current else 1.1f.rf,
           )
       } else {
         RemoteModifier.size(size)
@@ -382,7 +382,11 @@ private fun CompactPlaylistWidgetContent(snapshot: HeadsetSnapshot) {
   RemoteRow(
     modifier =
       RemoteModifier.fillMaxSize()
-        .let { if (track.playing) it.waterBackground(WaterColors.Pool, level = 0.3f) else it }
+        .let {
+          if (track.playing) {
+            it.waterBackground(WaterColors.Pool, level = 0.3f, clock = LocalSwimClock.current)
+          } else it
+        }
         .clickable(
           playTrackAction(track.id),
           enabled = snapshot.isSupported(RcspCommand.PlayLocalAudio(track.id)),
@@ -437,7 +441,13 @@ private fun PlaylistButton(track: LocalAudioTrack, enabled: Boolean) {
         .let {
           // The playing episode is the one in the water.
           if (track.playing) {
-            it.clip(RemoteCircleShape).waterBackground(WaterColors.Pool, level = 0.3f, crests = 3)
+            it.clip(RemoteCircleShape)
+              .waterBackground(
+                WaterColors.Pool,
+                level = 0.3f,
+                crests = 3,
+                clock = LocalSwimClock.current,
+              )
           } else it
         }
         .semantics {
@@ -560,7 +570,7 @@ private fun SyncRing(sync: CompanionSyncStatus, compact: Boolean) {
               water,
               level = 0.9f - sync.progressFraction * 0.65f,
               bubbles = if (sync is CompanionSyncStatus.Running) 3 else 0,
-              clock = if (sync is CompanionSyncStatus.Running) SwimClock else 0.6f.rf,
+              clock = if (sync is CompanionSyncStatus.Running) LocalSwimClock.current else 0.6f.rf,
             )
       },
     contentAlignment = RemoteAlignment.Center,

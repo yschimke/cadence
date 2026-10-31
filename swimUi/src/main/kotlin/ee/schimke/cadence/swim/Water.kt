@@ -17,12 +17,19 @@ import androidx.compose.remote.creation.compose.state.rc
 import androidx.compose.remote.creation.compose.state.rf
 import androidx.compose.remote.creation.compose.state.sin
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PaintingStyle
 
 /** Seconds since the player loaded the document: the clock every animation here runs on. */
 val SwimClock: RemoteFloat
   get() = RemoteTimeVariables.animationTime
+
+/**
+ * The clock the swimming composables animate on: [SwimClock] unless a preview or capture pins it
+ * to a moment, so that a single frame of any animation can be rendered.
+ */
+val LocalSwimClock = staticCompositionLocalOf { SwimClock }
 
 /**
  * Animated water to sit behind a button's content: two wave layers drifting against each other,
@@ -41,7 +48,7 @@ fun WaterBackground(
   level: Float = 0.38f,
   crests: Int = 2,
   bubbles: Int = 5,
-  clock: RemoteFloat = SwimClock,
+  clock: RemoteFloat = LocalSwimClock.current,
 ) {
   RemoteCanvas(modifier) { drawWater(colors, level, crests, bubbles, clock) }
 }

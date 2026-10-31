@@ -44,7 +44,7 @@ fun SwimLaneProgress(
   modifier: RemoteModifier = RemoteModifier,
   colors: LaneColors = LaneColors.Pool,
   progressPerSecond: Float = 0f,
-  clock: RemoteFloat = SwimClock,
+  clock: RemoteFloat = LocalSwimClock.current,
 ) {
   RemoteCanvas(modifier) {
     val progress =
@@ -84,7 +84,7 @@ fun SwimLaneLaps(
   modifier: RemoteModifier = RemoteModifier,
   colors: LaneColors = LaneColors.Pool,
   lapSeconds: Float = 7f,
-  clock: RemoteFloat = SwimClock,
+  clock: RemoteFloat = LocalSwimClock.current,
 ) {
   RemoteCanvas(modifier) {
     val motion = LapMotion(clock, lapSeconds)
@@ -123,7 +123,7 @@ fun SwimmingPool(
   bubbleScale: Float = 0.5f,
   swimmerSize: Float = 0.24f,
   lapSeconds: Float = 9f,
-  clock: RemoteFloat = SwimClock,
+  clock: RemoteFloat = LocalSwimClock.current,
 ) {
   RemoteCanvas(modifier) {
     val w = width
