@@ -26,6 +26,7 @@ import androidx.compose.remote.creation.compose.layout.RemoteComposable
 import androidx.compose.remote.creation.compose.layout.RemoteRow
 import androidx.compose.remote.creation.compose.modifier.RemoteModifier
 import androidx.compose.remote.creation.compose.modifier.background
+import androidx.compose.remote.creation.compose.modifier.clickable
 import androidx.compose.remote.creation.compose.modifier.contentDescription
 import androidx.compose.remote.creation.compose.modifier.fillMaxSize
 import androidx.compose.remote.creation.compose.modifier.fillMaxWidth
@@ -41,6 +42,7 @@ import androidx.compose.remote.creation.compose.state.rs
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -57,6 +59,7 @@ import androidx.glance.wear.tooling.preview.RectangularAllWidgetPreviewParams
 import androidx.glance.wear.tooling.preview.RoundAllWidgetPreviewParams
 import androidx.glance.wear.tooling.preview.SquircleAllWidgetPreviewParams
 import androidx.glance.wear.tooling.preview.WearWidgetPreview
+import androidx.wear.compose.material3.ColorScheme
 import androidx.wear.compose.remote.material3.RemoteButton
 import androidx.wear.compose.remote.material3.RemoteButtonDefaults
 import androidx.wear.compose.remote.material3.RemoteCircularProgressIndicator
@@ -104,15 +107,24 @@ class ModeAndControlsWearWidgetService : GlanceWearWidgetService() {
 }
 
 class LocalAudioPlaylistWearWidget : GlanceWearWidget() {
-  override suspend fun provideWidgetData(context: Context, params: WearWidgetParams) =
-    WearWidgetDocument(background = WearWidgetBrush.color(WidgetColors.background.rc)) {
-      RemoteMaterialTheme {
-        LocalAudioPlaylistWidgetContent(
-          snapshot = WearCompanionServices.gateway(context).snapshot.value,
-          itemLimit = if (params.containerType == ContainerInfo.CONTAINER_TYPE_SMALL) 1 else 2,
-        )
-      }
+  override suspend fun provideWidgetData(
+    context: Context,
+    params: WearWidgetParams,
+  ): WearWidgetDocument {
+    val snapshot = WearCompanionServices.gateway(context).snapshot.value
+    return WearWidgetDocument(
+      background = WearWidgetBrush.color(playlistBackground(snapshot, params.isCompact).rc)
+    ) {
+      RemoteMaterialTheme { PlaylistWidget(snapshot, params.isCompact) }
     }
+  }
+}
+
+@Composable
+@RemoteComposable
+private fun PlaylistWidget(snapshot: HeadsetSnapshot, compact: Boolean) {
+  if (compact) CompactPlaylistWidgetContent(snapshot)
+  else LocalAudioPlaylistWidgetContent(snapshot, itemLimit = 2)
 }
 
 @AssociateWithGlanceWearWidget(LocalAudioPlaylistWearWidget::class)
@@ -181,7 +193,8 @@ private fun ModeAndControlsWidgetContent(snapshot: HeadsetSnapshot, compact: Boo
       }
     }
     RemoteRow(
-      horizontalArrangement = RemoteArrangement.spacedBy(8.rdp),
+      modifier = RemoteModifier.fillMaxWidth(),
+      horizontalArrangement = RemoteArrangement.spacedBy(6.rdp, RemoteAlignment.CenterHorizontally),
       verticalAlignment = RemoteAlignment.CenterVertically,
     ) {
       TransportButton(
@@ -226,8 +239,8 @@ private fun TransportButton(
   val size =
     when {
       primary && compact -> 52.rdp
-      primary -> 60.rdp
-      compact -> 44.rdp
+      primary -> 56.rdp
+      // Wear's minimum touch target, at every size.
       else -> 48.rdp
     }
   RemoteIconButton(
@@ -279,6 +292,65 @@ private fun LocalAudioPlaylistWidgetContent(snapshot: HeadsetSnapshot, itemLimit
         PlaylistButton(track, enabled = snapshot.isSupported(RcspCommand.PlayLocalAudio(track.id)))
       }
     }
+  }
+}
+
+/**
+ * Small playlist: the whole widget is the button for one episode. The widget background carries the
+ * button colour (see [playlistBackground]) so there is no pill inside a pill.
+ */
+@Composable
+@RemoteComposable
+private fun CompactPlaylistWidgetContent(snapshot: HeadsetSnapshot) {
+  val colors = RemoteMaterialTheme.colorScheme
+  val track = snapshot.compactPlaylistTrack
+  if (track == null) {
+    LocalAudioPlaylistWidgetContent(snapshot, itemLimit = 1)
+    return
+  }
+  val content = if (track.playing) colors.onPrimaryContainer else colors.onSurface
+  RemoteRow(
+    modifier =
+      RemoteModifier.fillMaxSize()
+        .clickable(
+          playTrackAction(track.id),
+          enabled = snapshot.isSupported(RcspCommand.PlayLocalAudio(track.id)),
+          role = Role.Button,
+        )
+        .semantics {
+          contentDescription =
+            "${if (track.playing) "Playing" else "Play"} ${track.podcast.episodeTitle}".rs
+        },
+    horizontalArrangement = RemoteArrangement.spacedBy(8.rdp, RemoteAlignment.CenterHorizontally),
+    verticalAlignment = RemoteAlignment.CenterVertically,
+  ) {
+    RemoteIcon(
+      if (track.playing) Icons.Filled.GraphicEq else Icons.Filled.PlayArrow,
+      null,
+      modifier = RemoteModifier.size(24.rdp),
+      tint = content,
+    )
+    RemoteText(
+      text = track.podcast.episodeTitle.rs,
+      style = RemoteMaterialTheme.typography.titleSmall,
+      color = content,
+      maxLines = 2,
+      overflow = TextOverflow.Ellipsis,
+    )
+  }
+}
+
+/** The one episode the small playlist shows: the playing one, else the first. */
+private val HeadsetSnapshot.compactPlaylistTrack: LocalAudioTrack?
+  get() = localAudio.firstOrNull { it.playing } ?: localAudio.firstOrNull()
+
+/** Container colour for the playlist widget: the small size takes its single button's colour. */
+private fun playlistBackground(snapshot: HeadsetSnapshot, compact: Boolean): Color {
+  val track = snapshot.compactPlaylistTrack
+  return when {
+    !compact || track == null -> WidgetColors.background
+    track.playing -> WidgetColors.scheme.primaryContainer
+    else -> WidgetColors.scheme.surfaceContainer
   }
 }
 
@@ -503,6 +575,8 @@ private const val PlayTrackRequestCodeSpan = 100_000L
 /** Matches the Wear Material 3 dark surface the widget content is themed against. */
 private object WidgetColors {
   val background = Color(0xFF0E0E11)
+  /** Same defaults RemoteMaterialTheme uses, for colours needed outside composition. */
+  val scheme = ColorScheme()
 }
 
 private val CompanionSyncStatus.widgetLabel: String
@@ -541,9 +615,10 @@ private val CompanionSyncStatus.progressFraction: Float
 @Composable
 private fun WidgetPreview(
   params: WearWidgetParams,
+  background: Color = WidgetColors.background,
   content: @Composable @RemoteComposable () -> Unit,
 ) {
-  WearWidgetPreview(params, background = WearWidgetBrush.color(WidgetColors.background.rc)) {
+  WearWidgetPreview(params, background = WearWidgetBrush.color(background.rc)) {
     RemoteMaterialTheme { content() }
   }
 }
@@ -584,8 +659,8 @@ fun ModeAndControlsWearWidgetSquirclePreview(
 fun LocalAudioPlaylistWearWidgetRectangularPreview(
   @PreviewParameter(RectangularAllWidgetPreviewParams::class) params: WearWidgetParams
 ) {
-  WidgetPreview(params) {
-    LocalAudioPlaylistWidgetContent(previewSnapshot, if (params.isCompact) 1 else 2)
+  WidgetPreview(params, playlistBackground(previewSnapshot, params.isCompact)) {
+    PlaylistWidget(previewSnapshot, params.isCompact)
   }
 }
 
@@ -594,8 +669,8 @@ fun LocalAudioPlaylistWearWidgetRectangularPreview(
 fun LocalAudioPlaylistWearWidgetRoundPreview(
   @PreviewParameter(RoundAllWidgetPreviewParams::class) params: WearWidgetParams
 ) {
-  WidgetPreview(params) {
-    LocalAudioPlaylistWidgetContent(previewSnapshot, if (params.isCompact) 1 else 2)
+  WidgetPreview(params, playlistBackground(previewSnapshot, params.isCompact)) {
+    PlaylistWidget(previewSnapshot, params.isCompact)
   }
 }
 
@@ -604,8 +679,8 @@ fun LocalAudioPlaylistWearWidgetRoundPreview(
 fun LocalAudioPlaylistWearWidgetSquirclePreview(
   @PreviewParameter(SquircleAllWidgetPreviewParams::class) params: WearWidgetParams
 ) {
-  WidgetPreview(params) {
-    LocalAudioPlaylistWidgetContent(previewSnapshot, if (params.isCompact) 1 else 2)
+  WidgetPreview(params, playlistBackground(previewSnapshot, params.isCompact)) {
+    PlaylistWidget(previewSnapshot, params.isCompact)
   }
 }
 
