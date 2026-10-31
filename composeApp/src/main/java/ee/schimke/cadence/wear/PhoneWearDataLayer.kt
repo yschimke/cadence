@@ -62,7 +62,10 @@ class PhoneWearDataPublisher(
               RcspCommandId.Pause.name,
               RcspCommandId.PreviousTrack.name,
               RcspCommandId.NextTrack.name,
+              RcspCommandId.SelectWorkingMode.name,
             )
+          } else if (openSwim != null) {
+            listOf(RcspCommandId.SelectWorkingMode.name)
           } else {
             emptyList()
           }

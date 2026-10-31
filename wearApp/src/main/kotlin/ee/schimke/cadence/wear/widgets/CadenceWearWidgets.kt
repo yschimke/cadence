@@ -7,8 +7,11 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Bluetooth
+import androidx.compose.material.icons.filled.MusicNote
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.SkipNext
 import androidx.compose.material.icons.filled.SkipPrevious
 import androidx.compose.remote.creation.compose.action.pendingIntentAction
@@ -183,6 +186,34 @@ private fun ModeAndControlsWidgetContent(snapshot: HeadsetSnapshot, compact: Boo
         RemoteIcon(Icons.Filled.SkipNext, "Next".rs)
       }
     }
+    if (!compact) {
+      val nextMode =
+        if (snapshot.mode == WorkingMode.LocalAudio) WorkingMode.Bluetooth
+        else WorkingMode.LocalAudio
+      RemoteButtonGroup {
+        RemoteIconButton(
+          onClick = widgetAction(WidgetAction.ToggleMode),
+          modifier = RemoteModifier.size(40.rdp),
+          enabled = snapshot.isSupported(RcspCommand.SelectWorkingMode(nextMode)).rb,
+          colors =
+            RemoteIconButtonDefaults.iconButtonColors(containerColor = WidgetColors.tonal.rc),
+        ) {
+          if (nextMode == WorkingMode.Bluetooth) {
+            RemoteIcon(Icons.Filled.Bluetooth, "Switch to Bluetooth".rs)
+          } else {
+            RemoteIcon(Icons.Filled.MusicNote, "Switch to MP3".rs)
+          }
+        }
+        RemoteIconButton(
+          onClick = settingsAction(),
+          modifier = RemoteModifier.size(40.rdp),
+          colors =
+            RemoteIconButtonDefaults.iconButtonColors(containerColor = WidgetColors.tonal.rc),
+        ) {
+          RemoteIcon(Icons.Filled.Settings, "More settings".rs)
+        }
+      }
+    }
   }
 }
 
@@ -257,7 +288,17 @@ class WearWidgetActionReceiver : BroadcastReceiver() {
     val pendingResult = goAsync()
     widgetScope.launch {
       try {
-        WearCompanionServices.gateway(context).execute(action.toHeadsetAction())
+        val gateway = WearCompanionServices.gateway(context)
+        gateway.execute(
+          if (action == WidgetAction.ToggleMode) {
+            HeadsetAction.SelectMode(
+              if (gateway.snapshot.value.mode == WorkingMode.LocalAudio) WorkingMode.Bluetooth
+              else WorkingMode.LocalAudio
+            )
+          } else {
+            action.toHeadsetAction()
+          }
+        )
       } finally {
         WearWidgets.updateAll(context.applicationContext)
         pendingResult.finish()
@@ -288,11 +329,25 @@ private fun widgetAction(action: WidgetAction) = pendingIntentAction { context -
   )
 }
 
+@Composable
+@RemoteComposable
+private fun settingsAction() = pendingIntentAction { context ->
+  PendingIntent.getActivity(
+    context,
+    SettingsRequestCode,
+    Intent(context, ee.schimke.cadence.wear.WearMainActivity::class.java)
+      .putExtra(ee.schimke.cadence.wear.WearMainActivity.ExtraStartPage, SettingsPage)
+      .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP),
+    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+  )
+}
+
 private enum class WidgetAction(val wireName: String) {
   Previous("previous"),
   Play("play"),
   Pause("pause"),
-  Next("next");
+  Next("next"),
+  ToggleMode("toggle_mode");
 
   fun toHeadsetAction() =
     when (this) {
@@ -300,6 +355,7 @@ private enum class WidgetAction(val wireName: String) {
       Play -> HeadsetAction.Play
       Pause -> HeadsetAction.Pause
       Next -> HeadsetAction.NextTrack
+      ToggleMode -> error("Mode uses the current gateway snapshot")
     }
 
   companion object {
@@ -309,6 +365,8 @@ private enum class WidgetAction(val wireName: String) {
 
 private val widgetScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 private const val ExtraAction = "ee.schimke.cadence.wear.widgets.ACTION"
+private const val SettingsRequestCode = 100
+private const val SettingsPage = 2
 
 private object WidgetColors {
   val background = Color(0xFF17161E)

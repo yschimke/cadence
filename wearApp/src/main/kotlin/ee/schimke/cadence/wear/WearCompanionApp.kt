@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
@@ -42,13 +43,18 @@ import ee.schimke.rcsp.WorkingMode
 import kotlinx.coroutines.launch
 
 @Composable
-fun WearCompanionApp(gateway: HeadsetGateway, modifier: Modifier = Modifier) {
+fun WearCompanionApp(
+  gateway: HeadsetGateway,
+  startPage: Int = 0,
+  modifier: Modifier = Modifier,
+) {
   val snapshot by gateway.snapshot.collectAsState()
   val scope = rememberCoroutineScope()
   MaterialTheme {
     Box(modifier = modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
       WearCompanionContent(
         snapshot = snapshot,
+        startPage = startPage,
         onAction = { action ->
           if (gateway.isSupported(action.command)) {
             scope.launch { gateway.execute(action) }
@@ -62,10 +68,12 @@ fun WearCompanionApp(gateway: HeadsetGateway, modifier: Modifier = Modifier) {
 @Composable
 fun WearCompanionContent(
   snapshot: HeadsetSnapshot,
+  startPage: Int = 0,
   modifier: Modifier = Modifier,
   onAction: (HeadsetAction) -> Unit = {},
 ) {
-  val pagerState = rememberPagerState(pageCount = { 3 })
+  val pagerState = rememberPagerState(initialPage = startPage.coerceIn(0, 2), pageCount = { 3 })
+  LaunchedEffect(startPage) { pagerState.scrollToPage(startPage.coerceIn(0, 2)) }
   AppScaffold(modifier = modifier.fillMaxSize()) {
     HorizontalPagerScaffold(pagerState = pagerState, modifier = Modifier.fillMaxSize()) {
       HorizontalPager(state = pagerState, modifier = Modifier.fillMaxSize()) { page ->
@@ -408,7 +416,7 @@ private fun ConnectedWearCompanionPreview() {
 @Composable
 private fun LocalAudioPlaylistPreview() {
   MaterialTheme {
-    LocalAudioPlaylistScreen(
+    WearCompanionContent(
       snapshot =
         HeadsetSnapshot(
           localAudio =
@@ -418,7 +426,7 @@ private fun LocalAudioPlaylistPreview() {
             ),
           capabilities = RcspCapabilities().withSupported(RcspCommand.PlayLocalAudio(1u).id),
         ),
-      modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background),
+      startPage = 1,
       onAction = {},
     )
   }
