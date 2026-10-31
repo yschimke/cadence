@@ -813,7 +813,9 @@ private fun WidgetPreview(
   content: @Composable @RemoteComposable () -> Unit,
 ) {
   WearWidgetPreview(params, background = WearWidgetBrush.color(background.rc)) {
-    RemoteMaterialTheme { content() }
+    // Pinned so a still preview renders the same water every time; the animated preview pins
+    // its own moment inside this one.
+    SwimClockAt(0f) { RemoteMaterialTheme { content() } }
   }
 }
 
