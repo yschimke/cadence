@@ -106,7 +106,7 @@ fun SwimLaneLapsPreview() {
   ) {
     listOf(SwimLap(1, 0.15f), SwimLap(1, 0.62f), SwimLap(2, 0.35f), SwimLap(2, 0.9f)).forEach {
       Slot(RcPlatformProfiles.WIDGETS_V7, 276.dp, 36.dp) {
-        SwimLaneProgress(it, RemoteModifier.fillMaxSize(), clock = 0.4f.rf)
+        SwimClockAt(0.4f) { SwimLaneProgress(it, RemoteModifier.fillMaxSize()) }
       }
     }
   }
@@ -134,13 +134,14 @@ private fun FlipTurnStrip(profile: Profile, colors: LaneColors) {
     // Lap 2 just finished at the left wall; lap 3 swims right again, 30% in.
     listOf(0f, 0.25f, 0.5f, 0.7f, 1.0f, 1.3f, 1.6f, 2.4f).forEach { t ->
       Slot(profile, 276.dp, 32.dp) {
-        SwimLaneProgress(
-          SwimLap(3, 0.02f),
-          RemoteModifier.fillMaxSize(),
-          colors = colors,
-          progressPerSecond = 0.12f,
-          clock = t.rf,
-        )
+        SwimClockAt(t) {
+          SwimLaneProgress(
+            SwimLap(3, 0.02f),
+            RemoteModifier.fillMaxSize(),
+            colors = colors,
+            progressPerSecond = 0.12f,
+          )
+        }
       }
     }
   }

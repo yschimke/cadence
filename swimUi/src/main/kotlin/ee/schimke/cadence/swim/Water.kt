@@ -9,7 +9,6 @@ import androidx.compose.remote.creation.compose.layout.RemoteDrawScope
 import androidx.compose.remote.creation.compose.layout.RemoteOffset
 import androidx.compose.remote.creation.compose.layout.RemoteSize
 import androidx.compose.remote.creation.compose.modifier.RemoteModifier
-import androidx.compose.remote.creation.compose.modifier.drawWithContent
 import androidx.compose.remote.creation.compose.state.RemoteFloat
 import androidx.compose.remote.creation.compose.state.RemotePaint
 import androidx.compose.remote.creation.compose.state.RemoteTimeVariables
@@ -20,16 +19,38 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PaintingStyle
+import java.time.LocalTime
 
-/** Seconds since the player loaded the document: the clock every animation here runs on. */
+/**
+ * The second of the hour, continuous (0 until 3600): the clock every animation here runs on.
+ *
+ * Not the player's animation time: Android 16's platform widget player only schedules a repaint for
+ * a document that reads the wall-clock variables (continuous seconds every frame, seconds, or
+ * minutes), so a document driven by animation time draws once and freezes on the home screen. Every
+ * period here divides 3600, so the hourly wrap is seamless.
+ */
 val SwimClock: RemoteFloat
-  get() = RemoteTimeVariables.animationTime
+  get() = RemoteTimeVariables.continuousSeconds
 
 /**
  * The clock the swimming composables animate on: [SwimClock] unless a preview or capture pins it to
  * a moment, so that a single frame of any animation can be rendered.
  */
 val LocalSwimClock = staticCompositionLocalOf { SwimClock }
+
+/**
+ * [LocalSwimClock]'s reading when the document was captured, for one-shot animations (a flip turn
+ * as a new lap starts) that count seconds from then. [SwimClockAt] sets it to 0.
+ */
+val LocalSwimClockStart = staticCompositionLocalOf { secondOfHourNow() }
+
+/** Seconds since [start] on a clock that wraps every hour. */
+fun RemoteFloat.secondsSince(start: Float): RemoteFloat = (this - start + 3600f) % 3600f
+
+private fun secondOfHourNow(): Float {
+  val now = LocalTime.now()
+  return now.minute * 60f + now.second + now.nano / 1_000_000_000f
+}
 
 /**
  * Animated water to sit behind a button's content: two wave layers drifting against each other,
@@ -51,22 +72,6 @@ fun WaterBackground(
   clock: RemoteFloat = LocalSwimClock.current,
 ) {
   RemoteCanvas(modifier) { drawWater(colors, level, crests, bubbles, clock) }
-}
-
-/**
- * [WaterBackground] as a modifier: water drawn behind whatever the component draws, so it can sit
- * under an existing button (give the button a transparent container). Put a `clip` to the button's
- * shape before it.
- */
-fun RemoteModifier.waterBackground(
-  colors: WaterColors = WaterColors.Pool,
-  level: Float = 0.38f,
-  crests: Int = 2,
-  bubbles: Int = 5,
-  clock: RemoteFloat = SwimClock,
-): RemoteModifier = drawWithContent {
-  drawWater(colors, level, crests, bubbles, clock)
-  drawContent()
 }
 
 /** [WaterBackground]'s drawing, for canvases that layer more on top. */
@@ -129,7 +134,7 @@ private fun RemoteDrawScope.drawBubble(
   val rise = (clock / bubble.period + bubble.phase) % 1f
   val bottom = 1.08f
   val y = h * bottom - h * (bottom - level - 0.04f) * rise
-  val x = w * bubble.x + sin(clock * 1.9f + index * 1.3f) * h * 0.045f
+  val x = w * bubble.x + sin(clock * (TwoPi / 3f) + index * 1.3f) * h * 0.045f
   val radius = h * (bubble.radius * scale) * (rise * 0.5f + 0.6f)
   drawCircle(
     RemotePaint {
@@ -233,20 +238,22 @@ private class Bubble(val x: Float, val period: Float, val phase: Float, val radi
 
 private class Glint(val x: Float, val speed: Float, val phase: Float)
 
-// Periods are distinct and not multiples of each other, so the bubbles never fall into step.
+// Distinct periods so the bubbles rarely fall into step; each divides 3600 (see [SwimClock]).
 private val Bubbles =
   listOf(
-    Bubble(x = 0.2f, period = 3.1f, phase = 0.0f, radius = 0.05f),
-    Bubble(x = 0.47f, period = 4.3f, phase = 0.55f, radius = 0.035f),
-    Bubble(x = 0.72f, period = 3.7f, phase = 0.25f, radius = 0.06f),
-    Bubble(x = 0.86f, period = 5.2f, phase = 0.8f, radius = 0.04f),
-    Bubble(x = 0.33f, period = 4.7f, phase = 0.4f, radius = 0.03f),
-    Bubble(x = 0.6f, period = 3.4f, phase = 0.9f, radius = 0.045f),
+    Bubble(x = 0.2f, period = 3f, phase = 0.0f, radius = 0.05f),
+    Bubble(x = 0.47f, period = 4f, phase = 0.55f, radius = 0.035f),
+    Bubble(x = 0.72f, period = 3.6f, phase = 0.25f, radius = 0.06f),
+    Bubble(x = 0.86f, period = 4.8f, phase = 0.8f, radius = 0.04f),
+    Bubble(x = 0.33f, period = 4.5f, phase = 0.4f, radius = 0.03f),
+    Bubble(x = 0.6f, period = 3.75f, phase = 0.9f, radius = 0.045f),
   )
 
 private val Glints =
   listOf(
-    Glint(x = 0.24f, speed = 2.3f, phase = 0f),
-    Glint(x = 0.58f, speed = 1.7f, phase = 2.1f),
-    Glint(x = 0.8f, speed = 2.9f, phase = 4.0f),
+    Glint(x = 0.24f, speed = TwoPi / 2.5f, phase = 0f),
+    Glint(x = 0.58f, speed = TwoPi / 3.6f, phase = 2.1f),
+    Glint(x = 0.8f, speed = TwoPi / 2f, phase = 4.0f),
   )
+
+internal const val TwoPi = 6.2831855f

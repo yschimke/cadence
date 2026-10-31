@@ -48,8 +48,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import ee.schimke.cadence.swim.LocalSwimClock
-import ee.schimke.cadence.swim.WaterColors
-import ee.schimke.cadence.swim.waterBackground
+import ee.schimke.cadence.swim.WaterBackground
 
 /**
  * Phone counterpart of the Wear "Mode & controls" widget: the headset's mode, what is playing, the
@@ -194,20 +193,7 @@ private fun WidgetIconButton(
     modifier =
       RemoteModifier.size(size.rdp)
         .clip(RemoteRoundedCornerShape((size / 2).rdp))
-        .let {
-          // The primary button is a little pool: still water while paused, waves and bubbles
-          // while playing.
-          if (primary) {
-            it.waterBackground(
-              WaterColors.Pool,
-              level = 0.42f,
-              bubbles = if (playing) 4 else 0,
-              clock = if (playing) LocalSwimClock.current else 1.1f.rf,
-            )
-          } else {
-            it.background(colors.tonal.rc)
-          }
-        }
+        .let { if (primary) it else it.background(colors.tonal.rc) }
         .semantics {
           contentDescription = action.label.rs
           role = Role.Button
@@ -215,6 +201,17 @@ private fun WidgetIconButton(
         .let { if (onClick != null) it.clickable(onClick) else it },
     contentAlignment = RemoteAlignment.Center,
   ) {
+    if (primary) {
+      // The primary button is a little pool: still water while paused, waves and bubbles while
+      // playing. A canvas under the icon, not a drawWithContent modifier: Android 16's platform
+      // player recurses forever on DrawContent inside a modifier.
+      WaterBackground(
+        RemoteModifier.fillMaxSize(),
+        level = 0.42f,
+        bubbles = if (playing) 4 else 0,
+        clock = if (playing) LocalSwimClock.current else 1.1f.rf,
+      )
+    }
     RemoteBox(RemoteModifier.size(24.rdp).background(painterRemoteVector(action.icon, content.rc)))
   }
 }

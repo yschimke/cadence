@@ -46,19 +46,22 @@ fun SwimLaneProgress(
   progressPerSecond: Float = 0f,
   clock: RemoteFloat = LocalSwimClock.current,
 ) {
+  val start = LocalSwimClockStart.current
   RemoteCanvas(modifier) {
+    // Seconds since capture: the turn plays once, and progress keeps pace from there.
+    val elapsed = clock.secondsSince(start)
     val progress =
-      if (progressPerSecond > 0f) min(clock * progressPerSecond + lap.progress, 1f.rf)
+      if (progressPerSecond > 0f) min(elapsed * progressPerSecond + lap.progress, 1f.rf)
       else lap.progress.rf
     val wake = (if (lap.isOdd) colors.oddWake else colors.evenWake).copy(alpha = WakeAlpha)
     if (lap.isTurning) {
-      val glide = glideFraction(clock)
+      val glide = glideFraction(elapsed)
       drawLane(
         colors = colors,
         direction = lap.direction.toFloat().rf,
         position = progress * easeOut(glide),
         wake = wake.rc,
-        turnClock = clock,
+        turnClock = elapsed,
         strokeClock = clock,
       )
     } else {
@@ -75,15 +78,16 @@ fun SwimLaneProgress(
 }
 
 /**
- * The swimmer doing endless laps of [lapSeconds] each, with a flip turn at every wall: decoration
- * for something that is ready and waiting, not a measure of progress.
+ * The swimmer doing endless laps of [lapSeconds] each (a divisor of 3600, see [SwimClock]), with a
+ * flip turn at every wall: decoration for something that is ready and waiting, not a measure of
+ * progress.
  */
 @Composable
 @RemoteComposable
 fun SwimLaneLaps(
   modifier: RemoteModifier = RemoteModifier,
   colors: LaneColors = LaneColors.Pool,
-  lapSeconds: Float = 7f,
+  lapSeconds: Float = 8f,
   clock: RemoteFloat = LocalSwimClock.current,
 ) {
   RemoteCanvas(modifier) {
@@ -154,7 +158,7 @@ fun SwimmingPool(
           )
         } else {
           // Treading water: bobbing by the wall, unhurried strokes.
-          val bob = sin(clock * 2.2f) * band * 0.05f
+          val bob = sin(clock * (TwoPi / 3f)) * band * 0.05f
           drawSwimmer(
             swimmer,
             lane.swimmerX(1f.rf, 0f.rf),
@@ -346,7 +350,7 @@ private fun RemoteDrawScope.drawSwimmer(
   strokeClock: RemoteFloat,
 ) {
   val armBase = (strokeClock * 400f) % 360f
-  val kickBase = sin(strokeClock * 15f) * 0.07f
+  val kickBase = sin(strokeClock * (TwoPi / 0.4f)) * 0.07f
   if (turnClock == null) {
     translate(x, y) {
       scale(unit * direction, unit, RemoteOffset(0f, 0f)) {
