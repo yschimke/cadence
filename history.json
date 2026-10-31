@@ -1,6 +1,6 @@
 {
     "formatVersion": "compose-preview-history/v1",
-    "generatedFrom": "ff57ac0989280e1a8f42870327a6f4a3c45fd303",
+    "generatedFrom": "7c975894bd326758d63e47a30aba84605a5d78ab",
     "previews": {
         "composeApp/activity__MainActivity": {
             "path": "renders/composeApp/activity__MainActivity.png",
@@ -107,6 +107,13 @@
             "path": "renders/composeApp/HeadphoneWidgetBluetoothPreview_Headphone_widget_Bluetooth-672bb261.png",
             "versions": [
                 {
+                    "blob": "570fedcf0c6128704217970618963757bfc4f4b8",
+                    "commit": "7c975894bd326758d63e47a30aba84605a5d78ab",
+                    "date": "2026-10-31T19:48:27Z",
+                    "sourceSha": "ba0e1cc0",
+                    "commits": 1
+                },
+                {
                     "blob": "b52aec2e88561104df1002631465b3555586eb1d",
                     "commit": "ff57ac0989280e1a8f42870327a6f4a3c45fd303",
                     "date": "2026-10-31T19:07:09Z",
@@ -128,7 +135,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 3,
+            "observations": 4,
             "unstable": false,
             "flapCount": 0
         },
@@ -277,6 +284,13 @@
             "path": "renders/composeApp/HeadphoneWidgetPlayingAnimatedPreview_Headphone_widget_playing_animated-157e750e.gif",
             "versions": [
                 {
+                    "blob": "c5ea37a70a39b23aa5851e3c2fa1a0b393c89ad4",
+                    "commit": "7c975894bd326758d63e47a30aba84605a5d78ab",
+                    "date": "2026-10-31T19:48:27Z",
+                    "sourceSha": "ba0e1cc0",
+                    "commits": 1
+                },
+                {
                     "blob": "c45239f59553b2547fe05ab1b16ad6e80eef5175",
                     "commit": "ff57ac0989280e1a8f42870327a6f4a3c45fd303",
                     "date": "2026-10-31T19:07:09Z",
@@ -284,7 +298,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
@@ -977,6 +991,13 @@
             "path": "renders/swimUi/SwimLaneFlipTurnAnimatedPreview_Swim_lane_flip_turn_animated-db9e413a.gif",
             "versions": [
                 {
+                    "blob": "f031e9beaf4cc5a808c2c7c44eb7af1782c57ccf",
+                    "commit": "7c975894bd326758d63e47a30aba84605a5d78ab",
+                    "date": "2026-10-31T19:48:27Z",
+                    "sourceSha": "ba0e1cc0",
+                    "commits": 1
+                },
+                {
                     "blob": "2c6367b1a82658959d31741c648bdd99acf1b1d1",
                     "commit": "ff57ac0989280e1a8f42870327a6f4a3c45fd303",
                     "date": "2026-10-31T19:07:09Z",
@@ -984,13 +1005,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "swimUi/ee.schimke.cadence.swim.SwimAnimatedPreviewsKt.SwimLaneLapsAnimatedPreview_Swim lane · laps · animated": {
             "path": "renders/swimUi/SwimLaneLapsAnimatedPreview_Swim_lane_laps_animated-726ab47a.gif",
             "versions": [
+                {
+                    "blob": "90e52e88a5fbbb6837ea496a0d9e2408cb84fcbc",
+                    "commit": "7c975894bd326758d63e47a30aba84605a5d78ab",
+                    "date": "2026-10-31T19:48:27Z",
+                    "sourceSha": "ba0e1cc0",
+                    "commits": 1
+                },
                 {
                     "blob": "e044a47665f7eefa93995c1fc831b0302d805dcd",
                     "commit": "ff57ac0989280e1a8f42870327a6f4a3c45fd303",
@@ -999,13 +1027,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "swimUi/ee.schimke.cadence.swim.SwimAnimatedPreviewsKt.SwimmingPoolAnimatedPreview_Swimming pool · animated": {
             "path": "renders/swimUi/SwimmingPoolAnimatedPreview_Swimming_pool_animated-d70a85a6.gif",
             "versions": [
+                {
+                    "blob": "262490e4893533d1f21641bef2b92584aa3439a2",
+                    "commit": "7c975894bd326758d63e47a30aba84605a5d78ab",
+                    "date": "2026-10-31T19:48:27Z",
+                    "sourceSha": "ba0e1cc0",
+                    "commits": 1
+                },
                 {
                     "blob": "c202bde64fd978ed152d3b93b178a444c729a6d9",
                     "commit": "ff57ac0989280e1a8f42870327a6f4a3c45fd303",
@@ -1014,7 +1049,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
@@ -1562,6 +1597,13 @@
             "path": "renders/wearApp/ModeAndControlsWearWidgetAnimatedPreview_Now_playing_animated-da6d1cec_PARAM_0.gif",
             "versions": [
                 {
+                    "blob": "5483ee868401689ae62ae4a2a3976b92eb4d5aec",
+                    "commit": "7c975894bd326758d63e47a30aba84605a5d78ab",
+                    "date": "2026-10-31T19:48:27Z",
+                    "sourceSha": "ba0e1cc0",
+                    "commits": 1
+                },
+                {
                     "blob": "6d8ee47fc9957124b88b20be068338135950b0ca",
                     "commit": "ff57ac0989280e1a8f42870327a6f4a3c45fd303",
                     "date": "2026-10-31T19:07:09Z",
@@ -1569,7 +1611,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
@@ -1622,6 +1664,13 @@
             "path": "renders/wearApp/ModeAndControlsWearWidgetRectangularPreview_Now_playing_rectangular-71381054_PARAM_0.png",
             "versions": [
                 {
+                    "blob": "bafb5ea1d50086b6b9fff749a5c846424f7ee358",
+                    "commit": "7c975894bd326758d63e47a30aba84605a5d78ab",
+                    "date": "2026-10-31T19:48:27Z",
+                    "sourceSha": "ba0e1cc0",
+                    "commits": 1
+                },
+                {
                     "blob": "29fd38588cb9228fc9d8445398625e26bc58c1c7",
                     "commit": "e618876752e6a39b165b94db8de520c7dad33fa0",
                     "date": "2026-10-31T16:10:36Z",
@@ -1629,7 +1678,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
