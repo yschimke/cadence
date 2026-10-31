@@ -51,8 +51,8 @@ class RcspCodecTest {
   }
 
   @Test
-  fun `openswim profile stays conservative until its envelope is implemented`() {
-    assertFalse(OpenSwimProProfile.isSupported(RcspCommand.SetVolume(50u)))
+  fun `openswim profile stays conservative beyond captured commands`() {
+    assertTrue(OpenSwimProProfile.isSupported(RcspCommand.SetVolume(50u)))
     assertFalse(
       OpenSwimProProfile.isSupported(RcspCommand.SeekRelative(SeekDirection.Forward, 5_000u))
     )

@@ -20,6 +20,7 @@ object ShokzOpenSwimCodec {
   private const val requestType = 1u
   private const val responseType = 0x101u
   private const val requestChecksumSeed = 0x86F7
+  private const val equalizerRequestChecksumSeed = 0x742D
   private const val mediaResponseChecksumSeed = 0x7649
   private const val localAudioStateResponseChecksumSeed = 0xA492
   private const val headerSize = 12
@@ -61,9 +62,8 @@ object ShokzOpenSwimCodec {
   private fun seedFor(type: UInt, payload: ByteArray, checksum: Int): Int? =
     when (type) {
       requestType ->
-        listOf(requestChecksumSeed, mediaResponseChecksumSeed).firstOrNull {
-          crc16Modbus(payload, it) == checksum
-        }
+        listOf(requestChecksumSeed, equalizerRequestChecksumSeed, mediaResponseChecksumSeed)
+          .firstOrNull { crc16Modbus(payload, it) == checksum }
       responseType ->
         listOf(mediaResponseChecksumSeed, localAudioStateResponseChecksumSeed).firstOrNull {
           crc16Modbus(payload, it) == checksum
@@ -108,6 +108,13 @@ object ShokzOpenSwimCommandEncoder {
       RcspCommand.Pause -> mediaRequest(action = 4)
       RcspCommand.PreviousTrack -> mediaRequest(action = 7)
       RcspCommand.NextTrack -> mediaRequest(action = 8)
+      is RcspCommand.SetVolume -> valueRequest(command = 0x0A, value = command.level.toRawVolume())
+      is RcspCommand.SelectWorkingMode ->
+        valueRequest(command = 0x25, value = command.mode.toOpenSwimModeValue())
+      is RcspCommand.SelectEqualizerPreset ->
+        equalizerRequest(command.preset.toOpenSwimEqualizerValue())
+      is RcspCommand.SelectPlaybackOrder ->
+        valueRequest(command = 0x26, value = command.order.toOpenSwimOrderValue())
       else -> null
     }
 
@@ -133,6 +140,50 @@ object ShokzOpenSwimCommandEncoder {
       checksumSeed = 0x86F7,
     )
   }
+
+  /** Captured setters for working mode, Local Audio volume, and playback order. */
+  private fun valueRequest(command: Int, value: Int): ShokzOpenSwimEnvelope {
+    val values = intArrayOf(1, 36, 2, 4, 1, 3, 4, command, 4, 4, value)
+    return ShokzOpenSwimEnvelope(
+      type = requestType,
+      payload = values.toLittleEndianPayload(),
+      checksumSeed = 0x7649,
+    )
+  }
+
+  /** Captured EQ setter: unlike the simple tagged setters it has an eight-byte value payload. */
+  private fun equalizerRequest(value: Int): ShokzOpenSwimEnvelope {
+    val values = intArrayOf(1, 40, 2, 4, 1, 3, 4, 0x0E, 4, 8, value, 0)
+    return ShokzOpenSwimEnvelope(
+      type = requestType,
+      payload = values.toLittleEndianPayload(),
+      checksumSeed = 0x742D,
+    )
+  }
+
+  private fun UByte.toRawVolume(): Int = (toInt() * 16 + 50) / 100
+
+  private fun WorkingMode.toOpenSwimModeValue(): Int =
+    when (this) {
+      WorkingMode.Bluetooth -> 0
+      WorkingMode.LocalAudio -> 1
+      else -> error("OpenSwim Pro supports only Bluetooth and Local Audio working modes")
+    }
+
+  private fun EqualizerPreset.toOpenSwimEqualizerValue(): Int =
+    when (this) {
+      EqualizerPreset.Standard -> 1
+      EqualizerPreset.Vocal -> 2
+      EqualizerPreset.Swimming -> 7
+      else -> error("This OpenSwim Pro firmware has no captured value for $this")
+    }
+
+  private fun PlaybackOrder.toOpenSwimOrderValue(): Int =
+    when (this) {
+      PlaybackOrder.Normal -> 0
+      PlaybackOrder.Shuffle -> 1
+      PlaybackOrder.Repeat -> 2
+    }
 
   private fun IntArray.toLittleEndianPayload(): ByteArray =
     ByteArray(size * Int.SIZE_BYTES).also { payload ->

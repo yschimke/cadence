@@ -41,6 +41,38 @@ class ShokzOpenSwimProtocolTest {
   }
 
   @Test
+  fun `encodes captured OpenSwim settings byte-for-byte`() {
+    assertContentEquals(
+      "a55a3000010000002c00b0260100000024000000020000000400000001000000030000000400000025000000040000000400000000000000"
+        .hex(),
+      ShokzOpenSwimCodec.encode(
+        ShokzOpenSwimCommandEncoder.encode(RcspCommand.SelectWorkingMode(WorkingMode.Bluetooth))!!
+      ),
+    )
+    assertContentEquals(
+      "a55a3000010000002c00eee2010000002400000002000000040000000100000003000000040000000a00000004000000040000000e000000"
+        .hex(),
+      ShokzOpenSwimCodec.encode(ShokzOpenSwimCommandEncoder.encode(RcspCommand.SetVolume(88u))!!),
+    )
+    assertContentEquals(
+      "a55a3000010000002c00f12b0100000024000000020000000400000001000000030000000400000026000000040000000400000001000000"
+        .hex(),
+      ShokzOpenSwimCodec.encode(
+        ShokzOpenSwimCommandEncoder.encode(RcspCommand.SelectPlaybackOrder(PlaybackOrder.Shuffle))!!
+      ),
+    )
+    assertContentEquals(
+      "a55a3400010000003000820d010000002800000002000000040000000100000003000000040000000e00000004000000080000000200000000000000"
+        .hex(),
+      ShokzOpenSwimCodec.encode(
+        ShokzOpenSwimCommandEncoder.encode(
+          RcspCommand.SelectEqualizerPreset(EqualizerPreset.Vocal)
+        )!!
+      ),
+    )
+  }
+
+  @Test
   fun `decodes a captured request and rejects checksum corruption`() {
     val frame =
       "a55a2c000100000028005ab701000000200000000200000004000000020000000300000004000000020000000400000000000000"
@@ -73,12 +105,20 @@ class ShokzOpenSwimProtocolTest {
   }
 
   @Test
-  fun `OpenSwim profile exposes only verified Local Audio commands`() {
+  fun `OpenSwim profile exposes only verified commands`() {
     assertTrue(OpenSwimProProfile.isSupported(RcspCommand.QueryMediaState))
     assertTrue(OpenSwimProProfile.isSupported(RcspCommand.Play))
     assertTrue(OpenSwimProProfile.isSupported(RcspCommand.Pause))
     assertTrue(OpenSwimProProfile.isSupported(RcspCommand.NextTrack))
     assertTrue(OpenSwimProProfile.isSupported(RcspCommand.PreviousTrack))
+    assertTrue(OpenSwimProProfile.isSupported(RcspCommand.SelectWorkingMode(WorkingMode.Bluetooth)))
+    assertTrue(OpenSwimProProfile.isSupported(RcspCommand.SetVolume(50u)))
+    assertTrue(
+      OpenSwimProProfile.isSupported(RcspCommand.SelectEqualizerPreset(EqualizerPreset.Standard))
+    )
+    assertTrue(
+      OpenSwimProProfile.isSupported(RcspCommand.SelectPlaybackOrder(PlaybackOrder.Normal))
+    )
   }
 
   private fun String.hex(): ByteArray = chunked(2).map { it.toInt(16).toByte() }.toByteArray()

@@ -28,10 +28,10 @@ settings. Those commands require a chipset- and firmware-verified `RcspCommandEn
 
 `OpenSwimProProfile` captures the observed FEF0 RFCOMM channel 10 endpoint. Its Shokz app sends
 an `A5 5A` vendor envelope rather than public `FE DC BA … EF` frames. The module reconstructs the
-captured Local Audio `QueryMediaState`, `Play`, `Pause`, `PreviousTrack`, and `NextTrack` requests
-byte-for-byte; `AndroidShokzOpenSwimTransport` sends them over a connected socket. Those controls
-should appear only in Local Audio mode. Volume, seek, mode selection, playlist selection, and
-track identifiers remain unsupported and will not be encoded.
+captured commands byte-for-byte; `AndroidShokzOpenSwimTransport` sends them over a connected
+socket. Its supported surface includes Local Audio transport, Bluetooth/MP3 mode selection, Local
+Audio volume, Standard/Vocal/Swimming EQ, and Local Audio playback order. Seek, playlist sync,
+and track identifiers remain unsupported and will not be encoded.
 
 ### Observed request/response shape
 
@@ -43,8 +43,8 @@ A5 5A | outerLength:u16le | type:u32le | payloadLength:u16le | payloadCrc:u16le 
 
 App requests use `type = 1`; headset replies use `type = 0x101`. Both payload checksums are
 CRC-16/Modbus, but the seed is operation-class-specific: captured media-control requests use
-`0x86F7`, the Local Audio state query uses `0x7649`, media acknowledgements use `0x7649`, and
-Local Audio state replies use `0xA492`.
+`0x86F7`, simple setters and the Local Audio state query use `0x7649`, EQ writes use `0x742D`,
+media acknowledgements use `0x7649`, and Local Audio state replies use `0xA492`.
 
 The four verified media requests have a 40-byte, little-endian word payload:
 
@@ -70,6 +70,11 @@ from [OpenSwimProProfile].
 | media action `7` | `PreviousTrack` | Shokz UI changed to the preceding track | Verified, supported |
 | media action `8` | `NextTrack` | Shokz UI changed to the following track | Verified, supported |
 | query `0x40` / reply `0x8040` | `QueryMediaState` | Cadence replay acknowledged by the headset | Verified, supported; response fields are not public yet |
+| setter `0x25`: `0`/`1` | `SelectWorkingMode(Bluetooth/LocalAudio)` | Cadence replay changed the official Shokz UI between Bluetooth and MP3 | Verified, supported |
+| setter `0x0A`: raw `0…16` | `SetVolume(0…100)` | Shokz app volume-slider capture; library maps percent to the device's 16 steps | Captured, supported |
+| EQ setter `0x0E`: `1`/`2`/`7` | `SelectEqualizerPreset(Standard/Vocal/Swimming)` | Shokz app action captures; Vocal replay acknowledged through Cadence | Verified, supported |
+| setter `0x26`: `0`/`1`/`2` | `SelectPlaybackOrder(Normal/Shuffle/Repeat)` | Shokz app action captures | Captured, supported |
+| pairing operations `0x10`/`0x11` | multipoint device-list / state mutation | Captured while toggling multipoint; values include paired-device identifiers | Observed only; unsafe to expose without a state API |
 | query `0x02` | device/firmware identity | Reply contains `SEALU_R_R_24_202520250815` | Observed; no semantic command yet |
 | queries `0x03`, `0x05`, `0x07`, `0x08`, `0x10`, `0x1c`, `0x1d`, `0x42` | startup capability/state probes | Replies are captured, but their values are unmapped | Observed only |
 | operations `0x41`, `0x42`, `0x46`, `0x47`, `0x49`, `0x4a` | Local Audio sync / filesystem workflow | Sync replies include directory and MP3 filename metadata | Observed only |
@@ -84,10 +89,9 @@ The `0x40` query uses the same tagged-word convention but a different request sh
 Its `0x8040` reply has a changing nested value. It is suitable as a liveness/state query, but it
 must not yet be shown as a track number, play state, duration, or position.
 
-Do not infer an operation from a matching packet shape. Before adding an `RcspCommand` to the
-profile, capture one isolated Shokz-app action, replay it with the app stopped, and confirm the
-headset-visible effect. In particular, do not emit guesses for `0x43`, software volume, seek,
-mode switching, or filesystem writes.
+Do not infer an operation from a matching packet shape. In particular, do not emit guesses for
+`0x43`, seeking, filesystem writes, or multipoint mutations. `0x43` has been acknowledged by the
+headset but its values do not map to stable playlist ordinals; it remains deliberately blocked.
 
 `AndroidRfcommTransport` is available for a connected public-RCSP `BluetoothSocket`; it performs
 framing only, and deliberately does not bypass Android Bluetooth permission or OEM authentication.
