@@ -6,11 +6,13 @@ import com.google.android.gms.wearable.PutDataMapRequest
 import com.google.android.gms.wearable.Wearable
 import com.google.android.gms.wearable.WearableListenerService
 import ee.schimke.cadence.bluetooth.BluetoothController
+import ee.schimke.cadence.bluetooth.EqualizerPreset as PhoneEqualizerPreset
 import ee.schimke.cadence.bluetooth.WorkingMode as PhoneWorkingMode
 import ee.schimke.cadence.sync.SyncOrchestrator
 import ee.schimke.cadence.sync.SyncProgress
 import ee.schimke.cadence.wearcontract.CompanionCommand
 import ee.schimke.cadence.wearcontract.WearCompanionProtocol
+import ee.schimke.rcsp.EqualizerPreset
 import ee.schimke.rcsp.RcspCommandId
 import ee.schimke.rcsp.WorkingMode
 import kotlinx.coroutines.CoroutineScope
@@ -38,7 +40,7 @@ class PhoneWearDataPublisher(
     bluetooth: ee.schimke.cadence.bluetooth.BluetoothState,
     sync: SyncProgress,
   ) {
-    val openSwim = bluetooth.connectedDevice?.takeIf { it.name.contains("OpenSwim Pro", true) }
+    val openSwim = bluetooth.connectedDevice?.takeIf { bluetooth.openSwimConnected }
     val localAudio = bluetooth.workingMode == PhoneWorkingMode.Mp3
     val request = PutDataMapRequest.create(WearCompanionProtocol.SnapshotPath)
     request.dataMap.apply {
@@ -63,15 +65,25 @@ class PhoneWearDataPublisher(
               RcspCommandId.PreviousTrack.name,
               RcspCommandId.NextTrack.name,
               RcspCommandId.SelectWorkingMode.name,
+              RcspCommandId.SetVolume.name,
+              RcspCommandId.SelectEqualizerPreset.name,
             )
           } else if (openSwim != null) {
-            listOf(RcspCommandId.SelectWorkingMode.name)
+            listOf(
+              RcspCommandId.SelectWorkingMode.name,
+              RcspCommandId.SelectEqualizerPreset.name,
+            )
           } else {
             emptyList()
           }
         ),
       )
-      putInt(WearCompanionProtocol.VolumePercentKey, bluetooth.volumePercent)
+      // In MP3 mode only a level the headset acknowledged is its volume; -1 reads as unknown.
+      putInt(
+        WearCompanionProtocol.VolumePercentKey,
+        if (openSwim != null && localAudio) bluetooth.headsetVolumePercent ?: -1
+        else bluetooth.volumePercent,
+      )
       putString(WearCompanionProtocol.SyncStateKey, sync.wearState)
       putString(WearCompanionProtocol.SyncDetailKey, sync.wearDetail)
       putInt(WearCompanionProtocol.SyncFilesCompletedKey, sync.filesCompleted)
@@ -105,10 +117,11 @@ class PhoneWearCommandService : WearableListenerService() {
             WorkingMode.Bluetooth -> controller.setWorkingMode(PhoneWorkingMode.Bluetooth)
             else -> Unit
           }
-        // These RCSP commands are not captured for OpenSwim Pro, so the bridge declines them.
-        is CompanionCommand.SelectEqualizerPreset,
-        is CompanionCommand.PlayLocalAudio,
-        is CompanionCommand.SetVolume -> Unit
+        is CompanionCommand.SetVolume -> controller.setVolume(command.percent)
+        is CompanionCommand.SelectEqualizerPreset ->
+          command.preset.toPhonePreset()?.let { controller.setEqualizer(it) }
+        // Playlist selection is not captured for OpenSwim Pro, so the bridge declines it.
+        is CompanionCommand.PlayLocalAudio -> Unit
       }
     }
   }
@@ -117,6 +130,15 @@ class PhoneWearCommandService : WearableListenerService() {
     val commandScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
   }
 }
+
+/** Only presets with a captured OpenSwim Pro value; others are declined. */
+private fun EqualizerPreset.toPhonePreset(): PhoneEqualizerPreset? =
+  when (this) {
+    EqualizerPreset.Standard -> PhoneEqualizerPreset.Standard
+    EqualizerPreset.Vocal -> PhoneEqualizerPreset.Vocal
+    EqualizerPreset.Swimming -> PhoneEqualizerPreset.Swimming
+    else -> null
+  }
 
 private val SyncProgress.wearState: String
   get() = if (lastError != null) "failed" else if (running) "running" else "idle"

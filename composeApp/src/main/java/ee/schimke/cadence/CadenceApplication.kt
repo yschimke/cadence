@@ -6,6 +6,7 @@ import ee.schimke.cadence.metro.AndroidAppGraph
 import ee.schimke.cadence.metro.AppGraphProvider
 import ee.schimke.cadence.metro.CadenceAppGraph
 import ee.schimke.cadence.wear.PhoneWearDataPublisher
+import ee.schimke.cadence.widgets.HeadphoneControlsWidget
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -28,6 +29,7 @@ class CadenceApplication : Application(), AppGraphProvider {
         syncOrchestrator = appGraph.syncOrchestrator,
       )
       .start()
+    HeadphoneControlsWidget.start(applicationContext, appGraph.bluetoothController)
     // Keep WorkManager schedules in sync with the auto_refresh flags on each
     // profile. When a profile is added, toggled or removed the periodic job
     // is enqueued, updated or cancelled accordingly.

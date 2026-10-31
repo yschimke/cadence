@@ -82,6 +82,8 @@ dependencies {
   implementation(project(":wearCompanionContract"))
   implementation(libs.kotlinx.coroutines.android)
   implementation(libs.play.services.wearable)
+  implementation(libs.rc.widget.launcher)
+  implementation(libs.compose.remote.tooling.preview)
   implementation(libs.androidx.activity.compose)
   implementation(libs.androidx.core.splashscreen)
   implementation(libs.androidx.lifecycle.viewmodel)
@@ -101,6 +103,8 @@ dependencies {
   implementation(libs.compose.ui.tooling.preview)
   implementation(libs.androidx.ui.text.google.fonts)
   implementation(libs.ktor.client.core) // io.ktor.http.Url, used by BookmarksScreen previews
+
+  testImplementation(libs.kotlin.test.junit)
 
   androidTestImplementation(libs.junit)
   androidTestImplementation(libs.androidx.test.junit)
