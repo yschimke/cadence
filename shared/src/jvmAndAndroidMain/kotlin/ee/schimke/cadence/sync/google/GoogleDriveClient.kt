@@ -1,15 +1,14 @@
 package ee.schimke.cadence.sync.google
 
-import java.net.URI
 import java.net.URLEncoder
-import java.net.http.HttpClient
-import java.net.http.HttpRequest
-import java.net.http.HttpResponse
 import java.nio.charset.StandardCharsets
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.Request
+import okhttp3.RequestBody.Companion.toRequestBody
 
 /**
  * Minimal Google Drive v3 client scoped to the hidden appDataFolder. Just enough to upload a
@@ -17,11 +16,12 @@ import kotlinx.serialization.json.Json
  *
  * [tokenProvider] returns a valid bearer token; it's called for every request and expected to
  * refresh itself when needed so we never retry on 401 here.
+ *
+ * OkHttp rather than java.net.http.HttpClient: Android doesn't ship the latter, so R8 blows up at
+ * minify time with "Missing class java.net.http.HttpClient" even though the JVM-side build compiles
+ * fine.
  */
-class GoogleDriveClient(
-  private val tokenProvider: suspend () -> String,
-  private val http: HttpClient = HttpClient.newHttpClient(),
-) {
+class GoogleDriveClient(private val tokenProvider: suspend () -> String) {
   private val json = Json { ignoreUnknownKeys = true }
 
   /** Replace or create [name] in the user's Drive appDataFolder with [content]. */
@@ -36,20 +36,15 @@ class GoogleDriveClient(
   suspend fun downloadByName(name: String): String? =
     withContext(Dispatchers.IO) {
       val existing = findByName(name) ?: return@withContext null
-      val response =
-        http.send(
-          HttpRequest.newBuilder(
-              URI.create("https://www.googleapis.com/drive/v3/files/$existing?alt=media")
-            )
-            .header("Authorization", "Bearer ${tokenProvider()}")
-            .GET()
-            .build(),
-          HttpResponse.BodyHandlers.ofString(),
-        )
-      check(response.statusCode() == 200) {
-        "Drive download failed (${response.statusCode()}): ${response.body()}"
-      }
-      response.body()
+      val request =
+        Request.Builder()
+          .url("https://www.googleapis.com/drive/v3/files/$existing?alt=media")
+          .header("Authorization", "Bearer ${tokenProvider()}")
+          .get()
+          .build()
+      val (code, text) = sharedHttp.newCall(request).executeAsText()
+      check(code == 200) { "Drive download failed ($code): $text" }
+      text
     }
 
   /** Returns the Drive file id for [name] in appDataFolder, or null if it doesn't exist. */
@@ -61,18 +56,11 @@ class GoogleDriveClient(
         "&fields=files(id,name)" +
         "&q=" +
         URLEncoder.encode(query, StandardCharsets.UTF_8)
-    val response =
-      http.send(
-        HttpRequest.newBuilder(URI.create(url))
-          .header("Authorization", "Bearer ${tokenProvider()}")
-          .GET()
-          .build(),
-        HttpResponse.BodyHandlers.ofString(),
-      )
-    check(response.statusCode() == 200) {
-      "Drive list failed (${response.statusCode()}): ${response.body()}"
-    }
-    return json.decodeFromString<ListResponse>(response.body()).files.firstOrNull()?.id
+    val request =
+      Request.Builder().url(url).header("Authorization", "Bearer ${tokenProvider()}").get().build()
+    val (code, text) = sharedHttp.newCall(request).executeAsText()
+    check(code == 200) { "Drive list failed ($code): $text" }
+    return json.decodeFromString<ListResponse>(text).files.firstOrNull()?.id
   }
 
   private suspend fun createNew(name: String, content: String) {
@@ -96,39 +84,27 @@ class GoogleDriveClient(
         .append(boundary)
         .append("--")
         .toString()
-    val response =
-      http.send(
-        HttpRequest.newBuilder(
-            URI.create(
-              "https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&spaces=appDataFolder"
-            )
-          )
-          .header("Authorization", "Bearer ${tokenProvider()}")
-          .header("Content-Type", "multipart/related; boundary=$boundary")
-          .POST(HttpRequest.BodyPublishers.ofString(body))
-          .build(),
-        HttpResponse.BodyHandlers.ofString(),
-      )
-    check(response.statusCode() in 200..299) {
-      "Drive upload failed (${response.statusCode()}): ${response.body()}"
-    }
+    val request =
+      Request.Builder()
+        .url(
+          "https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&spaces=appDataFolder"
+        )
+        .header("Authorization", "Bearer ${tokenProvider()}")
+        .post(body.toRequestBody("multipart/related; boundary=$boundary".toMediaType()))
+        .build()
+    val (code, text) = sharedHttp.newCall(request).executeAsText()
+    check(code in 200..299) { "Drive upload failed ($code): $text" }
   }
 
   private suspend fun replaceContent(fileId: String, content: String) {
-    val response =
-      http.send(
-        HttpRequest.newBuilder(
-            URI.create("https://www.googleapis.com/upload/drive/v3/files/$fileId?uploadType=media")
-          )
-          .header("Authorization", "Bearer ${tokenProvider()}")
-          .header("Content-Type", "application/json; charset=UTF-8")
-          .method("PATCH", HttpRequest.BodyPublishers.ofString(content))
-          .build(),
-        HttpResponse.BodyHandlers.ofString(),
-      )
-    check(response.statusCode() in 200..299) {
-      "Drive patch failed (${response.statusCode()}): ${response.body()}"
-    }
+    val request =
+      Request.Builder()
+        .url("https://www.googleapis.com/upload/drive/v3/files/$fileId?uploadType=media")
+        .header("Authorization", "Bearer ${tokenProvider()}")
+        .patch(content.toRequestBody(JSON_UTF8))
+        .build()
+    val (code, text) = sharedHttp.newCall(request).executeAsText()
+    check(code in 200..299) { "Drive patch failed ($code): $text" }
   }
 
   @Serializable private data class ListResponse(val files: List<DriveFile> = emptyList())

@@ -91,6 +91,16 @@ android {
   }
 }
 
+// AGP 9.5 defaults release-variant unit tests off, which breaks the compose-preview tooling
+// (Layoutlib packages Android XML resources via the unit-test APK). Re-enable them explicitly.
+// `enableUnitTest` lives on HasUnitTestBuilder; the cast keeps this compiling against AGP 9.4.x
+// (where the property is still implicit on ApplicationVariantBuilder) and 9.5+ (where it isn't).
+androidComponents {
+  beforeVariants(selector().withBuildType("release")) { variant ->
+    (variant as? com.android.build.api.variant.HasUnitTestBuilder)?.enableUnitTest = true
+  }
+}
+
 dependencies {
   if (firebaseEnabled) {
     implementation(platform(libs.firebase.bom))

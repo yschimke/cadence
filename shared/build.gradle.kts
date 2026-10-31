@@ -34,7 +34,12 @@ kotlin {
   sourceSets {
     val jvmAndAndroidMain by creating {
       dependsOn(commonMain.get())
-      dependencies { implementation(libs.androidx.datastore) }
+      dependencies {
+        implementation(libs.androidx.datastore)
+        // OkHttp drives the Google OAuth refresh + Drive v3 calls. Android ships neither
+        // java.net.http nor a sync HTTP client of its own, so one dep covers both platforms.
+        implementation(libs.okhttp)
+      }
     }
     androidMain.get().dependsOn(jvmAndAndroidMain)
     val desktopMain by getting {

@@ -5,9 +5,6 @@ import java.awt.Desktop
 import java.net.InetSocketAddress
 import java.net.URI
 import java.net.URLEncoder
-import java.net.http.HttpClient
-import java.net.http.HttpRequest
-import java.net.http.HttpResponse
 import java.nio.charset.StandardCharsets
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
@@ -19,6 +16,10 @@ import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeout
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody.Companion.toRequestBody
 
 /**
  * Desktop installed-app OAuth 2.0 flow with PKCE. Pops the browser at Google's consent screen,
@@ -29,7 +30,7 @@ import kotlinx.serialization.json.Json
  */
 class DesktopGoogleOAuthFlow(
   private val config: OAuthConfig,
-  private val http: HttpClient = HttpClient.newHttpClient(),
+  private val http: OkHttpClient = sharedHttp,
   private val timeout: Duration = 5.minutes,
 ) : GoogleOAuthFlow {
   private val json = Json { ignoreUnknownKeys = true }
@@ -48,7 +49,7 @@ class DesktopGoogleOAuthFlow(
         openBrowser(authorizationUrl(redirectUri, pkce.challenge))
         val code = withTimeout(timeout) { awaitCode() }
         val tokens = exchangeCode(code, redirectUri, pkce.verifier)
-        val email = fetchGoogleUserEmail(tokens.accessToken, http)
+        val email = fetchGoogleUserEmail(tokens.accessToken)
         GoogleAccount(
           email = email,
           refreshToken = tokens.refreshToken,
@@ -61,7 +62,7 @@ class DesktopGoogleOAuthFlow(
     }
 
   override suspend fun refresh(account: GoogleAccount): GoogleAccount =
-    refreshGoogleAccessToken(config, account, http)
+    refreshGoogleAccessToken(config, account)
 
   private fun authorizationUrl(redirectUri: String, challenge: String): String {
     val params =
@@ -135,18 +136,14 @@ class DesktopGoogleOAuthFlow(
         "grant_type" to "authorization_code",
         "code_verifier" to verifier,
       )
-    val response =
-      http.send(
-        HttpRequest.newBuilder(URI.create("https://oauth2.googleapis.com/token"))
-          .header("Content-Type", "application/x-www-form-urlencoded")
-          .POST(HttpRequest.BodyPublishers.ofString(body))
-          .build(),
-        HttpResponse.BodyHandlers.ofString(),
-      )
-    check(response.statusCode() == 200) {
-      "Token exchange failed (${response.statusCode()}): ${response.body()}"
-    }
-    return json.decodeFromString(response.body())
+    val request =
+      Request.Builder()
+        .url("https://oauth2.googleapis.com/token")
+        .post(body.toRequestBody("application/x-www-form-urlencoded".toMediaType()))
+        .build()
+    val (status, text) = http.newCall(request).executeAsText()
+    check(status == 200) { "Token exchange failed ($status): $text" }
+    return json.decodeFromString(text)
   }
 
   private fun openBrowser(url: String) {
