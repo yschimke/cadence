@@ -18,6 +18,7 @@ Auto-generated from `main`. Browse inline or compare against PR branches.
 | `HeadphoneWidgetMp35x1Preview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HeadphoneWidgetMp35x1Preview_Headphone_widget_MP3_5_1-32dd6d60.png" width="150" /> |
 | `HeadphoneWidgetMp35x3Preview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HeadphoneWidgetMp35x3Preview_Headphone_widget_MP3_5_3-c18f130c.png" width="150" /> |
 | `HeadphoneWidgetMp3Preview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HeadphoneWidgetMp3Preview_Headphone_widget_MP3-d6a1c3d9.png" width="150" /> |
+| `HeadphoneWidgetPlayingAnimatedPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HeadphoneWidgetPlayingAnimatedPreview_Headphone_widget_playing_animated-157e750e.gif" width="150" /> |
 | `AddPodcastsPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/AddPodcastsPreview_Add_podcasts-e09ca4b7.png" width="150" /> |
 | `PodcastImportedPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/PodcastImportedPreview_Podcast_sync_imported-8403888a.png" width="150" /> |
 | `PodcastPocketCastsPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/PodcastPocketCastsPreview_Add_podcasts_Pocket_Casts_signed_in-cd7341fe.png" width="150" /> |
@@ -53,6 +54,23 @@ Auto-generated from `main`. Browse inline or compare against PR branches.
 | `SyncModeReadyPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/SyncModeReadyPreview_Sync_ready-ce4e5f0a.png" width="150" /> |
 | `SyncModeSyncingPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/SyncModeSyncingPreview_Sync_syncing-34770d66.png" width="150" /> |
 
+## swimUi
+
+| Preview | Image |
+|---------|-------|
+| `SwimLaneFlipTurnAnimatedPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/swimUi/SwimLaneFlipTurnAnimatedPreview_Swim_lane_flip_turn_animated-db9e413a.gif" width="150" /> |
+| `SwimLaneLapsAnimatedPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/swimUi/SwimLaneLapsAnimatedPreview_Swim_lane_laps_animated-726ab47a.gif" width="150" /> |
+| `SwimmingPoolAnimatedPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/swimUi/SwimmingPoolAnimatedPreview_Swimming_pool_animated-d70a85a6.gif" width="150" /> |
+| `WaterButtonAnimatedPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/swimUi/WaterButtonAnimatedPreview_Water_button_animated-55a32d9d.gif" width="150" /> |
+| `WaterRoundButtonAnimatedPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/swimUi/WaterRoundButtonAnimatedPreview_Water_round_button_animated-56625fee.gif" width="150" /> |
+| `SwimLaneEndlessPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/swimUi/SwimLaneEndlessPreview_Swim_lane_endless_laps-3bd8ff30.png" width="150" /> |
+| `SwimLaneFlipTurnLauncherPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/swimUi/SwimLaneFlipTurnLauncherPreview_Swim_lane_flip_turn_launcher-ca909f07.png" width="150" /> |
+| `SwimLaneFlipTurnPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/swimUi/SwimLaneFlipTurnPreview_Swim_lane_flip_turn-31a2260f.png" width="150" /> |
+| `SwimLaneLapsPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/swimUi/SwimLaneLapsPreview_Swim_lane_odd_and_even_laps-35df6d6f.png" width="150" /> |
+| `SwimmingPoolPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/swimUi/SwimmingPoolPreview_Swimming_pool-28ed1567.png" width="150" /> |
+| `WaterButtonsLauncherPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/swimUi/WaterButtonsLauncherPreview_Water_buttons_launcher-5df3807f.png" width="150" /> |
+| `WaterButtonsWearPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/swimUi/WaterButtonsWearPreview_Water_buttons_Wear-8eddeafe.png" width="150" /> |
+
 ## wearApp
 
 | Preview | Image |
@@ -84,6 +102,10 @@ Auto-generated from `main`. Browse inline or compare against PR branches.
 | `LocalAudioPlaylistWearWidgetSquirclePreview · parameter 1` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/wearApp/LocalAudioPlaylistWearWidgetSquirclePreview_Playlist_squircle-fe5fe95f_PARAM_1.png" width="150" /> |
 | `LocalAudioPlaylistWearWidgetSquirclePreview · parameter 2` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/wearApp/LocalAudioPlaylistWearWidgetSquirclePreview_Playlist_squircle-fe5fe95f_PARAM_2.png" width="150" /> |
 | `LocalAudioPlaylistWearWidgetSquirclePreview · parameter 3` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/wearApp/LocalAudioPlaylistWearWidgetSquirclePreview_Playlist_squircle-fe5fe95f_PARAM_3.png" width="150" /> |
+| `ModeAndControlsWearWidgetAnimatedPreview · parameter 0` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/wearApp/ModeAndControlsWearWidgetAnimatedPreview_Now_playing_animated-da6d1cec_PARAM_0.gif" width="150" /> |
+| `ModeAndControlsWearWidgetAnimatedPreview · parameter 1` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/wearApp/ModeAndControlsWearWidgetAnimatedPreview_Now_playing_animated-da6d1cec_PARAM_1.gif" width="150" /> |
+| `ModeAndControlsWearWidgetAnimatedPreview · parameter 2` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/wearApp/ModeAndControlsWearWidgetAnimatedPreview_Now_playing_animated-da6d1cec_PARAM_2.gif" width="150" /> |
+| `ModeAndControlsWearWidgetAnimatedPreview · parameter 3` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/wearApp/ModeAndControlsWearWidgetAnimatedPreview_Now_playing_animated-da6d1cec_PARAM_3.gif" width="150" /> |
 | `ModeAndControlsWearWidgetRectangularPreview · parameter 0` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/wearApp/ModeAndControlsWearWidgetRectangularPreview_Now_playing_rectangular-71381054_PARAM_0.png" width="150" /> |
 | `ModeAndControlsWearWidgetRectangularPreview · parameter 1` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/wearApp/ModeAndControlsWearWidgetRectangularPreview_Now_playing_rectangular-71381054_PARAM_1.png" width="150" /> |
 | `ModeAndControlsWearWidgetRoundPreview · parameter 0` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/wearApp/ModeAndControlsWearWidgetRoundPreview_Now_playing_round_Samsung-4f203db6_PARAM_0.png" width="150" /> |
