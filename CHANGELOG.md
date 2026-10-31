@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.1.9](https://github.com/yschimke/cadence/compare/v0.1.8...v0.1.9) (2026-10-31)
+
+
+### Bug Fixes
+
+* **build:** swap java.net.http for OkHttp in Google sync + enable release unit tests ([#457](https://github.com/yschimke/cadence/issues/457)) ([8012f1f](https://github.com/yschimke/cadence/commit/8012f1f0d9678e0cab25d793492bac557bcf6218))
+* **deps:** update dependency com.squareup.okhttp3:okhttp to v5.5.1 ([#458](https://github.com/yschimke/cadence/issues/458)) ([34204f9](https://github.com/yschimke/cadence/commit/34204f9cb5fda066735123ddd0d9db9d4e572df1))
+* **widgets:** draw headphone widget icons in a canvas; Remote Compose on Android 16 again ([#455](https://github.com/yschimke/cadence/issues/455)) ([cc2a859](https://github.com/yschimke/cadence/commit/cc2a8592284f0aa3d02c2501f6d78aee52229550))
+
 ## [0.1.8](https://github.com/yschimke/cadence/compare/v0.1.7...v0.1.8) (2026-10-31)
 
 
