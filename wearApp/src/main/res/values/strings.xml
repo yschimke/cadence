@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Cadence Companion</string>
+    <string name="mode_controls_tile_name">Headphone controls</string>
+    <string name="mode_controls_tile_description">Verified headphone mode and available controls</string>
+    <string name="local_audio_tile_name">Local audio</string>
+    <string name="local_audio_tile_description">Headphone local-audio playlist status</string>
+    <string name="sync_status_tile_name">Sync status</string>
+    <string name="sync_status_tile_description">Cadence sync status from the paired phone</string>
+</resources>

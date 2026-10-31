@@ -36,3 +36,6 @@ dependencyResolutionManagement {
 include(":composeApp")
 
 include(":shared", ":desktopApp", ":rcsp")
+
+// Wear owns presentation and Tiles; :rcsp supplies verified device facts and capability checks.
+include(":wearApp")
