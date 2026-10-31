@@ -50,7 +50,7 @@ jobs:
         run: echo "RENDER_STARTED=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_ENV"
 
       - id: apply
-        uses: yschimke/compose-ai-tools/.github/actions/apply@v2.77.0
+        uses: yschimke/compose-ai-tools/.github/actions/apply@v2.78.0
         with:
           # Keep CLI and plugin aligned: 2.64.3 ships the 2.64.2 plugin, but
           # the install action still probes for a plugin matching the CLI version.
