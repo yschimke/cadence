@@ -1,28 +1,6 @@
 {
   "entries": [
     {
-      "annotatedBasename": "ConnectedWearCompanionPreview_Devices_Large_Round-4b2d8b90.a11y.png",
-      "cleanBasename": "ConnectedWearCompanionPreview_Devices_Large_Round-4b2d8b90.png",
-      "findings": [],
-      "functionName": "ConnectedWearCompanionPreview",
-      "module": "wearApp",
-      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.ConnectedWearCompanionPreview_Devices - Large Round",
-      "rendersDir": "wearApp",
-      "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/WearCompanionApp.kt",
-      "variant": "wearos_large_round"
-    },
-    {
-      "annotatedBasename": "LocalAudioPlaylistPreview_Devices_Large_Round-a766dc27.a11y.png",
-      "cleanBasename": "LocalAudioPlaylistPreview_Devices_Large_Round-a766dc27.png",
-      "findings": [],
-      "functionName": "LocalAudioPlaylistPreview",
-      "module": "wearApp",
-      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.LocalAudioPlaylistPreview_Devices - Large Round",
-      "rendersDir": "wearApp",
-      "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/WearCompanionApp.kt",
-      "variant": "wearos_large_round"
-    },
-    {
       "annotatedBasename": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetPickerPreview_MP3 playlist \u00b7 picker asset.a11y.png",
       "cleanBasename": "",
       "findings": [
@@ -137,5 +115,71 @@
       "variant": ""
     }
   ],
-  "scope": "changed-previews"
+  "scope": "changed-previews",
+  "uncheckedPreviews": [
+    {
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.ConnectedWearCompanionPreview_Devices - Large Round"
+    },
+    {
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.ConnectedWearCompanionPreview_Devices - Small Round"
+    },
+    {
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.ConnectedWearCompanionPreview_Fonts - Large"
+    },
+    {
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.ConnectedWearCompanionPreview_Fonts - Larger"
+    },
+    {
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.ConnectedWearCompanionPreview_Fonts - Largest"
+    },
+    {
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.ConnectedWearCompanionPreview_Fonts - Medium"
+    },
+    {
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.ConnectedWearCompanionPreview_Fonts - Normal"
+    },
+    {
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.ConnectedWearCompanionPreview_Fonts - Small"
+    },
+    {
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.LocalAudioPlaylistPreview_Devices - Large Round"
+    },
+    {
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.LocalAudioPlaylistPreview_Devices - Small Round"
+    },
+    {
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.LocalAudioPlaylistPreview_Fonts - Large"
+    },
+    {
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.LocalAudioPlaylistPreview_Fonts - Larger"
+    },
+    {
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.LocalAudioPlaylistPreview_Fonts - Largest"
+    },
+    {
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.LocalAudioPlaylistPreview_Fonts - Medium"
+    },
+    {
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.LocalAudioPlaylistPreview_Fonts - Normal"
+    },
+    {
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.LocalAudioPlaylistPreview_Fonts - Small"
+    }
+  ]
 }

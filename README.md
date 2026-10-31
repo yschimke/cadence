@@ -1,22 +1,10 @@
 # Accessibility Report
 
-_Auto-generated from `compose-preview/a11y/pr`. 8 preview(s) across 1 module(s) · 6 error(s) · 0 warning(s) · 0 info._
+_Auto-generated from `compose-preview/a11y/pr`. 6 preview(s) across 1 module(s) · 6 error(s) · 0 warning(s) · 0 info._
 
 Browse inline; image URLs are pinned to the commit SHA on the baseline branch so links keep resolving after merge.
 
 ## wearApp
-
-### `ConnectedWearCompanionPreview` · `wearos_large_round`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/wearApp/ConnectedWearCompanionPreview_Devices_Large_Round-4b2d8b90.a11y.png" width="400" />
-
-_No findings._
-
-### `LocalAudioPlaylistPreview` · `wearos_large_round`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/wearApp/LocalAudioPlaylistPreview_Devices_Large_Round-a766dc27.a11y.png" width="400" />
-
-_No findings._
 
 ### `LocalAudioPlaylistWearWidgetPickerPreview`
 
