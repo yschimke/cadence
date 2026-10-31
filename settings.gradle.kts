@@ -42,3 +42,6 @@ include(":wearCompanionContract")
 
 // Wear owns presentation and Tiles; :rcsp supplies verified device facts and capability checks.
 include(":wearApp")
+
+// Swimming-themed Remote Compose drawing shared by the launcher and Wear widgets.
+include(":swimUi")
