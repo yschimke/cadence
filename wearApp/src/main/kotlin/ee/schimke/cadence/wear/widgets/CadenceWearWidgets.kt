@@ -52,6 +52,8 @@ import ee.schimke.cadence.wear.HeadsetSnapshot
 import ee.schimke.cadence.wear.LocalAudioTrack
 import ee.schimke.cadence.wear.SyncedPodcastTrack
 import ee.schimke.cadence.wear.WearCompanionServices
+import ee.schimke.cadence.wear.preview.GalaxyWatch44Preview
+import ee.schimke.cadence.wear.preview.PixelWatch45Preview
 import ee.schimke.rcsp.RcspCommand
 import ee.schimke.rcsp.WorkingMode
 import kotlinx.coroutines.CoroutineScope
@@ -102,7 +104,7 @@ class SyncStatusWearWidget : GlanceWearWidget() {
     WearWidgetDocument(background = WearWidgetBrush.color(WidgetColors.background.rc)) {
       RemoteMaterialTheme {
         SyncStatusWidgetContent(
-          sync = WearCompanionServices.gateway(context).snapshot.value.sync,
+          snapshot = WearCompanionServices.gateway(context).snapshot.value,
           compact = params.containerType == ContainerInfo.CONTAINER_TYPE_SMALL,
         )
       }
@@ -118,6 +120,10 @@ class SyncStatusWearWidgetService : GlanceWearWidgetService() {
 @RemoteComposable
 private fun ModeAndControlsWidgetContent(snapshot: HeadsetSnapshot, compact: Boolean) {
   val playing = snapshot.media?.playing == true
+  // Both candidates are source-to-storage records. Do not substitute an MP3 filename or Android
+  // media-session metadata here: neither identifies the episode synced onto OpenSwim Pro.
+  val currentTrack =
+    snapshot.media?.podcast ?: snapshot.localAudio.firstOrNull { it.playing }?.podcast
   RemoteColumn(
     modifier = RemoteModifier.fillMaxSize(),
     verticalArrangement = RemoteArrangement.SpaceBetween,
@@ -129,10 +135,18 @@ private fun ModeAndControlsWidgetContent(snapshot: HeadsetSnapshot, compact: Boo
       maxLines = 1,
       overflow = TextOverflow.Ellipsis,
     )
+    RemoteText(
+      text = (currentTrack?.episodeTitle ?: "No current track reported").rs,
+      style =
+        if (compact) RemoteMaterialTheme.typography.bodySmall
+        else RemoteMaterialTheme.typography.bodyMedium,
+      maxLines = 1,
+      overflow = TextOverflow.Ellipsis,
+    )
     if (!compact) {
       RemoteText(
-        text = snapshot.connection.widgetStatus.rs,
-        style = RemoteMaterialTheme.typography.bodySmall,
+        text = (currentTrack?.podcastTitle ?: snapshot.connection.widgetStatus).rs,
+        style = RemoteMaterialTheme.typography.bodyExtraSmall,
         color = WidgetColors.supporting.rc,
         maxLines = 1,
         overflow = TextOverflow.Ellipsis,
@@ -210,7 +224,8 @@ private fun LocalAudioPlaylistWidgetContent(snapshot: HeadsetSnapshot, itemLimit
 
 @Composable
 @RemoteComposable
-private fun SyncStatusWidgetContent(sync: CompanionSyncStatus, compact: Boolean) {
+private fun SyncStatusWidgetContent(snapshot: HeadsetSnapshot, compact: Boolean) {
+  val sync = snapshot.sync
   RemoteColumn(
     modifier = RemoteModifier.fillMaxSize(),
     verticalArrangement = RemoteArrangement.SpaceBetween,
@@ -224,9 +239,9 @@ private fun SyncStatusWidgetContent(sync: CompanionSyncStatus, compact: Boolean)
       maxLines = if (compact) 2 else 1,
       overflow = TextOverflow.Ellipsis,
     )
-    if (!compact) {
+    if (sync is CompanionSyncStatus.Running && !compact) {
       RemoteText(
-        text = "Cadence on your phone".rs,
+        text = (sync.progressLabel ?: snapshot.connection.widgetStatus).rs,
         style = RemoteMaterialTheme.typography.bodyExtraSmall,
         color = WidgetColors.supporting.rc,
         maxLines = 1,
@@ -332,7 +347,8 @@ private val CompanionSyncStatus.widgetLabel: String
       is CompanionSyncStatus.Failed -> "Sync failed: $message"
     }
 
-@Preview(name = "Mode controls · round")
+@PixelWatch45Preview
+@GalaxyWatch44Preview
 @Composable
 fun ModeAndControlsWearWidgetPreview(
   @PreviewParameter(RoundAllWidgetPreviewParams::class) params: WearWidgetParams
@@ -347,7 +363,8 @@ fun ModeAndControlsWearWidgetPreview(
   }
 }
 
-@Preview(name = "MP3 playlist · round")
+@PixelWatch45Preview
+@GalaxyWatch44Preview
 @Composable
 fun LocalAudioPlaylistWearWidgetPreview(
   @PreviewParameter(RoundAllWidgetPreviewParams::class) params: WearWidgetParams
@@ -362,7 +379,8 @@ fun LocalAudioPlaylistWearWidgetPreview(
   }
 }
 
-@Preview(name = "Sync status · round")
+@PixelWatch45Preview
+@GalaxyWatch44Preview
 @Composable
 fun SyncStatusWearWidgetPreview(
   @PreviewParameter(RoundAllWidgetPreviewParams::class) params: WearWidgetParams
@@ -370,7 +388,7 @@ fun SyncStatusWearWidgetPreview(
   WearWidgetPreview(params, background = WearWidgetBrush.color(WidgetColors.background.rc)) {
     RemoteMaterialTheme {
       SyncStatusWidgetContent(
-        CompanionSyncStatus.Running("Morning Swim"),
+        previewSnapshot,
         params.containerType == ContainerInfo.CONTAINER_TYPE_SMALL,
       )
     }
@@ -415,7 +433,7 @@ fun SyncStatusWearWidgetPickerPreview(
   WearWidgetPreview(params, background = WearWidgetBrush.color(WidgetColors.background.rc)) {
     RemoteMaterialTheme {
       SyncStatusWidgetContent(
-        CompanionSyncStatus.Running("Morning Swim"),
+        previewSnapshot,
         params.containerType == ContainerInfo.CONTAINER_TYPE_SMALL,
       )
     }
@@ -461,5 +479,5 @@ private val previewSnapshot =
           playing = false,
         ),
       ),
-    sync = CompanionSyncStatus.Running("Morning Swim"),
+    sync = CompanionSyncStatus.Running("Morning Swim", filesCompleted = 2, filesTotal = 4),
   )

@@ -14,7 +14,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.wear.compose.foundation.lazy.TransformingLazyColumn
 import androidx.wear.compose.foundation.lazy.items
 import androidx.wear.compose.foundation.lazy.rememberTransformingLazyColumnState
@@ -31,6 +30,8 @@ import androidx.wear.compose.material3.SurfaceTransformation
 import androidx.wear.compose.material3.Text
 import androidx.wear.compose.material3.lazy.rememberTransformationSpec
 import androidx.wear.compose.material3.lazy.transformedHeight
+import androidx.wear.compose.ui.tooling.preview.WearPreviewDevices
+import androidx.wear.compose.ui.tooling.preview.WearPreviewFontScales
 import com.google.android.horologist.annotations.ExperimentalHorologistApi
 import com.google.android.horologist.media.ui.material3.components.MediaControlButtons
 import com.google.android.horologist.media.ui.material3.screens.player.PlayerScreen
@@ -361,8 +362,8 @@ private val WorkingMode.label: String
       WorkingMode.Unknown -> "Unknown"
     }
 
-@Preview(device = "id:wearos_small_round", showBackground = true)
-@Preview(device = "id:wearos_small_round", fontScale = 1.3f, showBackground = true)
+@WearPreviewDevices
+@WearPreviewFontScales
 @Composable
 private fun ConnectedWearCompanionPreview() {
   MaterialTheme {
@@ -402,13 +403,8 @@ private fun ConnectedWearCompanionPreview() {
   }
 }
 
-@Preview(name = "MP3 playlist", device = "id:wearos_small_round", showBackground = true)
-@Preview(
-  name = "MP3 playlist large text",
-  device = "id:wearos_small_round",
-  fontScale = 1.3f,
-  showBackground = true,
-)
+@WearPreviewDevices
+@WearPreviewFontScales
 @Composable
 private fun LocalAudioPlaylistPreview() {
   MaterialTheme {

@@ -177,7 +177,29 @@ sealed interface CompanionSyncStatus {
 
   data object Idle : CompanionSyncStatus
 
-  data class Running(val sourceName: String?) : CompanionSyncStatus
+  data class Running(
+    val sourceName: String?,
+    val filesCompleted: Int = 0,
+    val filesTotal: Int = 0,
+    val filesSkipped: Int = 0,
+  ) : CompanionSyncStatus {
+    init {
+      require(filesCompleted >= 0 && filesTotal >= 0 && filesSkipped >= 0)
+      require(filesCompleted <= filesTotal || filesTotal == 0)
+    }
+
+    /** Status-only transfer facts: filenames are deliberately not podcast display metadata. */
+    val progressLabel: String?
+      get() =
+        filesTotal
+          .takeIf { it > 0 }
+          ?.let { total ->
+            buildString {
+              append("$filesCompleted of $total files")
+              if (filesSkipped > 0) append(" · $filesSkipped unchanged")
+            }
+          }
+  }
 
   data class Complete(val detail: String) : CompanionSyncStatus
 

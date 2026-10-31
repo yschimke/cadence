@@ -24,6 +24,9 @@ object WearCompanionProtocol {
   const val VolumePercentKey = "volume_percent"
   const val SyncStateKey = "sync_state"
   const val SyncDetailKey = "sync_detail"
+  const val SyncFilesCompletedKey = "sync_files_completed"
+  const val SyncFilesTotalKey = "sync_files_total"
+  const val SyncFilesSkippedKey = "sync_files_skipped"
 
   const val CommandKey = "command"
   const val CommandValueKey = "command_value"

@@ -71,6 +71,9 @@ class PhoneWearDataPublisher(
       putInt(WearCompanionProtocol.VolumePercentKey, bluetooth.volumePercent)
       putString(WearCompanionProtocol.SyncStateKey, sync.wearState)
       putString(WearCompanionProtocol.SyncDetailKey, sync.wearDetail)
+      putInt(WearCompanionProtocol.SyncFilesCompletedKey, sync.filesCompleted)
+      putInt(WearCompanionProtocol.SyncFilesTotalKey, sync.filesTotal)
+      putInt(WearCompanionProtocol.SyncFilesSkippedKey, sync.filesSkipped)
     }
     Wearable.getDataClient(context).putDataItem(request.asPutDataRequest().setUrgent())
   }

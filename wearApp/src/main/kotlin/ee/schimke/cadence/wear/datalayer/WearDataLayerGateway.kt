@@ -126,7 +126,13 @@ private fun HeadsetAction.toCompanionCommand(): CompanionCommand? =
 private fun com.google.android.gms.wearable.DataMap.toSyncStatus(): CompanionSyncStatus =
   when (getString(WearCompanionProtocol.SyncStateKey)) {
     "idle" -> CompanionSyncStatus.Idle
-    "running" -> CompanionSyncStatus.Running(getString(WearCompanionProtocol.SyncDetailKey))
+    "running" ->
+      CompanionSyncStatus.Running(
+        sourceName = getString(WearCompanionProtocol.SyncDetailKey),
+        filesCompleted = getInt(WearCompanionProtocol.SyncFilesCompletedKey).coerceAtLeast(0),
+        filesTotal = getInt(WearCompanionProtocol.SyncFilesTotalKey).coerceAtLeast(0),
+        filesSkipped = getInt(WearCompanionProtocol.SyncFilesSkippedKey).coerceAtLeast(0),
+      )
     "failed" ->
       CompanionSyncStatus.Failed(
         getString(WearCompanionProtocol.SyncDetailKey) ?: "Unknown sync error"
