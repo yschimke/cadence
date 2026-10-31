@@ -3,11 +3,19 @@
   "catalog": "cadence-mobile",
   "platform": "mobile",
   "version": 1,
-  "about": "Rules the Preview Audit workflow asks of the phone, tablet and desktop previews: the shared compose-ui pack, pinned. Add app-specific rules under `rules`.",
+  "about": "Rules the Preview Audit workflow and local reviews ask of the phone, tablet and desktop previews: the shared compose-ui pack, plus remote-compose and launcher-widgets for the Remote Compose home-screen widgets (their rules only apply to widget-surface previews). Pinned by tag and sha256. Add app-specific rules under `rules`.",
   "includes": [
     {
-      "url": "https://raw.githubusercontent.com/yschimke/compose-ai-tools/v2.74.1/guidelines/packs/compose-ui.guidelines.json",
+      "url": "https://raw.githubusercontent.com/yschimke/compose-ai-tools/v2.79.1/guidelines/packs/compose-ui.guidelines.json",
       "sha256": "f8a9ba061f1b8bb84c0246818a4b2e926aa72c8529bea0efef7b7cbe40f34496"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/yschimke/compose-ai-tools/v2.79.1/guidelines/packs/remote-compose.guidelines.json",
+      "sha256": "49902a9ed67dce054544785730d1e58dc389d30de9086aaecd980f8c09a88527"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/yschimke/compose-ai-tools/v2.79.1/guidelines/packs/launcher-widgets.guidelines.json",
+      "sha256": "434bc9e33d588f61a3cca043d02f2bd211f36efea6d621dccf00c268b67272ff"
     }
   ],
   "rules": []
