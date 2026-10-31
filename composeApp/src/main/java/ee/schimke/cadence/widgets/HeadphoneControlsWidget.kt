@@ -3,14 +3,19 @@ package ee.schimke.cadence.widgets
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
+import android.content.ComponentCallbacks
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
+import android.util.SizeF
 import android.view.View
 import android.widget.RemoteViews
 import androidx.annotation.RequiresApi
+import androidx.compose.material3.dynamicDarkColorScheme
+import androidx.compose.material3.dynamicLightColorScheme
 import ee.schimke.cadence.R
 import ee.schimke.cadence.bluetooth.BluetoothController
 import ee.schimke.cadence.bluetooth.WorkingMode
@@ -100,6 +105,15 @@ class HeadphoneControlsWidget : AppWidgetProvider() {
     /** Keeps every placed widget in step with the controller for the life of the process. */
     fun start(context: Context, controller: BluetoothController) {
       val appContext = context.applicationContext
+      // Captured documents hold resolved colours: recapture when light/dark or the wallpaper
+      // palette changes so the widget keeps following the system theme.
+      appContext.registerComponentCallbacks(
+        object : ComponentCallbacks {
+          override fun onConfigurationChanged(newConfig: Configuration) = updateAll(appContext)
+
+          @Deprecated("Deprecated in Java") override fun onLowMemory() = Unit
+        }
+      )
       scope.launch {
         controller.state.map(HeadphoneWidgetState::from).distinctUntilChanged().collect {
           latest = it
@@ -113,6 +127,16 @@ class HeadphoneControlsWidget : AppWidgetProvider() {
       val ids = manager.getAppWidgetIds(ComponentName(context, HeadphoneControlsWidget::class.java))
       if (ids.isEmpty()) return
       scope.launch { render(context, manager, ids) }
+    }
+
+    /** The system's dynamic scheme for the current light or dark mode. */
+    private fun widgetColors(context: Context): WidgetColors {
+      val dark =
+        context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK ==
+          Configuration.UI_MODE_NIGHT_YES
+      return WidgetColors.from(
+        if (dark) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+      )
     }
 
     private fun controller(context: Context): BluetoothController? =
@@ -146,7 +170,8 @@ class HeadphoneControlsWidget : AppWidgetProvider() {
         captureLauncherWidget(context, slot) {
           HeadphoneControlsWidgetContent(
             state = state,
-            compact = slot.heightDp < CompactHeightDp,
+            layout = HeadphoneWidgetLayout.of(state, slot.widthDp, slot.heightDp),
+            colors = widgetColors(context),
             onOpen = rcWidgetHostAction(name = OPEN_APP, payload = OPEN_APP),
             onAction = { action ->
               rcWidgetHostAction(name = action.wireName, payload = action.wireName)
@@ -169,15 +194,42 @@ class HeadphoneControlsWidget : AppWidgetProvider() {
       return RcLauncherWidgets.remoteViews(capture.bytes, taps)
     }
 
-    private fun legacyViews(context: Context, id: Int, state: HeadphoneWidgetState): RemoteViews {
-      val views = RemoteViews(context.packageName, R.layout.headphone_controls_widget)
-      views.setTextViewText(R.id.headphone_widget_headline, state.headline)
-      views.setTextViewText(R.id.headphone_widget_now_playing, state.nowPlaying)
-      views.setTextViewText(R.id.headphone_widget_settings, state.settingsLine.orEmpty())
-      views.setViewVisibility(
-        R.id.headphone_widget_settings,
-        if (state.settingsLine == null) View.GONE else View.VISIBLE,
+    /**
+     * Pre-Android 16 launchers: one `RemoteViews` per size step, and the launcher shows the largest
+     * that fits the widget's current size, so the same [HeadphoneWidgetLayout] tiers apply.
+     */
+    private fun legacyViews(context: Context, id: Int, state: HeadphoneWidgetState): RemoteViews =
+      RemoteViews(
+        LegacyWidthsDp.flatMap { width ->
+            LegacyHeightsDp.map { height ->
+              SizeF(width.toFloat(), height.toFloat()) to
+                legacyViews(context, id, state, HeadphoneWidgetLayout.of(state, width, height))
+            }
+          }
+          .toMap()
       )
+
+    private fun legacyViews(
+      context: Context,
+      id: Int,
+      state: HeadphoneWidgetState,
+      layout: HeadphoneWidgetLayout,
+    ): RemoteViews {
+      val views =
+        RemoteViews(
+          context.packageName,
+          if (layout.singleRow) R.layout.headphone_controls_widget_row
+          else R.layout.headphone_controls_widget,
+        )
+      views.setTextViewText(
+        R.id.headphone_widget_headline,
+        if (layout.shortTitle) state.shortTitle else state.title,
+      )
+      views.setViewVisibility(R.id.headphone_widget_header, layout.showTitle.visibility)
+      views.setTextViewText(R.id.headphone_widget_now_playing, state.detail.orEmpty())
+      views.setViewVisibility(R.id.headphone_widget_now_playing, layout.showDetail.visibility)
+      views.setTextViewText(R.id.headphone_widget_settings, state.extra.orEmpty())
+      views.setViewVisibility(R.id.headphone_widget_settings, layout.showExtra.visibility)
       launchIntent(context)?.let {
         views.setOnClickPendingIntent(
           R.id.headphone_widget_header,
@@ -198,9 +250,10 @@ class HeadphoneControlsWidget : AppWidgetProvider() {
           HeadphoneWidgetAction.SwitchToMp3 to R.id.headphone_widget_mode_mp3,
           HeadphoneWidgetAction.SwitchToBluetooth to R.id.headphone_widget_mode_bluetooth,
         )
-      val shown = state.transport + listOfNotNull(state.modeSwitch)
+      val shown =
+        layout.transport + listOfNotNull(state.modeSwitch?.takeIf { layout.showModeSwitch })
       buttons.forEach { (action, viewId) ->
-        views.setViewVisibility(viewId, if (action in shown) View.VISIBLE else View.GONE)
+        views.setViewVisibility(viewId, (action in shown).visibility)
         views.setOnClickPendingIntent(
           viewId,
           broadcast(context, id, LegacyActionIdBase + action.ordinal, action.wireName),
@@ -208,6 +261,9 @@ class HeadphoneControlsWidget : AppWidgetProvider() {
       }
       return views
     }
+
+    private val Boolean.visibility: Int
+      get() = if (this) View.VISIBLE else View.GONE
 
     private fun broadcast(context: Context, widgetId: Int, actionId: Int, payload: String) =
       RcLauncherWidgets.actionBroadcast(
@@ -221,8 +277,9 @@ class HeadphoneControlsWidget : AppWidgetProvider() {
     private fun launchIntent(context: Context): Intent? =
       context.packageManager.getLaunchIntentForPackage(context.packageName)
 
-    /** Below this the settings line and mode switch are dropped, as in the small Wear widget. */
-    private const val CompactHeightDp = 110
+    /** Size steps for the pre-Android 16 layouts (at most 16 pairs). */
+    private val LegacyWidthsDp = listOf(110, 180, 250, 320)
+    private val LegacyHeightsDp = listOf(40, 120, 150, 190)
 
     /** Keeps legacy button request codes apart from captured Remote Compose action ids. */
     private const val LegacyActionIdBase = 1_000

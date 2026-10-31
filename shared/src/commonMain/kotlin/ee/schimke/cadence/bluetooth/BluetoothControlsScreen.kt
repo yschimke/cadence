@@ -9,7 +9,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.VolumeDown
 import androidx.compose.material.icons.automirrored.filled.VolumeOff
@@ -55,6 +56,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import ee.schimke.cadence.metro.metroViewModel
@@ -124,10 +127,14 @@ fun BluetoothControlsContent(
   onAdvanced: (AdvancedCommand) -> Unit,
 ) {
   Box(modifier = modifier) {
-    LazyColumn(
+    // Cards flow into as many ~360dp columns as fit: one on a phone, two or three on a tablet,
+    // rather than one column stretched across the window.
+    LazyVerticalStaggeredGrid(
+      columns = StaggeredGridCells.Adaptive(360.dp),
       modifier = Modifier.fillMaxWidth().safeContentPadding(),
       contentPadding = androidx.compose.foundation.layout.PaddingValues(16.dp),
-      verticalArrangement = Arrangement.spacedBy(12.dp),
+      verticalItemSpacing = 12.dp,
+      horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
       item { ConnectionCard(state, onOpenSettings, onRefresh) }
       if (state.permissionMissing) {
@@ -233,6 +240,7 @@ private fun NowPlayingCard(state: BluetoothState, onRequestMediaAccess: () -> Un
     Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
       Text(
         "Now playing",
+        modifier = Modifier.semantics { heading() },
         style = MaterialTheme.typography.titleMedium,
         fontWeight = FontWeight.SemiBold,
       )
@@ -348,6 +356,7 @@ private fun VolumeCard(
       Row(verticalAlignment = Alignment.CenterVertically) {
         Text(
           "Volume",
+          modifier = Modifier.semantics { heading() },
           style = MaterialTheme.typography.titleMedium,
           fontWeight = FontWeight.SemiBold,
         )
@@ -394,6 +403,7 @@ private fun HeadsetVolume(
   Row(verticalAlignment = Alignment.CenterVertically) {
     Text(
       "Headphone volume",
+      modifier = Modifier.semantics { heading() },
       style = MaterialTheme.typography.titleMedium,
       fontWeight = FontWeight.SemiBold,
     )
@@ -441,6 +451,7 @@ private fun WorkingModeCard(
     Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
       Text(
         "Working mode",
+        modifier = Modifier.semantics { heading() },
         style = MaterialTheme.typography.titleMedium,
         fontWeight = FontWeight.SemiBold,
       )
@@ -491,6 +502,7 @@ private fun EqPresetsCard(state: BluetoothState, onSelect: (EqualizerPreset) -> 
         Spacer(Modifier.width(8.dp))
         Text(
           "EQ presets",
+          modifier = Modifier.semantics { heading() },
           style = MaterialTheme.typography.titleMedium,
           fontWeight = FontWeight.SemiBold,
         )
@@ -518,6 +530,7 @@ private fun PlaybackOrderCard(state: BluetoothState, onSelect: (PlaybackOrder) -
         Spacer(Modifier.width(8.dp))
         Text(
           "MP3 playback order",
+          modifier = Modifier.semantics { heading() },
           style = MaterialTheme.typography.titleMedium,
           fontWeight = FontWeight.SemiBold,
         )
@@ -578,6 +591,7 @@ private fun AdvancedCommandsCard(onAdvanced: (AdvancedCommand) -> Unit) {
         Column(Modifier.weight(1f)) {
           Text(
             "Advanced commands",
+            modifier = Modifier.semantics { heading() },
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.SemiBold,
           )

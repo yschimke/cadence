@@ -35,3 +35,16 @@
   export the bearer as `COMPOSE_PREVIEW_TOKEN` and reconnect the server — an
   MCP host cannot inject a header its config never declared. A box older
   than that change answers `401` to every message, handshake included.
+- **Design review uses the Preview Audit's guidelines.**
+  `.github/preview-audit/mobile.guidelines.json` pins the shared rule packs
+  from compose-ai-tools (`compose-ui` for every screen and component;
+  `remote-compose` and `launcher-widgets` for the Remote Compose home-screen
+  widgets). The Preview Audit workflow uses it on PRs; review locally with
+  the same file:
+  `compose-preview review --backend prompt --module :composeApp --filter <Name>
+  --guidelines .github/preview-audit/mobile.guidelines.json --annotate`.
+  Surfaces are inferred: give launcher-widget previews
+  `@LauncherWidgetPreview(width, height)` (one preview per footprint) so they
+  are reviewed as `widget`, and give screen previews a `device` so they are
+  reviewed as `screen`. To move to newer packs, bump the tag in each include
+  `url` and re-pin its `sha256`.

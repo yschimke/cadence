@@ -2,6 +2,7 @@
 <!-- Fallback for launchers without Remote Compose (before Android 16); mirrors
      HeadphoneControlsWidgetContent. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/headphone_widget_background"
@@ -21,8 +22,8 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="#FFE6E1E9"
-            android:textSize="15sp" />
+            android:textColor="@color/headphone_widget_on_background"
+            android:textSize="17sp" />
 
         <TextView
             android:id="@+id/headphone_widget_now_playing"
@@ -30,7 +31,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="#FFCBC3D7"
+            android:textColor="@color/headphone_widget_on_background"
             android:textSize="13sp" />
 
         <TextView
@@ -39,7 +40,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="#FF9ED1FF"
+            android:textColor="@color/headphone_widget_supporting"
             android:textSize="12sp" />
     </LinearLayout>
 
