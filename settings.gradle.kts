@@ -35,4 +35,4 @@ dependencyResolutionManagement {
 
 include(":composeApp")
 
-include(":shared", ":desktopApp")
+include(":shared", ":desktopApp", ":rcsp")
