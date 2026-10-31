@@ -1,6 +1,6 @@
 {
     "formatVersion": "compose-preview-history/v1",
-    "generatedFrom": "7b88a571680bbc324b21db105dfd496f1063b704",
+    "generatedFrom": "ff57ac0989280e1a8f42870327a6f4a3c45fd303",
     "previews": {
         "composeApp/activity__MainActivity": {
             "path": "renders/composeApp/activity__MainActivity.png",
@@ -107,6 +107,13 @@
             "path": "renders/composeApp/HeadphoneWidgetBluetoothPreview_Headphone_widget_Bluetooth-672bb261.png",
             "versions": [
                 {
+                    "blob": "b52aec2e88561104df1002631465b3555586eb1d",
+                    "commit": "ff57ac0989280e1a8f42870327a6f4a3c45fd303",
+                    "date": "2026-10-31T19:07:09Z",
+                    "sourceSha": "6edcf047",
+                    "commits": 1
+                },
+                {
                     "blob": "27e0a59249879194c1450e1bbe0c231f7330827d",
                     "commit": "7b88a571680bbc324b21db105dfd496f1063b704",
                     "date": "2026-10-31T18:08:08Z",
@@ -121,7 +128,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 2,
+            "observations": 3,
             "unstable": false,
             "flapCount": 0
         },
@@ -166,6 +173,13 @@
             "path": "renders/composeApp/HeadphoneWidgetMp32x1Preview_Headphone_widget_MP3_2_1-820e2ca9.png",
             "versions": [
                 {
+                    "blob": "660a4fa6f27b38fb04c52fded4e6edb70545c06f",
+                    "commit": "ff57ac0989280e1a8f42870327a6f4a3c45fd303",
+                    "date": "2026-10-31T19:07:09Z",
+                    "sourceSha": "6edcf047",
+                    "commits": 1
+                },
+                {
                     "blob": "076393a287e2c03b525a131aa6ab56c3b337a965",
                     "commit": "7b88a571680bbc324b21db105dfd496f1063b704",
                     "date": "2026-10-31T18:08:08Z",
@@ -173,7 +187,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
@@ -256,6 +270,21 @@
                 }
             ],
             "observations": 2,
+            "unstable": false,
+            "flapCount": 0
+        },
+        "composeApp/ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetPlayingAnimatedPreview_Headphone widget · playing · animated": {
+            "path": "renders/composeApp/HeadphoneWidgetPlayingAnimatedPreview_Headphone_widget_playing_animated-157e750e.gif",
+            "versions": [
+                {
+                    "blob": "c45239f59553b2547fe05ab1b16ad6e80eef5175",
+                    "commit": "ff57ac0989280e1a8f42870327a6f4a3c45fd303",
+                    "date": "2026-10-31T19:07:09Z",
+                    "sourceSha": "6edcf047",
+                    "commits": 1
+                }
+            ],
+            "observations": 1,
             "unstable": false,
             "flapCount": 0
         },
@@ -944,6 +973,186 @@
             "unstable": false,
             "flapCount": 0
         },
+        "swimUi/ee.schimke.cadence.swim.SwimAnimatedPreviewsKt.SwimLaneFlipTurnAnimatedPreview_Swim lane · flip turn · animated": {
+            "path": "renders/swimUi/SwimLaneFlipTurnAnimatedPreview_Swim_lane_flip_turn_animated-db9e413a.gif",
+            "versions": [
+                {
+                    "blob": "2c6367b1a82658959d31741c648bdd99acf1b1d1",
+                    "commit": "ff57ac0989280e1a8f42870327a6f4a3c45fd303",
+                    "date": "2026-10-31T19:07:09Z",
+                    "sourceSha": "6edcf047",
+                    "commits": 1
+                }
+            ],
+            "observations": 1,
+            "unstable": false,
+            "flapCount": 0
+        },
+        "swimUi/ee.schimke.cadence.swim.SwimAnimatedPreviewsKt.SwimLaneLapsAnimatedPreview_Swim lane · laps · animated": {
+            "path": "renders/swimUi/SwimLaneLapsAnimatedPreview_Swim_lane_laps_animated-726ab47a.gif",
+            "versions": [
+                {
+                    "blob": "e044a47665f7eefa93995c1fc831b0302d805dcd",
+                    "commit": "ff57ac0989280e1a8f42870327a6f4a3c45fd303",
+                    "date": "2026-10-31T19:07:09Z",
+                    "sourceSha": "6edcf047",
+                    "commits": 1
+                }
+            ],
+            "observations": 1,
+            "unstable": false,
+            "flapCount": 0
+        },
+        "swimUi/ee.schimke.cadence.swim.SwimAnimatedPreviewsKt.SwimmingPoolAnimatedPreview_Swimming pool · animated": {
+            "path": "renders/swimUi/SwimmingPoolAnimatedPreview_Swimming_pool_animated-d70a85a6.gif",
+            "versions": [
+                {
+                    "blob": "c202bde64fd978ed152d3b93b178a444c729a6d9",
+                    "commit": "ff57ac0989280e1a8f42870327a6f4a3c45fd303",
+                    "date": "2026-10-31T19:07:09Z",
+                    "sourceSha": "6edcf047",
+                    "commits": 1
+                }
+            ],
+            "observations": 1,
+            "unstable": false,
+            "flapCount": 0
+        },
+        "swimUi/ee.schimke.cadence.swim.SwimAnimatedPreviewsKt.WaterButtonAnimatedPreview_Water button · animated": {
+            "path": "renders/swimUi/WaterButtonAnimatedPreview_Water_button_animated-55a32d9d.gif",
+            "versions": [
+                {
+                    "blob": "939c45c2e7f3d6ced299419e23d3bec12bbe4d9d",
+                    "commit": "ff57ac0989280e1a8f42870327a6f4a3c45fd303",
+                    "date": "2026-10-31T19:07:09Z",
+                    "sourceSha": "6edcf047",
+                    "commits": 1
+                }
+            ],
+            "observations": 1,
+            "unstable": false,
+            "flapCount": 0
+        },
+        "swimUi/ee.schimke.cadence.swim.SwimAnimatedPreviewsKt.WaterRoundButtonAnimatedPreview_Water round button · animated": {
+            "path": "renders/swimUi/WaterRoundButtonAnimatedPreview_Water_round_button_animated-56625fee.gif",
+            "versions": [
+                {
+                    "blob": "d1e6e090aa47497ca3f8cfedb6d1eb9286341247",
+                    "commit": "ff57ac0989280e1a8f42870327a6f4a3c45fd303",
+                    "date": "2026-10-31T19:07:09Z",
+                    "sourceSha": "6edcf047",
+                    "commits": 1
+                }
+            ],
+            "observations": 1,
+            "unstable": false,
+            "flapCount": 0
+        },
+        "swimUi/ee.schimke.cadence.swim.SwimPreviewsKt.SwimLaneEndlessPreview_Swim lane · endless laps": {
+            "path": "renders/swimUi/SwimLaneEndlessPreview_Swim_lane_endless_laps-3bd8ff30.png",
+            "versions": [
+                {
+                    "blob": "f972d336d9403e8d0891f844edce41fb85faa639",
+                    "commit": "ff57ac0989280e1a8f42870327a6f4a3c45fd303",
+                    "date": "2026-10-31T19:07:09Z",
+                    "sourceSha": "6edcf047",
+                    "commits": 1
+                }
+            ],
+            "observations": 1,
+            "unstable": false,
+            "flapCount": 0
+        },
+        "swimUi/ee.schimke.cadence.swim.SwimPreviewsKt.SwimLaneFlipTurnLauncherPreview_Swim lane · flip turn · launcher": {
+            "path": "renders/swimUi/SwimLaneFlipTurnLauncherPreview_Swim_lane_flip_turn_launcher-ca909f07.png",
+            "versions": [
+                {
+                    "blob": "c6f317142be85b9e15d9c29a8f860213d8b29bfa",
+                    "commit": "ff57ac0989280e1a8f42870327a6f4a3c45fd303",
+                    "date": "2026-10-31T19:07:09Z",
+                    "sourceSha": "6edcf047",
+                    "commits": 1
+                }
+            ],
+            "observations": 1,
+            "unstable": false,
+            "flapCount": 0
+        },
+        "swimUi/ee.schimke.cadence.swim.SwimPreviewsKt.SwimLaneFlipTurnPreview_Swim lane · flip turn": {
+            "path": "renders/swimUi/SwimLaneFlipTurnPreview_Swim_lane_flip_turn-31a2260f.png",
+            "versions": [
+                {
+                    "blob": "c6f317142be85b9e15d9c29a8f860213d8b29bfa",
+                    "commit": "ff57ac0989280e1a8f42870327a6f4a3c45fd303",
+                    "date": "2026-10-31T19:07:09Z",
+                    "sourceSha": "6edcf047",
+                    "commits": 1
+                }
+            ],
+            "observations": 1,
+            "unstable": false,
+            "flapCount": 0
+        },
+        "swimUi/ee.schimke.cadence.swim.SwimPreviewsKt.SwimLaneLapsPreview_Swim lane · odd and even laps": {
+            "path": "renders/swimUi/SwimLaneLapsPreview_Swim_lane_odd_and_even_laps-35df6d6f.png",
+            "versions": [
+                {
+                    "blob": "f972d336d9403e8d0891f844edce41fb85faa639",
+                    "commit": "ff57ac0989280e1a8f42870327a6f4a3c45fd303",
+                    "date": "2026-10-31T19:07:09Z",
+                    "sourceSha": "6edcf047",
+                    "commits": 1
+                }
+            ],
+            "observations": 1,
+            "unstable": false,
+            "flapCount": 0
+        },
+        "swimUi/ee.schimke.cadence.swim.SwimPreviewsKt.SwimmingPoolPreview_Swimming pool": {
+            "path": "renders/swimUi/SwimmingPoolPreview_Swimming_pool-28ed1567.png",
+            "versions": [
+                {
+                    "blob": "2bd8d324bcb645ac86a24e9df726d286494eef47",
+                    "commit": "ff57ac0989280e1a8f42870327a6f4a3c45fd303",
+                    "date": "2026-10-31T19:07:09Z",
+                    "sourceSha": "6edcf047",
+                    "commits": 1
+                }
+            ],
+            "observations": 1,
+            "unstable": false,
+            "flapCount": 0
+        },
+        "swimUi/ee.schimke.cadence.swim.SwimPreviewsKt.WaterButtonsLauncherPreview_Water buttons · launcher": {
+            "path": "renders/swimUi/WaterButtonsLauncherPreview_Water_buttons_launcher-5df3807f.png",
+            "versions": [
+                {
+                    "blob": "b4bbf464d44038fc3071c4875f6da1343dbe6fc4",
+                    "commit": "ff57ac0989280e1a8f42870327a6f4a3c45fd303",
+                    "date": "2026-10-31T19:07:09Z",
+                    "sourceSha": "6edcf047",
+                    "commits": 1
+                }
+            ],
+            "observations": 1,
+            "unstable": false,
+            "flapCount": 0
+        },
+        "swimUi/ee.schimke.cadence.swim.SwimPreviewsKt.WaterButtonsWearPreview_Water buttons · Wear": {
+            "path": "renders/swimUi/WaterButtonsWearPreview_Water_buttons_Wear-8eddeafe.png",
+            "versions": [
+                {
+                    "blob": "b4bbf464d44038fc3071c4875f6da1343dbe6fc4",
+                    "commit": "ff57ac0989280e1a8f42870327a6f4a3c45fd303",
+                    "date": "2026-10-31T19:07:09Z",
+                    "sourceSha": "6edcf047",
+                    "commits": 1
+                }
+            ],
+            "observations": 1,
+            "unstable": false,
+            "flapCount": 0
+        },
         "wearApp/activity__WearMainActivity": {
             "path": "renders/wearApp/activity__WearMainActivity.png",
             "versions": [
@@ -1342,6 +1551,66 @@
                     "commit": "0f9e665adca6d225f63d1e9915fb5000d517c682",
                     "date": "2026-10-31T17:09:07Z",
                     "sourceSha": "d1e45c0a",
+                    "commits": 1
+                }
+            ],
+            "observations": 1,
+            "unstable": false,
+            "flapCount": 0
+        },
+        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetAnimatedPreview_Now playing · animated": {
+            "path": "renders/wearApp/ModeAndControlsWearWidgetAnimatedPreview_Now_playing_animated-da6d1cec_PARAM_0.gif",
+            "versions": [
+                {
+                    "blob": "6d8ee47fc9957124b88b20be068338135950b0ca",
+                    "commit": "ff57ac0989280e1a8f42870327a6f4a3c45fd303",
+                    "date": "2026-10-31T19:07:09Z",
+                    "sourceSha": "6edcf047",
+                    "commits": 1
+                }
+            ],
+            "observations": 1,
+            "unstable": false,
+            "flapCount": 0
+        },
+        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetAnimatedPreview_Now playing · animated#1": {
+            "path": "renders/wearApp/ModeAndControlsWearWidgetAnimatedPreview_Now_playing_animated-da6d1cec_PARAM_1.gif",
+            "versions": [
+                {
+                    "blob": "731f99f3ce41bebbb051b71c45c1a14b184cc226",
+                    "commit": "ff57ac0989280e1a8f42870327a6f4a3c45fd303",
+                    "date": "2026-10-31T19:07:09Z",
+                    "sourceSha": "6edcf047",
+                    "commits": 1
+                }
+            ],
+            "observations": 1,
+            "unstable": false,
+            "flapCount": 0
+        },
+        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetAnimatedPreview_Now playing · animated#2": {
+            "path": "renders/wearApp/ModeAndControlsWearWidgetAnimatedPreview_Now_playing_animated-da6d1cec_PARAM_2.gif",
+            "versions": [
+                {
+                    "blob": "731f99f3ce41bebbb051b71c45c1a14b184cc226",
+                    "commit": "ff57ac0989280e1a8f42870327a6f4a3c45fd303",
+                    "date": "2026-10-31T19:07:09Z",
+                    "sourceSha": "6edcf047",
+                    "commits": 1
+                }
+            ],
+            "observations": 1,
+            "unstable": false,
+            "flapCount": 0
+        },
+        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetAnimatedPreview_Now playing · animated#3": {
+            "path": "renders/wearApp/ModeAndControlsWearWidgetAnimatedPreview_Now_playing_animated-da6d1cec_PARAM_3.gif",
+            "versions": [
+                {
+                    "blob": "731f99f3ce41bebbb051b71c45c1a14b184cc226",
+                    "commit": "ff57ac0989280e1a8f42870327a6f4a3c45fd303",
+                    "date": "2026-10-31T19:07:09Z",
+                    "sourceSha": "6edcf047",
                     "commits": 1
                 }
             ],
