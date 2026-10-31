@@ -82,6 +82,8 @@ fun BluetoothControlsScreen(modifier: Modifier = Modifier) {
     onSetVolume = viewModel::setVolume,
     onAdjustVolume = viewModel::adjustVolume,
     onToggleMute = viewModel::toggleMute,
+    onPlay = viewModel::play,
+    onPause = viewModel::pause,
     onPlayPause = viewModel::playPause,
     onPrevious = viewModel::previous,
     onNext = viewModel::next,
@@ -104,6 +106,8 @@ fun BluetoothControlsContent(
   onSetVolume: (Int) -> Unit,
   onAdjustVolume: (Int) -> Unit,
   onToggleMute: () -> Unit,
+  onPlay: () -> Unit,
+  onPause: () -> Unit,
   onPlayPause: () -> Unit,
   onPrevious: () -> Unit,
   onNext: () -> Unit,
@@ -129,13 +133,16 @@ fun BluetoothControlsContent(
       item { NowPlayingCard(state, onRequestMediaAccess) }
       item {
         TransportCard(
-          onPlayPause,
-          onPrevious,
-          onNext,
-          onStop,
-          onRewind,
-          onFastForward,
-          state.mediaInfo?.playing == true,
+          mode = state.workingMode,
+          onPlay = onPlay,
+          onPause = onPause,
+          onPlayPause = onPlayPause,
+          onPrevious = onPrevious,
+          onNext = onNext,
+          onStop = onStop,
+          onRewind = onRewind,
+          onFastForward = onFastForward,
+          playing = state.mediaInfo?.playing == true,
         )
       }
       item { EqPresetsCard(onAdvanced) }
@@ -261,6 +268,9 @@ private fun NowPlayingCard(state: BluetoothState, onRequestMediaAccess: () -> Un
 
 @Composable
 private fun TransportCard(
+  mode: WorkingMode,
+  onPlay: () -> Unit,
+  onPause: () -> Unit,
   onPlayPause: () -> Unit,
   onPrevious: () -> Unit,
   onNext: () -> Unit,
@@ -275,23 +285,34 @@ private fun TransportCard(
       horizontalArrangement = Arrangement.SpaceEvenly,
       verticalAlignment = Alignment.CenterVertically,
     ) {
-      IconButton(onClick = onRewind) {
-        Icon(Icons.Filled.FastRewind, contentDescription = "Rewind")
-      }
       IconButton(onClick = onPrevious) {
         Icon(Icons.Filled.SkipPrevious, contentDescription = "Previous")
       }
-      FilledIconButton(onClick = onPlayPause) {
-        Icon(
-          imageVector = if (playing) Icons.Filled.Pause else Icons.Filled.PlayArrow,
-          contentDescription = if (playing) "Pause" else "Play",
-        )
+      if (mode == WorkingMode.Mp3) {
+        FilledIconButton(onClick = onPlay) {
+          Icon(Icons.Filled.PlayArrow, contentDescription = "Play")
+        }
+        FilledIconButton(onClick = onPause) {
+          Icon(Icons.Filled.Pause, contentDescription = "Pause")
+        }
+      } else {
+        IconButton(onClick = onRewind) {
+          Icon(Icons.Filled.FastRewind, contentDescription = "Rewind")
+        }
+        FilledIconButton(onClick = onPlayPause) {
+          Icon(
+            imageVector = if (playing) Icons.Filled.Pause else Icons.Filled.PlayArrow,
+            contentDescription = if (playing) "Pause" else "Play",
+          )
+        }
       }
       IconButton(onClick = onNext) { Icon(Icons.Filled.SkipNext, contentDescription = "Next") }
-      IconButton(onClick = onFastForward) {
-        Icon(Icons.Filled.FastForward, contentDescription = "Fast forward")
+      if (mode != WorkingMode.Mp3) {
+        IconButton(onClick = onFastForward) {
+          Icon(Icons.Filled.FastForward, contentDescription = "Fast forward")
+        }
+        IconButton(onClick = onStop) { Icon(Icons.Filled.Stop, contentDescription = "Stop") }
       }
-      IconButton(onClick = onStop) { Icon(Icons.Filled.Stop, contentDescription = "Stop") }
     }
   }
 }
@@ -385,7 +406,7 @@ private fun WorkingModeCard(selected: WorkingMode, onSelect: (WorkingMode) -> Un
         }
       }
       Text(
-        "Switching modes is a preview right now — your selection won't change what the headphones do until firmware support lands.",
+        "This selection does not switch the headphones. MP3 enables captured Local Audio transport controls after you switch the headset separately.",
         style = MaterialTheme.typography.bodySmall,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
       )

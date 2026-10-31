@@ -16,10 +16,13 @@ authenticated adapter—not a duplicate protocol stack.
   checks. Do not depend on the current app's Bluetooth controller directly.
 - The observed headset endpoint is RFCOMM channel 10 on
   `0000fef0-0000-1000-8000-00805f9b34fb`.
-- The Shokz Android app uses an authenticated `A5 5A` envelope. It is not the public Jieli
+- The Shokz Android app uses a vendor `A5 5A` envelope. It is not the public Jieli
   `FE DC BA … EF` format, so a generic RCSP socket must not be used to control OpenSwim Pro.
-- Start from `OpenSwimProProfile`. It deliberately supports no remote commands until a verified
-  authenticated adapter is supplied. Every interactive control must be gated with
+- The vendor envelope has a request type of `1` and a response type of `0x101`; simple Local
+  Audio requests use a fixed-width, little-endian tagged-word payload. Treat that byte format as
+  an adapter implementation detail: UI must continue to use semantic `RcspCommand`s.
+- Start from `OpenSwimProProfile`. It supports only the captured Local Audio `Play`, `Pause`,
+  `PreviousTrack`, and `NextTrack` operations. Every interactive control must be gated with
   `profile.isSupported(command)` / `gateway.isSupported(command)`.
 
 ## Finding and connecting the headset
@@ -52,9 +55,8 @@ The Wear screen should have:
 - A compact connection/status row, including current mode.
 - A mode selector (Bluetooth / Local Audio / Line In) only when
   `SelectWorkingMode` is supported; otherwise show the current mode as read-only.
-- Previous, play/pause, and next buttons, each independently capability-gated. Do not use Android
-  media-session controls as a proxy for OpenSwim controls unless the paired phone has explicitly
-  confirmed that mapping.
+- Previous, play/pause, and next buttons, each independently capability-gated and shown only in
+  Local Audio mode. Do not use Android media-session controls as a proxy for OpenSwim controls.
 - A local-audio playlist page with track title, position such as `2 of 4`, selected/playing state,
   and a tap-to-play action only when `ListLocalAudio` and `PlayLocalAudio` are supported.
 - Track progress and seeking only when both a genuine position/duration source and
@@ -77,11 +79,15 @@ timeouts. It may use `RcspCommandGateway` after it has populated capabilities.
 `PublicJieliCommandEncoder` is useful only for devices verified to use public RCSP. It has a
 conservative implementation for battery/volume/equalizer/working-mode queries and volume write;
 it intentionally returns no packet for media, seek, mode-select, or local-file commands. Do not
-wire it to `OpenSwimProProfile`.
+wire it to `OpenSwimProProfile`. For captured Local Audio transport actions, use
+`ShokzOpenSwimController` with `AndroidShokzOpenSwimTransport`.
 
 ## Explicit non-goals until new evidence exists
 
 - Do not send guessed headset volume or seek packets.
+- Do not infer an operation solely from a matching request/response shape. Record a single-action
+  capture, replay it after the Shokz app has released the RFCOMM socket, and verify the headset's
+  visible or audible effect before adding it to `OpenSwimProProfile`.
 - Do not treat the Flutter SoLoud seek/volume methods found in the Shokz APK as Bluetooth
   controls: they are phone-local audio rendering methods.
 - Do not infer a progress value from playlist selection or Android media playback state.

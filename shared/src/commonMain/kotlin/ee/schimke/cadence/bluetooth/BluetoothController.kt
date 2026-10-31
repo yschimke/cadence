@@ -40,8 +40,8 @@ interface BluetoothController {
 
   /**
    * UI-selected working mode. The opcode that switches the headphones between Bluetooth and
-   * on-device MP3 playback is unconfirmed (FUNCTION_CMD 0x0E sub-opcode), so the selection is
-   * currently presentation-only.
+   * on-device MP3 playback is still unconfirmed, so this does not switch headset mode. On OpenSwim
+   * Pro it gates the captured Local Audio play/pause/previous/next transport.
    */
   suspend fun setWorkingMode(mode: WorkingMode): String
 

@@ -35,12 +35,24 @@ data class RcspDeviceProfile(
 }
 
 /**
- * Observed OpenSwim Pro connection facts. Its authenticated A5 envelope is intentionally not
- * treated as the public Jieli RCSP wire format until the OEM adapter has been verified.
+ * Observed OpenSwim Pro connection facts.
+ *
+ * Local Audio play/pause/previous/next were captured on firmware R_24_202520250815 and have a
+ * byte-exact vendor encoder. They are still mode-dependent: do not present them while the device is
+ * in Bluetooth, Line In or USB mode. Volume, seek, mode changes and playlist selection remain
+ * unsupported until independently captured and verified.
  */
 val OpenSwimProProfile =
   RcspDeviceProfile(
     name = "OpenSwim Pro",
     serviceUuid = "0000fef0-0000-1000-8000-00805f9b34fb",
     rfcommChannel = 10,
+    capabilities =
+      RcspCapabilities()
+        .withSupported(
+          RcspCommandId.Play,
+          RcspCommandId.Pause,
+          RcspCommandId.NextTrack,
+          RcspCommandId.PreviousTrack,
+        ),
   )

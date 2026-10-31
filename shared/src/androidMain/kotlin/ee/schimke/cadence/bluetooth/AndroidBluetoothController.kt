@@ -18,6 +18,7 @@ import android.media.session.PlaybackState
 import android.os.Build
 import android.os.SystemClock
 import android.provider.Settings
+import android.util.Log
 import android.view.KeyEvent
 import androidx.core.content.ContextCompat
 import dev.zacsweers.metro.AppScope
@@ -25,6 +26,10 @@ import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.SingleIn
 import dev.zacsweers.metro.binding
+import ee.schimke.rcsp.AndroidShokzOpenSwimTransport
+import ee.schimke.rcsp.OpenSwimProProfile
+import ee.schimke.rcsp.RcspCommand
+import ee.schimke.rcsp.ShokzOpenSwimController
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -36,6 +41,7 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
+import java.util.UUID
 
 @ContributesBinding(AppScope::class, binding = binding<BluetoothController>())
 @SingleIn(AppScope::class)
@@ -55,6 +61,7 @@ class AndroidBluetoothController(
 
     private val refreshTrigger = MutableStateFlow(0L)
     private val workingModeFlow = MutableStateFlow(WorkingMode.Bluetooth)
+    private val commandScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
     override val supported = true
 
@@ -107,11 +114,11 @@ class AndroidBluetoothController(
         refresh()
     }
 
-    override fun play() = dispatchKey(KeyEvent.KEYCODE_MEDIA_PLAY)
-    override fun pause() = dispatchKey(KeyEvent.KEYCODE_MEDIA_PAUSE)
+    override fun play() = dispatchMediaOrOpenSwim(RcspCommand.Play, KeyEvent.KEYCODE_MEDIA_PLAY)
+    override fun pause() = dispatchMediaOrOpenSwim(RcspCommand.Pause, KeyEvent.KEYCODE_MEDIA_PAUSE)
     override fun playPause() = dispatchKey(KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE)
-    override fun next() = dispatchKey(KeyEvent.KEYCODE_MEDIA_NEXT)
-    override fun previous() = dispatchKey(KeyEvent.KEYCODE_MEDIA_PREVIOUS)
+    override fun next() = dispatchMediaOrOpenSwim(RcspCommand.NextTrack, KeyEvent.KEYCODE_MEDIA_NEXT)
+    override fun previous() = dispatchMediaOrOpenSwim(RcspCommand.PreviousTrack, KeyEvent.KEYCODE_MEDIA_PREVIOUS)
     override fun stop() = dispatchKey(KeyEvent.KEYCODE_MEDIA_STOP)
     override fun fastForward() = dispatchKey(KeyEvent.KEYCODE_MEDIA_FAST_FORWARD)
     override fun rewind() = dispatchKey(KeyEvent.KEYCODE_MEDIA_REWIND)
@@ -132,7 +139,10 @@ class AndroidBluetoothController(
 
     override suspend fun setWorkingMode(mode: WorkingMode): String {
         workingModeFlow.value = mode
-        return "Preview only — firmware support not wired up yet"
+        return when (mode) {
+            WorkingMode.Mp3 -> "Local Audio controls enabled; set MP3 mode on the headphones first"
+            WorkingMode.Bluetooth -> "Bluetooth controls use the system media session"
+        }
     }
 
     override suspend fun dispatchAdvanced(command: AdvancedCommand): String = when (command) {
@@ -162,6 +172,41 @@ class AndroidBluetoothController(
         val now = SystemClock.uptimeMillis()
         audioManager.dispatchMediaKeyEvent(KeyEvent(now, now, KeyEvent.ACTION_DOWN, keyCode, 0))
         audioManager.dispatchMediaKeyEvent(KeyEvent(now, now, KeyEvent.ACTION_UP, keyCode, 0))
+    }
+
+    /**
+     * Captured OpenSwim Local Audio media actions use a vendor RFCOMM envelope, not AVRCP.
+     * The UI's MP3 selection is an explicit guard: it does not switch headset mode itself.
+     */
+    private fun dispatchMediaOrOpenSwim(command: RcspCommand, mediaKeyCode: Int) {
+        val device = connectedAudioDevice()
+        if (
+            workingModeFlow.value != WorkingMode.Mp3 ||
+                device?.name?.contains("OpenSwim Pro", ignoreCase = true) != true
+        ) {
+            dispatchKey(mediaKeyCode)
+            return
+        }
+        commandScope.launch {
+            val result = runCatching {
+                val socket =
+                    device.createRfcommSocketToServiceRecord(UUID.fromString(OpenSwimProProfile.serviceUuid))
+                socket.use {
+                    it.connect()
+                    ShokzOpenSwimController(AndroidShokzOpenSwimTransport(it)).execute(command)
+                }
+            }
+            result.onSuccess { response ->
+                Log.i(
+                    "CadenceBluetooth",
+                    "OpenSwim ${command.id} acknowledged with type ${response.type}",
+                )
+            }
+            result.onFailure { error ->
+                Log.w("CadenceBluetooth", "OpenSwim ${command.id} failed", error)
+            }
+            refresh()
+        }
     }
 
     private fun hasBluetoothConnectPermission(): Boolean {

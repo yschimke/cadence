@@ -165,6 +165,8 @@ internal fun PlayStorePhoneBluetooth() {
       onSetVolume = {},
       onAdjustVolume = {},
       onToggleMute = {},
+      onPlay = {},
+      onPause = {},
       onPlayPause = {},
       onPrevious = {},
       onNext = {},

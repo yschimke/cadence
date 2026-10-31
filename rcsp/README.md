@@ -26,10 +26,35 @@ settings. Those commands require a chipset- and firmware-verified `RcspCommandEn
 
 ## OpenSwim Pro
 
-`OpenSwimProProfile` captures the observed FEF0 RFCOMM channel 10 endpoint, but reports no
-supported commands. Its Shokz app sends an authenticated `A5 5A` envelope rather than public
-`FE DC BA … EF` frames. Consequently, this module will never send a volume, seek or media packet
-to OpenSwim Pro until an authenticated adapter proves the concrete command mapping.
+`OpenSwimProProfile` captures the observed FEF0 RFCOMM channel 10 endpoint. Its Shokz app sends
+an `A5 5A` vendor envelope rather than public `FE DC BA … EF` frames. The module reconstructs the
+captured Local Audio `Play`, `Pause`, `PreviousTrack`, and `NextTrack` requests byte-for-byte;
+`AndroidShokzOpenSwimTransport` sends them over a connected socket. Those controls should appear
+only in Local Audio mode. Volume, seek, mode selection, and playlist selection remain unsupported
+and will not be encoded.
+
+### Observed request/response shape
+
+The envelope is deterministic and has no observed session-authentication field:
+
+```text
+A5 5A | outerLength:u16le | type:u32le | payloadLength:u16le | payloadCrc:u16le | payload
+```
+
+App requests use `type = 1`; headset replies use `type = 0x101`. Both payload checksums are
+CRC-16/Modbus, with a captured request seed of `0x86F7` and response seed of `0x7649`.
+
+The four verified media requests have a 40-byte, little-endian word payload:
+
+```text
+[1, 32, 2, 4, 1, 3, 4, action, 4, 0]
+```
+
+Only `action` varies: `3` is play/resume, `4` pause, `7` previous track, and `8` next track.
+The inner words look like a tagged RPC argument list, but their individual field names are not yet
+known. Other captured startup and sync traffic uses the same outer envelope and related word
+shapes, so it can be enumerated safely through single-action captures. It must not be published as
+a command until the request is replayed and the headset effect is verified.
 
 `AndroidRfcommTransport` is available for a connected public-RCSP `BluetoothSocket`; it performs
 framing only, and deliberately does not bypass Android Bluetooth permission or OEM authentication.
