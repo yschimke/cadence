@@ -1,0 +1,14 @@
+{
+  "schema": "compose-ui-builder/catalog-guidelines/v1",
+  "catalog": "cadence-wear-compose",
+  "platform": "wear",
+  "version": 1,
+  "about": "Rules the Preview Audit workflow asks of the wearApp screen previews: the shared wear-compose pack, pinned. Add app-specific rules under `rules`.",
+  "includes": [
+    {
+      "url": "https://raw.githubusercontent.com/yschimke/compose-ai-tools/56d5749780460115bdea0384dd4e823048a9efa3/guidelines/packs/wear-compose.guidelines.json",
+      "sha256": "7a33c7dbf4ff4b93338bb2ddbd781f0c8ec145ead04c6e2b5fa8746dedd303e4"
+    }
+  ],
+  "rules": []
+}
