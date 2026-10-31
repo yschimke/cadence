@@ -30,8 +30,11 @@ val appVersionName = "0.1.7" // x-release-please-version
 // Android OAuth clients don't have a secret — identity is the package + SHA-1 fingerprint
 // registered in Google Cloud Console. The redirect URI's custom scheme is the reversed client id.
 val bundledAndroidClientId = providers.gradleProperty("cadenceGoogleAndroidClientId").getOrElse("")
+// Lint rejects an empty android:scheme in the manifest, so pick an unroutable placeholder when the
+// credential isn't bundled. The sign-in button is already disabled on those builds (the OAuth
+// config loader returns null), so the receiver never gets invoked.
 val bundledAndroidRedirectScheme =
-  if (bundledAndroidClientId.isBlank()) ""
+  if (bundledAndroidClientId.isBlank()) "cadence.google.oauth.unconfigured"
   else
     "com.googleusercontent.apps.${bundledAndroidClientId.substringBefore(".apps.googleusercontent.com")}"
 
