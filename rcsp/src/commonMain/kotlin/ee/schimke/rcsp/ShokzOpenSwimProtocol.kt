@@ -5,20 +5,23 @@ data class ShokzOpenSwimEnvelope(
   /** `1` for captured app requests and `0x101` for headset responses. */
   val type: UInt,
   val payload: ByteArray,
+  internal val checksumSeed: Int,
 )
 
 /**
  * Codec for the OpenSwim Pro `A5 5A` RFCOMM envelope.
  *
  * This is deliberately distinct from [RcspCodec]. Captures on firmware R_24_202520250815 show a
- * four-byte type, and a payload CRC-16/Modbus. Captured requests use seed `0x86F7`; headset
- * responses use `0x7649`.
+ * four-byte type, and a payload CRC-16/Modbus. Captured media-control requests use seed `0x86F7`;
+ * Local Audio state queries use `0x7649`. Their response classes currently use `0x7649` and
+ * `0xA492`, respectively.
  */
 object ShokzOpenSwimCodec {
   private const val requestType = 1u
   private const val responseType = 0x101u
   private const val requestChecksumSeed = 0x86F7
-  private const val responseChecksumSeed = 0x7649
+  private const val mediaResponseChecksumSeed = 0x7649
+  private const val localAudioStateResponseChecksumSeed = 0xA492
   private const val headerSize = 12
 
   fun isRequest(envelope: ShokzOpenSwimEnvelope): Boolean = envelope.type == requestType
@@ -36,7 +39,7 @@ object ShokzOpenSwimCodec {
       frame.writeUShort(2, payloadLength + 4)
       frame.writeUInt(4, envelope.type)
       frame.writeUShort(8, payloadLength)
-      frame.writeUShort(10, crc16Modbus(envelope.payload, seedFor(envelope.type)))
+      frame.writeUShort(10, crc16Modbus(envelope.payload, envelope.checksumSeed))
       envelope.payload.copyInto(frame, destinationOffset = headerSize)
     }
   }
@@ -50,17 +53,22 @@ object ShokzOpenSwimCodec {
     require(frame.size == headerSize + payloadLength) { "OpenSwim frame is truncated" }
     val payload = frame.copyOfRange(headerSize, frame.size)
     val type = frame.readUInt(4)
-    require(frame.readUShort(10) == crc16Modbus(payload, seedFor(type))) {
-      "OpenSwim payload checksum failed"
-    }
-    return ShokzOpenSwimEnvelope(type = type, payload = payload)
+    val checksumSeed = seedFor(type, payload, frame.readUShort(10))
+    require(checksumSeed != null) { "OpenSwim payload checksum failed" }
+    return ShokzOpenSwimEnvelope(type = type, payload = payload, checksumSeed = checksumSeed)
   }
 
-  private fun seedFor(type: UInt): Int =
+  private fun seedFor(type: UInt, payload: ByteArray, checksum: Int): Int? =
     when (type) {
-      requestType -> requestChecksumSeed
-      responseType -> responseChecksumSeed
-      else -> throw IllegalArgumentException("Unsupported OpenSwim envelope type: $type")
+      requestType ->
+        listOf(requestChecksumSeed, mediaResponseChecksumSeed).firstOrNull {
+          crc16Modbus(payload, it) == checksum
+        }
+      responseType ->
+        listOf(mediaResponseChecksumSeed, localAudioStateResponseChecksumSeed).firstOrNull {
+          crc16Modbus(payload, it) == checksum
+        }
+      else -> null
     }
 
   private fun crc16Modbus(bytes: ByteArray, seed: Int): Int {
@@ -95,6 +103,7 @@ object ShokzOpenSwimCommandEncoder {
 
   fun encode(command: RcspCommand): ShokzOpenSwimEnvelope? =
     when (command) {
+      RcspCommand.QueryMediaState -> queryRequest(query = 0x40)
       RcspCommand.Play -> mediaRequest(action = 3)
       RcspCommand.Pause -> mediaRequest(action = 4)
       RcspCommand.PreviousTrack -> mediaRequest(action = 7)
@@ -102,22 +111,39 @@ object ShokzOpenSwimCommandEncoder {
       else -> null
     }
 
+  /**
+   * Observed Local Audio state query. The headset replies with a `0x8040` payload whose final
+   * tagged values change with local playback state. Keep that payload internal until every field
+   * has been independently mapped.
+   */
+  private fun queryRequest(query: Int): ShokzOpenSwimEnvelope {
+    val values = intArrayOf(1, 36, 2, 4, 2, 3, 4, query, 4, 4, 0)
+    return ShokzOpenSwimEnvelope(
+      type = requestType,
+      payload = values.toLittleEndianPayload(),
+      checksumSeed = 0x7649,
+    )
+  }
+
   private fun mediaRequest(action: Int): ShokzOpenSwimEnvelope {
     val values = intArrayOf(1, 32, 2, 4, 1, 3, 4, action, 4, 0)
     return ShokzOpenSwimEnvelope(
       type = requestType,
-      payload =
-        ByteArray(values.size * Int.SIZE_BYTES).also { payload ->
-          values.forEachIndexed { index, value ->
-            val offset = index * Int.SIZE_BYTES
-            payload[offset] = value.toByte()
-            payload[offset + 1] = (value ushr 8).toByte()
-            payload[offset + 2] = (value ushr 16).toByte()
-            payload[offset + 3] = (value ushr 24).toByte()
-          }
-        },
+      payload = values.toLittleEndianPayload(),
+      checksumSeed = 0x86F7,
     )
   }
+
+  private fun IntArray.toLittleEndianPayload(): ByteArray =
+    ByteArray(size * Int.SIZE_BYTES).also { payload ->
+      forEachIndexed { index, value ->
+        val offset = index * Int.SIZE_BYTES
+        payload[offset] = value.toByte()
+        payload[offset + 1] = (value ushr 8).toByte()
+        payload[offset + 2] = (value ushr 16).toByte()
+        payload[offset + 3] = (value ushr 24).toByte()
+      }
+    }
 }
 
 /** Vendor transport boundary for an OpenSwim Pro connection. */

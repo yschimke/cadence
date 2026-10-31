@@ -41,6 +41,7 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.UUID
 
 @ContributesBinding(AppScope::class, binding = binding<BluetoothController>())
@@ -145,9 +146,43 @@ class AndroidBluetoothController(
         }
     }
 
-    override suspend fun dispatchAdvanced(command: AdvancedCommand): String = when (command) {
-        AdvancedCommand.QueryBattery -> batteryFromConnected() ?: "Unknown — connect a device"
-        else -> "Preview only — firmware support not wired up yet"
+    override suspend fun dispatchAdvanced(command: AdvancedCommand): String =
+        when (command) {
+            AdvancedCommand.QueryBattery -> batteryFromConnected() ?: "Unknown — connect a device"
+            AdvancedCommand.QueryLocalAudioState -> queryOpenSwimLocalAudioState()
+            else -> "Preview only — firmware support not wired up yet"
+        }
+
+    private suspend fun queryOpenSwimLocalAudioState(): String {
+        if (workingModeFlow.value != WorkingMode.Mp3) {
+            return "Select Local Audio first"
+        }
+        val device = connectedAudioDevice()
+            ?.takeIf { it.name?.contains("OpenSwim Pro", ignoreCase = true) == true }
+            ?: return "Connect an OpenSwim Pro first"
+        return withContext(Dispatchers.IO) {
+            runCatching {
+                val socket =
+                    device.createRfcommSocketToServiceRecord(UUID.fromString(OpenSwimProProfile.serviceUuid))
+                socket.use {
+                    it.connect()
+                    ShokzOpenSwimController(AndroidShokzOpenSwimTransport(it))
+                        .execute(RcspCommand.QueryMediaState)
+                }
+            }.fold(
+                onSuccess = { response ->
+                    Log.i(
+                        "CadenceBluetooth",
+                        "OpenSwim Local Audio state acknowledged with type ${response.type}",
+                    )
+                    "Local Audio state acknowledged"
+                },
+                onFailure = { error ->
+                    Log.w("CadenceBluetooth", "OpenSwim Local Audio state query failed", error)
+                    "Local Audio state query failed: ${error.message ?: "unknown error"}"
+                },
+            )
+        }
     }
 
     private fun batteryFromConnected(): String? {

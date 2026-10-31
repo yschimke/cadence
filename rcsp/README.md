@@ -42,7 +42,9 @@ A5 5A | outerLength:u16le | type:u32le | payloadLength:u16le | payloadCrc:u16le 
 ```
 
 App requests use `type = 1`; headset replies use `type = 0x101`. Both payload checksums are
-CRC-16/Modbus, with a captured request seed of `0x86F7` and response seed of `0x7649`.
+CRC-16/Modbus, but the seed is operation-class-specific: captured media-control requests use
+`0x86F7`, the Local Audio state query uses `0x7649`, media acknowledgements use `0x7649`, and
+Local Audio state replies use `0xA492`.
 
 The four verified media requests have a 40-byte, little-endian word payload:
 

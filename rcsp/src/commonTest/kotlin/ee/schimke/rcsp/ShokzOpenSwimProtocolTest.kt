@@ -32,6 +32,15 @@ class ShokzOpenSwimProtocolTest {
   }
 
   @Test
+  fun `encodes the captured Local Audio state query byte-for-byte`() {
+    assertContentEquals(
+      "a55a3000010000002c005d9d0100000024000000020000000400000002000000030000000400000040000000040000000400000000000000"
+        .hex(),
+      ShokzOpenSwimCodec.encode(ShokzOpenSwimCommandEncoder.encode(RcspCommand.QueryMediaState)!!),
+    )
+  }
+
+  @Test
   fun `decodes a captured request and rejects checksum corruption`() {
     val frame =
       "a55a2c000100000028005ab701000000200000000200000004000000020000000300000004000000020000000400000000000000"
@@ -55,7 +64,17 @@ class ShokzOpenSwimProtocolTest {
   }
 
   @Test
-  fun `OpenSwim profile exposes only captured media controls`() {
+  fun `decodes a captured Local Audio state response with its query checksum seed`() {
+    val response =
+      "a55a4000010100003c00d211010000003400000002000000040000000200000003000000040000004080000004000000140000000100000002000000010000000400000001000000"
+        .hex()
+
+    assertTrue(ShokzOpenSwimCodec.isResponse(ShokzOpenSwimCodec.decode(response)))
+  }
+
+  @Test
+  fun `OpenSwim profile exposes only verified Local Audio commands`() {
+    assertTrue(OpenSwimProProfile.isSupported(RcspCommand.QueryMediaState))
     assertTrue(OpenSwimProProfile.isSupported(RcspCommand.Play))
     assertTrue(OpenSwimProProfile.isSupported(RcspCommand.Pause))
     assertTrue(OpenSwimProProfile.isSupported(RcspCommand.NextTrack))

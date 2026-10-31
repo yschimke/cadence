@@ -104,6 +104,7 @@ enum class AdvancedCommand(val label: String, val category: AdvancedCommandCateg
   QueryBattery("Query battery", AdvancedCommandCategory.Power),
   QueryFirmware("Query firmware version", AdvancedCommandCategory.Firmware),
   QueryDeviceInfo("Query device info", AdvancedCommandCategory.Diagnostics),
+  QueryLocalAudioState("Query Local Audio state", AdvancedCommandCategory.Audio),
   EqFlat("EQ: Flat", AdvancedCommandCategory.Audio),
   EqVocal("EQ: Vocal", AdvancedCommandCategory.Audio),
   EqBassBoost("EQ: Bass boost", AdvancedCommandCategory.Audio),
