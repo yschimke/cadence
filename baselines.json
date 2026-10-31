@@ -28,7 +28,7 @@
     "functionName": "HeadphoneWidgetBluetoothPreview",
     "module": "composeApp",
     "renderBasename": "HeadphoneWidgetBluetoothPreview_Headphone_widget_Bluetooth-672bb261.png",
-    "sha256": "1e446639265d75c34d2c64357f94e9252c517551c57bb0539d381dc7b985aa7e",
+    "sha256": "8ad354e58046020befe19386561b96e410bca069b1dcac409e5752b94257104e",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetDisconnectedPreview_Headphone widget \u00b7 disconnected": {
@@ -100,7 +100,7 @@
     "functionName": "HeadphoneWidgetPlayingAnimatedPreview",
     "module": "composeApp",
     "renderBasename": "HeadphoneWidgetPlayingAnimatedPreview_Headphone_widget_playing_animated-157e750e.gif",
-    "sha256": "a83134ace16d75d0f9dd9b74026e261f8a4afecdbb1f82bd826f71af674bc680",
+    "sha256": "d77fd1b76f42b77d7bb665707a1907a7df4761cbea33136ef468cee9599b317b",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.PodcastPreviewsKt.AddPodcastsPreview_Add podcasts": {
@@ -380,7 +380,7 @@
     "functionName": "SwimLaneFlipTurnAnimatedPreview",
     "module": "swimUi",
     "renderBasename": "SwimLaneFlipTurnAnimatedPreview_Swim_lane_flip_turn_animated-db9e413a.gif",
-    "sha256": "9c464ff260d9646e9401303cf36094fa9b1b71bdf0f06c127d6656d403e0791f",
+    "sha256": "296701069e9fc853a364b4b4e7595dba05f6d99cfb78d9db8761fe78622cb21a",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/swim/SwimAnimatedPreviews.kt"
   },
   "swimUi/ee.schimke.cadence.swim.SwimAnimatedPreviewsKt.SwimLaneLapsAnimatedPreview_Swim lane \u00b7 laps \u00b7 animated": {
@@ -396,7 +396,7 @@
     "functionName": "SwimmingPoolAnimatedPreview",
     "module": "swimUi",
     "renderBasename": "SwimmingPoolAnimatedPreview_Swimming_pool_animated-d70a85a6.gif",
-    "sha256": "6738f3f9f2d4d6fb8e46b55e80207ce0aecd5e8b07db543ec87ba6dc7687aa6b",
+    "sha256": "08698c95caa25a31845d7f5fa075742274d6c1952958286340cdb2f7f9a7f9f3",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/swim/SwimAnimatedPreviews.kt"
   },
   "swimUi/ee.schimke.cadence.swim.SwimAnimatedPreviewsKt.WaterButtonAnimatedPreview_Water button \u00b7 animated": {
@@ -692,7 +692,7 @@
     "functionName": "ModeAndControlsWearWidgetAnimatedPreview",
     "module": "wearApp",
     "renderBasename": "ModeAndControlsWearWidgetAnimatedPreview_Now_playing_animated-da6d1cec_PARAM_0.gif",
-    "sha256": "fda63ab31e5fe35cb01125d06a4d589b5d21c08f35e04500b6ac6c7f52d577f4",
+    "sha256": "188ccb1928d737353de815add617a70504a85e6c29d74ab0c88c12da4094ad60",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt"
   },
   "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetAnimatedPreview_Now playing \u00b7 animated#1": {
@@ -724,7 +724,7 @@
     "functionName": "ModeAndControlsWearWidgetRectangularPreview",
     "module": "wearApp",
     "renderBasename": "ModeAndControlsWearWidgetRectangularPreview_Now_playing_rectangular-71381054_PARAM_0.png",
-    "sha256": "b264da3ce9548868219b820c96a257c44f8255ee99b8c31311985e1db83d72c5",
+    "sha256": "d1d7ec0fbba9de67e9aac632f17acfc0801204755729e161893cda2da5f3486f",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt"
   },
   "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetRectangularPreview_Now playing \u00b7 rectangular#1": {
