@@ -2,19 +2,6 @@
 
 Auto-generated from `main`. Browse inline or compare against PR branches.
 
-> [!WARNING]
-> 3 preview(s) failed to render in the latest update (3 retained from the prior baseline). See **Render Failures** below.
-
-## Render Failures
-
-The render task completed but no PNG was produced for these previews. Entries with a prior baseline keep their previous image; the rest are absent from the gallery until a successful render lands.
-
-| Preview | Module | Function | Source | Baseline |
-|---------|--------|----------|--------|----------|
-| `wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetRectangularPreview_Now playing · rectangular` | wearApp | `ModeAndControlsWearWidgetRectangularPreview` | `src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt` | retained |
-| `wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetRoundPreview_Now playing · round (Samsung)` | wearApp | `ModeAndControlsWearWidgetRoundPreview` | `src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt` | retained |
-| `wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetSquirclePreview_Now playing · squircle` | wearApp | `ModeAndControlsWearWidgetSquirclePreview` | `src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt` | retained |
-
 ## composeApp
 
 | Preview | Image |
@@ -83,10 +70,25 @@ The render task completed but no PNG was produced for these previews. Entries wi
 | `LocalAudioPlaylistPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/wearApp/LocalAudioPlaylistPreview_Fonts_Normal-b7fff9fa.png" width="150" /> |
 | `LocalAudioPlaylistPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/wearApp/LocalAudioPlaylistPreview_Fonts_Small-34a794e7.png" width="150" /> |
 | `LocalAudioPlaylistWearWidgetRectangularPreview · parameter 0` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/wearApp/LocalAudioPlaylistWearWidgetRectangularPreview_Playlist_rectangular-a3081eb2_PARAM_0.png" width="150" /> |
+| `LocalAudioPlaylistWearWidgetRectangularPreview · parameter 1` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/wearApp/LocalAudioPlaylistWearWidgetRectangularPreview_Playlist_rectangular-a3081eb2_PARAM_1.png" width="150" /> |
 | `LocalAudioPlaylistWearWidgetRoundPreview · parameter 0` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/wearApp/LocalAudioPlaylistWearWidgetRoundPreview_Playlist_round_Samsung-8676e176_PARAM_0.png" width="150" /> |
 | `LocalAudioPlaylistWearWidgetRoundPreview · parameter 1` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/wearApp/LocalAudioPlaylistWearWidgetRoundPreview_Playlist_round_Samsung-8676e176_PARAM_1.png" width="150" /> |
+| `LocalAudioPlaylistWearWidgetRoundPreview · parameter 2` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/wearApp/LocalAudioPlaylistWearWidgetRoundPreview_Playlist_round_Samsung-8676e176_PARAM_2.png" width="150" /> |
+| `LocalAudioPlaylistWearWidgetRoundPreview · parameter 3` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/wearApp/LocalAudioPlaylistWearWidgetRoundPreview_Playlist_round_Samsung-8676e176_PARAM_3.png" width="150" /> |
 | `LocalAudioPlaylistWearWidgetSquirclePreview · parameter 0` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/wearApp/LocalAudioPlaylistWearWidgetSquirclePreview_Playlist_squircle-fe5fe95f_PARAM_0.png" width="150" /> |
 | `LocalAudioPlaylistWearWidgetSquirclePreview · parameter 1` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/wearApp/LocalAudioPlaylistWearWidgetSquirclePreview_Playlist_squircle-fe5fe95f_PARAM_1.png" width="150" /> |
+| `LocalAudioPlaylistWearWidgetSquirclePreview · parameter 2` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/wearApp/LocalAudioPlaylistWearWidgetSquirclePreview_Playlist_squircle-fe5fe95f_PARAM_2.png" width="150" /> |
+| `LocalAudioPlaylistWearWidgetSquirclePreview · parameter 3` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/wearApp/LocalAudioPlaylistWearWidgetSquirclePreview_Playlist_squircle-fe5fe95f_PARAM_3.png" width="150" /> |
+| `ModeAndControlsWearWidgetRectangularPreview · parameter 0` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/wearApp/ModeAndControlsWearWidgetRectangularPreview_Now_playing_rectangular-71381054_PARAM_0.png" width="150" /> |
+| `ModeAndControlsWearWidgetRectangularPreview · parameter 1` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/wearApp/ModeAndControlsWearWidgetRectangularPreview_Now_playing_rectangular-71381054_PARAM_1.png" width="150" /> |
+| `ModeAndControlsWearWidgetRoundPreview · parameter 0` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/wearApp/ModeAndControlsWearWidgetRoundPreview_Now_playing_round_Samsung-4f203db6_PARAM_0.png" width="150" /> |
+| `ModeAndControlsWearWidgetRoundPreview · parameter 1` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/wearApp/ModeAndControlsWearWidgetRoundPreview_Now_playing_round_Samsung-4f203db6_PARAM_1.png" width="150" /> |
+| `ModeAndControlsWearWidgetRoundPreview · parameter 2` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/wearApp/ModeAndControlsWearWidgetRoundPreview_Now_playing_round_Samsung-4f203db6_PARAM_2.png" width="150" /> |
+| `ModeAndControlsWearWidgetRoundPreview · parameter 3` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/wearApp/ModeAndControlsWearWidgetRoundPreview_Now_playing_round_Samsung-4f203db6_PARAM_3.png" width="150" /> |
+| `ModeAndControlsWearWidgetSquirclePreview · parameter 0` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/wearApp/ModeAndControlsWearWidgetSquirclePreview_Now_playing_squircle-f7452489_PARAM_0.png" width="150" /> |
+| `ModeAndControlsWearWidgetSquirclePreview · parameter 1` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/wearApp/ModeAndControlsWearWidgetSquirclePreview_Now_playing_squircle-f7452489_PARAM_1.png" width="150" /> |
+| `ModeAndControlsWearWidgetSquirclePreview · parameter 2` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/wearApp/ModeAndControlsWearWidgetSquirclePreview_Now_playing_squircle-f7452489_PARAM_2.png" width="150" /> |
+| `ModeAndControlsWearWidgetSquirclePreview · parameter 3` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/wearApp/ModeAndControlsWearWidgetSquirclePreview_Now_playing_squircle-f7452489_PARAM_3.png" width="150" /> |
 | `SyncStatusWearWidgetRectangularPreview · parameter 0` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/wearApp/SyncStatusWearWidgetRectangularPreview_Sync_rectangular-ecd1feeb_PARAM_0.png" width="150" /> |
 | `SyncStatusWearWidgetRectangularPreview · parameter 1` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/wearApp/SyncStatusWearWidgetRectangularPreview_Sync_rectangular-ecd1feeb_PARAM_1.png" width="150" /> |
 | `SyncStatusWearWidgetRoundPreview · parameter 0` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/wearApp/SyncStatusWearWidgetRoundPreview_Sync_round_Samsung-f0a0a37a_PARAM_0.png" width="150" /> |
