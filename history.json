@@ -1,6 +1,6 @@
 {
     "formatVersion": "compose-preview-history/v1",
-    "generatedFrom": "d8d78061c88f56a50e489c49e22a461ad0555971",
+    "generatedFrom": "9cdd7d6f8260e0efdae4857f30a44419fc45f5de",
     "previews": {
         "composeApp/activity__MainActivity": {
             "path": "renders/composeApp/activity__MainActivity.png",
@@ -107,6 +107,13 @@
             "path": "renders/composeApp/HeadphoneWidgetBluetoothPreview_Headphone_widget_Bluetooth-672bb261.png",
             "versions": [
                 {
+                    "blob": "27b0f7ea0bb57eb991d096c9d39c09ce08515666",
+                    "commit": "9cdd7d6f8260e0efdae4857f30a44419fc45f5de",
+                    "date": "2026-10-31T20:22:54Z",
+                    "sourceSha": "cc2a8592",
+                    "commits": 1
+                },
+                {
                     "blob": "97a7ac702aa82d60fd8166ba69d6f379df96d273",
                     "commit": "d8d78061c88f56a50e489c49e22a461ad0555971",
                     "date": "2026-10-31T19:53:43Z",
@@ -142,7 +149,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 5,
+            "observations": 6,
             "unstable": false,
             "flapCount": 0
         },
@@ -1604,6 +1611,13 @@
             "path": "renders/wearApp/ModeAndControlsWearWidgetAnimatedPreview_Now_playing_animated-da6d1cec_PARAM_0.gif",
             "versions": [
                 {
+                    "blob": "659da8ed737c545403e3c46269c91486308d7d48",
+                    "commit": "9cdd7d6f8260e0efdae4857f30a44419fc45f5de",
+                    "date": "2026-10-31T20:22:54Z",
+                    "sourceSha": "cc2a8592",
+                    "commits": 1
+                },
+                {
                     "blob": "5483ee868401689ae62ae4a2a3976b92eb4d5aec",
                     "commit": "7c975894bd326758d63e47a30aba84605a5d78ab",
                     "date": "2026-10-31T19:48:27Z",
@@ -1618,7 +1632,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 2,
+            "observations": 3,
             "unstable": false,
             "flapCount": 0
         },
@@ -1671,6 +1685,13 @@
             "path": "renders/wearApp/ModeAndControlsWearWidgetRectangularPreview_Now_playing_rectangular-71381054_PARAM_0.png",
             "versions": [
                 {
+                    "blob": "29fd38588cb9228fc9d8445398625e26bc58c1c7",
+                    "commit": "9cdd7d6f8260e0efdae4857f30a44419fc45f5de",
+                    "date": "2026-10-31T20:22:54Z",
+                    "sourceSha": "cc2a8592",
+                    "commits": 1
+                },
+                {
                     "blob": "368c58cc19164a0a493be86bd5fc34cbd145401e",
                     "commit": "d8d78061c88f56a50e489c49e22a461ad0555971",
                     "date": "2026-10-31T19:53:43Z",
@@ -1692,9 +1713,9 @@
                     "commits": 1
                 }
             ],
-            "observations": 3,
+            "observations": 4,
             "unstable": false,
-            "flapCount": 0
+            "flapCount": 1
         },
         "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetRectangularPreview_Now playing · rectangular#1": {
             "path": "renders/wearApp/ModeAndControlsWearWidgetRectangularPreview_Now_playing_rectangular-71381054_PARAM_1.png",
