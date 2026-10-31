@@ -1,6 +1,6 @@
 {
     "formatVersion": "compose-preview-history/v1",
-    "generatedFrom": "0f9e665adca6d225f63d1e9915fb5000d517c682",
+    "generatedFrom": "7b88a571680bbc324b21db105dfd496f1063b704",
     "previews": {
         "composeApp/activity__MainActivity": {
             "path": "renders/composeApp/activity__MainActivity.png",
@@ -107,6 +107,13 @@
             "path": "renders/composeApp/HeadphoneWidgetBluetoothPreview_Headphone_widget_Bluetooth-672bb261.png",
             "versions": [
                 {
+                    "blob": "27e0a59249879194c1450e1bbe0c231f7330827d",
+                    "commit": "7b88a571680bbc324b21db105dfd496f1063b704",
+                    "date": "2026-10-31T18:08:08Z",
+                    "sourceSha": "188e65f2",
+                    "commits": 1
+                },
+                {
                     "blob": "4b9b719532ebc9b713cab8e6b8a261a5f19ee406",
                     "commit": "be8be9cb409d540597006cb3ba09263b563c56b9",
                     "date": "2026-10-31T16:38:26Z",
@@ -114,22 +121,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
-            "unstable": false,
-            "flapCount": 0
-        },
-        "composeApp/ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetCompactPreview_Headphone widget · compact": {
-            "path": "renders/composeApp/HeadphoneWidgetCompactPreview_Headphone_widget_compact-2452261c.png",
-            "versions": [
-                {
-                    "blob": "56e46525e134f1680534407f755deb6907491255",
-                    "commit": "be8be9cb409d540597006cb3ba09263b563c56b9",
-                    "date": "2026-10-31T16:38:26Z",
-                    "sourceSha": "a8c615ee",
-                    "commits": 1
-                }
-            ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
@@ -137,10 +129,107 @@
             "path": "renders/composeApp/HeadphoneWidgetDisconnectedPreview_Headphone_widget_disconnected-b8bab80a.png",
             "versions": [
                 {
+                    "blob": "27e0a59249879194c1450e1bbe0c231f7330827d",
+                    "commit": "7b88a571680bbc324b21db105dfd496f1063b704",
+                    "date": "2026-10-31T18:08:08Z",
+                    "sourceSha": "188e65f2",
+                    "commits": 1
+                },
+                {
                     "blob": "4b9b719532ebc9b713cab8e6b8a261a5f19ee406",
                     "commit": "be8be9cb409d540597006cb3ba09263b563c56b9",
                     "date": "2026-10-31T16:38:26Z",
                     "sourceSha": "a8c615ee",
+                    "commits": 1
+                }
+            ],
+            "observations": 2,
+            "unstable": false,
+            "flapCount": 0
+        },
+        "composeApp/ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetLightPreview_Headphone widget · light": {
+            "path": "renders/composeApp/HeadphoneWidgetLightPreview_Headphone_widget_light-98937184.png",
+            "versions": [
+                {
+                    "blob": "27e0a59249879194c1450e1bbe0c231f7330827d",
+                    "commit": "7b88a571680bbc324b21db105dfd496f1063b704",
+                    "date": "2026-10-31T18:08:08Z",
+                    "sourceSha": "188e65f2",
+                    "commits": 1
+                }
+            ],
+            "observations": 1,
+            "unstable": false,
+            "flapCount": 0
+        },
+        "composeApp/ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetMp32x1Preview_Headphone widget · MP3 · 2×1": {
+            "path": "renders/composeApp/HeadphoneWidgetMp32x1Preview_Headphone_widget_MP3_2_1-820e2ca9.png",
+            "versions": [
+                {
+                    "blob": "076393a287e2c03b525a131aa6ab56c3b337a965",
+                    "commit": "7b88a571680bbc324b21db105dfd496f1063b704",
+                    "date": "2026-10-31T18:08:08Z",
+                    "sourceSha": "188e65f2",
+                    "commits": 1
+                }
+            ],
+            "observations": 1,
+            "unstable": false,
+            "flapCount": 0
+        },
+        "composeApp/ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetMp33x1Preview_Headphone widget · MP3 · 3×1": {
+            "path": "renders/composeApp/HeadphoneWidgetMp33x1Preview_Headphone_widget_MP3_3_1-0abd2b18.png",
+            "versions": [
+                {
+                    "blob": "e9ef4c599993e071ea5e46f3c3e5f685c31dcebb",
+                    "commit": "7b88a571680bbc324b21db105dfd496f1063b704",
+                    "date": "2026-10-31T18:08:08Z",
+                    "sourceSha": "188e65f2",
+                    "commits": 1
+                }
+            ],
+            "observations": 1,
+            "unstable": false,
+            "flapCount": 0
+        },
+        "composeApp/ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetMp33x2Preview_Headphone widget · MP3 · 3×2": {
+            "path": "renders/composeApp/HeadphoneWidgetMp33x2Preview_Headphone_widget_MP3_3_2-c9d5ee48.png",
+            "versions": [
+                {
+                    "blob": "d7d7730c34c3681cb848b64946b7417f185299c1",
+                    "commit": "7b88a571680bbc324b21db105dfd496f1063b704",
+                    "date": "2026-10-31T18:08:08Z",
+                    "sourceSha": "188e65f2",
+                    "commits": 1
+                }
+            ],
+            "observations": 1,
+            "unstable": false,
+            "flapCount": 0
+        },
+        "composeApp/ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetMp35x1Preview_Headphone widget · MP3 · 5×1": {
+            "path": "renders/composeApp/HeadphoneWidgetMp35x1Preview_Headphone_widget_MP3_5_1-32dd6d60.png",
+            "versions": [
+                {
+                    "blob": "ddd43ff295f5813d511a9ac82726cfc87121f9aa",
+                    "commit": "7b88a571680bbc324b21db105dfd496f1063b704",
+                    "date": "2026-10-31T18:08:08Z",
+                    "sourceSha": "188e65f2",
+                    "commits": 1
+                }
+            ],
+            "observations": 1,
+            "unstable": false,
+            "flapCount": 0
+        },
+        "composeApp/ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetMp35x3Preview_Headphone widget · MP3 · 5×3": {
+            "path": "renders/composeApp/HeadphoneWidgetMp35x3Preview_Headphone_widget_MP3_5_3-c18f130c.png",
+            "versions": [
+                {
+                    "blob": "8578997abef98adb0e81dca2d6830f2bbcbf55e5",
+                    "commit": "7b88a571680bbc324b21db105dfd496f1063b704",
+                    "date": "2026-10-31T18:08:08Z",
+                    "sourceSha": "188e65f2",
                     "commits": 1
                 }
             ],
@@ -152,6 +241,13 @@
             "path": "renders/composeApp/HeadphoneWidgetMp3Preview_Headphone_widget_MP3-d6a1c3d9.png",
             "versions": [
                 {
+                    "blob": "27e0a59249879194c1450e1bbe0c231f7330827d",
+                    "commit": "7b88a571680bbc324b21db105dfd496f1063b704",
+                    "date": "2026-10-31T18:08:08Z",
+                    "sourceSha": "188e65f2",
+                    "commits": 1
+                },
+                {
                     "blob": "4b9b719532ebc9b713cab8e6b8a261a5f19ee406",
                     "commit": "be8be9cb409d540597006cb3ba09263b563c56b9",
                     "date": "2026-10-31T16:38:26Z",
@@ -159,7 +255,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
