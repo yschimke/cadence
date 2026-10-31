@@ -6,15 +6,15 @@ Browse inline; image URLs are pinned to the commit SHA on the baseline branch so
 
 ## wearApp
 
-### `ConnectedWearCompanionPreview` · `wearos_small_round`
+### `ConnectedWearCompanionPreview` · `wearos_large_round`
 
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/wearApp/ConnectedWearCompanionPreview_wearos_small_round-16dda6ee.a11y.png" width="400" />
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/wearApp/ConnectedWearCompanionPreview_Devices_Large_Round-4b2d8b90.a11y.png" width="400" />
 
 _No findings._
 
-### `LocalAudioPlaylistPreview` · `wearos_small_round`
+### `LocalAudioPlaylistPreview` · `wearos_large_round`
 
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/wearApp/LocalAudioPlaylistPreview_MP3_playlist-18f486a6.a11y.png" width="400" />
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/wearApp/LocalAudioPlaylistPreview_Devices_Large_Round-a766dc27.a11y.png" width="400" />
 
 _No findings._
 
@@ -28,7 +28,7 @@ _No findings._
 
 ### `LocalAudioPlaylistWearWidgetPreview`
 
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetPreview_MP3 playlist · round.a11y.png" width="400" />
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetPreview_Galaxy Watch 7 · 44 mm.a11y.png" width="400" />
 
 | # | Level | Rule | Element | Message |
 |--:|---|---|---|---|
@@ -44,7 +44,7 @@ _No findings._
 
 ### `ModeAndControlsWearWidgetPreview`
 
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetPreview_Mode controls · round.a11y.png" width="400" />
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetPreview_Galaxy Watch 7 · 44 mm.a11y.png" width="400" />
 
 | # | Level | Rule | Element | Message |
 |--:|---|---|---|---|
@@ -60,7 +60,7 @@ _No findings._
 
 ### `SyncStatusWearWidgetPreview`
 
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetPreview_Sync status · round.a11y.png" width="400" />
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetPreview_Galaxy Watch 7 · 44 mm.a11y.png" width="400" />
 
 | # | Level | Rule | Element | Message |
 |--:|---|---|---|---|

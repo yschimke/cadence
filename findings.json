@@ -1,26 +1,26 @@
 {
   "entries": [
     {
-      "annotatedBasename": "ConnectedWearCompanionPreview_wearos_small_round-16dda6ee.a11y.png",
-      "cleanBasename": "ConnectedWearCompanionPreview_wearos_small_round-16dda6ee.png",
+      "annotatedBasename": "ConnectedWearCompanionPreview_Devices_Large_Round-4b2d8b90.a11y.png",
+      "cleanBasename": "ConnectedWearCompanionPreview_Devices_Large_Round-4b2d8b90.png",
       "findings": [],
       "functionName": "ConnectedWearCompanionPreview",
       "module": "wearApp",
-      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.ConnectedWearCompanionPreview_wearos_small_round",
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.ConnectedWearCompanionPreview_Devices - Large Round",
       "rendersDir": "wearApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/WearCompanionApp.kt",
-      "variant": "wearos_small_round"
+      "variant": "wearos_large_round"
     },
     {
-      "annotatedBasename": "LocalAudioPlaylistPreview_MP3_playlist-18f486a6.a11y.png",
-      "cleanBasename": "LocalAudioPlaylistPreview_MP3_playlist-18f486a6.png",
+      "annotatedBasename": "LocalAudioPlaylistPreview_Devices_Large_Round-a766dc27.a11y.png",
+      "cleanBasename": "LocalAudioPlaylistPreview_Devices_Large_Round-a766dc27.png",
       "findings": [],
       "functionName": "LocalAudioPlaylistPreview",
       "module": "wearApp",
-      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.LocalAudioPlaylistPreview_MP3 playlist",
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.LocalAudioPlaylistPreview_Devices - Large Round",
       "rendersDir": "wearApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/WearCompanionApp.kt",
-      "variant": "wearos_small_round"
+      "variant": "wearos_large_round"
     },
     {
       "annotatedBasename": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetPickerPreview_MP3 playlist \u00b7 picker asset.a11y.png",
@@ -42,7 +42,7 @@
       "variant": ""
     },
     {
-      "annotatedBasename": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetPreview_MP3 playlist \u00b7 round.a11y.png",
+      "annotatedBasename": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetPreview_Galaxy Watch 7 \u00b7 44 mm.a11y.png",
       "cleanBasename": "",
       "findings": [
         {
@@ -55,7 +55,7 @@
       ],
       "functionName": "LocalAudioPlaylistWearWidgetPreview",
       "module": "wearApp",
-      "previewId": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetPreview_MP3 playlist \u00b7 round",
+      "previewId": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetPreview_Galaxy Watch 7 \u00b7 44 mm",
       "rendersDir": "wearApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt",
       "variant": ""
@@ -80,7 +80,7 @@
       "variant": ""
     },
     {
-      "annotatedBasename": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetPreview_Mode controls \u00b7 round.a11y.png",
+      "annotatedBasename": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetPreview_Galaxy Watch 7 \u00b7 44 mm.a11y.png",
       "cleanBasename": "",
       "findings": [
         {
@@ -93,7 +93,7 @@
       ],
       "functionName": "ModeAndControlsWearWidgetPreview",
       "module": "wearApp",
-      "previewId": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetPreview_Mode controls \u00b7 round",
+      "previewId": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetPreview_Galaxy Watch 7 \u00b7 44 mm",
       "rendersDir": "wearApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt",
       "variant": ""
@@ -118,7 +118,7 @@
       "variant": ""
     },
     {
-      "annotatedBasename": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetPreview_Sync status \u00b7 round.a11y.png",
+      "annotatedBasename": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetPreview_Galaxy Watch 7 \u00b7 44 mm.a11y.png",
       "cleanBasename": "",
       "findings": [
         {
@@ -131,7 +131,7 @@
       ],
       "functionName": "SyncStatusWearWidgetPreview",
       "module": "wearApp",
-      "previewId": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetPreview_Sync status \u00b7 round",
+      "previewId": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetPreview_Galaxy Watch 7 \u00b7 44 mm",
       "rendersDir": "wearApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt",
       "variant": ""
