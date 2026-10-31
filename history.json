@@ -1,6 +1,6 @@
 {
     "formatVersion": "compose-preview-history/v1",
-    "generatedFrom": "77a44558328d4518a179de54689904a1db1efd7d",
+    "generatedFrom": "e618876752e6a39b165b94db8de520c7dad33fa0",
     "previews": {
         "composeApp/activity__MainActivity": {
             "path": "renders/composeApp/activity__MainActivity.png",
@@ -1043,14 +1043,14 @@
             "unstable": false,
             "flapCount": 0
         },
-        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetPickerPreview_MP3 playlist · picker asset": {
-            "path": "renders/wearApp/LocalAudioPlaylistWearWidgetPickerPreview_MP3_playlist_picker_asset-017dc0c5_PARAM_0.png",
+        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetRectangularPreview_Playlist · rectangular": {
+            "path": "renders/wearApp/LocalAudioPlaylistWearWidgetRectangularPreview_Playlist_rectangular-a3081eb2_PARAM_0.png",
             "versions": [
                 {
                     "blob": "29fd38588cb9228fc9d8445398625e26bc58c1c7",
-                    "commit": "77a44558328d4518a179de54689904a1db1efd7d",
-                    "date": "2026-10-31T15:24:54Z",
-                    "sourceSha": "2526d975",
+                    "commit": "e618876752e6a39b165b94db8de520c7dad33fa0",
+                    "date": "2026-10-31T16:10:36Z",
+                    "sourceSha": "38aa1bbf",
                     "commits": 1
                 }
             ],
@@ -1058,14 +1058,14 @@
             "unstable": false,
             "flapCount": 0
         },
-        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetPickerPreview_MP3 playlist · picker asset#1": {
-            "path": "renders/wearApp/LocalAudioPlaylistWearWidgetPickerPreview_MP3_playlist_picker_asset-017dc0c5_PARAM_1.png",
+        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetRectangularPreview_Playlist · rectangular#1": {
+            "path": "renders/wearApp/LocalAudioPlaylistWearWidgetRectangularPreview_Playlist_rectangular-a3081eb2_PARAM_1.png",
             "versions": [
                 {
                     "blob": "8e5bcde240791c0da1fd46340ead14012203571d",
-                    "commit": "77a44558328d4518a179de54689904a1db1efd7d",
-                    "date": "2026-10-31T15:24:54Z",
-                    "sourceSha": "2526d975",
+                    "commit": "e618876752e6a39b165b94db8de520c7dad33fa0",
+                    "date": "2026-10-31T16:10:36Z",
+                    "sourceSha": "38aa1bbf",
                     "commits": 1
                 }
             ],
@@ -1073,14 +1073,14 @@
             "unstable": false,
             "flapCount": 0
         },
-        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetPreview_Galaxy Watch 7 · 44 mm": {
-            "path": "renders/wearApp/LocalAudioPlaylistWearWidgetPreview_Galaxy_Watch_7_44_mm-9bd13b35_PARAM_0.png",
+        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetRoundPreview_Playlist · round (Samsung)": {
+            "path": "renders/wearApp/LocalAudioPlaylistWearWidgetRoundPreview_Playlist_round_Samsung-8676e176_PARAM_0.png",
             "versions": [
                 {
                     "blob": "b7207d31b442492feab348a34c35a2c3c8b8966b",
-                    "commit": "77a44558328d4518a179de54689904a1db1efd7d",
-                    "date": "2026-10-31T15:24:54Z",
-                    "sourceSha": "2526d975",
+                    "commit": "e618876752e6a39b165b94db8de520c7dad33fa0",
+                    "date": "2026-10-31T16:10:36Z",
+                    "sourceSha": "38aa1bbf",
                     "commits": 1
                 }
             ],
@@ -1088,14 +1088,14 @@
             "unstable": false,
             "flapCount": 0
         },
-        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetPreview_Galaxy Watch 7 · 44 mm#1": {
-            "path": "renders/wearApp/LocalAudioPlaylistWearWidgetPreview_Galaxy_Watch_7_44_mm-9bd13b35_PARAM_1.png",
+        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetRoundPreview_Playlist · round (Samsung)#1": {
+            "path": "renders/wearApp/LocalAudioPlaylistWearWidgetRoundPreview_Playlist_round_Samsung-8676e176_PARAM_1.png",
             "versions": [
                 {
                     "blob": "26177e6437257c3af3a16436788865e822553a24",
-                    "commit": "77a44558328d4518a179de54689904a1db1efd7d",
-                    "date": "2026-10-31T15:24:54Z",
-                    "sourceSha": "2526d975",
+                    "commit": "e618876752e6a39b165b94db8de520c7dad33fa0",
+                    "date": "2026-10-31T16:10:36Z",
+                    "sourceSha": "38aa1bbf",
                     "commits": 1
                 }
             ],
@@ -1103,14 +1103,14 @@
             "unstable": false,
             "flapCount": 0
         },
-        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetPreview_Galaxy Watch 7 · 44 mm#2": {
-            "path": "renders/wearApp/LocalAudioPlaylistWearWidgetPreview_Galaxy_Watch_7_44_mm-9bd13b35_PARAM_2.png",
+        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetRoundPreview_Playlist · round (Samsung)#2": {
+            "path": "renders/wearApp/LocalAudioPlaylistWearWidgetRoundPreview_Playlist_round_Samsung-8676e176_PARAM_2.png",
             "versions": [
                 {
                     "blob": "2029101af5e36e6e2765b4b79fcdbb6ade3fd44a",
-                    "commit": "77a44558328d4518a179de54689904a1db1efd7d",
-                    "date": "2026-10-31T15:24:54Z",
-                    "sourceSha": "2526d975",
+                    "commit": "e618876752e6a39b165b94db8de520c7dad33fa0",
+                    "date": "2026-10-31T16:10:36Z",
+                    "sourceSha": "38aa1bbf",
                     "commits": 1
                 }
             ],
@@ -1118,14 +1118,14 @@
             "unstable": false,
             "flapCount": 0
         },
-        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetPreview_Galaxy Watch 7 · 44 mm#3": {
-            "path": "renders/wearApp/LocalAudioPlaylistWearWidgetPreview_Galaxy_Watch_7_44_mm-9bd13b35_PARAM_3.png",
+        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetRoundPreview_Playlist · round (Samsung)#3": {
+            "path": "renders/wearApp/LocalAudioPlaylistWearWidgetRoundPreview_Playlist_round_Samsung-8676e176_PARAM_3.png",
             "versions": [
                 {
                     "blob": "b0ababa2a262a33565c6402f0a8dcd0e568072d2",
-                    "commit": "77a44558328d4518a179de54689904a1db1efd7d",
-                    "date": "2026-10-31T15:24:54Z",
-                    "sourceSha": "2526d975",
+                    "commit": "e618876752e6a39b165b94db8de520c7dad33fa0",
+                    "date": "2026-10-31T16:10:36Z",
+                    "sourceSha": "38aa1bbf",
                     "commits": 1
                 }
             ],
@@ -1133,14 +1133,14 @@
             "unstable": false,
             "flapCount": 0
         },
-        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetPreview_Pixel Watch 3 · 45 mm": {
-            "path": "renders/wearApp/LocalAudioPlaylistWearWidgetPreview_Pixel_Watch_3_45_mm-55449f0b_PARAM_0.png",
+        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetSquirclePreview_Playlist · squircle": {
+            "path": "renders/wearApp/LocalAudioPlaylistWearWidgetSquirclePreview_Playlist_squircle-fe5fe95f_PARAM_0.png",
             "versions": [
                 {
-                    "blob": "b7207d31b442492feab348a34c35a2c3c8b8966b",
-                    "commit": "77a44558328d4518a179de54689904a1db1efd7d",
-                    "date": "2026-10-31T15:24:54Z",
-                    "sourceSha": "2526d975",
+                    "blob": "26bd073147ed2424838a4aaf5b5c955b45ebc821",
+                    "commit": "e618876752e6a39b165b94db8de520c7dad33fa0",
+                    "date": "2026-10-31T16:10:36Z",
+                    "sourceSha": "38aa1bbf",
                     "commits": 1
                 }
             ],
@@ -1148,14 +1148,14 @@
             "unstable": false,
             "flapCount": 0
         },
-        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetPreview_Pixel Watch 3 · 45 mm#1": {
-            "path": "renders/wearApp/LocalAudioPlaylistWearWidgetPreview_Pixel_Watch_3_45_mm-55449f0b_PARAM_1.png",
+        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetSquirclePreview_Playlist · squircle#1": {
+            "path": "renders/wearApp/LocalAudioPlaylistWearWidgetSquirclePreview_Playlist_squircle-fe5fe95f_PARAM_1.png",
             "versions": [
                 {
-                    "blob": "26177e6437257c3af3a16436788865e822553a24",
-                    "commit": "77a44558328d4518a179de54689904a1db1efd7d",
-                    "date": "2026-10-31T15:24:54Z",
-                    "sourceSha": "2526d975",
+                    "blob": "4897bb839b9112dcec4783a3432750549061bbf7",
+                    "commit": "e618876752e6a39b165b94db8de520c7dad33fa0",
+                    "date": "2026-10-31T16:10:36Z",
+                    "sourceSha": "38aa1bbf",
                     "commits": 1
                 }
             ],
@@ -1163,14 +1163,14 @@
             "unstable": false,
             "flapCount": 0
         },
-        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetPreview_Pixel Watch 3 · 45 mm#2": {
-            "path": "renders/wearApp/LocalAudioPlaylistWearWidgetPreview_Pixel_Watch_3_45_mm-55449f0b_PARAM_2.png",
+        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetSquirclePreview_Playlist · squircle#2": {
+            "path": "renders/wearApp/LocalAudioPlaylistWearWidgetSquirclePreview_Playlist_squircle-fe5fe95f_PARAM_2.png",
             "versions": [
                 {
-                    "blob": "2029101af5e36e6e2765b4b79fcdbb6ade3fd44a",
-                    "commit": "77a44558328d4518a179de54689904a1db1efd7d",
-                    "date": "2026-10-31T15:24:54Z",
-                    "sourceSha": "2526d975",
+                    "blob": "e0402bc18d94ab6f31fff9f67346bc9277ede915",
+                    "commit": "e618876752e6a39b165b94db8de520c7dad33fa0",
+                    "date": "2026-10-31T16:10:36Z",
+                    "sourceSha": "38aa1bbf",
                     "commits": 1
                 }
             ],
@@ -1178,14 +1178,14 @@
             "unstable": false,
             "flapCount": 0
         },
-        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetPreview_Pixel Watch 3 · 45 mm#3": {
-            "path": "renders/wearApp/LocalAudioPlaylistWearWidgetPreview_Pixel_Watch_3_45_mm-55449f0b_PARAM_3.png",
+        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetSquirclePreview_Playlist · squircle#3": {
+            "path": "renders/wearApp/LocalAudioPlaylistWearWidgetSquirclePreview_Playlist_squircle-fe5fe95f_PARAM_3.png",
             "versions": [
                 {
-                    "blob": "b0ababa2a262a33565c6402f0a8dcd0e568072d2",
-                    "commit": "77a44558328d4518a179de54689904a1db1efd7d",
-                    "date": "2026-10-31T15:24:54Z",
-                    "sourceSha": "2526d975",
+                    "blob": "008237c090dcd1d2e499429af5aa591b1228ee44",
+                    "commit": "e618876752e6a39b165b94db8de520c7dad33fa0",
+                    "date": "2026-10-31T16:10:36Z",
+                    "sourceSha": "38aa1bbf",
                     "commits": 1
                 }
             ],
@@ -1193,14 +1193,14 @@
             "unstable": false,
             "flapCount": 0
         },
-        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetPickerPreview_Mode controls · picker asset": {
-            "path": "renders/wearApp/ModeAndControlsWearWidgetPickerPreview_Mode_controls_picker_asset-10ed7841_PARAM_0.png",
+        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetRectangularPreview_Now playing · rectangular": {
+            "path": "renders/wearApp/ModeAndControlsWearWidgetRectangularPreview_Now_playing_rectangular-71381054_PARAM_0.png",
             "versions": [
                 {
                     "blob": "29fd38588cb9228fc9d8445398625e26bc58c1c7",
-                    "commit": "77a44558328d4518a179de54689904a1db1efd7d",
-                    "date": "2026-10-31T15:24:54Z",
-                    "sourceSha": "2526d975",
+                    "commit": "e618876752e6a39b165b94db8de520c7dad33fa0",
+                    "date": "2026-10-31T16:10:36Z",
+                    "sourceSha": "38aa1bbf",
                     "commits": 1
                 }
             ],
@@ -1208,14 +1208,14 @@
             "unstable": false,
             "flapCount": 0
         },
-        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetPickerPreview_Mode controls · picker asset#1": {
-            "path": "renders/wearApp/ModeAndControlsWearWidgetPickerPreview_Mode_controls_picker_asset-10ed7841_PARAM_1.png",
+        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetRectangularPreview_Now playing · rectangular#1": {
+            "path": "renders/wearApp/ModeAndControlsWearWidgetRectangularPreview_Now_playing_rectangular-71381054_PARAM_1.png",
             "versions": [
                 {
                     "blob": "8e5bcde240791c0da1fd46340ead14012203571d",
-                    "commit": "77a44558328d4518a179de54689904a1db1efd7d",
-                    "date": "2026-10-31T15:24:54Z",
-                    "sourceSha": "2526d975",
+                    "commit": "e618876752e6a39b165b94db8de520c7dad33fa0",
+                    "date": "2026-10-31T16:10:36Z",
+                    "sourceSha": "38aa1bbf",
                     "commits": 1
                 }
             ],
@@ -1223,14 +1223,14 @@
             "unstable": false,
             "flapCount": 0
         },
-        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetPreview_Galaxy Watch 7 · 44 mm": {
-            "path": "renders/wearApp/ModeAndControlsWearWidgetPreview_Galaxy_Watch_7_44_mm-cee06627_PARAM_0.png",
+        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetRoundPreview_Now playing · round (Samsung)": {
+            "path": "renders/wearApp/ModeAndControlsWearWidgetRoundPreview_Now_playing_round_Samsung-4f203db6_PARAM_0.png",
             "versions": [
                 {
                     "blob": "b7207d31b442492feab348a34c35a2c3c8b8966b",
-                    "commit": "77a44558328d4518a179de54689904a1db1efd7d",
-                    "date": "2026-10-31T15:24:54Z",
-                    "sourceSha": "2526d975",
+                    "commit": "e618876752e6a39b165b94db8de520c7dad33fa0",
+                    "date": "2026-10-31T16:10:36Z",
+                    "sourceSha": "38aa1bbf",
                     "commits": 1
                 }
             ],
@@ -1238,14 +1238,14 @@
             "unstable": false,
             "flapCount": 0
         },
-        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetPreview_Galaxy Watch 7 · 44 mm#1": {
-            "path": "renders/wearApp/ModeAndControlsWearWidgetPreview_Galaxy_Watch_7_44_mm-cee06627_PARAM_1.png",
+        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetRoundPreview_Now playing · round (Samsung)#1": {
+            "path": "renders/wearApp/ModeAndControlsWearWidgetRoundPreview_Now_playing_round_Samsung-4f203db6_PARAM_1.png",
             "versions": [
                 {
                     "blob": "26177e6437257c3af3a16436788865e822553a24",
-                    "commit": "77a44558328d4518a179de54689904a1db1efd7d",
-                    "date": "2026-10-31T15:24:54Z",
-                    "sourceSha": "2526d975",
+                    "commit": "e618876752e6a39b165b94db8de520c7dad33fa0",
+                    "date": "2026-10-31T16:10:36Z",
+                    "sourceSha": "38aa1bbf",
                     "commits": 1
                 }
             ],
@@ -1253,14 +1253,14 @@
             "unstable": false,
             "flapCount": 0
         },
-        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetPreview_Galaxy Watch 7 · 44 mm#2": {
-            "path": "renders/wearApp/ModeAndControlsWearWidgetPreview_Galaxy_Watch_7_44_mm-cee06627_PARAM_2.png",
+        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetRoundPreview_Now playing · round (Samsung)#2": {
+            "path": "renders/wearApp/ModeAndControlsWearWidgetRoundPreview_Now_playing_round_Samsung-4f203db6_PARAM_2.png",
             "versions": [
                 {
                     "blob": "2029101af5e36e6e2765b4b79fcdbb6ade3fd44a",
-                    "commit": "77a44558328d4518a179de54689904a1db1efd7d",
-                    "date": "2026-10-31T15:24:54Z",
-                    "sourceSha": "2526d975",
+                    "commit": "e618876752e6a39b165b94db8de520c7dad33fa0",
+                    "date": "2026-10-31T16:10:36Z",
+                    "sourceSha": "38aa1bbf",
                     "commits": 1
                 }
             ],
@@ -1268,14 +1268,14 @@
             "unstable": false,
             "flapCount": 0
         },
-        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetPreview_Galaxy Watch 7 · 44 mm#3": {
-            "path": "renders/wearApp/ModeAndControlsWearWidgetPreview_Galaxy_Watch_7_44_mm-cee06627_PARAM_3.png",
+        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetRoundPreview_Now playing · round (Samsung)#3": {
+            "path": "renders/wearApp/ModeAndControlsWearWidgetRoundPreview_Now_playing_round_Samsung-4f203db6_PARAM_3.png",
             "versions": [
                 {
                     "blob": "b0ababa2a262a33565c6402f0a8dcd0e568072d2",
-                    "commit": "77a44558328d4518a179de54689904a1db1efd7d",
-                    "date": "2026-10-31T15:24:54Z",
-                    "sourceSha": "2526d975",
+                    "commit": "e618876752e6a39b165b94db8de520c7dad33fa0",
+                    "date": "2026-10-31T16:10:36Z",
+                    "sourceSha": "38aa1bbf",
                     "commits": 1
                 }
             ],
@@ -1283,14 +1283,14 @@
             "unstable": false,
             "flapCount": 0
         },
-        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetPreview_Pixel Watch 3 · 45 mm": {
-            "path": "renders/wearApp/ModeAndControlsWearWidgetPreview_Pixel_Watch_3_45_mm-d9d1b1db_PARAM_0.png",
+        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetSquirclePreview_Now playing · squircle": {
+            "path": "renders/wearApp/ModeAndControlsWearWidgetSquirclePreview_Now_playing_squircle-f7452489_PARAM_0.png",
             "versions": [
                 {
-                    "blob": "b7207d31b442492feab348a34c35a2c3c8b8966b",
-                    "commit": "77a44558328d4518a179de54689904a1db1efd7d",
-                    "date": "2026-10-31T15:24:54Z",
-                    "sourceSha": "2526d975",
+                    "blob": "26bd073147ed2424838a4aaf5b5c955b45ebc821",
+                    "commit": "e618876752e6a39b165b94db8de520c7dad33fa0",
+                    "date": "2026-10-31T16:10:36Z",
+                    "sourceSha": "38aa1bbf",
                     "commits": 1
                 }
             ],
@@ -1298,14 +1298,14 @@
             "unstable": false,
             "flapCount": 0
         },
-        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetPreview_Pixel Watch 3 · 45 mm#1": {
-            "path": "renders/wearApp/ModeAndControlsWearWidgetPreview_Pixel_Watch_3_45_mm-d9d1b1db_PARAM_1.png",
+        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetSquirclePreview_Now playing · squircle#1": {
+            "path": "renders/wearApp/ModeAndControlsWearWidgetSquirclePreview_Now_playing_squircle-f7452489_PARAM_1.png",
             "versions": [
                 {
-                    "blob": "26177e6437257c3af3a16436788865e822553a24",
-                    "commit": "77a44558328d4518a179de54689904a1db1efd7d",
-                    "date": "2026-10-31T15:24:54Z",
-                    "sourceSha": "2526d975",
+                    "blob": "4897bb839b9112dcec4783a3432750549061bbf7",
+                    "commit": "e618876752e6a39b165b94db8de520c7dad33fa0",
+                    "date": "2026-10-31T16:10:36Z",
+                    "sourceSha": "38aa1bbf",
                     "commits": 1
                 }
             ],
@@ -1313,14 +1313,14 @@
             "unstable": false,
             "flapCount": 0
         },
-        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetPreview_Pixel Watch 3 · 45 mm#2": {
-            "path": "renders/wearApp/ModeAndControlsWearWidgetPreview_Pixel_Watch_3_45_mm-d9d1b1db_PARAM_2.png",
+        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetSquirclePreview_Now playing · squircle#2": {
+            "path": "renders/wearApp/ModeAndControlsWearWidgetSquirclePreview_Now_playing_squircle-f7452489_PARAM_2.png",
             "versions": [
                 {
-                    "blob": "2029101af5e36e6e2765b4b79fcdbb6ade3fd44a",
-                    "commit": "77a44558328d4518a179de54689904a1db1efd7d",
-                    "date": "2026-10-31T15:24:54Z",
-                    "sourceSha": "2526d975",
+                    "blob": "e0402bc18d94ab6f31fff9f67346bc9277ede915",
+                    "commit": "e618876752e6a39b165b94db8de520c7dad33fa0",
+                    "date": "2026-10-31T16:10:36Z",
+                    "sourceSha": "38aa1bbf",
                     "commits": 1
                 }
             ],
@@ -1328,14 +1328,14 @@
             "unstable": false,
             "flapCount": 0
         },
-        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetPreview_Pixel Watch 3 · 45 mm#3": {
-            "path": "renders/wearApp/ModeAndControlsWearWidgetPreview_Pixel_Watch_3_45_mm-d9d1b1db_PARAM_3.png",
+        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetSquirclePreview_Now playing · squircle#3": {
+            "path": "renders/wearApp/ModeAndControlsWearWidgetSquirclePreview_Now_playing_squircle-f7452489_PARAM_3.png",
             "versions": [
                 {
-                    "blob": "b0ababa2a262a33565c6402f0a8dcd0e568072d2",
-                    "commit": "77a44558328d4518a179de54689904a1db1efd7d",
-                    "date": "2026-10-31T15:24:54Z",
-                    "sourceSha": "2526d975",
+                    "blob": "008237c090dcd1d2e499429af5aa591b1228ee44",
+                    "commit": "e618876752e6a39b165b94db8de520c7dad33fa0",
+                    "date": "2026-10-31T16:10:36Z",
+                    "sourceSha": "38aa1bbf",
                     "commits": 1
                 }
             ],
@@ -1343,14 +1343,14 @@
             "unstable": false,
             "flapCount": 0
         },
-        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetPickerPreview_Sync status · picker asset": {
-            "path": "renders/wearApp/SyncStatusWearWidgetPickerPreview_Sync_status_picker_asset-65006681_PARAM_0.png",
+        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetRectangularPreview_Sync · rectangular": {
+            "path": "renders/wearApp/SyncStatusWearWidgetRectangularPreview_Sync_rectangular-ecd1feeb_PARAM_0.png",
             "versions": [
                 {
                     "blob": "29fd38588cb9228fc9d8445398625e26bc58c1c7",
-                    "commit": "77a44558328d4518a179de54689904a1db1efd7d",
-                    "date": "2026-10-31T15:24:54Z",
-                    "sourceSha": "2526d975",
+                    "commit": "e618876752e6a39b165b94db8de520c7dad33fa0",
+                    "date": "2026-10-31T16:10:36Z",
+                    "sourceSha": "38aa1bbf",
                     "commits": 1
                 }
             ],
@@ -1358,14 +1358,14 @@
             "unstable": false,
             "flapCount": 0
         },
-        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetPickerPreview_Sync status · picker asset#1": {
-            "path": "renders/wearApp/SyncStatusWearWidgetPickerPreview_Sync_status_picker_asset-65006681_PARAM_1.png",
+        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetRectangularPreview_Sync · rectangular#1": {
+            "path": "renders/wearApp/SyncStatusWearWidgetRectangularPreview_Sync_rectangular-ecd1feeb_PARAM_1.png",
             "versions": [
                 {
                     "blob": "8e5bcde240791c0da1fd46340ead14012203571d",
-                    "commit": "77a44558328d4518a179de54689904a1db1efd7d",
-                    "date": "2026-10-31T15:24:54Z",
-                    "sourceSha": "2526d975",
+                    "commit": "e618876752e6a39b165b94db8de520c7dad33fa0",
+                    "date": "2026-10-31T16:10:36Z",
+                    "sourceSha": "38aa1bbf",
                     "commits": 1
                 }
             ],
@@ -1373,14 +1373,14 @@
             "unstable": false,
             "flapCount": 0
         },
-        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetPreview_Galaxy Watch 7 · 44 mm": {
-            "path": "renders/wearApp/SyncStatusWearWidgetPreview_Galaxy_Watch_7_44_mm-68e96980_PARAM_0.png",
+        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetRoundPreview_Sync · round (Samsung)": {
+            "path": "renders/wearApp/SyncStatusWearWidgetRoundPreview_Sync_round_Samsung-f0a0a37a_PARAM_0.png",
             "versions": [
                 {
                     "blob": "b7207d31b442492feab348a34c35a2c3c8b8966b",
-                    "commit": "77a44558328d4518a179de54689904a1db1efd7d",
-                    "date": "2026-10-31T15:24:54Z",
-                    "sourceSha": "2526d975",
+                    "commit": "e618876752e6a39b165b94db8de520c7dad33fa0",
+                    "date": "2026-10-31T16:10:36Z",
+                    "sourceSha": "38aa1bbf",
                     "commits": 1
                 }
             ],
@@ -1388,14 +1388,14 @@
             "unstable": false,
             "flapCount": 0
         },
-        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetPreview_Galaxy Watch 7 · 44 mm#1": {
-            "path": "renders/wearApp/SyncStatusWearWidgetPreview_Galaxy_Watch_7_44_mm-68e96980_PARAM_1.png",
+        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetRoundPreview_Sync · round (Samsung)#1": {
+            "path": "renders/wearApp/SyncStatusWearWidgetRoundPreview_Sync_round_Samsung-f0a0a37a_PARAM_1.png",
             "versions": [
                 {
                     "blob": "26177e6437257c3af3a16436788865e822553a24",
-                    "commit": "77a44558328d4518a179de54689904a1db1efd7d",
-                    "date": "2026-10-31T15:24:54Z",
-                    "sourceSha": "2526d975",
+                    "commit": "e618876752e6a39b165b94db8de520c7dad33fa0",
+                    "date": "2026-10-31T16:10:36Z",
+                    "sourceSha": "38aa1bbf",
                     "commits": 1
                 }
             ],
@@ -1403,14 +1403,14 @@
             "unstable": false,
             "flapCount": 0
         },
-        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetPreview_Galaxy Watch 7 · 44 mm#2": {
-            "path": "renders/wearApp/SyncStatusWearWidgetPreview_Galaxy_Watch_7_44_mm-68e96980_PARAM_2.png",
+        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetRoundPreview_Sync · round (Samsung)#2": {
+            "path": "renders/wearApp/SyncStatusWearWidgetRoundPreview_Sync_round_Samsung-f0a0a37a_PARAM_2.png",
             "versions": [
                 {
                     "blob": "2029101af5e36e6e2765b4b79fcdbb6ade3fd44a",
-                    "commit": "77a44558328d4518a179de54689904a1db1efd7d",
-                    "date": "2026-10-31T15:24:54Z",
-                    "sourceSha": "2526d975",
+                    "commit": "e618876752e6a39b165b94db8de520c7dad33fa0",
+                    "date": "2026-10-31T16:10:36Z",
+                    "sourceSha": "38aa1bbf",
                     "commits": 1
                 }
             ],
@@ -1418,14 +1418,14 @@
             "unstable": false,
             "flapCount": 0
         },
-        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetPreview_Galaxy Watch 7 · 44 mm#3": {
-            "path": "renders/wearApp/SyncStatusWearWidgetPreview_Galaxy_Watch_7_44_mm-68e96980_PARAM_3.png",
+        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetRoundPreview_Sync · round (Samsung)#3": {
+            "path": "renders/wearApp/SyncStatusWearWidgetRoundPreview_Sync_round_Samsung-f0a0a37a_PARAM_3.png",
             "versions": [
                 {
                     "blob": "b0ababa2a262a33565c6402f0a8dcd0e568072d2",
-                    "commit": "77a44558328d4518a179de54689904a1db1efd7d",
-                    "date": "2026-10-31T15:24:54Z",
-                    "sourceSha": "2526d975",
+                    "commit": "e618876752e6a39b165b94db8de520c7dad33fa0",
+                    "date": "2026-10-31T16:10:36Z",
+                    "sourceSha": "38aa1bbf",
                     "commits": 1
                 }
             ],
@@ -1433,14 +1433,14 @@
             "unstable": false,
             "flapCount": 0
         },
-        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetPreview_Pixel Watch 3 · 45 mm": {
-            "path": "renders/wearApp/SyncStatusWearWidgetPreview_Pixel_Watch_3_45_mm-c8dcdd98_PARAM_0.png",
+        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetSquirclePreview_Sync · squircle": {
+            "path": "renders/wearApp/SyncStatusWearWidgetSquirclePreview_Sync_squircle-d27e8677_PARAM_0.png",
             "versions": [
                 {
-                    "blob": "b7207d31b442492feab348a34c35a2c3c8b8966b",
-                    "commit": "77a44558328d4518a179de54689904a1db1efd7d",
-                    "date": "2026-10-31T15:24:54Z",
-                    "sourceSha": "2526d975",
+                    "blob": "26bd073147ed2424838a4aaf5b5c955b45ebc821",
+                    "commit": "e618876752e6a39b165b94db8de520c7dad33fa0",
+                    "date": "2026-10-31T16:10:36Z",
+                    "sourceSha": "38aa1bbf",
                     "commits": 1
                 }
             ],
@@ -1448,14 +1448,14 @@
             "unstable": false,
             "flapCount": 0
         },
-        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetPreview_Pixel Watch 3 · 45 mm#1": {
-            "path": "renders/wearApp/SyncStatusWearWidgetPreview_Pixel_Watch_3_45_mm-c8dcdd98_PARAM_1.png",
+        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetSquirclePreview_Sync · squircle#1": {
+            "path": "renders/wearApp/SyncStatusWearWidgetSquirclePreview_Sync_squircle-d27e8677_PARAM_1.png",
             "versions": [
                 {
-                    "blob": "26177e6437257c3af3a16436788865e822553a24",
-                    "commit": "77a44558328d4518a179de54689904a1db1efd7d",
-                    "date": "2026-10-31T15:24:54Z",
-                    "sourceSha": "2526d975",
+                    "blob": "4897bb839b9112dcec4783a3432750549061bbf7",
+                    "commit": "e618876752e6a39b165b94db8de520c7dad33fa0",
+                    "date": "2026-10-31T16:10:36Z",
+                    "sourceSha": "38aa1bbf",
                     "commits": 1
                 }
             ],
@@ -1463,14 +1463,14 @@
             "unstable": false,
             "flapCount": 0
         },
-        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetPreview_Pixel Watch 3 · 45 mm#2": {
-            "path": "renders/wearApp/SyncStatusWearWidgetPreview_Pixel_Watch_3_45_mm-c8dcdd98_PARAM_2.png",
+        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetSquirclePreview_Sync · squircle#2": {
+            "path": "renders/wearApp/SyncStatusWearWidgetSquirclePreview_Sync_squircle-d27e8677_PARAM_2.png",
             "versions": [
                 {
-                    "blob": "2029101af5e36e6e2765b4b79fcdbb6ade3fd44a",
-                    "commit": "77a44558328d4518a179de54689904a1db1efd7d",
-                    "date": "2026-10-31T15:24:54Z",
-                    "sourceSha": "2526d975",
+                    "blob": "e0402bc18d94ab6f31fff9f67346bc9277ede915",
+                    "commit": "e618876752e6a39b165b94db8de520c7dad33fa0",
+                    "date": "2026-10-31T16:10:36Z",
+                    "sourceSha": "38aa1bbf",
                     "commits": 1
                 }
             ],
@@ -1478,14 +1478,14 @@
             "unstable": false,
             "flapCount": 0
         },
-        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetPreview_Pixel Watch 3 · 45 mm#3": {
-            "path": "renders/wearApp/SyncStatusWearWidgetPreview_Pixel_Watch_3_45_mm-c8dcdd98_PARAM_3.png",
+        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetSquirclePreview_Sync · squircle#3": {
+            "path": "renders/wearApp/SyncStatusWearWidgetSquirclePreview_Sync_squircle-d27e8677_PARAM_3.png",
             "versions": [
                 {
-                    "blob": "b0ababa2a262a33565c6402f0a8dcd0e568072d2",
-                    "commit": "77a44558328d4518a179de54689904a1db1efd7d",
-                    "date": "2026-10-31T15:24:54Z",
-                    "sourceSha": "2526d975",
+                    "blob": "008237c090dcd1d2e499429af5aa591b1228ee44",
+                    "commit": "e618876752e6a39b165b94db8de520c7dad33fa0",
+                    "date": "2026-10-31T16:10:36Z",
+                    "sourceSha": "38aa1bbf",
                     "commits": 1
                 }
             ],
