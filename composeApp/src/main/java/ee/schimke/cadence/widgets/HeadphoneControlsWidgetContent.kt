@@ -16,6 +16,7 @@ import androidx.compose.remote.creation.compose.action.Action
 import androidx.compose.remote.creation.compose.layout.RemoteAlignment
 import androidx.compose.remote.creation.compose.layout.RemoteArrangement
 import androidx.compose.remote.creation.compose.layout.RemoteBox
+import androidx.compose.remote.creation.compose.layout.RemoteCanvas
 import androidx.compose.remote.creation.compose.layout.RemoteColumn
 import androidx.compose.remote.creation.compose.layout.RemoteComposable
 import androidx.compose.remote.creation.compose.layout.RemoteRow
@@ -212,7 +213,11 @@ private fun WidgetIconButton(
         clock = if (playing) LocalSwimClock.current else 1.1f.rf,
       )
     }
-    RemoteBox(RemoteModifier.size(24.rdp).background(painterRemoteVector(action.icon, content.rc)))
+    // Drawn in a canvas of its own, not as a painter background: a background painter is a
+    // drawWithContent, whose DrawContent Android 16's player repaints forever
+    // (yschimke/rc-players#776).
+    val icon = painterRemoteVector(action.icon, content.rc)
+    RemoteCanvas(RemoteModifier.size(24.rdp)) { with(icon) { draw() } }
   }
 }
 
