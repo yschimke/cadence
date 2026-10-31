@@ -50,6 +50,7 @@ kotlin {
     }
     androidMain.dependencies {
       implementation(project(":rcsp"))
+      implementation(project(":swimUi"))
       implementation(libs.media3.transformer)
       implementation(libs.compose.webview.multiplatform)
       implementation(libs.compose.ui.tooling.preview)

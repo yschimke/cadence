@@ -28,12 +28,16 @@ import androidx.compose.remote.creation.compose.layout.RemoteRow
 import androidx.compose.remote.creation.compose.modifier.RemoteModifier
 import androidx.compose.remote.creation.compose.modifier.background
 import androidx.compose.remote.creation.compose.modifier.clickable
+import androidx.compose.remote.creation.compose.modifier.clip
 import androidx.compose.remote.creation.compose.modifier.contentDescription
 import androidx.compose.remote.creation.compose.modifier.fillMaxSize
 import androidx.compose.remote.creation.compose.modifier.fillMaxWidth
+import androidx.compose.remote.creation.compose.modifier.height
 import androidx.compose.remote.creation.compose.modifier.padding
 import androidx.compose.remote.creation.compose.modifier.semantics
 import androidx.compose.remote.creation.compose.modifier.size
+import androidx.compose.remote.creation.compose.shapes.RemoteCircleShape
+import androidx.compose.remote.creation.compose.shapes.RemoteRoundedCornerShape
 import androidx.compose.remote.creation.compose.state.RemoteColor
 import androidx.compose.remote.creation.compose.state.rb
 import androidx.compose.remote.creation.compose.state.rc
@@ -41,6 +45,7 @@ import androidx.compose.remote.creation.compose.state.rdp
 import androidx.compose.remote.creation.compose.state.rf
 import androidx.compose.remote.creation.compose.state.rs
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.key
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
@@ -70,6 +75,14 @@ import androidx.wear.compose.remote.material3.RemoteIconButtonDefaults
 import androidx.wear.compose.remote.material3.RemoteMaterialTheme
 import androidx.wear.compose.remote.material3.RemoteProgressIndicatorDefaults
 import androidx.wear.compose.remote.material3.RemoteText
+import ee.schimke.cadence.swim.LaneColors
+import ee.schimke.cadence.swim.LocalSwimClock
+import ee.schimke.cadence.swim.SwimClockAt
+import ee.schimke.cadence.swim.SwimLaneProgress
+import ee.schimke.cadence.swim.SwimLap
+import ee.schimke.cadence.swim.WaterColors
+import ee.schimke.cadence.swim.rememberPreviewSeconds
+import ee.schimke.cadence.swim.waterBackground
 import ee.schimke.cadence.wear.CompanionSyncStatus
 import ee.schimke.cadence.wear.HeadsetAction
 import ee.schimke.cadence.wear.HeadsetAudioStorage
@@ -78,6 +91,7 @@ import ee.schimke.cadence.wear.HeadsetSnapshot
 import ee.schimke.cadence.wear.LocalAudioTrack
 import ee.schimke.cadence.wear.SyncedPodcastTrack
 import ee.schimke.cadence.wear.WearCompanionServices
+import ee.schimke.composeai.preview.AnimatedPreview
 import ee.schimke.rcsp.RcspCapabilities
 import ee.schimke.rcsp.RcspCommand
 import ee.schimke.rcsp.WorkingMode
@@ -152,8 +166,10 @@ class SyncStatusWearWidgetService : GlanceWearWidgetService() {
 
 /**
  * Now playing: the current episode and transport controls, nothing else. The small size is a single
- * row (play/pause beside the episode title); large adds the podcast name and full
- * previous/play/next controls. Mode switching and settings live in the app, not on the widget.
+ * row (play/pause beside the episode title); large adds the podcast name, a swimming lane for the
+ * track's progress (track N is lap N, so odd tracks swim one way and even tracks swim back) and
+ * full previous/play/next controls. The play button is a pool that ripples while audio plays. Mode
+ * switching and settings live in the app, not on the widget.
  */
 @Composable
 @RemoteComposable
@@ -180,6 +196,7 @@ private fun ModeAndControlsWidgetContent(snapshot: HeadsetSnapshot, compact: Boo
         enabled = snapshot.isSupported(if (playing) RcspCommand.Pause else RcspCommand.Play),
         primary = true,
         compact = true,
+        rippling = playing,
       )
       RemoteText(
         text = episode.rs,
@@ -221,6 +238,19 @@ private fun ModeAndControlsWidgetContent(snapshot: HeadsetSnapshot, compact: Boo
         )
       }
     }
+    val lap = snapshot.nowPlayingLap
+    if (!compact && currentTrack != null && lap != null) {
+      SwimLaneProgress(
+        lap = lap,
+        modifier =
+          RemoteModifier.fillMaxWidth(0.82f)
+            .height(22.rdp)
+            .clip(RemoteRoundedCornerShape(11.rdp))
+            .semantics { contentDescription = lap.description.rs },
+        colors = LaneColors.Night,
+        progressPerSecond = snapshot.nowPlayingProgressPerSecond,
+      )
+    }
     RemoteRow(
       modifier = RemoteModifier.fillMaxWidth(),
       horizontalArrangement = RemoteArrangement.spacedBy(6.rdp, RemoteAlignment.CenterHorizontally),
@@ -241,6 +271,7 @@ private fun ModeAndControlsWidgetContent(snapshot: HeadsetSnapshot, compact: Boo
         enabled = snapshot.isSupported(if (playing) RcspCommand.Pause else RcspCommand.Play),
         primary = true,
         compact = compact,
+        rippling = playing,
       )
       TransportButton(
         action = widgetAction(WidgetAction.Next),
@@ -263,6 +294,7 @@ private fun TransportButton(
   enabled: Boolean,
   primary: Boolean,
   compact: Boolean,
+  rippling: Boolean = false,
 ) {
   val colors = RemoteMaterialTheme.colorScheme
   val size =
@@ -274,13 +306,26 @@ private fun TransportButton(
     }
   RemoteIconButton(
     onClick = action,
-    modifier = RemoteModifier.size(size),
+    modifier =
+      if (primary) {
+        // A little pool: still water while paused, waves and bubbles while playing.
+        RemoteModifier.size(size)
+          .clip(RemoteRoundedCornerShape(size / 2))
+          .waterBackground(
+            colors = if (enabled) WaterColors.Pool else WaterColors.Night,
+            level = 0.42f,
+            bubbles = if (rippling) 4 else 0,
+            clock = if (rippling) LocalSwimClock.current else 1.1f.rf,
+          )
+      } else {
+        RemoteModifier.size(size)
+      },
     enabled = enabled.rb,
     colors =
       if (primary) {
         RemoteIconButtonDefaults.iconButtonColors(
-          containerColor = colors.primary,
-          contentColor = colors.onPrimary,
+          containerColor = Color.Transparent.rc,
+          contentColor = WidgetColors.onWater.rc,
         )
       } else {
         RemoteIconButtonDefaults.iconButtonColors(
@@ -337,10 +382,15 @@ private fun CompactPlaylistWidgetContent(snapshot: HeadsetSnapshot) {
     LocalAudioPlaylistWidgetContent(snapshot, itemLimit = 1)
     return
   }
-  val content = if (track.playing) colors.onPrimaryContainer else colors.onSurface
+  val content = if (track.playing) WidgetColors.onWater.rc else colors.onSurface
   RemoteRow(
     modifier =
       RemoteModifier.fillMaxSize()
+        .let {
+          if (track.playing) {
+            it.waterBackground(WaterColors.Pool, level = 0.3f, clock = LocalSwimClock.current)
+          } else it
+        }
         .clickable(
           playTrackAction(track.id),
           enabled = snapshot.isSupported(RcspCommand.PlayLocalAudio(track.id)),
@@ -378,7 +428,7 @@ private fun playlistBackground(snapshot: HeadsetSnapshot, compact: Boolean): Col
   val track = snapshot.compactPlaylistTrack
   return when {
     !compact || track == null -> WidgetColors.background
-    track.playing -> WidgetColors.scheme.primaryContainer
+    track.playing -> WaterColors.Pool.frontWave
     else -> WidgetColors.scheme.surfaceContainer
   }
 }
@@ -387,18 +437,32 @@ private fun playlistBackground(snapshot: HeadsetSnapshot, compact: Boolean): Col
 @RemoteComposable
 private fun PlaylistButton(track: LocalAudioTrack, enabled: Boolean) {
   val colors = RemoteMaterialTheme.colorScheme
-  val content = if (track.playing) colors.onPrimaryContainer else colors.onSurface
+  val content = if (track.playing) WidgetColors.onWater.rc else colors.onSurface
   RemoteButton(
     onClick = playTrackAction(track.id),
     modifier =
-      RemoteModifier.fillMaxWidth().semantics {
-        contentDescription =
-          "${if (track.playing) "Playing" else "Play"} ${track.podcast.episodeTitle}".rs
-      },
+      RemoteModifier.fillMaxWidth()
+        .let {
+          // The playing episode is the one in the water.
+          if (track.playing) {
+            it
+              .clip(RemoteCircleShape)
+              .waterBackground(
+                WaterColors.Pool,
+                level = 0.3f,
+                crests = 3,
+                clock = LocalSwimClock.current,
+              )
+          } else it
+        }
+        .semantics {
+          contentDescription =
+            "${if (track.playing) "Playing" else "Play"} ${track.podcast.episodeTitle}".rs
+        },
     enabled = enabled.rb,
     colors =
       RemoteButtonDefaults.buttonColors(
-        containerColor = if (track.playing) colors.primaryContainer else colors.surfaceContainer,
+        containerColor = if (track.playing) Color.Transparent.rc else colors.surfaceContainer,
         contentColor = content,
         iconColor = content,
       ),
@@ -419,8 +483,8 @@ private fun PlaylistButton(track: LocalAudioTrack, enabled: Boolean) {
 }
 
 /**
- * Podcast sync from the phone: a progress ring and one status line. Large adds a single detail line
- * (file count or connection).
+ * Podcast sync from the phone: a ring filling with water as files land, and one status line. Large
+ * swaps the ring for a swimming lane while files copy — each file is a lap — plus a detail line.
  */
 @Composable
 @RemoteComposable
@@ -429,7 +493,8 @@ private fun SyncStatusWidgetContent(snapshot: HeadsetSnapshot, compact: Boolean)
   val colors = RemoteMaterialTheme.colorScheme
   val detail =
     when (sync) {
-      is CompanionSyncStatus.Running -> sync.progressLabel
+      is CompanionSyncStatus.Running ->
+        sync.syncLap?.let { "Lap ${it.lap} of ${sync.filesTotal}" } ?: sync.progressLabel
       CompanionSyncStatus.Unavailable -> "Open Cadence on your phone"
       else -> null
     }
@@ -454,7 +519,19 @@ private fun SyncStatusWidgetContent(snapshot: HeadsetSnapshot, compact: Boolean)
         )
       }
     } else {
-      SyncRing(sync, compact = false)
+      val lap = sync.syncLap
+      if (lap != null) {
+        SwimLaneProgress(
+          lap = lap,
+          modifier =
+            RemoteModifier.fillMaxWidth(0.82f)
+              .height(24.rdp)
+              .clip(RemoteRoundedCornerShape(12.rdp)),
+          colors = LaneColors.Night,
+        )
+      } else {
+        SyncRing(sync, compact = false)
+      }
       RemoteColumn(horizontalAlignment = RemoteAlignment.CenterHorizontally) {
         RemoteText(
           text = sync.widgetLabel.rs,
@@ -484,8 +561,23 @@ private fun SyncStatusWidgetContent(snapshot: HeadsetSnapshot, compact: Boolean)
 private fun SyncRing(sync: CompanionSyncStatus, compact: Boolean) {
   val colors = RemoteMaterialTheme.colorScheme
   val accent = sync.accent()
+  val water = sync.ringWater
+  val ringSize = if (compact) 48.rdp else 60.rdp
   RemoteBox(
-    modifier = RemoteModifier.size(if (compact) 48.rdp else 60.rdp),
+    modifier =
+      RemoteModifier.size(ringSize).let {
+        // The ring fills with water as files land; a full pool once everything is synced.
+        if (water == null) it
+        else
+          it
+            .clip(RemoteRoundedCornerShape(ringSize / 2))
+            .waterBackground(
+              water,
+              level = 0.9f - sync.progressFraction * 0.65f,
+              bubbles = if (sync is CompanionSyncStatus.Running) 3 else 0,
+              clock = if (sync is CompanionSyncStatus.Running) LocalSwimClock.current else 0.6f.rf,
+            )
+      },
     contentAlignment = RemoteAlignment.Center,
   ) {
     RemoteCircularProgressIndicator(
@@ -604,6 +696,8 @@ private const val PlayTrackRequestCodeSpan = 100_000L
 /** Matches the Wear Material 3 dark surface the widget content is themed against. */
 private object WidgetColors {
   val background = Color(0xFF0E0E11)
+  /** Icons and text sitting on [WaterColors.Pool]. */
+  val onWater = Color(0xFF06243D)
   /** Same defaults RemoteMaterialTheme uses, for colours needed outside composition. */
   val scheme = ColorScheme()
 }
@@ -627,6 +721,42 @@ private val CompanionSyncStatus.widgetIcon: ImageVector
       is CompanionSyncStatus.Running -> Icons.Filled.Sync
       is CompanionSyncStatus.Failed -> Icons.Filled.PriorityHigh
     }
+
+/** Each file being copied is a lap; null until there is a file count to swim. */
+private val CompanionSyncStatus.syncLap: SwimLap?
+  get() =
+    (this as? CompanionSyncStatus.Running)
+      ?.takeIf { it.filesTotal > 0 }
+      ?.let { SwimLap.ofOverall(it.filesCompleted.toFloat() / it.filesTotal, it.filesTotal) }
+
+private val CompanionSyncStatus.ringWater: WaterColors?
+  get() =
+    when (this) {
+      is CompanionSyncStatus.Running -> WaterColors.Night
+      CompanionSyncStatus.Idle,
+      is CompanionSyncStatus.Complete -> WaterColors.Lagoon
+      is CompanionSyncStatus.Failed,
+      CompanionSyncStatus.Unavailable -> null
+    }
+
+/** The playing track as a lap: track N of the playlist is lap N. */
+private val HeadsetSnapshot.nowPlayingLap: SwimLap?
+  get() {
+    val media = media ?: return null
+    val track = media.index ?: localAudio.firstOrNull { it.playing }?.index ?: return null
+    return SwimLap.ofTrack(track, media.positionMs, media.durationMs)
+  }
+
+/** Lets the swimmer keep pace with playback between widget updates. */
+private val HeadsetSnapshot.nowPlayingProgressPerSecond: Float
+  get() {
+    val duration = media?.durationMs ?: return 0f
+    return if (media?.playing == true && duration > 0) 1000f / duration else 0f
+  }
+
+private val SwimLap.description: String
+  get() =
+    "Lap $lap, ${(progress * 100).toInt()}% swum, ${if (isOdd) "swimming out" else "swimming back"}"
 
 /** Ring fill: transfer progress while running, full once done, empty otherwise. */
 private val CompanionSyncStatus.progressFraction: Float
@@ -681,6 +811,27 @@ fun ModeAndControlsWearWidgetSquirclePreview(
   @PreviewParameter(SquircleAllWidgetPreviewParams::class) params: WearWidgetParams
 ) {
   WidgetPreview(params) { ModeAndControlsWidgetContent(previewSnapshot, params.isCompact) }
+}
+
+/** Playing: the play/pause button is a pool of moving water. */
+@Preview(
+  name = "Now playing · animated",
+  widthDp = 240,
+  heightDp = 240,
+  showBackground = true,
+  backgroundColor = 0xFF8A8A8E,
+)
+@AnimatedPreview(durationMs = 3000, frameIntervalMs = 80, showCurves = false)
+@Composable
+fun ModeAndControlsWearWidgetAnimatedPreview(
+  @PreviewParameter(RoundAllWidgetPreviewParams::class) params: WearWidgetParams
+) {
+  val seconds = rememberPreviewSeconds()
+  key(seconds) {
+    WidgetPreview(params) {
+      SwimClockAt(seconds) { ModeAndControlsWidgetContent(previewSnapshot, params.isCompact) }
+    }
+  }
 }
 
 @Preview(name = "Playlist · rectangular", showBackground = true, backgroundColor = 0xFF8A8A8E)
@@ -741,7 +892,14 @@ private val previewSnapshot =
   HeadsetSnapshot(
     connection = ee.schimke.cadence.wear.HeadsetConnection.Authenticated("OpenSwim Pro"),
     mode = WorkingMode.LocalAudio,
-    media = HeadsetMedia(playing = true),
+    media =
+      HeadsetMedia(
+        playing = true,
+        index = 2,
+        total = 2,
+        positionMs = 640_000,
+        durationMs = 1_800_000,
+      ),
     capabilities =
       RcspCapabilities()
         .withSupported(

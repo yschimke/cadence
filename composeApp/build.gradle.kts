@@ -105,6 +105,7 @@ dependencies {
   implementation(libs.play.services.wearable)
   implementation(libs.rc.widget.launcher)
   implementation(libs.compose.remote.tooling.preview)
+  implementation(project(":swimUi"))
   implementation(libs.composeai.preview.annotations)
   implementation(libs.androidx.activity.compose)
   implementation(libs.androidx.core.splashscreen)
