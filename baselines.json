@@ -28,7 +28,7 @@
     "functionName": "HeadphoneWidgetBluetoothPreview",
     "module": "composeApp",
     "renderBasename": "HeadphoneWidgetBluetoothPreview_Headphone_widget_Bluetooth-672bb261.png",
-    "sha256": "8ad354e58046020befe19386561b96e410bca069b1dcac409e5752b94257104e",
+    "sha256": "2e29430d8fbc68a63fe6b2b03291e91a42b4622a646a47296de0b488186a7215",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetDisconnectedPreview_Headphone widget \u00b7 disconnected": {
@@ -724,7 +724,7 @@
     "functionName": "ModeAndControlsWearWidgetRectangularPreview",
     "module": "wearApp",
     "renderBasename": "ModeAndControlsWearWidgetRectangularPreview_Now_playing_rectangular-71381054_PARAM_0.png",
-    "sha256": "d1d7ec0fbba9de67e9aac632f17acfc0801204755729e161893cda2da5f3486f",
+    "sha256": "791875bf46eba95cd321b77378e3e89594850c8c821aeea73e3ca33d50dd4812",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt"
   },
   "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetRectangularPreview_Now playing \u00b7 rectangular#1": {
