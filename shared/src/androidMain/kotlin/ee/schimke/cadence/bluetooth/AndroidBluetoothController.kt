@@ -1,6 +1,8 @@
 package ee.schimke.cadence.bluetooth
 
 import android.Manifest
+import android.app.Activity
+import android.app.Application
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
@@ -34,6 +36,7 @@ import ee.schimke.rcsp.RcspCommand
 import ee.schimke.rcsp.ShokzOpenSwimController
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.delay
@@ -42,6 +45,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -50,6 +54,7 @@ import java.util.UUID
 @ContributesBinding(AppScope::class, binding = binding<BluetoothController>())
 @SingleIn(AppScope::class)
 @Inject
+@OptIn(ExperimentalCoroutinesApi::class)
 class AndroidBluetoothController(
     private val applicationContext: Context,
 ) : BluetoothController {
@@ -63,7 +68,7 @@ class AndroidBluetoothController(
     private val mediaSessionManager: MediaSessionManager? =
         applicationContext.getSystemService(Context.MEDIA_SESSION_SERVICE) as? MediaSessionManager
 
-    private val refreshTrigger = MutableStateFlow(0L)
+    private val refreshTrigger = MutableStateFlow(0)
     /** Mode and settings the connected OpenSwim Pro acknowledged; none are read back. */
     private data class HeadsetSettings(
         val mode: WorkingMode = WorkingMode.Bluetooth,
@@ -78,31 +83,57 @@ class AndroidBluetoothController(
 
     override val supported = true
 
-    override val state: Flow<BluetoothState> = combine(
-        connectionFlow(),
-        volumeFlow(),
-        mediaInfoFlow(),
-        headsetFlow,
-        refreshTrigger,
-    ) { connection, volume, media, headset, _ ->
-        BluetoothState(
-            connectedDevice = connection,
-            volumePercent = volume.percent,
-            maxVolume = volume.max,
-            muted = volume.muted,
-            mediaInfo = media,
-            mediaAccessGranted = isNotificationAccessGranted(),
-            permissionMissing = !hasBluetoothConnectPermission(),
-            workingMode = headset.mode,
-            equalizer = headset.equalizer,
-            playbackOrder = headset.playbackOrder,
-            headsetVolumePercent = headset.volumePercent,
-            headsetPlaying = headset.playing,
+    override val state: Flow<BluetoothState> =
+        refreshTrigger
+            .flatMapLatest {
+                combine(
+                    connectionFlow(),
+                    volumeFlow(),
+                    mediaInfoFlow(),
+                    headsetFlow,
+                ) { connection, volume, media, headset ->
+                    BluetoothState(
+                        connectedDevice = connection,
+                        volumePercent = volume.percent,
+                        maxVolume = volume.max,
+                        muted = volume.muted,
+                        mediaInfo = media,
+                        mediaAccessGranted = isNotificationAccessGranted(),
+                        permissionMissing = !hasBluetoothConnectPermission(),
+                        workingMode = headset.mode,
+                        equalizer = headset.equalizer,
+                        playbackOrder = headset.playbackOrder,
+                        headsetVolumePercent = headset.volumePercent,
+                        headsetPlaying = headset.playing,
+                    )
+                }
+            }
+            .distinctUntilChanged()
+
+    init {
+        (applicationContext as? Application)?.registerActivityLifecycleCallbacks(
+            object : Application.ActivityLifecycleCallbacks {
+                override fun onActivityResumed(activity: Activity) = refresh()
+
+                override fun onActivityCreated(activity: Activity, state: android.os.Bundle?) = Unit
+
+                override fun onActivityStarted(activity: Activity) = Unit
+
+                override fun onActivityPaused(activity: Activity) = Unit
+
+                override fun onActivityStopped(activity: Activity) = Unit
+
+                override fun onActivitySaveInstanceState(activity: Activity, state: android.os.Bundle) = Unit
+
+                override fun onActivityDestroyed(activity: Activity) = Unit
+            },
         )
-    }.distinctUntilChanged()
+    }
 
     override fun refresh() {
-        refreshTrigger.value = SystemClock.elapsedRealtime()
+        // Recreate the platform callback flows: both notification-listener access and runtime
+        // Bluetooth permissions can be changed while Cadence is in Android Settings.
+        refreshTrigger.update { it + 1 }
     }
 
     override fun setVolume(percent: Int) {
