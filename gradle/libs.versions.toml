@@ -45,7 +45,7 @@ wire = "7.1.2"
 wearCompose = "1.7.1"
 wearWidgets = "1.0.0-alpha17"
 composeRemote = "1.0.0-alpha22"
-wearComposeRemote = "1.0.0-alpha10"
+wearComposeRemote = "1.0.0-alpha14"
 playServicesWearable = "20.0.1"
 
 [libraries]
