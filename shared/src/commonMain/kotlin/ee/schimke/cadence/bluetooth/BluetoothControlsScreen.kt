@@ -65,6 +65,7 @@ import ee.schimke.cadence.metro.metroViewModel
 @Composable
 fun BluetoothControlsScreen(modifier: Modifier = Modifier) {
   val viewModel = metroViewModel<BluetoothControlsViewModel>()
+  val requestBluetoothPermission = rememberBluetoothConnectPermissionLauncher(viewModel::refresh)
   val state by viewModel.state.collectAsState()
   val lastResult by viewModel.lastCommandResult.collectAsState()
   val snackbarHost = remember { SnackbarHostState() }
@@ -94,6 +95,7 @@ fun BluetoothControlsScreen(modifier: Modifier = Modifier) {
     onFastForward = viewModel::fastForward,
     onRewind = viewModel::rewind,
     onOpenSettings = viewModel::openSystemBluetoothSettings,
+    onRequestBluetoothPermission = requestBluetoothPermission,
     onRequestMediaAccess = viewModel::requestMediaAccess,
     onSelectWorkingMode = viewModel::selectWorkingMode,
     onSelectEqualizer = viewModel::selectEqualizer,
@@ -120,6 +122,7 @@ fun BluetoothControlsContent(
   onFastForward: () -> Unit,
   onRewind: () -> Unit,
   onOpenSettings: () -> Unit,
+  onRequestBluetoothPermission: () -> Unit = {},
   onRequestMediaAccess: () -> Unit,
   onSelectWorkingMode: (WorkingMode) -> Unit,
   onSelectEqualizer: (EqualizerPreset) -> Unit = {},
@@ -138,7 +141,7 @@ fun BluetoothControlsContent(
     ) {
       item { ConnectionCard(state, onOpenSettings, onRefresh) }
       if (state.permissionMissing) {
-        item { PermissionWarningCard(onOpenSettings) }
+        item { PermissionWarningCard(onRequestBluetoothPermission) }
       }
       item { WorkingModeCard(state.workingMode, state.openSwimConnected, onSelectWorkingMode) }
       item { NowPlayingCard(state, onRequestMediaAccess) }
@@ -221,7 +224,7 @@ private fun ConnectionCard(
 }
 
 @Composable
-private fun PermissionWarningCard(onOpenSettings: () -> Unit) {
+private fun PermissionWarningCard(onRequestBluetoothPermission: () -> Unit) {
   Card(
     modifier = Modifier.fillMaxWidth(),
     colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer),
@@ -229,7 +232,7 @@ private fun PermissionWarningCard(onOpenSettings: () -> Unit) {
     Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
       Text("Bluetooth permission required", fontWeight = FontWeight.SemiBold)
       Text("Grant the BLUETOOTH_CONNECT permission to read connected device state.")
-      OutlinedButton(onClick = onOpenSettings) { Text("Open settings") }
+      OutlinedButton(onClick = onRequestBluetoothPermission) { Text("Allow Bluetooth access") }
     }
   }
 }
