@@ -15,6 +15,9 @@ message Settings {
   SyncPreferences sync_preferences = 5;
   repeated SyncProfile sync_profiles = 6;
   AppearancePreferences appearance = 7;
+  // Random UUID set once on first run; identifies this install when attributing
+  // sync writes in a cross-host manifest.
+  string host_id = 8;
 }
 
 // Unused: the app always follows dynamic Material 3. Kept so stored settings still parse.
@@ -85,6 +88,9 @@ message SyncPreferences {
   bool auto_sync_on_usb = 2;
   // Optional VID:PID pattern in form "VID:PID" for triggering auto-sync.
   string usb_match = 3;
+  // When true (and the host is signed in to Google), sync writes are mirrored to a Drive-backed
+  // manifest so other hosts can see what's already on each device.
+  bool cross_device_sync_enabled = 4;
 }
 
 message SyncProfile {

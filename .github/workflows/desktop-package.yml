@@ -53,10 +53,23 @@ jobs:
         if: runner.os == 'Linux'
         run: sudo apt-get update && sudo apt-get install -y fakeroot
       - name: Build installer with bundled Java runtime
+        env:
+          # Google OAuth client baked into the installer so end users don't need to create their own
+          # Cloud project. Add CADENCE_GOOGLE_CLIENT_ID / CADENCE_GOOGLE_CLIENT_SECRET as repo
+          # secrets to enable; while unset the Cross-device sync card falls back to the self-build
+          # setup instructions.
+          CADENCE_GOOGLE_CLIENT_ID: ${{ secrets.CADENCE_GOOGLE_CLIENT_ID }}
+          CADENCE_GOOGLE_CLIENT_SECRET: ${{ secrets.CADENCE_GOOGLE_CLIENT_SECRET }}
         run: |
           args=()
           if [[ -n "$RELEASE_TAG" ]]; then
             args+=("-PdesktopVersion=${RELEASE_TAG#v}")
+          fi
+          if [[ -n "$CADENCE_GOOGLE_CLIENT_ID" ]]; then
+            args+=("-PcadenceGoogleClientId=$CADENCE_GOOGLE_CLIENT_ID")
+          fi
+          if [[ -n "$CADENCE_GOOGLE_CLIENT_SECRET" ]]; then
+            args+=("-PcadenceGoogleClientSecret=$CADENCE_GOOGLE_CLIENT_SECRET")
           fi
           ./gradlew :desktopApp:packageDistributionForCurrentOS "${args[@]}" --stacktrace
       - name: Show packaging diagnostics
