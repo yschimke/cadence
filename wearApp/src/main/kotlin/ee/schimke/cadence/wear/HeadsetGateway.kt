@@ -107,6 +107,9 @@ sealed interface HeadsetConnection {
 
   data class Authenticated(val deviceName: String) : HeadsetConnection
 
+  /** Phone reports a matching OpenSwim connection; this is not a watch-side RCSP authentication. */
+  data class PhoneConnected(val deviceName: String) : HeadsetConnection
+
   data class Unavailable(val reason: String) : HeadsetConnection
 }
 
@@ -205,5 +208,19 @@ class UnavailableHeadsetGateway : HeadsetGateway {
  * replace it; Tiles never create transport objects or issue raw writes.
  */
 object WearCompanionServices {
+  @Volatile
   var headsetGateway: HeadsetGateway = UnavailableHeadsetGateway()
+    private set
+
+  @Synchronized
+  fun gateway(
+    context: android.content.Context
+  ): ee.schimke.cadence.wear.datalayer.DataLayerHeadsetGateway {
+    (headsetGateway as? ee.schimke.cadence.wear.datalayer.DataLayerHeadsetGateway)?.let {
+      return it
+    }
+    return ee.schimke.cadence.wear.datalayer
+      .DataLayerHeadsetGateway(context.applicationContext)
+      .also { headsetGateway = it }
+  }
 }

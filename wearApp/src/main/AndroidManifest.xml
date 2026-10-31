@@ -16,37 +16,56 @@
             </intent-filter>
         </activity>
 
+        <receiver
+            android:name=".widgets.WearWidgetActionReceiver"
+            android:exported="false" />
+
         <service
-            android:name=".tiles.ModeAndControlsTileService"
-            android:description="@string/mode_controls_tile_description"
+            android:name=".datalayer.WearDataLayerListenerService"
             android:exported="true"
-            android:label="@string/mode_controls_tile_name"
-            android:permission="com.google.android.wearable.permission.BIND_TILE_PROVIDER">
+            android:permission="com.google.android.gms.permission.BIND_WEARABLE_LISTENER">
             <intent-filter>
-                <action android:name="androidx.wear.tiles.action.BIND_TILE_PROVIDER" />
+                <action android:name="com.google.android.gms.wearable.DATA_CHANGED" />
             </intent-filter>
         </service>
 
         <service
-            android:name=".tiles.LocalAudioTileService"
-            android:description="@string/local_audio_tile_description"
+            android:name=".widgets.ModeAndControlsWearWidgetService"
             android:exported="true"
-            android:label="@string/local_audio_tile_name"
+            android:label="@string/mode_controls_widget_name"
             android:permission="com.google.android.wearable.permission.BIND_TILE_PROVIDER">
             <intent-filter>
-                <action android:name="androidx.wear.tiles.action.BIND_TILE_PROVIDER" />
+                <action android:name="androidx.glance.wear.action.BIND_WIDGET_PROVIDER" />
             </intent-filter>
+            <meta-data
+                android:name="androidx.glance.wear.widget.provider"
+                android:resource="@xml/mode_and_controls_widget" />
         </service>
 
         <service
-            android:name=".tiles.SyncStatusTileService"
-            android:description="@string/sync_status_tile_description"
+            android:name=".widgets.LocalAudioPlaylistWearWidgetService"
             android:exported="true"
-            android:label="@string/sync_status_tile_name"
+            android:label="@string/local_audio_playlist_widget_name"
             android:permission="com.google.android.wearable.permission.BIND_TILE_PROVIDER">
             <intent-filter>
-                <action android:name="androidx.wear.tiles.action.BIND_TILE_PROVIDER" />
+                <action android:name="androidx.glance.wear.action.BIND_WIDGET_PROVIDER" />
             </intent-filter>
+            <meta-data
+                android:name="androidx.glance.wear.widget.provider"
+                android:resource="@xml/local_audio_playlist_widget" />
+        </service>
+
+        <service
+            android:name=".widgets.SyncStatusWearWidgetService"
+            android:exported="true"
+            android:label="@string/sync_status_widget_name"
+            android:permission="com.google.android.wearable.permission.BIND_TILE_PROVIDER">
+            <intent-filter>
+                <action android:name="androidx.glance.wear.action.BIND_WIDGET_PROVIDER" />
+            </intent-filter>
+            <meta-data
+                android:name="androidx.glance.wear.widget.provider"
+                android:resource="@xml/sync_status_widget" />
         </service>
     </application>
 </manifest>

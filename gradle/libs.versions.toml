@@ -42,8 +42,10 @@ runner = "1.7.0"
 tapmoc = "0.5.0"
 wire = "7.1.0"
 wearCompose = "1.7.1"
-wearTiles = "1.6.2"
-protoLayout = "1.4.2"
+wearWidgets = "1.0.0-alpha17"
+composeRemote = "1.0.0-alpha18"
+wearComposeRemote = "1.0.0-alpha10"
+playServicesWearable = "20.0.1"
 
 [libraries]
 rc-widget-launcher = { module = "ee.schimke.composeai:rc-widget-launcher", version.ref = "rcWidget" }
@@ -88,6 +90,7 @@ junit = { group = "junit", name = "junit", version.ref = "junit" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
+kotlinx-coroutines-play-services = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "kotlinxCoroutines" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktorClientCore" }
 material-icons-core = { module = "org.jetbrains.compose.material:material-icons-core", version.ref = "materialIconsCore" }
@@ -96,9 +99,15 @@ navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-co
 wear-compose-foundation = { module = "androidx.wear.compose:compose-foundation", version.ref = "wearCompose" }
 wear-compose-material3 = { module = "androidx.wear.compose:compose-material3", version.ref = "wearCompose" }
 wear-compose-ui-tooling = { module = "androidx.wear.compose:compose-ui-tooling", version.ref = "wearCompose" }
-wear-tiles = { module = "androidx.wear.tiles:tiles", version.ref = "wearTiles" }
-wear-protolayout = { module = "androidx.wear.protolayout:protolayout", version.ref = "protoLayout" }
-wear-protolayout-material3 = { module = "androidx.wear.protolayout:protolayout-material3", version.ref = "protoLayout" }
+compose-remote-creation = { module = "androidx.compose.remote:remote-creation", version.ref = "composeRemote" }
+compose-remote-creation-compose = { module = "androidx.compose.remote:remote-creation-compose", version.ref = "composeRemote" }
+compose-remote-core = { module = "androidx.compose.remote:remote-core", version.ref = "composeRemote" }
+compose-remote-tooling-preview = { module = "androidx.compose.remote:remote-tooling-preview", version.ref = "composeRemote" }
+glance-wear = { module = "androidx.glance.wear:wear", version.ref = "wearWidgets" }
+glance-wear-core = { module = "androidx.glance.wear:wear-core", version.ref = "wearWidgets" }
+glance-wear-tooling-preview = { module = "androidx.glance.wear:wear-tooling-preview", version.ref = "wearWidgets" }
+wear-compose-remote-material3 = { module = "androidx.wear.compose.remote:remote-material3", version.ref = "wearComposeRemote" }
+play-services-wearable = { module = "com.google.android.gms:play-services-wearable", version.ref = "playServicesWearable" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

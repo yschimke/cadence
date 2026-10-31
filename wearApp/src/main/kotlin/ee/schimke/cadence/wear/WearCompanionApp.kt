@@ -347,6 +347,7 @@ private fun connectionStatus(connection: HeadsetConnection): String =
     HeadsetConnection.Disconnected -> "Disconnected"
     HeadsetConnection.Connecting -> "Connecting"
     is HeadsetConnection.Authenticated -> "Connected"
+    is HeadsetConnection.PhoneConnected -> "Connected via phone"
     is HeadsetConnection.Unavailable -> "Unavailable"
   }
 
