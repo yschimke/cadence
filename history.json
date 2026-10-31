@@ -1,6 +1,6 @@
 {
     "formatVersion": "compose-preview-history/v1",
-    "generatedFrom": "7c975894bd326758d63e47a30aba84605a5d78ab",
+    "generatedFrom": "d8d78061c88f56a50e489c49e22a461ad0555971",
     "previews": {
         "composeApp/activity__MainActivity": {
             "path": "renders/composeApp/activity__MainActivity.png",
@@ -107,6 +107,13 @@
             "path": "renders/composeApp/HeadphoneWidgetBluetoothPreview_Headphone_widget_Bluetooth-672bb261.png",
             "versions": [
                 {
+                    "blob": "97a7ac702aa82d60fd8166ba69d6f379df96d273",
+                    "commit": "d8d78061c88f56a50e489c49e22a461ad0555971",
+                    "date": "2026-10-31T19:53:43Z",
+                    "sourceSha": "0b3e08c8",
+                    "commits": 1
+                },
+                {
                     "blob": "570fedcf0c6128704217970618963757bfc4f4b8",
                     "commit": "7c975894bd326758d63e47a30aba84605a5d78ab",
                     "date": "2026-10-31T19:48:27Z",
@@ -135,7 +142,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 4,
+            "observations": 5,
             "unstable": false,
             "flapCount": 0
         },
@@ -1664,6 +1671,13 @@
             "path": "renders/wearApp/ModeAndControlsWearWidgetRectangularPreview_Now_playing_rectangular-71381054_PARAM_0.png",
             "versions": [
                 {
+                    "blob": "368c58cc19164a0a493be86bd5fc34cbd145401e",
+                    "commit": "d8d78061c88f56a50e489c49e22a461ad0555971",
+                    "date": "2026-10-31T19:53:43Z",
+                    "sourceSha": "0b3e08c8",
+                    "commits": 1
+                },
+                {
                     "blob": "bafb5ea1d50086b6b9fff749a5c846424f7ee358",
                     "commit": "7c975894bd326758d63e47a30aba84605a5d78ab",
                     "date": "2026-10-31T19:48:27Z",
@@ -1678,7 +1692,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 2,
+            "observations": 3,
             "unstable": false,
             "flapCount": 0
         },
