@@ -39,6 +39,7 @@ import androidx.compose.remote.creation.compose.modifier.size
 import androidx.compose.remote.creation.compose.shapes.RemoteCircleShape
 import androidx.compose.remote.creation.compose.shapes.RemoteRoundedCornerShape
 import androidx.compose.remote.creation.compose.state.RemoteColor
+import androidx.compose.remote.creation.compose.state.RemoteDp
 import androidx.compose.remote.creation.compose.state.rb
 import androidx.compose.remote.creation.compose.state.rc
 import androidx.compose.remote.creation.compose.state.rdp
@@ -80,9 +81,9 @@ import ee.schimke.cadence.swim.LocalSwimClock
 import ee.schimke.cadence.swim.SwimClockAt
 import ee.schimke.cadence.swim.SwimLaneProgress
 import ee.schimke.cadence.swim.SwimLap
+import ee.schimke.cadence.swim.WaterBackground
 import ee.schimke.cadence.swim.WaterColors
 import ee.schimke.cadence.swim.rememberPreviewSeconds
-import ee.schimke.cadence.swim.waterBackground
 import ee.schimke.cadence.wear.CompanionSyncStatus
 import ee.schimke.cadence.wear.HeadsetAction
 import ee.schimke.cadence.wear.HeadsetAudioStorage
@@ -304,22 +305,42 @@ private fun TransportButton(
       // Wear's minimum touch target, at every size.
       else -> 48.rdp
     }
+  if (primary) {
+    // A little pool: still water while paused, waves and bubbles while playing. The water is a
+    // canvas layered under a transparent button, not a drawWithContent modifier: Android 16's
+    // platform player recurses forever on DrawContent inside a modifier.
+    RemoteBox(
+      modifier = RemoteModifier.size(size).clip(RemoteRoundedCornerShape(size / 2)),
+      contentAlignment = RemoteAlignment.Center,
+    ) {
+      WaterBackground(
+        RemoteModifier.fillMaxSize(),
+        colors = if (enabled) WaterColors.Pool else WaterColors.Night,
+        level = 0.42f,
+        bubbles = if (rippling) 4 else 0,
+        clock = if (rippling) LocalSwimClock.current else 1.1f.rf,
+      )
+      TransportIconButton(action, icon, label, enabled, primary, size)
+    }
+  } else {
+    TransportIconButton(action, icon, label, enabled, primary, size)
+  }
+}
+
+@Composable
+@RemoteComposable
+private fun TransportIconButton(
+  action: Action,
+  icon: ImageVector,
+  label: String,
+  enabled: Boolean,
+  primary: Boolean,
+  size: RemoteDp,
+) {
+  val colors = RemoteMaterialTheme.colorScheme
   RemoteIconButton(
     onClick = action,
-    modifier =
-      if (primary) {
-        // A little pool: still water while paused, waves and bubbles while playing.
-        RemoteModifier.size(size)
-          .clip(RemoteRoundedCornerShape(size / 2))
-          .waterBackground(
-            colors = if (enabled) WaterColors.Pool else WaterColors.Night,
-            level = 0.42f,
-            bubbles = if (rippling) 4 else 0,
-            clock = if (rippling) LocalSwimClock.current else 1.1f.rf,
-          )
-      } else {
-        RemoteModifier.size(size)
-      },
+    modifier = RemoteModifier.size(size),
     enabled = enabled.rb,
     colors =
       if (primary) {
@@ -383,39 +404,44 @@ private fun CompactPlaylistWidgetContent(snapshot: HeadsetSnapshot) {
     return
   }
   val content = if (track.playing) WidgetColors.onWater.rc else colors.onSurface
-  RemoteRow(
-    modifier =
-      RemoteModifier.fillMaxSize()
-        .let {
-          if (track.playing) {
-            it.waterBackground(WaterColors.Pool, level = 0.3f, clock = LocalSwimClock.current)
-          } else it
-        }
-        .clickable(
-          playTrackAction(track.id),
-          enabled = snapshot.isSupported(RcspCommand.PlayLocalAudio(track.id)),
-          role = Role.Button,
-        )
-        .semantics {
-          contentDescription =
-            "${if (track.playing) "Playing" else "Play"} ${track.podcast.episodeTitle}".rs
-        },
-    horizontalArrangement = RemoteArrangement.spacedBy(8.rdp, RemoteAlignment.CenterHorizontally),
-    verticalAlignment = RemoteAlignment.CenterVertically,
-  ) {
-    RemoteIcon(
-      (if (track.playing) Icons.Filled.GraphicEq else Icons.Filled.PlayArrow).toRemoteImageVector(),
-      null,
-      modifier = RemoteModifier.size(24.rdp),
-      tint = content,
-    )
-    RemoteText(
-      text = track.podcast.episodeTitle.rs,
-      style = RemoteMaterialTheme.typography.titleSmall,
-      color = content,
-      maxLines = 2,
-      overflow = TextOverflow.Ellipsis,
-    )
+  RemoteBox(RemoteModifier.fillMaxSize()) {
+    if (track.playing) {
+      WaterBackground(
+        RemoteModifier.fillMaxSize(),
+        level = 0.3f,
+        clock = LocalSwimClock.current,
+      )
+    }
+    RemoteRow(
+      modifier =
+        RemoteModifier.fillMaxSize()
+          .clickable(
+            playTrackAction(track.id),
+            enabled = snapshot.isSupported(RcspCommand.PlayLocalAudio(track.id)),
+            role = Role.Button,
+          )
+          .semantics {
+            contentDescription =
+              "${if (track.playing) "Playing" else "Play"} ${track.podcast.episodeTitle}".rs
+          },
+      horizontalArrangement = RemoteArrangement.spacedBy(8.rdp, RemoteAlignment.CenterHorizontally),
+      verticalAlignment = RemoteAlignment.CenterVertically,
+    ) {
+      RemoteIcon(
+        (if (track.playing) Icons.Filled.GraphicEq else Icons.Filled.PlayArrow)
+          .toRemoteImageVector(),
+        null,
+        modifier = RemoteModifier.size(24.rdp),
+        tint = content,
+      )
+      RemoteText(
+        text = track.podcast.episodeTitle.rs,
+        style = RemoteMaterialTheme.typography.titleSmall,
+        color = content,
+        maxLines = 2,
+        overflow = TextOverflow.Ellipsis,
+      )
+    }
   }
 }
 
@@ -436,25 +462,34 @@ private fun playlistBackground(snapshot: HeadsetSnapshot, compact: Boolean): Col
 @Composable
 @RemoteComposable
 private fun PlaylistButton(track: LocalAudioTrack, enabled: Boolean) {
+  if (!track.playing) {
+    PlaylistButtonContent(track, enabled)
+    return
+  }
+  // The playing episode is the one in the water, a canvas layered under a transparent button.
+  RemoteBox(RemoteModifier.fillMaxWidth().height(PlaylistButtonHeight).clip(RemoteCircleShape)) {
+    WaterBackground(
+      RemoteModifier.fillMaxSize(),
+      level = 0.3f,
+      crests = 3,
+      clock = LocalSwimClock.current,
+    )
+    PlaylistButtonContent(track, enabled)
+  }
+}
+
+private val PlaylistButtonHeight = 52.rdp
+
+@Composable
+@RemoteComposable
+private fun PlaylistButtonContent(track: LocalAudioTrack, enabled: Boolean) {
   val colors = RemoteMaterialTheme.colorScheme
   val content = if (track.playing) WidgetColors.onWater.rc else colors.onSurface
   RemoteButton(
     onClick = playTrackAction(track.id),
     modifier =
       RemoteModifier.fillMaxWidth()
-        .let {
-          // The playing episode is the one in the water.
-          if (track.playing) {
-            it
-              .clip(RemoteCircleShape)
-              .waterBackground(
-                WaterColors.Pool,
-                level = 0.3f,
-                crests = 3,
-                clock = LocalSwimClock.current,
-              )
-          } else it
-        }
+        .let { if (track.playing) it.height(PlaylistButtonHeight) else it }
         .semantics {
           contentDescription =
             "${if (track.playing) "Playing" else "Play"} ${track.podcast.episodeTitle}".rs
@@ -566,20 +601,20 @@ private fun SyncRing(sync: CompanionSyncStatus, compact: Boolean) {
   RemoteBox(
     modifier =
       RemoteModifier.size(ringSize).let {
-        // The ring fills with water as files land; a full pool once everything is synced.
-        if (water == null) it
-        else
-          it
-            .clip(RemoteRoundedCornerShape(ringSize / 2))
-            .waterBackground(
-              water,
-              level = 0.9f - sync.progressFraction * 0.65f,
-              bubbles = if (sync is CompanionSyncStatus.Running) 3 else 0,
-              clock = if (sync is CompanionSyncStatus.Running) LocalSwimClock.current else 0.6f.rf,
-            )
+        if (water == null) it else it.clip(RemoteRoundedCornerShape(ringSize / 2))
       },
     contentAlignment = RemoteAlignment.Center,
   ) {
+    // The ring fills with water as files land; a full pool once everything is synced.
+    if (water != null) {
+      WaterBackground(
+        RemoteModifier.fillMaxSize(),
+        colors = water,
+        level = 0.9f - sync.progressFraction * 0.65f,
+        bubbles = if (sync is CompanionSyncStatus.Running) 3 else 0,
+        clock = if (sync is CompanionSyncStatus.Running) LocalSwimClock.current else 0.6f.rf,
+      )
+    }
     RemoteCircularProgressIndicator(
       progress = sync.progressFraction.rf,
       modifier = RemoteModifier.fillMaxSize(),

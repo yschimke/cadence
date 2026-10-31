@@ -63,7 +63,11 @@ fun rememberPreviewSeconds(): Float {
 @Composable
 @RemoteComposable
 fun SwimClockAt(seconds: Float, content: @Composable @RemoteComposable () -> Unit) {
-  CompositionLocalProvider(LocalSwimClock provides seconds.rf, content)
+  CompositionLocalProvider(
+    LocalSwimClock provides seconds.rf,
+    LocalSwimClockStart provides 0f,
+    content = content,
+  )
 }
 
 @Preview(name = "Water button · animated", widthDp = 200, heightDp = 64)
