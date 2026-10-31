@@ -39,9 +39,8 @@ interface BluetoothController {
   fun requestMediaAccess()
 
   /**
-   * UI-selected working mode. The opcode that switches the headphones between Bluetooth and
-   * on-device MP3 playback is still unconfirmed, so this does not switch headset mode. On OpenSwim
-   * Pro it gates the captured Local Audio play/pause/previous/next transport.
+   * Switches an OpenSwim Pro between Bluetooth and on-device MP3 playback. Other devices may reject
+   * this request rather than silently changing local UI state.
    */
   suspend fun setWorkingMode(mode: WorkingMode): String
 
@@ -104,11 +103,12 @@ enum class AdvancedCommand(val label: String, val category: AdvancedCommandCateg
   QueryBattery("Query battery", AdvancedCommandCategory.Power),
   QueryFirmware("Query firmware version", AdvancedCommandCategory.Firmware),
   QueryDeviceInfo("Query device info", AdvancedCommandCategory.Diagnostics),
-  EqFlat("EQ: Flat", AdvancedCommandCategory.Audio),
+  QueryLocalAudioState("Query Local Audio state", AdvancedCommandCategory.Audio),
+  EqFlat("EQ: Standard", AdvancedCommandCategory.Audio),
   EqVocal("EQ: Vocal", AdvancedCommandCategory.Audio),
   EqBassBoost("EQ: Bass boost", AdvancedCommandCategory.Audio),
   EqTreble("EQ: Treble", AdvancedCommandCategory.Audio),
-  ToggleSwimmingMode("Toggle swimming mode", AdvancedCommandCategory.Audio),
+  ToggleSwimmingMode("EQ: Swimming", AdvancedCommandCategory.Audio),
   VoicePromptToggle("Toggle voice prompts", AdvancedCommandCategory.Voice),
   LanguageEnglish("Voice: English", AdvancedCommandCategory.Voice),
   LanguageMandarin("Voice: Mandarin", AdvancedCommandCategory.Voice),

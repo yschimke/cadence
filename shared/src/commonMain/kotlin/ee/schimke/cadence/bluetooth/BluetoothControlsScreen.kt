@@ -364,8 +364,7 @@ private val eqPresetCommands =
   listOf(
     AdvancedCommand.EqFlat,
     AdvancedCommand.EqVocal,
-    AdvancedCommand.EqBassBoost,
-    AdvancedCommand.EqTreble,
+    AdvancedCommand.ToggleSwimmingMode,
   )
 
 @Composable
@@ -406,7 +405,7 @@ private fun WorkingModeCard(selected: WorkingMode, onSelect: (WorkingMode) -> Un
         }
       }
       Text(
-        "This selection does not switch the headphones. MP3 enables captured Local Audio transport controls after you switch the headset separately.",
+        "Switches OpenSwim Pro between Bluetooth and on-device MP3 playback. Local Audio transport, volume, EQ, and playback order are available in MP3 mode.",
         style = MaterialTheme.typography.bodySmall,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
       )

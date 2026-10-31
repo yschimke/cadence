@@ -99,6 +99,10 @@ sealed interface RcspCommand {
     override val id = RcspCommandId.SelectEqualizerPreset
   }
 
+  data class SelectPlaybackOrder(val order: PlaybackOrder) : RcspCommand {
+    override val id = RcspCommandId.SelectPlaybackOrder
+  }
+
   data object SyncLocalAudioLibrary : RcspCommand {
     override val id = RcspCommandId.SyncLocalAudioLibrary
   }
@@ -152,6 +156,7 @@ enum class RcspCommandId {
   SelectWorkingMode,
   QueryEqualizer,
   SelectEqualizerPreset,
+  SelectPlaybackOrder,
   SyncLocalAudioLibrary,
   ListLocalAudio,
   PlayLocalAudio,
@@ -182,4 +187,10 @@ enum class EqualizerPreset {
   TrebleBoost,
   Swimming,
   Custom,
+}
+
+enum class PlaybackOrder {
+  Normal,
+  Shuffle,
+  Repeat,
 }

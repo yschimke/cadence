@@ -37,10 +37,10 @@ data class RcspDeviceProfile(
 /**
  * Observed OpenSwim Pro connection facts.
  *
- * Local Audio play/pause/previous/next were captured on firmware R_24_202520250815 and have a
- * byte-exact vendor encoder. They are still mode-dependent: do not present them while the device is
- * in Bluetooth, Line In or USB mode. Volume, seek, mode changes and playlist selection remain
- * unsupported until independently captured and verified.
+ * Local Audio playback-state query, transport, working-mode switch, volume, EQ, and playback order
+ * were captured on firmware R_24_202520250815 and have byte-exact vendor encoders. Local Audio
+ * transport and playback order remain mode-dependent. Seek and playlist selection remain
+ * unsupported until their response contracts are independently verified.
  */
 val OpenSwimProProfile =
   RcspDeviceProfile(
@@ -50,9 +50,14 @@ val OpenSwimProProfile =
     capabilities =
       RcspCapabilities()
         .withSupported(
+          RcspCommandId.QueryMediaState,
           RcspCommandId.Play,
           RcspCommandId.Pause,
           RcspCommandId.NextTrack,
           RcspCommandId.PreviousTrack,
+          RcspCommandId.SelectWorkingMode,
+          RcspCommandId.SetVolume,
+          RcspCommandId.SelectEqualizerPreset,
+          RcspCommandId.SelectPlaybackOrder,
         ),
   )

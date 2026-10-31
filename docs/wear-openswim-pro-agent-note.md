@@ -21,9 +21,9 @@ authenticated adapter—not a duplicate protocol stack.
 - The vendor envelope has a request type of `1` and a response type of `0x101`; simple Local
   Audio requests use a fixed-width, little-endian tagged-word payload. Treat that byte format as
   an adapter implementation detail: UI must continue to use semantic `RcspCommand`s.
-- Start from `OpenSwimProProfile`. It supports only the captured Local Audio `Play`, `Pause`,
-  `PreviousTrack`, and `NextTrack` operations. Every interactive control must be gated with
-  `profile.isSupported(command)` / `gateway.isSupported(command)`.
+- Start from `OpenSwimProProfile`. It supports the captured Local Audio `QueryMediaState`, `Play`,
+  `Pause`, `PreviousTrack`, and `NextTrack` operations. Every interactive control must be gated
+  with `profile.isSupported(command)` / `gateway.isSupported(command)`.
 
 ## Finding and connecting the headset
 
@@ -59,6 +59,9 @@ The Wear screen should have:
   Local Audio mode. Do not use Android media-session controls as a proxy for OpenSwim controls.
 - A local-audio playlist page with track title, position such as `2 of 4`, selected/playing state,
   and a tap-to-play action only when `ListLocalAudio` and `PlayLocalAudio` are supported.
+- `QueryMediaState` is safe to issue in Local Audio mode, but its inner response fields are not
+  yet a public state model. Do not derive a track indicator, play state, progress, or duration from
+  it until each field has been independently mapped.
 - Track progress and seeking only when both a genuine position/duration source and
   `SeekRelative` support exist. For OpenSwim Pro MP3 mode, show no scrubber or elapsed time:
   the Shokz app's active Local Audio UI does not expose one, and seeking is unverified.

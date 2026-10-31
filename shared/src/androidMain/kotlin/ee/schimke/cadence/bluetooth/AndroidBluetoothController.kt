@@ -27,6 +27,7 @@ import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.SingleIn
 import dev.zacsweers.metro.binding
 import ee.schimke.rcsp.AndroidShokzOpenSwimTransport
+import ee.schimke.rcsp.EqualizerPreset
 import ee.schimke.rcsp.OpenSwimProProfile
 import ee.schimke.rcsp.RcspCommand
 import ee.schimke.rcsp.ShokzOpenSwimController
@@ -41,6 +42,7 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.UUID
 
 @ContributesBinding(AppScope::class, binding = binding<BluetoothController>())
@@ -89,6 +91,14 @@ class AndroidBluetoothController(
     }
 
     override fun setVolume(percent: Int) {
+        val device = connectedAudioDevice()
+        if (
+            workingModeFlow.value == WorkingMode.Mp3 &&
+                device?.name?.contains("OpenSwim Pro", ignoreCase = true) == true
+        ) {
+            dispatchOpenSwim(device, RcspCommand.SetVolume(percent.coerceIn(0, 100).toUByte()))
+            return
+        }
         val max = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
         val target = (percent.coerceIn(0, 100) * max / 100).coerceIn(0, max)
         audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, target, AudioManager.FLAG_SHOW_UI)
@@ -138,16 +148,91 @@ class AndroidBluetoothController(
     }
 
     override suspend fun setWorkingMode(mode: WorkingMode): String {
-        workingModeFlow.value = mode
-        return when (mode) {
-            WorkingMode.Mp3 -> "Local Audio controls enabled; set MP3 mode on the headphones first"
-            WorkingMode.Bluetooth -> "Bluetooth controls use the system media session"
+        val device = connectedAudioDevice()
+            ?.takeIf { it.name?.contains("OpenSwim Pro", ignoreCase = true) == true }
+            ?: return "Connect an OpenSwim Pro first"
+        val command =
+            RcspCommand.SelectWorkingMode(
+                when (mode) {
+                    WorkingMode.Mp3 -> ee.schimke.rcsp.WorkingMode.LocalAudio
+                    WorkingMode.Bluetooth -> ee.schimke.rcsp.WorkingMode.Bluetooth
+                },
+            )
+        return withContext(Dispatchers.IO) {
+            runCatching { exchangeOpenSwim(device, command) }
+                .fold(
+                    onSuccess = {
+                        workingModeFlow.value = mode
+                        refresh()
+                        when (mode) {
+                            WorkingMode.Mp3 -> "OpenSwim Pro switched to MP3 Mode"
+                            WorkingMode.Bluetooth -> "OpenSwim Pro switched to Bluetooth Mode"
+                        }
+                    },
+                    onFailure = { error ->
+                        Log.w("CadenceBluetooth", "OpenSwim mode switch failed", error)
+                        "OpenSwim Pro mode switch failed: ${error.message ?: "unknown error"}"
+                    },
+                )
         }
     }
 
-    override suspend fun dispatchAdvanced(command: AdvancedCommand): String = when (command) {
-        AdvancedCommand.QueryBattery -> batteryFromConnected() ?: "Unknown — connect a device"
-        else -> "Preview only — firmware support not wired up yet"
+    override suspend fun dispatchAdvanced(command: AdvancedCommand): String =
+        when (command) {
+            AdvancedCommand.QueryBattery -> batteryFromConnected() ?: "Unknown — connect a device"
+            AdvancedCommand.QueryLocalAudioState -> queryOpenSwimLocalAudioState()
+            AdvancedCommand.EqFlat ->
+                executeOpenSwimCommand(RcspCommand.SelectEqualizerPreset(EqualizerPreset.Standard))
+            AdvancedCommand.EqVocal ->
+                executeOpenSwimCommand(RcspCommand.SelectEqualizerPreset(EqualizerPreset.Vocal))
+            AdvancedCommand.ToggleSwimmingMode ->
+                executeOpenSwimCommand(RcspCommand.SelectEqualizerPreset(EqualizerPreset.Swimming))
+            else -> "Preview only — firmware support not wired up yet"
+        }
+
+    private suspend fun executeOpenSwimCommand(command: RcspCommand): String {
+        val device = connectedAudioDevice()
+            ?.takeIf { it.name?.contains("OpenSwim Pro", ignoreCase = true) == true }
+            ?: return "Connect an OpenSwim Pro first"
+        return withContext(Dispatchers.IO) {
+            runCatching { exchangeOpenSwim(device, command) }
+                .fold(
+                    onSuccess = { "Acknowledged" },
+                    onFailure = { error -> "Failed: ${error.message ?: "unknown error"}" },
+                )
+        }
+    }
+
+    private suspend fun queryOpenSwimLocalAudioState(): String {
+        if (workingModeFlow.value != WorkingMode.Mp3) {
+            return "Select Local Audio first"
+        }
+        val device = connectedAudioDevice()
+            ?.takeIf { it.name?.contains("OpenSwim Pro", ignoreCase = true) == true }
+            ?: return "Connect an OpenSwim Pro first"
+        return withContext(Dispatchers.IO) {
+            runCatching {
+                val socket =
+                    device.createRfcommSocketToServiceRecord(UUID.fromString(OpenSwimProProfile.serviceUuid))
+                socket.use {
+                    it.connect()
+                    ShokzOpenSwimController(AndroidShokzOpenSwimTransport(it))
+                        .execute(RcspCommand.QueryMediaState)
+                }
+            }.fold(
+                onSuccess = { response ->
+                    Log.i(
+                        "CadenceBluetooth",
+                        "OpenSwim Local Audio state acknowledged with type ${response.type}",
+                    )
+                    "Local Audio state acknowledged"
+                },
+                onFailure = { error ->
+                    Log.w("CadenceBluetooth", "OpenSwim Local Audio state query failed", error)
+                    "Local Audio state query failed: ${error.message ?: "unknown error"}"
+                },
+            )
+        }
     }
 
     private fun batteryFromConnected(): String? {
@@ -187,27 +272,31 @@ class AndroidBluetoothController(
             dispatchKey(mediaKeyCode)
             return
         }
+        dispatchOpenSwim(device, command)
+    }
+
+    private fun dispatchOpenSwim(device: BluetoothDevice, command: RcspCommand) {
         commandScope.launch {
-            val result = runCatching {
-                val socket =
-                    device.createRfcommSocketToServiceRecord(UUID.fromString(OpenSwimProProfile.serviceUuid))
-                socket.use {
-                    it.connect()
-                    ShokzOpenSwimController(AndroidShokzOpenSwimTransport(it)).execute(command)
+            runCatching { exchangeOpenSwim(device, command) }
+                .onSuccess { response ->
+                    Log.i(
+                        "CadenceBluetooth",
+                        "OpenSwim ${command.id} acknowledged with type ${response.type}",
+                    )
                 }
-            }
-            result.onSuccess { response ->
-                Log.i(
-                    "CadenceBluetooth",
-                    "OpenSwim ${command.id} acknowledged with type ${response.type}",
-                )
-            }
-            result.onFailure { error ->
-                Log.w("CadenceBluetooth", "OpenSwim ${command.id} failed", error)
-            }
+                .onFailure { error -> Log.w("CadenceBluetooth", "OpenSwim ${command.id} failed", error) }
             refresh()
         }
     }
+
+    private suspend fun exchangeOpenSwim(
+        device: BluetoothDevice,
+        command: RcspCommand,
+    ) =
+        device.createRfcommSocketToServiceRecord(UUID.fromString(OpenSwimProProfile.serviceUuid)).use { socket ->
+            socket.connect()
+            ShokzOpenSwimController(AndroidShokzOpenSwimTransport(socket)).execute(command)
+        }
 
     private fun hasBluetoothConnectPermission(): Boolean {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return true
