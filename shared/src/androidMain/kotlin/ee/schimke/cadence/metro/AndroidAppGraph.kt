@@ -7,6 +7,7 @@ import dev.zacsweers.metro.Multibinds
 import dev.zacsweers.metro.Provider
 import dev.zacsweers.metro.Provides
 import ee.schimke.cadence.data.AndroidFileSystem
+import ee.schimke.cadence.bluetooth.BluetoothController
 import ee.schimke.cadence.sync.RefreshOrchestrator
 import ee.schimke.cadence.sync.RefreshScheduler
 import ee.schimke.cadence.sync.SyncOrchestrator
@@ -26,6 +27,9 @@ interface AndroidAppGraph: AppGraph {
     val viewModelGraphFactory: AndroidViewModelGraph.Factory
 
     val syncOrchestrator: SyncOrchestrator
+
+    /** The phone-owned controller is the only bridge allowed to reach OpenSwim transport. */
+    val bluetoothController: BluetoothController
 
     val syncRepo: SyncRepo
 

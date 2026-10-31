@@ -30,6 +30,7 @@ ktorClientCore = "3.6.1"
 materialIconsCore = "1.7.3"
 metro = "1.5.0"
 media3 = "1.11.1"
+horologist = "0.8.4-alpha"
 composeMaterial3 = "1.9.0"
 okio = "3.18.2"
 usb4java = "1.3.0"
@@ -40,6 +41,11 @@ rcWidget = "2.21.0"
 runner = "1.7.0"
 tapmoc = "0.5.0"
 wire = "7.1.0"
+wearCompose = "1.7.1"
+wearWidgets = "1.0.0-alpha17"
+composeRemote = "1.0.0-alpha18"
+wearComposeRemote = "1.0.0-alpha10"
+playServicesWearable = "20.0.1"
 
 [libraries]
 rc-widget-launcher = { module = "ee.schimke.composeai:rc-widget-launcher", version.ref = "rcWidget" }
@@ -48,6 +54,7 @@ firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
 
 media3-transformer = { module = "androidx.media3:media3-transformer", version.ref = "media3" }
+horologist-media-ui-material3 = { module = "com.google.android.horologist:horologist-media-ui-material3", version.ref = "horologist" }
 compose-components-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "compose-multiplatform" }
 compose-components-ui-tooling-preview = { module = "org.jetbrains.compose.components:components-ui-tooling-preview", version.ref = "compose-multiplatform" }
 compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "compose-multiplatform" }
@@ -83,11 +90,24 @@ junit = { group = "junit", name = "junit", version.ref = "junit" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
+kotlinx-coroutines-play-services = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "kotlinxCoroutines" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktorClientCore" }
 material-icons-core = { module = "org.jetbrains.compose.material:material-icons-core", version.ref = "materialIconsCore" }
 material-icons-extended = { module = "org.jetbrains.compose.material:material-icons-extended", version.ref = "materialIconsCore" }
 navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+wear-compose-foundation = { module = "androidx.wear.compose:compose-foundation", version.ref = "wearCompose" }
+wear-compose-material3 = { module = "androidx.wear.compose:compose-material3", version.ref = "wearCompose" }
+wear-compose-ui-tooling = { module = "androidx.wear.compose:compose-ui-tooling", version.ref = "wearCompose" }
+compose-remote-creation = { module = "androidx.compose.remote:remote-creation", version.ref = "composeRemote" }
+compose-remote-creation-compose = { module = "androidx.compose.remote:remote-creation-compose", version.ref = "composeRemote" }
+compose-remote-core = { module = "androidx.compose.remote:remote-core", version.ref = "composeRemote" }
+compose-remote-tooling-preview = { module = "androidx.compose.remote:remote-tooling-preview", version.ref = "composeRemote" }
+glance-wear = { module = "androidx.glance.wear:wear", version.ref = "wearWidgets" }
+glance-wear-core = { module = "androidx.glance.wear:wear-core", version.ref = "wearWidgets" }
+glance-wear-tooling-preview = { module = "androidx.glance.wear:wear-tooling-preview", version.ref = "wearWidgets" }
+wear-compose-remote-material3 = { module = "androidx.wear.compose.remote:remote-material3", version.ref = "wearComposeRemote" }
+play-services-wearable = { module = "com.google.android.gms:play-services-wearable", version.ref = "playServicesWearable" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

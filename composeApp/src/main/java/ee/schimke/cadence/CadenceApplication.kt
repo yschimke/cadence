@@ -5,6 +5,7 @@ import dev.zacsweers.metro.createGraphFactory
 import ee.schimke.cadence.metro.AndroidAppGraph
 import ee.schimke.cadence.metro.AppGraphProvider
 import ee.schimke.cadence.metro.CadenceAppGraph
+import ee.schimke.cadence.wear.PhoneWearDataPublisher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -21,6 +22,12 @@ class CadenceApplication : Application(), AppGraphProvider {
 
   override fun onCreate() {
     super.onCreate()
+    PhoneWearDataPublisher(
+        context = applicationContext,
+        bluetoothController = appGraph.bluetoothController,
+        syncOrchestrator = appGraph.syncOrchestrator,
+      )
+      .start()
     // Keep WorkManager schedules in sync with the auto_refresh flags on each
     // profile. When a profile is added, toggled or removed the periodic job
     // is enqueued, updated or cancelled accordingly.

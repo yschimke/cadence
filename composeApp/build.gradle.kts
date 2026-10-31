@@ -78,7 +78,10 @@ dependencies {
   }
 
   implementation(project(":shared"))
+  implementation(project(":rcsp"))
+  implementation(project(":wearCompanionContract"))
   implementation(libs.kotlinx.coroutines.android)
+  implementation(libs.play.services.wearable)
   implementation(libs.androidx.activity.compose)
   implementation(libs.androidx.core.splashscreen)
   implementation(libs.androidx.lifecycle.viewmodel)

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wearwidget-provider
+    description="@string/local_audio_playlist_widget_description"
+    icon="@android:drawable/ic_media_play"
+    label="@string/local_audio_playlist_widget_name"
+    preferredType="@integer/glance_wear_container_type_large">
+    <container type="@integer/glance_wear_container_type_small" previewImage="@drawable/local_audio_playlist_widget_small" />
+    <container type="@integer/glance_wear_container_type_large" previewImage="@drawable/local_audio_playlist_widget_large" />
+</wearwidget-provider>

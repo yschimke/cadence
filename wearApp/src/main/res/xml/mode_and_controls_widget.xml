@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wearwidget-provider
+    description="@string/mode_controls_widget_description"
+    icon="@android:drawable/ic_media_play"
+    label="@string/mode_controls_widget_name"
+    preferredType="@integer/glance_wear_container_type_small">
+    <container type="@integer/glance_wear_container_type_small" previewImage="@drawable/mode_and_controls_widget_small" />
+    <container type="@integer/glance_wear_container_type_large" previewImage="@drawable/mode_and_controls_widget_large" />
+</wearwidget-provider>

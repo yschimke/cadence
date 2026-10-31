@@ -36,3 +36,9 @@ dependencyResolutionManagement {
 include(":composeApp")
 
 include(":shared", ":desktopApp", ":rcsp")
+
+// Shared, transport-neutral schema for the phone ↔ Wear companion Data Layer.
+include(":wearCompanionContract")
+
+// Wear owns presentation and Tiles; :rcsp supplies verified device facts and capability checks.
+include(":wearApp")
