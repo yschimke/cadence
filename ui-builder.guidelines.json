@@ -1,0 +1,22 @@
+{
+  "schema": "compose-ui-builder/catalog-guidelines/v1",
+  "catalog": "cadence",
+  "platform": "mobile",
+  "version": 1,
+  "about": "Design guidelines for Cadence's previews: the shared compose-ui pack for every screen and component, and the remote-compose and launcher-widgets packs for the Remote Compose home-screen widgets. Run with `compose-preview review --guidelines ui-builder.guidelines.json` (see AGENTS.md).",
+  "includes": [
+    {
+      "url": "https://raw.githubusercontent.com/yschimke/compose-ai-tools/56d5749780460115bdea0384dd4e823048a9efa3/guidelines/packs/compose-ui.guidelines.json",
+      "sha256": "f8a9ba061f1b8bb84c0246818a4b2e926aa72c8529bea0efef7b7cbe40f34496"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/yschimke/compose-ai-tools/56d5749780460115bdea0384dd4e823048a9efa3/guidelines/packs/remote-compose.guidelines.json",
+      "sha256": "49902a9ed67dce054544785730d1e58dc389d30de9086aaecd980f8c09a88527"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/yschimke/compose-ai-tools/56d5749780460115bdea0384dd4e823048a9efa3/guidelines/packs/launcher-widgets.guidelines.json",
+      "sha256": "434bc9e33d588f61a3cca043d02f2bd211f36efea6d621dccf00c268b67272ff"
+    }
+  ],
+  "rules": []
+}

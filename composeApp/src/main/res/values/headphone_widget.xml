@@ -3,20 +3,21 @@
     <string name="headphone_widget_description">Headphone transport, MP3/Bluetooth mode and EQ status</string>
 
     <style name="HeadphoneWidgetButton">
-        <item name="android:layout_width">44dp</item>
-        <item name="android:layout_height">44dp</item>
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
         <item name="android:layout_marginHorizontal">4dp</item>
         <item name="android:background">@drawable/headphone_widget_button</item>
         <item name="android:scaleType">center</item>
+        <item name="android:tint">@color/headphone_widget_on_tonal</item>
     </style>
 
     <style name="HeadphoneWidgetModeButton">
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">44dp</item>
-        <item name="android:minWidth">44dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:minWidth">48dp</item>
         <item name="android:layout_marginHorizontal">4dp</item>
         <item name="android:background">@drawable/headphone_widget_button</item>
-        <item name="android:textColor">#FFE6E1E9</item>
+        <item name="android:textColor">@color/headphone_widget_on_tonal</item>
         <item name="android:textSize">12sp</item>
     </style>
 </resources>
