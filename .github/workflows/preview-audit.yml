@@ -170,7 +170,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v6.4.1
         with:
           cache-read-only: true
-      - uses: yschimke/compose-ai-tools/.github/actions/install@v2.78.0
+      - uses: yschimke/compose-ai-tools/.github/actions/install@v2.79.0
         with:
           # Same CLI as compose-preview.yml renders with.
           version: '2.64.2'
