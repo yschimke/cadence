@@ -55,6 +55,7 @@ import androidx.glance.wear.core.ContainerInfo
 import androidx.glance.wear.core.WearWidgetParams
 import androidx.glance.wear.tooling.preview.RectangularAllWidgetPreviewParams
 import androidx.glance.wear.tooling.preview.RoundAllWidgetPreviewParams
+import androidx.glance.wear.tooling.preview.SquircleAllWidgetPreviewParams
 import androidx.glance.wear.tooling.preview.WearWidgetPreview
 import androidx.wear.compose.remote.material3.RemoteButton
 import androidx.wear.compose.remote.material3.RemoteButtonDefaults
@@ -73,8 +74,6 @@ import ee.schimke.cadence.wear.HeadsetSnapshot
 import ee.schimke.cadence.wear.LocalAudioTrack
 import ee.schimke.cadence.wear.SyncedPodcastTrack
 import ee.schimke.cadence.wear.WearCompanionServices
-import ee.schimke.cadence.wear.preview.GalaxyWatch44Preview
-import ee.schimke.cadence.wear.preview.PixelWatch45Preview
 import ee.schimke.rcsp.RcspCapabilities
 import ee.schimke.rcsp.RcspCommand
 import ee.schimke.rcsp.WorkingMode
@@ -538,97 +537,100 @@ private val CompanionSyncStatus.progressFraction: Float
       CompanionSyncStatus.Unavailable -> 0f
     }
 
-@PixelWatch45Preview
-@GalaxyWatch44Preview
+/** Previews use Glance Wear's own container shapes: rectangular, round (Samsung) and squircle. */
 @Composable
-fun ModeAndControlsWearWidgetPreview(
-  @PreviewParameter(RoundAllWidgetPreviewParams::class) params: WearWidgetParams
+private fun WidgetPreview(
+  params: WearWidgetParams,
+  content: @Composable @RemoteComposable () -> Unit,
 ) {
   WearWidgetPreview(params, background = WearWidgetBrush.color(WidgetColors.background.rc)) {
-    RemoteMaterialTheme {
-      ModeAndControlsWidgetContent(
-        previewSnapshot,
-        params.containerType == ContainerInfo.CONTAINER_TYPE_SMALL,
-      )
-    }
+    RemoteMaterialTheme { content() }
   }
 }
 
-@PixelWatch45Preview
-@GalaxyWatch44Preview
-@Composable
-fun LocalAudioPlaylistWearWidgetPreview(
-  @PreviewParameter(RoundAllWidgetPreviewParams::class) params: WearWidgetParams
-) {
-  WearWidgetPreview(params, background = WearWidgetBrush.color(WidgetColors.background.rc)) {
-    RemoteMaterialTheme {
-      LocalAudioPlaylistWidgetContent(
-        previewSnapshot,
-        if (params.containerType == ContainerInfo.CONTAINER_TYPE_SMALL) 1 else 2,
-      )
-    }
-  }
-}
+private val WearWidgetParams.isCompact: Boolean
+  get() = containerType == ContainerInfo.CONTAINER_TYPE_SMALL
 
-@PixelWatch45Preview
-@GalaxyWatch44Preview
+@Preview(name = "Now playing · rectangular", showBackground = true, backgroundColor = 0xFF8A8A8E)
 @Composable
-fun SyncStatusWearWidgetPreview(
-  @PreviewParameter(RoundAllWidgetPreviewParams::class) params: WearWidgetParams
-) {
-  WearWidgetPreview(params, background = WearWidgetBrush.color(WidgetColors.background.rc)) {
-    RemoteMaterialTheme {
-      SyncStatusWidgetContent(
-        previewSnapshot,
-        params.containerType == ContainerInfo.CONTAINER_TYPE_SMALL,
-      )
-    }
-  }
-}
-
-@Preview(name = "Mode controls · picker asset", device = "spec:width=1000dp,height=1000dp,dpi=320")
-@Composable
-fun ModeAndControlsWearWidgetPickerPreview(
+fun ModeAndControlsWearWidgetRectangularPreview(
   @PreviewParameter(RectangularAllWidgetPreviewParams::class) params: WearWidgetParams
 ) {
-  WearWidgetPreview(params, background = WearWidgetBrush.color(WidgetColors.background.rc)) {
-    RemoteMaterialTheme {
-      ModeAndControlsWidgetContent(
-        previewSnapshot,
-        params.containerType == ContainerInfo.CONTAINER_TYPE_SMALL,
-      )
-    }
+  WidgetPreview(params) { ModeAndControlsWidgetContent(previewSnapshot, params.isCompact) }
+}
+
+@Preview(
+  name = "Now playing · round (Samsung)",
+  showBackground = true,
+  backgroundColor = 0xFF8A8A8E,
+)
+@Composable
+fun ModeAndControlsWearWidgetRoundPreview(
+  @PreviewParameter(RoundAllWidgetPreviewParams::class) params: WearWidgetParams
+) {
+  WidgetPreview(params) { ModeAndControlsWidgetContent(previewSnapshot, params.isCompact) }
+}
+
+@Preview(name = "Now playing · squircle", showBackground = true, backgroundColor = 0xFF8A8A8E)
+@Composable
+fun ModeAndControlsWearWidgetSquirclePreview(
+  @PreviewParameter(SquircleAllWidgetPreviewParams::class) params: WearWidgetParams
+) {
+  WidgetPreview(params) { ModeAndControlsWidgetContent(previewSnapshot, params.isCompact) }
+}
+
+@Preview(name = "Playlist · rectangular", showBackground = true, backgroundColor = 0xFF8A8A8E)
+@Composable
+fun LocalAudioPlaylistWearWidgetRectangularPreview(
+  @PreviewParameter(RectangularAllWidgetPreviewParams::class) params: WearWidgetParams
+) {
+  WidgetPreview(params) {
+    LocalAudioPlaylistWidgetContent(previewSnapshot, if (params.isCompact) 1 else 2)
   }
 }
 
-@Preview(name = "MP3 playlist · picker asset", device = "spec:width=1000dp,height=1000dp,dpi=320")
+@Preview(name = "Playlist · round (Samsung)", showBackground = true, backgroundColor = 0xFF8A8A8E)
 @Composable
-fun LocalAudioPlaylistWearWidgetPickerPreview(
-  @PreviewParameter(RectangularAllWidgetPreviewParams::class) params: WearWidgetParams
+fun LocalAudioPlaylistWearWidgetRoundPreview(
+  @PreviewParameter(RoundAllWidgetPreviewParams::class) params: WearWidgetParams
 ) {
-  WearWidgetPreview(params, background = WearWidgetBrush.color(WidgetColors.background.rc)) {
-    RemoteMaterialTheme {
-      LocalAudioPlaylistWidgetContent(
-        previewSnapshot,
-        if (params.containerType == ContainerInfo.CONTAINER_TYPE_SMALL) 1 else 2,
-      )
-    }
+  WidgetPreview(params) {
+    LocalAudioPlaylistWidgetContent(previewSnapshot, if (params.isCompact) 1 else 2)
   }
 }
 
-@Preview(name = "Sync status · picker asset", device = "spec:width=1000dp,height=1000dp,dpi=320")
+@Preview(name = "Playlist · squircle", showBackground = true, backgroundColor = 0xFF8A8A8E)
 @Composable
-fun SyncStatusWearWidgetPickerPreview(
+fun LocalAudioPlaylistWearWidgetSquirclePreview(
+  @PreviewParameter(SquircleAllWidgetPreviewParams::class) params: WearWidgetParams
+) {
+  WidgetPreview(params) {
+    LocalAudioPlaylistWidgetContent(previewSnapshot, if (params.isCompact) 1 else 2)
+  }
+}
+
+@Preview(name = "Sync · rectangular", showBackground = true, backgroundColor = 0xFF8A8A8E)
+@Composable
+fun SyncStatusWearWidgetRectangularPreview(
   @PreviewParameter(RectangularAllWidgetPreviewParams::class) params: WearWidgetParams
 ) {
-  WearWidgetPreview(params, background = WearWidgetBrush.color(WidgetColors.background.rc)) {
-    RemoteMaterialTheme {
-      SyncStatusWidgetContent(
-        previewSnapshot,
-        params.containerType == ContainerInfo.CONTAINER_TYPE_SMALL,
-      )
-    }
-  }
+  WidgetPreview(params) { SyncStatusWidgetContent(previewSnapshot, params.isCompact) }
+}
+
+@Preview(name = "Sync · round (Samsung)", showBackground = true, backgroundColor = 0xFF8A8A8E)
+@Composable
+fun SyncStatusWearWidgetRoundPreview(
+  @PreviewParameter(RoundAllWidgetPreviewParams::class) params: WearWidgetParams
+) {
+  WidgetPreview(params) { SyncStatusWidgetContent(previewSnapshot, params.isCompact) }
+}
+
+@Preview(name = "Sync · squircle", showBackground = true, backgroundColor = 0xFF8A8A8E)
+@Composable
+fun SyncStatusWearWidgetSquirclePreview(
+  @PreviewParameter(SquircleAllWidgetPreviewParams::class) params: WearWidgetParams
+) {
+  WidgetPreview(params) { SyncStatusWidgetContent(previewSnapshot, params.isCompact) }
 }
 
 private val previewSnapshot =
