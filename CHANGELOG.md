@@ -1,5 +1,30 @@
 # Changelog
 
+## [0.1.8](https://github.com/yschimke/cadence/compare/v0.1.7...v0.1.8) (2026-10-31)
+
+
+### Features
+
+* adaptive headphone widget and controls screen, with widget design guidelines ([#450](https://github.com/yschimke/cadence/issues/450)) ([188e65f](https://github.com/yschimke/cadence/commit/188e65f22ac6c6873c0b66ee2b26afce47f402c9))
+* add capability-gated RCSP library ([#435](https://github.com/yschimke/cadence/issues/435)) ([2fa8130](https://github.com/yschimke/cadence/commit/2fa81304e36eee105d8caf6307b89ab751cbffa5))
+* add OpenSwim mode and audio controls ([#441](https://github.com/yschimke/cadence/issues/441)) ([4b0d032](https://github.com/yschimke/cadence/commit/4b0d032b68e03956c4e26a2da98ec9b380922272))
+* bring OpenSwim controls and a headphone widget to the phone app ([#446](https://github.com/yschimke/cadence/issues/446)) ([a8c615e](https://github.com/yschimke/cadence/commit/a8c615ee8239dfe09b7feea391cf230368af8a2e))
+* **sync:** opt-in Google Drive manifest for cross-host awareness ([#437](https://github.com/yschimke/cadence/issues/437)) ([eade30e](https://github.com/yschimke/cadence/commit/eade30ec9c16734d5286b51256d074d0baf6d226))
+* **sync:** wire Android Google Drive sign-in via AppAuth ([#440](https://github.com/yschimke/cadence/issues/440)) ([6cfd5a0](https://github.com/yschimke/cadence/commit/6cfd5a0b4896b5c3aab25321780f4fdaa735a9fe))
+* **wear:** add capability-gated OpenSwim companion ([#439](https://github.com/yschimke/cadence/issues/439)) ([2526d97](https://github.com/yschimke/cadence/commit/2526d975ffb09912bdfba5d30652747c80972721))
+* **wear:** focus each widget on one job ([#445](https://github.com/yschimke/cadence/issues/445)) ([38aa1bb](https://github.com/yschimke/cadence/commit/38aa1bbf4d2ff508ef167c40edbcce849da8cae6))
+* **widgets:** swimming pool animations for launcher and Wear widgets ([#451](https://github.com/yschimke/cadence/issues/451)) ([6edcf04](https://github.com/yschimke/cadence/commit/6edcf047e7c45c10ff202007795699d72c909ad8))
+
+
+### Bug Fixes
+
+* **deps:** update androidx to v1.0.0-alpha21 ([#442](https://github.com/yschimke/cadence/issues/442)) ([4979e31](https://github.com/yschimke/cadence/commit/4979e31b97c27726b06a11a46c8d41a0fdb16139))
+* **deps:** update androidx-compose to v1.0.0-alpha22 ([#443](https://github.com/yschimke/cadence/issues/443)) ([550079f](https://github.com/yschimke/cadence/commit/550079f811a210bc4fd16f3a081f4c72ebf2e7e7))
+* put the AppState transform path behind a flag, off by default ([#429](https://github.com/yschimke/cadence/issues/429)) ([b7dd528](https://github.com/yschimke/cadence/commit/b7dd5280898558be37a0771018477d200b8d9049))
+* **swim:** animate on Android 16 launchers; drop drawWithContent water ([#454](https://github.com/yschimke/cadence/issues/454)) ([ba0e1cc](https://github.com/yschimke/cadence/commit/ba0e1cc0626cc9f3aee783fc2ca81dcba0bd458c))
+* **wear:** fill the small playlist widget and centre transport controls ([#447](https://github.com/yschimke/cadence/issues/447)) ([fef5775](https://github.com/yschimke/cadence/commit/fef577539bfc91af8b26f859913371837ff7c2a8))
+* **wear:** single-row small now-playing widget, fix remote-material3 crash ([#449](https://github.com/yschimke/cadence/issues/449)) ([d1e45c0](https://github.com/yschimke/cadence/commit/d1e45c0a51c7240edc421bdac4080e36f1a2fd5b))
+
 ## [0.1.7](https://github.com/yschimke/cadence/compare/v0.1.6...v0.1.7) (2026-10-30)
 
 
