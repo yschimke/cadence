@@ -61,3 +61,10 @@ val OpenSwimProProfile =
           RcspCommandId.SelectPlaybackOrder,
         ),
   )
+
+/**
+ * EQ presets with a captured OpenSwim Pro value. [RcspCommandId.SelectEqualizerPreset] is
+ * supported, but only for these presets; UIs offer these rather than every [EqualizerPreset].
+ */
+val OpenSwimProEqualizerPresets: List<EqualizerPreset> =
+  listOf(EqualizerPreset.Standard, EqualizerPreset.Vocal, EqualizerPreset.Swimming)

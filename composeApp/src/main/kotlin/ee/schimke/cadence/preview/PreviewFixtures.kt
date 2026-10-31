@@ -2,7 +2,9 @@ package ee.schimke.cadence.preview
 
 import ee.schimke.cadence.bluetooth.BluetoothState
 import ee.schimke.cadence.bluetooth.ConnectedDevice
+import ee.schimke.cadence.bluetooth.EqualizerPreset
 import ee.schimke.cadence.bluetooth.MediaInfo
+import ee.schimke.cadence.bluetooth.PlaybackOrder
 import ee.schimke.cadence.bluetooth.WorkingMode
 import ee.schimke.cadence.data.Volume
 import ee.schimke.cadence.datastore.proto.Bookmark
@@ -143,7 +145,12 @@ internal object PreviewFixtures {
 
   val btMp3Mode =
     btConnectedPlaying.copy(
+      connectedDevice = connectedDevice.copy(name = "OpenSwim Pro"),
       workingMode = WorkingMode.Mp3,
+      equalizer = EqualizerPreset.Swimming,
+      playbackOrder = PlaybackOrder.Shuffle,
+      headsetVolumePercent = 56,
+      headsetPlaying = true,
       mediaInfo =
         nowPlaying.copy(
           title = "swim/intervals_2k.mp3",

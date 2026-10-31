@@ -63,6 +63,19 @@ class BluetoothControlsViewModel(private val controller: BluetoothController) : 
     }
   }
 
+  fun selectEqualizer(preset: EqualizerPreset) {
+    viewModelScope.launch {
+      _lastCommandResult.value = "EQ → ${preset.label}: ${controller.setEqualizer(preset)}"
+    }
+  }
+
+  fun selectPlaybackOrder(order: PlaybackOrder) {
+    viewModelScope.launch {
+      _lastCommandResult.value =
+        "Playback order → ${order.label}: ${controller.setPlaybackOrder(order)}"
+    }
+  }
+
   fun dispatch(command: AdvancedCommand) {
     viewModelScope.launch {
       val result = controller.dispatchAdvanced(command)

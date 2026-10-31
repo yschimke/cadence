@@ -27,8 +27,9 @@ import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.SingleIn
 import dev.zacsweers.metro.binding
 import ee.schimke.rcsp.AndroidShokzOpenSwimTransport
-import ee.schimke.rcsp.EqualizerPreset
+import ee.schimke.rcsp.EqualizerPreset as RcspEqualizerPreset
 import ee.schimke.rcsp.OpenSwimProProfile
+import ee.schimke.rcsp.PlaybackOrder as RcspPlaybackOrder
 import ee.schimke.rcsp.RcspCommand
 import ee.schimke.rcsp.ShokzOpenSwimController
 import kotlinx.coroutines.CoroutineScope
@@ -41,6 +42,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.UUID
@@ -62,7 +64,16 @@ class AndroidBluetoothController(
         applicationContext.getSystemService(Context.MEDIA_SESSION_SERVICE) as? MediaSessionManager
 
     private val refreshTrigger = MutableStateFlow(0L)
-    private val workingModeFlow = MutableStateFlow(WorkingMode.Bluetooth)
+    /** Mode and settings the connected OpenSwim Pro acknowledged; none are read back. */
+    private data class HeadsetSettings(
+        val mode: WorkingMode = WorkingMode.Bluetooth,
+        val equalizer: EqualizerPreset? = null,
+        val playbackOrder: PlaybackOrder? = null,
+        val volumePercent: Int? = null,
+        val playing: Boolean? = null,
+    )
+
+    private val headsetFlow = MutableStateFlow(HeadsetSettings())
     private val commandScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
     override val supported = true
@@ -71,9 +82,9 @@ class AndroidBluetoothController(
         connectionFlow(),
         volumeFlow(),
         mediaInfoFlow(),
-        workingModeFlow,
+        headsetFlow,
         refreshTrigger,
-    ) { connection, volume, media, mode, _ ->
+    ) { connection, volume, media, headset, _ ->
         BluetoothState(
             connectedDevice = connection,
             volumePercent = volume.percent,
@@ -82,7 +93,11 @@ class AndroidBluetoothController(
             mediaInfo = media,
             mediaAccessGranted = isNotificationAccessGranted(),
             permissionMissing = !hasBluetoothConnectPermission(),
-            workingMode = mode,
+            workingMode = headset.mode,
+            equalizer = headset.equalizer,
+            playbackOrder = headset.playbackOrder,
+            headsetVolumePercent = headset.volumePercent,
+            headsetPlaying = headset.playing,
         )
     }.distinctUntilChanged()
 
@@ -91,21 +106,26 @@ class AndroidBluetoothController(
     }
 
     override fun setVolume(percent: Int) {
-        val device = connectedAudioDevice()
-        if (
-            workingModeFlow.value == WorkingMode.Mp3 &&
-                device?.name?.contains("OpenSwim Pro", ignoreCase = true) == true
-        ) {
-            dispatchOpenSwim(device, RcspCommand.SetVolume(percent.coerceIn(0, 100).toUByte()))
+        val target = percent.coerceIn(0, 100)
+        localAudioDevice()?.let { device ->
+            // MP3 playback is on the headset, so the phone's stream volume does not reach it.
+            dispatchOpenSwim(device, RcspCommand.SetVolume(target.toUByte())) {
+                headsetFlow.update { it.copy(volumePercent = target) }
+            }
             return
         }
         val max = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
-        val target = (percent.coerceIn(0, 100) * max / 100).coerceIn(0, max)
-        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, target, AudioManager.FLAG_SHOW_UI)
+        val streamLevel = (target * max / 100).coerceIn(0, max)
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, streamLevel, AudioManager.FLAG_SHOW_UI)
         refresh()
     }
 
     override fun adjustVolume(delta: Int) {
+        if (localAudioDevice() != null) {
+            // Only relative to a level the headset acknowledged; there is no verified volume query.
+            headsetFlow.value.volumePercent?.let { setVolume(it + delta * HeadsetVolumeStep) }
+            return
+        }
         val direction = when {
             delta > 0 -> AudioManager.ADJUST_RAISE
             delta < 0 -> AudioManager.ADJUST_LOWER
@@ -126,7 +146,17 @@ class AndroidBluetoothController(
 
     override fun play() = dispatchMediaOrOpenSwim(RcspCommand.Play, KeyEvent.KEYCODE_MEDIA_PLAY)
     override fun pause() = dispatchMediaOrOpenSwim(RcspCommand.Pause, KeyEvent.KEYCODE_MEDIA_PAUSE)
-    override fun playPause() = dispatchKey(KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE)
+
+    /** MP3 mode has no captured toggle, so it follows the last acknowledged Play/Pause. */
+    override fun playPause() {
+        if (localAudioDevice() == null) {
+            dispatchKey(KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE)
+        } else if (headsetFlow.value.playing == true) {
+            pause()
+        } else {
+            play()
+        }
+    }
     override fun next() = dispatchMediaOrOpenSwim(RcspCommand.NextTrack, KeyEvent.KEYCODE_MEDIA_NEXT)
     override fun previous() = dispatchMediaOrOpenSwim(RcspCommand.PreviousTrack, KeyEvent.KEYCODE_MEDIA_PREVIOUS)
     override fun stop() = dispatchKey(KeyEvent.KEYCODE_MEDIA_STOP)
@@ -148,9 +178,7 @@ class AndroidBluetoothController(
     }
 
     override suspend fun setWorkingMode(mode: WorkingMode): String {
-        val device = connectedAudioDevice()
-            ?.takeIf { it.name?.contains("OpenSwim Pro", ignoreCase = true) == true }
-            ?: return "Connect an OpenSwim Pro first"
+        val device = openSwimDevice() ?: return "Connect an OpenSwim Pro first"
         val command =
             RcspCommand.SelectWorkingMode(
                 when (mode) {
@@ -162,7 +190,7 @@ class AndroidBluetoothController(
             runCatching { exchangeOpenSwim(device, command) }
                 .fold(
                     onSuccess = {
-                        workingModeFlow.value = mode
+                        headsetFlow.update { it.copy(mode = mode, playing = null) }
                         refresh()
                         when (mode) {
                             WorkingMode.Mp3 -> "OpenSwim Pro switched to MP3 Mode"
@@ -181,35 +209,65 @@ class AndroidBluetoothController(
         when (command) {
             AdvancedCommand.QueryBattery -> batteryFromConnected() ?: "Unknown — connect a device"
             AdvancedCommand.QueryLocalAudioState -> queryOpenSwimLocalAudioState()
-            AdvancedCommand.EqFlat ->
-                executeOpenSwimCommand(RcspCommand.SelectEqualizerPreset(EqualizerPreset.Standard))
-            AdvancedCommand.EqVocal ->
-                executeOpenSwimCommand(RcspCommand.SelectEqualizerPreset(EqualizerPreset.Vocal))
-            AdvancedCommand.ToggleSwimmingMode ->
-                executeOpenSwimCommand(RcspCommand.SelectEqualizerPreset(EqualizerPreset.Swimming))
+            AdvancedCommand.EqFlat -> setEqualizer(EqualizerPreset.Standard)
+            AdvancedCommand.EqVocal -> setEqualizer(EqualizerPreset.Vocal)
+            AdvancedCommand.ToggleSwimmingMode -> setEqualizer(EqualizerPreset.Swimming)
             else -> "Preview only — firmware support not wired up yet"
         }
 
-    private suspend fun executeOpenSwimCommand(command: RcspCommand): String {
-        val device = connectedAudioDevice()
-            ?.takeIf { it.name?.contains("OpenSwim Pro", ignoreCase = true) == true }
-            ?: return "Connect an OpenSwim Pro first"
-        return withContext(Dispatchers.IO) {
-            runCatching { exchangeOpenSwim(device, command) }
-                .fold(
-                    onSuccess = { "Acknowledged" },
-                    onFailure = { error -> "Failed: ${error.message ?: "unknown error"}" },
-                )
+    override suspend fun setEqualizer(preset: EqualizerPreset): String {
+        val device = openSwimDevice() ?: return "Connect an OpenSwim Pro first"
+        val command =
+            RcspCommand.SelectEqualizerPreset(
+                when (preset) {
+                    EqualizerPreset.Standard -> RcspEqualizerPreset.Standard
+                    EqualizerPreset.Vocal -> RcspEqualizerPreset.Vocal
+                    EqualizerPreset.Swimming -> RcspEqualizerPreset.Swimming
+                },
+            )
+        return executeOpenSwimCommand(device, command) {
+            headsetFlow.update { it.copy(equalizer = preset) }
         }
     }
 
-    private suspend fun queryOpenSwimLocalAudioState(): String {
-        if (workingModeFlow.value != WorkingMode.Mp3) {
-            return "Select Local Audio first"
+    override suspend fun setPlaybackOrder(order: PlaybackOrder): String {
+        if (openSwimDevice() == null) return "Connect an OpenSwim Pro first"
+        val device = localAudioDevice() ?: return "Switch to MP3 mode first"
+        val command =
+            RcspCommand.SelectPlaybackOrder(
+                when (order) {
+                    PlaybackOrder.Normal -> RcspPlaybackOrder.Normal
+                    PlaybackOrder.Shuffle -> RcspPlaybackOrder.Shuffle
+                    PlaybackOrder.Repeat -> RcspPlaybackOrder.Repeat
+                },
+            )
+        return executeOpenSwimCommand(device, command) {
+            headsetFlow.update { it.copy(playbackOrder = order) }
         }
-        val device = connectedAudioDevice()
-            ?.takeIf { it.name?.contains("OpenSwim Pro", ignoreCase = true) == true }
-            ?: return "Connect an OpenSwim Pro first"
+    }
+
+    private suspend fun executeOpenSwimCommand(
+        device: BluetoothDevice,
+        command: RcspCommand,
+        onAcknowledged: () -> Unit = {},
+    ): String =
+        withContext(Dispatchers.IO) {
+            runCatching { exchangeOpenSwim(device, command) }
+                .fold(
+                    onSuccess = {
+                        onAcknowledged()
+                        "Acknowledged"
+                    },
+                    onFailure = { error ->
+                        Log.w("CadenceBluetooth", "OpenSwim ${command.id} failed", error)
+                        "Failed: ${error.message ?: "unknown error"}"
+                    },
+                )
+        }
+
+    private suspend fun queryOpenSwimLocalAudioState(): String {
+        if (openSwimDevice() == null) return "Connect an OpenSwim Pro first"
+        val device = localAudioDevice() ?: return "Select Local Audio first"
         return withContext(Dispatchers.IO) {
             runCatching {
                 val socket =
@@ -253,6 +311,15 @@ class AndroidBluetoothController(
         return lastConnectedDevice
     }
 
+    private fun openSwimDevice(): BluetoothDevice? =
+        connectedAudioDevice()?.takeIf {
+            runCatching { it.name }.getOrNull()?.contains(OpenSwimProName, ignoreCase = true) == true
+        }
+
+    /** The OpenSwim Pro, when Cadence has switched it to on-device (MP3) playback. */
+    private fun localAudioDevice(): BluetoothDevice? =
+        openSwimDevice()?.takeIf { headsetFlow.value.mode == WorkingMode.Mp3 }
+
     private fun dispatchKey(keyCode: Int) {
         val now = SystemClock.uptimeMillis()
         audioManager.dispatchMediaKeyEvent(KeyEvent(now, now, KeyEvent.ACTION_DOWN, keyCode, 0))
@@ -264,21 +331,29 @@ class AndroidBluetoothController(
      * The UI's MP3 selection is an explicit guard: it does not switch headset mode itself.
      */
     private fun dispatchMediaOrOpenSwim(command: RcspCommand, mediaKeyCode: Int) {
-        val device = connectedAudioDevice()
-        if (
-            workingModeFlow.value != WorkingMode.Mp3 ||
-                device?.name?.contains("OpenSwim Pro", ignoreCase = true) != true
-        ) {
+        val device = localAudioDevice()
+        if (device == null) {
             dispatchKey(mediaKeyCode)
             return
         }
-        dispatchOpenSwim(device, command)
+        dispatchOpenSwim(device, command) {
+            when (command) {
+                RcspCommand.Play -> headsetFlow.update { it.copy(playing = true) }
+                RcspCommand.Pause -> headsetFlow.update { it.copy(playing = false) }
+                else -> Unit
+            }
+        }
     }
 
-    private fun dispatchOpenSwim(device: BluetoothDevice, command: RcspCommand) {
+    private fun dispatchOpenSwim(
+        device: BluetoothDevice,
+        command: RcspCommand,
+        onAcknowledged: () -> Unit = {},
+    ) {
         commandScope.launch {
             runCatching { exchangeOpenSwim(device, command) }
                 .onSuccess { response ->
+                    onAcknowledged()
                     Log.i(
                         "CadenceBluetooth",
                         "OpenSwim ${command.id} acknowledged with type ${response.type}",
@@ -323,6 +398,8 @@ class AndroidBluetoothController(
             val device = current
             if (device == null) {
                 lastConnectedDevice = null
+                // Acknowledged settings belong to that connection; the mode selection is kept.
+                headsetFlow.update { HeadsetSettings(mode = it.mode) }
                 trySend(null)
                 return
             }
@@ -488,3 +565,6 @@ class AndroidBluetoothController(
         }
     }
 }
+
+/** Percent per volume button press on the headset; it has 16 raw steps. */
+private const val HeadsetVolumeStep = 6

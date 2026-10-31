@@ -23,6 +23,7 @@ import androidx.compose.material.icons.filled.FastRewind
 import androidx.compose.material.icons.filled.MusicNote
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Shuffle
 import androidx.compose.material.icons.filled.SkipNext
 import androidx.compose.material.icons.filled.SkipPrevious
 import androidx.compose.material.icons.filled.Stop
@@ -32,7 +33,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.FilledIconButton
-import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -93,6 +93,8 @@ fun BluetoothControlsScreen(modifier: Modifier = Modifier) {
     onOpenSettings = viewModel::openSystemBluetoothSettings,
     onRequestMediaAccess = viewModel::requestMediaAccess,
     onSelectWorkingMode = viewModel::selectWorkingMode,
+    onSelectEqualizer = viewModel::selectEqualizer,
+    onSelectPlaybackOrder = viewModel::selectPlaybackOrder,
     onAdvanced = viewModel::dispatch,
   )
 }
@@ -117,6 +119,8 @@ fun BluetoothControlsContent(
   onOpenSettings: () -> Unit,
   onRequestMediaAccess: () -> Unit,
   onSelectWorkingMode: (WorkingMode) -> Unit,
+  onSelectEqualizer: (EqualizerPreset) -> Unit = {},
+  onSelectPlaybackOrder: (PlaybackOrder) -> Unit = {},
   onAdvanced: (AdvancedCommand) -> Unit,
 ) {
   Box(modifier = modifier) {
@@ -129,11 +133,12 @@ fun BluetoothControlsContent(
       if (state.permissionMissing) {
         item { PermissionWarningCard(onOpenSettings) }
       }
-      item { WorkingModeCard(state.workingMode, onSelectWorkingMode) }
+      item { WorkingModeCard(state.workingMode, state.openSwimConnected, onSelectWorkingMode) }
       item { NowPlayingCard(state, onRequestMediaAccess) }
       item {
         TransportCard(
-          mode = state.workingMode,
+          // Headset transport only applies once Cadence has switched an OpenSwim Pro to MP3.
+          mode = if (state.localAudioControls) WorkingMode.Mp3 else WorkingMode.Bluetooth,
           onPlay = onPlay,
           onPause = onPause,
           onPlayPause = onPlayPause,
@@ -142,11 +147,14 @@ fun BluetoothControlsContent(
           onStop = onStop,
           onRewind = onRewind,
           onFastForward = onFastForward,
-          playing = state.mediaInfo?.playing == true,
+          playing =
+            if (state.localAudioControls) state.headsetPlaying == true
+            else state.mediaInfo?.playing == true,
         )
       }
-      item { EqPresetsCard(onAdvanced) }
       item { VolumeCard(state, onSetVolume, onAdjustVolume, onToggleMute) }
+      item { EqPresetsCard(state, onSelectEqualizer) }
+      item { PlaybackOrderCard(state, onSelectPlaybackOrder) }
       item { AdvancedCommandsCard(onAdvanced) }
     }
     SnackbarHost(snackbarHost, modifier = Modifier.align(Alignment.BottomCenter))
@@ -230,6 +238,12 @@ private fun NowPlayingCard(state: BluetoothState, onRequestMediaAccess: () -> Un
       )
       val info = state.mediaInfo
       when {
+        state.localAudioControls ->
+          // The phone's media session is not what the headset plays from its own storage.
+          Text(
+            "Playing from headphone storage. The headset does not report track details.",
+            style = MaterialTheme.typography.bodyMedium,
+          )
         !state.mediaAccessGranted -> {
           Text("Media metadata is unavailable until notification access is granted.")
           OutlinedButton(onClick = onRequestMediaAccess) { Text("Grant media access") }
@@ -288,23 +302,24 @@ private fun TransportCard(
       IconButton(onClick = onPrevious) {
         Icon(Icons.Filled.SkipPrevious, contentDescription = "Previous")
       }
-      if (mode == WorkingMode.Mp3) {
-        FilledIconButton(onClick = onPlay) {
-          Icon(Icons.Filled.PlayArrow, contentDescription = "Play")
-        }
-        FilledIconButton(onClick = onPause) {
-          Icon(Icons.Filled.Pause, contentDescription = "Pause")
-        }
-      } else {
+      if (mode != WorkingMode.Mp3) {
         IconButton(onClick = onRewind) {
           Icon(Icons.Filled.FastRewind, contentDescription = "Rewind")
         }
-        FilledIconButton(onClick = onPlayPause) {
-          Icon(
-            imageVector = if (playing) Icons.Filled.Pause else Icons.Filled.PlayArrow,
-            contentDescription = if (playing) "Pause" else "Play",
-          )
-        }
+      }
+      // MP3 mode sends explicit Play/Pause: the headset has no captured toggle command.
+      FilledIconButton(
+        onClick =
+          when {
+            mode != WorkingMode.Mp3 -> onPlayPause
+            playing -> onPause
+            else -> onPlay
+          }
+      ) {
+        Icon(
+          imageVector = if (playing) Icons.Filled.Pause else Icons.Filled.PlayArrow,
+          contentDescription = if (playing) "Pause" else "Play",
+        )
       }
       IconButton(onClick = onNext) { Icon(Icons.Filled.SkipNext, contentDescription = "Next") }
       if (mode != WorkingMode.Mp3) {
@@ -326,6 +341,10 @@ private fun VolumeCard(
 ) {
   ElevatedCard(modifier = Modifier.fillMaxWidth()) {
     Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+      if (state.localAudioControls) {
+        HeadsetVolume(state.headsetVolumePercent, onSetVolume, onAdjustVolume)
+        return@Column
+      }
       Row(verticalAlignment = Alignment.CenterVertically) {
         Text(
           "Volume",
@@ -360,6 +379,51 @@ private fun VolumeCard(
   }
 }
 
+/**
+ * Headset (MP3 mode) volume. Each write opens a vendor channel, so the slider commits on release
+ * rather than on every drag step. The level shown is the last one the headset acknowledged.
+ */
+@Composable
+private fun HeadsetVolume(
+  acknowledged: Int?,
+  onSetVolume: (Int) -> Unit,
+  onAdjustVolume: (Int) -> Unit,
+) {
+  var dragging by remember { mutableStateOf<Float?>(null) }
+  val shown = dragging ?: (acknowledged ?: 50).toFloat()
+  Row(verticalAlignment = Alignment.CenterVertically) {
+    Text(
+      "Headphone volume",
+      style = MaterialTheme.typography.titleMedium,
+      fontWeight = FontWeight.SemiBold,
+    )
+    Spacer(Modifier.weight(1f))
+    Text(if (acknowledged == null && dragging == null) "Not set" else "${shown.toInt()}%")
+  }
+  Slider(
+    value = shown,
+    onValueChange = { dragging = it },
+    onValueChangeFinished = {
+      dragging?.let { onSetVolume(it.toInt()) }
+      dragging = null
+    },
+    valueRange = 0f..100f,
+  )
+  Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+    IconButton(onClick = { onAdjustVolume(-1) }, enabled = acknowledged != null) {
+      Icon(Icons.AutoMirrored.Filled.VolumeDown, contentDescription = "Volume down")
+    }
+    IconButton(onClick = { onAdjustVolume(1) }, enabled = acknowledged != null) {
+      Icon(Icons.AutoMirrored.Filled.VolumeUp, contentDescription = "Volume up")
+    }
+  }
+  Text(
+    "Sets the volume of MP3 playback on the headphones.",
+    style = MaterialTheme.typography.bodySmall,
+    color = MaterialTheme.colorScheme.onSurfaceVariant,
+  )
+}
+
 private val eqPresetCommands =
   listOf(
     AdvancedCommand.EqFlat,
@@ -368,7 +432,11 @@ private val eqPresetCommands =
   )
 
 @Composable
-private fun WorkingModeCard(selected: WorkingMode, onSelect: (WorkingMode) -> Unit) {
+private fun WorkingModeCard(
+  selected: WorkingMode,
+  enabled: Boolean,
+  onSelect: (WorkingMode) -> Unit,
+) {
   ElevatedCard(modifier = Modifier.fillMaxWidth()) {
     Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
       Text(
@@ -382,6 +450,7 @@ private fun WorkingModeCard(selected: WorkingMode, onSelect: (WorkingMode) -> Un
           SegmentedButton(
             selected = mode == selected,
             onClick = { onSelect(mode) },
+            enabled = enabled,
             shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
             icon = {
               Icon(
@@ -414,7 +483,7 @@ private fun WorkingModeCard(selected: WorkingMode, onSelect: (WorkingMode) -> Un
 }
 
 @Composable
-private fun EqPresetsCard(onAdvanced: (AdvancedCommand) -> Unit) {
+private fun EqPresetsCard(state: BluetoothState, onSelect: (EqualizerPreset) -> Unit) {
   ElevatedCard(modifier = Modifier.fillMaxWidth()) {
     Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
       Row(verticalAlignment = Alignment.CenterVertically) {
@@ -426,15 +495,78 @@ private fun EqPresetsCard(onAdvanced: (AdvancedCommand) -> Unit) {
           fontWeight = FontWeight.SemiBold,
         )
       }
-      Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        eqPresetCommands.forEach { cmd ->
-          FilledTonalButton(onClick = { onAdvanced(cmd) }, modifier = Modifier.weight(1f)) {
-            Text(cmd.label.removePrefix("EQ: "))
-          }
-        }
+      ChoiceRow(
+        options = EqualizerPreset.entries,
+        selected = state.equalizer,
+        enabled = state.openSwimConnected,
+        label = { it.label },
+        onSelect = onSelect,
+      )
+      if (!state.openSwimConnected) {
+        SupportingText("Connect an OpenSwim Pro to change its EQ.")
       }
     }
   }
+}
+
+@Composable
+private fun PlaybackOrderCard(state: BluetoothState, onSelect: (PlaybackOrder) -> Unit) {
+  ElevatedCard(modifier = Modifier.fillMaxWidth()) {
+    Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+      Row(verticalAlignment = Alignment.CenterVertically) {
+        Icon(Icons.Filled.Shuffle, contentDescription = null)
+        Spacer(Modifier.width(8.dp))
+        Text(
+          "MP3 playback order",
+          style = MaterialTheme.typography.titleMedium,
+          fontWeight = FontWeight.SemiBold,
+        )
+      }
+      ChoiceRow(
+        options = PlaybackOrder.entries,
+        selected = state.playbackOrder,
+        enabled = state.localAudioControls,
+        label = { it.label },
+        onSelect = onSelect,
+      )
+      if (!state.localAudioControls) {
+        SupportingText("Available when an OpenSwim Pro is in MP3 mode.")
+      }
+    }
+  }
+}
+
+/**
+ * A single-choice row whose selection may be unknown: nothing is highlighted until acknowledged.
+ */
+@Composable
+private fun <T> ChoiceRow(
+  options: List<T>,
+  selected: T?,
+  enabled: Boolean,
+  label: (T) -> String,
+  onSelect: (T) -> Unit,
+) {
+  SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
+    options.forEachIndexed { index, option ->
+      SegmentedButton(
+        selected = option == selected,
+        onClick = { onSelect(option) },
+        enabled = enabled,
+        shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
+        label = { Text(label(option), maxLines = 1) },
+      )
+    }
+  }
+}
+
+@Composable
+private fun SupportingText(text: String) {
+  Text(
+    text,
+    style = MaterialTheme.typography.bodySmall,
+    color = MaterialTheme.colorScheme.onSurfaceVariant,
+  )
 }
 
 @Composable

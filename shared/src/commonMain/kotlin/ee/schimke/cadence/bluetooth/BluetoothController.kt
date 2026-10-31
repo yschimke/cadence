@@ -44,6 +44,12 @@ interface BluetoothController {
    */
   suspend fun setWorkingMode(mode: WorkingMode): String
 
+  /** Selects an OpenSwim Pro EQ preset; the acknowledged value is reflected in [BluetoothState]. */
+  suspend fun setEqualizer(preset: EqualizerPreset): String
+
+  /** Selects the OpenSwim Pro Local Audio playback order. Only meaningful in MP3 mode. */
+  suspend fun setPlaybackOrder(order: PlaybackOrder): String
+
   /**
    * Best-effort dispatch for the catalogue of vendor (RCSP) commands documented in research/.
    * Returns a human-readable result string for the UI to display.
@@ -56,6 +62,20 @@ enum class WorkingMode {
   Mp3,
 }
 
+/** OpenSwim Pro EQ presets with captured vendor values. */
+enum class EqualizerPreset(val label: String) {
+  Standard("Standard"),
+  Vocal("Vocal"),
+  Swimming("Swimming"),
+}
+
+/** OpenSwim Pro Local Audio playback order. */
+enum class PlaybackOrder(val label: String) {
+  Normal("In order"),
+  Shuffle("Shuffle"),
+  Repeat("Repeat"),
+}
+
 data class BluetoothState(
   val connectedDevice: ConnectedDevice? = null,
   val volumePercent: Int = 0,
@@ -65,7 +85,29 @@ data class BluetoothState(
   val mediaAccessGranted: Boolean = false,
   val permissionMissing: Boolean = false,
   val workingMode: WorkingMode = WorkingMode.Bluetooth,
-)
+  /**
+   * Last values the connected OpenSwim Pro acknowledged to Cadence. They are not read back from the
+   * headset, so they are null until Cadence sets them and are cleared when the headset disconnects.
+   */
+  val equalizer: EqualizerPreset? = null,
+  val playbackOrder: PlaybackOrder? = null,
+  val headsetVolumePercent: Int? = null,
+  /**
+   * MP3 mode: whether the last Play/Pause the headset acknowledged was Play. The headset does not
+   * report playback state, so its own buttons can make this stale; null until Cadence sends one.
+   */
+  val headsetPlaying: Boolean? = null,
+) {
+  /** Vendor (RCSP) controls are only wired for OpenSwim Pro. */
+  val openSwimConnected: Boolean
+    get() = connectedDevice?.name?.contains(OpenSwimProName, ignoreCase = true) == true
+
+  /** Local Audio transport, volume and playback order go to the headset itself. */
+  val localAudioControls: Boolean
+    get() = openSwimConnected && workingMode == WorkingMode.Mp3
+}
+
+const val OpenSwimProName = "OpenSwim Pro"
 
 data class ConnectedDevice(
   val name: String,

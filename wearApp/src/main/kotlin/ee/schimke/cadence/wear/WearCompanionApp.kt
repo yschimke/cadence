@@ -38,6 +38,7 @@ import com.google.android.horologist.annotations.ExperimentalHorologistApi
 import com.google.android.horologist.media.ui.material3.components.MediaControlButtons
 import com.google.android.horologist.media.ui.material3.screens.player.PlayerScreen
 import ee.schimke.rcsp.EqualizerPreset
+import ee.schimke.rcsp.OpenSwimProEqualizerPresets
 import ee.schimke.rcsp.RcspCapabilities
 import ee.schimke.rcsp.RcspCommand
 import ee.schimke.rcsp.WorkingMode
@@ -294,7 +295,7 @@ private fun DeviceSettingsScreen(
           Text(text = "Equalizer")
         }
       }
-      items(EqualizerPreset.entries) { preset ->
+      items(OpenSwimProEqualizerPresets) { preset ->
         SettingsRow(
           text = preset.label,
           enabled = snapshot.isSupported(RcspCommand.SelectEqualizerPreset(preset)),

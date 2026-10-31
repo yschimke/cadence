@@ -39,6 +39,12 @@ class UnavailableBluetoothController : BluetoothController {
   override suspend fun setWorkingMode(mode: WorkingMode) =
     "Classic Bluetooth controls are available in the Android app."
 
+  override suspend fun setEqualizer(preset: EqualizerPreset) =
+    "Classic Bluetooth controls are available in the Android app."
+
+  override suspend fun setPlaybackOrder(order: PlaybackOrder) =
+    "Classic Bluetooth controls are available in the Android app."
+
   override suspend fun dispatchAdvanced(command: AdvancedCommand) =
     "Classic Bluetooth controls are available in the Android app."
 }
