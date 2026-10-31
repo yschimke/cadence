@@ -37,6 +37,7 @@ import androidx.compose.remote.creation.compose.modifier.width
 import androidx.compose.remote.creation.compose.shapes.RemoteRoundedCornerShape
 import androidx.compose.remote.creation.compose.state.rc
 import androidx.compose.remote.creation.compose.state.rdp
+import androidx.compose.remote.creation.compose.state.rf
 import androidx.compose.remote.creation.compose.state.rs
 import androidx.compose.remote.creation.compose.state.rsp
 import androidx.compose.remote.creation.compose.vector.painterRemoteVector
@@ -46,6 +47,9 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import ee.schimke.cadence.swim.LocalSwimClock
+import ee.schimke.cadence.swim.WaterColors
+import ee.schimke.cadence.swim.waterBackground
 
 /**
  * Phone counterpart of the Wear "Mode & controls" widget: the headset's mode, what is playing, the
@@ -182,14 +186,28 @@ private fun WidgetIconButton(
   colors: WidgetColors,
   onClick: Action?,
 ) {
-  val container = if (primary) colors.primary else colors.tonal
-  val content = if (primary) colors.onPrimary else colors.onTonal
+  val content = if (primary) OnWater else colors.onTonal
   val size = HeadphoneWidgetLayout.ButtonDp
+  // Shown as Pause while audio plays: that is when the water moves.
+  val playing = action == HeadphoneWidgetAction.Pause
   RemoteBox(
     modifier =
       RemoteModifier.size(size.rdp)
         .clip(RemoteRoundedCornerShape((size / 2).rdp))
-        .background(container.rc)
+        .let {
+          // The primary button is a little pool: still water while paused, waves and bubbles
+          // while playing.
+          if (primary) {
+            it.waterBackground(
+              WaterColors.Pool,
+              level = 0.42f,
+              bubbles = if (playing) 4 else 0,
+              clock = if (playing) LocalSwimClock.current else 1.1f.rf,
+            )
+          } else {
+            it.background(colors.tonal.rc)
+          }
+        }
         .semantics {
           contentDescription = action.label.rs
           role = Role.Button
@@ -200,6 +218,9 @@ private fun WidgetIconButton(
     RemoteBox(RemoteModifier.size(24.rdp).background(painterRemoteVector(action.icon, content.rc)))
   }
 }
+
+/** Icons on [WaterColors.Pool], whatever the system colour scheme. */
+private val OnWater = Color(0xFF06243D)
 
 internal val HeadphoneWidgetAction.icon: ImageVector
   get() =

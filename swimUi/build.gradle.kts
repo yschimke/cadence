@@ -23,6 +23,7 @@ dependencies {
   implementation(libs.compose.foundation)
   implementation(libs.compose.ui.tooling.preview)
   implementation(libs.compose.remote.tooling.preview)
+  implementation(libs.composeai.preview.annotations)
 
   testImplementation(libs.junit)
   testImplementation(libs.kotlin.test.junit)

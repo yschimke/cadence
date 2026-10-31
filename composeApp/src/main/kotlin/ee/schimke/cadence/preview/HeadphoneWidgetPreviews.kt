@@ -4,16 +4,20 @@ package ee.schimke.cadence.preview
 
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.remote.creation.compose.layout.RemoteComposable
 import androidx.compose.remote.tooling.preview.RemoteContentPreview
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.key
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import ee.schimke.cadence.bluetooth.BluetoothState
+import ee.schimke.cadence.swim.SwimClockAt
+import ee.schimke.cadence.swim.rememberPreviewSeconds
 import ee.schimke.cadence.widgets.HeadphoneControlsWidgetContent
 import ee.schimke.cadence.widgets.HeadphoneWidgetLayout
 import ee.schimke.cadence.widgets.HeadphoneWidgetState
 import ee.schimke.cadence.widgets.WidgetColors
+import ee.schimke.composeai.preview.AnimatedPreview
 import ee.schimke.composeai.preview.LauncherWidgetPreview
 import ee.schimke.composeai.rcwidget.launcher.RcLauncherWidgets
 
@@ -26,20 +30,26 @@ import ee.schimke.composeai.rcwidget.launcher.RcLauncherWidgets
 private fun HeadphoneWidgetPreview(
   bluetooth: BluetoothState,
   colors: WidgetColors = WidgetColors.Dark,
+  animated: Boolean = false,
 ) {
+  // Animated previews re-capture every frame with the water's clock pinned to it.
+  val seconds = if (animated) rememberPreviewSeconds() else 0f
   BoxWithConstraints(Modifier.fillMaxSize()) {
     val state = HeadphoneWidgetState.from(bluetooth)
     val layout = HeadphoneWidgetLayout.of(state, maxWidth.value.toInt(), maxHeight.value.toInt())
     // RemoteContentPreview captures its document once; a new size needs a new capture.
-    key(maxWidth, maxHeight) {
+    key(maxWidth, maxHeight, seconds) {
       RemoteContentPreview(Modifier.fillMaxSize(), RcLauncherWidgets.profileFor()) {
-        HeadphoneControlsWidgetContent(
-          state = state,
-          layout = layout,
-          colors = colors,
-          onOpen = null,
-          onAction = { null },
-        )
+        val content: @Composable @RemoteComposable () -> Unit = {
+          HeadphoneControlsWidgetContent(
+            state = state,
+            layout = layout,
+            colors = colors,
+            onOpen = null,
+            onAction = { null },
+          )
+        }
+        if (animated) SwimClockAt(seconds, content) else content()
       }
     }
   }
@@ -112,4 +122,17 @@ internal fun HeadphoneWidgetDisconnectedPreview() {
 @Composable
 internal fun HeadphoneWidgetLightPreview() {
   HeadphoneWidgetPreview(PreviewFixtures.btMp3Mode, WidgetColors.Light)
+}
+
+/** Playing: the play/pause button is a pool of moving water. */
+@Preview(name = "Headphone widget · playing · animated", widthDp = 312, heightDp = 152)
+@AnimatedPreview(durationMs = 3000, frameIntervalMs = 80, showCurves = false)
+@Composable
+internal fun HeadphoneWidgetPlayingAnimatedPreview() {
+  HeadphoneWidgetPreview(
+    PreviewFixtures.btConnectedPlaying.copy(
+      connectedDevice = PreviewFixtures.connectedDevice.copy(name = "OpenSwim Pro")
+    ),
+    animated = true,
+  )
 }

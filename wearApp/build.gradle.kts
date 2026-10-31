@@ -22,6 +22,7 @@ dependencies {
   implementation(project(":rcsp"))
   implementation(project(":wearCompanionContract"))
   implementation(project(":swimUi"))
+  implementation(libs.composeai.preview.annotations)
   implementation(libs.androidx.activity.compose)
   implementation(libs.compose.runtime)
   implementation(libs.compose.foundation)

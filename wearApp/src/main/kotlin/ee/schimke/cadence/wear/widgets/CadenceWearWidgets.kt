@@ -45,6 +45,7 @@ import androidx.compose.remote.creation.compose.state.rdp
 import androidx.compose.remote.creation.compose.state.rf
 import androidx.compose.remote.creation.compose.state.rs
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.key
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
@@ -76,9 +77,11 @@ import androidx.wear.compose.remote.material3.RemoteProgressIndicatorDefaults
 import androidx.wear.compose.remote.material3.RemoteText
 import ee.schimke.cadence.swim.LaneColors
 import ee.schimke.cadence.swim.LocalSwimClock
+import ee.schimke.cadence.swim.SwimClockAt
 import ee.schimke.cadence.swim.SwimLaneProgress
 import ee.schimke.cadence.swim.SwimLap
 import ee.schimke.cadence.swim.WaterColors
+import ee.schimke.cadence.swim.rememberPreviewSeconds
 import ee.schimke.cadence.swim.waterBackground
 import ee.schimke.cadence.wear.CompanionSyncStatus
 import ee.schimke.cadence.wear.HeadsetAction
@@ -88,6 +91,7 @@ import ee.schimke.cadence.wear.HeadsetSnapshot
 import ee.schimke.cadence.wear.LocalAudioTrack
 import ee.schimke.cadence.wear.SyncedPodcastTrack
 import ee.schimke.cadence.wear.WearCompanionServices
+import ee.schimke.composeai.preview.AnimatedPreview
 import ee.schimke.rcsp.RcspCapabilities
 import ee.schimke.rcsp.RcspCommand
 import ee.schimke.rcsp.WorkingMode
@@ -441,7 +445,8 @@ private fun PlaylistButton(track: LocalAudioTrack, enabled: Boolean) {
         .let {
           // The playing episode is the one in the water.
           if (track.playing) {
-            it.clip(RemoteCircleShape)
+            it
+              .clip(RemoteCircleShape)
               .waterBackground(
                 WaterColors.Pool,
                 level = 0.3f,
@@ -806,6 +811,27 @@ fun ModeAndControlsWearWidgetSquirclePreview(
   @PreviewParameter(SquircleAllWidgetPreviewParams::class) params: WearWidgetParams
 ) {
   WidgetPreview(params) { ModeAndControlsWidgetContent(previewSnapshot, params.isCompact) }
+}
+
+/** Playing: the play/pause button is a pool of moving water. */
+@Preview(
+  name = "Now playing · animated",
+  widthDp = 240,
+  heightDp = 240,
+  showBackground = true,
+  backgroundColor = 0xFF8A8A8E,
+)
+@AnimatedPreview(durationMs = 3000, frameIntervalMs = 80, showCurves = false)
+@Composable
+fun ModeAndControlsWearWidgetAnimatedPreview(
+  @PreviewParameter(RoundAllWidgetPreviewParams::class) params: WearWidgetParams
+) {
+  val seconds = rememberPreviewSeconds()
+  key(seconds) {
+    WidgetPreview(params) {
+      SwimClockAt(seconds) { ModeAndControlsWidgetContent(previewSnapshot, params.isCompact) }
+    }
+  }
 }
 
 @Preview(name = "Playlist · rectangular", showBackground = true, backgroundColor = 0xFF8A8A8E)

@@ -26,8 +26,8 @@ val SwimClock: RemoteFloat
   get() = RemoteTimeVariables.animationTime
 
 /**
- * The clock the swimming composables animate on: [SwimClock] unless a preview or capture pins it
- * to a moment, so that a single frame of any animation can be rendered.
+ * The clock the swimming composables animate on: [SwimClock] unless a preview or capture pins it to
+ * a moment, so that a single frame of any animation can be rendered.
  */
 val LocalSwimClock = staticCompositionLocalOf { SwimClock }
 
