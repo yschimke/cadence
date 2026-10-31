@@ -18,6 +18,7 @@ import androidx.compose.material.icons.filled.SkipPrevious
 import androidx.compose.material.icons.filled.Sync
 import androidx.compose.remote.creation.compose.action.Action
 import androidx.compose.remote.creation.compose.action.pendingIntentAction
+import androidx.compose.remote.creation.compose.capture.toRemoteImageVector
 import androidx.compose.remote.creation.compose.layout.RemoteAlignment
 import androidx.compose.remote.creation.compose.layout.RemoteArrangement
 import androidx.compose.remote.creation.compose.layout.RemoteBox
@@ -150,8 +151,9 @@ class SyncStatusWearWidgetService : GlanceWearWidgetService() {
 }
 
 /**
- * Now playing: the current episode and transport controls, nothing else. Large adds the podcast
- * name. Mode switching and settings live in the app, not on the widget.
+ * Now playing: the current episode and transport controls, nothing else. The small size is a single
+ * row (play/pause beside the episode title); large adds the podcast name and full
+ * previous/play/next controls. Mode switching and settings live in the app, not on the widget.
  */
 @Composable
 @RemoteComposable
@@ -163,6 +165,33 @@ private fun ModeAndControlsWidgetContent(snapshot: HeadsetSnapshot, compact: Boo
   val currentTrack =
     snapshot.media?.podcast ?: snapshot.localAudio.firstOrNull { it.playing }?.podcast
   val episode = currentTrack?.episodeTitle ?: "Nothing playing"
+  if (compact) {
+    RemoteRow(
+      modifier =
+        RemoteModifier.fillMaxSize().semantics { contentDescription = "Now playing, $episode".rs },
+      horizontalArrangement =
+        RemoteArrangement.spacedBy(10.rdp, RemoteAlignment.CenterHorizontally),
+      verticalAlignment = RemoteAlignment.CenterVertically,
+    ) {
+      TransportButton(
+        action = widgetAction(if (playing) WidgetAction.Pause else WidgetAction.Play),
+        icon = if (playing) Icons.Filled.Pause else Icons.Filled.PlayArrow,
+        label = if (playing) "Pause" else "Play",
+        enabled = snapshot.isSupported(if (playing) RcspCommand.Pause else RcspCommand.Play),
+        primary = true,
+        compact = true,
+      )
+      RemoteText(
+        text = episode.rs,
+        modifier = RemoteModifier.weight(1f),
+        style = RemoteMaterialTheme.typography.titleSmall,
+        color = if (currentTrack == null) colors.onSurfaceVariant else colors.onSurface,
+        maxLines = 2,
+        overflow = TextOverflow.Ellipsis,
+      )
+    }
+    return
+  }
   RemoteColumn(
     modifier =
       RemoteModifier.fillMaxSize().semantics { contentDescription = "Now playing, $episode".rs },
@@ -260,7 +289,7 @@ private fun TransportButton(
         )
       },
   ) {
-    RemoteIcon(icon, label.rs)
+    RemoteIcon(icon.toRemoteImageVector(), label.rs)
   }
 }
 
@@ -325,7 +354,7 @@ private fun CompactPlaylistWidgetContent(snapshot: HeadsetSnapshot) {
     verticalAlignment = RemoteAlignment.CenterVertically,
   ) {
     RemoteIcon(
-      if (track.playing) Icons.Filled.GraphicEq else Icons.Filled.PlayArrow,
+      (if (track.playing) Icons.Filled.GraphicEq else Icons.Filled.PlayArrow).toRemoteImageVector(),
       null,
       modifier = RemoteModifier.size(24.rdp),
       tint = content,
@@ -375,14 +404,14 @@ private fun PlaylistButton(track: LocalAudioTrack, enabled: Boolean) {
       ),
   ) {
     RemoteIcon(
-      if (track.playing) Icons.Filled.GraphicEq else Icons.Filled.PlayArrow,
+      (if (track.playing) Icons.Filled.GraphicEq else Icons.Filled.PlayArrow).toRemoteImageVector(),
       null,
       modifier = RemoteModifier.size(RemoteButtonDefaults.SmallIconSize),
     )
     RemoteText(
       text = track.podcast.episodeTitle.rs,
       modifier = RemoteModifier.padding(start = 8.rdp).weight(1f),
-      style = RemoteMaterialTheme.typography.labelMedium,
+      style = RemoteMaterialTheme.typography.labelSmall,
       maxLines = 2,
       overflow = TextOverflow.Ellipsis,
     )
@@ -456,7 +485,7 @@ private fun SyncRing(sync: CompanionSyncStatus, compact: Boolean) {
   val colors = RemoteMaterialTheme.colorScheme
   val accent = sync.accent()
   RemoteBox(
-    modifier = RemoteModifier.size(if (compact) 48.rdp else 72.rdp),
+    modifier = RemoteModifier.size(if (compact) 48.rdp else 60.rdp),
     contentAlignment = RemoteAlignment.Center,
   ) {
     RemoteCircularProgressIndicator(
@@ -470,9 +499,9 @@ private fun SyncRing(sync: CompanionSyncStatus, compact: Boolean) {
       strokeWidth = if (compact) 4.rdp else 6.rdp,
     )
     RemoteIcon(
-      sync.widgetIcon,
+      sync.widgetIcon.toRemoteImageVector(),
       null,
-      modifier = RemoteModifier.size(if (compact) 22.rdp else 32.rdp),
+      modifier = RemoteModifier.size(if (compact) 22.rdp else 28.rdp),
       tint = accent,
     )
   }
