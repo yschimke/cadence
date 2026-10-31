@@ -203,7 +203,7 @@ jobs:
           claude_args: >-
             --max-turns 120
             ${{ vars.PREVIEW_AUDIT_CLAUDE_MODEL && format('--model {0}', vars.PREVIEW_AUDIT_CLAUDE_MODEL) || '' }}
-            --allowedTools "Bash(compose-preview:*),Bash(./gradlew:*),Bash(ls:*),Bash(cat:*),Bash(jq:*),Read,Write,Edit,Glob,Grep"
+            --allowedTools "Bash(compose-preview:*),Bash(./gradlew:*),Bash(ls:*),Bash(cat:*),Bash(jq:*),Bash(head:*),Bash(wc:*),Bash(mkdir:*),Read,Write,Edit,Glob,Grep"
 
       - name: Audit with OpenCode
         if: env.AGENT == 'opencode'
