@@ -147,7 +147,7 @@ class HeadphoneControlsWidget : AppWidgetProvider() {
         val state = latest
         for (id in ids) {
           val views =
-            if (Build.VERSION.SDK_INT >= RemoteComposeMinApi) {
+            if (Build.VERSION.SDK_INT >= RcLauncherWidgets.MIN_HOST_API) {
               runCatching { remoteComposeViews(context, manager, id, state) }
                 // A capture that fails still leaves working controls on screen.
                 .getOrElse { legacyViews(context, id, state) }
@@ -157,14 +157,6 @@ class HeadphoneControlsWidget : AppWidgetProvider() {
           manager.updateAppWidget(id, views)
         }
       }
-
-    /**
-     * Android 16's (API 36) platform player overflows its stack painting this widget: a
-     * `DrawContent` inside a modifier's canvas operations repaints the component that holds it,
-     * recursively (yschimke/rc-players#776). Until that is fixed or worked around, Android 16 gets
-     * the `RemoteViews` controls and Remote Compose starts at the next release.
-     */
-    private const val RemoteComposeMinApi = 37
 
     @RequiresApi(RcLauncherWidgets.MIN_HOST_API)
     private suspend fun remoteComposeViews(

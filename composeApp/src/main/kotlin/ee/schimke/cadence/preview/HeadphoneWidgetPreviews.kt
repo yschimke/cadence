@@ -49,7 +49,8 @@ private fun HeadphoneWidgetPreview(
             onAction = { null },
           )
         }
-        if (animated) SwimClockAt(seconds, content) else content()
+        // Still previews pin second 0, so they render the same water every time.
+        SwimClockAt(seconds, content)
       }
     }
   }
