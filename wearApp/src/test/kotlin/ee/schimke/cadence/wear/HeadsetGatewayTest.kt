@@ -69,7 +69,9 @@ class HeadsetGatewayTest {
   @Test
   fun `equalizer action is capability gated through the public rcsp command`() = runBlocking {
     val action = HeadsetAction.SelectEqualizerPreset(EqualizerPreset.Swimming)
-    val unsupported = FakeGateway(HeadsetSnapshot())
+    // #441 adds supported OpenSwim controls to the profile default. This case must explicitly
+    // model an adapter that has not reported equalizer support.
+    val unsupported = FakeGateway(HeadsetSnapshot(capabilities = RcspCapabilities()))
     val supported =
       FakeGateway(
         HeadsetSnapshot(capabilities = RcspCapabilities().withSupported(action.command.id))
