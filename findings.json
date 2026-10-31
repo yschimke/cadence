@@ -1,285 +1,242 @@
 {
   "entries": [
     {
-      "annotatedBasename": "HeadphoneWidgetBluetoothPreview_Headphone_widget_Bluetooth-672bb261.a11y.png",
-      "cleanBasename": "HeadphoneWidgetBluetoothPreview_Headphone_widget_Bluetooth-672bb261.png",
+      "annotatedBasename": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetRectangularPreview_Playlist \u00b7 rectangular.a11y.png",
+      "cleanBasename": "",
       "findings": [
         {
-          "boundsInScreen": "0,0,787,393",
+          "boundsInScreen": "0,0,448,168",
           "level": "ERROR",
           "message": "This item may not have a label readable by screen readers.",
           "type": "SpeakableTextPresentCheck",
           "viewDescription": "androidx.compose.remote.player.view.RemoteComposePlayer"
         }
       ],
-      "functionName": "HeadphoneWidgetBluetoothPreview",
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetBluetoothPreview_Headphone widget \u00b7 Bluetooth",
-      "rendersDir": "composeApp",
-      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt",
-      "variant": ""
-    },
-    {
-      "annotatedBasename": "HeadphoneWidgetCompactPreview_Headphone_widget_compact-2452261c.a11y.png",
-      "cleanBasename": "HeadphoneWidgetCompactPreview_Headphone_widget_compact-2452261c.png",
-      "findings": [
-        {
-          "boundsInScreen": "0,0,787,262",
-          "level": "ERROR",
-          "message": "This item may not have a label readable by screen readers.",
-          "type": "SpeakableTextPresentCheck",
-          "viewDescription": "androidx.compose.remote.player.view.RemoteComposePlayer"
-        }
-      ],
-      "functionName": "HeadphoneWidgetCompactPreview",
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetCompactPreview_Headphone widget \u00b7 compact",
-      "rendersDir": "composeApp",
-      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt",
-      "variant": ""
-    },
-    {
-      "annotatedBasename": "HeadphoneWidgetDisconnectedPreview_Headphone_widget_disconnected-b8bab80a.a11y.png",
-      "cleanBasename": "HeadphoneWidgetDisconnectedPreview_Headphone_widget_disconnected-b8bab80a.png",
-      "findings": [
-        {
-          "boundsInScreen": "0,0,787,393",
-          "level": "ERROR",
-          "message": "This item may not have a label readable by screen readers.",
-          "type": "SpeakableTextPresentCheck",
-          "viewDescription": "androidx.compose.remote.player.view.RemoteComposePlayer"
-        }
-      ],
-      "functionName": "HeadphoneWidgetDisconnectedPreview",
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetDisconnectedPreview_Headphone widget \u00b7 disconnected",
-      "rendersDir": "composeApp",
-      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt",
-      "variant": ""
-    },
-    {
-      "annotatedBasename": "HeadphoneWidgetMp3Preview_Headphone_widget_MP3-d6a1c3d9.a11y.png",
-      "cleanBasename": "HeadphoneWidgetMp3Preview_Headphone_widget_MP3-d6a1c3d9.png",
-      "findings": [
-        {
-          "boundsInScreen": "0,0,787,393",
-          "level": "ERROR",
-          "message": "This item may not have a label readable by screen readers.",
-          "type": "SpeakableTextPresentCheck",
-          "viewDescription": "androidx.compose.remote.player.view.RemoteComposePlayer"
-        }
-      ],
-      "functionName": "HeadphoneWidgetMp3Preview",
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetMp3Preview_Headphone widget \u00b7 MP3",
-      "rendersDir": "composeApp",
-      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt",
-      "variant": ""
-    },
-    {
-      "annotatedBasename": "ConnectedWearCompanionPreview_Devices_Large_Round-4b2d8b90.a11y.png",
-      "cleanBasename": "ConnectedWearCompanionPreview_Devices_Large_Round-4b2d8b90.png",
-      "findings": [],
-      "functionName": "ConnectedWearCompanionPreview",
+      "functionName": "LocalAudioPlaylistWearWidgetRectangularPreview",
       "module": "wearApp",
-      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.ConnectedWearCompanionPreview_Devices - Large Round",
+      "previewId": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetRectangularPreview_Playlist \u00b7 rectangular",
       "rendersDir": "wearApp",
-      "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/WearCompanionApp.kt",
-      "variant": "wearos_large_round"
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt",
+      "variant": ""
     },
     {
-      "annotatedBasename": "LocalAudioPlaylistPreview_Devices_Large_Round-a766dc27.a11y.png",
-      "cleanBasename": "LocalAudioPlaylistPreview_Devices_Large_Round-a766dc27.png",
-      "findings": [],
-      "functionName": "LocalAudioPlaylistPreview",
+      "annotatedBasename": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetRoundPreview_Playlist \u00b7 round (Samsung).a11y.png",
+      "cleanBasename": "",
+      "findings": [
+        {
+          "boundsInScreen": "0,0,416,140",
+          "level": "ERROR",
+          "message": "This item may not have a label readable by screen readers.",
+          "type": "SpeakableTextPresentCheck",
+          "viewDescription": "androidx.compose.remote.player.view.RemoteComposePlayer"
+        }
+      ],
+      "functionName": "LocalAudioPlaylistWearWidgetRoundPreview",
       "module": "wearApp",
-      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.LocalAudioPlaylistPreview_Devices - Large Round",
+      "previewId": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetRoundPreview_Playlist \u00b7 round (Samsung)",
       "rendersDir": "wearApp",
-      "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/WearCompanionApp.kt",
-      "variant": "wearos_large_round"
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt",
+      "variant": ""
+    },
+    {
+      "annotatedBasename": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetSquirclePreview_Playlist \u00b7 squircle.a11y.png",
+      "cleanBasename": "",
+      "findings": [
+        {
+          "boundsInScreen": "0,0,364,152",
+          "level": "ERROR",
+          "message": "This item may not have a label readable by screen readers.",
+          "type": "SpeakableTextPresentCheck",
+          "viewDescription": "androidx.compose.remote.player.view.RemoteComposePlayer"
+        }
+      ],
+      "functionName": "LocalAudioPlaylistWearWidgetSquirclePreview",
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetSquirclePreview_Playlist \u00b7 squircle",
+      "rendersDir": "wearApp",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt",
+      "variant": ""
+    },
+    {
+      "annotatedBasename": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetRectangularPreview_Now playing \u00b7 rectangular.a11y.png",
+      "cleanBasename": "",
+      "findings": [
+        {
+          "boundsInScreen": "0,0,448,168",
+          "level": "ERROR",
+          "message": "This item may not have a label readable by screen readers.",
+          "type": "SpeakableTextPresentCheck",
+          "viewDescription": "androidx.compose.remote.player.view.RemoteComposePlayer"
+        }
+      ],
+      "functionName": "ModeAndControlsWearWidgetRectangularPreview",
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetRectangularPreview_Now playing \u00b7 rectangular",
+      "rendersDir": "wearApp",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt",
+      "variant": ""
+    },
+    {
+      "annotatedBasename": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetRoundPreview_Now playing \u00b7 round (Samsung).a11y.png",
+      "cleanBasename": "",
+      "findings": [
+        {
+          "boundsInScreen": "0,0,416,140",
+          "level": "ERROR",
+          "message": "This item may not have a label readable by screen readers.",
+          "type": "SpeakableTextPresentCheck",
+          "viewDescription": "androidx.compose.remote.player.view.RemoteComposePlayer"
+        }
+      ],
+      "functionName": "ModeAndControlsWearWidgetRoundPreview",
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetRoundPreview_Now playing \u00b7 round (Samsung)",
+      "rendersDir": "wearApp",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt",
+      "variant": ""
+    },
+    {
+      "annotatedBasename": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetSquirclePreview_Now playing \u00b7 squircle.a11y.png",
+      "cleanBasename": "",
+      "findings": [
+        {
+          "boundsInScreen": "0,0,364,152",
+          "level": "ERROR",
+          "message": "This item may not have a label readable by screen readers.",
+          "type": "SpeakableTextPresentCheck",
+          "viewDescription": "androidx.compose.remote.player.view.RemoteComposePlayer"
+        }
+      ],
+      "functionName": "ModeAndControlsWearWidgetSquirclePreview",
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetSquirclePreview_Now playing \u00b7 squircle",
+      "rendersDir": "wearApp",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt",
+      "variant": ""
+    },
+    {
+      "annotatedBasename": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetRectangularPreview_Sync \u00b7 rectangular.a11y.png",
+      "cleanBasename": "",
+      "findings": [
+        {
+          "boundsInScreen": "0,0,448,168",
+          "level": "ERROR",
+          "message": "This item may not have a label readable by screen readers.",
+          "type": "SpeakableTextPresentCheck",
+          "viewDescription": "androidx.compose.remote.player.view.RemoteComposePlayer"
+        }
+      ],
+      "functionName": "SyncStatusWearWidgetRectangularPreview",
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetRectangularPreview_Sync \u00b7 rectangular",
+      "rendersDir": "wearApp",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt",
+      "variant": ""
+    },
+    {
+      "annotatedBasename": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetRoundPreview_Sync \u00b7 round (Samsung).a11y.png",
+      "cleanBasename": "",
+      "findings": [
+        {
+          "boundsInScreen": "0,0,416,140",
+          "level": "ERROR",
+          "message": "This item may not have a label readable by screen readers.",
+          "type": "SpeakableTextPresentCheck",
+          "viewDescription": "androidx.compose.remote.player.view.RemoteComposePlayer"
+        }
+      ],
+      "functionName": "SyncStatusWearWidgetRoundPreview",
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetRoundPreview_Sync \u00b7 round (Samsung)",
+      "rendersDir": "wearApp",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt",
+      "variant": ""
+    },
+    {
+      "annotatedBasename": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetSquirclePreview_Sync \u00b7 squircle.a11y.png",
+      "cleanBasename": "",
+      "findings": [
+        {
+          "boundsInScreen": "0,0,364,152",
+          "level": "ERROR",
+          "message": "This item may not have a label readable by screen readers.",
+          "type": "SpeakableTextPresentCheck",
+          "viewDescription": "androidx.compose.remote.player.view.RemoteComposePlayer"
+        }
+      ],
+      "functionName": "SyncStatusWearWidgetSquirclePreview",
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetSquirclePreview_Sync \u00b7 squircle",
+      "rendersDir": "wearApp",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt",
+      "variant": ""
     }
   ],
   "scope": "changed-previews",
   "uncheckedPreviews": [
     {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.FoundationPreviewsKt.FoundationMaterial3DarkPreview_Foundation \u2014 Material 3 dark"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.FoundationPreviewsKt.FoundationMaterial3LightPreview_Foundation \u2014 Material 3 light"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.PodcastPreviewsKt.AddPodcastsPreview_Add podcasts"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.PodcastPreviewsKt.PodcastImportedPreview_Podcast sync \u2014 imported"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.PodcastPreviewsKt.PodcastPocketCastsPreview_Add podcasts \u2014 Pocket Casts signed in"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.PodcastPreviewsKt.PodcastPreparedPreview_Podcast sync \u2014 prepared"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.BluetoothConnectedPlayingPreview_BT controls - connected + playing"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.BluetoothDisconnectedPreview_BT controls - disconnected"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.BluetoothMp3ModePreview_BT controls - MP3 mode"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.BluetoothPermissionMissingPreview_BT controls - permission missing"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.BookmarksScreenLoadedPreview_Bookmarks - loaded"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.BookmarksScreenLoadingPreview_Bookmarks - loading"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.DeviceFilesLoadingPreview_Device files - loading"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.DeviceFilesNotAvailablePreview_Device files - not available"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.DevicesScreenEmptyPreview_Devices - empty"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.DevicesScreenLoadedPreview_Devices - loaded"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.DevicesScreenLoadingPreview_Devices - loading"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.HomeEmptyPreview_Home \u2014 empty"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.HomeHeadphonesPreview_Home \u2014 headphones connected"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.HomeLibraryPreview_Home \u2014 library"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.ManageEmptyPreview_Manage - empty"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.ManagePopulatedPreview_Manage - populated"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.ManageRefreshingPreview_Manage - refreshing"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStorePhoneBluetooth_Play Store \u00b7 phone \u00b7 Bluetooth"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStorePhoneHomeDark_Play Store \u00b7 phone \u00b7 Home (dark)"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStorePhoneHomeLight_Play Store \u00b7 phone \u00b7 Home (light)"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStorePhoneManage_Play Store \u00b7 phone \u00b7 Manage"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStorePhoneSync_Play Store \u00b7 phone \u00b7 Sync"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStoreSevenInchHomeDark_Play Store \u00b7 7_ tablet \u00b7 Home (dark)"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStoreSevenInchHomeLight_Play Store \u00b7 7_ tablet \u00b7 Home (light)"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStoreTenInchHomeDark_Play Store \u00b7 10_ tablet \u00b7 Home (dark)"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStoreTenInchHomeLight_Play Store \u00b7 10_ tablet \u00b7 Home (light)"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeDonePreview_Sync complete"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeReadyDarkPreview_Sync ready (dark)"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeReadyPreview_Sync ready"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeSyncingPreview_Sync syncing"
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.ConnectedWearCompanionPreview_Devices - Large Round"
     },
     {
       "module": "wearApp",
-      "previewId": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetRectangularPreview_Playlist \u00b7 rectangular"
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.ConnectedWearCompanionPreview_Devices - Small Round"
     },
     {
       "module": "wearApp",
-      "previewId": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetRoundPreview_Playlist \u00b7 round (Samsung)"
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.ConnectedWearCompanionPreview_Fonts - Large"
     },
     {
       "module": "wearApp",
-      "previewId": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetSquirclePreview_Playlist \u00b7 squircle"
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.ConnectedWearCompanionPreview_Fonts - Larger"
     },
     {
       "module": "wearApp",
-      "previewId": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetRectangularPreview_Now playing \u00b7 rectangular"
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.ConnectedWearCompanionPreview_Fonts - Largest"
     },
     {
       "module": "wearApp",
-      "previewId": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetRoundPreview_Now playing \u00b7 round (Samsung)"
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.ConnectedWearCompanionPreview_Fonts - Medium"
     },
     {
       "module": "wearApp",
-      "previewId": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetSquirclePreview_Now playing \u00b7 squircle"
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.ConnectedWearCompanionPreview_Fonts - Normal"
     },
     {
       "module": "wearApp",
-      "previewId": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetRectangularPreview_Sync \u00b7 rectangular"
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.ConnectedWearCompanionPreview_Fonts - Small"
     },
     {
       "module": "wearApp",
-      "previewId": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetRoundPreview_Sync \u00b7 round (Samsung)"
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.LocalAudioPlaylistPreview_Devices - Large Round"
     },
     {
       "module": "wearApp",
-      "previewId": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetSquirclePreview_Sync \u00b7 squircle"
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.LocalAudioPlaylistPreview_Devices - Small Round"
+    },
+    {
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.LocalAudioPlaylistPreview_Fonts - Large"
+    },
+    {
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.LocalAudioPlaylistPreview_Fonts - Larger"
+    },
+    {
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.LocalAudioPlaylistPreview_Fonts - Largest"
+    },
+    {
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.LocalAudioPlaylistPreview_Fonts - Medium"
+    },
+    {
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.LocalAudioPlaylistPreview_Fonts - Normal"
+    },
+    {
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.LocalAudioPlaylistPreview_Fonts - Small"
     }
   ]
 }
