@@ -93,6 +93,28 @@
             <intent-filter><action android:name="android.appwidget.action.APPWIDGET_UPDATE" /></intent-filter>
             <meta-data android:name="android.appwidget.provider" android:resource="@xml/podcast_sync_widget" />
         </receiver>
+
+        <!-- Hosts the AppAuth-driven Google sign-in. Takes a transparent theme so no
+             blank window flashes before the Custom Tab opens. -->
+        <activity
+            android:name="ee.schimke.cadence.sync.google.GoogleOAuthActivity"
+            android:exported="false"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <!-- Receives the OAuth custom-scheme redirect back from the browser. The scheme is the
+             reversed Google client id, injected via the appAuthRedirectScheme manifest placeholder
+             in composeApp/build.gradle.kts. -->
+        <activity
+            android:name="net.openid.appauth.RedirectUriReceiverActivity"
+            android:exported="true"
+            tools:node="replace">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="${appAuthRedirectScheme}" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

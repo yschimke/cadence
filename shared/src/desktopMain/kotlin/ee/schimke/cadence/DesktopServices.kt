@@ -5,12 +5,12 @@ import ee.schimke.cadence.data.*
 import ee.schimke.cadence.datastore.proto.SyncProfile
 import ee.schimke.cadence.metro.PortableViewModelFactory
 import ee.schimke.cadence.sync.*
-import ee.schimke.cadence.sync.google.DesktopGoogleSyncController
+import ee.schimke.cadence.sync.google.DesktopGoogleOAuthFlow
 import ee.schimke.cadence.sync.google.GoogleAccountRepo
 import ee.schimke.cadence.sync.google.GoogleAccountStore
 import ee.schimke.cadence.sync.google.GoogleOAuthConfigLoader
-import ee.schimke.cadence.sync.google.GoogleOAuthFlow
 import ee.schimke.cadence.sync.google.GoogleSyncController
+import ee.schimke.cadence.sync.google.PortableGoogleSyncController
 import ee.schimke.cadence.usb.DesktopUsbManager
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collectLatest
@@ -42,11 +42,11 @@ class DesktopServices(
   private val googleAccounts =
     GoogleAccountRepo(
       store = googleAccountStore,
-      flowFactory = { GoogleOAuthFlow(it) },
+      flowFactory = { DesktopGoogleOAuthFlow(it) },
       configProvider = { oauthConfigLoader.load() },
       scope = scope,
     )
-  val googleSync: GoogleSyncController = DesktopGoogleSyncController(googleAccounts, repo, scope)
+  val googleSync: GoogleSyncController = PortableGoogleSyncController(googleAccounts, repo, scope)
 
   private val devicesRepoForDrive = DevicesRepo(store)
   private val driveManifest =

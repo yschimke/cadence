@@ -58,6 +58,7 @@ kotlin {
       implementation(libs.androidx.documentfile)
       implementation(libs.androidx.work.runtime)
       implementation(libs.rc.widget.launcher)
+      implementation(libs.appauth)
     }
     commonMain.dependencies {
       implementation(libs.kotlinx.coroutines.core)
