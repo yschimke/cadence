@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">Cadence Companion</string>
-    <string name="mode_controls_widget_name">Headphone controls</string>
-    <string name="mode_controls_widget_description">Headphone mode and verified playback controls</string>
+    <string name="mode_controls_widget_name">Now playing</string>
+    <string name="mode_controls_widget_description">Current episode and playback controls</string>
     <string name="local_audio_playlist_widget_name">MP3 playlist</string>
-    <string name="local_audio_playlist_widget_description">Podcast metadata for the headset MP3 playlist</string>
+    <string name="local_audio_playlist_widget_description">Tap an episode on your headphones to play it</string>
     <string name="sync_status_widget_name">Podcast sync</string>
     <string name="sync_status_widget_description">Sync status from Cadence on the paired phone</string>
 </resources>

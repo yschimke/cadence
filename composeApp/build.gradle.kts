@@ -24,6 +24,20 @@ if (firebaseEnabled) {
 
 val appVersionName = "0.1.7" // x-release-please-version
 
+// Google OAuth Android client id, baked into release builds. CI passes
+// `-PcadenceGoogleAndroidClientId=...` from GitHub secrets so end users don't configure anything.
+// Dev builds leave it empty; the Cross-device sync card then shows the self-build instructions.
+// Android OAuth clients don't have a secret — identity is the package + SHA-1 fingerprint
+// registered in Google Cloud Console. The redirect URI's custom scheme is the reversed client id.
+val bundledAndroidClientId = providers.gradleProperty("cadenceGoogleAndroidClientId").getOrElse("")
+// Lint rejects an empty android:scheme in the manifest, so pick an unroutable placeholder when the
+// credential isn't bundled. The sign-in button is already disabled on those builds (the OAuth
+// config loader returns null), so the receiver never gets invoked.
+val bundledAndroidRedirectScheme =
+  if (bundledAndroidClientId.isBlank()) "cadence.google.oauth.unconfigured"
+  else
+    "com.googleusercontent.apps.${bundledAndroidClientId.substringBefore(".apps.googleusercontent.com")}"
+
 // Pack MAJOR.MINOR.PATCH into a monotonic int. Caps at major < 22.
 val appVersionCode: Int = run {
   val parts = appVersionName.split(".", "-").mapNotNull { it.toIntOrNull() }
@@ -46,7 +60,14 @@ android {
     versionName = appVersionName
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+    buildConfigField("String", "GOOGLE_ANDROID_CLIENT_ID", "\"$bundledAndroidClientId\"")
+
+    // AppAuth's redirect-URI receiver pulls this scheme out of the manifest at runtime. Empty when
+    // the credential isn't bundled; the Sign in button stays disabled in that case.
+    manifestPlaceholders["appAuthRedirectScheme"] = bundledAndroidRedirectScheme
   }
+  buildFeatures { buildConfig = true }
   packaging { resources { excludes += "/META-INF/{AL2.0,LGPL2.1}" } }
   val releaseKeystorePath = System.getenv("CADENCE_KEYSTORE_PATH")
   signingConfigs {

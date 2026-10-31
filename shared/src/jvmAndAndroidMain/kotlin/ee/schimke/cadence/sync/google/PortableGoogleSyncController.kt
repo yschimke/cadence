@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
-class DesktopGoogleSyncController(
+class PortableGoogleSyncController(
   private val accounts: GoogleAccountRepo,
   private val syncRepo: SyncRepo,
   scope: CoroutineScope,

@@ -58,6 +58,9 @@ kotlin {
       implementation(libs.androidx.documentfile)
       implementation(libs.androidx.work.runtime)
       implementation(libs.rc.widget.launcher)
+      // api so the AppAuth RedirectUriReceiverActivity reference in composeApp's manifest resolves
+      // during Android lint — not just at runtime.
+      api(libs.appauth)
     }
     commonMain.dependencies {
       implementation(libs.kotlinx.coroutines.core)
