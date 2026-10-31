@@ -23,7 +23,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:textColor="@color/headphone_widget_on_background"
-            android:textSize="15sp" />
+            android:textSize="17sp" />
 
         <TextView
             android:id="@+id/headphone_widget_now_playing"
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="@color/headphone_widget_supporting"
+            android:textColor="@color/headphone_widget_on_background"
             android:textSize="13sp" />
 
         <TextView
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="@color/headphone_widget_accent"
+            android:textColor="@color/headphone_widget_supporting"
             android:textSize="12sp" />
     </LinearLayout>
 

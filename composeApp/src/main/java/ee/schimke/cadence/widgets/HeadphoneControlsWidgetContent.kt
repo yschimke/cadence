@@ -75,16 +75,16 @@ internal fun HeadphoneControlsWidgetContent(
       horizontalArrangement = RemoteArrangement.spacedBy(HeadphoneWidgetLayout.ButtonGapDp.rdp),
       verticalAlignment = RemoteAlignment.CenterVertically,
     ) {
-      if (layout.showHeadline) {
+      if (layout.showTitle) {
         // The open-app tap target spans the row's 48dp height, not just the text line.
         RemoteColumn(
           modifier =
-            RemoteModifier.width(layout.headlineWidthDp.rdp)
+            RemoteModifier.width(layout.titleWidthDp.rdp)
               .height(HeadphoneWidgetLayout.ButtonDp.rdp)
               .openOnTap(onOpen),
           verticalArrangement = RemoteArrangement.Center,
         ) {
-          Headline(if (layout.shortHeadline) state.shortHeadline else state.headline, colors)
+          Headline(if (layout.shortTitle) state.shortTitle else state.title, colors)
         }
       }
       Buttons(state, layout, colors, onAction)
@@ -100,21 +100,24 @@ internal fun HeadphoneControlsWidgetContent(
           .openOnTap(onOpen),
       verticalArrangement = RemoteArrangement.spacedBy(2.rdp),
     ) {
-      Headline(state.headline, colors)
-      if (layout.showNowPlaying) {
-        RemoteText(
-          state.nowPlaying.rs,
-          color = colors.supporting.rc,
-          fontSize = 13.rsp,
-          maxLines = 1,
-          overflow = TextOverflow.Ellipsis,
-        )
-      }
-      if (layout.showSettings) {
-        state.settingsLine?.let {
+      // Hierarchy by size and colour: what is happening, then what to check, then settings.
+      Headline(state.title, colors, fontSize = 17)
+      if (layout.showDetail) {
+        state.detail?.let {
           RemoteText(
             it.rs,
-            color = colors.accent.rc,
+            color = colors.onBackground.rc,
+            fontSize = 13.rsp,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+          )
+        }
+      }
+      if (layout.showExtra) {
+        state.extra?.let {
+          RemoteText(
+            it.rs,
+            color = colors.supporting.rc,
             fontSize = 12.rsp,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
@@ -134,11 +137,11 @@ internal fun HeadphoneControlsWidgetContent(
 
 @Composable
 @RemoteComposable
-private fun Headline(text: String, colors: WidgetColors) {
+private fun Headline(text: String, colors: WidgetColors, fontSize: Int = 15) {
   RemoteText(
     text.rs,
     color = colors.onBackground.rc,
-    fontSize = 15.rsp,
+    fontSize = fontSize.rsp,
     fontWeight = FontWeight.Medium,
     maxLines = 1,
     overflow = TextOverflow.Ellipsis,
@@ -222,7 +225,6 @@ internal data class WidgetColors(
   val onTonal: Color,
   val primary: Color,
   val onPrimary: Color,
-  val accent: Color,
 ) {
   companion object {
     fun from(scheme: ColorScheme) =
@@ -234,7 +236,6 @@ internal data class WidgetColors(
         onTonal = scheme.onSecondaryContainer,
         primary = scheme.primary,
         onPrimary = scheme.onPrimary,
-        accent = scheme.tertiary,
       )
 
     val Dark = from(darkColorScheme())

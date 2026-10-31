@@ -223,13 +223,13 @@ class HeadphoneControlsWidget : AppWidgetProvider() {
         )
       views.setTextViewText(
         R.id.headphone_widget_headline,
-        if (layout.shortHeadline) state.shortHeadline else state.headline,
+        if (layout.shortTitle) state.shortTitle else state.title,
       )
-      views.setViewVisibility(R.id.headphone_widget_header, layout.showHeadline.visibility)
-      views.setTextViewText(R.id.headphone_widget_now_playing, state.nowPlaying)
-      views.setViewVisibility(R.id.headphone_widget_now_playing, layout.showNowPlaying.visibility)
-      views.setTextViewText(R.id.headphone_widget_settings, state.settingsLine.orEmpty())
-      views.setViewVisibility(R.id.headphone_widget_settings, layout.showSettings.visibility)
+      views.setViewVisibility(R.id.headphone_widget_header, layout.showTitle.visibility)
+      views.setTextViewText(R.id.headphone_widget_now_playing, state.detail.orEmpty())
+      views.setViewVisibility(R.id.headphone_widget_now_playing, layout.showDetail.visibility)
+      views.setTextViewText(R.id.headphone_widget_settings, state.extra.orEmpty())
+      views.setViewVisibility(R.id.headphone_widget_settings, layout.showExtra.visibility)
       launchIntent(context)?.let {
         views.setOnClickPendingIntent(
           R.id.headphone_widget_header,

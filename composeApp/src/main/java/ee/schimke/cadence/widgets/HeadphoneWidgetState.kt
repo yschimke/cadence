@@ -20,54 +20,75 @@ internal enum class HeadphoneWidgetAction(val wireName: String, val label: Strin
 }
 
 /**
- * What the headphone widget shows, derived only from [BluetoothState].
+ * What the headphone widget shows, ranked by what it tells the user, derived only from
+ * [BluetoothState].
+ *
+ * - [title], the largest text, is what is happening now: the track playing, whether the headset is
+ *   playing from its own storage, or that nothing is connected.
+ * - [detail] is what the user checks at a glance: the artist, or battery and playback order.
+ * - [extra], shown only at the largest sizes, holds the settings that rarely change.
+ *
+ * The device's name is not a heading: for the OpenSwim Pro the widget exists for, it is constant
+ * and says nothing. It appears only when some other headset is connected. The mode is carried by
+ * the mode switch and by the title's wording, not a label.
  *
  * In MP3 mode the headset plays from its own storage and reports no track details, so the phone's
- * media session is deliberately not shown as "now playing" — the same rule the Wear widgets follow.
- * EQ, playback order and volume are the last values the headset acknowledged to Cadence.
+ * media session is deliberately not shown as "now playing", the same rule the Wear widgets follow.
+ * Playing/paused, EQ, playback order and volume are the last values the headset acknowledged.
  */
 internal data class HeadphoneWidgetState(
-  val headline: String,
-  /** For narrow one-row slots: the mode alone for OpenSwim Pro, otherwise the device. */
-  val shortHeadline: String = headline,
-  val nowPlaying: String,
-  val settingsLine: String?,
+  val title: String,
+  /** For narrow one-row slots: the same meaning in a word or two. */
+  val shortTitle: String = title,
+  val detail: String?,
+  val extra: String?,
   val transport: List<HeadphoneWidgetAction>,
   val modeSwitch: HeadphoneWidgetAction?,
 ) {
   companion object {
     fun from(bluetooth: BluetoothState): HeadphoneWidgetState {
       val device = bluetooth.connectedDevice
+      val media = bluetooth.mediaInfo
+      val phoneTransport = transport(playing = media?.playing == true)
       if (device == null) {
         return HeadphoneWidgetState(
-          headline = "No headphones connected",
-          shortHeadline = "No headphones",
-          nowPlaying = bluetooth.mediaInfo?.title ?: "Connect headphones to control them here",
-          settingsLine = null,
-          transport = transport(playing = bluetooth.mediaInfo?.playing == true),
+          title = "Headphones not connected",
+          shortTitle = "Not connected",
+          // The buttons still drive the phone's player, so say what they would control.
+          detail = media?.title?.let { "On phone: $it" },
+          extra = null,
+          transport = phoneTransport,
           modeSwitch = null,
         )
       }
+      val battery = device.batteryPercent?.let { "$it% battery" }
       if (bluetooth.localAudioControls) {
+        val (title, short) =
+          when (bluetooth.headsetPlaying) {
+            true -> "Playing from headphones" to "Playing"
+            false -> "Paused" to "Paused"
+            null -> "Headphone MP3 player" to "MP3"
+          }
         return HeadphoneWidgetState(
-          headline = "${device.name} · MP3",
-          shortHeadline = "MP3",
-          nowPlaying = "Playing from headphone storage",
-          settingsLine = settingsLine(bluetooth, includeLocalAudio = true),
+          title = title,
+          shortTitle = short,
+          detail = joined(battery, bluetooth.playbackOrder?.label),
+          extra = joined(eq(bluetooth), bluetooth.headsetVolumePercent?.let { "Volume $it%" }),
           transport = transport(playing = bluetooth.headsetPlaying == true),
           modeSwitch = HeadphoneWidgetAction.SwitchToBluetooth,
         )
       }
-      val media = bluetooth.mediaInfo
       return HeadphoneWidgetState(
-        headline = if (bluetooth.openSwimConnected) "${device.name} · Bluetooth" else device.name,
-        shortHeadline = if (bluetooth.openSwimConnected) "Bluetooth" else device.name,
-        // Title only: with the artist appended it ellipsizes mid-word at common widget widths.
-        nowPlaying = media?.title ?: "Nothing playing",
-        settingsLine =
-          if (bluetooth.openSwimConnected) settingsLine(bluetooth, includeLocalAudio = false)
-          else null,
-        transport = transport(playing = bluetooth.mediaInfo?.playing == true),
+        title = media?.title ?: "Nothing playing",
+        detail = media?.artist ?: battery,
+        extra =
+          joined(
+            // A headset other than the one the widget is built for is worth naming.
+            if (bluetooth.openSwimConnected) "Bluetooth" else device.name,
+            battery.takeIf { media?.artist != null },
+            eq(bluetooth),
+          ),
+        transport = phoneTransport,
         modeSwitch =
           HeadphoneWidgetAction.SwitchToMp3.takeIf {
             bluetooth.openSwimConnected && bluetooth.workingMode == WorkingMode.Bluetooth
@@ -86,14 +107,12 @@ internal data class HeadphoneWidgetState(
         HeadphoneWidgetAction.Next,
       )
 
-    private fun settingsLine(bluetooth: BluetoothState, includeLocalAudio: Boolean): String? =
-      listOfNotNull(
-          bluetooth.equalizer?.let { "EQ ${it.label}" },
-          bluetooth.playbackOrder?.label?.takeIf { includeLocalAudio },
-          bluetooth.headsetVolumePercent?.let { "Volume $it%" }?.takeIf { includeLocalAudio },
-        )
-        .joinToString(" · ")
-        .ifEmpty { null }
+    /** Only an OpenSwim Pro takes Cadence's EQ; any other headset's value would be stale. */
+    private fun eq(bluetooth: BluetoothState) =
+      bluetooth.equalizer?.takeIf { bluetooth.openSwimConnected }?.let { "${it.label} EQ" }
+
+    private fun joined(vararg parts: String?): String? =
+      parts.filterNotNull().joinToString(" · ").ifEmpty { null }
   }
 }
 
@@ -105,19 +124,19 @@ internal data class HeadphoneWidgetState(
  */
 internal data class HeadphoneWidgetLayout(
   val singleRow: Boolean,
-  val showHeadline: Boolean,
-  val showNowPlaying: Boolean,
-  val showSettings: Boolean,
+  val showTitle: Boolean,
+  val showDetail: Boolean,
+  val showExtra: Boolean,
   val transport: List<HeadphoneWidgetAction>,
   val showModeSwitch: Boolean,
   /**
    * One-row slots: the headline's width, what the buttons leave (Remote rows don't shrink text).
    */
-  val headlineWidthDp: Int = 0,
+  val titleWidthDp: Int = 0,
 ) {
-  /** A one-row headline column too narrow for the full headline shows the short one. */
-  val shortHeadline: Boolean
-    get() = singleRow && headlineWidthDp < 160
+  /** A one-row title column too narrow for the full title shows the short one. */
+  val shortTitle: Boolean
+    get() = singleRow && titleWidthDp < 160
 
   companion object {
     /** Every control is a 48dp touch target. */
@@ -143,20 +162,20 @@ internal data class HeadphoneWidgetLayout(
         val showText = withText >= buttonsWidth(1)
         val transport = fit(state.transport, if (showText) withText else inner)
         return HeadphoneWidgetLayout(
-          headlineWidthDp = inner - buttonsWidth(transport.size) - ButtonGapDp,
+          titleWidthDp = inner - buttonsWidth(transport.size) - ButtonGapDp,
           singleRow = true,
-          showHeadline = showText,
-          showNowPlaying = false,
-          showSettings = false,
+          showTitle = showText,
+          showDetail = false,
+          showExtra = false,
           transport = transport,
           showModeSwitch = false,
         )
       }
       return HeadphoneWidgetLayout(
         singleRow = false,
-        showHeadline = true,
-        showNowPlaying = heightDp >= 150,
-        showSettings = heightDp >= 190 && state.settingsLine != null,
+        showTitle = true,
+        showDetail = heightDp >= 150 && state.detail != null,
+        showExtra = heightDp >= 190 && state.extra != null,
         transport = fit(state.transport, transportRoom),
         showModeSwitch = modeSwitch,
       )
