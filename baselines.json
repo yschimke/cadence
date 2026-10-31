@@ -479,12 +479,28 @@
     "sha256": "ddea199077d39e8aab71f0deeb2f2e566ee4488f89b671770e7255edabf467e4",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt"
   },
+  "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetRoundPreview_Playlist \u00b7 round (Samsung)#1": {
+    "captureLabel": "parameter 1",
+    "functionName": "LocalAudioPlaylistWearWidgetRoundPreview",
+    "module": "wearApp",
+    "renderBasename": "LocalAudioPlaylistWearWidgetRoundPreview_Playlist_round_Samsung-8676e176_PARAM_1.png",
+    "sha256": "32195e8caa80462c5b80a143e11fe7bdfbb3b020f6e8b998a157b49c36ad381c",
+    "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt"
+  },
   "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetSquirclePreview_Playlist \u00b7 squircle": {
     "captureLabel": "parameter 0",
     "functionName": "LocalAudioPlaylistWearWidgetSquirclePreview",
     "module": "wearApp",
     "renderBasename": "LocalAudioPlaylistWearWidgetSquirclePreview_Playlist_squircle-fe5fe95f_PARAM_0.png",
     "sha256": "68bc897427871c9576831fab3da21a5493fe2a029b6f80c8aa122c01677d0bcb",
+    "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt"
+  },
+  "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetSquirclePreview_Playlist \u00b7 squircle#1": {
+    "captureLabel": "parameter 1",
+    "functionName": "LocalAudioPlaylistWearWidgetSquirclePreview",
+    "module": "wearApp",
+    "renderBasename": "LocalAudioPlaylistWearWidgetSquirclePreview_Playlist_squircle-fe5fe95f_PARAM_1.png",
+    "sha256": "d22830ba49cf4cf23505c4268555169b8f3c0ed1f224e5b6a60c7e6ebd904b76",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt"
   },
   "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetRectangularPreview_Now playing \u00b7 rectangular": {
@@ -519,6 +535,14 @@
     "sha256": "b264da3ce9548868219b820c96a257c44f8255ee99b8c31311985e1db83d72c5",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt"
   },
+  "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetRectangularPreview_Sync \u00b7 rectangular#1": {
+    "captureLabel": "parameter 1",
+    "functionName": "SyncStatusWearWidgetRectangularPreview",
+    "module": "wearApp",
+    "renderBasename": "SyncStatusWearWidgetRectangularPreview_Sync_rectangular-ecd1feeb_PARAM_1.png",
+    "sha256": "05e4be8937866516ff73b0ed0844bfa1c26181407d2a8937aaf197014b5ca47b",
+    "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt"
+  },
   "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetRoundPreview_Sync \u00b7 round (Samsung)": {
     "captureLabel": "parameter 0",
     "functionName": "SyncStatusWearWidgetRoundPreview",
@@ -527,12 +551,60 @@
     "sha256": "ddea199077d39e8aab71f0deeb2f2e566ee4488f89b671770e7255edabf467e4",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt"
   },
+  "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetRoundPreview_Sync \u00b7 round (Samsung)#1": {
+    "captureLabel": "parameter 1",
+    "functionName": "SyncStatusWearWidgetRoundPreview",
+    "module": "wearApp",
+    "renderBasename": "SyncStatusWearWidgetRoundPreview_Sync_round_Samsung-f0a0a37a_PARAM_1.png",
+    "sha256": "32195e8caa80462c5b80a143e11fe7bdfbb3b020f6e8b998a157b49c36ad381c",
+    "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt"
+  },
+  "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetRoundPreview_Sync \u00b7 round (Samsung)#2": {
+    "captureLabel": "parameter 2",
+    "functionName": "SyncStatusWearWidgetRoundPreview",
+    "module": "wearApp",
+    "renderBasename": "SyncStatusWearWidgetRoundPreview_Sync_round_Samsung-f0a0a37a_PARAM_2.png",
+    "sha256": "1845a857d4d45972ef91f918555671df888f34326fdc04b4521c7210a759302e",
+    "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt"
+  },
+  "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetRoundPreview_Sync \u00b7 round (Samsung)#3": {
+    "captureLabel": "parameter 3",
+    "functionName": "SyncStatusWearWidgetRoundPreview",
+    "module": "wearApp",
+    "renderBasename": "SyncStatusWearWidgetRoundPreview_Sync_round_Samsung-f0a0a37a_PARAM_3.png",
+    "sha256": "50b32544729cb2b0d159239fa0ec373de4e07e0ab2f2e77b6b61ce5845e6de52",
+    "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt"
+  },
   "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetSquirclePreview_Sync \u00b7 squircle": {
     "captureLabel": "parameter 0",
     "functionName": "SyncStatusWearWidgetSquirclePreview",
     "module": "wearApp",
     "renderBasename": "SyncStatusWearWidgetSquirclePreview_Sync_squircle-d27e8677_PARAM_0.png",
     "sha256": "68bc897427871c9576831fab3da21a5493fe2a029b6f80c8aa122c01677d0bcb",
+    "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt"
+  },
+  "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetSquirclePreview_Sync \u00b7 squircle#1": {
+    "captureLabel": "parameter 1",
+    "functionName": "SyncStatusWearWidgetSquirclePreview",
+    "module": "wearApp",
+    "renderBasename": "SyncStatusWearWidgetSquirclePreview_Sync_squircle-d27e8677_PARAM_1.png",
+    "sha256": "d22830ba49cf4cf23505c4268555169b8f3c0ed1f224e5b6a60c7e6ebd904b76",
+    "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt"
+  },
+  "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetSquirclePreview_Sync \u00b7 squircle#2": {
+    "captureLabel": "parameter 2",
+    "functionName": "SyncStatusWearWidgetSquirclePreview",
+    "module": "wearApp",
+    "renderBasename": "SyncStatusWearWidgetSquirclePreview_Sync_squircle-d27e8677_PARAM_2.png",
+    "sha256": "da85bb04f29461e406ccdaf915119c0839896a1e2af9efd093d921628d96c4f4",
+    "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt"
+  },
+  "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetSquirclePreview_Sync \u00b7 squircle#3": {
+    "captureLabel": "parameter 3",
+    "functionName": "SyncStatusWearWidgetSquirclePreview",
+    "module": "wearApp",
+    "renderBasename": "SyncStatusWearWidgetSquirclePreview_Sync_squircle-d27e8677_PARAM_3.png",
+    "sha256": "059cb1cd12f616d2462afa63ffe7cb214de68bcd860e786af580a02ee05d5666",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt"
   }
 }
