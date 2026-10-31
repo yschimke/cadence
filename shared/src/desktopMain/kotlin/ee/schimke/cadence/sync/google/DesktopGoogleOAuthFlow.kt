@@ -11,8 +11,8 @@ import java.net.http.HttpResponse
 import java.nio.charset.StandardCharsets
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
+import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
-import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
@@ -21,20 +21,20 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
 /**
- * Installed-app OAuth 2.0 flow with PKCE. Pops the browser at Google's consent screen, catches the
- * redirect on a short-lived loopback server, and exchanges the code for tokens.
+ * Desktop installed-app OAuth 2.0 flow with PKCE. Pops the browser at Google's consent screen,
+ * catches the redirect on a short-lived loopback server, and exchanges the code for tokens.
  *
  * Fails with [IllegalStateException] when a desktop browser cannot be launched (headless session),
  * so the UI can offer "copy the URL manually" as a follow-up.
  */
-class GoogleOAuthFlow(
+class DesktopGoogleOAuthFlow(
   private val config: OAuthConfig,
   private val http: HttpClient = HttpClient.newHttpClient(),
-) {
+  private val timeout: Duration = 5.minutes,
+) : GoogleOAuthFlow {
   private val json = Json { ignoreUnknownKeys = true }
 
-  /** Runs the whole flow and returns the signed-in account. Suspends until the user consents. */
-  suspend fun authorize(timeout: kotlin.time.Duration = 5.minutes): GoogleAccount =
+  override suspend fun authorize(): GoogleAccount =
     withContext(Dispatchers.IO) {
       val pkce = generatePkce()
       val server = HttpServer.create(InetSocketAddress("127.0.0.1", 0), 0)
@@ -48,7 +48,7 @@ class GoogleOAuthFlow(
         openBrowser(authorizationUrl(redirectUri, pkce.challenge))
         val code = withTimeout(timeout) { awaitCode() }
         val tokens = exchangeCode(code, redirectUri, pkce.verifier)
-        val email = fetchEmail(tokens.accessToken)
+        val email = fetchGoogleUserEmail(tokens.accessToken, http)
         GoogleAccount(
           email = email,
           refreshToken = tokens.refreshToken,
@@ -60,33 +60,8 @@ class GoogleOAuthFlow(
       }
     }
 
-  /** Refreshes a stale access token using the stored refresh token. */
-  suspend fun refresh(account: GoogleAccount): GoogleAccount =
-    withContext(Dispatchers.IO) {
-      val body =
-        formUrlEncoded(
-          "client_id" to config.clientId,
-          "client_secret" to config.clientSecret,
-          "refresh_token" to account.refreshToken,
-          "grant_type" to "refresh_token",
-        )
-      val response =
-        http.send(
-          HttpRequest.newBuilder(URI.create("https://oauth2.googleapis.com/token"))
-            .header("Content-Type", "application/x-www-form-urlencoded")
-            .POST(HttpRequest.BodyPublishers.ofString(body))
-            .build(),
-          HttpResponse.BodyHandlers.ofString(),
-        )
-      check(response.statusCode() == 200) {
-        "Token refresh failed (${response.statusCode()}): ${response.body()}"
-      }
-      val tokens = json.decodeFromString<TokenResponse>(response.body())
-      account.copy(
-        accessToken = tokens.accessToken,
-        accessTokenExpiresAtMillis = System.currentTimeMillis() + tokens.expiresIn * 1000L,
-      )
-    }
+  override suspend fun refresh(account: GoogleAccount): GoogleAccount =
+    refreshGoogleAccessToken(config, account, http)
 
   private fun authorizationUrl(redirectUri: String, challenge: String): String {
     val params =
@@ -174,21 +149,6 @@ class GoogleOAuthFlow(
     return json.decodeFromString(response.body())
   }
 
-  private fun fetchEmail(accessToken: String): String {
-    val response =
-      http.send(
-        HttpRequest.newBuilder(URI.create("https://openidconnect.googleapis.com/v1/userinfo"))
-          .header("Authorization", "Bearer $accessToken")
-          .GET()
-          .build(),
-        HttpResponse.BodyHandlers.ofString(),
-      )
-    check(response.statusCode() == 200) {
-      "Fetching user info failed (${response.statusCode()}): ${response.body()}"
-    }
-    return json.decodeFromString<UserInfoResponse>(response.body()).email
-  }
-
   private fun openBrowser(url: String) {
     if (!Desktop.isDesktopSupported() || !Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
       throw IllegalStateException(
@@ -223,9 +183,4 @@ class GoogleOAuthFlow(
     val expiresIn
       get() = expires_in
   }
-
-  @Serializable private data class UserInfoResponse(val email: String)
 }
-
-/** Marker thrown when the user cancels the flow (closes browser without consenting). */
-class GoogleOAuthCancelled : CancellationException("Google sign-in cancelled")

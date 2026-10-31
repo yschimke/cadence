@@ -4,6 +4,7 @@ agp = "9.4.1"
 android-compileSdk = "37"
 android-minSdk = "34"
 android-targetSdk = "36"
+appauth = "0.11.1"
 androidx-activityCompose = "1.13.0"
 androidx-appcompat = "1.8.0"
 androidx-constraintlayout = "2.2.2"
@@ -52,6 +53,7 @@ rc-widget-launcher = { module = "ee.schimke.composeai:rc-widget-launcher", versi
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
+appauth = { module = "net.openid:appauth", version.ref = "appauth" }
 
 media3-transformer = { module = "androidx.media3:media3-transformer", version.ref = "media3" }
 horologist-media-ui-material3 = { module = "com.google.android.horologist:horologist-media-ui-material3", version.ref = "horologist" }

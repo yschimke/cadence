@@ -133,7 +133,14 @@ jobs:
           CADENCE_KEYSTORE_PASSWORD: ${{ secrets.CADENCE_KEYSTORE_PASSWORD }}
           CADENCE_KEY_ALIAS: ${{ secrets.CADENCE_KEY_ALIAS }}
           CADENCE_KEY_PASSWORD: ${{ secrets.CADENCE_KEY_PASSWORD }}
-        run: ./gradlew :composeApp:assembleRelease :composeApp:bundleRelease :shared:wasmoApp --stacktrace
+          CADENCE_GOOGLE_ANDROID_CLIENT_ID: ${{ secrets.CADENCE_GOOGLE_ANDROID_CLIENT_ID }}
+        run: |
+          set -euo pipefail
+          args=(:composeApp:assembleRelease :composeApp:bundleRelease :shared:wasmoApp --stacktrace)
+          if [[ -n "${CADENCE_GOOGLE_ANDROID_CLIENT_ID:-}" ]]; then
+            args+=("-PcadenceGoogleAndroidClientId=$CADENCE_GOOGLE_ANDROID_CLIENT_ID")
+          fi
+          ./gradlew "${args[@]}"
 
       - name: Publish library artifacts to GitHub Packages
         env:

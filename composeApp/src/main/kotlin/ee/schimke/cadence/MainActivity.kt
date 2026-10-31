@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.ViewModelProvider
 import dev.zacsweers.metro.AppScope
@@ -12,11 +13,16 @@ import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.binding
 import ee.schimke.cadence.metro.ActivityKey
+import ee.schimke.cadence.sync.google.GoogleSyncController
+import ee.schimke.cadence.sync.google.LocalGoogleSyncController
 
 @ContributesIntoMap(AppScope::class, binding<Activity>())
 @ActivityKey(MainActivity::class)
 @Inject
-class MainActivity(private val viewModelFactory: ViewModelProvider.Factory) : ComponentActivity() {
+class MainActivity(
+  private val viewModelFactory: ViewModelProvider.Factory,
+  private val googleSync: GoogleSyncController,
+) : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     val splashScreen = installSplashScreen()
 
@@ -24,7 +30,11 @@ class MainActivity(private val viewModelFactory: ViewModelProvider.Factory) : Co
 
     super.onCreate(savedInstanceState)
 
-    setContent { AndroidMaterialTheme { App() } }
+    setContent {
+      AndroidMaterialTheme {
+        CompositionLocalProvider(LocalGoogleSyncController provides googleSync) { App() }
+      }
+    }
   }
 
   override val defaultViewModelProviderFactory: ViewModelProvider.Factory
