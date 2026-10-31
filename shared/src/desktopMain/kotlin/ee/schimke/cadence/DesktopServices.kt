@@ -5,6 +5,12 @@ import ee.schimke.cadence.data.*
 import ee.schimke.cadence.datastore.proto.SyncProfile
 import ee.schimke.cadence.metro.PortableViewModelFactory
 import ee.schimke.cadence.sync.*
+import ee.schimke.cadence.sync.google.DesktopGoogleSyncController
+import ee.schimke.cadence.sync.google.GoogleAccountRepo
+import ee.schimke.cadence.sync.google.GoogleAccountStore
+import ee.schimke.cadence.sync.google.GoogleOAuthConfigLoader
+import ee.schimke.cadence.sync.google.GoogleOAuthFlow
+import ee.schimke.cadence.sync.google.GoogleSyncController
 import ee.schimke.cadence.usb.DesktopUsbManager
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collectLatest
@@ -13,7 +19,9 @@ import okio.FileSystem
 import okio.Path
 import okio.Path.Companion.toPath
 
-class DesktopServices : AutoCloseable {
+class DesktopServices(
+  private val bundledOAuth: ee.schimke.cadence.sync.google.OAuthConfig? = null
+) : AutoCloseable {
   private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
   private val root = (System.getProperty("user.home") + "/.cadence").toPath()
 
@@ -25,7 +33,39 @@ class DesktopServices : AutoCloseable {
   private val repo = SyncRepo(store)
   private val backend = DesktopDirectoryBackend((root / "sync-staging").toString())
   private val refresh = PortableRefresh(repo, backend)
-  private val sync = PortableSync(repo, DevicesRepo(store), backend, scope)
+  private val hostId = HostId(store)
+  private val localManifest = FileManifestStore(root / "manifests")
+
+  private val oauthConfigLoader =
+    GoogleOAuthConfigLoader(configFile = root / "google-oauth.json", bundled = bundledOAuth)
+  private val googleAccountStore = GoogleAccountStore(root / "google-auth.json")
+  private val googleAccounts =
+    GoogleAccountRepo(
+      store = googleAccountStore,
+      flowFactory = { GoogleOAuthFlow(it) },
+      configProvider = { oauthConfigLoader.load() },
+      scope = scope,
+    )
+  val googleSync: GoogleSyncController = DesktopGoogleSyncController(googleAccounts, repo, scope)
+
+  private val devicesRepoForDrive = DevicesRepo(store)
+  private val driveManifest =
+    GoogleDriveManifestStore(
+      local = localManifest,
+      accounts = googleAccounts,
+      // Share the manifest by device name (slugified) when it's non-blank, so two hosts that both
+      // auto-detect the same Cadence stick as "Cadence" land on the same Drive file; otherwise
+      // fall back to the local id (per-host unique, so each host writes its own file).
+      sharedKeyFor = { id ->
+        devicesRepoForDrive.getDevice(id)?.name?.slugify()?.takeIf { it.isNotBlank() } ?: id
+      },
+    )
+  private val manifest: ManifestStore = SwitchingManifestStore {
+    // Hot-check prefs on every call so the user's toggle takes effect immediately.
+    if (googleSync.state.value.enabled && googleSync.state.value.signedIn) driveManifest
+    else localManifest
+  }
+  private val sync = PortableSync(repo, DevicesRepo(store), backend, scope, manifest, hostId)
   private val scheduler =
     object : RefreshScheduler {
       private val jobs = mutableMapOf<String, Job>()
@@ -123,3 +163,6 @@ class DesktopServices : AutoCloseable {
     scope.cancel()
   }
 }
+
+private fun String.slugify(): String =
+  lowercase().map { if (it.isLetterOrDigit()) it else '-' }.joinToString("").trim('-')
