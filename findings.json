@@ -1,17 +1,6 @@
 {
   "entries": [
     {
-      "annotatedBasename": "AddPodcastsPreview_Add_podcasts-e09ca4b7.a11y.png",
-      "cleanBasename": "AddPodcastsPreview_Add_podcasts-e09ca4b7.png",
-      "findings": [],
-      "functionName": "AddPodcastsPreview",
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.PodcastPreviewsKt.AddPodcastsPreview_Add podcasts",
-      "rendersDir": "composeApp",
-      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastPreviews.kt",
-      "variant": ""
-    },
-    {
       "annotatedBasename": "BluetoothConnectedPlayingPreview_BT_controls_connected_playing-45366603.a11y.png",
       "cleanBasename": "BluetoothConnectedPlayingPreview_BT_controls_connected_playing-45366603.png",
       "findings": [],
@@ -130,28 +119,6 @@
       "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.DevicesScreenLoadingPreview_Devices - loading",
       "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
-      "variant": ""
-    },
-    {
-      "annotatedBasename": "FoundationMaterial3DarkPreview_Foundation_Material_3_dark-8fbb7bd3.a11y.png",
-      "cleanBasename": "FoundationMaterial3DarkPreview_Foundation_Material_3_dark-8fbb7bd3.png",
-      "findings": [],
-      "functionName": "FoundationMaterial3DarkPreview",
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.FoundationPreviewsKt.FoundationMaterial3DarkPreview_Foundation \u2014 Material 3 dark",
-      "rendersDir": "composeApp",
-      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/FoundationPreviews.kt",
-      "variant": ""
-    },
-    {
-      "annotatedBasename": "FoundationMaterial3LightPreview_Foundation_Material_3_light-8a361022.a11y.png",
-      "cleanBasename": "FoundationMaterial3LightPreview_Foundation_Material_3_light-8a361022.png",
-      "findings": [],
-      "functionName": "FoundationMaterial3LightPreview",
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.FoundationPreviewsKt.FoundationMaterial3LightPreview_Foundation \u2014 Material 3 light",
-      "rendersDir": "composeApp",
-      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/FoundationPreviews.kt",
       "variant": ""
     },
     {
@@ -383,84 +350,49 @@
       "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/playstore/PlayStorePreviews.kt",
       "variant": "spec:width=800dp,height=1280dp,dpi=320"
-    },
-    {
-      "annotatedBasename": "PodcastImportedPreview_Podcast_sync_imported-8403888a.a11y.png",
-      "cleanBasename": "PodcastImportedPreview_Podcast_sync_imported-8403888a.png",
-      "findings": [],
-      "functionName": "PodcastImportedPreview",
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.PodcastPreviewsKt.PodcastImportedPreview_Podcast sync \u2014 imported",
-      "rendersDir": "composeApp",
-      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastPreviews.kt",
-      "variant": ""
-    },
-    {
-      "annotatedBasename": "PodcastPocketCastsPreview_Add_podcasts_Pocket_Casts_signed_in-cd7341fe.a11y.png",
-      "cleanBasename": "PodcastPocketCastsPreview_Add_podcasts_Pocket_Casts_signed_in-cd7341fe.png",
-      "findings": [],
-      "functionName": "PodcastPocketCastsPreview",
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.PodcastPreviewsKt.PodcastPocketCastsPreview_Add podcasts \u2014 Pocket Casts signed in",
-      "rendersDir": "composeApp",
-      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastPreviews.kt",
-      "variant": ""
-    },
-    {
-      "annotatedBasename": "PodcastPreparedPreview_Podcast_sync_prepared-2db5b8ad.a11y.png",
-      "cleanBasename": "PodcastPreparedPreview_Podcast_sync_prepared-2db5b8ad.png",
-      "findings": [],
-      "functionName": "PodcastPreparedPreview",
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.PodcastPreviewsKt.PodcastPreparedPreview_Podcast sync \u2014 prepared",
-      "rendersDir": "composeApp",
-      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastPreviews.kt",
-      "variant": ""
-    },
-    {
-      "annotatedBasename": "SyncModeDonePreview_Sync_complete-7dc4927b.a11y.png",
-      "cleanBasename": "SyncModeDonePreview_Sync_complete-7dc4927b.png",
-      "findings": [],
-      "functionName": "SyncModeDonePreview",
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeDonePreview_Sync complete",
-      "rendersDir": "composeApp",
-      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/redesign/RedesignPreviews.kt",
-      "variant": ""
-    },
-    {
-      "annotatedBasename": "SyncModeReadyDarkPreview_Sync_ready_dark-de653549.a11y.png",
-      "cleanBasename": "SyncModeReadyDarkPreview_Sync_ready_dark-de653549.png",
-      "findings": [],
-      "functionName": "SyncModeReadyDarkPreview",
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeReadyDarkPreview_Sync ready (dark)",
-      "rendersDir": "composeApp",
-      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/redesign/RedesignPreviews.kt",
-      "variant": ""
-    },
-    {
-      "annotatedBasename": "SyncModeReadyPreview_Sync_ready-ce4e5f0a.a11y.png",
-      "cleanBasename": "SyncModeReadyPreview_Sync_ready-ce4e5f0a.png",
-      "findings": [],
-      "functionName": "SyncModeReadyPreview",
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeReadyPreview_Sync ready",
-      "rendersDir": "composeApp",
-      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/redesign/RedesignPreviews.kt",
-      "variant": ""
-    },
-    {
-      "annotatedBasename": "SyncModeSyncingPreview_Sync_syncing-34770d66.a11y.png",
-      "cleanBasename": "SyncModeSyncingPreview_Sync_syncing-34770d66.png",
-      "findings": [],
-      "functionName": "SyncModeSyncingPreview",
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeSyncingPreview_Sync syncing",
-      "rendersDir": "composeApp",
-      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/redesign/RedesignPreviews.kt",
-      "variant": ""
     }
   ],
-  "scope": "changed-previews"
+  "scope": "changed-previews",
+  "uncheckedPreviews": [
+    {
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.FoundationPreviewsKt.FoundationMaterial3DarkPreview_Foundation \u2014 Material 3 dark"
+    },
+    {
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.FoundationPreviewsKt.FoundationMaterial3LightPreview_Foundation \u2014 Material 3 light"
+    },
+    {
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.PodcastPreviewsKt.AddPodcastsPreview_Add podcasts"
+    },
+    {
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.PodcastPreviewsKt.PodcastImportedPreview_Podcast sync \u2014 imported"
+    },
+    {
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.PodcastPreviewsKt.PodcastPocketCastsPreview_Add podcasts \u2014 Pocket Casts signed in"
+    },
+    {
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.PodcastPreviewsKt.PodcastPreparedPreview_Podcast sync \u2014 prepared"
+    },
+    {
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeDonePreview_Sync complete"
+    },
+    {
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeReadyDarkPreview_Sync ready (dark)"
+    },
+    {
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeReadyPreview_Sync ready"
+    },
+    {
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeSyncingPreview_Sync syncing"
+    }
+  ]
 }

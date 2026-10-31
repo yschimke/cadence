@@ -1,16 +1,10 @@
 # Accessibility Report
 
-_Auto-generated from `compose-preview/a11y/pr`. 36 preview(s) across 1 module(s) · 1 error(s) · 0 warning(s) · 8 info._
+_Auto-generated from `compose-preview/a11y/pr`. 26 preview(s) across 1 module(s) · 1 error(s) · 0 warning(s) · 8 info._
 
 Browse inline; image URLs are pinned to the commit SHA on the baseline branch so links keep resolving after merge.
 
 ## composeApp
-
-### `AddPodcastsPreview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/AddPodcastsPreview_Add_podcasts-e09ca4b7.a11y.png" width="400" />
-
-_No findings._
 
 ### `BluetoothConnectedPlayingPreview`
 
@@ -75,18 +69,6 @@ _No findings._
 ### `DevicesScreenLoadingPreview`
 
 <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/DevicesScreenLoadingPreview_Devices_loading-8e171a67.a11y.png" width="400" />
-
-_No findings._
-
-### `FoundationMaterial3DarkPreview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/FoundationMaterial3DarkPreview_Foundation_Material_3_dark-8fbb7bd3.a11y.png" width="400" />
-
-_No findings._
-
-### `FoundationMaterial3LightPreview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/FoundationMaterial3LightPreview_Foundation_Material_3_light-8a361022.a11y.png" width="400" />
 
 _No findings._
 
@@ -188,47 +170,5 @@ _No findings._
 ### `PlayStoreTenInchHomeLight` · `spec:width=800dp,height=1280dp,dpi=320`
 
 <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/PlayStoreTenInchHomeLight_Play_Store_10_tablet_Home_light-536fa195.a11y.png" width="400" />
-
-_No findings._
-
-### `PodcastImportedPreview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/PodcastImportedPreview_Podcast_sync_imported-8403888a.a11y.png" width="400" />
-
-_No findings._
-
-### `PodcastPocketCastsPreview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/PodcastPocketCastsPreview_Add_podcasts_Pocket_Casts_signed_in-cd7341fe.a11y.png" width="400" />
-
-_No findings._
-
-### `PodcastPreparedPreview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/PodcastPreparedPreview_Podcast_sync_prepared-2db5b8ad.a11y.png" width="400" />
-
-_No findings._
-
-### `SyncModeDonePreview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/SyncModeDonePreview_Sync_complete-7dc4927b.a11y.png" width="400" />
-
-_No findings._
-
-### `SyncModeReadyDarkPreview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/SyncModeReadyDarkPreview_Sync_ready_dark-de653549.a11y.png" width="400" />
-
-_No findings._
-
-### `SyncModeReadyPreview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/SyncModeReadyPreview_Sync_ready-ce4e5f0a.a11y.png" width="400" />
-
-_No findings._
-
-### `SyncModeSyncingPreview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/SyncModeSyncingPreview_Sync_syncing-34770d66.a11y.png" width="400" />
 
 _No findings._
