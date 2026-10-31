@@ -1,5 +1,6 @@
 package ee.schimke.cadence.wear
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -45,22 +46,29 @@ import kotlinx.coroutines.launch
 @Composable
 fun WearCompanionApp(
   gateway: HeadsetGateway,
-  startPage: Int = 0,
+  showSettings: Boolean = false,
+  onDismissSettings: () -> Unit = {},
   modifier: Modifier = Modifier,
 ) {
   val snapshot by gateway.snapshot.collectAsState()
   val scope = rememberCoroutineScope()
   MaterialTheme {
     Box(modifier = modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
-      WearCompanionContent(
-        snapshot = snapshot,
-        startPage = startPage,
-        onAction = { action ->
-          if (gateway.isSupported(action.command)) {
-            scope.launch { gateway.execute(action) }
-          }
-        },
-      )
+      BackHandler(enabled = showSettings, onBack = onDismissSettings)
+      val onAction: (HeadsetAction) -> Unit = { action ->
+        if (gateway.isSupported(action.command)) {
+          scope.launch { gateway.execute(action) }
+        }
+      }
+      if (showSettings) {
+        DeviceSettingsScreen(
+          snapshot = snapshot,
+          modifier = Modifier.fillMaxSize(),
+          onAction = onAction,
+        )
+      } else {
+        WearCompanionContent(snapshot = snapshot, onAction = onAction)
+      }
     }
   }
 }
@@ -72,8 +80,8 @@ fun WearCompanionContent(
   modifier: Modifier = Modifier,
   onAction: (HeadsetAction) -> Unit = {},
 ) {
-  val pagerState = rememberPagerState(initialPage = startPage.coerceIn(0, 2), pageCount = { 3 })
-  LaunchedEffect(startPage) { pagerState.scrollToPage(startPage.coerceIn(0, 2)) }
+  val pagerState = rememberPagerState(initialPage = startPage.coerceIn(0, 1), pageCount = { 2 })
+  LaunchedEffect(startPage) { pagerState.scrollToPage(startPage.coerceIn(0, 1)) }
   AppScaffold(modifier = modifier.fillMaxSize()) {
     HorizontalPagerScaffold(pagerState = pagerState, modifier = Modifier.fillMaxSize()) {
       HorizontalPager(state = pagerState, modifier = Modifier.fillMaxSize()) { page ->
@@ -86,12 +94,6 @@ fun WearCompanionContent(
             )
           1 ->
             LocalAudioPlaylistScreen(
-              snapshot = snapshot,
-              modifier = Modifier.fillMaxSize(),
-              onAction = onAction,
-            )
-          else ->
-            DeviceSettingsScreen(
               snapshot = snapshot,
               modifier = Modifier.fillMaxSize(),
               onAction = onAction,

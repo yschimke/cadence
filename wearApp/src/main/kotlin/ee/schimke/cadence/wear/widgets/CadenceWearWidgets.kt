@@ -336,7 +336,7 @@ private fun settingsAction() = pendingIntentAction { context ->
     context,
     SettingsRequestCode,
     Intent(context, ee.schimke.cadence.wear.WearMainActivity::class.java)
-      .putExtra(ee.schimke.cadence.wear.WearMainActivity.ExtraStartPage, SettingsPage)
+      .putExtra(ee.schimke.cadence.wear.WearMainActivity.ExtraOpenSettings, true)
       .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP),
     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
   )
@@ -366,7 +366,6 @@ private enum class WidgetAction(val wireName: String) {
 private val widgetScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 private const val ExtraAction = "ee.schimke.cadence.wear.widgets.ACTION"
 private const val SettingsRequestCode = 100
-private const val SettingsPage = 2
 
 private object WidgetColors {
   val background = Color(0xFF17161E)

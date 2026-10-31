@@ -4,30 +4,34 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 
 class WearMainActivity : ComponentActivity() {
-  private var startPage by mutableIntStateOf(PlayerPage)
+  private var showSettings by mutableStateOf(false)
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    startPage = intent.startPage
-    setContent { WearCompanionApp(WearCompanionServices.gateway(applicationContext), startPage) }
+    showSettings = intent.openSettings
+    setContent {
+      WearCompanionApp(
+        gateway = WearCompanionServices.gateway(applicationContext),
+        showSettings = showSettings,
+        onDismissSettings = { showSettings = false },
+      )
+    }
   }
 
   override fun onNewIntent(intent: android.content.Intent) {
     super.onNewIntent(intent)
     setIntent(intent)
-    startPage = intent.startPage
+    showSettings = intent.openSettings
   }
 
-  private val android.content.Intent.startPage: Int
-    get() = getIntExtra(ExtraStartPage, PlayerPage).coerceIn(PlayerPage, SettingsPage)
+  private val android.content.Intent.openSettings: Boolean
+    get() = getBooleanExtra(ExtraOpenSettings, false)
 
   companion object {
-    const val ExtraStartPage = "ee.schimke.cadence.wear.START_PAGE"
-    const val PlayerPage = 0
-    const val SettingsPage = 2
+    const val ExtraOpenSettings = "ee.schimke.cadence.wear.OPEN_SETTINGS"
   }
 }
