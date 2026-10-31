@@ -1,6 +1,6 @@
 [versions]
 firebase-bom = "35.1.0"
-agp = "9.4.1"
+agp = "9.5.0"
 android-compileSdk = "37"
 android-minSdk = "34"
 android-targetSdk = "36"
