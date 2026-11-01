@@ -57,6 +57,7 @@ on:
       # visuals, the launcher and Wear widgets) only reached preview.coo.ee on
       # the next Monday cron or an unrelated dependency bump.
       - 'composeApp/src/**'
+      - 'branding/src/**'
       - 'swimUi/src/**'
       - 'wearApp/src/**'
       - 'shared/src/**'
