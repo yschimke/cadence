@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-01T14:42:01.965Z",
+  "generatedAt": "2026-11-01T15:15:08.677Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "c9bf69ad543fd68995d9bc4e6d0b04d294abc4fe",
+        "subject": "chore(main): release 0.1.11 (#474)",
+        "at": "2026-11-01T14:52:35Z",
+        "author": "github-actions[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "f649b8472287c92f8274b8384c4a97936fa3d384",
         "subject": "fix: keep swim cap hem visible (#475)",
@@ -475,14 +483,6 @@
         "subject": "fix(deps): update dependency io.ktor:ktor-client-core to v3.6.1 (#416)",
         "at": "2026-10-29T18:11:47Z",
         "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "e4c933dcd0664ad678b074e7d9cfcd9068a1cee2",
-        "subject": "chore(renovate): merge automerging PRs with GitHub native auto-merge (#414)",
-        "at": "2026-10-29T12:21:11Z",
-        "author": "Yuri Schimke",
         "previewIds": [],
         "components": []
       }
