@@ -50,11 +50,18 @@ jobs:
         run: echo "RENDER_STARTED=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_ENV"
 
       - id: apply
-        uses: yschimke/compose-ai-tools/.github/actions/apply@v2.80.0
+        uses: yschimke/compose-ai-tools/.github/actions/apply@v2.81.0
         with:
-          # Keep CLI and plugin aligned: 2.64.3 ships the 2.64.2 plugin, but
-          # the install action still probes for a plugin matching the CLI version.
-          cli-version: '2.64.2'
+          # Render the debug variant explicitly. AGP 9.5 turns unit tests off for release
+          # variants, and Compose Preview packages Android resources through the variant's
+          # unit-test APK, so a release render fails before it starts (compose-ai-tools #6382).
+          variant: debug
+          # The CLI the version catalog pins (composePreviewPlugin), the same one
+          # design-artifacts.yml publishes with. Renovate bumps that key, so the PR
+          # renders, the catalog and the audits can't drift onto different renderers
+          # the way the old literal 2.64.2 pin did.
+          cli-version: catalog
+          catalog-key: composePreviewPlugin
           # Don't hard-gate the render on a preview that produces no PNG.
           #
           # `composePreviewRenderAll` renders every @Preview in the module; a
