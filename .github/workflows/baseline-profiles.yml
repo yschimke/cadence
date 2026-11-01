@@ -69,6 +69,8 @@ jobs:
           api-level: 34
           target: ${{ matrix.target }}
           arch: x86_64
+          # Wear API 34 configures dex2oat to use CPUs 2 and 3.
+          cores: 4
           profile: ${{ matrix.profile }}
           emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -camera-back none
           disable-animations: true
