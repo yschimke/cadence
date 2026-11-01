@@ -156,7 +156,7 @@ jobs:
           pngs = []
           for p in d["previews"] if isinstance(d, dict) else d:
               for c in p.get("captures") or []:
-                  if c.get("pngPath", "").startswith(ws):
+                  if (c.get("pngPath") or "").startswith(ws):
                       c["pngPath"] = c["pngPath"][len(ws):]
                   if c.get("pngPath") and os.path.exists(c["pngPath"]):
                       pngs.append(c["pngPath"])
