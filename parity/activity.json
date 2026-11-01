@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-01T14:20:24.429Z",
+  "generatedAt": "2026-11-01T14:42:01.965Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "f649b8472287c92f8274b8384c4a97936fa3d384",
+        "subject": "fix: keep swim cap hem visible (#475)",
+        "at": "2026-11-01T14:18:48Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "b250abc97f373c72c2a70598d65b130ce516630e",
         "subject": "fix: use adaptive icons for phone and Wear (#473)",
@@ -474,14 +482,6 @@
         "sha": "e4c933dcd0664ad678b074e7d9cfcd9068a1cee2",
         "subject": "chore(renovate): merge automerging PRs with GitHub native auto-merge (#414)",
         "at": "2026-10-29T12:21:11Z",
-        "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "540accec53fc9a17e3948dade23bed5e245fb300",
-        "subject": "ci: report failed preview renders, add preview audit and on-request Claude review (#413)",
-        "at": "2026-10-29T09:20:24Z",
         "author": "Yuri Schimke",
         "previewIds": [],
         "components": []
