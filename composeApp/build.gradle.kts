@@ -50,6 +50,7 @@ val appVersionCode: Int = run {
 
 android {
   namespace = "ee.schimke.cadence"
+  sourceSets.getByName("main").res.directories.add(rootProject.file("branding/src/main/res").path)
   compileSdk = libs.versions.android.compileSdk.get().toInt()
 
   defaultConfig {

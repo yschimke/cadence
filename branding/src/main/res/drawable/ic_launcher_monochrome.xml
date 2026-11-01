@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Bluetooth sits centrally on the cap. -->
+    <path
+        android:strokeColor="#000000"
+        android:strokeWidth="4.5"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:fillColor="#00000000"
+        android:pathData="M51,34 L51,73 L66,60 L42,42 M42,66 L66,47 L51,34" />
+
+    <!-- A small original Cadence wordmark and tapered underline. -->
+    <path
+        android:strokeColor="#000000"
+        android:strokeWidth="0.8"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:fillColor="#00000000"
+        android:pathData="M63,68 L61,68 L61,71.5 L63,71.5 M64,71.5 L65.3,68 L66.6,71.5 M64.5,70.4 L66.1,70.4 M67.5,71.5 L67.5,68 L68.5,68 Q70,68 70,69.75 Q70,71.5 68.5,71.5 Z M73,68 L71,68 L71,71.5 L73,71.5 M71,69.75 L72.7,69.75 M74,71.5 L74,68 L76,71.5 L76,68 M79,68 L77,68 L77,71.5 L79,71.5 M82,68 L80,68 L80,71.5 L82,71.5 M80,69.75 L81.7,69.75" />
+    <path android:fillColor="#000000" android:pathData="M64,76 L79,73 L74,76 Z" />
+</vector>
