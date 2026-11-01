@@ -22,7 +22,7 @@ if (firebaseEnabled) {
   apply(plugin = "com.google.firebase.crashlytics")
 }
 
-val appVersionName = "0.1.9" // x-release-please-version
+val appVersionName = "0.1.11" // x-release-please-version
 
 // Google OAuth Android client id, baked into release builds. CI passes
 // `-PcadenceGoogleAndroidClientId=...` from GitHub secrets so end users don't configure anything.
@@ -50,6 +50,7 @@ val appVersionCode: Int = run {
 
 android {
   namespace = "ee.schimke.cadence"
+  sourceSets.getByName("main").res.directories.add(rootProject.file("branding/src/main/res").path)
   compileSdk = libs.versions.android.compileSdk.get().toInt()
 
   defaultConfig {
@@ -88,16 +89,6 @@ android {
         signingConfig = signingConfigs.getByName("release")
       }
     }
-  }
-}
-
-// AGP 9.5 defaults release-variant unit tests off, which breaks the compose-preview tooling
-// (Layoutlib packages Android XML resources via the unit-test APK). Re-enable them explicitly.
-// `enableUnitTest` lives on HasUnitTestBuilder; the cast keeps this compiling against AGP 9.4.x
-// (where the property is still implicit on ApplicationVariantBuilder) and 9.5+ (where it isn't).
-androidComponents {
-  beforeVariants(selector().withBuildType("release")) { variant ->
-    (variant as? com.android.build.api.variant.HasUnitTestBuilder)?.enableUnitTest = true
   }
 }
 

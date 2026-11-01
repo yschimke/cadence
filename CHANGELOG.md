@@ -1,5 +1,26 @@
 # Changelog
 
+## [0.1.11](https://github.com/yschimke/cadence/compare/v0.1.10...v0.1.11) (2026-11-01)
+
+
+### Bug Fixes
+
+* keep swim cap hem visible ([#475](https://github.com/yschimke/cadence/issues/475)) ([f649b84](https://github.com/yschimke/cadence/commit/f649b8472287c92f8274b8384c4a97936fa3d384))
+* use adaptive icons for phone and Wear ([#473](https://github.com/yschimke/cadence/issues/473)) ([b250abc](https://github.com/yschimke/cadence/commit/b250abc97f373c72c2a70598d65b130ce516630e))
+
+## [0.1.10](https://github.com/yschimke/cadence/compare/v0.1.9...v0.1.10) (2026-11-01)
+
+
+### Bug Fixes
+
+* **build:** enable release-variant unit tests on :swimUi and :wearApp too ([#465](https://github.com/yschimke/cadence/issues/465)) ([d7c4399](https://github.com/yschimke/cadence/commit/d7c43999ab61fcbffb05c2cb222181efb451c423))
+* **ci:** pin the design-artifacts CLI to a published plugin ([#462](https://github.com/yschimke/cadence/issues/462)) ([fcfee30](https://github.com/yschimke/cadence/commit/fcfee303c15cccb266a5254c57fd0af99c4d6e8d))
+* **deps:** update dependency ee.schimke.composeai:preview-annotations to v3.27.1 ([#467](https://github.com/yschimke/cadence/issues/467)) ([85e1ba4](https://github.com/yschimke/cadence/commit/85e1ba46ebc1b2cde8692abe5e659916074e22ee))
+* **deps:** update dependency ee.schimke.composeai:rc-widget-launcher to v2.22.0 ([#468](https://github.com/yschimke/cadence/issues/468)) ([5f827b5](https://github.com/yschimke/cadence/commit/5f827b5c3ad5459cac7f16a3d22ec73d60f99d07))
+* polish Bluetooth permission recovery ([#464](https://github.com/yschimke/cadence/issues/464)) ([d9a5f72](https://github.com/yschimke/cadence/commit/d9a5f726660307e2f9540fc8ef94ed56e3442911))
+* **previews:** give round Wear devices catalog breakpoints and render the debug variant everywhere ([#470](https://github.com/yschimke/cadence/issues/470)) ([46fc983](https://github.com/yschimke/cadence/commit/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f))
+* refresh permissions after settings return ([#459](https://github.com/yschimke/cadence/issues/459)) ([962ef09](https://github.com/yschimke/cadence/commit/962ef097b32f8e3f27fc8905c717b3e551cc2227))
+
 ## [0.1.9](https://github.com/yschimke/cadence/compare/v0.1.8...v0.1.9) (2026-10-31)
 
 

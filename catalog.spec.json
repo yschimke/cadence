@@ -8,7 +8,11 @@
   ],
   "module": "composeApp",
   "modes": ["light", "dark"],
-  "breakpoints": [{ "size": "compact", "widthDp": 412 }],
+  "breakpoints": [
+    { "size": "compact", "widthDp": 412 },
+    { "size": "smallRound", "device": "id:wearos_small_round" },
+    { "size": "largeRound", "device": "id:wearos_large_round" }
+  ],
   "completeness": {
     "exemptSemantics": ["*Activity", "composeApp/HeadphoneWidget*", "swimUi/*", "wearApp/*Widget*"]
   },
@@ -16,16 +20,6 @@
     {
       "name": "Foundation",
       "components": [
-        {
-          "componentId": "Theme/Cadence-Light",
-          "preview": "FoundationCadenceLightPreview",
-          "caption": "Cadence theme — colour roles, elevation and type (light)."
-        },
-        {
-          "componentId": "Theme/Cadence-Dark",
-          "preview": "FoundationCadenceDarkPreview",
-          "caption": "Cadence theme (dark)."
-        },
         {
           "componentId": "Theme/Material3-Light",
           "preview": "FoundationMaterial3LightPreview",
