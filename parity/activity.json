@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-01T19:36:58.980Z",
+  "generatedAt": "2026-11-01T19:52:30.069Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "410373ba2672bd3277d75e54cd9bd01e4b05fe7f",
+        "subject": "build: generate Android baseline profiles in CI (#481)",
+        "at": "2026-11-01T19:42:45Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "b455368ce08be2cfaa3747113a591abcd9da1aa1",
         "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.83.0 (#482)",
@@ -475,14 +483,6 @@
         "subject": "chore(main): release 0.1.6 (#412)",
         "at": "2026-10-30T07:18:02Z",
         "author": "github-actions[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "65c15e77ee3fe479689f2538400df91e1e67c54b",
-        "subject": "chore(deps): update anthropics/claude-code-action action to v1.0.265 (#420)",
-        "at": "2026-10-30T06:07:02Z",
-        "author": "renovate[bot]",
         "previewIds": [],
         "components": []
       }
