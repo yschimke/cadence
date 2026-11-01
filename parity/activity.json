@@ -1,11 +1,27 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-01T19:52:30.069Z",
+  "generatedAt": "2026-11-01T20:05:38.190Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "c455f76767082ba8cafec817e50315691856f6da",
+        "subject": "chore(deps): update agp to v9.5.0 (#409)",
+        "at": "2026-11-01T19:53:28Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "3edb2102a4fb7f3bdbbb0313ffdd8ff16a111ace",
+        "subject": "ci(previews): use compose-ai-tools' reusable audit and release-diff workflows (#483)",
+        "at": "2026-11-01T19:50:03Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "410373ba2672bd3277d75e54cd9bd01e4b05fe7f",
         "subject": "build: generate Android baseline profiles in CI (#481)",
@@ -467,22 +483,6 @@
         "subject": "fix(sync): require same mtime for skip + record sync success on Android (#423)",
         "at": "2026-10-30T09:10:11Z",
         "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "8744ed41ad1c82af1d582d17e4bf4c2bac958b34",
-        "subject": "feat(sync): daily-run UX sweep — skip-if-same + last-synced + Add folder (#421)",
-        "at": "2026-10-30T07:34:36Z",
-        "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "155c321a947cb809708aa683e698f50d34a05656",
-        "subject": "chore(main): release 0.1.6 (#412)",
-        "at": "2026-10-30T07:18:02Z",
-        "author": "github-actions[bot]",
         "previewIds": [],
         "components": []
       }
