@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-01T20:05:38.190Z",
+  "generatedAt": "2026-11-01T20:15:39.230Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "26b0a6399390db15975b9edd1229a57b36050cd6",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.84.0 (#484)",
+        "at": "2026-11-01T19:59:20Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "c455f76767082ba8cafec817e50315691856f6da",
         "subject": "chore(deps): update agp to v9.5.0 (#409)",
@@ -474,14 +482,6 @@
         "sha": "87a8e94746d2f0b13b1bca9f4b3c938e68453922",
         "subject": "feat(podcasts): sign in to Pocket Casts through the Wasmo (#426)",
         "at": "2026-10-30T09:26:55Z",
-        "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "d62924ec038db12b918e4bae5cbc6f3fbd8e4c0d",
-        "subject": "fix(sync): require same mtime for skip + record sync success on Android (#423)",
-        "at": "2026-10-30T09:10:11Z",
         "author": "Yuri Schimke",
         "previewIds": [],
         "components": []
