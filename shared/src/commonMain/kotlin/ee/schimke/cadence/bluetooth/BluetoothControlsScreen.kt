@@ -96,6 +96,7 @@ fun BluetoothControlsScreen(modifier: Modifier = Modifier) {
     onRewind = viewModel::rewind,
     onOpenSettings = viewModel::openSystemBluetoothSettings,
     onRequestBluetoothPermission = requestBluetoothPermission,
+    onOpenAppPermissionSettings = viewModel::openAppPermissionSettings,
     onRequestMediaAccess = viewModel::requestMediaAccess,
     onSelectWorkingMode = viewModel::selectWorkingMode,
     onSelectEqualizer = viewModel::selectEqualizer,
@@ -123,6 +124,7 @@ fun BluetoothControlsContent(
   onRewind: () -> Unit,
   onOpenSettings: () -> Unit,
   onRequestBluetoothPermission: () -> Unit = {},
+  onOpenAppPermissionSettings: () -> Unit = {},
   onRequestMediaAccess: () -> Unit,
   onSelectWorkingMode: (WorkingMode) -> Unit,
   onSelectEqualizer: (EqualizerPreset) -> Unit = {},
@@ -141,7 +143,7 @@ fun BluetoothControlsContent(
     ) {
       item { ConnectionCard(state, onOpenSettings, onRefresh) }
       if (state.permissionMissing) {
-        item { PermissionWarningCard(onRequestBluetoothPermission) }
+        item { PermissionWarningCard(onRequestBluetoothPermission, onOpenAppPermissionSettings) }
       }
       item { WorkingModeCard(state.workingMode, state.openSwimConnected, onSelectWorkingMode) }
       item { NowPlayingCard(state, onRequestMediaAccess) }
@@ -224,7 +226,10 @@ private fun ConnectionCard(
 }
 
 @Composable
-private fun PermissionWarningCard(onRequestBluetoothPermission: () -> Unit) {
+private fun PermissionWarningCard(
+  onRequestBluetoothPermission: () -> Unit,
+  onOpenAppPermissionSettings: () -> Unit,
+) {
   Card(
     modifier = Modifier.fillMaxWidth(),
     colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer),
@@ -233,6 +238,7 @@ private fun PermissionWarningCard(onRequestBluetoothPermission: () -> Unit) {
       Text("Bluetooth permission required", fontWeight = FontWeight.SemiBold)
       Text("Grant the BLUETOOTH_CONNECT permission to read connected device state.")
       OutlinedButton(onClick = onRequestBluetoothPermission) { Text("Allow Bluetooth access") }
+      TextButton(onClick = onOpenAppPermissionSettings) { Text("Open app permission settings") }
     }
   }
 }
@@ -256,8 +262,10 @@ private fun NowPlayingCard(state: BluetoothState, onRequestMediaAccess: () -> Un
             style = MaterialTheme.typography.bodyMedium,
           )
         !state.mediaAccessGranted -> {
-          Text("Media metadata is unavailable until notification access is granted.")
-          OutlinedButton(onClick = onRequestMediaAccess) { Text("Grant media access") }
+          Text(
+            "Media metadata needs notification access. Android will open its Notification access settings."
+          )
+          OutlinedButton(onClick = onRequestMediaAccess) { Text("Allow notification access") }
         }
         info == null -> Text("No active media session.")
         else -> {

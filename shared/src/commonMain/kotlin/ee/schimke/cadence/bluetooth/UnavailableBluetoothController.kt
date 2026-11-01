@@ -34,6 +34,8 @@ class UnavailableBluetoothController : BluetoothController {
 
   override fun openSystemBluetoothSettings() {}
 
+  override fun openAppPermissionSettings() {}
+
   override fun requestMediaAccess() {}
 
   override suspend fun setWorkingMode(mode: WorkingMode) =
