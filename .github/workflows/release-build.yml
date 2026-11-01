@@ -136,7 +136,7 @@ jobs:
           CADENCE_GOOGLE_ANDROID_CLIENT_ID: ${{ secrets.CADENCE_GOOGLE_ANDROID_CLIENT_ID }}
         run: |
           set -euo pipefail
-          args=(:composeApp:assembleRelease :composeApp:bundleRelease :shared:wasmoApp --stacktrace)
+          args=(:composeApp:assembleRelease :composeApp:bundleRelease :wearApp:bundleRelease :shared:wasmoApp --stacktrace)
           if [[ -n "${CADENCE_GOOGLE_ANDROID_CLIENT_ID:-}" ]]; then
             args+=("-PcadenceGoogleAndroidClientId=$CADENCE_GOOGLE_ANDROID_CLIENT_ID")
           fi
@@ -156,6 +156,15 @@ jobs:
           CADENCE_KEY_ALIAS: ${{ secrets.CADENCE_KEY_ALIAS }}
           CADENCE_KEY_PASSWORD: ${{ secrets.CADENCE_KEY_PASSWORD }}
         run: ./gradlew :composeApp:publishReleaseBundle --stacktrace
+
+      - name: Publish Wear to Play (internal track)
+        if: env.PUBLISH_PLAY == 'true'
+        env:
+          ANDROID_PUBLISHER_CREDENTIALS: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+          CADENCE_KEYSTORE_PASSWORD: ${{ secrets.CADENCE_KEYSTORE_PASSWORD }}
+          CADENCE_KEY_ALIAS: ${{ secrets.CADENCE_KEY_ALIAS }}
+          CADENCE_KEY_PASSWORD: ${{ secrets.CADENCE_KEY_PASSWORD }}
+        run: ./gradlew :wearApp:publishReleaseBundle --stacktrace
 
       - name: Publish store listing to Play
         if: env.PUBLISH_PLAY == 'true' && env.PUBLISH_LISTING == 'true'
@@ -201,6 +210,9 @@ jobs:
           done
           for f in composeApp/build/outputs/bundle/release/*.aab; do
             cp "$f" "_release/cadence-${version}.aab"
+          done
+          for f in wearApp/build/outputs/bundle/release/*.aab; do
+            cp "$f" "_release/cadence-wear-${version}.aab"
           done
           # The browser build as an installable Wasmo app. Unversioned so
           # releases/latest/download/cadence.wasmo is a stable install URL;
