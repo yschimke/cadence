@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-01T13:31:22.662Z",
+  "generatedAt": "2026-11-01T14:20:24.429Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "b250abc97f373c72c2a70598d65b130ce516630e",
+        "subject": "fix: use adaptive icons for phone and Wear (#473)",
+        "at": "2026-11-01T14:06:49Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "f1b248da8cbfb66fd6a2bd2cebe8a251ec64a1db",
         "subject": "chore(main): release 0.1.10 (#460)",
@@ -474,14 +482,6 @@
         "sha": "540accec53fc9a17e3948dade23bed5e245fb300",
         "subject": "ci: report failed preview renders, add preview audit and on-request Claude review (#413)",
         "at": "2026-10-29T09:20:24Z",
-        "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "18ec4a31d834d719912a64f919b98573362720fb",
-        "subject": "feat: drop platform notice and hide Bluetooth where unsupported (#410)",
-        "at": "2026-10-29T07:10:11Z",
         "author": "Yuri Schimke",
         "previewIds": [],
         "components": []
