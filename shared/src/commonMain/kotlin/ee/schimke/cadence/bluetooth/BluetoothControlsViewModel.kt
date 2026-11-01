@@ -54,6 +54,8 @@ class BluetoothControlsViewModel(private val controller: BluetoothController) : 
 
   fun openSystemBluetoothSettings() = controller.openSystemBluetoothSettings()
 
+  fun openAppPermissionSettings() = controller.openAppPermissionSettings()
+
   fun requestMediaAccess() = controller.requestMediaAccess()
 
   fun selectWorkingMode(mode: WorkingMode) {

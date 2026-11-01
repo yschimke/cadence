@@ -36,6 +36,9 @@ interface BluetoothController {
 
   fun openSystemBluetoothSettings()
 
+  /** Opens Cadence's app details page, where a previously denied permission can be enabled. */
+  fun openAppPermissionSettings()
+
   fun requestMediaAccess()
 
   /**

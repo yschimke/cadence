@@ -17,6 +17,7 @@ import android.media.AudioManager
 import android.media.MediaMetadata
 import android.media.session.MediaSessionManager
 import android.media.session.PlaybackState
+import android.net.Uri
 import android.os.Build
 import android.os.SystemClock
 import android.provider.Settings
@@ -196,6 +197,16 @@ class AndroidBluetoothController(
 
     override fun openSystemBluetoothSettings() {
         val intent = Intent(Settings.ACTION_BLUETOOTH_SETTINGS).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        runCatching { applicationContext.startActivity(intent) }
+    }
+
+    override fun openAppPermissionSettings() {
+        val intent = Intent(
+            Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+            Uri.fromParts("package", applicationContext.packageName, null),
+        ).apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
         runCatching { applicationContext.startActivity(intent) }
