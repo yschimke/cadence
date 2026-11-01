@@ -5,6 +5,69 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.*
 
 class PodcastTest {
+  @Test
+  fun automaticMatchRequiresOneCompatibleHeadsetAndVolumeAndRespectsRemoval() {
+    assertEquals("a", automaticHeadphoneCandidate(true, 1, listOf("a"), false))
+    assertNull(automaticHeadphoneCandidate(false, 1, listOf("a"), false))
+    assertNull(automaticHeadphoneCandidate(true, 2, listOf("a"), false))
+    assertNull(automaticHeadphoneCandidate(true, 1, listOf("a", "b"), false))
+    assertNull(automaticHeadphoneCandidate(true, 1, listOf("a"), true))
+  }
+
+  @Test
+  fun scrubPositionClampsAndPreservesTheExactEpisodeEnd() {
+    assertEquals(0, scrubPosition(-1f, 60_501))
+    assertEquals(30_000, scrubPosition(.5f, 60_501))
+    assertEquals(60_501, scrubPosition(1f, 60_501))
+    assertEquals(60_501, scrubPosition(2f, 60_501))
+    assertFailsWith<IllegalArgumentException> { scrubPosition(Float.NaN, 60_501) }
+  }
+
+  @Test
+  fun batteryIdentityHonorsTheChosenUsbMatch() {
+    assertEquals("chosen", batteryHeadphoneAddress("chosen", "other", "previous"))
+    assertEquals("current", batteryHeadphoneAddress(null, "current", "previous"))
+    assertEquals("previous", batteryHeadphoneAddress(null, null, "previous"))
+    assertNull(batteryHeadphoneAddress(null, null, null))
+  }
+
+  @Test
+  fun podcastTrimChangesBoundariesAndAdvancesOnlyAfterMarking() {
+    val episode =
+      Episode(
+        "rss",
+        "id",
+        "Example",
+        "https://example.com/audio.mp3",
+        600_000,
+        revision = "r1",
+        audioVersion = "v1",
+        podcastId = "feed:example",
+      )
+    val library = PodcastLibrary(podcastTrims = mapOf("feed:example" to PodcastTrim(30, 20)))
+    val config = library.configFor(episode)
+    val sections = segment(episode, config)
+    assertEquals(30_000L, sections.first().startMs)
+    assertEquals(580_000L, sections.last().endMs)
+    assertNotEquals(segment(episode, Segmentation()).first().id, sections.first().id)
+    assertEquals(0L, advancedPosition(episode, emptyList(), config))
+    val section = sections.single()
+    val completion =
+      Completion(
+        section.id,
+        episode.revision,
+        episode.key,
+        episode.audioVersion,
+        section.startMs,
+        section.endMs,
+      )
+    assertEquals(600_000L, advancedPosition(episode, listOf(completion), config))
+    assertEquals(Segmentation(), library.configFor(episode.copy(podcastId = "other")))
+    assertTrue(
+      segment(episode.copy(positionMs = 590_000), config.copy(skipListened = true)).isEmpty()
+    )
+  }
+
   private val episode =
     Episode(
       "fixture",
@@ -148,6 +211,32 @@ class PodcastTest {
     restored.setTarget("fixture-device")
     assertFailsWith<PodcastProblem> { restored.copyToDevice() }
     assertFalse(platform.exported)
+  }
+
+  @Test
+  fun episodePositionIsOneCorrectablePointAndSurvivesReload() = runBlocking {
+    val platform = FakePlatform()
+    val controller = PodcastController(platform)
+    controller.importSnapshot(
+      podcastJson.encodeToString(PlaylistSnapshot(name = "Wanted", episodes = listOf(episode)))
+    )
+    controller.prepare()
+    val section = controller.state.value.library.manifests.single().sections.last()
+    controller.markPlayed(section)
+    assertEquals(episode.durationMs, episodePosition(episode, controller.state.value.library))
+    controller.setEpisodePosition(episode.key, 600_000)
+    assertEquals(600_000, episodePosition(episode, controller.state.value.library))
+    val restored = PodcastController(platform)
+    restored.load()
+    assertEquals(600_000, episodePosition(episode, restored.state.value.library))
+    assertEquals(
+      episode.positionMs,
+      episodePosition(episode.copy(revision = "new"), restored.state.value.library),
+    )
+    assertFailsWith<IllegalArgumentException> {
+      restored.setEpisodePosition(episode.key, episode.durationMs + 1)
+    }
+    Unit
   }
 
   @Test
@@ -295,6 +384,26 @@ class PodcastTest {
   }
 
   @Test
+  fun exportFoldersGroupEpisodesByShowWithoutExposingSourceIds() {
+    val first =
+      episode.copy(podcastId = "https://example.com/feed?secret=1", podcastTitle = "Show / One")
+    val second = first.copy(id = "episode-2", title = "Second")
+    val other = first.copy(id = "episode-3", podcastId = "other")
+    val config = Segmentation(false)
+    val episodes = listOf(first, second, other)
+    val manifests = episodes.map { Manifest(it, config, segment(it, config)) }
+    val device = deviceManifest(PodcastLibrary(manifests = manifests))
+    val folders =
+      podcastExportFolders(manifests.flatMap { it.sections }, podcastJson.encodeToString(device))
+    assertEquals(device.episodes[0].folder, device.episodes[1].folder)
+    assertNotEquals(device.episodes[0].folder, device.episodes[2].folder)
+    assertTrue(folders.values.all { it.matches(Regex("[A-Za-z0-9_-]{1,50}")) })
+    assertFalse(podcastJson.encodeToString(device).contains("secret=1"))
+    assertEquals(first.durationMs, device.episodes[0].durationMs)
+    assertEquals("Show / One", device.episodes[0].podcastTitle)
+  }
+
+  @Test
   fun savedSettingsAreMatchedToWhatThePlatformCanPrepare() = runBlocking {
     val stored =
       podcastJson.encodeToString(
@@ -324,6 +433,66 @@ class PodcastTest {
     assertFalse(web.state.value.library.config.splitAtPosition)
   }
 
+  @Test
+  fun widgetDistinguishesLastCopyFromNextPreparation() {
+    val config = Segmentation(skipListened = true)
+    val manifest = Manifest(episode, config, segment(episode, config))
+    val library =
+      PodcastLibrary(
+        playlist = PlaylistSnapshot(name = "Test", episodes = listOf(episode)),
+        config = config,
+        manifests = listOf(manifest),
+      )
+    val state =
+      LocalPodcastState(
+        library = library,
+        readySectionIds = manifest.sections.map { it.id }.toSet(),
+        lastCopied = deviceManifest(library),
+      )
+    assertEquals("Last copy: 1 eps · 30m · 0 marked", podcastWidgetSummary(state).copied)
+    assertEquals("Ready: 1 eps · 30m", podcastWidgetSummary(state).available)
+    assertEquals("Last copy: unknown", podcastWidgetSummary(state.copy(lastCopied = null)).copied)
+    assertEquals(
+      "To prepare: 1 eps · 30m",
+      podcastWidgetSummary(state.copy(readySectionIds = emptySet())).available,
+    )
+  }
+
+  @Test
+  fun pocketCastsSendsOnlyMarkedContiguousProgressAndRejectsConflicts() = runBlocking {
+    val platform = FakePlatform()
+    val source =
+      episode.copy(backend = "pocket-casts", id = "ep-1", revision = "pocketcasts:1800000")
+    val config = Segmentation()
+    val manifest = Manifest(source, config, segment(source, config))
+    val controller = PodcastController(platform)
+    controller.state.value =
+      LocalPodcastState(
+        library =
+          PodcastLibrary(
+            playlist = PlaylistSnapshot(name = "Test", episodes = listOf(source)),
+            manifests = listOf(manifest),
+          ),
+        pocketCasts = PocketCastsSession(accessToken = "fixture", expiresAtMs = Long.MAX_VALUE),
+      )
+    platform.pocketEpisode =
+      """{"uuid":"ep-1","podcastUuid":"pod-1","playedUpTo":1800,"playingStatus":2}"""
+    assertFailsWith<PodcastProblem> { controller.sendPosition(source.key) }
+    assertNull(platform.pocketWrite)
+    controller.markPlayed(manifest.sections.last())
+    controller.sendPosition(source.key)
+    val sent = kotlinx.serialization.json.Json.parseToJsonElement(platform.pocketWrite!!).jsonObject
+    assertEquals("ep-1", sent["uuid"]?.jsonPrimitive?.content)
+    assertEquals("pod-1", sent["podcast"]?.jsonPrimitive?.content)
+    assertEquals("3600", sent["position"]?.jsonPrimitive?.content)
+    assertEquals("3", sent["status"]?.jsonPrimitive?.content)
+    platform.pocketWrite = null
+    platform.pocketEpisode =
+      """{"uuid":"ep-1","podcastUuid":"pod-1","playedUpTo":2000,"playingStatus":2}"""
+    assertFailsWith<PodcastProblem> { controller.sendPosition(source.key) }
+    assertNull(platform.pocketWrite)
+  }
+
   private class FakePlatform(override val splitFormats: Set<String> = setOf("mp3", "m4a")) :
     PodcastPlatform {
     override val description = "Fixture"
@@ -334,6 +503,8 @@ class PodcastTest {
     var lastPush = ""
     var remoteDocument: CloudDocument? = null
     var feed: RssFeed? = null
+    var pocketEpisode: String? = null
+    var pocketWrite: String? = null
     val files = mutableSetOf<String>()
 
     override suspend fun readState() = saved
@@ -362,6 +533,11 @@ class PodcastTest {
       body: String?,
     ): String =
       when {
+        url.endsWith("/user/episode") && pocketEpisode != null -> pocketEpisode!!
+        url.endsWith("/sync/update_episode") -> {
+          pocketWrite = body
+          "{}"
+        }
         url.contains("/auth/") ->
           """{"access_token":"fixture-token","user":{"id":"fixture-user"}}"""
         url.endsWith("cadence_put") -> {

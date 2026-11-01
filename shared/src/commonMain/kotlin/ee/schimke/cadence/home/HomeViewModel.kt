@@ -12,6 +12,7 @@ import dev.zacsweers.metro.Inject
 import ee.schimke.cadence.UseAppStateTransform
 import ee.schimke.cadence.bluetooth.BluetoothController
 import ee.schimke.cadence.bluetooth.BluetoothState
+import ee.schimke.cadence.bluetooth.WorkingMode
 import ee.schimke.cadence.datastore.proto.SyncPreferences
 import ee.schimke.cadence.datastore.proto.SyncProfile
 import ee.schimke.cadence.datastore.proto.SyncSource
@@ -168,6 +169,16 @@ class HomeViewModel(
   fun refreshNow(profileId: String) {
     refreshScheduler.runNow(profileId)
   }
+
+  fun previousTrack() = bluetoothController.previous()
+
+  fun playPause() = bluetoothController.playPause()
+
+  suspend fun switchToBluetoothAudio(): Boolean =
+    bluetoothController.setWorkingMode(WorkingMode.Bluetooth) ==
+      "OpenSwim Pro switched to Bluetooth Mode"
+
+  fun nextTrack() = bluetoothController.next()
 
   fun openSuggestion(suggestion: SourceSuggestion) {
     suggestionsProvider.open(suggestion)

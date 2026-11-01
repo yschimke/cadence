@@ -212,7 +212,7 @@ private fun ConnectionCard(
           }
         }
         if (device.batteryPercent != null) {
-          Text("Battery: ${device.batteryPercent}%")
+          Text(device.batterySummary().orEmpty())
         }
         if (device.codec != null) {
           Text("Codec: ${device.codec}")
@@ -361,7 +361,12 @@ private fun VolumeCard(
   ElevatedCard(modifier = Modifier.fillMaxWidth()) {
     Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
       if (state.localAudioControls) {
-        HeadsetVolume(state.headsetVolumePercent, onSetVolume, onAdjustVolume)
+        HeadsetVolume(
+          state.headsetVolumePercent,
+          state.headsetVolumeError,
+          onSetVolume,
+          onAdjustVolume,
+        )
         return@Column
       }
       Row(verticalAlignment = Alignment.CenterVertically) {
@@ -401,16 +406,19 @@ private fun VolumeCard(
 
 /**
  * Headset (MP3 mode) volume. Each write opens a vendor channel, so the slider commits on release
- * rather than on every drag step. The level shown is the last one the headset acknowledged.
+ * rather than on every drag step. A pending level stays visible while the command is sent.
  */
 @Composable
 private fun HeadsetVolume(
   acknowledged: Int?,
+  failed: Boolean,
   onSetVolume: (Int) -> Unit,
   onAdjustVolume: (Int) -> Unit,
 ) {
   var dragging by remember { mutableStateOf<Float?>(null) }
-  val shown = dragging ?: (acknowledged ?: 50).toFloat()
+  var pending by remember { mutableStateOf<Int?>(null) }
+  LaunchedEffect(acknowledged, failed) { if (failed || acknowledged == pending) pending = null }
+  val shown = dragging ?: (pending ?: acknowledged ?: 50).toFloat()
   Row(verticalAlignment = Alignment.CenterVertically) {
     Text(
       "Headphone volume",
@@ -419,13 +427,19 @@ private fun HeadsetVolume(
       fontWeight = FontWeight.SemiBold,
     )
     Spacer(Modifier.weight(1f))
-    Text(if (acknowledged == null && dragging == null) "Not set" else "${shown.toInt()}%")
+    Text(
+      if (acknowledged == null && dragging == null && pending == null) "Not set"
+      else "${shown.toInt()}%"
+    )
   }
   Slider(
     value = shown,
     onValueChange = { dragging = it },
     onValueChangeFinished = {
-      dragging?.let { onSetVolume(it.toInt()) }
+      dragging?.let {
+        pending = it.toInt()
+        onSetVolume(it.toInt())
+      }
       dragging = null
     },
     valueRange = 0f..100f,
@@ -439,7 +453,8 @@ private fun HeadsetVolume(
     }
   }
   Text(
-    "Sets the volume of MP3 playback on the headphones.",
+    if (failed) "Couldn't set headphone volume. Try again."
+    else "Sets the volume of MP3 playback on the headphones.",
     style = MaterialTheme.typography.bodySmall,
     color = MaterialTheme.colorScheme.onSurfaceVariant,
   )

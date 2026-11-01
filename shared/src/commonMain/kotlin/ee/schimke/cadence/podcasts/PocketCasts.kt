@@ -84,6 +84,10 @@ data class PocketCastsEpisode(
   val playedUpToSeconds: Double,
   val fileType: String,
   val archived: Boolean,
+  val podcastUuid: String = "",
+  val playingStatus: Int = 0,
+  val podcastTitle: String = "",
+  val published: String = "",
 )
 
 private fun JsonElement?.objects() = (this as? JsonArray).orEmpty().mapNotNull { it as? JsonObject }
@@ -119,6 +123,10 @@ fun pocketCastsEpisode(node: JsonObject) =
     node.number("playedUpTo"),
     node.text("fileType"),
     node.flag("isDeleted"),
+    node.text("podcastUuid"),
+    node.number("playingStatus").toInt(),
+    node.text("podcastTitle"),
+    node.text("published"),
   )
 
 /** `/user/episode` returns one episode; `/user/in_progress` a list under `episodes`. */
@@ -202,6 +210,10 @@ fun pocketCastsSnapshot(
           "pocketcasts:$positionMs",
           digest("${episode.url}|$durationMs"),
           extension,
+          podcastId =
+            episode.podcastUuid.takeIf { it.isNotBlank() }?.let { "pocket-casts:$it" }.orEmpty(),
+          podcastTitle = episode.podcastTitle,
+          published = episode.published,
         )
       }
       .take(limit)
@@ -347,6 +359,23 @@ class PocketCastsApi(
   private val now: () -> Long,
   private val onSession: suspend (PocketCastsSession) -> Unit,
 ) : PocketCastsCalls() {
+  /**
+   * The official Android client sends this request; the service is not a public third-party API.
+   */
+  suspend fun sendPosition(uuid: String, podcast: String, positionMs: Long, durationMs: Long) {
+    call(
+      "/sync/update_episode",
+      body = buildJsonObject {
+          put("uuid", uuid)
+          put("podcast", podcast)
+          put("position", positionMs / 1000)
+          put("duration", durationMs / 1000)
+          put("status", if (positionMs >= durationMs) 3 else 2)
+        }
+          .toString(),
+    )
+  }
+
   private suspend fun send(path: String, method: String, body: String?) =
     platform.request(
       POCKET_CASTS_API + path,

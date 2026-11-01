@@ -134,6 +134,9 @@ class BrowserPodcastPlatform : PodcastPlatform {
           field("duration"),
           field("length"),
           field("type"),
+          field("summary"),
+          field("transcriptUrl"),
+          field("published"),
         )
       },
     )
@@ -157,12 +160,23 @@ class BrowserPodcastPlatform : PodcastPlatform {
       .boolean
 
   override suspend fun export(sections: List<Section>, target: String, manifest: String) {
+    val folders = podcastExportFolders(sections, manifest)
     browserCall(
       "podcastExport",
       buildJsonObject {
         put("target", target)
         put("manifest", manifest)
-        put("files", JsonArray(sections.map { JsonPrimitive(it.fileName) }))
+        put(
+          "files",
+          JsonArray(
+            sections.map { section ->
+              buildJsonObject {
+                put("name", section.fileName)
+                folders[section.fileName]?.let { put("folder", it) }
+              }
+            }
+          ),
+        )
       }
         .toString(),
     )

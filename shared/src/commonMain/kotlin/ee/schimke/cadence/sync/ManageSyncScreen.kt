@@ -58,7 +58,11 @@ import ee.schimke.cadence.datastore.proto.SyncSource
 import ee.schimke.cadence.metro.metroViewModel
 
 @Composable
-fun ManageSyncScreen(modifier: Modifier = Modifier) {
+fun ManageSyncScreen(
+  modifier: Modifier = Modifier,
+  onAddPodcasts: () -> Unit = {},
+  onCloudBackup: () -> Unit = {},
+) {
   val viewModel = metroViewModel<FileSyncViewModel>()
   val state by viewModel.collectState()
   val suggestions by viewModel.suggestions.collectAsState()
@@ -114,6 +118,8 @@ fun ManageSyncScreen(modifier: Modifier = Modifier) {
     onSelectTargetDevice = viewModel::selectTargetDevice,
     onSetAutoSync = viewModel::setAutoSync,
     onSetUsbMatch = viewModel::setUsbMatch,
+    onAddPodcasts = onAddPodcasts,
+    onCloudBackup = onCloudBackup,
   )
 }
 
@@ -132,12 +138,23 @@ fun ManageSyncContent(
   onSelectTargetDevice: (String) -> Unit,
   onSetAutoSync: (Boolean) -> Unit,
   onSetUsbMatch: (String) -> Unit,
+  onAddPodcasts: () -> Unit = {},
+  onCloudBackup: () -> Unit = {},
 ) {
   LazyColumn(
     modifier = modifier.fillMaxWidth().safeContentPadding(),
     contentPadding = PaddingValues(16.dp),
     verticalArrangement = Arrangement.spacedBy(12.dp),
   ) {
+    item {
+      Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Text("Manage sources", style = MaterialTheme.typography.headlineSmall)
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+          OutlinedButton(onClick = onAddPodcasts) { Text("Add podcasts") }
+          TextButton(onClick = onCloudBackup) { Text("Cross-device backup") }
+        }
+      }
+    }
     item {
       TargetDeviceCard(
         state = state,

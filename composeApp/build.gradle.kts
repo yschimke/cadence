@@ -100,6 +100,7 @@ dependencies {
   }
 
   implementation(project(":shared"))
+  implementation(libs.media3.exoplayer)
   implementation(project(":rcsp"))
   implementation(project(":wearCompanionContract"))
   implementation(libs.kotlinx.coroutines.android)

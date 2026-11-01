@@ -20,6 +20,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
@@ -41,6 +42,8 @@ import kotlinx.serialization.Serializable
 fun App() {
   val navController = rememberNavController()
   val podcasts = rememberPodcastController()
+  val podcastState by podcasts.state.collectAsState()
+  if (podcastState.target.isNotBlank()) AutomaticallyMatchHeadphones(podcastState.target)
 
   val entry by navController.currentBackStackEntryAsState()
   Column(Modifier.fillMaxSize()) {
@@ -79,6 +82,7 @@ fun App() {
           onAddPodcasts = { navController.navigate(AddPodcasts) },
           onOpenPodcasts = { navController.navigate(Podcasts) },
           onCopyToHeadphones = { navController.navigate(FileSync) },
+          onCloudSync = { navController.navigate(CloudSync) },
           onBluetoothControls = { navController.navigate(BluetoothControls) },
           onManageSources = { navController.navigate(ManageSync) },
           onBookmarks = { navController.navigate(Bookmarks) },
@@ -88,6 +92,7 @@ fun App() {
       composable<Podcasts> {
         PodcastScreen(podcasts, onChangeSource = { navController.navigate(AddPodcasts) })
       }
+      composable<CloudSync> { CloudSyncScreen(podcasts) }
       composable<AddPodcasts> {
         AddPodcastsScreen(
           podcasts,
@@ -130,7 +135,9 @@ fun App() {
       }
       composable<ManageSync> {
         ManageSyncScreen(
-          modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize()
+          modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
+          onAddPodcasts = { navController.navigate(AddPodcasts) },
+          onCloudBackup = { navController.navigate(CloudSync) },
         )
       }
     }
@@ -154,5 +161,7 @@ fun App() {
 @Serializable data object ManageSync
 
 @Serializable data object Podcasts
+
+@Serializable data object CloudSync
 
 @Serializable data object AddPodcasts

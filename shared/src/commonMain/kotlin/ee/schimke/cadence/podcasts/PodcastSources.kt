@@ -81,6 +81,11 @@ suspend fun resolveProgress(
             remote.revision,
             digest(it.audioUrl + "|" + it.length),
             rssExtension(it.type),
+            podcastId = "feed:${remote.feedUrl}",
+            podcastTitle = feed.name,
+            summary = it.summary,
+            transcriptUrl = it.transcriptUrl,
+            published = it.published,
           )
           .also(Episode::validate)
       }

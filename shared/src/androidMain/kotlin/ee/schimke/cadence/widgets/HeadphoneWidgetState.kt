@@ -2,9 +2,10 @@ package ee.schimke.cadence.widgets
 
 import ee.schimke.cadence.bluetooth.BluetoothState
 import ee.schimke.cadence.bluetooth.WorkingMode
+import ee.schimke.cadence.bluetooth.batterySummary
 
 /** Controls a headphone widget can fire; [wireName] is the host-action payload. */
-internal enum class HeadphoneWidgetAction(val wireName: String, val label: String) {
+enum class HeadphoneWidgetAction(val wireName: String, val label: String) {
   Previous("previous", "Previous"),
   Play("play", "Play"),
   Pause("pause", "Pause"),
@@ -36,7 +37,7 @@ internal enum class HeadphoneWidgetAction(val wireName: String, val label: Strin
  * media session is deliberately not shown as "now playing", the same rule the Wear widgets follow.
  * Playing/paused, EQ, playback order and volume are the last values the headset acknowledged.
  */
-internal data class HeadphoneWidgetState(
+data class HeadphoneWidgetState(
   val title: String,
   /** For narrow one-row slots: the same meaning in a word or two. */
   val shortTitle: String = title,
@@ -44,6 +45,7 @@ internal data class HeadphoneWidgetState(
   val extra: String?,
   val transport: List<HeadphoneWidgetAction>,
   val modeSwitch: HeadphoneWidgetAction?,
+  val showWater: Boolean = false,
 ) {
   companion object {
     fun from(bluetooth: BluetoothState): HeadphoneWidgetState {
@@ -61,7 +63,7 @@ internal data class HeadphoneWidgetState(
           modeSwitch = null,
         )
       }
-      val battery = device.batteryPercent?.let { "$it% battery" }
+      val battery = device.batterySummary()
       if (bluetooth.localAudioControls) {
         val (title, short) =
           when (bluetooth.headsetPlaying) {
@@ -76,6 +78,7 @@ internal data class HeadphoneWidgetState(
           extra = joined(eq(bluetooth), bluetooth.headsetVolumePercent?.let { "Volume $it%" }),
           transport = transport(playing = bluetooth.headsetPlaying == true),
           modeSwitch = HeadphoneWidgetAction.SwitchToBluetooth,
+          showWater = true,
         )
       }
       return HeadphoneWidgetState(
@@ -122,7 +125,7 @@ internal data class HeadphoneWidgetState(
  * play/pause first, then next, then previous, and the settings line and mode switch only appear
  * when there is room for them at full size.
  */
-internal data class HeadphoneWidgetLayout(
+data class HeadphoneWidgetLayout(
   val singleRow: Boolean,
   val showTitle: Boolean,
   val showDetail: Boolean,

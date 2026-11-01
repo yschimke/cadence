@@ -21,12 +21,22 @@ import okio.Path.Companion.toPath
 
 @Composable actual fun rememberPodcastPlatform(): PodcastPlatform {
   val context = LocalContext.current.applicationContext
-  return remember(context) { AndroidPodcastPlatform(context) }
+  return remember(context) { AndroidPodcastPlatform.instance(context) }
 }
 
 @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
 open class AndroidPodcastPlatform(private val context: Context) : FilePodcastPlatform(File(context.filesDir, "podcasts")) {
+  private val sharedController by lazy { PodcastController(this) }
+  override fun controller(): PodcastController = sharedController
+
+  companion object {
+    @Volatile private var singleton: AndroidPodcastPlatform? = null
+    fun instance(context: Context): AndroidPodcastPlatform = singleton ?: synchronized(this) {
+      singleton ?: AndroidPodcastPlatform(context.applicationContext).also { singleton = it }
+    }
+  }
   override val splitFormats = setOf("m4a")
+  fun originalForPlayback(episode: Episode): File? = source(episode).takeIf { it.isFile && it.length() > 0 }
   override val description = "Android: HTTPS downloads, Media3 AAC/M4A chunks and USB copying through the system document picker. The OS must expose the headphone volume. No raw USB block access. Keep the app open while syncing."
 
   override suspend fun rss(url: String) = parseAndroidRss(feedText(url))
@@ -34,12 +44,12 @@ open class AndroidPodcastPlatform(private val context: Context) : FilePodcastPla
   override suspend fun prepare(episode: Episode, sections: List<Section>) {
     val whole = sections.size == 1 && sections[0].startMs == 0L && sections[0].endMs == episode.durationMs
     if (sections.all { available(it) }) return
-    if (whole) { download(episode, audio(sections.single())); return }
+    if (whole) { copyWhole(episode, sections.single()); return }
     require(sections.all { it.fileName.endsWith(".m4a") })
-    val source = File(root, "source/${episode.key}-${digest(episode.audioVersion)}.${episode.extension}")
-    download(episode, source)
-    try {
+    val source = cachedSource(episode)
       for (section in sections) {
+        // A stopped preparation can resume without encoding completed chunks again.
+        if (available(section)) continue
         val output = audio(section)
         withContext(Dispatchers.IO) { output.parentFile!!.mkdirs() }
         val temp = File(output.parentFile, output.name + ".part.m4a")
@@ -48,7 +58,6 @@ open class AndroidPodcastPlatform(private val context: Context) : FilePodcastPla
           withContext(Dispatchers.IO) { require(temp.length() > 0); replacePodcastFile(temp, output) }
         } finally { withContext(kotlinx.coroutines.NonCancellable + Dispatchers.IO) { temp.delete() } }
       }
-    } finally { withContext(kotlinx.coroutines.NonCancellable + Dispatchers.IO) { source.delete() } }
   }
 
   // Transformer must be created, started and cancelled on the same application looper.
@@ -86,20 +95,46 @@ open class AndroidPodcastPlatform(private val context: Context) : FilePodcastPla
     } else {
       require(context.contentResolver.openInputStream(marker.uri)?.bufferedReader()?.use { it.readText() } == "cadence-podcasts-v1")
     }
-    fun write(name: String, mime: String, writer: (java.io.OutputStream) -> Unit) {
-      val targetFile = folder.findFile(name) ?: requireNotNull(folder.createFile(mime, name))
+    fun write(parent: DocumentFile, name: String, mime: String, writer: (java.io.OutputStream) -> Unit) {
+      val targetFile = parent.findFile(name) ?: requireNotNull(parent.createFile(mime, name))
       require(targetFile.isFile)
       requireNotNull(context.contentResolver.openOutputStream(targetFile.uri, "wt")).use(writer)
     }
     // SAF does not promise atomic replace. A failed copy is retryable and never marks readiness copied.
+    val folders = podcastExportFolders(sections, manifest)
+    val destinations = mutableMapOf<String, DocumentFile>()
     sections.forEach { section ->
-      write(section.fileName, if (section.fileName.endsWith(".mp3")) "audio/mpeg" else "application/octet-stream") { output -> audio(section).inputStream().use { it.copyTo(output) } }
+      val show = folders[section.fileName]
+      val destination = if (show == null) folder else destinations.getOrPut(show) {
+        val dir = directory(folder, show)
+        val owner = dir.findFile(".cadence-owner")
+        if (owner == null) {
+          require(dir.listFiles().isEmpty()) { "Existing podcast folder is not owned by Cadence" }
+          val created = requireNotNull(dir.createFile("application/octet-stream", ".cadence-owner"))
+          requireNotNull(context.contentResolver.openOutputStream(created.uri, "wt")).use { it.write("cadence-podcasts-v1".toByteArray()) }
+        } else {
+          require(context.contentResolver.openInputStream(owner.uri)?.bufferedReader()?.use { it.readText() } == "cadence-podcasts-v1")
+        }
+        dir
+      }
+      write(destination, section.fileName, if (section.fileName.endsWith(".mp3")) "audio/mpeg" else "application/octet-stream") { output -> audio(section).inputStream().use { it.copyTo(output) } }
     }
-    write("cadence-manifest.json", "application/json") { it.write(manifest.toByteArray()) }
+    write(folder, "cadence-manifest.json", "application/json") { it.write(manifest.toByteArray()) }
   }
 
-  override fun publishStatus(status: String, ready: Boolean) {
-    context.getSharedPreferences("podcast-widget", Context.MODE_PRIVATE).edit().putString("status", status).putBoolean("ready", ready).apply()
+  override suspend fun readDeviceManifest(target: String): DeviceManifest? = withContext(Dispatchers.IO) {
+    runCatching {
+      val root = DocumentFile.fromTreeUri(context, target.toPath().toUri()) ?: return@runCatching null
+      val file = root.findFile("Cadence")?.findFile("podcasts")?.findFile("cadence-manifest.json") ?: return@runCatching null
+      val json = context.contentResolver.openInputStream(file.uri)?.bufferedReader()?.use { it.readText() } ?: return@runCatching null
+      podcastJson.decodeFromString<DeviceManifest>(json).takeIf { it.schema == 1 }
+    }.getOrNull()
+  }
+
+  override fun publishStatus(status: String, state: LocalPodcastState) {
+    val summary = podcastWidgetSummary(state)
+    context.getSharedPreferences("podcast-widget", Context.MODE_PRIVATE).edit().putString("status", status).putBoolean("ready", state.readyForDevice()).putString("copied", summary.copied).putString("available", summary.available).putString("target", state.target).apply()
     PodcastSyncWidget.updateAll(context)
+    CloudSyncWidget.publish(context, state, sharedController.canRefresh, sharedController.busy.value, status)
   }
 }
