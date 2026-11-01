@@ -4,181 +4,1843 @@
   "label": "Compose",
   "source": {
     "repo": "yschimke/cadence",
-    "ref": "fed18d8099e2fe3b79b604d151e0c955e352f0a8",
-    "module": ":composeApp"
+    "ref": "46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f"
   },
-  "generatedAt": "2026-10-11T16:48:23.916Z",
+  "generatedAt": "2026-11-01T12:42:30.189Z",
   "mappings": [
-    {
-      "componentId": "Theme/Cadence-Light",
-      "figmaLayerName": "Theme/Cadence-Light",
-      "componentName": "FoundationCadenceLightPreview",
-      "source": "https://github.com/yschimke/cadence/blob/fed18d8099e2fe3b79b604d151e0c955e352f0a8/composeApp/src/main/kotlin/ee/schimke/cadence/preview/FoundationPreviews.kt",
-      "label": "Compose",
-      "confidence": "preview-fallback",
-      "previewName": "FoundationCadenceLightPreview"
-    },
-    {
-      "componentId": "Theme/Cadence-Dark",
-      "figmaLayerName": "Theme/Cadence-Dark",
-      "componentName": "FoundationCadenceDarkPreview",
-      "source": "https://github.com/yschimke/cadence/blob/fed18d8099e2fe3b79b604d151e0c955e352f0a8/composeApp/src/main/kotlin/ee/schimke/cadence/preview/FoundationPreviews.kt",
-      "label": "Compose",
-      "confidence": "preview-fallback",
-      "previewName": "FoundationCadenceDarkPreview"
-    },
     {
       "componentId": "Theme/Material3-Light",
       "figmaLayerName": "Theme/Material3-Light",
       "componentName": "FoundationMaterial3LightPreview",
-      "source": "https://github.com/yschimke/cadence/blob/fed18d8099e2fe3b79b604d151e0c955e352f0a8/composeApp/src/main/kotlin/ee/schimke/cadence/preview/FoundationPreviews.kt",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/preview/FoundationPreviews.kt",
       "label": "Compose",
       "confidence": "preview-fallback",
-      "previewName": "FoundationMaterial3LightPreview"
+      "previewName": "FoundationMaterial3LightPreview",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/theme-material3-light__ideal__default__light.svg"
     },
     {
       "componentId": "Theme/Material3-Dark",
       "figmaLayerName": "Theme/Material3-Dark",
       "componentName": "FoundationMaterial3DarkPreview",
-      "source": "https://github.com/yschimke/cadence/blob/fed18d8099e2fe3b79b604d151e0c955e352f0a8/composeApp/src/main/kotlin/ee/schimke/cadence/preview/FoundationPreviews.kt",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/preview/FoundationPreviews.kt",
       "label": "Compose",
       "confidence": "preview-fallback",
-      "previewName": "FoundationMaterial3DarkPreview"
+      "previewName": "FoundationMaterial3DarkPreview",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/theme-material3-dark__ideal__default__dark.svg"
     },
     {
       "componentId": "Home/Empty",
       "figmaLayerName": "Home/Empty",
       "componentName": "HomeEmptyPreview",
-      "source": "https://github.com/yschimke/cadence/blob/fed18d8099e2fe3b79b604d151e0c955e352f0a8/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "label": "Compose",
       "confidence": "preview-fallback",
-      "previewName": "HomeEmptyPreview"
+      "previewName": "HomeEmptyPreview",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/home-empty__ideal__default.svg"
     },
     {
       "componentId": "Devices/Loaded",
       "figmaLayerName": "Devices/Loaded",
       "componentName": "DevicesScreenLoadedPreview",
-      "source": "https://github.com/yschimke/cadence/blob/fed18d8099e2fe3b79b604d151e0c955e352f0a8/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "label": "Compose",
       "confidence": "preview-fallback",
-      "previewName": "DevicesScreenLoadedPreview"
+      "previewName": "DevicesScreenLoadedPreview",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/devices-loaded__ideal__default.svg"
     },
     {
       "componentId": "Devices/Loading",
       "figmaLayerName": "Devices/Loading",
       "componentName": "DevicesScreenLoadingPreview",
-      "source": "https://github.com/yschimke/cadence/blob/fed18d8099e2fe3b79b604d151e0c955e352f0a8/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "label": "Compose",
       "confidence": "preview-fallback",
-      "previewName": "DevicesScreenLoadingPreview"
+      "previewName": "DevicesScreenLoadingPreview",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/devices-loading__ideal__default.svg"
     },
     {
       "componentId": "Devices/Empty",
       "figmaLayerName": "Devices/Empty",
       "componentName": "DevicesScreenEmptyPreview",
-      "source": "https://github.com/yschimke/cadence/blob/fed18d8099e2fe3b79b604d151e0c955e352f0a8/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "label": "Compose",
       "confidence": "preview-fallback",
-      "previewName": "DevicesScreenEmptyPreview"
+      "previewName": "DevicesScreenEmptyPreview",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/devices-empty__ideal__default.svg"
     },
     {
       "componentId": "Bookmarks/Loaded",
       "figmaLayerName": "Bookmarks/Loaded",
       "componentName": "BookmarksScreenLoadedPreview",
-      "source": "https://github.com/yschimke/cadence/blob/fed18d8099e2fe3b79b604d151e0c955e352f0a8/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "label": "Compose",
       "confidence": "preview-fallback",
-      "previewName": "BookmarksScreenLoadedPreview"
+      "previewName": "BookmarksScreenLoadedPreview",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/bookmarks-loaded__ideal__default.svg"
     },
     {
       "componentId": "Bookmarks/Loading",
       "figmaLayerName": "Bookmarks/Loading",
       "componentName": "BookmarksScreenLoadingPreview",
-      "source": "https://github.com/yschimke/cadence/blob/fed18d8099e2fe3b79b604d151e0c955e352f0a8/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "label": "Compose",
       "confidence": "preview-fallback",
-      "previewName": "BookmarksScreenLoadingPreview"
+      "previewName": "BookmarksScreenLoadingPreview",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/bookmarks-loading__ideal__default.svg"
     },
     {
       "componentId": "DeviceFiles/Loading",
       "figmaLayerName": "DeviceFiles/Loading",
       "componentName": "DeviceFilesLoadingPreview",
-      "source": "https://github.com/yschimke/cadence/blob/fed18d8099e2fe3b79b604d151e0c955e352f0a8/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "label": "Compose",
       "confidence": "preview-fallback",
-      "previewName": "DeviceFilesLoadingPreview"
+      "previewName": "DeviceFilesLoadingPreview",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/devicefiles-loading__ideal__default.svg"
     },
     {
       "componentId": "DeviceFiles/NotAvailable",
       "figmaLayerName": "DeviceFiles/NotAvailable",
       "componentName": "DeviceFilesNotAvailablePreview",
-      "source": "https://github.com/yschimke/cadence/blob/fed18d8099e2fe3b79b604d151e0c955e352f0a8/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "label": "Compose",
       "confidence": "preview-fallback",
-      "previewName": "DeviceFilesNotAvailablePreview"
+      "previewName": "DeviceFilesNotAvailablePreview",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/devicefiles-notavailable__ideal__default.svg"
     },
     {
       "componentId": "Bluetooth/Disconnected",
       "figmaLayerName": "Bluetooth/Disconnected",
       "componentName": "BluetoothDisconnectedPreview",
-      "source": "https://github.com/yschimke/cadence/blob/fed18d8099e2fe3b79b604d151e0c955e352f0a8/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "label": "Compose",
       "confidence": "preview-fallback",
-      "previewName": "BluetoothDisconnectedPreview"
+      "previewName": "BluetoothDisconnectedPreview",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/bluetooth-disconnected__ideal__default.svg"
     },
     {
       "componentId": "Bluetooth/ConnectedPlaying",
       "figmaLayerName": "Bluetooth/ConnectedPlaying",
       "componentName": "BluetoothConnectedPlayingPreview",
-      "source": "https://github.com/yschimke/cadence/blob/fed18d8099e2fe3b79b604d151e0c955e352f0a8/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "label": "Compose",
       "confidence": "preview-fallback",
-      "previewName": "BluetoothConnectedPlayingPreview"
+      "previewName": "BluetoothConnectedPlayingPreview",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/bluetooth-connectedplaying__ideal__default.svg"
     },
     {
       "componentId": "Bluetooth/PermissionMissing",
       "figmaLayerName": "Bluetooth/PermissionMissing",
       "componentName": "BluetoothPermissionMissingPreview",
-      "source": "https://github.com/yschimke/cadence/blob/fed18d8099e2fe3b79b604d151e0c955e352f0a8/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "label": "Compose",
       "confidence": "preview-fallback",
-      "previewName": "BluetoothPermissionMissingPreview"
+      "previewName": "BluetoothPermissionMissingPreview",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/bluetooth-permissionmissing__ideal__default.svg"
     },
     {
       "componentId": "Bluetooth/Mp3Mode",
       "figmaLayerName": "Bluetooth/Mp3Mode",
       "componentName": "BluetoothMp3ModePreview",
-      "source": "https://github.com/yschimke/cadence/blob/fed18d8099e2fe3b79b604d151e0c955e352f0a8/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "label": "Compose",
       "confidence": "preview-fallback",
-      "previewName": "BluetoothMp3ModePreview"
+      "previewName": "BluetoothMp3ModePreview",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/bluetooth-mp3mode__ideal__default.svg"
     },
     {
       "componentId": "Manage/Empty",
       "figmaLayerName": "Manage/Empty",
       "componentName": "ManageEmptyPreview",
-      "source": "https://github.com/yschimke/cadence/blob/fed18d8099e2fe3b79b604d151e0c955e352f0a8/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "label": "Compose",
       "confidence": "preview-fallback",
-      "previewName": "ManageEmptyPreview"
+      "previewName": "ManageEmptyPreview",
+      "figmaSvg": "figma/manage-empty.svg"
     },
     {
       "componentId": "Manage/Populated",
       "figmaLayerName": "Manage/Populated",
       "componentName": "ManagePopulatedPreview",
-      "source": "https://github.com/yschimke/cadence/blob/fed18d8099e2fe3b79b604d151e0c955e352f0a8/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "label": "Compose",
       "confidence": "preview-fallback",
-      "previewName": "ManagePopulatedPreview"
+      "previewName": "ManagePopulatedPreview",
+      "figmaSvg": "figma/manage-populated.svg"
     },
     {
       "componentId": "Manage/Refreshing",
       "figmaLayerName": "Manage/Refreshing",
       "componentName": "ManageRefreshingPreview",
-      "source": "https://github.com/yschimke/cadence/blob/fed18d8099e2fe3b79b604d151e0c955e352f0a8/composeApp/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "label": "Compose",
       "confidence": "preview-fallback",
-      "previewName": "ManageRefreshingPreview"
+      "previewName": "ManageRefreshingPreview",
+      "figmaSvg": "figma/manage-refreshing.svg"
+    },
+    {
+      "componentId": "Widgets/Headphone/Bluetooth",
+      "figmaLayerName": "Widgets/Headphone/Bluetooth",
+      "componentName": "HeadphoneWidgetPreview",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt",
+      "label": "Compose",
+      "confidence": "HIGH",
+      "previewName": "HeadphoneWidgetBluetoothPreview",
+      "codeSnippet": "HeadphoneWidgetPreview(\n    bluetooth = TODO(\"BluetoothState\"),\n)",
+      "imports": [
+        "import ee.schimke.cadence.preview.HeadphoneWidgetPreview"
+      ],
+      "parameters": [
+        {
+          "name": "bluetooth",
+          "type": "BluetoothState",
+          "typeFqn": "ee.schimke.cadence.bluetooth.BluetoothState",
+          "hasDefault": false,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "colors",
+          "type": "WidgetColors",
+          "typeFqn": "ee.schimke.cadence.widgets.WidgetColors",
+          "hasDefault": true,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "animated",
+          "type": "Boolean",
+          "typeFqn": "kotlin.Boolean",
+          "hasDefault": true,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        }
+      ]
+    },
+    {
+      "componentId": "Widgets/Headphone/Mp3",
+      "figmaLayerName": "Widgets/Headphone/Mp3",
+      "componentName": "HeadphoneWidgetPreview",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt",
+      "label": "Compose",
+      "confidence": "HIGH",
+      "previewName": "HeadphoneWidgetMp3Preview",
+      "codeSnippet": "HeadphoneWidgetPreview(\n    bluetooth = TODO(\"BluetoothState\"),\n)",
+      "imports": [
+        "import ee.schimke.cadence.preview.HeadphoneWidgetPreview"
+      ],
+      "parameters": [
+        {
+          "name": "bluetooth",
+          "type": "BluetoothState",
+          "typeFqn": "ee.schimke.cadence.bluetooth.BluetoothState",
+          "hasDefault": false,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "colors",
+          "type": "WidgetColors",
+          "typeFqn": "ee.schimke.cadence.widgets.WidgetColors",
+          "hasDefault": true,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "animated",
+          "type": "Boolean",
+          "typeFqn": "kotlin.Boolean",
+          "hasDefault": true,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        }
+      ]
+    },
+    {
+      "componentId": "Widgets/Headphone/Disconnected",
+      "figmaLayerName": "Widgets/Headphone/Disconnected",
+      "componentName": "HeadphoneWidgetPreview",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt",
+      "label": "Compose",
+      "confidence": "HIGH",
+      "previewName": "HeadphoneWidgetDisconnectedPreview",
+      "codeSnippet": "HeadphoneWidgetPreview(\n    bluetooth = TODO(\"BluetoothState\"),\n)",
+      "imports": [
+        "import ee.schimke.cadence.preview.HeadphoneWidgetPreview"
+      ],
+      "parameters": [
+        {
+          "name": "bluetooth",
+          "type": "BluetoothState",
+          "typeFqn": "ee.schimke.cadence.bluetooth.BluetoothState",
+          "hasDefault": false,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "colors",
+          "type": "WidgetColors",
+          "typeFqn": "ee.schimke.cadence.widgets.WidgetColors",
+          "hasDefault": true,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "animated",
+          "type": "Boolean",
+          "typeFqn": "kotlin.Boolean",
+          "hasDefault": true,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        }
+      ]
+    },
+    {
+      "componentId": "Widgets/Headphone/Light",
+      "figmaLayerName": "Widgets/Headphone/Light",
+      "componentName": "HeadphoneWidgetPreview",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt",
+      "label": "Compose",
+      "confidence": "HIGH",
+      "previewName": "HeadphoneWidgetLightPreview",
+      "codeSnippet": "HeadphoneWidgetPreview(\n    bluetooth = TODO(\"BluetoothState\"),\n)",
+      "imports": [
+        "import ee.schimke.cadence.preview.HeadphoneWidgetPreview"
+      ],
+      "parameters": [
+        {
+          "name": "bluetooth",
+          "type": "BluetoothState",
+          "typeFqn": "ee.schimke.cadence.bluetooth.BluetoothState",
+          "hasDefault": false,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "colors",
+          "type": "WidgetColors",
+          "typeFqn": "ee.schimke.cadence.widgets.WidgetColors",
+          "hasDefault": true,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "animated",
+          "type": "Boolean",
+          "typeFqn": "kotlin.Boolean",
+          "hasDefault": true,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        }
+      ]
+    },
+    {
+      "componentId": "composeApp/HeadphoneWidgetMp32x1Preview",
+      "figmaLayerName": "composeApp/HeadphoneWidgetMp32x1Preview",
+      "componentName": "HeadphoneWidgetPreview",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt",
+      "label": "Compose",
+      "confidence": "HIGH",
+      "previewName": "HeadphoneWidgetMp32x1Preview",
+      "codeSnippet": "HeadphoneWidgetPreview(\n    bluetooth = TODO(\"BluetoothState\"),\n)",
+      "imports": [
+        "import ee.schimke.cadence.preview.HeadphoneWidgetPreview"
+      ],
+      "parameters": [
+        {
+          "name": "bluetooth",
+          "type": "BluetoothState",
+          "typeFqn": "ee.schimke.cadence.bluetooth.BluetoothState",
+          "hasDefault": false,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "colors",
+          "type": "WidgetColors",
+          "typeFqn": "ee.schimke.cadence.widgets.WidgetColors",
+          "hasDefault": true,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "animated",
+          "type": "Boolean",
+          "typeFqn": "kotlin.Boolean",
+          "hasDefault": true,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        }
+      ]
+    },
+    {
+      "componentId": "composeApp/HeadphoneWidgetMp33x1Preview",
+      "figmaLayerName": "composeApp/HeadphoneWidgetMp33x1Preview",
+      "componentName": "HeadphoneWidgetPreview",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt",
+      "label": "Compose",
+      "confidence": "HIGH",
+      "previewName": "HeadphoneWidgetMp33x1Preview",
+      "codeSnippet": "HeadphoneWidgetPreview(\n    bluetooth = TODO(\"BluetoothState\"),\n)",
+      "imports": [
+        "import ee.schimke.cadence.preview.HeadphoneWidgetPreview"
+      ],
+      "parameters": [
+        {
+          "name": "bluetooth",
+          "type": "BluetoothState",
+          "typeFqn": "ee.schimke.cadence.bluetooth.BluetoothState",
+          "hasDefault": false,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "colors",
+          "type": "WidgetColors",
+          "typeFqn": "ee.schimke.cadence.widgets.WidgetColors",
+          "hasDefault": true,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "animated",
+          "type": "Boolean",
+          "typeFqn": "kotlin.Boolean",
+          "hasDefault": true,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        }
+      ]
+    },
+    {
+      "componentId": "composeApp/HeadphoneWidgetMp35x1Preview",
+      "figmaLayerName": "composeApp/HeadphoneWidgetMp35x1Preview",
+      "componentName": "HeadphoneWidgetPreview",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt",
+      "label": "Compose",
+      "confidence": "HIGH",
+      "previewName": "HeadphoneWidgetMp35x1Preview",
+      "codeSnippet": "HeadphoneWidgetPreview(\n    bluetooth = TODO(\"BluetoothState\"),\n)",
+      "imports": [
+        "import ee.schimke.cadence.preview.HeadphoneWidgetPreview"
+      ],
+      "parameters": [
+        {
+          "name": "bluetooth",
+          "type": "BluetoothState",
+          "typeFqn": "ee.schimke.cadence.bluetooth.BluetoothState",
+          "hasDefault": false,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "colors",
+          "type": "WidgetColors",
+          "typeFqn": "ee.schimke.cadence.widgets.WidgetColors",
+          "hasDefault": true,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "animated",
+          "type": "Boolean",
+          "typeFqn": "kotlin.Boolean",
+          "hasDefault": true,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        }
+      ]
+    },
+    {
+      "componentId": "composeApp/HeadphoneWidgetMp33x2Preview",
+      "figmaLayerName": "composeApp/HeadphoneWidgetMp33x2Preview",
+      "componentName": "HeadphoneWidgetPreview",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt",
+      "label": "Compose",
+      "confidence": "HIGH",
+      "previewName": "HeadphoneWidgetMp33x2Preview",
+      "codeSnippet": "HeadphoneWidgetPreview(\n    bluetooth = TODO(\"BluetoothState\"),\n)",
+      "imports": [
+        "import ee.schimke.cadence.preview.HeadphoneWidgetPreview"
+      ],
+      "parameters": [
+        {
+          "name": "bluetooth",
+          "type": "BluetoothState",
+          "typeFqn": "ee.schimke.cadence.bluetooth.BluetoothState",
+          "hasDefault": false,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "colors",
+          "type": "WidgetColors",
+          "typeFqn": "ee.schimke.cadence.widgets.WidgetColors",
+          "hasDefault": true,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "animated",
+          "type": "Boolean",
+          "typeFqn": "kotlin.Boolean",
+          "hasDefault": true,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        }
+      ]
+    },
+    {
+      "componentId": "composeApp/HeadphoneWidgetMp35x3Preview",
+      "figmaLayerName": "composeApp/HeadphoneWidgetMp35x3Preview",
+      "componentName": "HeadphoneWidgetPreview",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt",
+      "label": "Compose",
+      "confidence": "HIGH",
+      "previewName": "HeadphoneWidgetMp35x3Preview",
+      "codeSnippet": "HeadphoneWidgetPreview(\n    bluetooth = TODO(\"BluetoothState\"),\n)",
+      "imports": [
+        "import ee.schimke.cadence.preview.HeadphoneWidgetPreview"
+      ],
+      "parameters": [
+        {
+          "name": "bluetooth",
+          "type": "BluetoothState",
+          "typeFqn": "ee.schimke.cadence.bluetooth.BluetoothState",
+          "hasDefault": false,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "colors",
+          "type": "WidgetColors",
+          "typeFqn": "ee.schimke.cadence.widgets.WidgetColors",
+          "hasDefault": true,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "animated",
+          "type": "Boolean",
+          "typeFqn": "kotlin.Boolean",
+          "hasDefault": true,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        }
+      ]
+    },
+    {
+      "componentId": "composeApp/PodcastImportedPreview",
+      "figmaLayerName": "composeApp/PodcastImportedPreview",
+      "componentName": "PodcastImportedPreview",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/preview/PodcastPreviews.kt",
+      "label": "Compose",
+      "confidence": "preview-fallback",
+      "previewName": "PodcastImportedPreview",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/composeapp-podcastimportedpreview__ideal__default.svg"
+    },
+    {
+      "componentId": "composeApp/PodcastPreparedPreview",
+      "figmaLayerName": "composeApp/PodcastPreparedPreview",
+      "componentName": "PodcastPreparedPreview",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/preview/PodcastPreviews.kt",
+      "label": "Compose",
+      "confidence": "preview-fallback",
+      "previewName": "PodcastPreparedPreview",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/composeapp-podcastpreparedpreview__ideal__default.svg"
+    },
+    {
+      "componentId": "composeApp/AddPodcastsPreview",
+      "figmaLayerName": "composeApp/AddPodcastsPreview",
+      "componentName": "AddPodcastsPreview",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/preview/PodcastPreviews.kt",
+      "label": "Compose",
+      "confidence": "preview-fallback",
+      "previewName": "AddPodcastsPreview",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/composeapp-addpodcastspreview__ideal__default.svg"
+    },
+    {
+      "componentId": "composeApp/PodcastPocketCastsPreview",
+      "figmaLayerName": "composeApp/PodcastPocketCastsPreview",
+      "componentName": "PodcastPocketCastsPreview",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/preview/PodcastPreviews.kt",
+      "label": "Compose",
+      "confidence": "preview-fallback",
+      "previewName": "PodcastPocketCastsPreview",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/composeapp-podcastpocketcastspreview__ideal__default.svg"
+    },
+    {
+      "componentId": "composeApp/HomeLibraryPreview",
+      "figmaLayerName": "composeApp/HomeLibraryPreview",
+      "componentName": "HomeLibraryPreview",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "label": "Compose",
+      "confidence": "preview-fallback",
+      "previewName": "HomeLibraryPreview",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/composeapp-homelibrarypreview__ideal__default.svg"
+    },
+    {
+      "componentId": "composeApp/HomeHeadphonesPreview",
+      "figmaLayerName": "composeApp/HomeHeadphonesPreview",
+      "componentName": "HomeHeadphonesPreview",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "label": "Compose",
+      "confidence": "preview-fallback",
+      "previewName": "HomeHeadphonesPreview",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/composeapp-homeheadphonespreview__ideal__default.svg"
+    },
+    {
+      "componentId": "composeApp/SyncModeReadyPreview",
+      "figmaLayerName": "composeApp/SyncModeReadyPreview",
+      "componentName": "SyncModeReadyPreview",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/preview/redesign/RedesignPreviews.kt",
+      "label": "Compose",
+      "confidence": "preview-fallback",
+      "previewName": "SyncModeReadyPreview",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/composeapp-syncmodereadypreview__ideal__default.svg"
+    },
+    {
+      "componentId": "composeApp/SyncModeReadyDarkPreview",
+      "figmaLayerName": "composeApp/SyncModeReadyDarkPreview",
+      "componentName": "SyncModeReadyDarkPreview",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/preview/redesign/RedesignPreviews.kt",
+      "label": "Compose",
+      "confidence": "preview-fallback",
+      "previewName": "SyncModeReadyDarkPreview",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/composeapp-syncmodereadydarkpreview__ideal__default__dark.svg"
+    },
+    {
+      "componentId": "composeApp/SyncModeSyncingPreview",
+      "figmaLayerName": "composeApp/SyncModeSyncingPreview",
+      "componentName": "SyncModeSyncingPreview",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/preview/redesign/RedesignPreviews.kt",
+      "label": "Compose",
+      "confidence": "preview-fallback",
+      "previewName": "SyncModeSyncingPreview",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/composeapp-syncmodesyncingpreview__ideal__default.svg"
+    },
+    {
+      "componentId": "composeApp/SyncModeDonePreview",
+      "figmaLayerName": "composeApp/SyncModeDonePreview",
+      "componentName": "SyncModeDonePreview",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/preview/redesign/RedesignPreviews.kt",
+      "label": "Compose",
+      "confidence": "preview-fallback",
+      "previewName": "SyncModeDonePreview",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/composeapp-syncmodedonepreview__ideal__default.svg"
+    },
+    {
+      "componentId": "composeApp/MainActivity",
+      "figmaLayerName": "composeApp/MainActivity",
+      "componentName": "MainActivity",
+      "source": "",
+      "label": "Compose",
+      "confidence": "preview-fallback",
+      "previewName": "MainActivity"
+    },
+    {
+      "componentId": "composeApp/PlayStorePhoneHomeLight",
+      "figmaLayerName": "composeApp/PlayStorePhoneHomeLight",
+      "componentName": "PlayStorePhoneHomeLight",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/preview/playstore/PlayStorePreviews.kt",
+      "label": "Compose",
+      "confidence": "preview-fallback",
+      "previewName": "PlayStorePhoneHomeLight",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/composeapp-playstorephonehomelight__ideal__default__light__compact.svg"
+    },
+    {
+      "componentId": "composeApp/PlayStorePhoneHomeDark",
+      "figmaLayerName": "composeApp/PlayStorePhoneHomeDark",
+      "componentName": "PlayStorePhoneHomeDark",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/preview/playstore/PlayStorePreviews.kt",
+      "label": "Compose",
+      "confidence": "preview-fallback",
+      "previewName": "PlayStorePhoneHomeDark",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/composeapp-playstorephonehomedark__ideal__default__dark__compact.svg"
+    },
+    {
+      "componentId": "composeApp/PlayStorePhoneSync",
+      "figmaLayerName": "composeApp/PlayStorePhoneSync",
+      "componentName": "PlayStorePhoneSync",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/preview/playstore/PlayStorePreviews.kt",
+      "label": "Compose",
+      "confidence": "preview-fallback",
+      "previewName": "PlayStorePhoneSync",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/composeapp-playstorephonesync__ideal__default__compact.svg"
+    },
+    {
+      "componentId": "composeApp/PlayStorePhoneBluetooth",
+      "figmaLayerName": "composeApp/PlayStorePhoneBluetooth",
+      "componentName": "PlayStorePhoneBluetooth",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/preview/playstore/PlayStorePreviews.kt",
+      "label": "Compose",
+      "confidence": "preview-fallback",
+      "previewName": "PlayStorePhoneBluetooth",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/composeapp-playstorephonebluetooth__ideal__default__compact.svg"
+    },
+    {
+      "componentId": "composeApp/PlayStorePhoneManage",
+      "figmaLayerName": "composeApp/PlayStorePhoneManage",
+      "componentName": "PlayStorePhoneManage",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/preview/playstore/PlayStorePreviews.kt",
+      "label": "Compose",
+      "confidence": "preview-fallback",
+      "previewName": "PlayStorePhoneManage",
+      "figmaSvg": "figma/composeapp-playstorephonemanage.svg"
+    },
+    {
+      "componentId": "composeApp/PlayStoreSevenInchHomeLight",
+      "figmaLayerName": "composeApp/PlayStoreSevenInchHomeLight",
+      "componentName": "PlayStoreSevenInchHomeLight",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/preview/playstore/PlayStorePreviews.kt",
+      "label": "Compose",
+      "confidence": "preview-fallback",
+      "previewName": "PlayStoreSevenInchHomeLight",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/composeapp-playstoreseveninchhomelight__ideal__default__light__medium.svg"
+    },
+    {
+      "componentId": "composeApp/PlayStoreSevenInchHomeDark",
+      "figmaLayerName": "composeApp/PlayStoreSevenInchHomeDark",
+      "componentName": "PlayStoreSevenInchHomeDark",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/preview/playstore/PlayStorePreviews.kt",
+      "label": "Compose",
+      "confidence": "preview-fallback",
+      "previewName": "PlayStoreSevenInchHomeDark",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/composeapp-playstoreseveninchhomedark__ideal__default__dark__medium.svg"
+    },
+    {
+      "componentId": "composeApp/PlayStoreTenInchHomeLight",
+      "figmaLayerName": "composeApp/PlayStoreTenInchHomeLight",
+      "componentName": "PlayStoreTenInchHomeLight",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/preview/playstore/PlayStorePreviews.kt",
+      "label": "Compose",
+      "confidence": "preview-fallback",
+      "previewName": "PlayStoreTenInchHomeLight",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/composeapp-playstoreteninchhomelight__ideal__default__light__medium.svg"
+    },
+    {
+      "componentId": "composeApp/PlayStoreTenInchHomeDark",
+      "figmaLayerName": "composeApp/PlayStoreTenInchHomeDark",
+      "componentName": "PlayStoreTenInchHomeDark",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/preview/playstore/PlayStorePreviews.kt",
+      "label": "Compose",
+      "confidence": "preview-fallback",
+      "previewName": "PlayStoreTenInchHomeDark",
+      "figmaSvg": "https://preview.coo.ee/cadence/render/composeapp-playstoreteninchhomedark__ideal__default__dark__medium.svg"
+    },
+    {
+      "componentId": "swimUi/WaterButtonsLauncherPreview",
+      "figmaLayerName": "swimUi/WaterButtonsLauncherPreview",
+      "componentName": "WaterButtons",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/swim/SwimPreviews.kt",
+      "label": "Compose",
+      "confidence": "HIGH",
+      "previewName": "WaterButtonsLauncherPreview",
+      "codeSnippet": "WaterButtons(\n    profile = TODO(\"Profile\"),\n)",
+      "imports": [
+        "import ee.schimke.cadence.swim.WaterButtons"
+      ],
+      "parameters": [
+        {
+          "name": "profile",
+          "type": "Profile",
+          "typeFqn": "androidx.compose.remote.creation.profile.Profile",
+          "hasDefault": false,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        }
+      ]
+    },
+    {
+      "componentId": "swimUi/WaterButtonsWearPreview",
+      "figmaLayerName": "swimUi/WaterButtonsWearPreview",
+      "componentName": "WaterButtons",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/swim/SwimPreviews.kt",
+      "label": "Compose",
+      "confidence": "HIGH",
+      "previewName": "WaterButtonsWearPreview",
+      "codeSnippet": "WaterButtons(\n    profile = TODO(\"Profile\"),\n)",
+      "imports": [
+        "import ee.schimke.cadence.swim.WaterButtons"
+      ],
+      "parameters": [
+        {
+          "name": "profile",
+          "type": "Profile",
+          "typeFqn": "androidx.compose.remote.creation.profile.Profile",
+          "hasDefault": false,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        }
+      ]
+    },
+    {
+      "componentId": "swimUi/SwimLaneLapsPreview",
+      "figmaLayerName": "swimUi/SwimLaneLapsPreview",
+      "componentName": "Slot",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/swim/SwimPreviews.kt",
+      "label": "Compose",
+      "confidence": "HIGH",
+      "previewName": "SwimLaneLapsPreview",
+      "codeSnippet": "Slot(\n    profile = TODO(\"Profile\"),\n    width = TODO(\"Dp\"),\n    height = TODO(\"Dp\"),\n    content = { },\n)",
+      "imports": [
+        "import ee.schimke.cadence.swim.Slot"
+      ],
+      "parameters": [
+        {
+          "name": "profile",
+          "type": "Profile",
+          "typeFqn": "androidx.compose.remote.creation.profile.Profile",
+          "hasDefault": false,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "width",
+          "type": "Dp",
+          "typeFqn": "androidx.compose.ui.unit.Dp",
+          "hasDefault": false,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "height",
+          "type": "Dp",
+          "typeFqn": "androidx.compose.ui.unit.Dp",
+          "hasDefault": false,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "content",
+          "type": "() -> Unit",
+          "typeFqn": "kotlin.Function0",
+          "hasDefault": false,
+          "composableSlot": true,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": "kotlin.Unit"
+        }
+      ]
+    },
+    {
+      "componentId": "swimUi/SwimLaneFlipTurnPreview",
+      "figmaLayerName": "swimUi/SwimLaneFlipTurnPreview",
+      "componentName": "FlipTurnStrip",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/swim/SwimPreviews.kt",
+      "label": "Compose",
+      "confidence": "HIGH",
+      "previewName": "SwimLaneFlipTurnPreview",
+      "codeSnippet": "FlipTurnStrip(\n    profile = TODO(\"Profile\"),\n    colors = TODO(\"LaneColors\"),\n)",
+      "imports": [
+        "import ee.schimke.cadence.swim.FlipTurnStrip"
+      ],
+      "parameters": [
+        {
+          "name": "profile",
+          "type": "Profile",
+          "typeFqn": "androidx.compose.remote.creation.profile.Profile",
+          "hasDefault": false,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "colors",
+          "type": "LaneColors",
+          "typeFqn": "ee.schimke.cadence.swim.LaneColors",
+          "hasDefault": false,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        }
+      ]
+    },
+    {
+      "componentId": "swimUi/SwimLaneFlipTurnLauncherPreview",
+      "figmaLayerName": "swimUi/SwimLaneFlipTurnLauncherPreview",
+      "componentName": "FlipTurnStrip",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/swim/SwimPreviews.kt",
+      "label": "Compose",
+      "confidence": "HIGH",
+      "previewName": "SwimLaneFlipTurnLauncherPreview",
+      "codeSnippet": "FlipTurnStrip(\n    profile = TODO(\"Profile\"),\n    colors = TODO(\"LaneColors\"),\n)",
+      "imports": [
+        "import ee.schimke.cadence.swim.FlipTurnStrip"
+      ],
+      "parameters": [
+        {
+          "name": "profile",
+          "type": "Profile",
+          "typeFqn": "androidx.compose.remote.creation.profile.Profile",
+          "hasDefault": false,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "colors",
+          "type": "LaneColors",
+          "typeFqn": "ee.schimke.cadence.swim.LaneColors",
+          "hasDefault": false,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        }
+      ]
+    },
+    {
+      "componentId": "swimUi/SwimLaneEndlessPreview",
+      "figmaLayerName": "swimUi/SwimLaneEndlessPreview",
+      "componentName": "Slot",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/swim/SwimPreviews.kt",
+      "label": "Compose",
+      "confidence": "HIGH",
+      "previewName": "SwimLaneEndlessPreview",
+      "codeSnippet": "Slot(\n    profile = TODO(\"Profile\"),\n    width = TODO(\"Dp\"),\n    height = TODO(\"Dp\"),\n    content = { },\n)",
+      "imports": [
+        "import ee.schimke.cadence.swim.Slot"
+      ],
+      "parameters": [
+        {
+          "name": "profile",
+          "type": "Profile",
+          "typeFqn": "androidx.compose.remote.creation.profile.Profile",
+          "hasDefault": false,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "width",
+          "type": "Dp",
+          "typeFqn": "androidx.compose.ui.unit.Dp",
+          "hasDefault": false,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "height",
+          "type": "Dp",
+          "typeFqn": "androidx.compose.ui.unit.Dp",
+          "hasDefault": false,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "content",
+          "type": "() -> Unit",
+          "typeFqn": "kotlin.Function0",
+          "hasDefault": false,
+          "composableSlot": true,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": "kotlin.Unit"
+        }
+      ]
+    },
+    {
+      "componentId": "swimUi/SwimmingPoolPreview",
+      "figmaLayerName": "swimUi/SwimmingPoolPreview",
+      "componentName": "Slot",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/swim/SwimPreviews.kt",
+      "label": "Compose",
+      "confidence": "HIGH",
+      "previewName": "SwimmingPoolPreview",
+      "codeSnippet": "Slot(\n    profile = TODO(\"Profile\"),\n    width = TODO(\"Dp\"),\n    height = TODO(\"Dp\"),\n    content = { },\n)",
+      "imports": [
+        "import ee.schimke.cadence.swim.Slot"
+      ],
+      "parameters": [
+        {
+          "name": "profile",
+          "type": "Profile",
+          "typeFqn": "androidx.compose.remote.creation.profile.Profile",
+          "hasDefault": false,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "width",
+          "type": "Dp",
+          "typeFqn": "androidx.compose.ui.unit.Dp",
+          "hasDefault": false,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "height",
+          "type": "Dp",
+          "typeFqn": "androidx.compose.ui.unit.Dp",
+          "hasDefault": false,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "content",
+          "type": "() -> Unit",
+          "typeFqn": "kotlin.Function0",
+          "hasDefault": false,
+          "composableSlot": true,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": "kotlin.Unit"
+        }
+      ]
+    },
+    {
+      "componentId": "wearApp/ConnectedWearCompanionPreview",
+      "figmaLayerName": "wearApp/ConnectedWearCompanionPreview",
+      "componentName": "WearCompanionContent",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/wear/WearCompanionApp.kt",
+      "label": "Compose",
+      "confidence": "HIGH",
+      "previewName": "ConnectedWearCompanionPreview",
+      "codeSnippet": "WearCompanionContent(\n    snapshot = TODO(\"HeadsetSnapshot\"),\n)",
+      "imports": [
+        "import ee.schimke.cadence.wear.WearCompanionContent"
+      ],
+      "parameters": [
+        {
+          "name": "snapshot",
+          "type": "HeadsetSnapshot",
+          "typeFqn": "ee.schimke.cadence.wear.HeadsetSnapshot",
+          "hasDefault": false,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "startPage",
+          "type": "Int",
+          "typeFqn": "kotlin.Int",
+          "hasDefault": true,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "modifier",
+          "type": "Modifier",
+          "typeFqn": "androidx.compose.ui.Modifier",
+          "hasDefault": true,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "onAction",
+          "type": "(HeadsetAction) -> Unit",
+          "typeFqn": "kotlin.Function1",
+          "hasDefault": true,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": "kotlin.Unit"
+        }
+      ],
+      "figmaSvg": "figma/wearapp-connectedwearcompanionpreview.svg"
+    },
+    {
+      "componentId": "wearApp/LocalAudioPlaylistPreview",
+      "figmaLayerName": "wearApp/LocalAudioPlaylistPreview",
+      "componentName": "WearCompanionContent",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/wear/WearCompanionApp.kt",
+      "label": "Compose",
+      "confidence": "HIGH",
+      "previewName": "LocalAudioPlaylistPreview",
+      "codeSnippet": "WearCompanionContent(\n    snapshot = TODO(\"HeadsetSnapshot\"),\n)",
+      "imports": [
+        "import ee.schimke.cadence.wear.WearCompanionContent"
+      ],
+      "parameters": [
+        {
+          "name": "snapshot",
+          "type": "HeadsetSnapshot",
+          "typeFqn": "ee.schimke.cadence.wear.HeadsetSnapshot",
+          "hasDefault": false,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "startPage",
+          "type": "Int",
+          "typeFqn": "kotlin.Int",
+          "hasDefault": true,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "modifier",
+          "type": "Modifier",
+          "typeFqn": "androidx.compose.ui.Modifier",
+          "hasDefault": true,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "onAction",
+          "type": "(HeadsetAction) -> Unit",
+          "typeFqn": "kotlin.Function1",
+          "hasDefault": true,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": "kotlin.Unit"
+        }
+      ],
+      "figmaSvg": "figma/wearapp-localaudioplaylistpreview.svg"
+    },
+    {
+      "componentId": "wearApp/ModeAndControlsWearWidgetRectangularPreview",
+      "figmaLayerName": "wearApp/ModeAndControlsWearWidgetRectangularPreview",
+      "componentName": "WidgetPreview",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt",
+      "label": "Compose",
+      "confidence": "HIGH",
+      "previewName": "ModeAndControlsWearWidgetRectangularPreview",
+      "codeSnippet": "WidgetPreview(\n    params = TODO(\"WearWidgetParams\"),\n    content = { },\n)",
+      "imports": [
+        "import ee.schimke.cadence.wear.widgets.WidgetPreview"
+      ],
+      "parameters": [
+        {
+          "name": "params",
+          "type": "WearWidgetParams",
+          "typeFqn": "androidx.glance.wear.core.WearWidgetParams",
+          "hasDefault": false,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "background",
+          "type": "Color",
+          "typeFqn": "androidx.compose.ui.graphics.Color",
+          "hasDefault": true,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "content",
+          "type": "() -> Unit",
+          "typeFqn": "kotlin.Function0",
+          "hasDefault": false,
+          "composableSlot": true,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": "kotlin.Unit"
+        }
+      ],
+      "figmaSvg": "figma/wearapp-modeandcontrolswearwidgetrectangularpreview.svg"
+    },
+    {
+      "componentId": "wearApp/ModeAndControlsWearWidgetRoundPreview",
+      "figmaLayerName": "wearApp/ModeAndControlsWearWidgetRoundPreview",
+      "componentName": "WidgetPreview",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt",
+      "label": "Compose",
+      "confidence": "HIGH",
+      "previewName": "ModeAndControlsWearWidgetRoundPreview",
+      "codeSnippet": "WidgetPreview(\n    params = TODO(\"WearWidgetParams\"),\n    content = { },\n)",
+      "imports": [
+        "import ee.schimke.cadence.wear.widgets.WidgetPreview"
+      ],
+      "parameters": [
+        {
+          "name": "params",
+          "type": "WearWidgetParams",
+          "typeFqn": "androidx.glance.wear.core.WearWidgetParams",
+          "hasDefault": false,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "background",
+          "type": "Color",
+          "typeFqn": "androidx.compose.ui.graphics.Color",
+          "hasDefault": true,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "content",
+          "type": "() -> Unit",
+          "typeFqn": "kotlin.Function0",
+          "hasDefault": false,
+          "composableSlot": true,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": "kotlin.Unit"
+        }
+      ],
+      "figmaSvg": "figma/wearapp-modeandcontrolswearwidgetroundpreview.svg"
+    },
+    {
+      "componentId": "wearApp/ModeAndControlsWearWidgetSquirclePreview",
+      "figmaLayerName": "wearApp/ModeAndControlsWearWidgetSquirclePreview",
+      "componentName": "WidgetPreview",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt",
+      "label": "Compose",
+      "confidence": "HIGH",
+      "previewName": "ModeAndControlsWearWidgetSquirclePreview",
+      "codeSnippet": "WidgetPreview(\n    params = TODO(\"WearWidgetParams\"),\n    content = { },\n)",
+      "imports": [
+        "import ee.schimke.cadence.wear.widgets.WidgetPreview"
+      ],
+      "parameters": [
+        {
+          "name": "params",
+          "type": "WearWidgetParams",
+          "typeFqn": "androidx.glance.wear.core.WearWidgetParams",
+          "hasDefault": false,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "background",
+          "type": "Color",
+          "typeFqn": "androidx.compose.ui.graphics.Color",
+          "hasDefault": true,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "content",
+          "type": "() -> Unit",
+          "typeFqn": "kotlin.Function0",
+          "hasDefault": false,
+          "composableSlot": true,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": "kotlin.Unit"
+        }
+      ],
+      "figmaSvg": "figma/wearapp-modeandcontrolswearwidgetsquirclepreview.svg"
+    },
+    {
+      "componentId": "wearApp/LocalAudioPlaylistWearWidgetRectangularPreview",
+      "figmaLayerName": "wearApp/LocalAudioPlaylistWearWidgetRectangularPreview",
+      "componentName": "WidgetPreview",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt",
+      "label": "Compose",
+      "confidence": "HIGH",
+      "previewName": "LocalAudioPlaylistWearWidgetRectangularPreview",
+      "codeSnippet": "WidgetPreview(\n    params = TODO(\"WearWidgetParams\"),\n    content = { },\n)",
+      "imports": [
+        "import ee.schimke.cadence.wear.widgets.WidgetPreview"
+      ],
+      "parameters": [
+        {
+          "name": "params",
+          "type": "WearWidgetParams",
+          "typeFqn": "androidx.glance.wear.core.WearWidgetParams",
+          "hasDefault": false,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "background",
+          "type": "Color",
+          "typeFqn": "androidx.compose.ui.graphics.Color",
+          "hasDefault": true,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "content",
+          "type": "() -> Unit",
+          "typeFqn": "kotlin.Function0",
+          "hasDefault": false,
+          "composableSlot": true,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": "kotlin.Unit"
+        }
+      ],
+      "figmaSvg": "figma/wearapp-localaudioplaylistwearwidgetrectangularpreview.svg"
+    },
+    {
+      "componentId": "wearApp/LocalAudioPlaylistWearWidgetRoundPreview",
+      "figmaLayerName": "wearApp/LocalAudioPlaylistWearWidgetRoundPreview",
+      "componentName": "WidgetPreview",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt",
+      "label": "Compose",
+      "confidence": "HIGH",
+      "previewName": "LocalAudioPlaylistWearWidgetRoundPreview",
+      "codeSnippet": "WidgetPreview(\n    params = TODO(\"WearWidgetParams\"),\n    content = { },\n)",
+      "imports": [
+        "import ee.schimke.cadence.wear.widgets.WidgetPreview"
+      ],
+      "parameters": [
+        {
+          "name": "params",
+          "type": "WearWidgetParams",
+          "typeFqn": "androidx.glance.wear.core.WearWidgetParams",
+          "hasDefault": false,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "background",
+          "type": "Color",
+          "typeFqn": "androidx.compose.ui.graphics.Color",
+          "hasDefault": true,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "content",
+          "type": "() -> Unit",
+          "typeFqn": "kotlin.Function0",
+          "hasDefault": false,
+          "composableSlot": true,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": "kotlin.Unit"
+        }
+      ],
+      "figmaSvg": "figma/wearapp-localaudioplaylistwearwidgetroundpreview.svg"
+    },
+    {
+      "componentId": "wearApp/LocalAudioPlaylistWearWidgetSquirclePreview",
+      "figmaLayerName": "wearApp/LocalAudioPlaylistWearWidgetSquirclePreview",
+      "componentName": "WidgetPreview",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt",
+      "label": "Compose",
+      "confidence": "HIGH",
+      "previewName": "LocalAudioPlaylistWearWidgetSquirclePreview",
+      "codeSnippet": "WidgetPreview(\n    params = TODO(\"WearWidgetParams\"),\n    content = { },\n)",
+      "imports": [
+        "import ee.schimke.cadence.wear.widgets.WidgetPreview"
+      ],
+      "parameters": [
+        {
+          "name": "params",
+          "type": "WearWidgetParams",
+          "typeFqn": "androidx.glance.wear.core.WearWidgetParams",
+          "hasDefault": false,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "background",
+          "type": "Color",
+          "typeFqn": "androidx.compose.ui.graphics.Color",
+          "hasDefault": true,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "content",
+          "type": "() -> Unit",
+          "typeFqn": "kotlin.Function0",
+          "hasDefault": false,
+          "composableSlot": true,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": "kotlin.Unit"
+        }
+      ],
+      "figmaSvg": "figma/wearapp-localaudioplaylistwearwidgetsquirclepreview.svg"
+    },
+    {
+      "componentId": "wearApp/SyncStatusWearWidgetRectangularPreview",
+      "figmaLayerName": "wearApp/SyncStatusWearWidgetRectangularPreview",
+      "componentName": "WidgetPreview",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt",
+      "label": "Compose",
+      "confidence": "HIGH",
+      "previewName": "SyncStatusWearWidgetRectangularPreview",
+      "codeSnippet": "WidgetPreview(\n    params = TODO(\"WearWidgetParams\"),\n    content = { },\n)",
+      "imports": [
+        "import ee.schimke.cadence.wear.widgets.WidgetPreview"
+      ],
+      "parameters": [
+        {
+          "name": "params",
+          "type": "WearWidgetParams",
+          "typeFqn": "androidx.glance.wear.core.WearWidgetParams",
+          "hasDefault": false,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "background",
+          "type": "Color",
+          "typeFqn": "androidx.compose.ui.graphics.Color",
+          "hasDefault": true,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "content",
+          "type": "() -> Unit",
+          "typeFqn": "kotlin.Function0",
+          "hasDefault": false,
+          "composableSlot": true,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": "kotlin.Unit"
+        }
+      ],
+      "figmaSvg": "figma/wearapp-syncstatuswearwidgetrectangularpreview.svg"
+    },
+    {
+      "componentId": "wearApp/SyncStatusWearWidgetRoundPreview",
+      "figmaLayerName": "wearApp/SyncStatusWearWidgetRoundPreview",
+      "componentName": "WidgetPreview",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt",
+      "label": "Compose",
+      "confidence": "HIGH",
+      "previewName": "SyncStatusWearWidgetRoundPreview",
+      "codeSnippet": "WidgetPreview(\n    params = TODO(\"WearWidgetParams\"),\n    content = { },\n)",
+      "imports": [
+        "import ee.schimke.cadence.wear.widgets.WidgetPreview"
+      ],
+      "parameters": [
+        {
+          "name": "params",
+          "type": "WearWidgetParams",
+          "typeFqn": "androidx.glance.wear.core.WearWidgetParams",
+          "hasDefault": false,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "background",
+          "type": "Color",
+          "typeFqn": "androidx.compose.ui.graphics.Color",
+          "hasDefault": true,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "content",
+          "type": "() -> Unit",
+          "typeFqn": "kotlin.Function0",
+          "hasDefault": false,
+          "composableSlot": true,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": "kotlin.Unit"
+        }
+      ],
+      "figmaSvg": "figma/wearapp-syncstatuswearwidgetroundpreview.svg"
+    },
+    {
+      "componentId": "wearApp/SyncStatusWearWidgetSquirclePreview",
+      "figmaLayerName": "wearApp/SyncStatusWearWidgetSquirclePreview",
+      "componentName": "WidgetPreview",
+      "source": "https://github.com/yschimke/cadence/blob/46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f/src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt",
+      "label": "Compose",
+      "confidence": "HIGH",
+      "previewName": "SyncStatusWearWidgetSquirclePreview",
+      "codeSnippet": "WidgetPreview(\n    params = TODO(\"WearWidgetParams\"),\n    content = { },\n)",
+      "imports": [
+        "import ee.schimke.cadence.wear.widgets.WidgetPreview"
+      ],
+      "parameters": [
+        {
+          "name": "params",
+          "type": "WearWidgetParams",
+          "typeFqn": "androidx.glance.wear.core.WearWidgetParams",
+          "hasDefault": false,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "background",
+          "type": "Color",
+          "typeFqn": "androidx.compose.ui.graphics.Color",
+          "hasDefault": true,
+          "composableSlot": false,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": null
+        },
+        {
+          "name": "content",
+          "type": "() -> Unit",
+          "typeFqn": "kotlin.Function0",
+          "hasDefault": false,
+          "composableSlot": true,
+          "composableSlotReceiver": null,
+          "nullable": false,
+          "noArgConstructible": false,
+          "noArgFactory": null,
+          "scopeDslReceiver": null,
+          "lambdaReturnTypeFqn": "kotlin.Unit"
+        }
+      ],
+      "figmaSvg": "figma/wearapp-syncstatuswearwidgetsquirclepreview.svg"
+    },
+    {
+      "componentId": "wearApp/WearMainActivity",
+      "figmaLayerName": "wearApp/WearMainActivity",
+      "componentName": "WearMainActivity",
+      "source": "",
+      "label": "Compose",
+      "confidence": "preview-fallback",
+      "previewName": "WearMainActivity"
     }
   ]
 }

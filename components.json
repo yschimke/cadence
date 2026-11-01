@@ -132,16 +132,6 @@
             ],
             "bindings": [
                 {
-                    "previewId": "ee.schimke.cadence.preview.FoundationPreviewsKt.FoundationCadenceDarkPreview_Foundation___Cadence_dark",
-                    "componentId": null,
-                    "group": null
-                },
-                {
-                    "previewId": "ee.schimke.cadence.preview.FoundationPreviewsKt.FoundationCadenceLightPreview_Foundation___Cadence_light",
-                    "componentId": null,
-                    "group": null
-                },
-                {
                     "previewId": "ee.schimke.cadence.preview.FoundationPreviewsKt.FoundationMaterial3DarkPreview_Foundation___Material_3_dark",
                     "componentId": null,
                     "group": null
@@ -534,16 +524,6 @@
             "slots": [],
             "bindings": [
                 {
-                    "previewId": "ee.schimke.cadence.preview.FoundationPreviewsKt.FoundationCadenceDarkPreview_Foundation___Cadence_dark",
-                    "componentId": null,
-                    "group": null
-                },
-                {
-                    "previewId": "ee.schimke.cadence.preview.FoundationPreviewsKt.FoundationCadenceLightPreview_Foundation___Cadence_light",
-                    "componentId": null,
-                    "group": null
-                },
-                {
                     "previewId": "ee.schimke.cadence.preview.FoundationPreviewsKt.FoundationMaterial3DarkPreview_Foundation___Material_3_dark",
                     "componentId": null,
                     "group": null
@@ -812,6 +792,131 @@
                     ]
                 }
             ]
+        },
+        {
+            "canonicalId": "composeApp/ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetPreview",
+            "componentIds": [],
+            "symbol": {
+                "jvmOwner": "ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt",
+                "callable": "ee.schimke.cadence.preview.HeadphoneWidgetPreview",
+                "name": "HeadphoneWidgetPreview",
+                "origin": "PROJECT",
+                "jvmName": "HeadphoneWidgetPreview",
+                "descriptor": "(Lee/schimke/cadence/bluetooth/BluetoothState;Lee/schimke/cadence/widgets/WidgetColors;ZLandroidx/compose/runtime/Composer;II)V",
+                "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt",
+                "docs": "unavailable",
+                "receiver": null
+            },
+            "parameters": [
+                {
+                    "name": "bluetooth",
+                    "type": "BluetoothState",
+                    "typeFqn": "ee.schimke.cadence.bluetooth.BluetoothState",
+                    "hasDefault": false,
+                    "composableSlot": false,
+                    "composableSlotReceiver": null,
+                    "nullable": false,
+                    "noArgConstructible": false,
+                    "noArgFactory": null,
+                    "scopeDslReceiver": null,
+                    "lambdaReturnTypeFqn": null
+                },
+                {
+                    "name": "colors",
+                    "type": "WidgetColors",
+                    "typeFqn": "ee.schimke.cadence.widgets.WidgetColors",
+                    "hasDefault": true,
+                    "composableSlot": false,
+                    "composableSlotReceiver": null,
+                    "nullable": false,
+                    "noArgConstructible": false,
+                    "noArgFactory": null,
+                    "scopeDslReceiver": null,
+                    "lambdaReturnTypeFqn": null
+                },
+                {
+                    "name": "animated",
+                    "type": "Boolean",
+                    "typeFqn": "kotlin.Boolean",
+                    "hasDefault": true,
+                    "composableSlot": false,
+                    "composableSlotReceiver": null,
+                    "nullable": false,
+                    "noArgConstructible": false,
+                    "noArgFactory": null,
+                    "scopeDslReceiver": null,
+                    "lambdaReturnTypeFqn": null
+                }
+            ],
+            "slots": [],
+            "bindings": [
+                {
+                    "previewId": "ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetBluetoothPreview_Headphone_widget___Bluetooth",
+                    "componentId": null,
+                    "group": null
+                },
+                {
+                    "previewId": "ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetDisconnectedPreview_Headphone_widget___disconnected",
+                    "componentId": null,
+                    "group": null
+                },
+                {
+                    "previewId": "ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetLightPreview_Headphone_widget___light",
+                    "componentId": null,
+                    "group": null
+                },
+                {
+                    "previewId": "ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetMp32x1Preview_Headphone_widget___MP3___2_1",
+                    "componentId": null,
+                    "group": null
+                },
+                {
+                    "previewId": "ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetMp33x1Preview_Headphone_widget___MP3___3_1",
+                    "componentId": null,
+                    "group": null
+                },
+                {
+                    "previewId": "ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetMp33x2Preview_Headphone_widget___MP3___3_2",
+                    "componentId": null,
+                    "group": null
+                },
+                {
+                    "previewId": "ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetMp35x1Preview_Headphone_widget___MP3___5_1",
+                    "componentId": null,
+                    "group": null
+                },
+                {
+                    "previewId": "ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetMp35x3Preview_Headphone_widget___MP3___5_3",
+                    "componentId": null,
+                    "group": null
+                },
+                {
+                    "previewId": "ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetMp3Preview_Headphone_widget___MP3",
+                    "componentId": null,
+                    "group": null
+                },
+                {
+                    "previewId": "ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetPlayingAnimatedPreview_Headphone_widget___playing___animated",
+                    "componentId": null,
+                    "group": null
+                }
+            ],
+            "code": {
+                "call": null,
+                "imports": [],
+                "refusedReason": "not public or internal, so a generated file cannot call it",
+                "requiredOptIns": [],
+                "androidxOptIns": []
+            },
+            "signatureKnown": true,
+            "callableFromAnotherFile": false,
+            "hasTypeParameters": false,
+            "hasContextReceivers": false,
+            "overloadsCollided": false,
+            "builder": null,
+            "requiredOptIns": [],
+            "androidxOptIns": [],
+            "overloads": []
         }
     ],
     "builderOrphans": []

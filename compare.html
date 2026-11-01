@@ -116,16 +116,17 @@
 <body>
 <header class="top">
   <h1>Cadence — SVG vs PNG</h1>
-  <div class="subtitle">system <code>cadence</code> · rendered by compose-preview 2.47.0 · 19 components · 0 comparable</div>
+  <div class="subtitle">system <code>cadence</code> · rendered by compose-preview 2.79.0 · 65 components · 47 comparable</div>
   <div class="summary">
     <span><span class="k">avg structural match</span> <b id="avg">…</b></span>
-    <span><span class="k">scored</span> <b id="done">0</b> / 0</span>
+    <span><span class="k">scored</span> <b id="done">0</b> / 47</span>
   </div>
   <div class="controls" role="group" aria-label="Override options">
     <label class="ov">Font scale <output id="ov-fontScale-val">1.0×</output>
       <input id="ov-fontScale" type="range" min="0.5" max="2" step="0.1" value="1" aria-label="Font scale" /></label>
     <label class="ov ov-check"><input id="ov-fonts" type="checkbox" checked /> Embedded fonts</label>
-    
+    <label class="ov">Theme
+        <select id="ov-theme"><option value="light">Light</option><option value="dark">Dark</option></select></label>
     <label class="ov">Backdrop
       <select id="ov-bg"><option value="checker">Checker</option><option value="white">White</option><option value="dark">Dark</option></select></label>
     <button type="button" id="ov-reset">Reset</button>
@@ -178,118 +179,394 @@
         <th scope="col" class="col-score">Match ↑</th>
       </tr>
     </thead>
-    <tbody id="rows"><tr class="crow">
-  <th scope="row" class="rowhead"><span class="cid">Theme/Cadence-Light</span><span class="grp">Foundation</span></th>
-  <td class="col-svg"><div class="shot shot--missing">no figma-svg</div></td>
-  <td class="col-png"><div class="shot"><img loading="lazy" src="images/theme-cadence-light/ideal__default__light.png" alt="Theme/Cadence-Light PNG" /></div></td>
-  <td class="score score--na" title="needs both a PNG and a figma-svg">—</td>
-</tr>
-<tr class="crow">
-  <th scope="row" class="rowhead"><span class="cid">Theme/Cadence-Dark</span><span class="grp">Foundation</span></th>
-  <td class="col-svg"><div class="shot shot--missing">no figma-svg</div></td>
-  <td class="col-png"><div class="shot"><img loading="lazy" src="images/theme-cadence-dark/ideal__default__dark.png" alt="Theme/Cadence-Dark PNG" /></div></td>
-  <td class="score score--na" title="needs both a PNG and a figma-svg">—</td>
-</tr>
-<tr class="crow">
+    <tbody id="rows"><tr class="crow" data-png="images/theme-material3-light/ideal__default__light.png" data-svg="https://preview.coo.ee/cadence/render/theme-material3-light__ideal__default__light.svg">
   <th scope="row" class="rowhead"><span class="cid">Theme/Material3-Light</span><span class="grp">Foundation</span></th>
-  <td class="col-svg"><div class="shot shot--missing">no figma-svg</div></td>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="https://preview.coo.ee/cadence/render/theme-material3-light__ideal__default__light.svg" alt="Theme/Material3-Light SVG" /></div></td>
   <td class="col-png"><div class="shot"><img loading="lazy" src="images/theme-material3-light/ideal__default__light.png" alt="Theme/Material3-Light PNG" /></div></td>
-  <td class="score score--na" title="needs both a PNG and a figma-svg">—</td>
+  <td class="score" aria-label="structural similarity">…</td>
 </tr>
-<tr class="crow">
+<tr class="crow" data-png="images/theme-material3-dark/ideal__default__dark.png" data-png-dark="images/theme-material3-dark/ideal__default__dark.png" data-svg="https://preview.coo.ee/cadence/render/theme-material3-dark__ideal__default__dark.svg" data-svg-dark="https://preview.coo.ee/cadence/render/theme-material3-dark__ideal__default__dark.svg">
   <th scope="row" class="rowhead"><span class="cid">Theme/Material3-Dark</span><span class="grp">Foundation</span></th>
-  <td class="col-svg"><div class="shot shot--missing">no figma-svg</div></td>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="https://preview.coo.ee/cadence/render/theme-material3-dark__ideal__default__dark.svg" alt="Theme/Material3-Dark SVG" /></div></td>
   <td class="col-png"><div class="shot"><img loading="lazy" src="images/theme-material3-dark/ideal__default__dark.png" alt="Theme/Material3-Dark PNG" /></div></td>
-  <td class="score score--na" title="needs both a PNG and a figma-svg">—</td>
+  <td class="score" aria-label="structural similarity">…</td>
 </tr>
-<tr class="crow">
+<tr class="crow" data-png="images/home-empty/ideal__default.png" data-svg="https://preview.coo.ee/cadence/render/home-empty__ideal__default.svg">
   <th scope="row" class="rowhead"><span class="cid">Home/Empty</span><span class="grp">Home</span></th>
-  <td class="col-svg"><div class="shot shot--missing">no figma-svg</div></td>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="https://preview.coo.ee/cadence/render/home-empty__ideal__default.svg" alt="Home/Empty SVG" /></div></td>
   <td class="col-png"><div class="shot"><img loading="lazy" src="images/home-empty/ideal__default.png" alt="Home/Empty PNG" /></div></td>
-  <td class="score score--na" title="needs both a PNG and a figma-svg">—</td>
+  <td class="score" aria-label="structural similarity">…</td>
 </tr>
-<tr class="crow">
+<tr class="crow" data-png="images/devices-loaded/ideal__default.png" data-svg="https://preview.coo.ee/cadence/render/devices-loaded__ideal__default.svg">
   <th scope="row" class="rowhead"><span class="cid">Devices/Loaded</span><span class="grp">Devices</span></th>
-  <td class="col-svg"><div class="shot shot--missing">no figma-svg</div></td>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="https://preview.coo.ee/cadence/render/devices-loaded__ideal__default.svg" alt="Devices/Loaded SVG" /></div></td>
   <td class="col-png"><div class="shot"><img loading="lazy" src="images/devices-loaded/ideal__default.png" alt="Devices/Loaded PNG" /></div></td>
-  <td class="score score--na" title="needs both a PNG and a figma-svg">—</td>
+  <td class="score" aria-label="structural similarity">…</td>
 </tr>
-<tr class="crow">
+<tr class="crow" data-png="images/devices-loading/ideal__default.png" data-svg="https://preview.coo.ee/cadence/render/devices-loading__ideal__default.svg">
   <th scope="row" class="rowhead"><span class="cid">Devices/Loading</span><span class="grp">Devices</span></th>
-  <td class="col-svg"><div class="shot shot--missing">no figma-svg</div></td>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="https://preview.coo.ee/cadence/render/devices-loading__ideal__default.svg" alt="Devices/Loading SVG" /></div></td>
   <td class="col-png"><div class="shot"><img loading="lazy" src="images/devices-loading/ideal__default.png" alt="Devices/Loading PNG" /></div></td>
-  <td class="score score--na" title="needs both a PNG and a figma-svg">—</td>
+  <td class="score" aria-label="structural similarity">…</td>
 </tr>
-<tr class="crow">
+<tr class="crow" data-png="images/devices-empty/ideal__default.png" data-svg="https://preview.coo.ee/cadence/render/devices-empty__ideal__default.svg">
   <th scope="row" class="rowhead"><span class="cid">Devices/Empty</span><span class="grp">Devices</span></th>
-  <td class="col-svg"><div class="shot shot--missing">no figma-svg</div></td>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="https://preview.coo.ee/cadence/render/devices-empty__ideal__default.svg" alt="Devices/Empty SVG" /></div></td>
   <td class="col-png"><div class="shot"><img loading="lazy" src="images/devices-empty/ideal__default.png" alt="Devices/Empty PNG" /></div></td>
-  <td class="score score--na" title="needs both a PNG and a figma-svg">—</td>
+  <td class="score" aria-label="structural similarity">…</td>
 </tr>
-<tr class="crow">
+<tr class="crow" data-png="images/bookmarks-loaded/ideal__default.png" data-svg="https://preview.coo.ee/cadence/render/bookmarks-loaded__ideal__default.svg">
   <th scope="row" class="rowhead"><span class="cid">Bookmarks/Loaded</span><span class="grp">Bookmarks</span></th>
-  <td class="col-svg"><div class="shot shot--missing">no figma-svg</div></td>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="https://preview.coo.ee/cadence/render/bookmarks-loaded__ideal__default.svg" alt="Bookmarks/Loaded SVG" /></div></td>
   <td class="col-png"><div class="shot"><img loading="lazy" src="images/bookmarks-loaded/ideal__default.png" alt="Bookmarks/Loaded PNG" /></div></td>
-  <td class="score score--na" title="needs both a PNG and a figma-svg">—</td>
+  <td class="score" aria-label="structural similarity">…</td>
 </tr>
-<tr class="crow">
+<tr class="crow" data-png="images/bookmarks-loading/ideal__default.png" data-svg="https://preview.coo.ee/cadence/render/bookmarks-loading__ideal__default.svg">
   <th scope="row" class="rowhead"><span class="cid">Bookmarks/Loading</span><span class="grp">Bookmarks</span></th>
-  <td class="col-svg"><div class="shot shot--missing">no figma-svg</div></td>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="https://preview.coo.ee/cadence/render/bookmarks-loading__ideal__default.svg" alt="Bookmarks/Loading SVG" /></div></td>
   <td class="col-png"><div class="shot"><img loading="lazy" src="images/bookmarks-loading/ideal__default.png" alt="Bookmarks/Loading PNG" /></div></td>
-  <td class="score score--na" title="needs both a PNG and a figma-svg">—</td>
+  <td class="score" aria-label="structural similarity">…</td>
 </tr>
-<tr class="crow">
+<tr class="crow" data-png="images/devicefiles-loading/ideal__default.png" data-svg="https://preview.coo.ee/cadence/render/devicefiles-loading__ideal__default.svg">
   <th scope="row" class="rowhead"><span class="cid">DeviceFiles/Loading</span><span class="grp">Device files</span></th>
-  <td class="col-svg"><div class="shot shot--missing">no figma-svg</div></td>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="https://preview.coo.ee/cadence/render/devicefiles-loading__ideal__default.svg" alt="DeviceFiles/Loading SVG" /></div></td>
   <td class="col-png"><div class="shot"><img loading="lazy" src="images/devicefiles-loading/ideal__default.png" alt="DeviceFiles/Loading PNG" /></div></td>
-  <td class="score score--na" title="needs both a PNG and a figma-svg">—</td>
+  <td class="score" aria-label="structural similarity">…</td>
 </tr>
-<tr class="crow">
+<tr class="crow" data-png="images/devicefiles-notavailable/ideal__default.png" data-svg="https://preview.coo.ee/cadence/render/devicefiles-notavailable__ideal__default.svg">
   <th scope="row" class="rowhead"><span class="cid">DeviceFiles/NotAvailable</span><span class="grp">Device files</span></th>
-  <td class="col-svg"><div class="shot shot--missing">no figma-svg</div></td>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="https://preview.coo.ee/cadence/render/devicefiles-notavailable__ideal__default.svg" alt="DeviceFiles/NotAvailable SVG" /></div></td>
   <td class="col-png"><div class="shot"><img loading="lazy" src="images/devicefiles-notavailable/ideal__default.png" alt="DeviceFiles/NotAvailable PNG" /></div></td>
-  <td class="score score--na" title="needs both a PNG and a figma-svg">—</td>
+  <td class="score" aria-label="structural similarity">…</td>
 </tr>
-<tr class="crow">
+<tr class="crow" data-png="images/bluetooth-disconnected/ideal__default.png" data-svg="https://preview.coo.ee/cadence/render/bluetooth-disconnected__ideal__default.svg">
   <th scope="row" class="rowhead"><span class="cid">Bluetooth/Disconnected</span><span class="grp">Bluetooth</span></th>
-  <td class="col-svg"><div class="shot shot--missing">no figma-svg</div></td>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="https://preview.coo.ee/cadence/render/bluetooth-disconnected__ideal__default.svg" alt="Bluetooth/Disconnected SVG" /></div></td>
   <td class="col-png"><div class="shot"><img loading="lazy" src="images/bluetooth-disconnected/ideal__default.png" alt="Bluetooth/Disconnected PNG" /></div></td>
-  <td class="score score--na" title="needs both a PNG and a figma-svg">—</td>
+  <td class="score" aria-label="structural similarity">…</td>
 </tr>
-<tr class="crow">
+<tr class="crow" data-png="images/bluetooth-connectedplaying/ideal__default.png" data-svg="https://preview.coo.ee/cadence/render/bluetooth-connectedplaying__ideal__default.svg">
   <th scope="row" class="rowhead"><span class="cid">Bluetooth/ConnectedPlaying</span><span class="grp">Bluetooth</span></th>
-  <td class="col-svg"><div class="shot shot--missing">no figma-svg</div></td>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="https://preview.coo.ee/cadence/render/bluetooth-connectedplaying__ideal__default.svg" alt="Bluetooth/ConnectedPlaying SVG" /></div></td>
   <td class="col-png"><div class="shot"><img loading="lazy" src="images/bluetooth-connectedplaying/ideal__default.png" alt="Bluetooth/ConnectedPlaying PNG" /></div></td>
-  <td class="score score--na" title="needs both a PNG and a figma-svg">—</td>
+  <td class="score" aria-label="structural similarity">…</td>
 </tr>
-<tr class="crow">
+<tr class="crow" data-png="images/bluetooth-permissionmissing/ideal__default.png" data-svg="https://preview.coo.ee/cadence/render/bluetooth-permissionmissing__ideal__default.svg">
   <th scope="row" class="rowhead"><span class="cid">Bluetooth/PermissionMissing</span><span class="grp">Bluetooth</span></th>
-  <td class="col-svg"><div class="shot shot--missing">no figma-svg</div></td>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="https://preview.coo.ee/cadence/render/bluetooth-permissionmissing__ideal__default.svg" alt="Bluetooth/PermissionMissing SVG" /></div></td>
   <td class="col-png"><div class="shot"><img loading="lazy" src="images/bluetooth-permissionmissing/ideal__default.png" alt="Bluetooth/PermissionMissing PNG" /></div></td>
-  <td class="score score--na" title="needs both a PNG and a figma-svg">—</td>
+  <td class="score" aria-label="structural similarity">…</td>
 </tr>
-<tr class="crow">
+<tr class="crow" data-png="images/bluetooth-mp3mode/ideal__default.png" data-svg="https://preview.coo.ee/cadence/render/bluetooth-mp3mode__ideal__default.svg">
   <th scope="row" class="rowhead"><span class="cid">Bluetooth/Mp3Mode</span><span class="grp">Bluetooth</span></th>
-  <td class="col-svg"><div class="shot shot--missing">no figma-svg</div></td>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="https://preview.coo.ee/cadence/render/bluetooth-mp3mode__ideal__default.svg" alt="Bluetooth/Mp3Mode SVG" /></div></td>
   <td class="col-png"><div class="shot"><img loading="lazy" src="images/bluetooth-mp3mode/ideal__default.png" alt="Bluetooth/Mp3Mode PNG" /></div></td>
-  <td class="score score--na" title="needs both a PNG and a figma-svg">—</td>
+  <td class="score" aria-label="structural similarity">…</td>
 </tr>
-<tr class="crow">
+<tr class="crow" data-png="images/manage-empty/ideal__default.png" data-svg="figma/manage-empty/ideal__default.svg">
   <th scope="row" class="rowhead"><span class="cid">Manage/Empty</span><span class="grp">Manage</span></th>
-  <td class="col-svg"><div class="shot shot--missing">no figma-svg</div></td>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="figma/manage-empty/ideal__default.svg" alt="Manage/Empty SVG" /><span class="badge" title="hybrid sticker: opaque layers are raster crops, inlined for scoring">hybrid</span></div></td>
   <td class="col-png"><div class="shot"><img loading="lazy" src="images/manage-empty/ideal__default.png" alt="Manage/Empty PNG" /></div></td>
-  <td class="score score--na" title="needs both a PNG and a figma-svg">—</td>
+  <td class="score" aria-label="structural similarity">…</td>
 </tr>
-<tr class="crow">
+<tr class="crow" data-png="images/manage-populated/ideal__default.png" data-svg="figma/manage-populated/ideal__default.svg">
   <th scope="row" class="rowhead"><span class="cid">Manage/Populated</span><span class="grp">Manage</span></th>
-  <td class="col-svg"><div class="shot shot--missing">no figma-svg</div></td>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="figma/manage-populated/ideal__default.svg" alt="Manage/Populated SVG" /><span class="badge" title="hybrid sticker: opaque layers are raster crops, inlined for scoring">hybrid</span></div></td>
   <td class="col-png"><div class="shot"><img loading="lazy" src="images/manage-populated/ideal__default.png" alt="Manage/Populated PNG" /></div></td>
+  <td class="score" aria-label="structural similarity">…</td>
+</tr>
+<tr class="crow" data-png="images/manage-refreshing/ideal__default.png" data-svg="figma/manage-refreshing/ideal__default.svg">
+  <th scope="row" class="rowhead"><span class="cid">Manage/Refreshing</span><span class="grp">Manage</span></th>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="figma/manage-refreshing/ideal__default.svg" alt="Manage/Refreshing SVG" /><span class="badge" title="hybrid sticker: opaque layers are raster crops, inlined for scoring">hybrid</span></div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/manage-refreshing/ideal__default.png" alt="Manage/Refreshing PNG" /></div></td>
+  <td class="score" aria-label="structural similarity">…</td>
+</tr>
+<tr class="crow">
+  <th scope="row" class="rowhead"><span class="cid">Widgets/Headphone/Bluetooth</span><span class="grp">Launcher widgets</span></th>
+  <td class="col-svg"><div class="shot shot--missing">no figma-svg</div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/widgets-headphone-bluetooth/ideal__default__compact.png" alt="Widgets/Headphone/Bluetooth PNG" /></div></td>
   <td class="score score--na" title="needs both a PNG and a figma-svg">—</td>
 </tr>
 <tr class="crow">
-  <th scope="row" class="rowhead"><span class="cid">Manage/Refreshing</span><span class="grp">Manage</span></th>
+  <th scope="row" class="rowhead"><span class="cid">Widgets/Headphone/Mp3</span><span class="grp">Launcher widgets</span></th>
   <td class="col-svg"><div class="shot shot--missing">no figma-svg</div></td>
-  <td class="col-png"><div class="shot"><img loading="lazy" src="images/manage-refreshing/ideal__default.png" alt="Manage/Refreshing PNG" /></div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/widgets-headphone-mp3/ideal__default__compact.png" alt="Widgets/Headphone/Mp3 PNG" /></div></td>
+  <td class="score score--na" title="needs both a PNG and a figma-svg">—</td>
+</tr>
+<tr class="crow">
+  <th scope="row" class="rowhead"><span class="cid">Widgets/Headphone/Disconnected</span><span class="grp">Launcher widgets</span></th>
+  <td class="col-svg"><div class="shot shot--missing">no figma-svg</div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/widgets-headphone-disconnected/ideal__default__compact.png" alt="Widgets/Headphone/Disconnected PNG" /></div></td>
+  <td class="score score--na" title="needs both a PNG and a figma-svg">—</td>
+</tr>
+<tr class="crow">
+  <th scope="row" class="rowhead"><span class="cid">Widgets/Headphone/Light</span><span class="grp">Launcher widgets</span></th>
+  <td class="col-svg"><div class="shot shot--missing">no figma-svg</div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/widgets-headphone-light/ideal__default__light__compact.png" alt="Widgets/Headphone/Light PNG" /></div></td>
+  <td class="score score--na" title="needs both a PNG and a figma-svg">—</td>
+</tr>
+<tr class="crow">
+  <th scope="row" class="rowhead"><span class="cid">composeApp/HeadphoneWidgetMp32x1Preview</span><span class="grp">Previews</span></th>
+  <td class="col-svg"><div class="shot shot--missing">no figma-svg</div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/composeapp-headphonewidgetmp32x1preview/ideal__default__compact.png" alt="composeApp/HeadphoneWidgetMp32x1Preview PNG" /></div></td>
+  <td class="score score--na" title="needs both a PNG and a figma-svg">—</td>
+</tr>
+<tr class="crow">
+  <th scope="row" class="rowhead"><span class="cid">composeApp/HeadphoneWidgetMp33x1Preview</span><span class="grp">Previews</span></th>
+  <td class="col-svg"><div class="shot shot--missing">no figma-svg</div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/composeapp-headphonewidgetmp33x1preview/ideal__default__compact.png" alt="composeApp/HeadphoneWidgetMp33x1Preview PNG" /></div></td>
+  <td class="score score--na" title="needs both a PNG and a figma-svg">—</td>
+</tr>
+<tr class="crow">
+  <th scope="row" class="rowhead"><span class="cid">composeApp/HeadphoneWidgetMp35x1Preview</span><span class="grp">Previews</span></th>
+  <td class="col-svg"><div class="shot shot--missing">no figma-svg</div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/composeapp-headphonewidgetmp35x1preview/ideal__default__compact.png" alt="composeApp/HeadphoneWidgetMp35x1Preview PNG" /></div></td>
+  <td class="score score--na" title="needs both a PNG and a figma-svg">—</td>
+</tr>
+<tr class="crow">
+  <th scope="row" class="rowhead"><span class="cid">composeApp/HeadphoneWidgetMp33x2Preview</span><span class="grp">Previews</span></th>
+  <td class="col-svg"><div class="shot shot--missing">no figma-svg</div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/composeapp-headphonewidgetmp33x2preview/ideal__default__compact.png" alt="composeApp/HeadphoneWidgetMp33x2Preview PNG" /></div></td>
+  <td class="score score--na" title="needs both a PNG and a figma-svg">—</td>
+</tr>
+<tr class="crow">
+  <th scope="row" class="rowhead"><span class="cid">composeApp/HeadphoneWidgetMp35x3Preview</span><span class="grp">Previews</span></th>
+  <td class="col-svg"><div class="shot shot--missing">no figma-svg</div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/composeapp-headphonewidgetmp35x3preview/ideal__default__compact.png" alt="composeApp/HeadphoneWidgetMp35x3Preview PNG" /></div></td>
+  <td class="score score--na" title="needs both a PNG and a figma-svg">—</td>
+</tr>
+<tr class="crow" data-png="images/composeapp-podcastimportedpreview/ideal__default.png" data-svg="https://preview.coo.ee/cadence/render/composeapp-podcastimportedpreview__ideal__default.svg">
+  <th scope="row" class="rowhead"><span class="cid">composeApp/PodcastImportedPreview</span><span class="grp">Previews</span></th>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="https://preview.coo.ee/cadence/render/composeapp-podcastimportedpreview__ideal__default.svg" alt="composeApp/PodcastImportedPreview SVG" /></div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/composeapp-podcastimportedpreview/ideal__default.png" alt="composeApp/PodcastImportedPreview PNG" /></div></td>
+  <td class="score" aria-label="structural similarity">…</td>
+</tr>
+<tr class="crow" data-png="images/composeapp-podcastpreparedpreview/ideal__default.png" data-svg="https://preview.coo.ee/cadence/render/composeapp-podcastpreparedpreview__ideal__default.svg">
+  <th scope="row" class="rowhead"><span class="cid">composeApp/PodcastPreparedPreview</span><span class="grp">Previews</span></th>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="https://preview.coo.ee/cadence/render/composeapp-podcastpreparedpreview__ideal__default.svg" alt="composeApp/PodcastPreparedPreview SVG" /></div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/composeapp-podcastpreparedpreview/ideal__default.png" alt="composeApp/PodcastPreparedPreview PNG" /></div></td>
+  <td class="score" aria-label="structural similarity">…</td>
+</tr>
+<tr class="crow" data-png="images/composeapp-addpodcastspreview/ideal__default.png" data-svg="https://preview.coo.ee/cadence/render/composeapp-addpodcastspreview__ideal__default.svg">
+  <th scope="row" class="rowhead"><span class="cid">composeApp/AddPodcastsPreview</span><span class="grp">Previews</span></th>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="https://preview.coo.ee/cadence/render/composeapp-addpodcastspreview__ideal__default.svg" alt="composeApp/AddPodcastsPreview SVG" /></div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/composeapp-addpodcastspreview/ideal__default.png" alt="composeApp/AddPodcastsPreview PNG" /></div></td>
+  <td class="score" aria-label="structural similarity">…</td>
+</tr>
+<tr class="crow" data-png="images/composeapp-podcastpocketcastspreview/ideal__default.png" data-svg="https://preview.coo.ee/cadence/render/composeapp-podcastpocketcastspreview__ideal__default.svg">
+  <th scope="row" class="rowhead"><span class="cid">composeApp/PodcastPocketCastsPreview</span><span class="grp">Previews</span></th>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="https://preview.coo.ee/cadence/render/composeapp-podcastpocketcastspreview__ideal__default.svg" alt="composeApp/PodcastPocketCastsPreview SVG" /></div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/composeapp-podcastpocketcastspreview/ideal__default.png" alt="composeApp/PodcastPocketCastsPreview PNG" /></div></td>
+  <td class="score" aria-label="structural similarity">…</td>
+</tr>
+<tr class="crow" data-png="images/composeapp-homelibrarypreview/ideal__default.png" data-svg="https://preview.coo.ee/cadence/render/composeapp-homelibrarypreview__ideal__default.svg">
+  <th scope="row" class="rowhead"><span class="cid">composeApp/HomeLibraryPreview</span><span class="grp">Previews</span></th>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="https://preview.coo.ee/cadence/render/composeapp-homelibrarypreview__ideal__default.svg" alt="composeApp/HomeLibraryPreview SVG" /></div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/composeapp-homelibrarypreview/ideal__default.png" alt="composeApp/HomeLibraryPreview PNG" /></div></td>
+  <td class="score" aria-label="structural similarity">…</td>
+</tr>
+<tr class="crow" data-png="images/composeapp-homeheadphonespreview/ideal__default.png" data-svg="https://preview.coo.ee/cadence/render/composeapp-homeheadphonespreview__ideal__default.svg">
+  <th scope="row" class="rowhead"><span class="cid">composeApp/HomeHeadphonesPreview</span><span class="grp">Previews</span></th>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="https://preview.coo.ee/cadence/render/composeapp-homeheadphonespreview__ideal__default.svg" alt="composeApp/HomeHeadphonesPreview SVG" /></div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/composeapp-homeheadphonespreview/ideal__default.png" alt="composeApp/HomeHeadphonesPreview PNG" /></div></td>
+  <td class="score" aria-label="structural similarity">…</td>
+</tr>
+<tr class="crow" data-png="images/composeapp-syncmodereadypreview/ideal__default.png" data-svg="https://preview.coo.ee/cadence/render/composeapp-syncmodereadypreview__ideal__default.svg">
+  <th scope="row" class="rowhead"><span class="cid">composeApp/SyncModeReadyPreview</span><span class="grp">Previews</span></th>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="https://preview.coo.ee/cadence/render/composeapp-syncmodereadypreview__ideal__default.svg" alt="composeApp/SyncModeReadyPreview SVG" /></div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/composeapp-syncmodereadypreview/ideal__default.png" alt="composeApp/SyncModeReadyPreview PNG" /></div></td>
+  <td class="score" aria-label="structural similarity">…</td>
+</tr>
+<tr class="crow" data-png="images/composeapp-syncmodereadydarkpreview/ideal__default__dark.png" data-png-dark="images/composeapp-syncmodereadydarkpreview/ideal__default__dark.png" data-svg="https://preview.coo.ee/cadence/render/composeapp-syncmodereadydarkpreview__ideal__default__dark.svg" data-svg-dark="https://preview.coo.ee/cadence/render/composeapp-syncmodereadydarkpreview__ideal__default__dark.svg">
+  <th scope="row" class="rowhead"><span class="cid">composeApp/SyncModeReadyDarkPreview</span><span class="grp">Previews</span></th>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="https://preview.coo.ee/cadence/render/composeapp-syncmodereadydarkpreview__ideal__default__dark.svg" alt="composeApp/SyncModeReadyDarkPreview SVG" /></div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/composeapp-syncmodereadydarkpreview/ideal__default__dark.png" alt="composeApp/SyncModeReadyDarkPreview PNG" /></div></td>
+  <td class="score" aria-label="structural similarity">…</td>
+</tr>
+<tr class="crow" data-png="images/composeapp-syncmodesyncingpreview/ideal__default.png" data-svg="https://preview.coo.ee/cadence/render/composeapp-syncmodesyncingpreview__ideal__default.svg">
+  <th scope="row" class="rowhead"><span class="cid">composeApp/SyncModeSyncingPreview</span><span class="grp">Previews</span></th>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="https://preview.coo.ee/cadence/render/composeapp-syncmodesyncingpreview__ideal__default.svg" alt="composeApp/SyncModeSyncingPreview SVG" /></div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/composeapp-syncmodesyncingpreview/ideal__default.png" alt="composeApp/SyncModeSyncingPreview PNG" /></div></td>
+  <td class="score" aria-label="structural similarity">…</td>
+</tr>
+<tr class="crow" data-png="images/composeapp-syncmodedonepreview/ideal__default.png" data-svg="https://preview.coo.ee/cadence/render/composeapp-syncmodedonepreview__ideal__default.svg">
+  <th scope="row" class="rowhead"><span class="cid">composeApp/SyncModeDonePreview</span><span class="grp">Previews</span></th>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="https://preview.coo.ee/cadence/render/composeapp-syncmodedonepreview__ideal__default.svg" alt="composeApp/SyncModeDonePreview SVG" /></div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/composeapp-syncmodedonepreview/ideal__default.png" alt="composeApp/SyncModeDonePreview PNG" /></div></td>
+  <td class="score" aria-label="structural similarity">…</td>
+</tr>
+<tr class="crow">
+  <th scope="row" class="rowhead"><span class="cid">composeApp/MainActivity</span><span class="grp">Previews</span></th>
+  <td class="col-svg"><div class="shot shot--missing">no figma-svg</div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/composeapp-mainactivity/ideal__default__compact.png" alt="composeApp/MainActivity PNG" /></div></td>
+  <td class="score score--na" title="needs both a PNG and a figma-svg">—</td>
+</tr>
+<tr class="crow" data-png="images/composeapp-playstorephonehomelight/ideal__default__light__compact.png" data-svg="https://preview.coo.ee/cadence/render/composeapp-playstorephonehomelight__ideal__default__light__compact.svg">
+  <th scope="row" class="rowhead"><span class="cid">composeApp/PlayStorePhoneHomeLight</span><span class="grp">Play Store</span></th>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="https://preview.coo.ee/cadence/render/composeapp-playstorephonehomelight__ideal__default__light__compact.svg" alt="composeApp/PlayStorePhoneHomeLight SVG" /></div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/composeapp-playstorephonehomelight/ideal__default__light__compact.png" alt="composeApp/PlayStorePhoneHomeLight PNG" /></div></td>
+  <td class="score" aria-label="structural similarity">…</td>
+</tr>
+<tr class="crow" data-png="images/composeapp-playstorephonehomedark/ideal__default__dark__compact.png" data-png-dark="images/composeapp-playstorephonehomedark/ideal__default__dark__compact.png" data-svg="https://preview.coo.ee/cadence/render/composeapp-playstorephonehomedark__ideal__default__dark__compact.svg" data-svg-dark="https://preview.coo.ee/cadence/render/composeapp-playstorephonehomedark__ideal__default__dark__compact.svg">
+  <th scope="row" class="rowhead"><span class="cid">composeApp/PlayStorePhoneHomeDark</span><span class="grp">Play Store</span></th>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="https://preview.coo.ee/cadence/render/composeapp-playstorephonehomedark__ideal__default__dark__compact.svg" alt="composeApp/PlayStorePhoneHomeDark SVG" /></div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/composeapp-playstorephonehomedark/ideal__default__dark__compact.png" alt="composeApp/PlayStorePhoneHomeDark PNG" /></div></td>
+  <td class="score" aria-label="structural similarity">…</td>
+</tr>
+<tr class="crow" data-png="images/composeapp-playstorephonesync/ideal__default__compact.png" data-svg="https://preview.coo.ee/cadence/render/composeapp-playstorephonesync__ideal__default__compact.svg">
+  <th scope="row" class="rowhead"><span class="cid">composeApp/PlayStorePhoneSync</span><span class="grp">Play Store</span></th>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="https://preview.coo.ee/cadence/render/composeapp-playstorephonesync__ideal__default__compact.svg" alt="composeApp/PlayStorePhoneSync SVG" /></div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/composeapp-playstorephonesync/ideal__default__compact.png" alt="composeApp/PlayStorePhoneSync PNG" /></div></td>
+  <td class="score" aria-label="structural similarity">…</td>
+</tr>
+<tr class="crow" data-png="images/composeapp-playstorephonebluetooth/ideal__default__compact.png" data-svg="https://preview.coo.ee/cadence/render/composeapp-playstorephonebluetooth__ideal__default__compact.svg">
+  <th scope="row" class="rowhead"><span class="cid">composeApp/PlayStorePhoneBluetooth</span><span class="grp">Play Store</span></th>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="https://preview.coo.ee/cadence/render/composeapp-playstorephonebluetooth__ideal__default__compact.svg" alt="composeApp/PlayStorePhoneBluetooth SVG" /></div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/composeapp-playstorephonebluetooth/ideal__default__compact.png" alt="composeApp/PlayStorePhoneBluetooth PNG" /></div></td>
+  <td class="score" aria-label="structural similarity">…</td>
+</tr>
+<tr class="crow" data-png="images/composeapp-playstorephonemanage/ideal__default__compact.png" data-svg="figma/composeapp-playstorephonemanage/ideal__default__compact.svg">
+  <th scope="row" class="rowhead"><span class="cid">composeApp/PlayStorePhoneManage</span><span class="grp">Play Store</span></th>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="figma/composeapp-playstorephonemanage/ideal__default__compact.svg" alt="composeApp/PlayStorePhoneManage SVG" /><span class="badge" title="hybrid sticker: opaque layers are raster crops, inlined for scoring">hybrid</span></div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/composeapp-playstorephonemanage/ideal__default__compact.png" alt="composeApp/PlayStorePhoneManage PNG" /></div></td>
+  <td class="score" aria-label="structural similarity">…</td>
+</tr>
+<tr class="crow" data-png="images/composeapp-playstoreseveninchhomelight/ideal__default__light__medium.png" data-svg="https://preview.coo.ee/cadence/render/composeapp-playstoreseveninchhomelight__ideal__default__light__medium.svg">
+  <th scope="row" class="rowhead"><span class="cid">composeApp/PlayStoreSevenInchHomeLight</span><span class="grp">Play Store</span></th>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="https://preview.coo.ee/cadence/render/composeapp-playstoreseveninchhomelight__ideal__default__light__medium.svg" alt="composeApp/PlayStoreSevenInchHomeLight SVG" /></div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/composeapp-playstoreseveninchhomelight/ideal__default__light__medium.png" alt="composeApp/PlayStoreSevenInchHomeLight PNG" /></div></td>
+  <td class="score" aria-label="structural similarity">…</td>
+</tr>
+<tr class="crow" data-png="images/composeapp-playstoreseveninchhomedark/ideal__default__dark__medium.png" data-png-dark="images/composeapp-playstoreseveninchhomedark/ideal__default__dark__medium.png" data-svg="https://preview.coo.ee/cadence/render/composeapp-playstoreseveninchhomedark__ideal__default__dark__medium.svg" data-svg-dark="https://preview.coo.ee/cadence/render/composeapp-playstoreseveninchhomedark__ideal__default__dark__medium.svg">
+  <th scope="row" class="rowhead"><span class="cid">composeApp/PlayStoreSevenInchHomeDark</span><span class="grp">Play Store</span></th>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="https://preview.coo.ee/cadence/render/composeapp-playstoreseveninchhomedark__ideal__default__dark__medium.svg" alt="composeApp/PlayStoreSevenInchHomeDark SVG" /></div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/composeapp-playstoreseveninchhomedark/ideal__default__dark__medium.png" alt="composeApp/PlayStoreSevenInchHomeDark PNG" /></div></td>
+  <td class="score" aria-label="structural similarity">…</td>
+</tr>
+<tr class="crow" data-png="images/composeapp-playstoreteninchhomelight/ideal__default__light__medium.png" data-svg="https://preview.coo.ee/cadence/render/composeapp-playstoreteninchhomelight__ideal__default__light__medium.svg">
+  <th scope="row" class="rowhead"><span class="cid">composeApp/PlayStoreTenInchHomeLight</span><span class="grp">Play Store</span></th>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="https://preview.coo.ee/cadence/render/composeapp-playstoreteninchhomelight__ideal__default__light__medium.svg" alt="composeApp/PlayStoreTenInchHomeLight SVG" /></div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/composeapp-playstoreteninchhomelight/ideal__default__light__medium.png" alt="composeApp/PlayStoreTenInchHomeLight PNG" /></div></td>
+  <td class="score" aria-label="structural similarity">…</td>
+</tr>
+<tr class="crow" data-png="images/composeapp-playstoreteninchhomedark/ideal__default__dark__medium.png" data-png-dark="images/composeapp-playstoreteninchhomedark/ideal__default__dark__medium.png" data-svg="https://preview.coo.ee/cadence/render/composeapp-playstoreteninchhomedark__ideal__default__dark__medium.svg" data-svg-dark="https://preview.coo.ee/cadence/render/composeapp-playstoreteninchhomedark__ideal__default__dark__medium.svg">
+  <th scope="row" class="rowhead"><span class="cid">composeApp/PlayStoreTenInchHomeDark</span><span class="grp">Play Store</span></th>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="https://preview.coo.ee/cadence/render/composeapp-playstoreteninchhomedark__ideal__default__dark__medium.svg" alt="composeApp/PlayStoreTenInchHomeDark SVG" /></div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/composeapp-playstoreteninchhomedark/ideal__default__dark__medium.png" alt="composeApp/PlayStoreTenInchHomeDark PNG" /></div></td>
+  <td class="score" aria-label="structural similarity">…</td>
+</tr>
+<tr class="crow">
+  <th scope="row" class="rowhead"><span class="cid">swimUi/WaterButtonsLauncherPreview</span><span class="grp">Previews</span></th>
+  <td class="col-svg"><div class="shot shot--missing">no figma-svg</div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/swimui-waterbuttonslauncherpreview/ideal__default__compact.png" alt="swimUi/WaterButtonsLauncherPreview PNG" /></div></td>
+  <td class="score score--na" title="needs both a PNG and a figma-svg">—</td>
+</tr>
+<tr class="crow">
+  <th scope="row" class="rowhead"><span class="cid">swimUi/WaterButtonsWearPreview</span><span class="grp">Previews</span></th>
+  <td class="col-svg"><div class="shot shot--missing">no figma-svg</div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/swimui-waterbuttonswearpreview/ideal__default__compact.png" alt="swimUi/WaterButtonsWearPreview PNG" /></div></td>
+  <td class="score score--na" title="needs both a PNG and a figma-svg">—</td>
+</tr>
+<tr class="crow">
+  <th scope="row" class="rowhead"><span class="cid">swimUi/SwimLaneLapsPreview</span><span class="grp">Previews</span></th>
+  <td class="col-svg"><div class="shot shot--missing">no figma-svg</div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/swimui-swimlanelapspreview/ideal__default__compact.png" alt="swimUi/SwimLaneLapsPreview PNG" /></div></td>
+  <td class="score score--na" title="needs both a PNG and a figma-svg">—</td>
+</tr>
+<tr class="crow">
+  <th scope="row" class="rowhead"><span class="cid">swimUi/SwimLaneFlipTurnPreview</span><span class="grp">Previews</span></th>
+  <td class="col-svg"><div class="shot shot--missing">no figma-svg</div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/swimui-swimlaneflipturnpreview/ideal__default__compact.png" alt="swimUi/SwimLaneFlipTurnPreview PNG" /></div></td>
+  <td class="score score--na" title="needs both a PNG and a figma-svg">—</td>
+</tr>
+<tr class="crow">
+  <th scope="row" class="rowhead"><span class="cid">swimUi/SwimLaneFlipTurnLauncherPreview</span><span class="grp">Previews</span></th>
+  <td class="col-svg"><div class="shot shot--missing">no figma-svg</div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/swimui-swimlaneflipturnlauncherpreview/ideal__default__compact.png" alt="swimUi/SwimLaneFlipTurnLauncherPreview PNG" /></div></td>
+  <td class="score score--na" title="needs both a PNG and a figma-svg">—</td>
+</tr>
+<tr class="crow">
+  <th scope="row" class="rowhead"><span class="cid">swimUi/SwimLaneEndlessPreview</span><span class="grp">Previews</span></th>
+  <td class="col-svg"><div class="shot shot--missing">no figma-svg</div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/swimui-swimlaneendlesspreview/ideal__default__compact.png" alt="swimUi/SwimLaneEndlessPreview PNG" /></div></td>
+  <td class="score score--na" title="needs both a PNG and a figma-svg">—</td>
+</tr>
+<tr class="crow">
+  <th scope="row" class="rowhead"><span class="cid">swimUi/SwimmingPoolPreview</span><span class="grp">Previews</span></th>
+  <td class="col-svg"><div class="shot shot--missing">no figma-svg</div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/swimui-swimmingpoolpreview/ideal__default__compact.png" alt="swimUi/SwimmingPoolPreview PNG" /></div></td>
+  <td class="score score--na" title="needs both a PNG and a figma-svg">—</td>
+</tr>
+<tr class="crow" data-png="images/wearapp-connectedwearcompanionpreview/ideal__default__largeround.png" data-svg="figma/wearapp-connectedwearcompanionpreview/ideal__default__largeround.svg">
+  <th scope="row" class="rowhead"><span class="cid">wearApp/ConnectedWearCompanionPreview</span><span class="grp">Devices - Large Round</span></th>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="figma/wearapp-connectedwearcompanionpreview/ideal__default__largeround.svg" alt="wearApp/ConnectedWearCompanionPreview SVG" /><span class="badge" title="hybrid sticker: opaque layers are raster crops, inlined for scoring">hybrid</span></div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/wearapp-connectedwearcompanionpreview/ideal__default__largeround.png" alt="wearApp/ConnectedWearCompanionPreview PNG" /></div></td>
+  <td class="score" aria-label="structural similarity">…</td>
+</tr>
+<tr class="crow" data-png="images/wearapp-localaudioplaylistpreview/ideal__default__largeround.png" data-svg="figma/wearapp-localaudioplaylistpreview/ideal__default__largeround.svg">
+  <th scope="row" class="rowhead"><span class="cid">wearApp/LocalAudioPlaylistPreview</span><span class="grp">Devices - Large Round</span></th>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="figma/wearapp-localaudioplaylistpreview/ideal__default__largeround.svg" alt="wearApp/LocalAudioPlaylistPreview SVG" /><span class="badge" title="hybrid sticker: opaque layers are raster crops, inlined for scoring">hybrid</span></div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/wearapp-localaudioplaylistpreview/ideal__default__largeround.png" alt="wearApp/LocalAudioPlaylistPreview PNG" /></div></td>
+  <td class="score" aria-label="structural similarity">…</td>
+</tr>
+<tr class="crow" data-png="images/wearapp-modeandcontrolswearwidgetrectangularpreview/ideal__default.png" data-svg="figma/wearapp-modeandcontrolswearwidgetrectangularpreview/ideal__default.svg">
+  <th scope="row" class="rowhead"><span class="cid">wearApp/ModeAndControlsWearWidgetRectangularPreview</span><span class="grp">Previews</span></th>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="figma/wearapp-modeandcontrolswearwidgetrectangularpreview/ideal__default.svg" alt="wearApp/ModeAndControlsWearWidgetRectangularPreview SVG" /><span class="badge" title="hybrid sticker: opaque layers are raster crops, inlined for scoring">hybrid</span></div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/wearapp-modeandcontrolswearwidgetrectangularpreview/ideal__default.png" alt="wearApp/ModeAndControlsWearWidgetRectangularPreview PNG" /></div></td>
+  <td class="score" aria-label="structural similarity">…</td>
+</tr>
+<tr class="crow" data-png="images/wearapp-modeandcontrolswearwidgetroundpreview/ideal__default.png" data-svg="figma/wearapp-modeandcontrolswearwidgetroundpreview/ideal__default.svg">
+  <th scope="row" class="rowhead"><span class="cid">wearApp/ModeAndControlsWearWidgetRoundPreview</span><span class="grp">Previews</span></th>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="figma/wearapp-modeandcontrolswearwidgetroundpreview/ideal__default.svg" alt="wearApp/ModeAndControlsWearWidgetRoundPreview SVG" /><span class="badge" title="hybrid sticker: opaque layers are raster crops, inlined for scoring">hybrid</span></div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/wearapp-modeandcontrolswearwidgetroundpreview/ideal__default.png" alt="wearApp/ModeAndControlsWearWidgetRoundPreview PNG" /></div></td>
+  <td class="score" aria-label="structural similarity">…</td>
+</tr>
+<tr class="crow" data-png="images/wearapp-modeandcontrolswearwidgetsquirclepreview/ideal__default.png" data-svg="figma/wearapp-modeandcontrolswearwidgetsquirclepreview/ideal__default.svg">
+  <th scope="row" class="rowhead"><span class="cid">wearApp/ModeAndControlsWearWidgetSquirclePreview</span><span class="grp">Previews</span></th>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="figma/wearapp-modeandcontrolswearwidgetsquirclepreview/ideal__default.svg" alt="wearApp/ModeAndControlsWearWidgetSquirclePreview SVG" /><span class="badge" title="hybrid sticker: opaque layers are raster crops, inlined for scoring">hybrid</span></div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/wearapp-modeandcontrolswearwidgetsquirclepreview/ideal__default.png" alt="wearApp/ModeAndControlsWearWidgetSquirclePreview PNG" /></div></td>
+  <td class="score" aria-label="structural similarity">…</td>
+</tr>
+<tr class="crow" data-png="images/wearapp-localaudioplaylistwearwidgetrectangularpreview/ideal__default.png" data-svg="figma/wearapp-localaudioplaylistwearwidgetrectangularpreview/ideal__default.svg">
+  <th scope="row" class="rowhead"><span class="cid">wearApp/LocalAudioPlaylistWearWidgetRectangularPreview</span><span class="grp">Previews</span></th>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="figma/wearapp-localaudioplaylistwearwidgetrectangularpreview/ideal__default.svg" alt="wearApp/LocalAudioPlaylistWearWidgetRectangularPreview SVG" /><span class="badge" title="hybrid sticker: opaque layers are raster crops, inlined for scoring">hybrid</span></div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/wearapp-localaudioplaylistwearwidgetrectangularpreview/ideal__default.png" alt="wearApp/LocalAudioPlaylistWearWidgetRectangularPreview PNG" /></div></td>
+  <td class="score" aria-label="structural similarity">…</td>
+</tr>
+<tr class="crow" data-png="images/wearapp-localaudioplaylistwearwidgetroundpreview/ideal__default.png" data-svg="figma/wearapp-localaudioplaylistwearwidgetroundpreview/ideal__default.svg">
+  <th scope="row" class="rowhead"><span class="cid">wearApp/LocalAudioPlaylistWearWidgetRoundPreview</span><span class="grp">Previews</span></th>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="figma/wearapp-localaudioplaylistwearwidgetroundpreview/ideal__default.svg" alt="wearApp/LocalAudioPlaylistWearWidgetRoundPreview SVG" /><span class="badge" title="hybrid sticker: opaque layers are raster crops, inlined for scoring">hybrid</span></div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/wearapp-localaudioplaylistwearwidgetroundpreview/ideal__default.png" alt="wearApp/LocalAudioPlaylistWearWidgetRoundPreview PNG" /></div></td>
+  <td class="score" aria-label="structural similarity">…</td>
+</tr>
+<tr class="crow" data-png="images/wearapp-localaudioplaylistwearwidgetsquirclepreview/ideal__default.png" data-svg="figma/wearapp-localaudioplaylistwearwidgetsquirclepreview/ideal__default.svg">
+  <th scope="row" class="rowhead"><span class="cid">wearApp/LocalAudioPlaylistWearWidgetSquirclePreview</span><span class="grp">Previews</span></th>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="figma/wearapp-localaudioplaylistwearwidgetsquirclepreview/ideal__default.svg" alt="wearApp/LocalAudioPlaylistWearWidgetSquirclePreview SVG" /><span class="badge" title="hybrid sticker: opaque layers are raster crops, inlined for scoring">hybrid</span></div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/wearapp-localaudioplaylistwearwidgetsquirclepreview/ideal__default.png" alt="wearApp/LocalAudioPlaylistWearWidgetSquirclePreview PNG" /></div></td>
+  <td class="score" aria-label="structural similarity">…</td>
+</tr>
+<tr class="crow" data-png="images/wearapp-syncstatuswearwidgetrectangularpreview/ideal__default.png" data-svg="figma/wearapp-syncstatuswearwidgetrectangularpreview/ideal__default.svg">
+  <th scope="row" class="rowhead"><span class="cid">wearApp/SyncStatusWearWidgetRectangularPreview</span><span class="grp">Previews</span></th>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="figma/wearapp-syncstatuswearwidgetrectangularpreview/ideal__default.svg" alt="wearApp/SyncStatusWearWidgetRectangularPreview SVG" /><span class="badge" title="hybrid sticker: opaque layers are raster crops, inlined for scoring">hybrid</span></div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/wearapp-syncstatuswearwidgetrectangularpreview/ideal__default.png" alt="wearApp/SyncStatusWearWidgetRectangularPreview PNG" /></div></td>
+  <td class="score" aria-label="structural similarity">…</td>
+</tr>
+<tr class="crow" data-png="images/wearapp-syncstatuswearwidgetroundpreview/ideal__default.png" data-svg="figma/wearapp-syncstatuswearwidgetroundpreview/ideal__default.svg">
+  <th scope="row" class="rowhead"><span class="cid">wearApp/SyncStatusWearWidgetRoundPreview</span><span class="grp">Previews</span></th>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="figma/wearapp-syncstatuswearwidgetroundpreview/ideal__default.svg" alt="wearApp/SyncStatusWearWidgetRoundPreview SVG" /><span class="badge" title="hybrid sticker: opaque layers are raster crops, inlined for scoring">hybrid</span></div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/wearapp-syncstatuswearwidgetroundpreview/ideal__default.png" alt="wearApp/SyncStatusWearWidgetRoundPreview PNG" /></div></td>
+  <td class="score" aria-label="structural similarity">…</td>
+</tr>
+<tr class="crow" data-png="images/wearapp-syncstatuswearwidgetsquirclepreview/ideal__default.png" data-svg="figma/wearapp-syncstatuswearwidgetsquirclepreview/ideal__default.svg">
+  <th scope="row" class="rowhead"><span class="cid">wearApp/SyncStatusWearWidgetSquirclePreview</span><span class="grp">Previews</span></th>
+  <td class="col-svg"><div class="shot"><img loading="lazy" src="figma/wearapp-syncstatuswearwidgetsquirclepreview/ideal__default.svg" alt="wearApp/SyncStatusWearWidgetSquirclePreview SVG" /><span class="badge" title="hybrid sticker: opaque layers are raster crops, inlined for scoring">hybrid</span></div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/wearapp-syncstatuswearwidgetsquirclepreview/ideal__default.png" alt="wearApp/SyncStatusWearWidgetSquirclePreview PNG" /></div></td>
+  <td class="score" aria-label="structural similarity">…</td>
+</tr>
+<tr class="crow">
+  <th scope="row" class="rowhead"><span class="cid">wearApp/WearMainActivity</span><span class="grp">Previews</span></th>
+  <td class="col-svg"><div class="shot shot--missing">no figma-svg</div></td>
+  <td class="col-png"><div class="shot"><img loading="lazy" src="images/wearapp-wearmainactivity/ideal__default__compact.png" alt="wearApp/WearMainActivity PNG" /></div></td>
   <td class="score score--na" title="needs both a PNG and a figma-svg">—</td>
 </tr></tbody>
   </table>

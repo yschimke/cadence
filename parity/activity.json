@@ -1,471 +1,487 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-10-11T16:48:24.530Z",
+  "generatedAt": "2026-11-01T12:42:31.972Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
       {
-        "sha": "fed18d8099e2fe3b79b604d151e0c955e352f0a8",
-        "subject": "feat: add desktop and browser support with USB discovery (#352)",
-        "at": "2026-10-11T17:40:12+01:00",
+        "sha": "46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f",
+        "subject": "fix(previews): give round Wear devices catalog breakpoints and render the debug variant everywhere (#470)",
+        "at": "2026-11-01T12:30:44Z",
         "author": "Yuri Schimke",
         "previewIds": [],
         "components": []
       },
       {
-        "sha": "9cbc08bcc9c0339e8cdaa7c2c8ee0c2d7a5a5bd8",
-        "subject": "chore(deps): extend the shared yschimke/renovate-config preset (#350)",
-        "at": "2026-10-11T13:17:17+01:00",
+        "sha": "57b1546aa6a1fe345da6617193b34b25c33fd362",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.80.0 (#469)",
+        "at": "2026-11-01T11:13:54Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "778a2de5bdb7e3efb4cc8e388cbcbadefded319b",
+        "subject": "ci(previews): /audit on request, a release-to-release preview diff, and unblock the catalog publish (#466)",
+        "at": "2026-11-01T11:07:04Z",
         "author": "Yuri Schimke",
         "previewIds": [],
         "components": []
       },
       {
-        "sha": "c422b628e0ff23b7c7dbff1c0418314cceb20527",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.44.0 (#349)",
-        "at": "2026-10-11T08:22:26Z",
+        "sha": "5f827b5c3ad5459cac7f16a3d22ec73d60f99d07",
+        "subject": "fix(deps): update dependency ee.schimke.composeai:rc-widget-launcher to v2.22.0 (#468)",
+        "at": "2026-11-01T10:32:00Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
       },
       {
-        "sha": "ccc824cc108e6e165c154f29f9a8504f7ccd2d65",
-        "subject": "ci: use the shared design-artifacts workflow (#348)",
-        "at": "2026-10-11T08:55:23+01:00",
+        "sha": "85e1ba46ebc1b2cde8692abe5e659916074e22ee",
+        "subject": "fix(deps): update dependency ee.schimke.composeai:preview-annotations to v3.27.1 (#467)",
+        "at": "2026-11-01T10:31:48Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "d7c43999ab61fcbffb05c2cb222181efb451c423",
+        "subject": "fix(build): enable release-variant unit tests on :swimUi and :wearApp too (#465)",
+        "at": "2026-11-01T10:23:57Z",
         "author": "Yuri Schimke",
         "previewIds": [],
         "components": []
       },
       {
-        "sha": "c798f9242abac9ac297b7357bf7450f4754c71ba",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.43.0 (#347)",
-        "at": "2026-10-11T02:27:03Z",
+        "sha": "d9a5f726660307e2f9540fc8ef94ed56e3442911",
+        "subject": "fix: polish Bluetooth permission recovery (#464)",
+        "at": "2026-11-01T10:23:41Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "fcfee303c15cccb266a5254c57fd0af99c4d6e8d",
+        "subject": "fix(ci): pin the design-artifacts CLI to a published plugin (#462)",
+        "at": "2026-11-01T09:53:54Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "5af53383db9981c04d891edca270f22988fb43bc",
+        "subject": "chore(deps): update openai/codex-action action to v1.13 (#463)",
+        "at": "2026-11-01T09:48:17Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
       },
       {
-        "sha": "dab3ce1742d45315757f84e030306333dae144ef",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.42.0 (#346)",
-        "at": "2026-10-10T20:04:33Z",
+        "sha": "eb2a4ea2fcbd1b508644dffd2cae9ed7c6699bee",
+        "subject": "ci: publish widgets to preview.coo.ee and fix the preview audit (#461)",
+        "at": "2026-11-01T09:33:40Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "962ef097b32f8e3f27fc8905c717b3e551cc2227",
+        "subject": "fix: refresh permissions after settings return (#459)",
+        "at": "2026-10-31T23:39:53Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "c1f93501c842ba0c223a082ec7dd6b4f970b8476",
+        "subject": "chore(main): release 0.1.9 (#456)",
+        "at": "2026-10-31T22:16:08Z",
+        "author": "github-actions[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "34204f9cb5fda066735123ddd0d9db9d4e572df1",
+        "subject": "fix(deps): update dependency com.squareup.okhttp3:okhttp to v5.5.1 (#458)",
+        "at": "2026-10-31T22:07:04Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
       },
       {
-        "sha": "6119c2c4c9859c81df868c6ea9aaad651b2dc8d8",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.39.1 (#345)",
-        "at": "2026-10-10T02:33:55Z",
+        "sha": "8012f1f0d9678e0cab25d793492bac557bcf6218",
+        "subject": "fix(build): swap java.net.http for OkHttp in Google sync + enable release unit tests (#457)",
+        "at": "2026-10-31T21:58:23Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "cc2a8592284f0aa3d02c2501f6d78aee52229550",
+        "subject": "fix(widgets): draw headphone widget icons in a canvas; Remote Compose on Android 16 again (#455)",
+        "at": "2026-10-31T20:18:12Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "0b3e08c8857b710d61b58798f5012089ac513848",
+        "subject": "chore(main): release 0.1.8 (#430)",
+        "at": "2026-10-31T19:48:18Z",
+        "author": "github-actions[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "ba0e1cc0626cc9f3aee783fc2ca81dcba0bd458c",
+        "subject": "fix(swim): animate on Android 16 launchers; drop drawWithContent water (#454)",
+        "at": "2026-10-31T19:43:19Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "6edcf047e7c45c10ff202007795699d72c909ad8",
+        "subject": "feat(widgets): swimming pool animations for launcher and Wear widgets (#451)",
+        "at": "2026-10-31T19:01:05Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "faee231cc715bba3a130958614af35143dc00ca4",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.79.2 (#453)",
+        "at": "2026-10-31T18:38:03Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
       },
       {
-        "sha": "0a5be3e94589d0fad21fe4a0e460654f31797462",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.38.0 (#344)",
-        "at": "2026-10-09T23:25:14Z",
+        "sha": "66f5f5b7ed61c4abca8dbbb4d699ee421abd8f3f",
+        "subject": "ci: make the preview audit always report, and judge Wear with Wear rules (#452)",
+        "at": "2026-10-31T18:34:06Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "188e65f22ac6c6873c0b66ee2b26afce47f402c9",
+        "subject": "feat: adaptive headphone widget and controls screen, with widget design guidelines (#450)",
+        "at": "2026-10-31T18:03:33Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "d1e45c0a51c7240edc421bdac4080e36f1a2fd5b",
+        "subject": "fix(wear): single-row small now-playing widget, fix remote-material3 crash (#449)",
+        "at": "2026-10-31T17:06:15Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "4979e31b97c27726b06a11a46c8d41a0fdb16139",
+        "subject": "fix(deps): update androidx to v1.0.0-alpha21 (#442)",
+        "at": "2026-10-31T16:35:57Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
       },
       {
-        "sha": "058e0971de85ca3a151d4821ce545f0b0f2f095d",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.37.0 (#343)",
-        "at": "2026-10-09T13:39:45Z",
+        "sha": "a336254d797eac3a70fcdfa44f45ae0a5acfb36a",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.79.1 (#448)",
+        "at": "2026-10-31T16:35:27Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
       },
       {
-        "sha": "c5c592998c5badb50b6c51359fa8568a5999db0f",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.35.1 (#342)",
-        "at": "2026-10-08T00:18:52Z",
+        "sha": "a8c615ee8239dfe09b7feea391cf230368af8a2e",
+        "subject": "feat: bring OpenSwim controls and a headphone widget to the phone app (#446)",
+        "at": "2026-10-31T16:34:07Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "7841799edef4c855d384bbac974d7a07f7a8d9b3",
+        "subject": "chore(deps): update dependency dev.zacsweers.metro to v1.5.1 (#415)",
+        "at": "2026-10-31T16:32:25Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
       },
       {
-        "sha": "ccb424a71b106f7dae21a202563384da2b283809",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.35.0 (#341)",
-        "at": "2026-10-06T14:00:05Z",
+        "sha": "550079f811a210bc4fd16f3a081f4c72ebf2e7e7",
+        "subject": "fix(deps): update androidx-compose to v1.0.0-alpha22 (#443)",
+        "at": "2026-10-31T16:31:11Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
       },
       {
-        "sha": "a083fea46efc775fbd25a7ebc371464898d98452",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.34.1 (#340)",
-        "at": "2026-10-05T14:33:29Z",
+        "sha": "fef577539bfc91af8b26f859913371837ff7c2a8",
+        "subject": "fix(wear): fill the small playlist widget and centre transport controls (#447)",
+        "at": "2026-10-31T16:30:25Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "38aa1bbf4d2ff508ef167c40edbcce849da8cae6",
+        "subject": "feat(wear): focus each widget on one job (#445)",
+        "at": "2026-10-31T16:07:24Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "586587e275ffe5631498272a029ada07c0cb2ab8",
+        "subject": "chore(deps): update plugin com.squareup.wire to v7.1.2 (#396)",
+        "at": "2026-10-31T15:33:49Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
       },
       {
-        "sha": "45021e1a1a861f94c1a71fa209a23fc15b719a43",
-        "subject": "chore(deps): update github actions (#338)",
-        "at": "2026-10-05T06:02:50Z",
+        "sha": "6cfd5a0b4896b5c3aab25321780f4fdaa735a9fe",
+        "subject": "feat(sync): wire Android Google Drive sign-in via AppAuth (#440)",
+        "at": "2026-10-31T15:30:50Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "2526d975ffb09912bdfba5d30652747c80972721",
+        "subject": "feat(wear): add capability-gated OpenSwim companion (#439)",
+        "at": "2026-10-31T15:20:06Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "4b0d032b68e03956c4e26a2da98ec9b380922272",
+        "subject": "feat: add OpenSwim mode and audio controls (#441)",
+        "at": "2026-10-31T15:01:10Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "eade30ec9c16734d5286b51256d074d0baf6d226",
+        "subject": "feat(sync): opt-in Google Drive manifest for cross-host awareness (#437)",
+        "at": "2026-10-31T14:33:51Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "2fa81304e36eee105d8caf6307b89ab751cbffa5",
+        "subject": "feat: add capability-gated RCSP library (#435)",
+        "at": "2026-10-31T13:39:48Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "356aab5523f6996508ee1af1e517c0ded1566eb4",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.79.0 (#436)",
+        "at": "2026-10-31T12:52:41Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
       },
       {
-        "sha": "0104d165f7f91d0a064b5ef36deb519999a88b5a",
-        "subject": "chore(deps): update plugin com.squareup.wire to v7.1.0 (#339)",
-        "at": "2026-10-05T06:02:47Z",
+        "sha": "f662df97fdcd7cd79116697696c1db4b293f463e",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.78.0 (#434)",
+        "at": "2026-10-31T09:29:51Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
       },
       {
-        "sha": "b6dca9f65ea7c0d6ba4f3d235b6d4b76943bff8a",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.34.0 (#337)",
-        "at": "2026-10-04T13:44:32Z",
+        "sha": "ee42303f4371491db10b6348c39c3b822c985db3",
+        "subject": "chore(deps): update anthropics/claude-code-action action to v1.0.266 (#433)",
+        "at": "2026-10-31T01:13:36Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
       },
       {
-        "sha": "e7b44ba961f03cb95b2e648c7c5024e11868bae7",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.33.0 (#336)",
-        "at": "2026-10-03T15:49:03Z",
+        "sha": "49da04c83ec1e87505b353df37aa6cedffd6056e",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.77.0 (#432)",
+        "at": "2026-10-31T01:06:24Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
       },
       {
-        "sha": "29443576527fe3d8bdfb7566e5c455e20bd4d2e6",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.32.2 (#335)",
-        "at": "2026-10-03T05:22:19Z",
+        "sha": "8a68598d1893fd76b3c548aabfb73f2d3236f295",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.76.0 (#431)",
+        "at": "2026-10-30T20:34:15Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
       },
       {
-        "sha": "c1667e7d3d9eb271627b936edc76a8a8cd698fb1",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.32.1 (#334)",
-        "at": "2026-10-02T20:35:58Z",
+        "sha": "b7dd5280898558be37a0771018477d200b8d9049",
+        "subject": "fix: put the AppState transform path behind a flag, off by default (#429)",
+        "at": "2026-10-30T18:37:20Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "67836c1ae63d16447b6872a07cec1178e543a50d",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.75.0 (#428)",
+        "at": "2026-10-30T10:13:41Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
       },
       {
-        "sha": "5f9cd7166cde990cbff03146ad3b8e54c98c8673",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.32.0 (#333)",
-        "at": "2026-10-02T14:43:04Z",
+        "sha": "9fcd57c7c4e1899f5db5e366d6a10a8c734b3555",
+        "subject": "refactor: move FileSyncViewModel and HomeViewModel to androidx AppState transform (#427)",
+        "at": "2026-10-30T10:08:54Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "5431cfa3f34096c8a62cc75d4875a0b8c0b9b159",
+        "subject": "chore(main): release 0.1.7 (#422)",
+        "at": "2026-10-30T09:37:42Z",
+        "author": "github-actions[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "87a8e94746d2f0b13b1bca9f4b3c938e68453922",
+        "subject": "feat(podcasts): sign in to Pocket Casts through the Wasmo (#426)",
+        "at": "2026-10-30T09:26:55Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "d62924ec038db12b918e4bae5cbc6f3fbd8e4c0d",
+        "subject": "fix(sync): require same mtime for skip + record sync success on Android (#423)",
+        "at": "2026-10-30T09:10:11Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "8744ed41ad1c82af1d582d17e4bf4c2bac958b34",
+        "subject": "feat(sync): daily-run UX sweep — skip-if-same + last-synced + Add folder (#421)",
+        "at": "2026-10-30T07:34:36Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "155c321a947cb809708aa683e698f50d34a05656",
+        "subject": "chore(main): release 0.1.6 (#412)",
+        "at": "2026-10-30T07:18:02Z",
+        "author": "github-actions[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "65c15e77ee3fe479689f2538400df91e1e67c54b",
+        "subject": "chore(deps): update anthropics/claude-code-action action to v1.0.265 (#420)",
+        "at": "2026-10-30T06:07:02Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
       },
       {
-        "sha": "3c5658c6c02b0fdb986b1431aebccb26de63d2a3",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.31.0 (#332)",
-        "at": "2026-10-01T19:41:54Z",
+        "sha": "6926d69791c0529072a36cd58addcc64350b8708",
+        "subject": "feat: share Cadence's settings across browsers on Wasmo (#418)",
+        "at": "2026-10-30T00:28:48Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "1d493760ea699c9fc1f6d37b9e2bee704d8382f5",
+        "subject": "chore(deps): update dependency python to v3.15.2 (#419)",
+        "at": "2026-10-30T00:24:49Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
       },
       {
-        "sha": "60f787906383df650f0f5cd2f835c262f58105e4",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.29.0 (#331)",
-        "at": "2026-10-01T06:54:13Z",
+        "sha": "e9d8cb1d88fced41c791a146d46fb613c82e3150",
+        "subject": "chore(deps): pin dependencies (#383)",
+        "at": "2026-10-29T23:57:47Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
       },
       {
-        "sha": "189f314353ad19a39f92f3c9f126a27868b5ad46",
-        "subject": "chore(deps): update dependency dev.zacsweers.metro to v1.4.5 (#325)",
-        "at": "2026-09-28T16:54:17Z",
+        "sha": "d7636278abfdd09f72fc188f980a42beeff275d4",
+        "subject": "feat: package the browser app as an installable Wasmo app (#417)",
+        "at": "2026-10-29T23:46:26Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "d085c8f2f7f92eab2f37d20f5b8e0dbded2dfcb8",
+        "subject": "fix(deps): update dependency io.ktor:ktor-client-core to v3.6.1 (#416)",
+        "at": "2026-10-29T18:11:47Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
       },
       {
-        "sha": "b5bcbdc0795fef441a8bdec88fd02a622775da4e",
-        "subject": "chore(deps): update dependency org.jetbrains.compose to v1.12.1 (#326)",
-        "at": "2026-09-28T16:54:13Z",
-        "author": "renovate[bot]",
+        "sha": "e4c933dcd0664ad678b074e7d9cfcd9068a1cee2",
+        "subject": "chore(renovate): merge automerging PRs with GitHub native auto-merge (#414)",
+        "at": "2026-10-29T12:21:11Z",
+        "author": "Yuri Schimke",
         "previewIds": [],
         "components": []
       },
       {
-        "sha": "5216b96b3fd5880446938e92997e91fd53d8c2ae",
-        "subject": "chore(deps): update github actions (#327)",
-        "at": "2026-09-28T08:18:03Z",
-        "author": "renovate[bot]",
+        "sha": "540accec53fc9a17e3948dade23bed5e245fb300",
+        "subject": "ci: report failed preview renders, add preview audit and on-request Claude review (#413)",
+        "at": "2026-10-29T09:20:24Z",
+        "author": "Yuri Schimke",
         "previewIds": [],
         "components": []
       },
       {
-        "sha": "0e12309f1e98045803971fb4e9755c414a14af30",
-        "subject": "chore(deps): update plugin com.squareup.wire to v7 (#330)",
-        "at": "2026-09-28T08:18:00Z",
-        "author": "renovate[bot]",
+        "sha": "18ec4a31d834d719912a64f919b98573362720fb",
+        "subject": "feat: drop platform notice and hide Bluetooth where unsupported (#410)",
+        "at": "2026-10-29T07:10:11Z",
+        "author": "Yuri Schimke",
         "previewIds": [],
         "components": []
       },
       {
-        "sha": "4261dc7559f68d041c8f6eb7154f431b8435b1d5",
-        "subject": "chore(deps): update gradle to v9.8.0 (#328)",
-        "at": "2026-09-28T01:52:26Z",
-        "author": "renovate[bot]",
+        "sha": "4668a55706d5777fbdcc5e7ea0e0bde45d2e4332",
+        "subject": "chore(main): release 0.1.5 (#406)",
+        "at": "2026-10-29T06:33:00Z",
+        "author": "github-actions[bot]",
         "previewIds": [],
         "components": []
       },
       {
-        "sha": "c305ba1271b03372ebaaadb2827faf6f6924245b",
-        "subject": "fix(deps): update androidx (#329)",
-        "at": "2026-09-28T01:52:22Z",
-        "author": "renovate[bot]",
+        "sha": "d0c509ba627a075652736517ea3964e9fb1953e7",
+        "subject": "perf(compose): add contentType to lazy list items and dedupe profile lookup (#408)",
+        "at": "2026-10-28T17:08:34Z",
+        "author": "Yuri Schimke",
         "previewIds": [],
         "components": []
       },
       {
-        "sha": "ce7c33ac4d76111504872d174ff97c152b376b7b",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.28.3 (#324)",
-        "at": "2026-09-27T23:16:04Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "1ea0f82de8051d0ca910cc87e58caf9dd6933ce0",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.28.0 (#323)",
-        "at": "2026-09-27T17:09:16Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "a44a67791ae237740fb5ae763ef6589ae58dcb5d",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.27.0 (#322)",
-        "at": "2026-09-26T19:32:12Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "1390ef2a2b276df57a2408f14ccced3c0fa9edf7",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.26.0 (#321)",
-        "at": "2026-09-26T01:48:34Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "7cd313e6683ded8d0b2fa1327891c90cf351ea63",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.25.0 (#320)",
-        "at": "2026-09-25T11:17:51Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "89b0334ef5aa11abd8f2597d05ccde90c07b86f1",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.24.0 (#319)",
-        "at": "2026-09-25T05:53:41Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "084cd716088286f175a2142e3030d6647e51c770",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.22.0 (#318)",
-        "at": "2026-09-22T20:22:33Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "5bf5b2e40bdd4b718f3450f70dc0b41c152cf22d",
-        "subject": "chore(deps): update agp to v9.4.1 (#313)",
-        "at": "2026-09-21T19:05:33Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "19b974be5bb357c45a796ac887afc9c4b5145990",
-        "subject": "chore(deps): update dependency dev.zacsweers.metro to v1.4.4 (#314)",
-        "at": "2026-09-21T13:40:24Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "9de349daba20731723dfc7dfec555747e080d40e",
-        "subject": "chore(deps): update github actions (#315)",
-        "at": "2026-09-21T13:40:20Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "1064d47b227c4f9e3604a97a143d1ed7268619fb",
-        "subject": "fix(deps): update dependency io.ktor:ktor-client-core to v3.6.0 (#316)",
-        "at": "2026-09-21T06:48:28Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "365eca9d37169dca7131976fc215caae62810b8e",
-        "subject": "chore(deps): update dependency java-jdk to v25 (#317)",
-        "at": "2026-09-21T06:48:25Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "27367b94f00b1926315c53f00274761f15278e5e",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.21.1 (#312)",
-        "at": "2026-09-20T18:57:41Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "5f27646efe09ac945fe5ebc17c32f8292e81c4c5",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.20.0 (#311)",
-        "at": "2026-09-20T12:31:33Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "f5a60c6ef379895edbadc4884dac119827182f5d",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.19.0 (#310)",
-        "at": "2026-09-20T12:02:35Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "a6c919d0b6adab7c2bc505354282d49cd7c55ac5",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.18.1 (#309)",
-        "at": "2026-09-17T20:31:02Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "ce586726d301852dbb4ada8ad6bea10c255b6126",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.18.0 (#308)",
-        "at": "2026-09-17T01:36:33Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "faa6f40646a14555376426c488dac0bd01430cad",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.17.0 (#307)",
-        "at": "2026-09-16T17:29:43Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "f04486401b8323d9450bdd2d3180d7bbcddd833e",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.15.0 (#306)",
-        "at": "2026-09-15T20:22:17Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "14197c30db5f22edab56805dd830adcda350cb3c",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.14.1 (#305)",
-        "at": "2026-09-15T01:11:32Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "6b57f17db7516a03b971e7e55c5a07febf376b95",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.14.0 (#304)",
-        "at": "2026-09-14T22:38:32Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "d1505e8a381490f8417df44f22b3905b71e17c19",
-        "subject": "chore(deps): update dependency dev.zacsweers.metro to v1.4.3 (#299)",
-        "at": "2026-09-14T19:03:11Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "fc02815650ebd3fcf3d698ad1c2099ec38c51f22",
-        "subject": "chore(deps): update github actions (#300)",
-        "at": "2026-09-14T13:41:22Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "b268afdbb671fb089f9e5cf81af1184f52af5f0a",
-        "subject": "fix(deps): update dependency androidx.compose.ui:ui-text-google-fonts to v1.12.1 (#301)",
-        "at": "2026-09-14T13:41:18Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "9eebedb84c565cff7a914320f2ebe85c7d5f2898",
-        "subject": "fix(deps): update kotlin to v2.4.20 (#302)",
-        "at": "2026-09-14T06:46:15Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "6e8e967f746b5a72b0eef88f5fe6248d149d7e0f",
-        "subject": "chore(deps): update agp to v9.4.0 (#303)",
-        "at": "2026-09-14T06:46:12Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "9c9b20ee1bc178b46d0ed63c01742eb26ffcd0f0",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.13.1 (#298)",
-        "at": "2026-09-13T14:58:47Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "845c7eb461762913eb04db6ab436e5e71430f314",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.13.0 (#297)",
-        "at": "2026-09-12T18:09:03Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "b480d8f78dfe8c19d5d4ade5496b8c51ecefaa68",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.11.1 (#296)",
-        "at": "2026-09-12T12:17:38Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "487e7a0755ce5993d0fd12c8f167bb7f2ed9fc2c",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.11.0 (#295)",
-        "at": "2026-09-12T03:25:07Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "1a879a051b244286d039b1edde8d5a2fef8b358b",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.10.0 (#294)",
-        "at": "2026-09-11T21:50:41Z",
+        "sha": "1ceaf839c2911fb1d8e2633fb53b5d046c278bea",
+        "subject": "fix(deps): update dependency ee.schimke.composeai:rc-widget-launcher to v2.21.0 (#407)",
+        "at": "2026-10-28T10:34:35Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
