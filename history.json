@@ -1,6 +1,6 @@
 {
     "formatVersion": "compose-preview-history/v1",
-    "generatedFrom": "9cdd7d6f8260e0efdae4857f30a44419fc45f5de",
+    "generatedFrom": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
     "previews": {
         "composeApp/activity__MainActivity": {
             "path": "renders/composeApp/activity__MainActivity.png",
@@ -63,6 +63,13 @@
             "path": "renders/composeApp/FoundationMaterial3DarkPreview_Foundation_Material_3_dark-8fbb7bd3.png",
             "versions": [
                 {
+                    "blob": "ab1c62438d41d08a7ff9377fa95bd268c98d1484",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
+                {
                     "blob": "1a0e66893293d5efd8b34df88f39a425eb854d56",
                     "commit": "a7a550e1c26571d661e9f5d7f11aae1d105ec143",
                     "date": "2026-10-16T09:49:35Z",
@@ -77,13 +84,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 2,
+            "observations": 3,
             "unstable": false,
-            "flapCount": 0
+            "flapCount": 1
         },
         "composeApp/ee.schimke.cadence.preview.FoundationPreviewsKt.FoundationMaterial3LightPreview_Foundation — Material 3 light": {
             "path": "renders/composeApp/FoundationMaterial3LightPreview_Foundation_Material_3_light-8a361022.png",
             "versions": [
+                {
+                    "blob": "5f64a9b52281f2684883e960455032f502fedf0e",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "1a0e66893293d5efd8b34df88f39a425eb854d56",
                     "commit": "a7a550e1c26571d661e9f5d7f11aae1d105ec143",
@@ -99,9 +113,9 @@
                     "commits": 1
                 }
             ],
-            "observations": 2,
+            "observations": 3,
             "unstable": false,
-            "flapCount": 0
+            "flapCount": 1
         },
         "composeApp/ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetBluetoothPreview_Headphone widget · Bluetooth": {
             "path": "renders/composeApp/HeadphoneWidgetBluetoothPreview_Headphone_widget_Bluetooth-672bb261.png",
@@ -157,6 +171,13 @@
             "path": "renders/composeApp/HeadphoneWidgetDisconnectedPreview_Headphone_widget_disconnected-b8bab80a.png",
             "versions": [
                 {
+                    "blob": "d422811d07148415c84a56696d36562d1bc4ad72",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
+                {
                     "blob": "27e0a59249879194c1450e1bbe0c231f7330827d",
                     "commit": "7b88a571680bbc324b21db105dfd496f1063b704",
                     "date": "2026-10-31T18:08:08Z",
@@ -171,13 +192,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 2,
+            "observations": 3,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetLightPreview_Headphone widget · light": {
             "path": "renders/composeApp/HeadphoneWidgetLightPreview_Headphone_widget_light-98937184.png",
             "versions": [
+                {
+                    "blob": "ec352509ba7352e3290bac33afa8b47f7ec4607f",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "27e0a59249879194c1450e1bbe0c231f7330827d",
                     "commit": "7b88a571680bbc324b21db105dfd496f1063b704",
@@ -186,13 +214,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetMp32x1Preview_Headphone widget · MP3 · 2×1": {
             "path": "renders/composeApp/HeadphoneWidgetMp32x1Preview_Headphone_widget_MP3_2_1-820e2ca9.png",
             "versions": [
+                {
+                    "blob": "0c5d4b864d5e3b34b18878c773ef364433444f78",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "660a4fa6f27b38fb04c52fded4e6edb70545c06f",
                     "commit": "ff57ac0989280e1a8f42870327a6f4a3c45fd303",
@@ -208,13 +243,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 2,
+            "observations": 3,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetMp33x1Preview_Headphone widget · MP3 · 3×1": {
             "path": "renders/composeApp/HeadphoneWidgetMp33x1Preview_Headphone_widget_MP3_3_1-0abd2b18.png",
             "versions": [
+                {
+                    "blob": "90389f6fd9dba822e0ba6ebdeb592ba79c4821c7",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "e9ef4c599993e071ea5e46f3c3e5f685c31dcebb",
                     "commit": "7b88a571680bbc324b21db105dfd496f1063b704",
@@ -223,13 +265,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetMp33x2Preview_Headphone widget · MP3 · 3×2": {
             "path": "renders/composeApp/HeadphoneWidgetMp33x2Preview_Headphone_widget_MP3_3_2-c9d5ee48.png",
             "versions": [
+                {
+                    "blob": "c40180d90054e5a6824606b27849b5535f9a03e4",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "d7d7730c34c3681cb848b64946b7417f185299c1",
                     "commit": "7b88a571680bbc324b21db105dfd496f1063b704",
@@ -238,13 +287,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetMp35x1Preview_Headphone widget · MP3 · 5×1": {
             "path": "renders/composeApp/HeadphoneWidgetMp35x1Preview_Headphone_widget_MP3_5_1-32dd6d60.png",
             "versions": [
+                {
+                    "blob": "7ffb3eb204f5e1130998466a0d13b796207758ea",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "ddd43ff295f5813d511a9ac82726cfc87121f9aa",
                     "commit": "7b88a571680bbc324b21db105dfd496f1063b704",
@@ -253,13 +309,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetMp35x3Preview_Headphone widget · MP3 · 5×3": {
             "path": "renders/composeApp/HeadphoneWidgetMp35x3Preview_Headphone_widget_MP3_5_3-c18f130c.png",
             "versions": [
+                {
+                    "blob": "40fd4fa51e25574d13110850d1576e52c6887e9e",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "8578997abef98adb0e81dca2d6830f2bbcbf55e5",
                     "commit": "7b88a571680bbc324b21db105dfd496f1063b704",
@@ -268,13 +331,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetMp3Preview_Headphone widget · MP3": {
             "path": "renders/composeApp/HeadphoneWidgetMp3Preview_Headphone_widget_MP3-d6a1c3d9.png",
             "versions": [
+                {
+                    "blob": "947c78162dba02cc6715fbe946556377e9374273",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "27e0a59249879194c1450e1bbe0c231f7330827d",
                     "commit": "7b88a571680bbc324b21db105dfd496f1063b704",
@@ -290,7 +360,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 2,
+            "observations": 3,
             "unstable": false,
             "flapCount": 0
         },
@@ -320,6 +390,13 @@
             "path": "renders/composeApp/AddPodcastsPreview_Add_podcasts-e09ca4b7.png",
             "versions": [
                 {
+                    "blob": "9d1fb6ef374d17a8c9ffa5aa9466285c4b6c59db",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
+                {
                     "blob": "76041ad25427619ea16d522ef6ab9acd407e995e",
                     "commit": "c4e524338e8e19bf7084573b6e54388573fbb148",
                     "date": "2026-10-28T09:59:21Z",
@@ -327,13 +404,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.PodcastPreviewsKt.PodcastImportedPreview_Podcast sync — imported": {
             "path": "renders/composeApp/PodcastImportedPreview_Podcast_sync_imported-8403888a.png",
             "versions": [
+                {
+                    "blob": "648de97a9a7b686c8a28b3575fc2aaa933f60bb6",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "5ce389c839c8f88edafd661c8b64623f81f1efa4",
                     "commit": "c4e524338e8e19bf7084573b6e54388573fbb148",
@@ -349,13 +433,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 2,
+            "observations": 3,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.PodcastPreviewsKt.PodcastPocketCastsPreview_Add podcasts — Pocket Casts signed in": {
             "path": "renders/composeApp/PodcastPocketCastsPreview_Add_podcasts_Pocket_Casts_signed_in-cd7341fe.png",
             "versions": [
+                {
+                    "blob": "038542ff1bd8cb2ed89323bbd50dc6fdbc8e8882",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "b953efe092779e81c5227c8d50d5ada216bac39f",
                     "commit": "c4e524338e8e19bf7084573b6e54388573fbb148",
@@ -364,13 +455,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.PodcastPreviewsKt.PodcastPreparedPreview_Podcast sync — prepared": {
             "path": "renders/composeApp/PodcastPreparedPreview_Podcast_sync_prepared-2db5b8ad.png",
             "versions": [
+                {
+                    "blob": "8a42a35d6f0c06e8081954095fbb1ef5e95585e3",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "eb8504a779097441dfcd114a4dec7f1e98607acc",
                     "commit": "1916666e911ee2b9ffc3a960fc5db1a9a907de26",
@@ -379,13 +477,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.BluetoothConnectedPlayingPreview_BT controls - connected + playing": {
             "path": "renders/composeApp/BluetoothConnectedPlayingPreview_BT_controls_connected_playing-45366603.png",
             "versions": [
+                {
+                    "blob": "b0920c9d950d4354742f0f594f373eaced8cacee",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "90893b96c2e5e312b4c83e4eefbf85c68640bf5a",
                     "commit": "a7a550e1c26571d661e9f5d7f11aae1d105ec143",
@@ -401,13 +506,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 2,
+            "observations": 3,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.BluetoothDisconnectedPreview_BT controls - disconnected": {
             "path": "renders/composeApp/BluetoothDisconnectedPreview_BT_controls_disconnected-42332e99.png",
             "versions": [
+                {
+                    "blob": "2078c9e4724332d0d2b1aca0ba19e6dd434d3fd6",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "0935841eb6beb6056a1720869d731915fe4597c0",
                     "commit": "a7a550e1c26571d661e9f5d7f11aae1d105ec143",
@@ -423,13 +535,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 2,
+            "observations": 3,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.BluetoothMp3ModePreview_BT controls - MP3 mode": {
             "path": "renders/composeApp/BluetoothMp3ModePreview_BT_controls_MP3_mode-f13f654e.png",
             "versions": [
+                {
+                    "blob": "df3de63bc25cd4286641d4d4a6d318edf16889eb",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "90893b96c2e5e312b4c83e4eefbf85c68640bf5a",
                     "commit": "a7a550e1c26571d661e9f5d7f11aae1d105ec143",
@@ -445,13 +564,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 2,
+            "observations": 3,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.BluetoothPermissionMissingPreview_BT controls - permission missing": {
             "path": "renders/composeApp/BluetoothPermissionMissingPreview_BT_controls_permission_missing-a7ac699a.png",
             "versions": [
+                {
+                    "blob": "d238807531acc0b893e153a71aa022f6e53961e6",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "90893b96c2e5e312b4c83e4eefbf85c68640bf5a",
                     "commit": "a7a550e1c26571d661e9f5d7f11aae1d105ec143",
@@ -467,13 +593,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 2,
+            "observations": 3,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.BookmarksScreenLoadedPreview_Bookmarks - loaded": {
             "path": "renders/composeApp/BookmarksScreenLoadedPreview_Bookmarks_loaded-d8723d62.png",
             "versions": [
+                {
+                    "blob": "614cc8846119e387855ed5cbbaf399d184819ffc",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "67425e4a9ffcba5812e8b910f246212af4e0f897",
                     "commit": "a7a550e1c26571d661e9f5d7f11aae1d105ec143",
@@ -489,13 +622,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 2,
+            "observations": 3,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.BookmarksScreenLoadingPreview_Bookmarks - loading": {
             "path": "renders/composeApp/BookmarksScreenLoadingPreview_Bookmarks_loading-38d27511.png",
             "versions": [
+                {
+                    "blob": "93a5cff0c0dcd583eebc398d057ca23f66b88caa",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "67425e4a9ffcba5812e8b910f246212af4e0f897",
                     "commit": "a7a550e1c26571d661e9f5d7f11aae1d105ec143",
@@ -511,13 +651,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 2,
+            "observations": 3,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.DeviceFilesLoadingPreview_Device files - loading": {
             "path": "renders/composeApp/DeviceFilesLoadingPreview_Device_files_loading-86a4c3d8.png",
             "versions": [
+                {
+                    "blob": "4f6d59dafaabbd9e7ff1690a59e303bded42cc66",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "67425e4a9ffcba5812e8b910f246212af4e0f897",
                     "commit": "a7a550e1c26571d661e9f5d7f11aae1d105ec143",
@@ -533,13 +680,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 2,
+            "observations": 3,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.DeviceFilesNotAvailablePreview_Device files - not available": {
             "path": "renders/composeApp/DeviceFilesNotAvailablePreview_Device_files_not_available-713d5491.png",
             "versions": [
+                {
+                    "blob": "6e3235f318b51105bd2715a7f7a05f2536ab331d",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "67425e4a9ffcba5812e8b910f246212af4e0f897",
                     "commit": "a7a550e1c26571d661e9f5d7f11aae1d105ec143",
@@ -555,13 +709,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 2,
+            "observations": 3,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.DevicesScreenEmptyPreview_Devices - empty": {
             "path": "renders/composeApp/DevicesScreenEmptyPreview_Devices_empty-af5a9e1c.png",
             "versions": [
+                {
+                    "blob": "50a5800900953d867bc25aaa7a4a0c2bcbe3f092",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "67425e4a9ffcba5812e8b910f246212af4e0f897",
                     "commit": "a7a550e1c26571d661e9f5d7f11aae1d105ec143",
@@ -577,13 +738,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 2,
+            "observations": 3,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.DevicesScreenLoadedPreview_Devices - loaded": {
             "path": "renders/composeApp/DevicesScreenLoadedPreview_Devices_loaded-cfb106a7.png",
             "versions": [
+                {
+                    "blob": "c9fbda1cde097e422be1fd1030eeed33147866c7",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "67425e4a9ffcba5812e8b910f246212af4e0f897",
                     "commit": "a7a550e1c26571d661e9f5d7f11aae1d105ec143",
@@ -599,13 +767,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 2,
+            "observations": 3,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.DevicesScreenLoadingPreview_Devices - loading": {
             "path": "renders/composeApp/DevicesScreenLoadingPreview_Devices_loading-8e171a67.png",
             "versions": [
+                {
+                    "blob": "c59a81f37cd950ef64f9c8ba77051b108dc7162e",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "67425e4a9ffcba5812e8b910f246212af4e0f897",
                     "commit": "a7a550e1c26571d661e9f5d7f11aae1d105ec143",
@@ -621,13 +796,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 2,
+            "observations": 3,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.HomeEmptyPreview_Home — empty": {
             "path": "renders/composeApp/HomeEmptyPreview_Home_empty-571e68af.png",
             "versions": [
+                {
+                    "blob": "7498a91d651a99021bbd0a222db06e0bf3562a53",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "67425e4a9ffcba5812e8b910f246212af4e0f897",
                     "commit": "a7a550e1c26571d661e9f5d7f11aae1d105ec143",
@@ -643,13 +825,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 2,
+            "observations": 3,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.HomeHeadphonesPreview_Home — headphones connected": {
             "path": "renders/composeApp/HomeHeadphonesPreview_Home_headphones_connected-71a28d46.png",
             "versions": [
+                {
+                    "blob": "f3cc99ff0c2361687b3c3d96c20f84fa6002a558",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "5a6fbc882a98d739ac47c524f121311b670b8e1a",
                     "commit": "c4e524338e8e19bf7084573b6e54388573fbb148",
@@ -658,13 +847,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.HomeLibraryPreview_Home — library": {
             "path": "renders/composeApp/HomeLibraryPreview_Home_library-7701225c.png",
             "versions": [
+                {
+                    "blob": "89ffb8de42e6e9edc5269e2c8ec9438de4c6b7f4",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "5ce389c839c8f88edafd661c8b64623f81f1efa4",
                     "commit": "c4e524338e8e19bf7084573b6e54388573fbb148",
@@ -673,13 +869,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.ManageEmptyPreview_Manage - empty": {
             "path": "renders/composeApp/ManageEmptyPreview_Manage_empty-55c57410.png",
             "versions": [
+                {
+                    "blob": "381407754e8687a41d5393d3d617b785ad15be5b",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "90893b96c2e5e312b4c83e4eefbf85c68640bf5a",
                     "commit": "a7a550e1c26571d661e9f5d7f11aae1d105ec143",
@@ -695,13 +898,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 2,
+            "observations": 3,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.ManagePopulatedPreview_Manage - populated": {
             "path": "renders/composeApp/ManagePopulatedPreview_Manage_populated-41ab32cd.png",
             "versions": [
+                {
+                    "blob": "c298084ba6713e002273f6fa22d828edc687c4f0",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "80aa19598897f979b56184238bf5bdf6c4d1455d",
                     "commit": "a7a550e1c26571d661e9f5d7f11aae1d105ec143",
@@ -717,13 +927,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 2,
+            "observations": 3,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.ManageRefreshingPreview_Manage - refreshing": {
             "path": "renders/composeApp/ManageRefreshingPreview_Manage_refreshing-fe8bc7dc.png",
             "versions": [
+                {
+                    "blob": "d1dd98c73ae1c8cff2011d38cfa878462d6a2bf0",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "80aa19598897f979b56184238bf5bdf6c4d1455d",
                     "commit": "a7a550e1c26571d661e9f5d7f11aae1d105ec143",
@@ -739,13 +956,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 2,
+            "observations": 3,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStorePhoneBluetooth_Play Store · phone · Bluetooth": {
             "path": "renders/composeApp/PlayStorePhoneBluetooth_Play_Store_phone_Bluetooth-37d78602.png",
             "versions": [
+                {
+                    "blob": "c647c4399336a7e9160dd706b59acd266b9b000f",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "17e9d80616092f9208cd58d2d8a1248ca6e7bafb",
                     "commit": "a7a550e1c26571d661e9f5d7f11aae1d105ec143",
@@ -761,13 +985,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 2,
+            "observations": 3,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStorePhoneHomeDark_Play Store · phone · Home (dark)": {
             "path": "renders/composeApp/PlayStorePhoneHomeDark_Play_Store_phone_Home_dark-aef8b2b7.png",
             "versions": [
+                {
+                    "blob": "035e595cba3a539fe4c31521caad9c14082a1cad",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "17e9d80616092f9208cd58d2d8a1248ca6e7bafb",
                     "commit": "a7a550e1c26571d661e9f5d7f11aae1d105ec143",
@@ -783,13 +1014,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 2,
+            "observations": 3,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStorePhoneHomeLight_Play Store · phone · Home (light)": {
             "path": "renders/composeApp/PlayStorePhoneHomeLight_Play_Store_phone_Home_light-a1bae343.png",
             "versions": [
+                {
+                    "blob": "a7d8e2e0a2484a6dab835dbde5582694efb178be",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "17e9d80616092f9208cd58d2d8a1248ca6e7bafb",
                     "commit": "a7a550e1c26571d661e9f5d7f11aae1d105ec143",
@@ -805,13 +1043,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 2,
+            "observations": 3,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStorePhoneManage_Play Store · phone · Manage": {
             "path": "renders/composeApp/PlayStorePhoneManage_Play_Store_phone_Manage-5865e3ea.png",
             "versions": [
+                {
+                    "blob": "7036e6ab1134393a2764999629ad925b286e2199",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "17e9d80616092f9208cd58d2d8a1248ca6e7bafb",
                     "commit": "a7a550e1c26571d661e9f5d7f11aae1d105ec143",
@@ -827,13 +1072,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 2,
+            "observations": 3,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStorePhoneSync_Play Store · phone · Sync": {
             "path": "renders/composeApp/PlayStorePhoneSync_Play_Store_phone_Sync-aa8cb5dd.png",
             "versions": [
+                {
+                    "blob": "ca50c1b51a4201728b828b334a3215c87f55aa24",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "17e9d80616092f9208cd58d2d8a1248ca6e7bafb",
                     "commit": "a7a550e1c26571d661e9f5d7f11aae1d105ec143",
@@ -849,13 +1101,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 2,
+            "observations": 3,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStoreSevenInchHomeDark_Play Store · 7_ tablet · Home (dark)": {
             "path": "renders/composeApp/PlayStoreSevenInchHomeDark_Play_Store_7_tablet_Home_dark-79090521.png",
             "versions": [
+                {
+                    "blob": "f421c7c058d899dc410252bdd001234166d9faab",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "8ab559da93cae8652c952587303876b065c3c3ba",
                     "commit": "a7a550e1c26571d661e9f5d7f11aae1d105ec143",
@@ -871,13 +1130,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 2,
+            "observations": 3,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStoreSevenInchHomeLight_Play Store · 7_ tablet · Home (light)": {
             "path": "renders/composeApp/PlayStoreSevenInchHomeLight_Play_Store_7_tablet_Home_light-59744afc.png",
             "versions": [
+                {
+                    "blob": "43de0d974542b45541ab2e230bafa1df0833ed51",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "8ab559da93cae8652c952587303876b065c3c3ba",
                     "commit": "a7a550e1c26571d661e9f5d7f11aae1d105ec143",
@@ -893,13 +1159,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 2,
+            "observations": 3,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStoreTenInchHomeDark_Play Store · 10_ tablet · Home (dark)": {
             "path": "renders/composeApp/PlayStoreTenInchHomeDark_Play_Store_10_tablet_Home_dark-91cf4524.png",
             "versions": [
+                {
+                    "blob": "420f6ecc15ae5bc9d01a7cc093cd4ede171c9d40",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "4e604b1f9f9bc9c292fcbab6eea92b380bb9bc9f",
                     "commit": "a7a550e1c26571d661e9f5d7f11aae1d105ec143",
@@ -915,13 +1188,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 2,
+            "observations": 3,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStoreTenInchHomeLight_Play Store · 10_ tablet · Home (light)": {
             "path": "renders/composeApp/PlayStoreTenInchHomeLight_Play_Store_10_tablet_Home_light-536fa195.png",
             "versions": [
+                {
+                    "blob": "afb5d76b5a9e72c2677247d0c719fb424b326b33",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "4e604b1f9f9bc9c292fcbab6eea92b380bb9bc9f",
                     "commit": "a7a550e1c26571d661e9f5d7f11aae1d105ec143",
@@ -937,13 +1217,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 2,
+            "observations": 3,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeDonePreview_Sync complete": {
             "path": "renders/composeApp/SyncModeDonePreview_Sync_complete-7dc4927b.png",
             "versions": [
+                {
+                    "blob": "06d04d55d0d05790b8b0ca7d1f77fc070a993dd6",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "b953efe092779e81c5227c8d50d5ada216bac39f",
                     "commit": "c4e524338e8e19bf7084573b6e54388573fbb148",
@@ -952,7 +1239,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
@@ -960,20 +1247,12 @@
             "path": "renders/composeApp/SyncModeReadyDarkPreview_Sync_ready_dark-de653549.png",
             "versions": [
                 {
-                    "blob": "068bf7630c2f83bad619b604fc9d53f1869ae397",
-                    "commit": "c4e524338e8e19bf7084573b6e54388573fbb148",
-                    "date": "2026-10-28T09:59:21Z",
-                    "sourceSha": "468a53d3",
+                    "blob": "f41bf4cb13f78aa4c7971ee24435b1935f8e5134",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
                     "commits": 1
-                }
-            ],
-            "observations": 1,
-            "unstable": false,
-            "flapCount": 0
-        },
-        "composeApp/ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeReadyPreview_Sync ready": {
-            "path": "renders/composeApp/SyncModeReadyPreview_Sync_ready-ce4e5f0a.png",
-            "versions": [
+                },
                 {
                     "blob": "068bf7630c2f83bad619b604fc9d53f1869ae397",
                     "commit": "c4e524338e8e19bf7084573b6e54388573fbb148",
@@ -982,13 +1261,42 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
+            "unstable": false,
+            "flapCount": 0
+        },
+        "composeApp/ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeReadyPreview_Sync ready": {
+            "path": "renders/composeApp/SyncModeReadyPreview_Sync_ready-ce4e5f0a.png",
+            "versions": [
+                {
+                    "blob": "3a4ed5e6bc6a05412707a4379a98a0e04b1af709",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
+                {
+                    "blob": "068bf7630c2f83bad619b604fc9d53f1869ae397",
+                    "commit": "c4e524338e8e19bf7084573b6e54388573fbb148",
+                    "date": "2026-10-28T09:59:21Z",
+                    "sourceSha": "468a53d3",
+                    "commits": 1
+                }
+            ],
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeSyncingPreview_Sync syncing": {
             "path": "renders/composeApp/SyncModeSyncingPreview_Sync_syncing-34770d66.png",
             "versions": [
+                {
+                    "blob": "9ebffa1cfce486b2cf4fb5bd91047503bef63596",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "a6c6e2003caeb9f16496826c9ca7ec9c013a245e",
                     "commit": "c4e524338e8e19bf7084573b6e54388573fbb148",
@@ -997,7 +1305,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
@@ -1071,6 +1379,13 @@
             "path": "renders/swimUi/WaterButtonAnimatedPreview_Water_button_animated-55a32d9d.gif",
             "versions": [
                 {
+                    "blob": "ba3be248ac8d6ebaa9ad5a67f3a539e77f32cc44",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
+                {
                     "blob": "939c45c2e7f3d6ced299419e23d3bec12bbe4d9d",
                     "commit": "ff57ac0989280e1a8f42870327a6f4a3c45fd303",
                     "date": "2026-10-31T19:07:09Z",
@@ -1078,13 +1393,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "swimUi/ee.schimke.cadence.swim.SwimAnimatedPreviewsKt.WaterRoundButtonAnimatedPreview_Water round button · animated": {
             "path": "renders/swimUi/WaterRoundButtonAnimatedPreview_Water_round_button_animated-56625fee.gif",
             "versions": [
+                {
+                    "blob": "149c08ba977d9e10afb3aefd07ca19fc940e92f5",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "d1e6e090aa47497ca3f8cfedb6d1eb9286341247",
                     "commit": "ff57ac0989280e1a8f42870327a6f4a3c45fd303",
@@ -1093,7 +1415,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
@@ -1101,6 +1423,13 @@
             "path": "renders/swimUi/SwimLaneEndlessPreview_Swim_lane_endless_laps-3bd8ff30.png",
             "versions": [
                 {
+                    "blob": "d12ab0a8eac8554abc82a160fe77971e829cb17f",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
+                {
                     "blob": "f972d336d9403e8d0891f844edce41fb85faa639",
                     "commit": "ff57ac0989280e1a8f42870327a6f4a3c45fd303",
                     "date": "2026-10-31T19:07:09Z",
@@ -1108,7 +1437,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
@@ -1116,20 +1445,12 @@
             "path": "renders/swimUi/SwimLaneFlipTurnLauncherPreview_Swim_lane_flip_turn_launcher-ca909f07.png",
             "versions": [
                 {
-                    "blob": "c6f317142be85b9e15d9c29a8f860213d8b29bfa",
-                    "commit": "ff57ac0989280e1a8f42870327a6f4a3c45fd303",
-                    "date": "2026-10-31T19:07:09Z",
-                    "sourceSha": "6edcf047",
+                    "blob": "fa292fc523229d7398cb56bfa3d3fddafee2e733",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
                     "commits": 1
-                }
-            ],
-            "observations": 1,
-            "unstable": false,
-            "flapCount": 0
-        },
-        "swimUi/ee.schimke.cadence.swim.SwimPreviewsKt.SwimLaneFlipTurnPreview_Swim lane · flip turn": {
-            "path": "renders/swimUi/SwimLaneFlipTurnPreview_Swim_lane_flip_turn-31a2260f.png",
-            "versions": [
+                },
                 {
                     "blob": "c6f317142be85b9e15d9c29a8f860213d8b29bfa",
                     "commit": "ff57ac0989280e1a8f42870327a6f4a3c45fd303",
@@ -1138,13 +1459,42 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
+            "unstable": false,
+            "flapCount": 0
+        },
+        "swimUi/ee.schimke.cadence.swim.SwimPreviewsKt.SwimLaneFlipTurnPreview_Swim lane · flip turn": {
+            "path": "renders/swimUi/SwimLaneFlipTurnPreview_Swim_lane_flip_turn-31a2260f.png",
+            "versions": [
+                {
+                    "blob": "4a8f12c3faff05aafb30cfb6e5f9f450a324b19f",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
+                {
+                    "blob": "c6f317142be85b9e15d9c29a8f860213d8b29bfa",
+                    "commit": "ff57ac0989280e1a8f42870327a6f4a3c45fd303",
+                    "date": "2026-10-31T19:07:09Z",
+                    "sourceSha": "6edcf047",
+                    "commits": 1
+                }
+            ],
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "swimUi/ee.schimke.cadence.swim.SwimPreviewsKt.SwimLaneLapsPreview_Swim lane · odd and even laps": {
             "path": "renders/swimUi/SwimLaneLapsPreview_Swim_lane_odd_and_even_laps-35df6d6f.png",
             "versions": [
+                {
+                    "blob": "ed0d64036d3479d69703a3bc8fb1fcc2e056fa53",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "f972d336d9403e8d0891f844edce41fb85faa639",
                     "commit": "ff57ac0989280e1a8f42870327a6f4a3c45fd303",
@@ -1153,13 +1503,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "swimUi/ee.schimke.cadence.swim.SwimPreviewsKt.SwimmingPoolPreview_Swimming pool": {
             "path": "renders/swimUi/SwimmingPoolPreview_Swimming_pool-28ed1567.png",
             "versions": [
+                {
+                    "blob": "da615aa06854b1e5a43dfd315a8324955413b2a6",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "2bd8d324bcb645ac86a24e9df726d286494eef47",
                     "commit": "ff57ac0989280e1a8f42870327a6f4a3c45fd303",
@@ -1168,7 +1525,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
@@ -1176,20 +1533,12 @@
             "path": "renders/swimUi/WaterButtonsLauncherPreview_Water_buttons_launcher-5df3807f.png",
             "versions": [
                 {
-                    "blob": "b4bbf464d44038fc3071c4875f6da1343dbe6fc4",
-                    "commit": "ff57ac0989280e1a8f42870327a6f4a3c45fd303",
-                    "date": "2026-10-31T19:07:09Z",
-                    "sourceSha": "6edcf047",
+                    "blob": "a14b8d5a5170cfcfb18da42aa72312e19a2bfd69",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
                     "commits": 1
-                }
-            ],
-            "observations": 1,
-            "unstable": false,
-            "flapCount": 0
-        },
-        "swimUi/ee.schimke.cadence.swim.SwimPreviewsKt.WaterButtonsWearPreview_Water buttons · Wear": {
-            "path": "renders/swimUi/WaterButtonsWearPreview_Water_buttons_Wear-8eddeafe.png",
-            "versions": [
+                },
                 {
                     "blob": "b4bbf464d44038fc3071c4875f6da1343dbe6fc4",
                     "commit": "ff57ac0989280e1a8f42870327a6f4a3c45fd303",
@@ -1198,7 +1547,29 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
+            "unstable": false,
+            "flapCount": 0
+        },
+        "swimUi/ee.schimke.cadence.swim.SwimPreviewsKt.WaterButtonsWearPreview_Water buttons · Wear": {
+            "path": "renders/swimUi/WaterButtonsWearPreview_Water_buttons_Wear-8eddeafe.png",
+            "versions": [
+                {
+                    "blob": "a14b8d5a5170cfcfb18da42aa72312e19a2bfd69",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
+                {
+                    "blob": "b4bbf464d44038fc3071c4875f6da1343dbe6fc4",
+                    "commit": "ff57ac0989280e1a8f42870327a6f4a3c45fd303",
+                    "date": "2026-10-31T19:07:09Z",
+                    "sourceSha": "6edcf047",
+                    "commits": 1
+                }
+            ],
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
@@ -1236,6 +1607,13 @@
             "path": "renders/wearApp/ConnectedWearCompanionPreview_Devices_Small_Round-fb6314dc.png",
             "versions": [
                 {
+                    "blob": "a2d231878bced092e61096fca817db909c1ec651",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
+                {
                     "blob": "89a8ec1f8e282e4c061c2daf1bab7da2ca2e13eb",
                     "commit": "77a44558328d4518a179de54689904a1db1efd7d",
                     "date": "2026-10-31T15:24:54Z",
@@ -1243,7 +1621,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
@@ -1251,6 +1629,13 @@
             "path": "renders/wearApp/ConnectedWearCompanionPreview_Fonts_Large-e0a1ac42.png",
             "versions": [
                 {
+                    "blob": "ba7a8aa2a52506a397aaacb92af123a9740662eb",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
+                {
                     "blob": "89a8ec1f8e282e4c061c2daf1bab7da2ca2e13eb",
                     "commit": "77a44558328d4518a179de54689904a1db1efd7d",
                     "date": "2026-10-31T15:24:54Z",
@@ -1258,7 +1643,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
@@ -1266,6 +1651,13 @@
             "path": "renders/wearApp/ConnectedWearCompanionPreview_Fonts_Larger-c1260298.png",
             "versions": [
                 {
+                    "blob": "a245aef313e9d1cc04fcc5c963670628e727de0b",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
+                {
                     "blob": "89a8ec1f8e282e4c061c2daf1bab7da2ca2e13eb",
                     "commit": "77a44558328d4518a179de54689904a1db1efd7d",
                     "date": "2026-10-31T15:24:54Z",
@@ -1273,7 +1665,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
@@ -1281,6 +1673,13 @@
             "path": "renders/wearApp/ConnectedWearCompanionPreview_Fonts_Largest-0f41b6d2.png",
             "versions": [
                 {
+                    "blob": "f7b77a981d73995ef73207bcd6c073df2c2d9909",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
+                {
                     "blob": "89a8ec1f8e282e4c061c2daf1bab7da2ca2e13eb",
                     "commit": "77a44558328d4518a179de54689904a1db1efd7d",
                     "date": "2026-10-31T15:24:54Z",
@@ -1288,7 +1687,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
@@ -1296,6 +1695,13 @@
             "path": "renders/wearApp/ConnectedWearCompanionPreview_Fonts_Medium-f187004f.png",
             "versions": [
                 {
+                    "blob": "9fc036ed6826b4c35e1333f23d1853d9d1769c09",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
+                {
                     "blob": "89a8ec1f8e282e4c061c2daf1bab7da2ca2e13eb",
                     "commit": "77a44558328d4518a179de54689904a1db1efd7d",
                     "date": "2026-10-31T15:24:54Z",
@@ -1303,7 +1709,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
@@ -1311,20 +1717,12 @@
             "path": "renders/wearApp/ConnectedWearCompanionPreview_Fonts_Normal-0eb51079.png",
             "versions": [
                 {
-                    "blob": "89a8ec1f8e282e4c061c2daf1bab7da2ca2e13eb",
-                    "commit": "77a44558328d4518a179de54689904a1db1efd7d",
-                    "date": "2026-10-31T15:24:54Z",
-                    "sourceSha": "2526d975",
+                    "blob": "a2d231878bced092e61096fca817db909c1ec651",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
                     "commits": 1
-                }
-            ],
-            "observations": 1,
-            "unstable": false,
-            "flapCount": 0
-        },
-        "wearApp/ee.schimke.cadence.wear.WearCompanionAppKt.ConnectedWearCompanionPreview_Fonts - Small": {
-            "path": "renders/wearApp/ConnectedWearCompanionPreview_Fonts_Small-80b9402f.png",
-            "versions": [
+                },
                 {
                     "blob": "89a8ec1f8e282e4c061c2daf1bab7da2ca2e13eb",
                     "commit": "77a44558328d4518a179de54689904a1db1efd7d",
@@ -1333,13 +1731,42 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
+            "unstable": false,
+            "flapCount": 0
+        },
+        "wearApp/ee.schimke.cadence.wear.WearCompanionAppKt.ConnectedWearCompanionPreview_Fonts - Small": {
+            "path": "renders/wearApp/ConnectedWearCompanionPreview_Fonts_Small-80b9402f.png",
+            "versions": [
+                {
+                    "blob": "144ca35bb1610d55038be0eba8e7d27a9f740546",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
+                {
+                    "blob": "89a8ec1f8e282e4c061c2daf1bab7da2ca2e13eb",
+                    "commit": "77a44558328d4518a179de54689904a1db1efd7d",
+                    "date": "2026-10-31T15:24:54Z",
+                    "sourceSha": "2526d975",
+                    "commits": 1
+                }
+            ],
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "wearApp/ee.schimke.cadence.wear.WearCompanionAppKt.LocalAudioPlaylistPreview_Devices - Large Round": {
             "path": "renders/wearApp/LocalAudioPlaylistPreview_Devices_Large_Round-a766dc27.png",
             "versions": [
+                {
+                    "blob": "8ccdcc0ed0468fe9d993561a98af92eeef57c774",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "cbe26e61691248f12f8d8680a75c97ca83fe803d",
                     "commit": "77a44558328d4518a179de54689904a1db1efd7d",
@@ -1348,7 +1775,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
@@ -1371,6 +1798,13 @@
             "path": "renders/wearApp/LocalAudioPlaylistPreview_Fonts_Large-c9cbad9f.png",
             "versions": [
                 {
+                    "blob": "7c23ab1f20ab343fb486ad34bb4d22919058c6bb",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
+                {
                     "blob": "89a8ec1f8e282e4c061c2daf1bab7da2ca2e13eb",
                     "commit": "77a44558328d4518a179de54689904a1db1efd7d",
                     "date": "2026-10-31T15:24:54Z",
@@ -1378,7 +1812,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
@@ -1386,6 +1820,13 @@
             "path": "renders/wearApp/LocalAudioPlaylistPreview_Fonts_Larger-0f6f49b6.png",
             "versions": [
                 {
+                    "blob": "b6e3de05c3cad14820a82be742ec9e47bf1abb34",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
+                {
                     "blob": "89a8ec1f8e282e4c061c2daf1bab7da2ca2e13eb",
                     "commit": "77a44558328d4518a179de54689904a1db1efd7d",
                     "date": "2026-10-31T15:24:54Z",
@@ -1393,7 +1834,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
@@ -1401,6 +1842,13 @@
             "path": "renders/wearApp/LocalAudioPlaylistPreview_Fonts_Largest-913e4c94.png",
             "versions": [
                 {
+                    "blob": "b4bfdc15086017970d5a0f9da5fb9f7cdbfff9f9",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
+                {
                     "blob": "89a8ec1f8e282e4c061c2daf1bab7da2ca2e13eb",
                     "commit": "77a44558328d4518a179de54689904a1db1efd7d",
                     "date": "2026-10-31T15:24:54Z",
@@ -1408,7 +1856,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
@@ -1416,6 +1864,13 @@
             "path": "renders/wearApp/LocalAudioPlaylistPreview_Fonts_Medium-d61d7c8b.png",
             "versions": [
                 {
+                    "blob": "bcaa91d96507a1d49d57ec8e87f28246d5ef63eb",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
+                {
                     "blob": "89a8ec1f8e282e4c061c2daf1bab7da2ca2e13eb",
                     "commit": "77a44558328d4518a179de54689904a1db1efd7d",
                     "date": "2026-10-31T15:24:54Z",
@@ -1423,7 +1878,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
@@ -1431,20 +1886,12 @@
             "path": "renders/wearApp/LocalAudioPlaylistPreview_Fonts_Normal-b7fff9fa.png",
             "versions": [
                 {
-                    "blob": "89a8ec1f8e282e4c061c2daf1bab7da2ca2e13eb",
-                    "commit": "77a44558328d4518a179de54689904a1db1efd7d",
-                    "date": "2026-10-31T15:24:54Z",
-                    "sourceSha": "2526d975",
+                    "blob": "3115ada2a1983f95f93be7f0293bfad7c1ff1e0d",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
                     "commits": 1
-                }
-            ],
-            "observations": 1,
-            "unstable": false,
-            "flapCount": 0
-        },
-        "wearApp/ee.schimke.cadence.wear.WearCompanionAppKt.LocalAudioPlaylistPreview_Fonts - Small": {
-            "path": "renders/wearApp/LocalAudioPlaylistPreview_Fonts_Small-34a794e7.png",
-            "versions": [
+                },
                 {
                     "blob": "89a8ec1f8e282e4c061c2daf1bab7da2ca2e13eb",
                     "commit": "77a44558328d4518a179de54689904a1db1efd7d",
@@ -1453,13 +1900,42 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
+            "unstable": false,
+            "flapCount": 0
+        },
+        "wearApp/ee.schimke.cadence.wear.WearCompanionAppKt.LocalAudioPlaylistPreview_Fonts - Small": {
+            "path": "renders/wearApp/LocalAudioPlaylistPreview_Fonts_Small-34a794e7.png",
+            "versions": [
+                {
+                    "blob": "26a37639ed7cfea91206fc81bdb45ec1b1ce5c69",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
+                {
+                    "blob": "89a8ec1f8e282e4c061c2daf1bab7da2ca2e13eb",
+                    "commit": "77a44558328d4518a179de54689904a1db1efd7d",
+                    "date": "2026-10-31T15:24:54Z",
+                    "sourceSha": "2526d975",
+                    "commits": 1
+                }
+            ],
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetRectangularPreview_Playlist · rectangular": {
             "path": "renders/wearApp/LocalAudioPlaylistWearWidgetRectangularPreview_Playlist_rectangular-a3081eb2_PARAM_0.png",
             "versions": [
+                {
+                    "blob": "d0f8e24ea519973474580a0ffc1d854f45249c9b",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "29fd38588cb9228fc9d8445398625e26bc58c1c7",
                     "commit": "e618876752e6a39b165b94db8de520c7dad33fa0",
@@ -1468,13 +1944,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetRectangularPreview_Playlist · rectangular#1": {
             "path": "renders/wearApp/LocalAudioPlaylistWearWidgetRectangularPreview_Playlist_rectangular-a3081eb2_PARAM_1.png",
             "versions": [
+                {
+                    "blob": "6e9cc8f94939c0663b1b082a16ae7bbce7f3a6fb",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "8e5bcde240791c0da1fd46340ead14012203571d",
                     "commit": "0f9e665adca6d225f63d1e9915fb5000d517c682",
@@ -1483,13 +1966,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetRoundPreview_Playlist · round (Samsung)": {
             "path": "renders/wearApp/LocalAudioPlaylistWearWidgetRoundPreview_Playlist_round_Samsung-8676e176_PARAM_0.png",
             "versions": [
+                {
+                    "blob": "a6dfbe85db20bceb9e1fcf7dd9207ee4c8433fad",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "b7207d31b442492feab348a34c35a2c3c8b8966b",
                     "commit": "e618876752e6a39b165b94db8de520c7dad33fa0",
@@ -1498,13 +1988,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetRoundPreview_Playlist · round (Samsung)#1": {
             "path": "renders/wearApp/LocalAudioPlaylistWearWidgetRoundPreview_Playlist_round_Samsung-8676e176_PARAM_1.png",
             "versions": [
+                {
+                    "blob": "39f287a6035c9efda82e95a5047efba9e764403a",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "26177e6437257c3af3a16436788865e822553a24",
                     "commit": "6f483249237550c94f3789167e5605c1009527ff",
@@ -1513,13 +2010,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetRoundPreview_Playlist · round (Samsung)#2": {
             "path": "renders/wearApp/LocalAudioPlaylistWearWidgetRoundPreview_Playlist_round_Samsung-8676e176_PARAM_2.png",
             "versions": [
+                {
+                    "blob": "e825d4f1d0a34bbbd61db91101fa5ee865af2591",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "2029101af5e36e6e2765b4b79fcdbb6ade3fd44a",
                     "commit": "0f9e665adca6d225f63d1e9915fb5000d517c682",
@@ -1528,13 +2032,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetRoundPreview_Playlist · round (Samsung)#3": {
             "path": "renders/wearApp/LocalAudioPlaylistWearWidgetRoundPreview_Playlist_round_Samsung-8676e176_PARAM_3.png",
             "versions": [
+                {
+                    "blob": "e8cc580db2f178e7d7c3bc6aa2dbfa42fddfcfbe",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "b0ababa2a262a33565c6402f0a8dcd0e568072d2",
                     "commit": "0f9e665adca6d225f63d1e9915fb5000d517c682",
@@ -1543,13 +2054,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetSquirclePreview_Playlist · squircle": {
             "path": "renders/wearApp/LocalAudioPlaylistWearWidgetSquirclePreview_Playlist_squircle-fe5fe95f_PARAM_0.png",
             "versions": [
+                {
+                    "blob": "d180da2448d2342f49f68906a52cbcefa36520cf",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "26bd073147ed2424838a4aaf5b5c955b45ebc821",
                     "commit": "e618876752e6a39b165b94db8de520c7dad33fa0",
@@ -1558,13 +2076,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetSquirclePreview_Playlist · squircle#1": {
             "path": "renders/wearApp/LocalAudioPlaylistWearWidgetSquirclePreview_Playlist_squircle-fe5fe95f_PARAM_1.png",
             "versions": [
+                {
+                    "blob": "cd8328bcbea40856d1cb674f7383ab73da26c37e",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "4897bb839b9112dcec4783a3432750549061bbf7",
                     "commit": "6f483249237550c94f3789167e5605c1009527ff",
@@ -1573,13 +2098,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetSquirclePreview_Playlist · squircle#2": {
             "path": "renders/wearApp/LocalAudioPlaylistWearWidgetSquirclePreview_Playlist_squircle-fe5fe95f_PARAM_2.png",
             "versions": [
+                {
+                    "blob": "5ee8b7e411ba0c5ea1447366b6e4489e7d858280",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "e0402bc18d94ab6f31fff9f67346bc9277ede915",
                     "commit": "0f9e665adca6d225f63d1e9915fb5000d517c682",
@@ -1588,13 +2120,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetSquirclePreview_Playlist · squircle#3": {
             "path": "renders/wearApp/LocalAudioPlaylistWearWidgetSquirclePreview_Playlist_squircle-fe5fe95f_PARAM_3.png",
             "versions": [
+                {
+                    "blob": "3a5a53bd057c191e47826869c4e2f749dc169ec5",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "008237c090dcd1d2e499429af5aa591b1228ee44",
                     "commit": "0f9e665adca6d225f63d1e9915fb5000d517c682",
@@ -1603,13 +2142,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetAnimatedPreview_Now playing · animated": {
             "path": "renders/wearApp/ModeAndControlsWearWidgetAnimatedPreview_Now_playing_animated-da6d1cec_PARAM_0.gif",
             "versions": [
+                {
+                    "blob": "d52bd4b93b393481252a39d040efbfe34cbbd389",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "659da8ed737c545403e3c46269c91486308d7d48",
                     "commit": "9cdd7d6f8260e0efdae4857f30a44419fc45f5de",
@@ -1632,7 +2178,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 3,
+            "observations": 4,
             "unstable": false,
             "flapCount": 0
         },
@@ -1640,6 +2186,13 @@
             "path": "renders/wearApp/ModeAndControlsWearWidgetAnimatedPreview_Now_playing_animated-da6d1cec_PARAM_1.gif",
             "versions": [
                 {
+                    "blob": "f1ddf7dafab83aa5e7975182eb6f9a0dc06ccfe5",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
+                {
                     "blob": "731f99f3ce41bebbb051b71c45c1a14b184cc226",
                     "commit": "ff57ac0989280e1a8f42870327a6f4a3c45fd303",
                     "date": "2026-10-31T19:07:09Z",
@@ -1647,7 +2200,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
@@ -1655,20 +2208,12 @@
             "path": "renders/wearApp/ModeAndControlsWearWidgetAnimatedPreview_Now_playing_animated-da6d1cec_PARAM_2.gif",
             "versions": [
                 {
-                    "blob": "731f99f3ce41bebbb051b71c45c1a14b184cc226",
-                    "commit": "ff57ac0989280e1a8f42870327a6f4a3c45fd303",
-                    "date": "2026-10-31T19:07:09Z",
-                    "sourceSha": "6edcf047",
+                    "blob": "316df4c6a3b8e27326357a95323bf89859d402e4",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
                     "commits": 1
-                }
-            ],
-            "observations": 1,
-            "unstable": false,
-            "flapCount": 0
-        },
-        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetAnimatedPreview_Now playing · animated#3": {
-            "path": "renders/wearApp/ModeAndControlsWearWidgetAnimatedPreview_Now_playing_animated-da6d1cec_PARAM_3.gif",
-            "versions": [
+                },
                 {
                     "blob": "731f99f3ce41bebbb051b71c45c1a14b184cc226",
                     "commit": "ff57ac0989280e1a8f42870327a6f4a3c45fd303",
@@ -1677,13 +2222,42 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
+            "unstable": false,
+            "flapCount": 0
+        },
+        "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetAnimatedPreview_Now playing · animated#3": {
+            "path": "renders/wearApp/ModeAndControlsWearWidgetAnimatedPreview_Now_playing_animated-da6d1cec_PARAM_3.gif",
+            "versions": [
+                {
+                    "blob": "7ed99abc39e1653407d5d3021080450a8fb21d5f",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
+                {
+                    "blob": "731f99f3ce41bebbb051b71c45c1a14b184cc226",
+                    "commit": "ff57ac0989280e1a8f42870327a6f4a3c45fd303",
+                    "date": "2026-10-31T19:07:09Z",
+                    "sourceSha": "6edcf047",
+                    "commits": 1
+                }
+            ],
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetRectangularPreview_Now playing · rectangular": {
             "path": "renders/wearApp/ModeAndControlsWearWidgetRectangularPreview_Now_playing_rectangular-71381054_PARAM_0.png",
             "versions": [
+                {
+                    "blob": "8648d79f8334592bca58eb6e2b31009cc8559e0d",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "29fd38588cb9228fc9d8445398625e26bc58c1c7",
                     "commit": "9cdd7d6f8260e0efdae4857f30a44419fc45f5de",
@@ -1713,13 +2287,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 4,
+            "observations": 5,
             "unstable": false,
             "flapCount": 1
         },
         "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetRectangularPreview_Now playing · rectangular#1": {
             "path": "renders/wearApp/ModeAndControlsWearWidgetRectangularPreview_Now_playing_rectangular-71381054_PARAM_1.png",
             "versions": [
+                {
+                    "blob": "ee91d7a3c899614af6a287d29a4aadeed23afd19",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "8e5bcde240791c0da1fd46340ead14012203571d",
                     "commit": "0f9e665adca6d225f63d1e9915fb5000d517c682",
@@ -1728,13 +2309,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetRoundPreview_Now playing · round (Samsung)": {
             "path": "renders/wearApp/ModeAndControlsWearWidgetRoundPreview_Now_playing_round_Samsung-4f203db6_PARAM_0.png",
             "versions": [
+                {
+                    "blob": "d431358bbd4e5b4abad5f8daf93e1eaffdd1b83f",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "b7207d31b442492feab348a34c35a2c3c8b8966b",
                     "commit": "e618876752e6a39b165b94db8de520c7dad33fa0",
@@ -1743,13 +2331,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetRoundPreview_Now playing · round (Samsung)#1": {
             "path": "renders/wearApp/ModeAndControlsWearWidgetRoundPreview_Now_playing_round_Samsung-4f203db6_PARAM_1.png",
             "versions": [
+                {
+                    "blob": "7c0ecd4203d5c00a12a6041bc35577777e22b6a7",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "26177e6437257c3af3a16436788865e822553a24",
                     "commit": "0f9e665adca6d225f63d1e9915fb5000d517c682",
@@ -1758,13 +2353,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetRoundPreview_Now playing · round (Samsung)#2": {
             "path": "renders/wearApp/ModeAndControlsWearWidgetRoundPreview_Now_playing_round_Samsung-4f203db6_PARAM_2.png",
             "versions": [
+                {
+                    "blob": "d6bce09130d8021ddda7475b53cfa4bd77523c79",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "2029101af5e36e6e2765b4b79fcdbb6ade3fd44a",
                     "commit": "0f9e665adca6d225f63d1e9915fb5000d517c682",
@@ -1773,13 +2375,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetRoundPreview_Now playing · round (Samsung)#3": {
             "path": "renders/wearApp/ModeAndControlsWearWidgetRoundPreview_Now_playing_round_Samsung-4f203db6_PARAM_3.png",
             "versions": [
+                {
+                    "blob": "a3204920862c3a30a4d22b965440c5a440e1a72e",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "b0ababa2a262a33565c6402f0a8dcd0e568072d2",
                     "commit": "0f9e665adca6d225f63d1e9915fb5000d517c682",
@@ -1788,13 +2397,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetSquirclePreview_Now playing · squircle": {
             "path": "renders/wearApp/ModeAndControlsWearWidgetSquirclePreview_Now_playing_squircle-f7452489_PARAM_0.png",
             "versions": [
+                {
+                    "blob": "09a5fd25f04df7e58df8933cd09570dae0b57a8d",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "26bd073147ed2424838a4aaf5b5c955b45ebc821",
                     "commit": "e618876752e6a39b165b94db8de520c7dad33fa0",
@@ -1803,13 +2419,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetSquirclePreview_Now playing · squircle#1": {
             "path": "renders/wearApp/ModeAndControlsWearWidgetSquirclePreview_Now_playing_squircle-f7452489_PARAM_1.png",
             "versions": [
+                {
+                    "blob": "9a3477244c9054da8e4e6a203d6438700433bfcc",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "4897bb839b9112dcec4783a3432750549061bbf7",
                     "commit": "0f9e665adca6d225f63d1e9915fb5000d517c682",
@@ -1818,13 +2441,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetSquirclePreview_Now playing · squircle#2": {
             "path": "renders/wearApp/ModeAndControlsWearWidgetSquirclePreview_Now_playing_squircle-f7452489_PARAM_2.png",
             "versions": [
+                {
+                    "blob": "788e550de32f5944f8837df45bbbd07db51e3a89",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "e0402bc18d94ab6f31fff9f67346bc9277ede915",
                     "commit": "0f9e665adca6d225f63d1e9915fb5000d517c682",
@@ -1833,13 +2463,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetSquirclePreview_Now playing · squircle#3": {
             "path": "renders/wearApp/ModeAndControlsWearWidgetSquirclePreview_Now_playing_squircle-f7452489_PARAM_3.png",
             "versions": [
+                {
+                    "blob": "627268d96f17c221ffd2b518a2364b8531b6e92f",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "008237c090dcd1d2e499429af5aa591b1228ee44",
                     "commit": "0f9e665adca6d225f63d1e9915fb5000d517c682",
@@ -1848,13 +2485,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetRectangularPreview_Sync · rectangular": {
             "path": "renders/wearApp/SyncStatusWearWidgetRectangularPreview_Sync_rectangular-ecd1feeb_PARAM_0.png",
             "versions": [
+                {
+                    "blob": "2d982048ed129158b4cd1144911df4bcbcce3268",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "29fd38588cb9228fc9d8445398625e26bc58c1c7",
                     "commit": "e618876752e6a39b165b94db8de520c7dad33fa0",
@@ -1863,13 +2507,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetRectangularPreview_Sync · rectangular#1": {
             "path": "renders/wearApp/SyncStatusWearWidgetRectangularPreview_Sync_rectangular-ecd1feeb_PARAM_1.png",
             "versions": [
+                {
+                    "blob": "ea563c5b0c70f83860b13ea1aa03ff7ff1bd4a53",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "8e5bcde240791c0da1fd46340ead14012203571d",
                     "commit": "6f483249237550c94f3789167e5605c1009527ff",
@@ -1878,13 +2529,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetRoundPreview_Sync · round (Samsung)": {
             "path": "renders/wearApp/SyncStatusWearWidgetRoundPreview_Sync_round_Samsung-f0a0a37a_PARAM_0.png",
             "versions": [
+                {
+                    "blob": "459e41a24c9a200e67364e90780d9f7cc4bbdfc4",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "b7207d31b442492feab348a34c35a2c3c8b8966b",
                     "commit": "e618876752e6a39b165b94db8de520c7dad33fa0",
@@ -1893,13 +2551,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetRoundPreview_Sync · round (Samsung)#1": {
             "path": "renders/wearApp/SyncStatusWearWidgetRoundPreview_Sync_round_Samsung-f0a0a37a_PARAM_1.png",
             "versions": [
+                {
+                    "blob": "9cc851f1f9c043ac31aa05048ba3d292e1e8f817",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "26177e6437257c3af3a16436788865e822553a24",
                     "commit": "6f483249237550c94f3789167e5605c1009527ff",
@@ -1908,13 +2573,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetRoundPreview_Sync · round (Samsung)#2": {
             "path": "renders/wearApp/SyncStatusWearWidgetRoundPreview_Sync_round_Samsung-f0a0a37a_PARAM_2.png",
             "versions": [
+                {
+                    "blob": "87ea054d1c7e38167a9e78aed6632a75246046d1",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "2029101af5e36e6e2765b4b79fcdbb6ade3fd44a",
                     "commit": "6f483249237550c94f3789167e5605c1009527ff",
@@ -1923,13 +2595,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetRoundPreview_Sync · round (Samsung)#3": {
             "path": "renders/wearApp/SyncStatusWearWidgetRoundPreview_Sync_round_Samsung-f0a0a37a_PARAM_3.png",
             "versions": [
+                {
+                    "blob": "4e4d00d757df75fa9a6bdd557cd2e358775f8c53",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "b0ababa2a262a33565c6402f0a8dcd0e568072d2",
                     "commit": "6f483249237550c94f3789167e5605c1009527ff",
@@ -1938,13 +2617,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetSquirclePreview_Sync · squircle": {
             "path": "renders/wearApp/SyncStatusWearWidgetSquirclePreview_Sync_squircle-d27e8677_PARAM_0.png",
             "versions": [
+                {
+                    "blob": "4aec1c472bd09b0eca9c8d423412ea71234ef0d4",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "26bd073147ed2424838a4aaf5b5c955b45ebc821",
                     "commit": "e618876752e6a39b165b94db8de520c7dad33fa0",
@@ -1953,13 +2639,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetSquirclePreview_Sync · squircle#1": {
             "path": "renders/wearApp/SyncStatusWearWidgetSquirclePreview_Sync_squircle-d27e8677_PARAM_1.png",
             "versions": [
+                {
+                    "blob": "7428264947bb0a1c5117c3f60e7928a17c8972d8",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "4897bb839b9112dcec4783a3432750549061bbf7",
                     "commit": "6f483249237550c94f3789167e5605c1009527ff",
@@ -1968,13 +2661,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetSquirclePreview_Sync · squircle#2": {
             "path": "renders/wearApp/SyncStatusWearWidgetSquirclePreview_Sync_squircle-d27e8677_PARAM_2.png",
             "versions": [
+                {
+                    "blob": "7017bc51c30bfe969cc98a447246724495d3f7a9",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "e0402bc18d94ab6f31fff9f67346bc9277ede915",
                     "commit": "6f483249237550c94f3789167e5605c1009527ff",
@@ -1983,13 +2683,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "wearApp/ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetSquirclePreview_Sync · squircle#3": {
             "path": "renders/wearApp/SyncStatusWearWidgetSquirclePreview_Sync_squircle-d27e8677_PARAM_3.png",
             "versions": [
+                {
+                    "blob": "9e588665d11203fe7ef8cbd025bf0b3d205845a5",
+                    "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
+                    "date": "2026-11-01T12:37:00Z",
+                    "sourceSha": "46fc9832",
+                    "commits": 1
+                },
                 {
                     "blob": "008237c090dcd1d2e499429af5aa591b1228ee44",
                     "commit": "6f483249237550c94f3789167e5605c1009527ff",
@@ -1998,7 +2705,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         }
