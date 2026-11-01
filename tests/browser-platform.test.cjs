@@ -146,14 +146,19 @@ test('podcast export writes only the owned folder, refuses collisions and reject
  const { api } = environment({ navigator: { storage: { getDirectory: async () => opfs } },
   indexedDB: memoryIndexedDb(), crypto: { randomUUID: () => 'usb' }, showDirectoryPicker: async () => target });
  const selected = await new Promise((resolve, reject) => api.pickDirectory(s => resolve(JSON.parse(s)), reject));
- const args = { target: selected.location, files: [name], manifest: '{"schema":1}' };
+ const args = { target: selected.location, files: [{ name, folder: 'Example-12345678' }], manifest: '{"schema":1}' };
  await assert.rejects(api.call('clear', { root: 'opfs:staging/.cadence-podcasts' }), /Reserved/);
  await api.call('podcastExport', args);
  const folder = target.children.get('Cadence').children.get('podcasts');
- assert.equal(folder.children.get(name).contents, 'prepared audio');
+ const show = folder.children.get('Example-12345678');
+ assert.equal(show.children.get(name).contents, 'prepared audio');
+ assert.equal(show.children.get('.cadence-owner').contents, 'cadence-podcasts-v1');
  assert.equal(folder.children.get('.cadence-owner').contents, 'cadence-podcasts-v1');
  assert.equal(target.children.get('keep.mp3').contents, 'unrelated');
- await assert.rejects(api.call('podcastExport', { ...args, files: ['../escape.mp3'] }), /Invalid podcast filename/);
+ await assert.rejects(api.call('podcastExport', { ...args, files: [{ name: '../escape.mp3' }] }), /Invalid podcast filename/);
+ await assert.rejects(api.call('podcastExport', { ...args, files: [{ name, folder: '../outside' }] }), /Invalid podcast folder/);
+ show.children.delete('.cadence-owner');
+ await assert.rejects(api.call('podcastExport', args), /not owned/);
  folder.children.delete('.cadence-owner');
  await assert.rejects(api.call('podcastExport', args), /not owned/);
  assert.equal(target.children.get('keep.mp3').contents, 'unrelated');

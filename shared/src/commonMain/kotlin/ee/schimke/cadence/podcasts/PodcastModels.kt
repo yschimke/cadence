@@ -21,6 +21,12 @@ data class Episode(
   // An immutable enclosure version. Changes (including dynamic ads) require a new version.
   val audioVersion: String,
   val extension: String = "mp3",
+  // Stable source-specific show identity. Empty for old snapshots without show metadata.
+  val podcastId: String = "",
+  val podcastTitle: String = "",
+  val summary: String = "",
+  val transcriptUrl: String = "",
+  val published: String = "",
 ) {
   val key: String
     get() = digest("$backend\u0000$id")
@@ -60,10 +66,13 @@ data class Segmentation(
   val chunkFormat: String = "mp3",
   // Leave out audio before the imported position. Defaults off so stored manifests stay valid.
   val skipListened: Boolean = false,
+  val trimStartSeconds: Int = 0,
+  val trimEndSeconds: Int = 0,
 ) {
   fun validate() {
     require(chunkFormat in listOf("mp3", "m4a"))
     require(chunkMinutes in 0..120) { "Chunks must be 0 (off) or 1–120 minutes" }
+    require(trimStartSeconds in 0..3600 && trimEndSeconds in 0..3600)
   }
 }
 
@@ -86,15 +95,28 @@ fun formatTime(ms: Long): String {
   return if (h > 0) "$h:${m.toString().padStart(2, '0')}:$s" else "$m:$s"
 }
 
+/** Convert an episode timeline fraction to a whole-second position, preserving the exact end. */
+fun scrubPosition(fraction: Float, durationMs: Long): Long {
+  require(durationMs > 0 && fraction.isFinite())
+  val clamped = fraction.coerceIn(0f, 1f)
+  return if (clamped == 1f) durationMs else ((clamped * durationMs).toLong() / 1000) * 1000
+}
+
 fun digest(value: String): String = value.encodeUtf8().sha256().hex()
 
 fun segment(episode: Episode, config: Segmentation): List<Section> {
   episode.validate()
   config.validate()
-  val resumable = episode.positionMs > 0 && episode.positionMs < episode.durationMs
-  val boundaries = mutableListOf(if (config.skipListened && resumable) episode.positionMs else 0L)
+  val start = config.trimStartSeconds * 1000L
+  val end = episode.durationMs - config.trimEndSeconds * 1000L
+  require(start < end) { "Trim exceeds the length of ${episode.title}" }
+  // Once the listener has reached the trimmed outro, no playable audio remains.
+  if (config.skipListened && episode.positionMs >= end && episode.positionMs > 0) return emptyList()
+  val resumable = episode.positionMs > start && episode.positionMs < end
+  val boundaries =
+    mutableListOf(if (config.skipListened && resumable) episode.positionMs else start)
   if (config.splitAtPosition && resumable && !config.skipListened) boundaries += episode.positionMs
-  boundaries += episode.durationMs
+  boundaries += end
   val ranges =
     boundaries.zipWithNext().flatMap { (start, end) ->
       val size = if (config.chunkMinutes == 0) end - start else config.chunkMinutes * 60_000L
@@ -140,11 +162,24 @@ data class Completion(
   val endMs: Long,
 )
 
+@Serializable
+data class EpisodeProgress(
+  val audioVersion: String,
+  val observedRevision: String,
+  val positionMs: Long,
+  val updatedAtMs: Long,
+)
+
 /**
  * Only contiguous completion after the backend position advances playback; gaps never skip audio.
  */
-fun advancedPosition(episode: Episode, completions: List<Completion>): Long {
+fun advancedPosition(
+  episode: Episode,
+  completions: List<Completion>,
+  config: Segmentation? = null,
+): Long {
   var position = episode.positionMs
+  var advanced = false
   val intervals =
     completions
       .filter {
@@ -154,9 +189,19 @@ fun advancedPosition(episode: Episode, completions: List<Completion>): Long {
       }
       .sortedBy { it.startMs }
   for (interval in intervals) {
-    if (interval.startMs <= position && interval.endMs > position)
+    if (
+      config != null &&
+        position < config.trimStartSeconds * 1000L &&
+        interval.startMs == config.trimStartSeconds * 1000L
+    )
+      position = interval.startMs
+    if (interval.startMs <= position && interval.endMs > position) {
       position = minOf(interval.endMs, episode.durationMs)
+      advanced = true
+    }
   }
+  if (config != null && advanced && position >= episode.durationMs - config.trimEndSeconds * 1000L)
+    position = episode.durationMs
   return position
 }
 
@@ -170,6 +215,8 @@ enum class PodcastSourceKind {
   Snapshot,
 }
 
+@Serializable data class PodcastTrim(val startSeconds: Int = 0, val endSeconds: Int = 0)
+
 @Serializable
 data class PodcastLibrary(
   val schema: Int = 1,
@@ -182,11 +229,19 @@ data class PodcastLibrary(
   val config: Segmentation = Segmentation(),
   val manifests: List<Manifest> = emptyList(),
   val completions: List<Completion> = emptyList(),
+  val episodeProgress: Map<String, EpisodeProgress> = emptyMap(),
+  val podcastTrims: Map<String, PodcastTrim> = emptyMap(),
   val lastBackendSync: String = "Never",
 ) {
   fun validate() {
     require(schema == 1)
     config.validate()
+    episodeProgress.forEach { (key, value) ->
+      require(key.isNotBlank() && value.positionMs >= 0 && value.updatedAtMs >= 0)
+    }
+    podcastTrims.forEach { (id, trim) ->
+      require(id.isNotBlank() && trim.startSeconds in 0..3600 && trim.endSeconds in 0..3600)
+    }
     require(feedUrl.isBlank() || feedUrl.startsWith("https://"))
     require(feedLatest in 1..MAX_FEED_EPISODES)
     playlist?.validate()
@@ -206,13 +261,33 @@ data class PodcastLibrary(
   }
 }
 
+/** A manually chosen episode position supersedes legacy per-section acknowledgements. */
+fun episodePosition(episode: Episode, library: PodcastLibrary, config: Segmentation? = null): Long {
+  val manual = library.episodeProgress[episode.key]
+  return if (
+    manual != null &&
+      manual.audioVersion == episode.audioVersion &&
+      manual.observedRevision == episode.revision
+  ) {
+    manual.positionMs.coerceIn(0, episode.durationMs)
+  } else advancedPosition(episode, library.completions, config)
+}
+
+fun PodcastLibrary.configFor(episode: Episode): Segmentation {
+  val trim = podcastTrims[episode.podcastId] ?: return config
+  return config.copy(trimStartSeconds = trim.startSeconds, trimEndSeconds = trim.endSeconds)
+}
+
 @Serializable
 data class LocalPodcastState(
   val library: PodcastLibrary = PodcastLibrary(),
   // These fields are device-local, never uploaded as cross-device readiness.
   val readySectionIds: Set<String> = emptySet(),
+  val downloadedEpisodeKeys: Set<String> = emptySet(),
   val target: String = "",
   val copiedSectionIds: Set<String> = emptySet(),
+  // Manifest recorded by the most recent successful copy, not a live headset playback report.
+  val lastCopied: DeviceManifest? = null,
   val cloudUrl: String = "",
   val cloudKey: String = "",
   val cloudRevision: Long = 0,
@@ -256,7 +331,7 @@ object PocketCastsBackend : PodcastBackend {
       false,
       false,
       false,
-      "Pocket Casts has no public API. Cadence reads Up Next, in-progress episodes and manual playlists through its private web-player API (see PocketCastsApi); positions are not written back.",
+      "Pocket Casts has no public API. Cadence reads account lists through its private API; a direct sign-in also supports explicit, conflict-checked position updates.",
     )
 
   override suspend fun playlists(): List<String> = error(capabilities.explanation)
@@ -296,6 +371,9 @@ data class RssItem(
   val duration: String,
   val length: String,
   val type: String,
+  val summary: String = "",
+  val transcriptUrl: String = "",
+  val published: String = "",
 )
 
 data class RssFeed(val name: String, val items: List<RssItem>)
@@ -339,6 +417,11 @@ fun rssSnapshot(url: String, feed: RssFeed, latest: Int): RssImport {
           revision = "rss",
           audioVersion = digest(item.audioUrl + "|" + item.length),
           extension = rssExtension(item.type),
+          podcastId = "feed:$url",
+          podcastTitle = feed.name,
+          summary = item.summary,
+          transcriptUrl = item.transcriptUrl,
+          published = item.published,
         )
         .also { it.validate() }
     }
@@ -393,6 +476,9 @@ data class DeviceEpisode(
   val title: String,
   val audioVersion: String,
   val sections: List<Section>,
+  val podcastTitle: String = "",
+  val durationMs: Long? = null,
+  val folder: String = "",
 )
 
 @Serializable data class DeviceManifest(val schema: Int = 1, val episodes: List<DeviceEpisode>)
@@ -407,9 +493,80 @@ fun deviceManifest(library: PodcastLibrary): DeviceManifest =
           it.episode.title,
           it.episode.audioVersion,
           it.sections,
+          it.episode.podcastTitle,
+          it.episode.durationMs,
+          podcastFolder(it.episode),
         )
       }
   )
+
+/** A stable, filesystem-safe show folder; source identifiers are never written to the device. */
+fun podcastFolder(episode: Episode): String {
+  val title = episode.podcastTitle.replace(Regex("[^a-zA-Z0-9]"), "_").take(36).trim('_')
+  val identity = episode.podcastId.ifBlank { episode.podcastTitle }
+  if (identity.isBlank()) return "Other_podcasts"
+  return "${title.ifBlank { "Podcast" }}-${digest("${episode.backend}\u0000$identity").take(8)}"
+}
+
+/** Resolve only manifest-declared filenames; old manifests retain the flat export layout. */
+fun podcastExportFolders(sections: List<Section>, manifest: String): Map<String, String> {
+  val device =
+    runCatching { podcastJson.decodeFromString<DeviceManifest>(manifest) }.getOrNull()
+      ?: return emptyMap()
+  require(device.schema == 1)
+  val known = sections.associateBy { it.fileName }
+  require(known.size == sections.size)
+  val result = mutableMapOf<String, String>()
+  for (episode in device.episodes) {
+    if (episode.folder.isEmpty()) continue
+    require(episode.folder.matches(Regex("[A-Za-z0-9_-]{1,50}")))
+    for (section in episode.sections) {
+      require(known[section.fileName] == section)
+      require(result.put(section.fileName, episode.folder) == null)
+    }
+  }
+  return result
+}
+
+data class PodcastWidgetSummary(val copied: String, val available: String)
+
+fun podcastWidgetSummary(state: LocalPodcastState): PodcastWidgetSummary {
+  fun minutes(ms: Long) = (ms + 59_999) / 60_000
+  val copied = state.lastCopied
+  val copiedSections = copied?.episodes.orEmpty().flatMap { it.sections }
+  val revisions = state.library.manifests.associate { it.episode.key to it.episode.revision }
+  val completions =
+    state.library.completions
+      .filter { revisions[it.episodeKey] == it.observedRevision }
+      .map { it.sectionId }
+      .toSet()
+  val copiedText =
+    if (copied == null) "Last copy: unknown"
+    else {
+      val marked =
+        copied.episodes.count {
+          val episode =
+            state.library.playlist?.episodes?.firstOrNull { source -> source.key == it.episodeKey }
+          if (episode != null && state.library.episodeProgress.containsKey(episode.key)) {
+            episodePosition(episode, state.library) >= episode.durationMs
+          } else
+            it.sections.isNotEmpty() && it.sections.all { section -> section.id in completions }
+        }
+      "Last copy: ${copied.episodes.size} eps · ${minutes(copiedSections.sumOf { it.endMs - it.startMs })}m · $marked marked"
+    }
+  val episodes = state.library.playlist?.episodes.orEmpty()
+  val pending =
+    episodes
+      .map { runCatching { segment(it, state.library.configFor(it)) }.getOrDefault(emptyList()) }
+      .filter { it.isNotEmpty() }
+  val sections = pending.flatten()
+  val ready = state.readyForDevice()
+  val availableText =
+    if (episodes.isEmpty()) "Sync: no podcasts"
+    else
+      "${if (ready) "Ready" else "To prepare"}: ${pending.size} eps · ${minutes(sections.sumOf { it.endMs - it.startMs })}m"
+  return PodcastWidgetSummary(copiedText, availableText)
+}
 
 /**
  * A failure safe to show as-is. [status] is the HTTP status when the server refused the request.

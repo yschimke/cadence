@@ -105,6 +105,17 @@ class ShokzOpenSwimProtocolTest {
   }
 
   @Test
+  fun `decodes a captured swimming equalizer response`() {
+    val response =
+      "a55a3400010100003000f69d010000002800000002000000040000000300000003000000040000000900000004000000080000000700000000000000"
+        .hex()
+
+    assertTrue(ShokzOpenSwimCodec.isResponse(ShokzOpenSwimCodec.decode(response)))
+    response[20] = (response[20].toInt() xor 1).toByte()
+    assertFailsWith<IllegalArgumentException> { ShokzOpenSwimCodec.decode(response) }
+  }
+
+  @Test
   fun `OpenSwim profile exposes only verified commands`() {
     assertTrue(OpenSwimProProfile.isSupported(RcspCommand.QueryMediaState))
     assertTrue(OpenSwimProProfile.isSupported(RcspCommand.Play))

@@ -3,6 +3,10 @@
 package ee.schimke.cadence.podcasts
 
 import androidx.compose.remote.creation.compose.action.Action
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Headphones
+import androidx.compose.material.icons.filled.BatteryFull
+import androidx.compose.material.icons.filled.Sync
 import androidx.compose.remote.creation.compose.layout.RemoteAlignment
 import androidx.compose.remote.creation.compose.layout.RemoteArrangement
 import androidx.compose.remote.creation.compose.layout.RemoteBox
@@ -15,6 +19,8 @@ import androidx.compose.remote.creation.compose.modifier.background
 import androidx.compose.remote.creation.compose.modifier.clickable
 import androidx.compose.remote.creation.compose.modifier.clip
 import androidx.compose.remote.creation.compose.modifier.fillMaxSize
+import androidx.compose.remote.creation.compose.modifier.fillMaxWidth
+import androidx.compose.remote.creation.compose.modifier.height
 import androidx.compose.remote.creation.compose.modifier.padding
 import androidx.compose.remote.creation.compose.modifier.size
 import androidx.compose.remote.creation.compose.shapes.RemoteCircleShape
@@ -24,6 +30,8 @@ import androidx.compose.remote.creation.compose.state.rdp
 import androidx.compose.remote.creation.compose.state.rs
 import androidx.compose.remote.creation.compose.state.rsp
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import ee.schimke.cadence.swim.SwimmingPool
 import ee.schimke.cadence.swim.WaterColors
 import ee.schimke.cadence.theme.CadencePalette
@@ -40,7 +48,20 @@ import ee.schimke.cadence.theme.CadencePalette
  */
 @Composable
 @RemoteComposable
-internal fun PodcastSyncWidgetContent(ready: Boolean, status: String, onTap: Action? = null) {
+fun PodcastSyncWidgetContent(
+  ready: Boolean,
+  copied: String,
+  available: String,
+  battery: String?,
+  showSwimming: Boolean,
+  heightDp: Int,
+  onTap: Action? = null,
+  widthDp: Int = 232,
+) {
+  val lane = heightDp >= 140
+  val scale = minOf(widthDp / 232f, heightDp / if (lane) 152f else 72f).coerceIn(0.8f, 1.35f)
+  val poolHeight = (heightDp * 0.28f).toInt().coerceIn(40, 72)
+  val headerHeight = heightDp - poolHeight
   RemoteBox(
     modifier =
       RemoteModifier.fillMaxSize()
@@ -48,38 +69,45 @@ internal fun PodcastSyncWidgetContent(ready: Boolean, status: String, onTap: Act
         .clip(RemoteRoundedCornerShape(16.rdp))
         .background(CadencePalette.Grey20.rc)
   ) {
-    // Ready: off doing laps. Not yet: treading water by the wall, waiting for the audio.
-    SwimmingPool(
-      RemoteModifier.fillMaxSize(),
-      water = WaterColors.Night,
-      swimming = ready,
-      level = 0.66f,
-      bubbles = if (ready) 6 else 3,
-    )
-    RemoteColumn(
-      modifier = RemoteModifier.fillMaxSize().padding(16.rdp),
-      verticalArrangement = RemoteArrangement.spacedBy(6.rdp),
-    ) {
-      RemoteRow(
-        horizontalArrangement = RemoteArrangement.spacedBy(8.rdp),
-        verticalAlignment = RemoteAlignment.CenterVertically,
+    RemoteColumn(modifier = RemoteModifier.fillMaxSize(), verticalArrangement = if (lane) RemoteArrangement.Top else RemoteArrangement.Center) {
+      RemoteColumn(
+        modifier = (if (lane) RemoteModifier.fillMaxWidth().height(headerHeight.rdp) else RemoteModifier.fillMaxWidth()).padding((8 * scale).rdp),
+        verticalArrangement = RemoteArrangement.spacedBy((1 * scale).rdp),
       ) {
-        val dot = if (ready) CadencePalette.Aqua80 else CadencePalette.GreyVariant80
-        RemoteBox(RemoteModifier.size(10.rdp).clip(RemoteCircleShape).background(dot.rc))
-        RemoteText(
-          (if (ready) "Ready to copy to USB" else "Audio not ready").rs,
-          color = CadencePalette.Grey90.rc,
-          fontSize = 16.rsp,
-          maxLines = 1,
-        )
+        SyncMetricLine(copied, Icons.Default.Headphones, "on headphones", CadencePalette.Blue80, scale)
+        SyncMetricLine(available, Icons.Default.Sync, if (ready) "ready to sync" else "to prepare", if (ready) CadencePalette.Aqua80 else CadencePalette.Orange80, scale)
+        RemoteRow(horizontalArrangement = RemoteArrangement.spacedBy(6.rdp), verticalAlignment = RemoteAlignment.CenterVertically) {
+          SyncStatusIcon(Icons.Default.BatteryFull, CadencePalette.GreyVariant80, (14 * scale).toInt())
+          RemoteText((battery ?: "Battery unavailable").rs, color = CadencePalette.GreyVariant80.rc, fontSize = (11 * scale).rsp, maxLines = 1, overflow = TextOverflow.Ellipsis)
+        }
       }
-      RemoteText(
-        status.rs,
-        color = CadencePalette.GreyVariant80.rc,
-        fontSize = 14.rsp,
-        maxLines = 2,
+      if (lane) SwimmingPool(
+        RemoteModifier.fillMaxWidth().height((heightDp - headerHeight).rdp),
+        water = WaterColors.Night,
+        swimming = showSwimming && ready,
+        level = 0.35f,
+        bubbles = if (ready) 6 else 3,
+        amplitude = 0.025f,
+        swimmerSize = 0.48f,
+        standing = !showSwimming,
       )
-      RemoteText("Cadence".rs, color = CadencePalette.Blue80.rc, fontSize = 12.rsp)
+    }
+  }
+}
+
+@Composable
+@RemoteComposable
+private fun SyncMetricLine(text: String, icon: androidx.compose.ui.graphics.vector.ImageVector, label: String, color: androidx.compose.ui.graphics.Color, scale: Float) {
+  val detail = text.substringAfter(": ", "")
+  val count = detail.substringBefore(" eps").toIntOrNull()
+  RemoteRow(horizontalArrangement = RemoteArrangement.spacedBy(6.rdp), verticalAlignment = RemoteAlignment.CenterVertically) {
+    SyncStatusIcon(icon, color, (14 * scale).toInt())
+    if (count != null) {
+      RemoteText(count.toString().rs, color = color.rc, fontSize = (17 * scale).rsp, fontWeight = FontWeight.Medium, maxLines = 1)
+      val remainder = detail.substringAfter(" eps", "").replace(" marked", " played")
+      RemoteText("$label$remainder".rs, color = CadencePalette.Grey90.rc, fontSize = (11 * scale).rsp, maxLines = 1, overflow = TextOverflow.Ellipsis)
+    } else {
+      RemoteText(text.rs, color = CadencePalette.Grey90.rc, fontSize = (11 * scale).rsp, maxLines = 1, overflow = TextOverflow.Ellipsis)
     }
   }
 }

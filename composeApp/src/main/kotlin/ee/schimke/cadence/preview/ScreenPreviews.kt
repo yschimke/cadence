@@ -21,6 +21,8 @@ import ee.schimke.cadence.home.HomeActions
 import ee.schimke.cadence.home.HomeContent
 import ee.schimke.cadence.home.HomeViewModel
 import ee.schimke.cadence.podcasts.LocalPodcastState
+import ee.schimke.cadence.podcasts.PodcastPlayerUi
+import ee.schimke.cadence.podcasts.PodcastWorkUi
 import ee.schimke.cadence.sync.ManageSyncContent
 
 private val themedModifier
@@ -49,6 +51,8 @@ internal fun HomeLibraryPreview() {
       podcasts = PreviewFixtures.podcastState,
       actions = HomeActions(),
       canRefreshPodcasts = true,
+      podcastWork = PodcastWorkUi(supportsDownload = true),
+      podcastPlayer = PodcastPlayerUi(suggestMediaAccess = true),
       modifier = themedModifier,
     )
   }

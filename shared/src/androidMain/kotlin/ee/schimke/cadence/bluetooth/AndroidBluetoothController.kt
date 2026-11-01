@@ -49,6 +49,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import java.util.UUID
 
@@ -76,6 +77,7 @@ class AndroidBluetoothController(
         val equalizer: EqualizerPreset? = null,
         val playbackOrder: PlaybackOrder? = null,
         val volumePercent: Int? = null,
+        val volumeError: Boolean = false,
         val playing: Boolean? = null,
     )
 
@@ -105,6 +107,7 @@ class AndroidBluetoothController(
                         equalizer = headset.equalizer,
                         playbackOrder = headset.playbackOrder,
                         headsetVolumePercent = headset.volumePercent,
+                        headsetVolumeError = headset.volumeError,
                         headsetPlaying = headset.playing,
                     )
                 }
@@ -141,9 +144,13 @@ class AndroidBluetoothController(
         val target = percent.coerceIn(0, 100)
         localAudioDevice()?.let { device ->
             // MP3 playback is on the headset, so the phone's stream volume does not reach it.
-            dispatchOpenSwim(device, RcspCommand.SetVolume(target.toUByte())) {
-                headsetFlow.update { it.copy(volumePercent = target) }
-            }
+            val previous = headsetFlow.value.volumePercent
+            headsetFlow.update { it.copy(volumePercent = target, volumeError = false) }
+            dispatchOpenSwim(device, RcspCommand.SetVolume(target.toUByte()), onFailure = {
+                headsetFlow.update {
+                    if (it.volumePercent == target) it.copy(volumePercent = previous, volumeError = true) else it
+                }
+            })
             return
         }
         val max = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
@@ -232,6 +239,8 @@ class AndroidBluetoothController(
             runCatching { exchangeOpenSwim(device, command) }
                 .fold(
                     onSuccess = {
+                        applicationContext.getSharedPreferences("headset-mode", Context.MODE_PRIVATE)
+                            .edit().putString("device", device.address).putString("mode", mode.name).apply()
                         headsetFlow.update { it.copy(mode = mode, playing = null) }
                         refresh()
                         when (mode) {
@@ -336,12 +345,18 @@ class AndroidBluetoothController(
     }
 
     private fun batteryFromConnected(): String? {
-        if (!hasBluetoothConnectPermission()) return null
         val device = connectedAudioDevice() ?: return null
+        return batteryPercent(device)?.let {
+            ConnectedDevice(runCatching { device.name }.getOrNull().orEmpty(), "", emptyList(), batteryPercent = it).batterySummary()
+        }
+    }
+
+    private fun batteryPercent(device: BluetoothDevice): Int? {
+        if (!hasBluetoothConnectPermission()) return null
         return runCatching {
             val method = BluetoothDevice::class.java.getMethod("getBatteryLevel")
             val level = method.invoke(device) as? Int
-            if (level == null || level < 0) null else "$level%"
+            level?.takeIf { it in 0..100 }
         }.getOrNull()
     }
 
@@ -390,6 +405,7 @@ class AndroidBluetoothController(
     private fun dispatchOpenSwim(
         device: BluetoothDevice,
         command: RcspCommand,
+        onFailure: () -> Unit = {},
         onAcknowledged: () -> Unit = {},
     ) {
         commandScope.launch {
@@ -401,8 +417,12 @@ class AndroidBluetoothController(
                         "OpenSwim ${command.id} acknowledged with type ${response.type}",
                     )
                 }
-                .onFailure { error -> Log.w("CadenceBluetooth", "OpenSwim ${command.id} failed", error) }
-            refresh()
+                .onFailure { error ->
+                    onFailure()
+                    Log.w("CadenceBluetooth", "OpenSwim ${command.id} failed", error)
+                }
+            // The acknowledged settings flow and platform callbacks already publish changes.
+            // Restarting the observers here briefly reports the headset as disconnected.
         }
     }
 
@@ -445,17 +465,27 @@ class AndroidBluetoothController(
                 trySend(null)
                 return
             }
+            if (lastConnectedDevice?.address != device.address) {
+                val prefs = applicationContext.getSharedPreferences("headset-mode", Context.MODE_PRIVATE)
+                val remembered = if (prefs.getString("device", null) == device.address)
+                    WorkingMode.entries.firstOrNull { it.name == prefs.getString("mode", null) } else null
+                if (remembered != null) headsetFlow.update { it.copy(mode = remembered) }
+            }
             lastConnectedDevice = device
             trySend(
                 ConnectedDevice(
                     name = runCatching { device.name }.getOrNull() ?: "Unknown device",
                     address = device.address ?: "—",
                     profileNames = activeProfiles.toList().sorted(),
+                    batteryPercent = batteryPercent(device),
                 )
             )
         }
 
-        emitCurrent()
+        // Starting a fresh observer does not mean the device disconnected. Profile proxies seed
+        // the connection asynchronously, and clearing settings here loses acknowledged playback
+        // state every time refresh() recreates this flow.
+        trySend(null)
 
         val receiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
@@ -528,7 +558,17 @@ class AndroidBluetoothController(
             runCatching { adapter.getProfileProxy(applicationContext, proxyListener, BluetoothProfile.HEADSET) }
         }
 
-        awaitClose { runCatching { applicationContext.unregisterReceiver(receiver) } }
+        val batteryPoll = launch {
+            while (true) {
+                delay(10 * 60 * 1000L)
+                if (current != null) emitCurrent()
+            }
+        }
+
+        awaitClose {
+            batteryPoll.cancel()
+            runCatching { applicationContext.unregisterReceiver(receiver) }
+        }
     }
 
     private data class VolumeSnapshot(val percent: Int, val max: Int, val muted: Boolean)

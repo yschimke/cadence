@@ -23,6 +23,8 @@ class CadenceApplication : Application(), AppGraphProvider {
 
   override fun onCreate() {
     super.onCreate()
+    ee.schimke.cadence.podcasts.scheduleOvernightPodcasts(applicationContext)
+    ee.schimke.cadence.podcasts.CloudSyncWidget.start(applicationContext)
     PhoneWearDataPublisher(
         context = applicationContext,
         bluetoothController = appGraph.bluetoothController,
@@ -30,6 +32,10 @@ class CadenceApplication : Application(), AppGraphProvider {
       )
       .start()
     HeadphoneControlsWidget.start(applicationContext, appGraph.bluetoothController)
+    ee.schimke.cadence.podcasts.PodcastSyncWidget.start(
+      applicationContext,
+      appGraph.bluetoothController,
+    )
     // Keep WorkManager schedules in sync with the auto_refresh flags on each
     // profile. When a profile is added, toggled or removed the periodic job
     // is enqueued, updated or cancelled accordingly.

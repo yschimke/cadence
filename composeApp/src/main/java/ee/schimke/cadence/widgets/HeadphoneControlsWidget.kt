@@ -16,8 +16,10 @@ import android.widget.RemoteViews
 import androidx.annotation.RequiresApi
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
+import androidx.media3.common.util.UnstableApi
 import ee.schimke.cadence.R
 import ee.schimke.cadence.bluetooth.BluetoothController
+import ee.schimke.cadence.bluetooth.ShokzPlayer
 import ee.schimke.cadence.bluetooth.WorkingMode
 import ee.schimke.cadence.metro.AppGraphProvider
 import ee.schimke.composeai.rcwidget.creation.rcWidgetHostAction
@@ -32,6 +34,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.withContext
 
 /**
  * Home-screen headphone controls, the phone counterpart of the Wear "Mode & controls" widget.
@@ -41,6 +44,7 @@ import kotlinx.coroutines.sync.withLock
  * Android 16+ launchers draw a Remote Compose document captured per slot; older launchers get a
  * `RemoteViews` layout with the same controls.
  */
+@androidx.annotation.OptIn(UnstableApi::class)
 class HeadphoneControlsWidget : AppWidgetProvider() {
   override fun onUpdate(context: Context, manager: AppWidgetManager, appWidgetIds: IntArray) {
     val pending = goAsync()
@@ -74,16 +78,29 @@ class HeadphoneControlsWidget : AppWidgetProvider() {
     val pending = goAsync()
     scope.launch {
       try {
-        when (action) {
-          HeadphoneWidgetAction.Previous -> controller.previous()
-          HeadphoneWidgetAction.Play -> controller.play()
-          HeadphoneWidgetAction.Pause -> controller.pause()
-          HeadphoneWidgetAction.Next -> controller.next()
-          HeadphoneWidgetAction.SwitchToMp3 -> controller.setWorkingMode(WorkingMode.Mp3)
-          HeadphoneWidgetAction.SwitchToBluetooth ->
-            controller.setWorkingMode(WorkingMode.Bluetooth)
+        withContext(Dispatchers.Main.immediate) {
+          val player = shokzPlayer
+          if (latest.showWater && player != null)
+            when (action) {
+              HeadphoneWidgetAction.Previous -> player.previousTrack()
+              HeadphoneWidgetAction.Play -> player.play()
+              HeadphoneWidgetAction.Pause -> player.pause()
+              HeadphoneWidgetAction.Next -> player.nextTrack()
+              HeadphoneWidgetAction.SwitchToMp3 -> controller.setWorkingMode(WorkingMode.Mp3)
+              HeadphoneWidgetAction.SwitchToBluetooth ->
+                controller.setWorkingMode(WorkingMode.Bluetooth)
+            }
+          else
+            when (action) {
+              HeadphoneWidgetAction.Previous -> controller.previous()
+              HeadphoneWidgetAction.Play -> controller.play()
+              HeadphoneWidgetAction.Pause -> controller.pause()
+              HeadphoneWidgetAction.Next -> controller.next()
+              HeadphoneWidgetAction.SwitchToMp3 -> controller.setWorkingMode(WorkingMode.Mp3)
+              HeadphoneWidgetAction.SwitchToBluetooth ->
+                controller.setWorkingMode(WorkingMode.Bluetooth)
+            }
         }
-        controller.refresh()
       } finally {
         pending.finish()
       }
@@ -96,6 +113,7 @@ class HeadphoneControlsWidget : AppWidgetProvider() {
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     private val updates = Mutex()
+    private var shokzPlayer: ShokzPlayer? = null
 
     /** Latest controller state; the widget never queries Bluetooth itself. */
     @Volatile
@@ -104,6 +122,7 @@ class HeadphoneControlsWidget : AppWidgetProvider() {
 
     /** Keeps every placed widget in step with the controller for the life of the process. */
     fun start(context: Context, controller: BluetoothController) {
+      if (shokzPlayer == null) shokzPlayer = ShokzPlayer(controller)
       val appContext = context.applicationContext
       // Captured documents hold resolved colours: recapture when light/dark or the wallpaper
       // palette changes so the widget keeps following the system theme.

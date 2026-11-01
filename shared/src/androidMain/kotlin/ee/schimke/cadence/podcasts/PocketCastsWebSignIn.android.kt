@@ -6,7 +6,13 @@ import android.view.ViewGroup
 import android.webkit.CookieManager
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.graphics.Bitmap
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 import java.net.URLDecoder
@@ -93,6 +99,8 @@ actual fun PocketCastsWebSignIn(
   val cookie by rememberUpdatedState(onCookie)
   val capture by rememberUpdatedState(onCapture)
   var view by remember { mutableStateOf<WebView?>(null) }
+  var loading by remember { mutableStateOf(true) }
+  Box(modifier) {
   AndroidView(
     factory = { context ->
       if (context.applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0)
@@ -107,7 +115,15 @@ actual fun PocketCastsWebSignIn(
         settings.javaScriptEnabled = true
         settings.domStorageEnabled = true
         // Keeps the sign-in flow inside this view.
-        webViewClient = WebViewClient()
+        webViewClient = object : WebViewClient() {
+          override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+            loading = true
+          }
+
+          override fun onPageFinished(view: WebView?, url: String?) {
+            loading = false
+          }
+        }
         // Cadence only opens this when it has no working session, so an old web sign-in is stale.
         // Without this an expired cookie would be picked up again on every attempt.
         forgetAuthCookie()
@@ -116,9 +132,11 @@ actual fun PocketCastsWebSignIn(
         view = this
       }
     },
-    modifier = modifier,
+    modifier = Modifier.fillMaxSize(),
     onRelease = { it.destroy() },
   )
+  if (loading) LinearProgressIndicator(Modifier.fillMaxWidth().align(Alignment.TopCenter))
+  }
   LaunchedEffect(Unit) {
     var signedInAt = 0L
     var installed = false

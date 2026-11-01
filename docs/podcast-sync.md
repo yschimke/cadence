@@ -6,6 +6,15 @@ volume. Podcasts are added from the library home screen (**Add source →
 Podcasts**) and appear there alongside folders; tapping them opens the episode
 view.
 
+On Android, after choosing a USB destination, the podcast screen can suggest a
+paired OpenSwim Pro as its matching Bluetooth device. This is a user-confirmed
+association, not proof from the USB hardware: the USB bridge does not expose a
+reliable Bluetooth identity. You can change or remove it. The sync widget uses
+the linked headset's last observed battery instead of another headset's reading.
+The Shokz local-audio workflow has been observed returning file names over
+Bluetooth, but Cadence does not yet have a verified read-only listing command;
+content matching is not used to make the suggestion.
+
 ## Sources
 
 Cadence imports from Pocket Casts, public RSS feeds, gpodder-compatible servers,
@@ -49,8 +58,11 @@ Signing in:
 The tokens are saved with the local library (`library.json` in app storage) so
 later imports don't ask again; **Sign out** deletes them. Smart playlists are
 returned without members and aren't offered. Archived playlist members are left
-out unless the playlist shows archived episodes, as in the player. Position
-write-back to Pocket Casts isn't implemented.
+out unless the playlist shows archived episodes, as in the player. With a direct
+sign-in, **Send position** submits contiguous locally marked progress to Pocket
+Casts after re-reading the episode and refusing a changed remote position. This
+uses Pocket Casts' private API and is unavailable for captured-only or Wasmo
+server sessions; it does not run automatically when a section is marked.
 
 The earlier [passive browser helper](pocketcasts-browser-import.md) still works
 for the browser build: run it in your own Pocket Casts tab and paste its export.
@@ -173,8 +185,12 @@ headphones** before choosing it; use desktop MP3 preparation for MP3-only device
 Cloud currently syncs manifests, not generated audio, so a phone cannot retrieve
 desktop MP3 chunks through cloud sync.
 
-All operations are foreground/manual. Keep the app/tab open; no background
-podcast worker is advertised. Browser requests omit ambient cookies and reject
+On Android, overnight preparation is enabled by default. WorkManager attempts it
+around 2am while the phone is charging and on an unmetered network; Android can
+defer it, and attempts outside midnight–7am are skipped. The podcast screen can
+disable this or start preparation immediately. A notification is shown during
+background work. USB copying still requires a mounted destination and a manual
+action. Desktop and browser preparation remains foreground/manual. Browser requests omit ambient cookies and reject
 redirects; feeds or enclosures that depend on redirects need a direct HTTPS URL
 or preparation on desktop/Android. Native media downloads follow at most five
 HTTPS redirects without account headers. Downloads reject empty/non-audio content
@@ -210,8 +226,12 @@ RSS uses enclosure URL and declared length as a best-effort version fingerprint;
 this cannot detect all dynamic advertising changes. Use versioned snapshots for
 feeds with changing ads. Credentials must not be embedded in URLs. Cloud metadata
 contains the playlist URLs/history; use public media URLs unless you deliberately
-accept storing private URLs in your own account. Files and metadata accumulate
-locally; automatic cache eviction is not implemented.
+accept storing private URLs in your own account. Android and desktop retain the
+original downloads and processed chunks for episodes in the imported selection;
+reimporting removes recognized cached audio for episodes no longer selected.
+Changing a show's optional intro/outro trim produces new chunks while preserving
+the original audio. The trim applies to episodes that expose a stable show ID;
+older imports may need to be refreshed to populate it.
 
 ## Playback acknowledgements and conflicts
 
@@ -241,6 +261,12 @@ An empty folder receives `.cadence-owner` containing `cadence-podcasts-v1`. An
 existing nonempty folder without that marker is refused. Nothing outside that
 folder is deleted or replaced. Existing Cadence sections are retained, including
 obsolete sections, so an incremental refresh cannot delete personal files.
+New exports put episodes from each known podcast feed in a separate, marked
+subfolder, with all of an episode's sections together. Episodes without feed
+metadata share `Other_podcasts`. Existing flat copies remain in place; the
+first export with this layout can therefore use additional storage and show
+duplicate episodes until those old copies are removed separately. Each show
+folder must be empty or carry the Cadence ownership marker before it is used.
 Desktop also rejects symlinks in the owned path. Directory selection grants
 filesystem access; USB discovery does not grant a mount path or access to the
 protected mass-storage interface.

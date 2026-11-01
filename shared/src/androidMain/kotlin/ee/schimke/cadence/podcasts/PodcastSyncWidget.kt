@@ -14,10 +14,15 @@ import ee.schimke.composeai.rcwidget.creation.rcWidgetHostAction
 import ee.schimke.composeai.rcwidget.launcher.RcLauncherWidgets
 import ee.schimke.composeai.rcwidget.launcher.RcWidgetSizing
 import ee.schimke.composeai.rcwidget.launcher.captureLauncherWidget
+import ee.schimke.cadence.bluetooth.BluetoothController
+import ee.schimke.cadence.bluetooth.ConnectedDevice
+import ee.schimke.cadence.bluetooth.batterySummary
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
@@ -70,6 +75,47 @@ class PodcastSyncWidget : AppWidgetProvider() {
      */
     private val updates = Mutex()
 
+    @Volatile private var currentDevice: ConnectedDevice? = null
+    @Volatile private var swimming = false
+
+    /** Refresh the widget when the controller receives a new connected-headphone battery level. */
+    fun start(context: Context, controller: BluetoothController) {
+      val appContext = context.applicationContext
+      scope.launch {
+        controller.state.map { Triple(it.connectedDevice, it.localAudioControls, it.openSwimConnected) }.distinctUntilChanged().collect { (device, mp3, openSwim) ->
+          val summary = device?.batterySummary()
+          val preferences = prefs(appContext)
+          currentDevice = device
+          if (summary != null && openSwim && device.address.isNotBlank()) {
+            val key = digest(device.address)
+            preferences.edit().putString("battery-$key", summary).putLong("battery-time-$key", System.currentTimeMillis()).putString("last-battery-address", device.address).apply()
+          }
+          swimming = mp3
+          updateAll(appContext)
+        }
+      }
+    }
+
+    private fun copied(context: Context): String = prefs(context).getString("copied", null) ?: "Last copy: unknown"
+    private fun available(context: Context): String = prefs(context).getString("available", null) ?: "Sync: no podcasts"
+
+    internal fun battery(context: Context, connected: ConnectedDevice? = currentDevice, selectedTarget: String? = null): String? {
+      val preferences = prefs(context)
+      val target = selectedTarget ?: preferences.getString("target", "").orEmpty()
+      val linked = linkedHeadphoneAddress(context, target)
+      if (connected != null && (linked == null || linked == connected.address))
+        connected.batterySummary()?.let { return it }
+      val address = batteryHeadphoneAddress(linked, connected?.address, preferences.getString("last-battery-address", null))
+      if (address == null) {
+        return if (linked == null && connected == null) preferences.getString("last-battery", null)?.let { "Last headset: $it" } else null
+      }
+      val key = digest(address)
+      val summary = preferences.getString("battery-$key", null) ?: return null
+      val seen = preferences.getLong("battery-time-$key", 0)
+      val date = android.text.format.DateUtils.getRelativeTimeSpanString(seen, System.currentTimeMillis(), android.text.format.DateUtils.MINUTE_IN_MILLIS)
+      return "Last $date: $summary"
+    }
+
     fun updateAll(context: Context) {
       val manager = AppWidgetManager.getInstance(context)
       val ids = manager.getAppWidgetIds(ComponentName(context, PodcastSyncWidget::class.java))
@@ -90,8 +136,8 @@ class PodcastSyncWidget : AppWidgetProvider() {
     private fun legacyViews(context: Context): RemoteViews {
       val prefs = prefs(context)
       val views = RemoteViews(context.packageName, android.R.layout.simple_list_item_2)
-      views.setTextViewText(android.R.id.text1, if (prefs.getBoolean("ready", false)) "Cadence · Ready to copy to USB" else "Cadence · Audio not ready")
-      views.setTextViewText(android.R.id.text2, prefs.getString("status", "Open Cadence to sync podcasts"))
+      views.setTextViewText(android.R.id.text1, copied(context))
+      views.setTextViewText(android.R.id.text2, listOfNotNull(available(context), battery(context)).joinToString(" · "))
       launchIntent(context)?.let { intent ->
         views.setOnClickPendingIntent(android.R.id.text1, PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE))
       }
@@ -106,16 +152,23 @@ class PodcastSyncWidget : AppWidgetProvider() {
     ): Unit = updates.withLock {
       val prefs = prefs(context)
       val ready = prefs.getBoolean("ready", false)
-      val status = prefs.getString("status", null) ?: "Open Cadence to sync podcasts"
+      val copied = copied(context)
+      val available = available(context)
       val launch = launchIntent(context)
       for (id in ids) {
+        val slot = RcWidgetSizing.slotOf(manager, id)
         val views =
           runCatching {
               val capture =
-                captureLauncherWidget(context, RcWidgetSizing.slotOf(manager, id)) {
+                captureLauncherWidget(context, slot) {
                   PodcastSyncWidgetContent(
                     ready = ready,
-                    status = status,
+                    copied = copied,
+                    available = available,
+                    battery = battery(context),
+                    showSwimming = swimming,
+                    heightDp = slot.heightDp,
+                    widthDp = slot.widthDp,
                     onTap = rcWidgetHostAction(name = OPEN_APP, payload = OPEN_APP),
                   )
                 }

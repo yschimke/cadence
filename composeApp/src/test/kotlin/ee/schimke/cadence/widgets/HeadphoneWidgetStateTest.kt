@@ -6,6 +6,7 @@ import ee.schimke.cadence.bluetooth.EqualizerPreset
 import ee.schimke.cadence.bluetooth.MediaInfo
 import ee.schimke.cadence.bluetooth.PlaybackOrder
 import ee.schimke.cadence.bluetooth.WorkingMode
+import ee.schimke.cadence.bluetooth.batterySummary
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -25,6 +26,13 @@ class HeadphoneWidgetStateTest {
       positionMs = null,
       packageName = "player",
     )
+
+  @Test
+  fun estimatesAreScopedToOpenSwimAndInvalidLevelsAreOmitted() {
+    assertEquals("50% · ~3h MP3 · ~4h 30m BT", openSwim.copy(batteryPercent = 50).batterySummary())
+    assertNull(openSwim.copy(batteryPercent = 101).batterySummary())
+    assertEquals("50% battery", openSwim.copy(name = "Other", batteryPercent = 50).batterySummary())
+  }
 
   private fun mp3(playing: Boolean? = null) =
     HeadphoneWidgetState.from(
@@ -55,7 +63,7 @@ class HeadphoneWidgetStateTest {
   @Test
   fun mp3DetailIsBatteryAndOrderAndExtraIsSettings() {
     val state = mp3(playing = true)
-    assertEquals("78% battery · Shuffle", state.detail)
+    assertEquals("78% · ~4h 45m MP3 · ~7h BT · Shuffle", state.detail)
     assertEquals("Swimming EQ · Volume 56%", state.extra)
   }
 
@@ -79,6 +87,7 @@ class HeadphoneWidgetStateTest {
     )
     assertEquals(HeadphoneWidgetAction.Pause, mp3(playing = true).transport[1])
     assertEquals(HeadphoneWidgetAction.SwitchToBluetooth, mp3().modeSwitch)
+    assertTrue(mp3().showWater)
   }
 
   @Test
@@ -87,9 +96,10 @@ class HeadphoneWidgetStateTest {
       HeadphoneWidgetState.from(BluetoothState(connectedDevice = openSwim, mediaInfo = phoneMedia))
     assertEquals("Phone episode", state.title)
     assertEquals("Phone podcast", state.detail)
-    assertEquals("Bluetooth · 78% battery", state.extra)
+    assertEquals("Bluetooth · 78% · ~4h 45m MP3 · ~7h BT", state.extra)
     assertEquals(HeadphoneWidgetAction.Pause, state.transport[1])
     assertEquals(HeadphoneWidgetAction.SwitchToMp3, state.modeSwitch)
+    assertFalse(state.showWater)
   }
 
   @Test

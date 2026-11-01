@@ -95,6 +95,7 @@ data class BluetoothState(
   val equalizer: EqualizerPreset? = null,
   val playbackOrder: PlaybackOrder? = null,
   val headsetVolumePercent: Int? = null,
+  val headsetVolumeError: Boolean = false,
   /**
    * MP3 mode: whether the last Play/Pause the headset acknowledged was Play. The headset does not
    * report playback state, so its own buttons can make this stale; null until Cadence sends one.
@@ -119,6 +120,23 @@ data class ConnectedDevice(
   val batteryPercent: Int? = null,
   val codec: String? = null,
 )
+
+/** Rough linear estimates from Shokz's stated full-charge runtimes, not measured remaining time. */
+fun ConnectedDevice.batterySummary(): String? {
+  val percent = batteryPercent?.takeIf { it in 0..100 } ?: return null
+  if (!name.contains(OpenSwimProName, ignoreCase = true)) return "$percent% battery"
+  fun estimate(fullMinutes: Int): String {
+    val minutes = ((fullMinutes * percent / 100 + 7) / 15) * 15
+    val hours = minutes / 60
+    val remainder = minutes % 60
+    return when {
+      hours == 0 -> "${minutes}m"
+      remainder == 0 -> "${hours}h"
+      else -> "${hours}h ${remainder}m"
+    }
+  }
+  return "$percent% · ~${estimate(360)} MP3 · ~${estimate(540)} BT"
+}
 
 data class MediaInfo(
   val title: String?,

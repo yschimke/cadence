@@ -128,50 +128,94 @@ fun SwimmingPool(
   swimmerSize: Float = 0.24f,
   lapSeconds: Float = 9f,
   clock: RemoteFloat = LocalSwimClock.current,
+  amplitude: Float = 0.05f,
+  standing: Boolean = false,
 ) {
   RemoteCanvas(modifier) {
     val w = width
     val h = height
-    drawWater(water, level, crests, bubbles, clock, bubbleScale = bubbleScale, amplitude = 0.05f)
+    drawWater(
+      water,
+      level,
+      crests,
+      if (standing) 0 else bubbles,
+      if (standing) 0f.rf else clock,
+      bubbleScale = bubbleScale,
+      amplitude = amplitude,
+    )
     val band = h * swimmerSize
     clipRect(0f.rf, 0f.rf, w, h) {
-      translate(0f.rf, h * level - band * 0.45f) {
-        val lane = LaneGeometry(w, band, wall = 0f.rf)
-        if (swimming) {
-          val motion = LapMotion(clock, lapSeconds)
-          drawPushOffBubbles(
-            swimmer.splash,
-            lane.startX(motion.direction),
-            lane.mid,
-            band,
-            motion.direction,
-            motion.lapClock,
-          )
-          drawSwimmer(
-            swimmer,
-            lane.swimmerX(motion.direction, motion.position),
-            lane.mid,
-            lane.unit,
-            motion.direction,
-            motion.lapClock,
-            clock,
-          )
-        } else {
-          // Treading water: bobbing by the wall, unhurried strokes.
-          val bob = sin(clock * (TwoPi / 3f)) * band * 0.05f
-          drawSwimmer(
-            swimmer,
-            lane.swimmerX(1f.rf, 0f.rf),
-            lane.mid + bob,
-            lane.unit,
-            1f.rf,
-            null,
-            clock * 0.3f,
-          )
+      if (standing) {
+        translate(w * 0.12f, h * level) {
+          scale(band, band, RemoteOffset(0f, 0f)) { drawStandingSwimmer(swimmer) }
+        }
+      } else {
+        translate(0f.rf, h * level - band * 0.45f) {
+          val lane = LaneGeometry(w, band, wall = 0f.rf)
+          if (swimming) {
+            val motion = LapMotion(clock, lapSeconds)
+            drawPushOffBubbles(
+              swimmer.splash,
+              lane.startX(motion.direction),
+              lane.mid,
+              band,
+              motion.direction,
+              motion.lapClock,
+            )
+            drawSwimmer(
+              swimmer,
+              lane.swimmerX(motion.direction, motion.position),
+              lane.mid,
+              lane.unit,
+              motion.direction,
+              motion.lapClock,
+              clock,
+            )
+          } else {
+            // Treading water: bobbing by the wall, unhurried strokes.
+            val bob = sin(clock * (TwoPi / 3f)) * band * 0.05f
+            drawSwimmer(
+              swimmer,
+              lane.swimmerX(1f.rf, 0f.rf),
+              lane.mid + bob,
+              lane.unit,
+              1f.rf,
+              null,
+              clock * 0.3f,
+            )
+          }
         }
       }
     }
   }
+}
+
+private fun RemoteDrawScope.drawStandingSwimmer(colors: SwimmerColors) {
+  val limb = RemotePaint {
+    color = colors.skin.rc
+    style = PaintingStyle.Stroke
+    strokeWidth = 0.10f.rf
+    strokeCap = StrokeCap.Round
+  }
+  drawLine(limb, RemoteOffset(-0.15f, 0.08f), RemoteOffset(-0.22f, 0.43f))
+  drawLine(limb, RemoteOffset(0.15f, 0.08f), RemoteOffset(0.22f, 0.43f))
+  drawRoundRect(
+    fill(colors.suit),
+    RemoteOffset(-0.16f, -0.02f),
+    RemoteSize(0.32f.rf, 0.48f.rf),
+    RemoteOffset(0.12f, 0.12f),
+  )
+  drawCircle(fill(colors.skin), 0.17f.rf, RemoteOffset(0f, -0.20f))
+  drawArc(
+    fill(colors.cap),
+    180f.rf,
+    180f.rf,
+    true,
+    RemoteOffset(-0.17f, -0.38f),
+    RemoteSize(0.34f.rf, 0.34f.rf),
+  )
+  drawCircle(fill(colors.goggles), 0.045f.rf, RemoteOffset(-0.07f, -0.20f))
+  drawCircle(fill(colors.goggles), 0.045f.rf, RemoteOffset(0.07f, -0.20f))
 }
 
 /** Endless laps of [lapSeconds]: which way, how far, and seconds since the last wall. */

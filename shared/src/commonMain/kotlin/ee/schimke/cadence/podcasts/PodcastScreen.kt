@@ -4,7 +4,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.toggleable
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ContentPaste
@@ -17,6 +19,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -31,8 +34,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun rememberPodcastController(): PodcastController {
   val platform = rememberPodcastPlatform()
-  val controller = remember(platform) { PodcastController(platform) }
-  LaunchedEffect(controller) { controller.run { load() } }
+  val controller = remember(platform) { platform.controller() }
+  LaunchedEffect(controller) { controller.run { if (!loaded.value) load() } }
   return controller
 }
 
@@ -77,17 +80,37 @@ fun AddPodcastsScreen(
   val scope = rememberCoroutineScope()
   var provider by rememberSaveable { mutableStateOf(initialProvider) }
   var latest by rememberSaveable { mutableStateOf(local.library.feedLatest) }
+  var pending by remember { mutableStateOf<String?>(null) }
+  val working = busy || pending != null
   fun import(block: suspend PodcastController.() -> Unit) {
-    scope.launch { if (controller.attempt(snackbar, block)) onDone() }
+    if (pending != null || controller.busy.value) return
+    pending = "Adding podcasts…"
+    scope.launch {
+      try {
+        if (controller.run(block)) onDone() else snackbar.showSnackbar(controller.status.value)
+      } finally {
+        pending = null
+      }
+    }
   }
   fun action(block: suspend PodcastController.() -> Unit) {
-    scope.launch { controller.attempt(snackbar, block) }
+    if (pending != null || controller.busy.value) return
+    pending = "Connecting to Pocket Casts…"
+    scope.launch {
+      val ok: Boolean
+      try {
+        ok = controller.run(block)
+      } finally {
+        pending = null
+      }
+      if (!ok || controller.status.value != "Saved") snackbar.showSnackbar(controller.status.value)
+    }
   }
   Scaffold(modifier = modifier, snackbarHost = { SnackbarHost(snackbar) }) { padding ->
     Column(Modifier.padding(padding).fillMaxSize()) {
-      if (busy) {
+      if (working) {
         LinearProgressIndicator(Modifier.fillMaxWidth())
-        Text(status, Modifier.padding(16.dp), style = MaterialTheme.typography.bodySmall)
+        Text(pending ?: status, Modifier.padding(16.dp), style = MaterialTheme.typography.bodySmall)
       }
       val chosen = provider
       if (chosen == null) {
@@ -112,7 +135,7 @@ fun AddPodcastsScreen(
         Modifier.padding(horizontal = 4.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
       ) {
-        IconButton(onClick = { provider = null }) {
+        IconButton(enabled = !working, onClick = { provider = null }) {
           Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Other podcast sources")
         }
         Text(chosen.title, style = MaterialTheme.typography.headlineSmall)
@@ -121,16 +144,19 @@ fun AddPodcastsScreen(
         Modifier.padding(horizontal = 16.dp).fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(12.dp),
       ) {
-        if (chosen != PodcastProvider.Export) EpisodeCount(latest, enabled = !busy) { latest = it }
+        if (chosen != PodcastProvider.Export)
+          EpisodeCount(latest, enabled = !working) { latest = it }
         when (chosen) {
           PodcastProvider.PocketCasts ->
-            PocketCastsForm(controller, local, busy, latest, ::import, ::action)
-          PodcastProvider.Rss -> RssForm(local, busy) { url -> import { importRss(url, latest) } }
+            PocketCastsForm(controller, local, working, pending, latest, ::import, ::action)
+          PodcastProvider.Rss ->
+            RssForm(local, working) { url -> import { importRss(url, latest) } }
           PodcastProvider.Gpodder ->
-            GpodderForm(local, busy) { account, password ->
+            GpodderForm(local, working) { account, password ->
               import { importGpodder(account, password, latest) }
             }
-          PodcastProvider.Export -> ExportForm(busy) { text -> import { importText(text, latest) } }
+          PodcastProvider.Export ->
+            ExportForm(working) { text -> import { importText(text, latest) } }
         }
       }
     }
@@ -159,6 +185,7 @@ private fun PocketCastsForm(
   controller: PodcastController,
   local: LocalPodcastState,
   busy: Boolean,
+  pending: String?,
   latest: Int,
   import: (suspend PodcastController.() -> Unit) -> Unit,
   action: (suspend PodcastController.() -> Unit) -> Unit,
@@ -224,13 +251,15 @@ private fun PocketCastsForm(
       }
     }
     FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-      lists.forEach { FilterChip(list == it.id, { list = it.id }, label = { Text(it.title) }) }
+      lists.forEach {
+        FilterChip(list == it.id, { list = it.id }, enabled = !busy, label = { Text(it.title) })
+      }
     }
     Button(
       enabled = !busy && lists.any { it.id == list },
       onClick = { import { importPocketCasts(list, latest) } },
     ) {
-      Text("Add")
+      Text(if (pending == "Adding podcasts…") "Adding…" else "Add")
     }
     return
   }
@@ -248,6 +277,7 @@ private fun PocketCastsForm(
   OutlinedTextField(
     email,
     { email = it },
+    enabled = !busy,
     label = { Text("Email") },
     singleLine = true,
     modifier = Modifier.fillMaxWidth(),
@@ -255,6 +285,7 @@ private fun PocketCastsForm(
   OutlinedTextField(
     password,
     { password = it },
+    enabled = !busy,
     label = { Text("Password") },
     singleLine = true,
     visualTransformation = PasswordVisualTransformation(),
@@ -268,7 +299,7 @@ private fun PocketCastsForm(
       action { signInPocketCasts(email, supplied) }
     },
   ) {
-    Text("Sign in with password")
+    Text(if (pending != null) "Signing in…" else "Sign in with password")
   }
   Text(
     if (pocketCastsWebSignIn)
@@ -385,6 +416,7 @@ fun PodcastScreen(
   val local by controller.state.collectAsState()
   val busy by controller.busy.collectAsState()
   val status by controller.status.collectAsState()
+  KeepPodcastScreenAwake(busy)
   val snackbar = remember { SnackbarHostState() }
   val scope = rememberCoroutineScope()
   fun action(block: suspend PodcastController.() -> Unit) {
@@ -441,26 +473,11 @@ fun PodcastScreen(
               Text("Refresh")
             }
         }
-        if (prepared)
-          Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(
-              if (local.target.isBlank()) "You'll pick the headphones' storage first."
-              else
-                "Copies to ${local.target.substringAfterLast('/')}" +
-                  if (local.copiedSectionIds.isNotEmpty()) " · last copy complete" else "",
-              Modifier.weight(1f),
-              style = MaterialTheme.typography.bodySmall,
-              color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-            if (local.target.isNotBlank())
-              TextButton(
-                enabled = !busy,
-                onClick = selectTarget,
-                modifier = Modifier.semantics { contentDescription = "Change where copies go" },
-              ) {
-                Text("Change")
-              }
-          }
+        if (prepared && local.target.isBlank())
+          Text(
+            "You'll pick the headphones' storage first.",
+            style = MaterialTheme.typography.bodySmall,
+          )
       }
       items(playlist.episodes, key = { it.key }, contentType = { "episode" }) { episode ->
         EpisodeCard(
@@ -468,12 +485,94 @@ fun PodcastScreen(
           library.manifests.firstOrNull { it.episode.key == episode.key },
           local,
           busy,
+          controller.platform,
           ::action,
         )
       }
       item { AudioOptions(controller, library, busy, ::action) }
-      item { CloudBackup(controller, local, busy, ::action) }
+      item {
+        Expandable("Advanced settings") {
+          OvernightPodcastOptions()
+          if (local.target.isNotBlank()) {
+            Text("Headphone storage selected", style = MaterialTheme.typography.bodyMedium)
+            TextButton(enabled = !busy, onClick = selectTarget) { Text("Change headphone storage") }
+            HeadphoneAssociation(local.target)
+          }
+          if (controller.platform.splitFormats.isNotEmpty())
+            PodcastTrimming(library, busy, ::action)
+        }
+      }
       item { TextButton(onClick = onChangeSource) { Text("Use a different podcast source") } }
+    }
+  }
+}
+
+@Composable
+private fun PodcastTrimming(
+  library: PodcastLibrary,
+  busy: Boolean,
+  action: (suspend PodcastController.() -> Unit) -> Unit,
+) {
+  val shows =
+    library.playlist
+      ?.episodes
+      .orEmpty()
+      .filter { it.podcastId.isNotBlank() }
+      .distinctBy { it.podcastId }
+  Expandable("Trim podcast intros and outros") {
+    Text(
+      "Skip a fixed number of seconds for every episode of a podcast. Changes apply when audio is next prepared."
+    )
+    if (shows.isEmpty()) Text("Refresh your podcast source to load show information.")
+    shows.forEach { episode ->
+      key(episode.podcastId) {
+        val saved = library.podcastTrims[episode.podcastId] ?: PodcastTrim()
+        var start by
+          rememberSaveable(episode.podcastId, saved.startSeconds) {
+            mutableStateOf(saved.startSeconds.toString())
+          }
+        var end by
+          rememberSaveable(episode.podcastId, saved.endSeconds) {
+            mutableStateOf(saved.endSeconds.toString())
+          }
+        Text(
+          episode.podcastTitle.ifBlank { "Podcast: ${episode.title}" },
+          style = MaterialTheme.typography.titleSmall,
+        )
+        OutlinedTextField(
+          start,
+          { start = it },
+          label = { Text("Skip at start (seconds)") },
+          singleLine = true,
+          enabled = !busy,
+          modifier = Modifier.fillMaxWidth(),
+        )
+        OutlinedTextField(
+          end,
+          { end = it },
+          label = { Text("Skip at end (seconds)") },
+          singleLine = true,
+          enabled = !busy,
+          modifier = Modifier.fillMaxWidth(),
+        )
+        val first = start.toIntOrNull()
+        val last = end.toIntOrNull()
+        Button(
+          enabled =
+            !busy &&
+              first != null &&
+              last != null &&
+              first in 0..3600 &&
+              last in 0..3600 &&
+              PodcastTrim(first, last) != saved,
+          onClick = {
+            if (first != null && last != null)
+              action { configurePodcastTrim(episode.podcastId, PodcastTrim(first, last)) }
+          },
+        ) {
+          Text("Save trim")
+        }
+      }
     }
   }
 }
@@ -484,29 +583,101 @@ private fun EpisodeCard(
   manifest: Manifest?,
   local: LocalPodcastState,
   busy: Boolean,
+  platform: PodcastPlatform,
   action: (suspend PodcastController.() -> Unit) -> Unit,
 ) {
   val library = local.library
-  val position = advancedPosition(episode, library.completions)
+  val position = episodePosition(episode, library, manifest?.config)
+  var showParts by rememberSaveable(episode.key) { mutableStateOf(false) }
+  var showDetails by rememberSaveable(episode.key) { mutableStateOf(false) }
+  var details by remember(episode.key) { mutableStateOf<EpisodeDetails?>(null) }
+  var detailsLoading by remember(episode.key) { mutableStateOf(false) }
+  var detailsFailed by remember(episode.key) { mutableStateOf(false) }
+  val uriHandler = LocalUriHandler.current
+  LaunchedEffect(showDetails, episode.key) {
+    if (showDetails && details == null) {
+      detailsLoading = true
+      detailsFailed = false
+      try {
+        details = loadEpisodeDetails(platform, episode)
+      } catch (e: kotlinx.coroutines.CancellationException) {
+        throw e
+      } catch (_: Exception) {
+        detailsFailed = true
+      } finally {
+        detailsLoading = false
+      }
+    }
+  }
+  var draft by remember(episode.key) { mutableStateOf<Float?>(null) }
+  val displayedPosition = draft?.let { scrubPosition(it, episode.durationMs) } ?: position
   OutlinedCard(Modifier.fillMaxWidth()) {
     Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+      if (episode.podcastTitle.isNotBlank()) {
+        Text(episode.podcastTitle, style = MaterialTheme.typography.labelLarge)
+      }
       Text(
         episode.title,
         style = MaterialTheme.typography.titleMedium,
         maxLines = 2,
         overflow = TextOverflow.Ellipsis,
       )
+      TextButton(onClick = { showDetails = !showDetails }) {
+        Text(if (showDetails) "Hide episode details" else "Episode details")
+      }
+      if (showDetails) {
+        if (episode.published.isNotBlank())
+          Text(episode.published, style = MaterialTheme.typography.labelMedium)
+        when {
+          detailsLoading ->
+            Text("Loading episode details…", style = MaterialTheme.typography.bodySmall)
+          detailsFailed ->
+            Text(
+              "Couldn’t load episode details. Close and reopen to retry.",
+              style = MaterialTheme.typography.bodySmall,
+            )
+          details != null -> {
+            val info = details!!
+            if (info.summary.isNotBlank())
+              Text(info.summary, style = MaterialTheme.typography.bodyMedium)
+            else Text("No episode summary available.", style = MaterialTheme.typography.bodySmall)
+            info.transcriptUrl?.let { url ->
+              TextButton(onClick = { runCatching { uriHandler.openUri(url) } }) {
+                Text("Open transcript")
+              }
+            }
+          }
+        }
+      }
       Text(
-        if (position <= 0) formatTime(episode.durationMs)
-        else "${formatTime(position)} of ${formatTime(episode.durationMs)} heard",
+        "${formatTime(displayedPosition)} of ${formatTime(episode.durationMs)} heard",
         style = MaterialTheme.typography.bodyMedium,
       )
-      if (position > 0)
-        LinearProgressIndicator(
-          progress = { position.toFloat() / episode.durationMs },
-          modifier = Modifier.fillMaxWidth(),
-        )
-      if (episode.backend == "gpodder") {
+      Slider(
+        value = draft ?: (position.toFloat() / episode.durationMs).coerceIn(0f, 1f),
+        onValueChange = { draft = it },
+        onValueChangeFinished = {
+          draft?.let { fraction ->
+            val selected = scrubPosition(fraction, episode.durationMs)
+            action {
+              try {
+                setEpisodePosition(episode.key, selected)
+              } finally {
+                draft = null
+              }
+            }
+          }
+        },
+        enabled = !busy,
+        modifier =
+          Modifier.fillMaxWidth().semantics { contentDescription = "Position in ${episode.title}" },
+      )
+      if (
+        episode.backend == "gpodder" ||
+          (episode.backend == "pocket-casts" &&
+            local.pocketCasts.signedIn &&
+            !local.pocketCasts.server)
+      ) {
         val sent = local.sentPositions[episode.key]
         if (position > episode.positionMs && position != sent)
           TextButton(
@@ -523,38 +694,33 @@ private fun EpisodeCard(
             style = MaterialTheme.typography.bodySmall,
           )
       }
-      manifest?.sections?.forEach { section ->
-        val played =
-          library.completions.any {
-            it.sectionId == section.id && it.observedRevision == episode.revision
-          }
-        Row(verticalAlignment = Alignment.CenterVertically) {
-          Text(
-            "${formatTime(section.startMs)}–${formatTime(section.endMs)}" +
-              if (section.id in local.readySectionIds) "" else " · not downloaded",
-            Modifier.weight(1f),
-            style = MaterialTheme.typography.bodySmall,
-          )
-          TextButton(
-            enabled = !busy && !played,
-            onClick = { action { markPlayed(section) } },
-            modifier =
-              Modifier.semantics {
-                contentDescription =
-                  "Mark ${formatTime(section.startMs)} to ${formatTime(section.endMs)} of ${episode.title} played"
-              },
-          ) {
-            Text(if (played) "Played" else "Mark played")
-          }
+      if (manifest != null) {
+        TextButton(onClick = { showParts = !showParts }) {
+          Text(if (showParts) "Hide parts" else "Show ${manifest.sections.size} parts")
         }
       }
+      if (showParts)
+        manifest?.sections?.forEach { section ->
+          Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+              "${formatTime(section.startMs)}–${formatTime(section.endMs)}" +
+                if (section.id in local.readySectionIds) "" else " · not downloaded",
+              Modifier.weight(1f),
+              style = MaterialTheme.typography.bodySmall,
+            )
+          }
+        }
     }
   }
 }
 
 @Composable
-private fun Expandable(title: String, content: @Composable ColumnScope.() -> Unit) {
-  var open by rememberSaveable(title) { mutableStateOf(false) }
+private fun Expandable(
+  title: String,
+  initiallyExpanded: Boolean = false,
+  content: @Composable ColumnScope.() -> Unit,
+) {
+  var open by rememberSaveable(title) { mutableStateOf(initiallyExpanded) }
   OutlinedCard(Modifier.fillMaxWidth()) {
     ListItem(
       headlineContent = { Text(title) },
@@ -603,6 +769,7 @@ private fun AudioOptions(
       },
       label = { Text("Split into parts of (minutes)") },
       supportingText = { Text("0 keeps each episode in one piece") },
+      enabled = !busy,
       singleLine = true,
       modifier = Modifier.fillMaxWidth(),
     )
@@ -625,18 +792,27 @@ private fun CloudBackup(
   local: LocalPodcastState,
   busy: Boolean,
   action: (suspend PodcastController.() -> Unit) -> Unit,
+  initiallyExpanded: Boolean = false,
 ) {
   val signedIn by controller.signedIn.collectAsState()
   var url by rememberSaveable { mutableStateOf(local.cloudUrl) }
   var key by rememberSaveable { mutableStateOf(local.cloudKey) }
   var email by remember { mutableStateOf("") }
   var password by remember { mutableStateOf("") }
-  Expandable("Share with your other devices") {
+  var providerSelected by rememberSaveable { mutableStateOf(local.cloudUrl.isNotBlank()) }
+  Expandable(if (signedIn) "Cloud sync" else "Connect a cloud sync provider", initiallyExpanded) {
     Text(
-      "Keeps episodes and what you've played in step across devices through your own Supabase project. Audio stays on each device.",
+      "Share episodes and progress across your devices. Audio stays on each device.",
       style = MaterialTheme.typography.bodyMedium,
     )
     if (!signedIn) {
+      if (!providerSelected) {
+        OutlinedButton(enabled = !busy, onClick = { providerSelected = true }) {
+          Text("Connect Supabase")
+        }
+        return@Expandable
+      }
+      Text("Connect your Supabase project", style = MaterialTheme.typography.titleSmall)
       OutlinedTextField(
         url,
         { url = it },
@@ -691,6 +867,26 @@ private fun CloudBackup(
       Button(enabled = !busy, onClick = { action { pushCloud() } }) { Text("Save") }
       OutlinedButton(enabled = !busy, onClick = { action { pullCloud() } }) { Text("Restore") }
       TextButton(enabled = !busy, onClick = { controller.signOut() }) { Text("Sign out") }
+    }
+  }
+}
+
+@Composable
+fun CloudSyncScreen(controller: PodcastController) {
+  val local by controller.state.collectAsState()
+  val busy by controller.busy.collectAsState()
+  val snackbar = remember { SnackbarHostState() }
+  val scope = rememberCoroutineScope()
+  fun action(block: suspend PodcastController.() -> Unit) {
+    scope.launch { controller.attempt(snackbar, block) }
+  }
+  Scaffold(snackbarHost = { SnackbarHost(snackbar) }) { padding ->
+    Column(
+      Modifier.padding(padding).fillMaxWidth().verticalScroll(rememberScrollState()).padding(16.dp),
+      verticalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+      Text("Cross-device backup", style = MaterialTheme.typography.headlineMedium)
+      CloudBackup(controller, local, busy, ::action, initiallyExpanded = true)
     }
   }
 }

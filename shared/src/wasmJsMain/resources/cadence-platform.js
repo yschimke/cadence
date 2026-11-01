@@ -187,7 +187,8 @@
           const items = Array.from(xml.getElementsByTagName('item')).map(item => {
             const enclosure = item.getElementsByTagName('enclosure')[0];
             return { guid: child(item, 'guid'), title: child(item, 'title'), audioUrl: enclosure?.getAttribute('url') || '',
-              duration: child(item, 'itunes:duration'), length: enclosure?.getAttribute('length') || '', type: enclosure?.getAttribute('type') || '' };
+              duration: child(item, 'itunes:duration'), length: enclosure?.getAttribute('length') || '', type: enclosure?.getAttribute('type') || '',
+              summary: child(item, 'description') || child(item, 'itunes:summary'), transcriptUrl: item.getElementsByTagName('podcast:transcript')[0]?.getAttribute('url') || '', published: child(item, 'pubDate') };
           });
           return { name: child(xml.getElementsByTagName('channel')[0], 'title'), items };
         }
@@ -213,7 +214,10 @@
           return true;
         }
         case 'podcastExport': {
-          args.files.forEach(podcastFileName);
+          args.files.forEach(file => {
+            podcastFileName(file.name);
+            if (file.folder && !/^[A-Za-z0-9_-]{1,50}$/.test(file.folder)) throw new Error('Invalid podcast folder');
+          });
           const folder = await directory(args.target + '/Cadence/podcasts', true);
           let marker;
           try { marker = await folder.getFileHandle('.cadence-owner'); }
@@ -223,10 +227,27 @@
             marker = await folder.getFileHandle('.cadence-owner', { create: true });
             const writer = await marker.createWritable(); await writer.write('cadence-podcasts-v1'); await writer.close();
           } else if (await (await marker.getFile()).text() !== 'cadence-podcasts-v1') throw new Error('Invalid ownership marker');
-          for (const name of args.files) {
-            const source = await (await podcastFile(name)).getFile();
+          const destinations = new Map();
+          for (const file of args.files) {
+            const source = await (await podcastFile(file.name)).getFile();
             if (!source.size) throw new Error('Audio not prepared');
-            const destination = await folder.getFileHandle(name, { create: true });
+            let output = folder;
+            if (file.folder) {
+              if (!destinations.has(file.folder)) {
+                const show = await folder.getDirectoryHandle(file.folder, { create: true });
+                let owner;
+                try { owner = await show.getFileHandle('.cadence-owner'); }
+                catch (e) { if (e.name !== 'NotFoundError') throw e; }
+                if (!owner) {
+                  for await (const entry of show.entries()) throw new Error('Existing podcast folder is not owned by Cadence');
+                  owner = await show.getFileHandle('.cadence-owner', { create: true });
+                  const writer = await owner.createWritable(); await writer.write('cadence-podcasts-v1'); await writer.close();
+                } else if (await (await owner.getFile()).text() !== 'cadence-podcasts-v1') throw new Error('Invalid ownership marker');
+                destinations.set(file.folder, show);
+              }
+              output = destinations.get(file.folder);
+            }
+            const destination = await output.getFileHandle(file.name, { create: true });
             const writer = await destination.createWritable();
             await source.stream().pipeTo(writer);
           }

@@ -17,6 +17,7 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
 
     <queries>
         <!-- Source-suggestion catalogue: visibility on Android 11+ for installed-app
@@ -31,6 +32,10 @@
         <package android:name="com.cxinventor.file.explorer" />
         <package android:name="com.lonelycatgames.Xplore" />
         <package android:name="me.zhanghai.android.files" />
+        <package android:name="au.com.shiftyjelly.pocketcasts" />
+        <package android:name="com.spotify.music" />
+        <package android:name="de.danoeh.antennapod" />
+        <intent><action android:name="android.media.action.MEDIA_PLAY_FROM_SEARCH" /></intent>
         <package android:name="at.bitfire.davdroid" />
         <package android:name="io.github.x0b.rcx" />
         <intent>
@@ -52,6 +57,7 @@
             android:exported="true"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden|mnc|colorMode|density|fontScale|fontWeightAdjustment|keyboard|layoutDirection|locale|mcc|navigation|smallestScreenSize|touchscreen|uiMode"
             android:name=".MainActivity"
+            android:launchMode="singleTop"
             tools:ignore="Instantiatable"
             android:enableOnBackInvokedCallback="true">
             <intent-filter>
@@ -70,6 +76,14 @@
             android:name=".sync.SyncForegroundService"
             android:exported="false"
             android:foregroundServiceType="dataSync" />
+
+        <service android:name="ee.schimke.cadence.podcasts.PodcastPlaybackService"
+            android:exported="false" android:foregroundServiceType="mediaPlayback">
+            <intent-filter><action android:name="androidx.media3.session.MediaSessionService" /></intent-filter>
+        </service>
+
+        <service android:name="androidx.work.impl.foreground.SystemForegroundService"
+            android:foregroundServiceType="dataSync" tools:node="merge" />
 
         <service
             android:name=".bluetooth.NowPlayingNotificationListener"
@@ -100,6 +114,10 @@
         <receiver android:name="ee.schimke.cadence.podcasts.PodcastSyncWidget" android:exported="false" android:label="Podcast sync">
             <intent-filter><action android:name="android.appwidget.action.APPWIDGET_UPDATE" /></intent-filter>
             <meta-data android:name="android.appwidget.provider" android:resource="@xml/podcast_sync_widget" />
+        </receiver>
+        <receiver android:name="ee.schimke.cadence.podcasts.CloudSyncWidget" android:exported="false" android:label="Cloud sync">
+            <intent-filter><action android:name="android.appwidget.action.APPWIDGET_UPDATE" /></intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/cloud_sync_widget" />
         </receiver>
         <receiver
             android:name=".widgets.HeadphoneControlsWidget"

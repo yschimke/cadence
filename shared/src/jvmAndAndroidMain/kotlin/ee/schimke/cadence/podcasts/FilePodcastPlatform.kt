@@ -12,6 +12,55 @@ import kotlinx.coroutines.withContext
 import org.w3c.dom.Element
 
 abstract class FilePodcastPlatform(protected val root: File) : PodcastPlatform {
+  override val supportsOriginalDownloads = true
+
+  override suspend fun originalAvailable(episode: Episode): Boolean =
+    withContext(Dispatchers.IO) { source(episode).let { it.isFile && it.length() > 0 } }
+
+  override suspend fun downloadOriginal(episode: Episode) {
+    cachedSource(episode)
+  }
+
+  protected fun source(episode: Episode): File =
+    File(root, "source/${episode.key}-${digest(episode.audioVersion)}.${episode.extension}")
+
+  protected suspend fun cachedSource(episode: Episode): File {
+    val file = source(episode)
+    if (!withContext(Dispatchers.IO) { file.isFile && file.length() > 0 }) download(episode, file)
+    return file
+  }
+
+  protected suspend fun copyWhole(episode: Episode, section: Section) =
+    withContext(Dispatchers.IO) {
+      val original = cachedSource(episode)
+      val output = audio(section)
+      output.parentFile!!.mkdirs()
+      val temp = File(output.parentFile, output.name + ".part")
+      try {
+        original.copyTo(temp, overwrite = true)
+        replacePodcastFile(temp, output)
+      } finally {
+        temp.delete()
+      }
+    }
+
+  override suspend fun pruneAudio(episodes: List<Episode>) =
+    withContext(Dispatchers.IO) {
+      val keys = episodes.map { it.key }.toSet()
+      val prefixes = keys.map { it.take(8) }.toSet()
+      val original = Regex("^([a-f0-9]{64})-[a-f0-9]{64}\\.[a-z0-9]+$")
+      val processed = Regex("^.+-([a-f0-9]{8})-[0-9]{12}-[a-f0-9]{64}\\.[a-z0-9]+$")
+      File(root, "source").listFiles()?.forEach { file ->
+        val key = original.matchEntire(file.name)?.groupValues?.get(1)
+        if (file.isFile && key != null && key !in keys) file.delete()
+      }
+      File(root, "audio").listFiles()?.forEach { file ->
+        val prefix = processed.matchEntire(file.name)?.groupValues?.get(1)
+        if (file.isFile && prefix != null && prefix !in prefixes) file.delete()
+      }
+      Unit
+    }
+
   protected fun audio(section: Section): File {
     validateAudioFileName(section.fileName)
     require(section.fileName.substringBeforeLast('.').endsWith(section.id))
@@ -190,6 +239,8 @@ abstract class FilePodcastPlatform(protected val root: File) : PodcastPlatform {
   override suspend fun available(section: Section): Boolean =
     withContext(Dispatchers.IO) { audio(section).let { it.isFile && it.length() > 0 } }
 
+  override suspend fun publicText(url: String): String = feedText(url)
+
   override suspend fun rss(url: String): RssFeed {
     val text = feedText(url)
     val factory =
@@ -222,6 +273,11 @@ abstract class FilePodcastPlatform(protected val root: File) : PodcastPlatform {
           item.child("itunes:duration"),
           enclosure?.getAttribute("length").orEmpty(),
           enclosure?.getAttribute("type").orEmpty(),
+          item.child("description").ifBlank { item.child("itunes:summary") },
+          (item.getElementsByTagName("podcast:transcript").item(0) as? Element)
+            ?.getAttribute("url")
+            .orEmpty(),
+          item.child("pubDate"),
         )
       },
     )

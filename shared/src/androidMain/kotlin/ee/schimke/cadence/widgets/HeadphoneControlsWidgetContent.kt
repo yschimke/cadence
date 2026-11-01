@@ -54,14 +54,14 @@ import ee.schimke.cadence.swim.WaterBackground
 /**
  * Phone counterpart of the Wear "Mode & controls" widget: the headset's mode, what is playing, the
  * transport, and a mode switch. Drawn by the launcher (Android 16+) so it reflows with the slot;
- * [HeadphoneControlsWidget] provides a `RemoteViews` fallback for older launchers.
+ * the launcher widget provider provides a `RemoteViews` fallback for older launchers.
  *
  * [onAction] returns the host action that fires a [HeadphoneWidgetAction]; null (previews) leaves
  * the control inert.
  */
 @Composable
 @RemoteComposable
-internal fun HeadphoneControlsWidgetContent(
+fun HeadphoneControlsWidgetContent(
   state: HeadphoneWidgetState,
   layout: HeadphoneWidgetLayout,
   colors: WidgetColors,
@@ -95,7 +95,7 @@ internal fun HeadphoneControlsWidgetContent(
     }
     return
   }
-  RemoteColumn(modifier = root, verticalArrangement = RemoteArrangement.SpaceBetween) {
+  RemoteColumn(modifier = root, verticalArrangement = RemoteArrangement.Center) {
     RemoteColumn(
       modifier =
         RemoteModifier.fillMaxWidth()
@@ -164,6 +164,7 @@ private fun Buttons(
     WidgetIconButton(
       action = action,
       primary = action == HeadphoneWidgetAction.Play || action == HeadphoneWidgetAction.Pause,
+      showWater = state.showWater,
       colors = colors,
       onClick = onAction(action),
     )
@@ -183,10 +184,12 @@ private fun RemoteModifier.openOnTap(onOpen: Action?): RemoteModifier =
 private fun WidgetIconButton(
   action: HeadphoneWidgetAction,
   primary: Boolean,
+  showWater: Boolean = false,
   colors: WidgetColors,
   onClick: Action?,
 ) {
-  val content = if (primary) OnWater else colors.onTonal
+  val water = primary && showWater
+  val content = if (water) OnWater else if (primary) colors.onPrimary else colors.onTonal
   val size = HeadphoneWidgetLayout.ButtonDp
   // Shown as Pause while audio plays: that is when the water moves.
   val playing = action == HeadphoneWidgetAction.Pause
@@ -194,7 +197,9 @@ private fun WidgetIconButton(
     modifier =
       RemoteModifier.size(size.rdp)
         .clip(RemoteRoundedCornerShape((size / 2).rdp))
-        .let { if (primary) it else it.background(colors.tonal.rc) }
+        .let {
+          if (water) it else it.background((if (primary) colors.primary else colors.tonal).rc)
+        }
         .semantics {
           contentDescription = action.label.rs
           role = Role.Button
@@ -202,7 +207,7 @@ private fun WidgetIconButton(
         .let { if (onClick != null) it.clickable(onClick) else it },
     contentAlignment = RemoteAlignment.Center,
   ) {
-    if (primary) {
+    if (water) {
       // The primary button is a little pool: still water while paused, waves and bubbles while
       // playing. A canvas under the icon, not a drawWithContent modifier: Android 16's platform
       // player recurses forever on DrawContent inside a modifier.
@@ -236,11 +241,11 @@ internal val HeadphoneWidgetAction.icon: ImageVector
     }
 
 /**
- * The widget's colour roles. Captured on the device, so [HeadphoneControlsWidget] fills them from
+ * The widget's colour roles. Captured on the device, so the launcher widget provider fills them from
  * the system's dynamic Material scheme for the current light or dark mode, and recaptures when that
  * changes; [Dark] and [Light] are the fallbacks without dynamic colour, and what previews show.
  */
-internal data class WidgetColors(
+data class WidgetColors(
   val background: Color,
   val onBackground: Color,
   val supporting: Color,

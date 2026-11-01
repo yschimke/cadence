@@ -65,9 +65,12 @@ object ShokzOpenSwimCodec {
         listOf(requestChecksumSeed, equalizerRequestChecksumSeed, mediaResponseChecksumSeed)
           .firstOrNull { crc16Modbus(payload, it) == checksum }
       responseType ->
-        listOf(mediaResponseChecksumSeed, localAudioStateResponseChecksumSeed).firstOrNull {
-          crc16Modbus(payload, it) == checksum
-        }
+        listOf(
+            mediaResponseChecksumSeed,
+            localAudioStateResponseChecksumSeed,
+            equalizerRequestChecksumSeed,
+          )
+          .firstOrNull { crc16Modbus(payload, it) == checksum }
       else -> null
     }
 

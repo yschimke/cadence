@@ -16,6 +16,8 @@ interface PodcastPlatform {
   val splitFormats: Set<String>
   val description: String
 
+  fun controller(): PodcastController = PodcastController(this)
+
   suspend fun readState(): String?
 
   suspend fun saveState(state: String)
@@ -27,16 +29,33 @@ interface PodcastPlatform {
     body: String? = null,
   ): String
 
+  /** Read public metadata without forwarding credentials across HTTPS redirects. */
+  suspend fun publicText(url: String): String = request(url)
+
   /** Fetches and parses a public feed, following HTTPS redirects without credentials. */
   suspend fun rss(url: String): RssFeed
 
   suspend fun prepare(episode: Episode, sections: List<Section>)
 
+  val supportsOriginalDownloads: Boolean
+    get() = false
+
+  suspend fun originalAvailable(episode: Episode): Boolean = false
+
+  suspend fun downloadOriginal(episode: Episode) {
+    throw PodcastProblem("Downloading originals is not supported on this platform")
+  }
+
   suspend fun available(section: Section): Boolean
+
+  /** Remove staged audio for episodes no longer in the imported source. */
+  suspend fun pruneAudio(episodes: List<Episode>) {}
 
   suspend fun export(sections: List<Section>, target: String, manifest: String)
 
-  fun publishStatus(status: String, ready: Boolean) {}
+  fun publishStatus(status: String, state: LocalPodcastState) {}
+
+  suspend fun readDeviceManifest(target: String): DeviceManifest? = null
 
   /**
    * False in the browser, where Pocket Casts only accepts API calls from its own site, unless a
@@ -121,7 +140,12 @@ class PodcastController(val platform: PodcastPlatform) {
         // Settings saved elsewhere, or before a format was supported here, may not apply.
         state.value =
           restored.copy(
-            library = restored.library.copy(config = supported(restored.library.config))
+            lastCopied =
+              restored.lastCopied
+                ?: restored.target
+                  .takeIf { it.isNotBlank() }
+                  ?.let { platform.readDeviceManifest(it) },
+            library = restored.library.copy(config = supported(restored.library.config)),
           )
       }
       platform.pocketCastsServer?.let { server ->
@@ -138,6 +162,7 @@ class PodcastController(val platform: PodcastPlatform) {
           }
       }
       recheckReady()
+      recheckDownloads()
       status.value = "Library loaded"
     } finally {
       // Even an unreadable library counts as loaded, so the home screen can offer to start over.
@@ -153,10 +178,9 @@ class PodcastController(val platform: PodcastPlatform) {
   }
 
   private fun publish() {
-    val ready = state.value.readyForDevice()
     platform.publishStatus(
       status.value + " · Last import: " + state.value.library.lastBackendSync,
-      ready,
+      state.value,
     )
   }
 
@@ -176,6 +200,53 @@ class PodcastController(val platform: PodcastPlatform) {
         copiedSectionIds = emptySet(),
       )
     )
+    platform.pruneAudio(snapshot.episodes)
+    recheckDownloads()
+    recheckCachedProcessing()
+  }
+
+  private suspend fun recheckCachedProcessing() {
+    val library = state.value.library
+    val manifests =
+      library.playlist?.episodes.orEmpty().mapNotNull { episode ->
+        val config = library.configFor(episode)
+        val sections =
+          runCatching { segment(episode, config) }.getOrNull() ?: return@mapNotNull null
+        if (sections.isNotEmpty() && sections.all { platform.available(it) })
+          Manifest(episode, config, sections)
+        else null
+      }
+    save(
+      state.value.copy(
+        library = library.copy(manifests = manifests),
+        readySectionIds = manifests.flatMap { it.sections }.map { it.id }.toSet(),
+      )
+    )
+  }
+
+  private suspend fun recheckDownloads() {
+    if (!platform.supportsOriginalDownloads) return
+    val downloaded =
+      state.value.library.playlist
+        ?.episodes
+        .orEmpty()
+        .filter { platform.originalAvailable(it) }
+        .map { it.key }
+        .toSet()
+    save(state.value.copy(downloadedEpisodeKeys = downloaded))
+  }
+
+  suspend fun downloadOriginals() {
+    val episodes =
+      state.value.library.playlist?.episodes ?: throw PodcastProblem("Connect a source first")
+    episodes.forEachIndexed { index, episode ->
+      status.value = "Downloading ${index + 1} of ${episodes.size}: ${episode.title}"
+      platform.downloadOriginal(episode)
+      save(
+        state.value.copy(downloadedEpisodeKeys = state.value.downloadedEpisodeKeys + episode.key)
+      )
+    }
+    notice = "Downloaded ${count(episodes.size, "episode")}"
   }
 
   suspend fun importRss(url: String, latest: Int = state.value.library.feedLatest) {
@@ -190,7 +261,15 @@ class PodcastController(val platform: PodcastPlatform) {
             it.key == episode.key && it.audioVersion == episode.audioVersion
           }
         if (previous == null) episode
-        else episode.copy(positionMs = advancedPosition(previous, old.completions))
+        else
+          episode.copy(
+            positionMs =
+              episodePosition(
+                previous,
+                old,
+                old.manifests.firstOrNull { it.episode.key == previous.key }?.config,
+              )
+          )
       }
     importSnapshot(podcastJson.encodeToString(snapshot.copy(episodes = episodes)))
     save(
@@ -304,6 +383,7 @@ class PodcastController(val platform: PodcastPlatform) {
           PodcastLibrary(
             config = state.value.library.config,
             feedLatest = state.value.library.feedLatest,
+            podcastTrims = state.value.library.podcastTrims,
           ),
         readySectionIds = emptySet(),
         copiedSectionIds = emptySet(),
@@ -400,11 +480,20 @@ class PodcastController(val platform: PodcastPlatform) {
       state.value.library.manifests.firstOrNull { it.episode.key == episodeKey }
         ?: throw PodcastProblem("Prepare the episode first")
     val episode = manifest.episode
+    if (episode.backend == "pocket-casts") {
+      sendPocketCastsPosition(episode)
+      return
+    }
     if (episode.backend != "gpodder") throw PodcastProblem("Only gpodder imports accept positions")
     val account = state.value.gpodder
     if (gpodderPassword.isBlank()) throw PodcastProblem("Import from gpodder again to sign in")
-    val position = advancedPosition(episode, state.value.library.completions)
-    if (position <= episode.positionMs) throw PodcastProblem("Mark sections played first")
+    val position =
+      episodePosition(
+        episode,
+        state.value.library,
+        state.value.library.manifests.firstOrNull { it.episode.key == episode.key }?.config,
+      )
+    if (position <= episode.positionMs) throw PodcastProblem("Set a later episode position first")
     val (podcast, audio) = episode.id.split(' ', limit = 2)
     val current =
       gpodderPlays(
@@ -428,6 +517,44 @@ class PodcastController(val platform: PodcastPlatform) {
     save(state.value.copy(sentPositions = state.value.sentPositions + (episodeKey to position)))
     notice =
       "Sent ${formatTime(position)} to ${account.server.substringAfter("https://").substringBefore('/')}"
+  }
+
+  private suspend fun sendPocketCastsPosition(episode: Episode) {
+    if (
+      pocketCastsCapture != null ||
+        state.value.pocketCasts.server ||
+        !state.value.pocketCasts.signedIn
+    )
+      throw PodcastProblem("Sign in to Pocket Casts in Cadence before sending a position")
+    val position =
+      episodePosition(
+        episode,
+        state.value.library,
+        state.value.library.manifests.firstOrNull { it.episode.key == episode.key }?.config,
+      )
+    if (position <= episode.positionMs) throw PodcastProblem("Set a later episode position first")
+    val api =
+      PocketCastsApi(platform, state.value.pocketCasts, ::nowMs) { session ->
+        save(state.value.copy(pocketCasts = session))
+      }
+    val remote =
+      pocketCastsEpisodes(api.episode(episode.id)).singleOrNull()
+        ?: throw PodcastProblem("Pocket Casts didn't return the episode")
+    if (remote.uuid != episode.id || remote.podcastUuid.isBlank())
+      throw PodcastProblem("Pocket Casts didn't return the episode's podcast ID")
+    val remoteMs = (remote.playedUpToSeconds * 1000).toLong()
+    val previousSend = state.value.sentPositions[episode.key]?.let { it / 1000 * 1000 }
+    if (remoteMs != episode.positionMs && remoteMs != previousSend)
+      throw PodcastProblem(
+        "This episode moved in Pocket Casts since import. Refresh before sending a position."
+      )
+    if (remote.playingStatus == 3 && position < episode.durationMs)
+      throw PodcastProblem(
+        "This episode is already marked played in Pocket Casts. Refresh before sending a position."
+      )
+    api.sendPosition(episode.id, remote.podcastUuid, position, episode.durationMs)
+    save(state.value.copy(sentPositions = state.value.sentPositions + (episode.key to position)))
+    notice = "Sent ${formatTime(position)} to Pocket Casts"
   }
 
   /**
@@ -455,12 +582,40 @@ class PodcastController(val platform: PodcastPlatform) {
     )
   }
 
+  suspend fun configurePodcastTrim(id: String, trim: PodcastTrim) {
+    require(id.isNotBlank() && trim.startSeconds in 0..3600 && trim.endSeconds in 0..3600)
+    val library = state.value.library
+    val affected = library.playlist?.episodes.orEmpty().filter { it.podcastId == id }
+    require(affected.isNotEmpty())
+    if (affected.any { (trim.startSeconds + trim.endSeconds) * 1000L >= it.durationMs })
+      throw PodcastProblem("Trim must be shorter than every episode in this podcast")
+    val trims =
+      if (trim == PodcastTrim()) library.podcastTrims - id else library.podcastTrims + (id to trim)
+    save(
+      state.value.copy(
+        library = library.copy(podcastTrims = trims, manifests = emptyList()),
+        readySectionIds = emptySet(),
+        copiedSectionIds = emptySet(),
+      )
+    )
+  }
+
   suspend fun prepare() {
     val library = state.value.library
     val playlist = requireNotNull(library.playlist) { "Import a playlist first" }
     require(playlist.episodes.isNotEmpty())
     val manifests =
-      playlist.episodes.map { Manifest(it, library.config, segment(it, library.config)) }
+      playlist.episodes
+        .map { episode ->
+          val config = library.configFor(episode)
+          if ((config.trimStartSeconds + config.trimEndSeconds) * 1000L >= episode.durationMs)
+            throw PodcastProblem(
+              "Trim is longer than ${episode.title}. Reduce this podcast's trim before preparing."
+            )
+          Manifest(episode, config, segment(episode, config))
+        }
+        .filter { it.sections.isNotEmpty() }
+    if (manifests.isEmpty()) throw PodcastProblem("No unheard audio remains after trimming")
     if (
       manifests.any { m ->
         (m.sections.size > 1 || m.sections.first().startMs > 0) &&
@@ -472,9 +627,25 @@ class PodcastController(val platform: PodcastPlatform) {
       )
     // Publish the manifest and readiness only after every audio file is committed.
     manifests.forEachIndexed { index, manifest ->
-      status.value = "Downloading ${index + 1} of ${manifests.size}: ${manifest.episode.title}"
+      status.value = "Preparing ${index + 1} of ${manifests.size}: ${manifest.episode.title}"
       publish()
       platform.prepare(manifest.episode, manifest.sections)
+      val current = state.value
+      save(
+        current.copy(
+          library =
+            current.library.copy(
+              manifests =
+                current.library.manifests.filterNot { it.episode.key == manifest.episode.key } +
+                  manifest
+            ),
+          readySectionIds = current.readySectionIds + manifest.sections.map { it.id },
+          downloadedEpisodeKeys =
+            if (platform.originalAvailable(manifest.episode))
+              current.downloadedEpisodeKeys + manifest.episode.key
+            else current.downloadedEpisodeKeys,
+        )
+      )
     }
     val sections = manifests.flatMap { it.sections }
     require(sections.all { platform.available(it) })
@@ -514,8 +685,29 @@ class PodcastController(val platform: PodcastPlatform) {
     // success remotely.
   }
 
+  suspend fun setEpisodePosition(episodeKey: String, positionMs: Long) {
+    val library = state.value.library
+    val episode =
+      library.playlist?.episodes?.firstOrNull { it.key == episodeKey }
+        ?: throw PodcastProblem("Episode no longer available")
+    require(positionMs in 0..episode.durationMs)
+    val progress = EpisodeProgress(episode.audioVersion, episode.revision, positionMs, nowMs())
+    save(
+      state.value.copy(
+        library = library.copy(episodeProgress = library.episodeProgress + (episodeKey to progress))
+      )
+    )
+    notice = "Position set to ${formatTime(positionMs)}"
+  }
+
   suspend fun setTarget(target: String) {
-    save(state.value.copy(target = target, copiedSectionIds = emptySet()))
+    save(
+      state.value.copy(
+        target = target,
+        copiedSectionIds = emptySet(),
+        lastCopied = if (target == state.value.target) state.value.lastCopied else null,
+      )
+    )
   }
 
   suspend fun copyToDevice() {
@@ -529,7 +721,12 @@ class PodcastController(val platform: PodcastPlatform) {
       state.value.target,
       podcastJson.encodeToString(deviceManifest(state.value.library)),
     )
-    save(state.value.copy(copiedSectionIds = sections.map { it.id }.toSet()))
+    save(
+      state.value.copy(
+        copiedSectionIds = sections.map { it.id }.toSet(),
+        lastCopied = deviceManifest(state.value.library),
+      )
+    )
     notice =
       "Copied ${count(sections.size, "file")} to the headphones. Eject the volume before unplugging."
   }
@@ -654,10 +851,19 @@ class PodcastController(val platform: PodcastPlatform) {
     remote.document.validate()
     val merged =
       remote.document.copy(
+        episodeProgress =
+          (remote.document.episodeProgress.keys + state.value.library.episodeProgress.keys)
+            .associateWith { key ->
+              listOfNotNull(
+                  remote.document.episodeProgress[key],
+                  state.value.library.episodeProgress[key],
+                )
+                .maxBy { it.updatedAtMs }
+            },
         completions =
           (remote.document.completions + state.value.library.completions).distinctBy {
             it.sectionId to it.observedRevision
-          }
+          },
       )
     save(
       state.value.copy(
