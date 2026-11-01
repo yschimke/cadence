@@ -1,11 +1,27 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-01T12:42:31.972Z",
+  "generatedAt": "2026-11-01T13:08:33.769Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "f25da7f14a66e1c7475f27b6da04446dad5fdd38",
+        "subject": "build: publish Wear bundle to internal testing (#472)",
+        "at": "2026-11-01T12:51:04Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "bde98073c0f6f311060beb039b66bd27ea7b1779",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.81.0 (#471)",
+        "at": "2026-11-01T12:38:06Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "46fc9832cf6419fa429b8a3c853a4a3ca2c0c70f",
         "subject": "fix(previews): give round Wear devices catalog breakpoints and render the debug variant everywhere (#470)",
@@ -467,22 +483,6 @@
         "subject": "chore(main): release 0.1.5 (#406)",
         "at": "2026-10-29T06:33:00Z",
         "author": "github-actions[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "d0c509ba627a075652736517ea3964e9fb1953e7",
-        "subject": "perf(compose): add contentType to lazy list items and dedupe profile lookup (#408)",
-        "at": "2026-10-28T17:08:34Z",
-        "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "1ceaf839c2911fb1d8e2633fb53b5d046c278bea",
-        "subject": "fix(deps): update dependency ee.schimke.composeai:rc-widget-launcher to v2.21.0 (#407)",
-        "at": "2026-10-28T10:34:35Z",
-        "author": "renovate[bot]",
         "previewIds": [],
         "components": []
       }
