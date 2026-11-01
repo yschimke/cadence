@@ -55,7 +55,7 @@ playServicesWearable = "20.0.1"
 
 [libraries]
 rc-widget-launcher = { module = "ee.schimke.composeai:rc-widget-launcher", version.ref = "rcWidget" }
-composeai-preview-annotations = { module = "ee.schimke.composeai:preview-annotations", version = "3.26.0" }
+composeai-preview-annotations = { module = "ee.schimke.composeai:preview-annotations", version = "3.27.1" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
