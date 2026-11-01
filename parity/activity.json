@@ -1,11 +1,27 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-01T18:09:18.865Z",
+  "generatedAt": "2026-11-01T19:36:58.980Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "b455368ce08be2cfaa3747113a591abcd9da1aa1",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.83.0 (#482)",
+        "at": "2026-11-01T19:26:24Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "0356da03249cd4259e6086d51a812665d87a965f",
+        "subject": "ci(preview-audit): use compose-ai-tools' preview-audit-jev action (#480)",
+        "at": "2026-11-01T18:33:27Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "f2809073a5b1ebe911ec46b280eca3b571f726a5",
         "subject": "feat: improve podcast sync and headphone playback (#477)",
@@ -466,22 +482,6 @@
         "sha": "65c15e77ee3fe479689f2538400df91e1e67c54b",
         "subject": "chore(deps): update anthropics/claude-code-action action to v1.0.265 (#420)",
         "at": "2026-10-30T06:07:02Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "6926d69791c0529072a36cd58addcc64350b8708",
-        "subject": "feat: share Cadence's settings across browsers on Wasmo (#418)",
-        "at": "2026-10-30T00:28:48Z",
-        "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "1d493760ea699c9fc1f6d37b9e2bee704d8382f5",
-        "subject": "chore(deps): update dependency python to v3.15.2 (#419)",
-        "at": "2026-10-30T00:24:49Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
