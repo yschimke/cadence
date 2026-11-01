@@ -1,5 +1,5 @@
 {
-  "$comment": "Design-catalog spec for the Cadence design system. Code-led: it declares which @Preview composables (by function name) make up the published sticker sheet, their grouping, and captions. Consumed by @design-parity/catalog-export (via compose-ai-tools' scripts/design-artifacts/generate-design-catalog.mjs) over a `compose-preview bundle pack --module :composeApp` render to produce the importable design-artifacts/cadence bundle the public preview server serves at /cadence/. Each `preview` MUST equal the exact @Preview function name in :composeApp (ee.schimke.cadence.preview.ScreenPreviews).",
+  "$comment": "Design-catalog spec for the Cadence design system. Code-led: it declares which @Preview composables (by function name) make up the published sticker sheet, their grouping, and captions. Consumed by @design-parity/catalog-export (via compose-ai-tools' scripts/design-artifacts/generate-design-catalog.mjs) over a `compose-preview bundle pack --module :composeApp` render to produce the importable design-artifacts/cadence bundle the public preview server serves at /cadence/. Each `preview` MUST equal the exact @Preview function name in :composeApp (ee.schimke.cadence.preview.ScreenPreviews, HeadphoneWidgetPreviews). design-artifacts.yml publishes every preview-enabled module (`modules: all`), so :swimUi and :wearApp (the swim visuals and the Wear widgets) appear as their own module sections without being listed here. completeness.exemptSemantics names the renders that draw a Remote Compose document through a player View and so carry no semantics tree.",
   "system": "cadence",
   "title": "Cadence",
   "library": [
@@ -9,6 +9,9 @@
   "module": "composeApp",
   "modes": ["light", "dark"],
   "breakpoints": [{ "size": "compact", "widthDp": 412 }],
+  "completeness": {
+    "exemptSemantics": ["*Activity", "composeApp/HeadphoneWidget*", "swimUi/*", "wearApp/*Widget*"]
+  },
   "groups": [
     {
       "name": "Foundation",
@@ -137,6 +140,31 @@
           "componentId": "Manage/Refreshing",
           "preview": "ManageRefreshingPreview",
           "caption": "Manage sync, refreshing."
+        }
+      ]
+    },
+    {
+      "name": "Launcher widgets",
+      "components": [
+        {
+          "componentId": "Widgets/Headphone/Bluetooth",
+          "preview": "HeadphoneWidgetBluetoothPreview",
+          "caption": "Headphone launcher widget, Bluetooth mode."
+        },
+        {
+          "componentId": "Widgets/Headphone/Mp3",
+          "preview": "HeadphoneWidgetMp3Preview",
+          "caption": "Headphone launcher widget, MP3 mode."
+        },
+        {
+          "componentId": "Widgets/Headphone/Disconnected",
+          "preview": "HeadphoneWidgetDisconnectedPreview",
+          "caption": "Headphone launcher widget, disconnected."
+        },
+        {
+          "componentId": "Widgets/Headphone/Light",
+          "preview": "HeadphoneWidgetLightPreview",
+          "caption": "Headphone launcher widget, light theme."
         }
       ]
     }

@@ -53,14 +53,18 @@ on:
       - 'build.gradle.kts'
       - '**/build.gradle.kts'
       - 'catalog.spec.json'
+      # The preview sources themselves. Without these a feature PR (the swim
+      # visuals, the launcher and Wear widgets) only reached preview.coo.ee on
+      # the next Monday cron or an unrelated dependency bump.
+      - 'composeApp/src/**'
+      - 'swimUi/src/**'
+      - 'wearApp/src/**'
+      - 'shared/src/**'
       - '.github/workflows/design-artifacts.yml'
       - '.github/workflows/compose-preview.yml'
+  # No `allow_incomplete` input: the job passes `allow-incomplete: true`
+  # unconditionally, so a dispatch toggle would do nothing.
   workflow_dispatch:
-    inputs:
-      allow_incomplete:
-        description: 'Publish even if some catalog previews fail to render or lack semantics (use for the first run while tuning the spec).'
-        type: boolean
-        default: false
 
 permissions:
   contents: read
@@ -86,7 +90,13 @@ jobs:
       # Only main publishes; a manual dispatch from another branch renders without pushing.
       publish: ${{ github.ref == 'refs/heads/main' }}
       spec: catalog.spec.json
-      module: ':composeApp'
+      # Every preview-enabled module, not just :composeApp: the Wear widgets
+      # live in :wearApp and the swim visuals (launcher + Wear) in :swimUi, and
+      # with `module: ':composeApp'` none of them reached preview.coo.ee.
+      # catalog.spec.json's `"module": "composeApp"` stays the primary that the
+      # authored groups resolve against; the other modules get their own
+      # sections from discovery. Same setup as meshcore-mobile.
+      modules: all
       # :composeApp does not apply the preview plugin from its build (there is no
       # ee.schimke.composeai coordinate in gradle/libs.versions.toml) — the CLI
       # injects it via --init-script, so `latest` always carries a matching plugin
@@ -103,7 +113,13 @@ jobs:
       # (ported from yschimke/meshcore-mobile#461).
       defer-figma-svg: true
       split-per-preview: false
-      allow-incomplete: ${{ github.event_name == 'workflow_dispatch' && inputs.allow_incomplete || false }}
+      # Widget renders draw a Remote Compose document through a player View and
+      # carry no semantics; catalog.spec.json exempts them by name. Anything the
+      # exemptions miss is reported (run log + job summary) rather than blocking
+      # the publish: a catalog missing one sticker beats a stale one. This is
+      # what meshcore-mobile settled on after its widget previews stranded the
+      # catalog behind the completeness gate.
+      allow-incomplete: true
       # Generated delivery branch — attributed to the repo owner, not a bot.
       commit-user-name: 'Yuri Schimke'
       commit-user-email: 'yuri@schimke.ee'
