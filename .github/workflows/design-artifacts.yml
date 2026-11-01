@@ -97,11 +97,15 @@ jobs:
       # authored groups resolve against; the other modules get their own
       # sections from discovery. Same setup as meshcore-mobile.
       modules: all
-      # :composeApp does not apply the preview plugin from its build (there is no
-      # ee.schimke.composeai coordinate in gradle/libs.versions.toml) — the CLI
-      # injects it via --init-script, so `latest` always carries a matching plugin
-      # and cannot skew against a stale pin.
-      cli-version: latest
+      # Pinned through the version catalog's `composePreviewPlugin` key (the
+      # action's default catalog-key), as meshcore-mobile and
+      # homeassistant-remotecompose do. `latest` picked the newest CLI release
+      # and then waited 300s for a Gradle plugin of the same version, which
+      # several releases (2.76.0-2.78.0, 2.79.1, 2.79.2) never published to
+      # Maven Central. Every run from 28 Oct onward failed in "Install
+      # compose-preview CLI", so preview.coo.ee/cadence/ stopped updating. Bump
+      # the key only to a version whose plugin resolves on Central.
+      cli-version: catalog
       # Carry the executable render bundle onto the delivery branch under bundle/
       # and record liveBundle in catalog.json, so preview.coo.ee re-renders the
       # previews live (device / theme / knob controls) instead of serving baked

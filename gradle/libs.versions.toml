@@ -1,4 +1,8 @@
 [versions]
+# compose-preview CLI + Gradle plugin used by design-artifacts.yml (`cli-version: catalog`).
+# Not referenced by a build: the CLI injects the plugin. Keep it on a version
+# whose plugin is on Maven Central.
+composePreviewPlugin = "2.79.0"
 firebase-bom = "35.1.0"
 agp = "9.4.1"
 android-compileSdk = "37"
