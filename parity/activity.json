@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-01T17:52:17.397Z",
+  "generatedAt": "2026-11-01T18:09:18.865Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "f2809073a5b1ebe911ec46b280eca3b571f726a5",
+        "subject": "feat: improve podcast sync and headphone playback (#477)",
+        "at": "2026-11-01T17:59:25Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "2546ca7da79fe693c550b214edef4c9e00b9bbd8",
         "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.82.0 (#478)",
@@ -474,14 +482,6 @@
         "sha": "1d493760ea699c9fc1f6d37b9e2bee704d8382f5",
         "subject": "chore(deps): update dependency python to v3.15.2 (#419)",
         "at": "2026-10-30T00:24:49Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "e9d8cb1d88fced41c791a146d46fb613c82e3150",
-        "subject": "chore(deps): pin dependencies (#383)",
-        "at": "2026-10-29T23:57:47Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []

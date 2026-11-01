@@ -917,6 +917,98 @@
             "requiredOptIns": [],
             "androidxOptIns": [],
             "overloads": []
+        },
+        {
+            "canonicalId": "composeApp/ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetPreview",
+            "componentIds": [],
+            "symbol": {
+                "jvmOwner": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt",
+                "callable": "ee.schimke.cadence.preview.PodcastWidgetPreview",
+                "name": "PodcastWidgetPreview",
+                "origin": "PROJECT",
+                "jvmName": "PodcastWidgetPreview",
+                "descriptor": "(ZLjava/lang/String;Landroidx/compose/runtime/Composer;II)V",
+                "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
+                "docs": "unavailable",
+                "receiver": null
+            },
+            "parameters": [
+                {
+                    "name": "swimming",
+                    "type": "Boolean",
+                    "typeFqn": "kotlin.Boolean",
+                    "hasDefault": false,
+                    "composableSlot": false,
+                    "composableSlotReceiver": null,
+                    "nullable": false,
+                    "noArgConstructible": false,
+                    "noArgFactory": null,
+                    "scopeDslReceiver": null,
+                    "lambdaReturnTypeFqn": null
+                },
+                {
+                    "name": "battery",
+                    "type": "String?",
+                    "typeFqn": "kotlin.String",
+                    "hasDefault": true,
+                    "composableSlot": false,
+                    "composableSlotReceiver": null,
+                    "nullable": true,
+                    "noArgConstructible": false,
+                    "noArgFactory": null,
+                    "scopeDslReceiver": null,
+                    "lambdaReturnTypeFqn": null
+                }
+            ],
+            "slots": [],
+            "bindings": [
+                {
+                    "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetBluetoothPoolPreview_Podcast_widget___Bluetooth_pool",
+                    "componentId": null,
+                    "group": null
+                },
+                {
+                    "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetBluetoothPreview_Podcast_widget___Bluetooth",
+                    "componentId": null,
+                    "group": null
+                },
+                {
+                    "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetDisconnectedPreview_Podcast_widget___disconnected",
+                    "componentId": null,
+                    "group": null
+                },
+                {
+                    "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetMp3LargePreview_Podcast_widget___MP3_large",
+                    "componentId": null,
+                    "group": null
+                },
+                {
+                    "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetMp3Preview_Podcast_widget___MP3",
+                    "componentId": null,
+                    "group": null
+                },
+                {
+                    "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetMp3SmallPreview_Podcast_widget___MP3_small",
+                    "componentId": null,
+                    "group": null
+                }
+            ],
+            "code": {
+                "call": null,
+                "imports": [],
+                "refusedReason": "not public or internal, so a generated file cannot call it",
+                "requiredOptIns": [],
+                "androidxOptIns": []
+            },
+            "signatureKnown": true,
+            "callableFromAnotherFile": false,
+            "hasTypeParameters": false,
+            "hasContextReceivers": false,
+            "overloadsCollided": false,
+            "builder": null,
+            "requiredOptIns": [],
+            "androidxOptIns": [],
+            "overloads": []
         }
     ],
     "builderOrphans": []
