@@ -23,7 +23,7 @@ if (firebaseEnabled) {
   apply(plugin = "com.google.firebase.crashlytics")
 }
 
-val appVersionName = "0.1.11" // x-release-please-version
+val appVersionName = "0.1.12" // x-release-please-version
 
 // Google OAuth Android client id, baked into release builds. CI passes
 // `-PcadenceGoogleAndroidClientId=...` from GitHub secrets so end users don't configure anything.

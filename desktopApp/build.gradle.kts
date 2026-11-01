@@ -4,7 +4,7 @@ plugins {
   alias(libs.plugins.composeCompiler)
 }
 
-val desktopVersion = "0.1.11" // x-release-please-version
+val desktopVersion = "0.1.12" // x-release-please-version
 val distributionVersion = providers.gradleProperty("desktopVersion").getOrElse(desktopVersion)
 
 // Google OAuth credentials baked into release builds. CI passes
