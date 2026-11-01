@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-01T13:08:33.769Z",
+  "generatedAt": "2026-11-01T13:31:22.662Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "f1b248da8cbfb66fd6a2bd2cebe8a251ec64a1db",
+        "subject": "chore(main): release 0.1.10 (#460)",
+        "at": "2026-11-01T12:51:23Z",
+        "author": "github-actions[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "f25da7f14a66e1c7475f27b6da04446dad5fdd38",
         "subject": "build: publish Wear bundle to internal testing (#472)",
@@ -475,14 +483,6 @@
         "subject": "feat: drop platform notice and hide Bluetooth where unsupported (#410)",
         "at": "2026-10-29T07:10:11Z",
         "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "4668a55706d5777fbdcc5e7ea0e0bde45d2e4332",
-        "subject": "chore(main): release 0.1.5 (#406)",
-        "at": "2026-10-29T06:33:00Z",
-        "author": "github-actions[bot]",
         "previewIds": [],
         "components": []
       }
