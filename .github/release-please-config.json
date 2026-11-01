@@ -17,6 +17,10 @@
         },
         {
           "type": "generic",
+          "path": "wearApp/build.gradle.kts"
+        },
+        {
+          "type": "generic",
           "path": "desktopApp/build.gradle.kts"
         },
         {

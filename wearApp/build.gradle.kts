@@ -1,8 +1,23 @@
+import com.github.triplet.gradle.androidpublisher.ReleaseStatus
+
 plugins {
   alias(libs.plugins.androidApplication)
   alias(libs.plugins.composeMultiplatform)
   alias(libs.plugins.composeCompiler)
+  alias(libs.plugins.playPublisher)
 }
+
+val appVersionName = "0.1.9" // x-release-please-version
+val appVersionCode =
+  appVersionName
+    .split(".", "-")
+    .mapNotNull { it.toIntOrNull() }
+    .let { parts ->
+      1_000_000_000 +
+        (parts.getOrNull(0) ?: 0) * 10_000 +
+        (parts.getOrNull(1) ?: 0) * 100 +
+        (parts.getOrNull(2) ?: 0)
+    }
 
 android {
   namespace = "ee.schimke.cadence.wear"
@@ -13,9 +28,35 @@ android {
     applicationId = "ee.schimke.cadence"
     minSdk = libs.versions.android.minSdk.get().toInt()
     targetSdk = libs.versions.android.compileSdk.get().toInt()
-    versionCode = 1
-    versionName = "0.1.0"
+    versionCode = appVersionCode
+    versionName = appVersionName
   }
+
+  val releaseKeystorePath = System.getenv("CADENCE_KEYSTORE_PATH")
+  signingConfigs {
+    if (releaseKeystorePath != null) {
+      create("release") {
+        storeFile = file(releaseKeystorePath)
+        storePassword = System.getenv("CADENCE_KEYSTORE_PASSWORD")
+        keyAlias = System.getenv("CADENCE_KEY_ALIAS")
+        keyPassword = System.getenv("CADENCE_KEY_PASSWORD")
+      }
+    }
+  }
+  buildTypes {
+    getByName("release") {
+      if (releaseKeystorePath != null) {
+        signingConfig = signingConfigs.getByName("release")
+      }
+    }
+  }
+}
+
+play {
+  track.set("wear:qa")
+  defaultToAppBundles.set(true)
+  releaseStatus.set(ReleaseStatus.COMPLETED)
+  enabled.set(System.getenv("ANDROID_PUBLISHER_CREDENTIALS") != null)
 }
 
 // AGP 9.5 defaults release-variant unit tests off, which breaks Compose Preview rendering

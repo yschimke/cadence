@@ -6,7 +6,11 @@ release-please workflow calls `release-build.yml` directly because tags made
 with `GITHUB_TOKEN` do not trigger another workflow. Direct `v*` tag pushes
 also publish. Production promotion remains a Play Console action.
 
-The workflow builds and publishes only `:composeApp:publishReleaseBundle`, then
+The workflow builds and publishes `:composeApp:publishReleaseBundle` to the phone
+internal track and `:wearApp:publishReleaseBundle` to `wear:qa`, the Wear OS
+internal track. Both bundles use the same upload key. Wear version codes use a
+1,000,000,000 offset from the phone version code to keep the two artifacts
+distinct. Release Please updates both version names. The workflow then publishes
 `:composeApp:publishReleaseListing` for the checked-in English (UK) title,
 descriptions and graphics in `composeApp/src/main/play`. Set the repository
 variable `PLAY_PUBLISH_LISTING=false` to skip listing changes. Listings are
@@ -65,6 +69,10 @@ disclosed under Device or other IDs in Data safety.
 4. Publish a new release and check **Android publishing** in the job summary,
    the internal track's version and rollout status, and the store listing.
 
-The Play app and initial bundle upload must already exist. If Play still
+The Play app and its Wear OS form factor must already exist. Before the first
+Wear upload, check that its version code exceeds any previously uploaded Wear
+version and has not already been used by another bundle. Wear store screenshots
+and a testing release are required before completing Wear OS opt-in in Play
+Console. If Play still
 marks the app as draft, complete its required Console setup; a `COMPLETED`
 API release may be rejected until that is resolved.
