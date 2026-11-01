@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-01T20:15:39.230Z",
+  "generatedAt": "2026-11-01T20:27:30.445Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "89c73a8b4589fee4f87f0a632786540a504dcbe1",
+        "subject": "chore(main): release 0.1.12 (#479)",
+        "at": "2026-11-01T20:12:16Z",
+        "author": "github-actions[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "26b0a6399390db15975b9edd1229a57b36050cd6",
         "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.84.0 (#484)",
@@ -475,14 +483,6 @@
         "subject": "chore(main): release 0.1.7 (#422)",
         "at": "2026-10-30T09:37:42Z",
         "author": "github-actions[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "87a8e94746d2f0b13b1bca9f4b3c938e68453922",
-        "subject": "feat(podcasts): sign in to Pocket Casts through the Wasmo (#426)",
-        "at": "2026-10-30T09:26:55Z",
-        "author": "Yuri Schimke",
         "previewIds": [],
         "components": []
       }
