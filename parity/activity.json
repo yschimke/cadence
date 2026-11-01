@@ -1,11 +1,27 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-01T15:15:08.677Z",
+  "generatedAt": "2026-11-01T17:52:17.397Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "2546ca7da79fe693c550b214edef4c9e00b9bbd8",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.82.0 (#478)",
+        "at": "2026-11-01T17:37:13Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "245f764363f7427748708c44c2eca3753b4b689a",
+        "subject": "ci(preview-audit): add a Jev agent with a vision recheck (#476)",
+        "at": "2026-11-01T17:31:56Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "c9bf69ad543fd68995d9bc4e6d0b04d294abc4fe",
         "subject": "chore(main): release 0.1.11 (#474)",
@@ -466,22 +482,6 @@
         "sha": "e9d8cb1d88fced41c791a146d46fb613c82e3150",
         "subject": "chore(deps): pin dependencies (#383)",
         "at": "2026-10-29T23:57:47Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "d7636278abfdd09f72fc188f980a42beeff275d4",
-        "subject": "feat: package the browser app as an installable Wasmo app (#417)",
-        "at": "2026-10-29T23:46:26Z",
-        "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "d085c8f2f7f92eab2f37d20f5b8e0dbded2dfcb8",
-        "subject": "fix(deps): update dependency io.ktor:ktor-client-core to v3.6.1 (#416)",
-        "at": "2026-10-29T18:11:47Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
