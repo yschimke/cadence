@@ -1,6 +1,6 @@
 {
     "formatVersion": "compose-preview-history/v1",
-    "generatedFrom": "3bcebe5b4a2f3de79a910ccee720c23c365ca2d9",
+    "generatedFrom": "d19016c4d8a6b52ca9b558f8f143a05a4a468106",
     "previews": {
         "composeApp/activity__MainActivity": {
             "path": "renders/composeApp/activity__MainActivity.png",
@@ -660,6 +660,13 @@
             "path": "renders/composeApp/PodcastWidgetMp3LargePreview_Podcast_widget_MP3_large-06e82c93.png",
             "versions": [
                 {
+                    "blob": "64fb3aa45681921b00d9029cac4a91cbaa22f7d8",
+                    "commit": "d19016c4d8a6b52ca9b558f8f143a05a4a468106",
+                    "date": "2026-11-01T18:37:07Z",
+                    "sourceSha": "0356da03",
+                    "commits": 1
+                },
+                {
                     "blob": "25e8c3a0e2b6ad619b6fcc56591b3f5e01fdd3ad",
                     "commit": "3bcebe5b4a2f3de79a910ccee720c23c365ca2d9",
                     "date": "2026-11-01T18:05:46Z",
@@ -667,13 +674,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetMp3Preview_Podcast widget · MP3": {
             "path": "renders/composeApp/PodcastWidgetMp3Preview_Podcast_widget_MP3-3525244f.png",
             "versions": [
+                {
+                    "blob": "5624eabe5edc468d9853116d4a728b2b0d766697",
+                    "commit": "d19016c4d8a6b52ca9b558f8f143a05a4a468106",
+                    "date": "2026-11-01T18:37:07Z",
+                    "sourceSha": "0356da03",
+                    "commits": 1
+                },
                 {
                     "blob": "1b71ce42f1b04ecdba6b3981fa3c1c6e5b6254dd",
                     "commit": "3bcebe5b4a2f3de79a910ccee720c23c365ca2d9",
@@ -682,7 +696,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
