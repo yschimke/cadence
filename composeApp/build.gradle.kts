@@ -6,6 +6,7 @@ import dev.zacsweers.metro.gradle.DelicateMetroGradleApi
 
 plugins {
   alias(libs.plugins.androidApplication)
+  alias(libs.plugins.androidxBaselineProfile)
   alias(libs.plugins.composeMultiplatform)
   alias(libs.plugins.composeCompiler)
   alias(libs.plugins.tapmoc)
@@ -93,6 +94,8 @@ android {
 }
 
 dependencies {
+  baselineProfile(project(":mobileBaselineProfile"))
+  implementation(libs.androidx.profileinstaller)
   if (firebaseEnabled) {
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
