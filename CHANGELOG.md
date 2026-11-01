@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.11](https://github.com/yschimke/cadence/compare/v0.1.10...v0.1.11) (2026-11-01)
+
+
+### Bug Fixes
+
+* keep swim cap hem visible ([#475](https://github.com/yschimke/cadence/issues/475)) ([f649b84](https://github.com/yschimke/cadence/commit/f649b8472287c92f8274b8384c4a97936fa3d384))
+* use adaptive icons for phone and Wear ([#473](https://github.com/yschimke/cadence/issues/473)) ([b250abc](https://github.com/yschimke/cadence/commit/b250abc97f373c72c2a70598d65b130ce516630e))
+
 ## [0.1.10](https://github.com/yschimke/cadence/compare/v0.1.9...v0.1.10) (2026-11-01)
 
 
