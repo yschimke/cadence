@@ -1,6 +1,7 @@
 package ee.schimke.cadence
 
 import android.app.Application
+import androidx.work.Configuration
 import dev.zacsweers.metro.createGraphFactory
 import ee.schimke.cadence.metro.AndroidAppGraph
 import ee.schimke.cadence.metro.AppGraphProvider
@@ -13,7 +14,10 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class CadenceApplication : Application(), AppGraphProvider {
+class CadenceApplication : Application(), AppGraphProvider, Configuration.Provider {
+  override val workManagerConfiguration: Configuration
+    get() = Configuration.Builder().build()
+
   /** Holder reference for the app graph for [MetroAppComponentFactory]. */
   override val appGraph: AndroidAppGraph by lazy {
     createGraphFactory<CadenceAppGraph.Factory>().create(this)

@@ -44,7 +44,9 @@ actual fun rememberPodcastPlayer(controller: PodcastController, mediaAccess: Boo
   }
   var pocketCasts by remember { mutableStateOf<MediaController?>(null) }
   var localPlayer by remember { mutableStateOf<MediaController?>(null) }
-  DisposableEffect(context) {
+  // Robolectric's service binding returns a null ComponentName to Media3. App-tour previews
+  // render without a real playback service; devices use the normal MediaController connection.
+  if (android.os.Build.FINGERPRINT != "robolectric") DisposableEffect(context) {
     val future = MediaController.Builder(context, SessionToken(context, ComponentName(context, PodcastPlaybackService::class.java))).buildAsync()
     var disposed = false
     Futures.addCallback(future, object : FutureCallback<MediaController> {

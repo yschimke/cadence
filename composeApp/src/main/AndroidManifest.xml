@@ -53,6 +53,13 @@
         android:appComponentFactory="ee.schimke.cadence.metro.MetroAppComponentFactory"
         tools:replace="android:appComponentFactory"
         android:name=".CadenceApplication">
+        <!-- WorkManager is configured on demand by CadenceApplication. Keep other Startup
+             initializers while removing WorkManager's automatic initializer. -->
+        <provider android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            tools:node="merge">
+            <meta-data android:name="androidx.work.WorkManagerInitializer" tools:node="remove" />
+        </provider>
         <activity
             android:exported="true"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden|mnc|colorMode|density|fontScale|fontWeightAdjustment|keyboard|layoutDirection|locale|mcc|navigation|smallestScreenSize|touchscreen|uiMode"
