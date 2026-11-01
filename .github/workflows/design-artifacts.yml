@@ -105,6 +105,10 @@ jobs:
       # Maven Central. Every run from 28 Oct onward failed in "Install
       # compose-preview CLI", so preview.coo.ee/cadence/ stopped updating. Bump
       # the key only to a version whose plugin resolves on Central.
+      # Render the debug variant explicitly. AGP 9.5 turns unit tests off for release
+      # variants, and Compose Preview packages Android resources through the variant's
+      # unit-test APK, so a release render fails before it starts (compose-ai-tools #6382).
+      variant: debug
       cli-version: catalog
       # Carry the executable render bundle onto the delivery branch under bundle/
       # and record liveBundle in catalog.json, so preview.coo.ee re-renders the

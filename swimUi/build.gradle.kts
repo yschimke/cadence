@@ -14,14 +14,6 @@ android {
   defaultConfig { minSdk = libs.versions.android.minSdk.get().toInt() }
 }
 
-// AGP 9.5 defaults release-variant unit tests off, which breaks Compose Preview rendering
-// (Layoutlib packages Android XML resources via the unit-test APK). Re-enable them explicitly.
-androidComponents {
-  beforeVariants(selector().withBuildType("release")) { variant ->
-    (variant as? com.android.build.api.variant.HasUnitTestBuilder)?.enableUnitTest = true
-  }
-}
-
 dependencies {
   api(libs.compose.remote.creation.compose)
   implementation(libs.compose.remote.creation)
