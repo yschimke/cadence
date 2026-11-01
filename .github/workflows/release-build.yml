@@ -51,8 +51,15 @@ concurrency:
 # GOOGLE_SERVICES_JSON: base64 of composeApp/google-services.json (required for Play).
 # PLAY_PUBLISH_LISTING=false disables listing uploads; enabled by default.
 jobs:
+  baseline-profiles:
+    name: Generate baseline profiles
+    uses: ./.github/workflows/baseline-profiles.yml
+    with:
+      ref: ${{ github.ref_type == 'tag' && github.ref_name || inputs.tag }}
+
   release:
     name: Build & publish release
+    needs: [baseline-profiles]
     runs-on: ubuntu-latest
     timeout-minutes: 45
     permissions:
@@ -69,6 +76,18 @@ jobs:
       - uses: actions/checkout@v7.0.1
         with:
           ref: ${{ github.ref_type == 'tag' && github.ref_name || inputs.tag }}
+
+      - name: Download mobile baseline profile
+        uses: actions/download-artifact@v8.0.2
+        with:
+          name: baseline-profile-mobile
+          path: composeApp/src/release/generated/baselineProfiles
+
+      - name: Download Wear baseline profile
+        uses: actions/download-artifact@v8.0.2
+        with:
+          name: baseline-profile-wear
+          path: wearApp/src/release/generated/baselineProfiles
 
       - name: Set up JDK 21
         uses: actions/setup-java@v6.1.0

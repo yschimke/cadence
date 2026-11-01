@@ -4,6 +4,8 @@
 # whose plugin is on Maven Central.
 composePreviewPlugin = "2.79.0"
 firebase-bom = "35.1.0"
+benchmark = "1.5.0"
+profileinstaller = "1.4.1"
 agp = "9.4.1"
 android-compileSdk = "37"
 android-minSdk = "34"
@@ -54,6 +56,8 @@ wearComposeRemote = "1.0.0-alpha14"
 playServicesWearable = "20.0.1"
 
 [libraries]
+androidx-benchmark-macro-junit4 = { module = "androidx.benchmark:benchmark-macro-junit4", version.ref = "benchmark" }
+androidx-profileinstaller = { module = "androidx.profileinstaller:profileinstaller", version.ref = "profileinstaller" }
 rc-widget-launcher = { module = "ee.schimke.composeai:rc-widget-launcher", version.ref = "rcWidget" }
 composeai-preview-annotations = { module = "ee.schimke.composeai:preview-annotations", version = "3.27.1" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
@@ -121,6 +125,8 @@ wear-compose-remote-material3 = { module = "androidx.wear.compose.remote:remote-
 play-services-wearable = { module = "com.google.android.gms:play-services-wearable", version.ref = "playServicesWearable" }
 
 [plugins]
+androidTest = { id = "com.android.test", version.ref = "agp" }
+androidxBaselineProfile = { id = "androidx.baselineprofile", version.ref = "benchmark" }
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidKotlinMultiplatformLibrary = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }

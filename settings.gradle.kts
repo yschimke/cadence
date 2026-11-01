@@ -45,3 +45,6 @@ include(":wearApp")
 
 // Swimming-themed Remote Compose drawing shared by the launcher and Wear widgets.
 include(":swimUi")
+
+// Each application has its own profile generator and target device.
+include(":mobileBaselineProfile", ":wearBaselineProfile")

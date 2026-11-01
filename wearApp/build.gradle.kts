@@ -2,6 +2,7 @@ import com.github.triplet.gradle.androidpublisher.ReleaseStatus
 
 plugins {
   alias(libs.plugins.androidApplication)
+  alias(libs.plugins.androidxBaselineProfile)
   alias(libs.plugins.composeMultiplatform)
   alias(libs.plugins.composeCompiler)
   alias(libs.plugins.playPublisher)
@@ -61,6 +62,8 @@ play {
 }
 
 dependencies {
+  baselineProfile(project(":wearBaselineProfile"))
+  implementation(libs.androidx.profileinstaller)
   implementation(project(":rcsp"))
   implementation(project(":wearCompanionContract"))
   implementation(project(":swimUi"))
