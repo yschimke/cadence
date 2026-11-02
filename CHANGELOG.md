@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.13](https://github.com/yschimke/cadence/compare/v0.1.12...v0.1.13) (2026-11-02)
+
+
+### Bug Fixes
+
+* improve podcast sync and playback experience ([#485](https://github.com/yschimke/cadence/issues/485)) ([f30e9e0](https://github.com/yschimke/cadence/commit/f30e9e059c629ed4695e641e614542cb43bf42a4))
+
 ## [0.1.12](https://github.com/yschimke/cadence/compare/v0.1.11...v0.1.12) (2026-11-01)
 
 
