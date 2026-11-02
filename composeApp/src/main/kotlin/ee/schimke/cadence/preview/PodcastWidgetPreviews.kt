@@ -2,6 +2,8 @@
 
 package ee.schimke.cadence.preview
 
+import android.content.res.Configuration.UI_MODE_NIGHT_NO
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.remote.tooling.preview.RemoteContentPreview
@@ -12,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import ee.schimke.cadence.podcasts.CloudSyncStatus
 import ee.schimke.cadence.podcasts.CloudSyncWidgetContent
 import ee.schimke.cadence.podcasts.PodcastSyncWidgetContent
+import ee.schimke.cadence.widgets.WidgetColors
 import ee.schimke.composeai.preview.LauncherWidgetPreview
 import ee.schimke.composeai.rcwidget.creation.rcWidgetHostAction
 import ee.schimke.composeai.rcwidget.launcher.RcLauncherWidgets
@@ -20,11 +23,12 @@ import ee.schimke.composeai.rcwidget.launcher.RcLauncherWidgets
 private fun PodcastWidgetPreview(
   swimming: Boolean,
   battery: String? = "50% · ~3h MP3 · ~4h 30m BT",
+  colors: WidgetColors = WidgetColors.Dark,
 ) {
   BoxWithConstraints(Modifier.fillMaxSize()) {
     val width = maxWidth.value.toInt()
     val height = maxHeight.value.toInt()
-    key(width, height) {
+    key(width, height, colors) {
       RemoteContentPreview(Modifier.fillMaxSize(), RcLauncherWidgets.profileFor()) {
         PodcastSyncWidgetContent(
           true,
@@ -34,6 +38,7 @@ private fun PodcastWidgetPreview(
           swimming,
           height,
           widthDp = width,
+          colors = colors,
         )
       }
     }
@@ -52,6 +57,18 @@ internal fun PodcastWidgetBluetoothPreview() {
 @Composable
 internal fun PodcastWidgetMp3Preview() {
   PodcastWidgetPreview(true)
+}
+
+@Preview(
+  name = "Podcast widget · MP3 · light",
+  widthDp = 312,
+  heightDp = 152,
+  uiMode = UI_MODE_NIGHT_NO,
+)
+@LauncherWidgetPreview(width = 4, height = 2)
+@Composable
+internal fun PodcastWidgetMp3LightPreview() {
+  PodcastWidgetPreview(true, colors = WidgetColors.Light)
 }
 
 @Preview(name = "Podcast widget · Bluetooth pool", widthDp = 312, heightDp = 152)
@@ -75,50 +92,70 @@ internal fun PodcastWidgetDisconnectedPreview() {
   PodcastWidgetPreview(false, null)
 }
 
-@Preview(name = "Cloud sync widget", widthDp = 312, heightDp = 192)
-@LauncherWidgetPreview(width = 4, height = 2)
 @Composable
-internal fun CloudSyncWidgetPreview() {
+private fun CloudSyncPreviewBody(colors: WidgetColors) {
   BoxWithConstraints(Modifier.fillMaxSize()) {
     val width = maxWidth.value.toInt()
     val height = maxHeight.value.toInt()
-    RemoteContentPreview(Modifier.fillMaxSize(), RcLauncherWidgets.profileFor()) {
-      CloudSyncWidgetContent(
-        CloudSyncStatus(
-          "Pocket Casts · Swimming",
-          "1 downloaded · 2 to download",
-          "0 processed · 3 to process",
-          "Last checked: just now",
-          true,
-          true,
-          true,
-          true,
-          downloadedCount = 1,
-          downloadNeeded = 2,
-          processingNeeded = 3,
-        ),
-        onRefresh = rcWidgetHostAction(name = "refresh", payload = "refresh"),
-        onDownload = rcWidgetHostAction(name = "download", payload = "download"),
-        onProcess = rcWidgetHostAction(name = "process", payload = "process"),
-        widthDp = width,
-        heightDp = height,
-      )
+    key(width, height, colors) {
+      RemoteContentPreview(Modifier.fillMaxSize(), RcLauncherWidgets.profileFor()) {
+        CloudSyncWidgetContent(
+          CloudSyncStatus(
+            "Pocket Casts · Swimming",
+            "1 downloaded · 2 to download",
+            "0 processed · 3 to process",
+            "Last checked: just now",
+            true,
+            true,
+            true,
+            true,
+            downloadedCount = 1,
+            downloadNeeded = 2,
+            processingNeeded = 3,
+          ),
+          onRefresh = rcWidgetHostAction(name = "refresh", payload = "refresh"),
+          onDownload = rcWidgetHostAction(name = "download", payload = "download"),
+          onProcess = rcWidgetHostAction(name = "process", payload = "process"),
+          widthDp = width,
+          heightDp = height,
+          colors = colors,
+        )
+      }
     }
   }
+}
+
+@Preview(name = "Cloud sync widget", widthDp = 312, heightDp = 192, uiMode = UI_MODE_NIGHT_YES)
+@LauncherWidgetPreview(width = 4, height = 2)
+@Composable
+internal fun CloudSyncWidgetPreview() {
+  CloudSyncPreviewBody(WidgetColors.Dark)
+}
+
+@Preview(
+  name = "Cloud sync widget · light",
+  widthDp = 312,
+  heightDp = 192,
+  uiMode = UI_MODE_NIGHT_NO,
+)
+@LauncherWidgetPreview(width = 4, height = 2)
+@Composable
+internal fun CloudSyncWidgetLightPreview() {
+  CloudSyncPreviewBody(WidgetColors.Light)
 }
 
 @Preview(name = "Cloud sync widget · small", widthDp = 250, heightDp = 160)
 @LauncherWidgetPreview(width = 3, height = 2)
 @Composable
 internal fun CloudSyncWidgetSmallPreview() {
-  CloudSyncWidgetPreview()
+  CloudSyncPreviewBody(WidgetColors.Dark)
 }
 
 @Preview(name = "Cloud sync widget · large", widthDp = 420, heightDp = 300)
 @LauncherWidgetPreview(width = 5, height = 3)
 @Composable
 internal fun CloudSyncWidgetLargePreview() {
-  CloudSyncWidgetPreview()
+  CloudSyncPreviewBody(WidgetColors.Dark)
 }
 
 @Preview(name = "Podcast widget · MP3 large", widthDp = 420, heightDp = 260)

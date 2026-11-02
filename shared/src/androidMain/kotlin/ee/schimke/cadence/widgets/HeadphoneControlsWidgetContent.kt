@@ -44,6 +44,7 @@ import androidx.compose.remote.creation.compose.state.rsp
 import androidx.compose.remote.creation.compose.vector.painterRemoteVector
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
@@ -244,6 +245,9 @@ internal val HeadphoneWidgetAction.icon: ImageVector
  * The widget's colour roles. Captured on the device, so the launcher widget provider fills them from
  * the system's dynamic Material scheme for the current light or dark mode, and recaptures when that
  * changes; [Dark] and [Light] are the fallbacks without dynamic colour, and what previews show.
+ *
+ * Shared by every Cadence Remote Compose launcher surface (headphones, podcast sync, cloud sync)
+ * so light and dark home screens never get a fixed dark chrome card.
  */
 data class WidgetColors(
   val background: Color,
@@ -253,7 +257,15 @@ data class WidgetColors(
   val onTonal: Color,
   val primary: Color,
   val onPrimary: Color,
+  /** Ready / complete accents (sync-ready, downloaded). */
+  val tertiary: Color,
+  /** Pending work accents (to prepare, to download). */
+  val warning: Color,
 ) {
+  /** Whether [background] reads as a dark surface — picks the matching swim palette. */
+  val isDark: Boolean
+    get() = background.luminance() < 0.5f
+
   companion object {
     fun from(scheme: ColorScheme) =
       WidgetColors(
@@ -264,6 +276,8 @@ data class WidgetColors(
         onTonal = scheme.onSecondaryContainer,
         primary = scheme.primary,
         onPrimary = scheme.onPrimary,
+        tertiary = scheme.tertiary,
+        warning = scheme.secondary,
       )
 
     val Dark = from(darkColorScheme())

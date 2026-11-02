@@ -3,26 +3,29 @@ package ee.schimke.cadence.podcasts
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
+import android.content.ComponentCallbacks
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.widget.RemoteViews
 import androidx.annotation.RequiresApi
+import ee.schimke.cadence.bluetooth.BluetoothController
+import ee.schimke.cadence.bluetooth.ConnectedDevice
+import ee.schimke.cadence.bluetooth.batterySummary
+import ee.schimke.cadence.widgets.systemWidgetColors
 import ee.schimke.composeai.rcwidget.creation.rcWidgetHostAction
 import ee.schimke.composeai.rcwidget.launcher.RcLauncherWidgets
 import ee.schimke.composeai.rcwidget.launcher.RcWidgetSizing
 import ee.schimke.composeai.rcwidget.launcher.captureLauncherWidget
-import ee.schimke.cadence.bluetooth.BluetoothController
-import ee.schimke.cadence.bluetooth.ConnectedDevice
-import ee.schimke.cadence.bluetooth.batterySummary
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
@@ -81,6 +84,14 @@ class PodcastSyncWidget : AppWidgetProvider() {
     /** Refresh the widget when the controller receives a new connected-headphone battery level. */
     fun start(context: Context, controller: BluetoothController) {
       val appContext = context.applicationContext
+      // Captured documents hold resolved colours: recapture when light/dark changes.
+      appContext.registerComponentCallbacks(
+        object : ComponentCallbacks {
+          override fun onConfigurationChanged(newConfig: Configuration) = updateAll(appContext)
+
+          @Deprecated("Deprecated in Java") override fun onLowMemory() = Unit
+        }
+      )
       scope.launch {
         controller.state.map { Triple(it.connectedDevice, it.localAudioControls, it.openSwimConnected) }.distinctUntilChanged().collect { (device, mp3, openSwim) ->
           val summary = device?.batterySummary()
@@ -174,6 +185,7 @@ class PodcastSyncWidget : AppWidgetProvider() {
                     heightDp = slot.heightDp,
                     widthDp = slot.widthDp,
                     onTap = rcWidgetHostAction(name = OPEN_APP, payload = OPEN_APP),
+                    colors = context.systemWidgetColors(),
                   )
                 }
               val taps =
