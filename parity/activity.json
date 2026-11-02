@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-02T06:43:44.647Z",
+  "generatedAt": "2026-11-02T06:55:15.498Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "f30e9e059c629ed4695e641e614542cb43bf42a4",
+        "subject": "fix: improve podcast sync and playback experience (#485)",
+        "at": "2026-11-02T06:38:11Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "89c73a8b4589fee4f87f0a632786540a504dcbe1",
         "subject": "chore(main): release 0.1.12 (#479)",
@@ -475,14 +483,6 @@
         "subject": "refactor: move FileSyncViewModel and HomeViewModel to androidx AppState transform (#427)",
         "at": "2026-10-30T10:08:54Z",
         "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "5431cfa3f34096c8a62cc75d4875a0b8c0b9b159",
-        "subject": "chore(main): release 0.1.7 (#422)",
-        "at": "2026-10-30T09:37:42Z",
-        "author": "github-actions[bot]",
         "previewIds": [],
         "components": []
       }

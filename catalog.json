@@ -3102,7 +3102,8 @@
           "previewParams": {
             "showBackground": true
           },
-          "density": 2.625
+          "density": 2.625,
+          "figmaSvg": "https://preview.coo.ee/cadence/render/manage-empty__ideal__default.svg"
         }
       ],
       "greenlines": [
@@ -3114,14 +3115,14 @@
             "role": "button",
             "bounds": {
               "x": 42,
-              "y": 158,
+              "y": 238,
               "width": 351,
               "height": 105
             }
           },
           "bounds": {
             "x": 42,
-            "y": 158,
+            "y": 238,
             "width": 351,
             "height": 105
           }
@@ -3133,56 +3134,16 @@
           "detail": {
             "role": "button",
             "bounds": {
-              "x": 414,
-              "y": 158,
-              "width": 406,
+              "x": 42,
+              "y": 375,
+              "width": 431,
               "height": 105
             }
           },
           "bounds": {
-            "x": 414,
-            "y": 158,
-            "width": 406,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "switch",
-          "detail": {
-            "role": "switch",
-            "bounds": {
-              "x": 84,
-              "y": 620,
-              "width": 137,
-              "height": 84
-            }
-          },
-          "bounds": {
-            "x": 84,
-            "y": 620,
-            "width": 137,
-            "height": 84
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button",
-          "detail": {
-            "role": "button",
-            "bounds": {
-              "x": 84,
-              "y": 946,
-              "width": 329,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 84,
-            "y": 946,
-            "width": 329,
+            "x": 42,
+            "y": 375,
+            "width": 431,
             "height": 105
           }
         },
@@ -3193,75 +3154,15 @@
           "detail": {
             "role": "button",
             "bounds": {
-              "x": 705,
-              "y": 1210,
-              "width": 303,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 705,
-            "y": 1210,
-            "width": 303,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button",
-          "detail": {
-            "role": "button",
-            "bounds": {
-              "x": 406,
-              "y": 1611,
-              "width": 311,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 406,
-            "y": 1611,
-            "width": 311,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button",
-          "detail": {
-            "role": "button",
-            "bounds": {
-              "x": 738,
-              "y": 1611,
-              "width": 270,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 738,
-            "y": 1611,
-            "width": 270,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button",
-          "detail": {
-            "role": "button",
-            "bounds": {
-              "x": 620,
-              "y": 1943,
+              "x": 42,
+              "y": 533,
               "width": 356,
               "height": 105
             }
           },
           "bounds": {
-            "x": 620,
-            "y": 1943,
+            "x": 42,
+            "y": 533,
             "width": 356,
             "height": 105
           }
@@ -3271,7 +3172,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 158,
+            "y": 238,
             "width": 351,
             "height": 105
           },
@@ -3280,9 +3181,9 @@
         },
         {
           "bounds": {
-            "x": 414,
-            "y": 158,
-            "width": 406,
+            "x": 42,
+            "y": 375,
+            "width": 431,
             "height": 105
           },
           "role": "Button",
@@ -3291,116 +3192,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 305,
-            "width": 966,
-            "height": 798
-          },
-          "cornerRadius": 12
-        },
-        {
-          "bounds": {
-            "x": 84,
-            "y": 431,
-            "width": 882,
-            "height": 147
-          },
-          "cornerRadius": 4
-        },
-        {
-          "bounds": {
-            "x": 84,
-            "y": 620,
-            "width": 137,
-            "height": 84
-          },
-          "role": "Switch",
-          "cornerRadius": 16
-        },
-        {
-          "bounds": {
-            "x": 105,
-            "y": 641,
-            "width": 42,
-            "height": 42
-          },
-          "cornerRadius": 8
-        },
-        {
-          "bounds": {
-            "x": 84,
-            "y": 746,
-            "width": 882,
-            "height": 168
-          },
-          "padding": {
-            "start": 0,
-            "top": 8,
-            "end": 0,
-            "bottom": 0
-          }
-        },
-        {
-          "bounds": {
-            "x": 84,
-            "y": 767,
-            "width": 882,
-            "height": 147
-          },
-          "cornerRadius": 4
-        },
-        {
-          "bounds": {
-            "x": 84,
-            "y": 946,
-            "width": 329,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 705,
-            "y": 1210,
-            "width": 303,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 406,
-            "y": 1611,
-            "width": 311,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 738,
-            "y": 1611,
-            "width": 270,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 42,
-            "y": 1831,
-            "width": 966,
-            "height": 327
-          },
-          "cornerRadius": 12
-        },
-        {
-          "bounds": {
-            "x": 620,
-            "y": 1943,
+            "y": 533,
             "width": 356,
             "height": 105
           },
@@ -3431,7 +3223,8 @@
           "previewParams": {
             "showBackground": true
           },
-          "density": 2.625
+          "density": 2.625,
+          "figmaSvg": "https://preview.coo.ee/cadence/render/manage-populated__ideal__default.svg"
         }
       ],
       "greenlines": [
@@ -3442,15 +3235,75 @@
           "detail": {
             "role": "button",
             "bounds": {
+              "x": 851,
+              "y": 312,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 851,
+            "y": 312,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 851,
+              "y": 596,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 851,
+            "y": 596,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 851,
+              "y": 880,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 851,
+            "y": 880,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
               "x": 42,
-              "y": 158,
+              "y": 1111,
               "width": 351,
               "height": 105
             }
           },
           "bounds": {
             "x": 42,
-            "y": 158,
+            "y": 1111,
             "width": 351,
             "height": 105
           }
@@ -3462,56 +3315,16 @@
           "detail": {
             "role": "button",
             "bounds": {
-              "x": 414,
-              "y": 158,
-              "width": 406,
+              "x": 42,
+              "y": 1248,
+              "width": 431,
               "height": 105
             }
           },
           "bounds": {
-            "x": 414,
-            "y": 158,
-            "width": 406,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "switch",
-          "detail": {
-            "role": "switch",
-            "bounds": {
-              "x": 84,
-              "y": 620,
-              "width": 137,
-              "height": 84
-            }
-          },
-          "bounds": {
-            "x": 84,
-            "y": 620,
-            "width": 137,
-            "height": 84
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button",
-          "detail": {
-            "role": "button",
-            "bounds": {
-              "x": 84,
-              "y": 946,
-              "width": 329,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 84,
-            "y": 946,
-            "width": 329,
+            "x": 42,
+            "y": 1248,
+            "width": 431,
             "height": 105
           }
         },
@@ -3522,319 +3335,16 @@
           "detail": {
             "role": "button",
             "bounds": {
-              "x": 705,
-              "y": 1210,
-              "width": 303,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 705,
-            "y": 1210,
-            "width": 303,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button",
-          "detail": {
-            "role": "button",
-            "bounds": {
-              "x": 851,
-              "y": 1441,
-              "width": 105,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 851,
-            "y": 1441,
-            "width": 105,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "switch",
-          "detail": {
-            "role": "switch",
-            "bounds": {
-              "x": 84,
-              "y": 1577,
-              "width": 882,
-              "height": 126
-            }
-          },
-          "bounds": {
-            "x": 84,
-            "y": 1577,
-            "width": 882,
-            "height": 126
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button \"Refresh Morning podcasts now\"",
-          "detail": {
-            "role": "button",
-            "label": "Refresh Morning podcasts now",
-            "bounds": {
-              "x": 84,
-              "y": 1735,
-              "width": 401,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 84,
-            "y": 1735,
-            "width": 401,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button",
-          "detail": {
-            "role": "button",
-            "bounds": {
-              "x": 851,
-              "y": 1977,
-              "width": 105,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 851,
-            "y": 1977,
-            "width": 105,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "switch",
-          "detail": {
-            "role": "switch",
-            "bounds": {
-              "x": 84,
-              "y": 2113,
-              "width": 882,
-              "height": 126
-            }
-          },
-          "bounds": {
-            "x": 84,
-            "y": 2113,
-            "width": 882,
-            "height": 126
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button \"Refresh Swim mixes now\"",
-          "detail": {
-            "role": "button",
-            "label": "Refresh Swim mixes now",
-            "bounds": {
-              "x": 84,
-              "y": 2271,
-              "width": 401,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 84,
-            "y": 2271,
-            "width": 401,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button",
-          "detail": {
-            "role": "button",
-            "bounds": {
-              "x": 851,
-              "y": 2513,
-              "width": 105,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 851,
-            "y": 2513,
-            "width": 105,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "switch",
-          "detail": {
-            "role": "switch",
-            "bounds": {
-              "x": 84,
-              "y": 2649,
-              "width": 882,
-              "height": 137
-            }
-          },
-          "bounds": {
-            "x": 84,
-            "y": 2649,
-            "width": 882,
-            "height": 137
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button \"Refresh Audiobooks now\"",
-          "detail": {
-            "role": "button",
-            "label": "Refresh Audiobooks now",
-            "bounds": {
-              "x": 84,
-              "y": 2818,
-              "width": 401,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 84,
-            "y": 2818,
-            "width": 401,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button",
-          "detail": {
-            "role": "button",
-            "bounds": {
-              "x": 406,
-              "y": 3092,
-              "width": 311,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 406,
-            "y": 3092,
-            "width": 311,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button",
-          "detail": {
-            "role": "button",
-            "bounds": {
-              "x": 738,
-              "y": 3092,
-              "width": 270,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 738,
-            "y": 3092,
-            "width": 270,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button",
-          "detail": {
-            "role": "button",
-            "bounds": {
-              "x": 620,
-              "y": 3424,
+              "x": 42,
+              "y": 1406,
               "width": 356,
               "height": 105
             }
           },
           "bounds": {
-            "x": 620,
-            "y": 3424,
+            "x": 42,
+            "y": 1406,
             "width": 356,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button",
-          "detail": {
-            "role": "button",
-            "bounds": {
-              "x": 851,
-              "y": 3756,
-              "width": 105,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 851,
-            "y": 3756,
-            "width": 105,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button",
-          "detail": {
-            "role": "button",
-            "bounds": {
-              "x": 851,
-              "y": 4040,
-              "width": 105,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 851,
-            "y": 4040,
-            "width": 105,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button",
-          "detail": {
-            "role": "button",
-            "bounds": {
-              "x": 851,
-              "y": 4324,
-              "width": 105,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 851,
-            "y": 4324,
-            "width": 105,
             "height": 105
           }
         }
@@ -3843,290 +3353,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 158,
-            "width": 351,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 414,
-            "y": 158,
-            "width": 406,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 42,
-            "y": 305,
-            "width": 966,
-            "height": 798
-          },
-          "cornerRadius": 12
-        },
-        {
-          "bounds": {
-            "x": 84,
-            "y": 431,
-            "width": 882,
-            "height": 147
-          },
-          "cornerRadius": 4
-        },
-        {
-          "bounds": {
-            "x": 84,
-            "y": 620,
-            "width": 137,
-            "height": 84
-          },
-          "role": "Switch",
-          "cornerRadius": 16
-        },
-        {
-          "bounds": {
-            "x": 147,
-            "y": 631,
-            "width": 63,
-            "height": 63
-          },
-          "cornerRadius": 12
-        },
-        {
-          "bounds": {
-            "x": 84,
-            "y": 746,
-            "width": 882,
-            "height": 168
-          },
-          "padding": {
-            "start": 0,
-            "top": 8,
-            "end": 0,
-            "bottom": 0
-          }
-        },
-        {
-          "bounds": {
-            "x": 84,
-            "y": 767,
-            "width": 882,
-            "height": 147
-          },
-          "cornerRadius": 4
-        },
-        {
-          "bounds": {
-            "x": 84,
-            "y": 946,
-            "width": 329,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 705,
-            "y": 1210,
-            "width": 303,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 42,
-            "y": 1388,
-            "width": 966,
-            "height": 504
-          },
-          "cornerRadius": 12
-        },
-        {
-          "bounds": {
-            "x": 851,
-            "y": 1441,
-            "width": 105,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 84,
-            "y": 1598,
-            "width": 137,
-            "height": 84
-          },
-          "cornerRadius": 16
-        },
-        {
-          "bounds": {
-            "x": 147,
-            "y": 1609,
-            "width": 63,
-            "height": 63
-          },
-          "cornerRadius": 12
-        },
-        {
-          "bounds": {
-            "x": 84,
-            "y": 1735,
-            "width": 401,
-            "height": 105
-          },
-          "role": "Button",
-          "label": "Refresh Morning podcasts now",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 42,
-            "y": 1924,
-            "width": 966,
-            "height": 504
-          },
-          "cornerRadius": 12
-        },
-        {
-          "bounds": {
-            "x": 851,
-            "y": 1977,
-            "width": 105,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 84,
-            "y": 2134,
-            "width": 137,
-            "height": 84
-          },
-          "cornerRadius": 16
-        },
-        {
-          "bounds": {
-            "x": 105,
-            "y": 2155,
-            "width": 42,
-            "height": 42
-          },
-          "cornerRadius": 8
-        },
-        {
-          "bounds": {
-            "x": 84,
-            "y": 2271,
-            "width": 401,
-            "height": 105
-          },
-          "role": "Button",
-          "label": "Refresh Swim mixes now",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 42,
-            "y": 2460,
-            "width": 966,
-            "height": 515
-          },
-          "cornerRadius": 12
-        },
-        {
-          "bounds": {
-            "x": 851,
-            "y": 2513,
-            "width": 105,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 84,
-            "y": 2676,
-            "width": 137,
-            "height": 84
-          },
-          "cornerRadius": 16
-        },
-        {
-          "bounds": {
-            "x": 105,
-            "y": 2697,
-            "width": 42,
-            "height": 42
-          },
-          "cornerRadius": 8
-        },
-        {
-          "bounds": {
-            "x": 84,
-            "y": 2818,
-            "width": 401,
-            "height": 105
-          },
-          "role": "Button",
-          "label": "Refresh Audiobooks now",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 406,
-            "y": 3092,
-            "width": 311,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 738,
-            "y": 3092,
-            "width": 270,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 42,
-            "y": 3312,
-            "width": 966,
-            "height": 327
-          },
-          "cornerRadius": 12
-        },
-        {
-          "bounds": {
-            "x": 620,
-            "y": 3424,
-            "width": 356,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 42,
-            "y": 3671,
+            "y": 227,
             "width": 966,
             "height": 273
           },
@@ -4135,7 +3362,7 @@
         {
           "bounds": {
             "x": 851,
-            "y": 3756,
+            "y": 312,
             "width": 105,
             "height": 105
           },
@@ -4145,7 +3372,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 3976,
+            "y": 532,
             "width": 966,
             "height": 231
           },
@@ -4154,7 +3381,7 @@
         {
           "bounds": {
             "x": 851,
-            "y": 4040,
+            "y": 596,
             "width": 105,
             "height": 105
           },
@@ -4164,7 +3391,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 4239,
+            "y": 795,
             "width": 966,
             "height": 273
           },
@@ -4173,8 +3400,38 @@
         {
           "bounds": {
             "x": 851,
-            "y": 4324,
+            "y": 880,
             "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 1111,
+            "width": 351,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 1248,
+            "width": 431,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 1406,
+            "width": 356,
             "height": 105
           },
           "role": "Button",
@@ -4204,7 +3461,8 @@
           "previewParams": {
             "showBackground": true
           },
-          "density": 2.625
+          "density": 2.625,
+          "figmaSvg": "https://preview.coo.ee/cadence/render/manage-refreshing__ideal__default.svg"
         }
       ],
       "greenlines": [
@@ -4215,15 +3473,75 @@
           "detail": {
             "role": "button",
             "bounds": {
+              "x": 851,
+              "y": 312,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 851,
+            "y": 312,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 851,
+              "y": 596,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 851,
+            "y": 596,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 851,
+              "y": 880,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 851,
+            "y": 880,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
               "x": 42,
-              "y": 158,
+              "y": 1111,
               "width": 351,
               "height": 105
             }
           },
           "bounds": {
             "x": 42,
-            "y": 158,
+            "y": 1111,
             "width": 351,
             "height": 105
           }
@@ -4235,56 +3553,16 @@
           "detail": {
             "role": "button",
             "bounds": {
-              "x": 414,
-              "y": 158,
-              "width": 406,
+              "x": 42,
+              "y": 1248,
+              "width": 431,
               "height": 105
             }
           },
           "bounds": {
-            "x": 414,
-            "y": 158,
-            "width": 406,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "switch",
-          "detail": {
-            "role": "switch",
-            "bounds": {
-              "x": 84,
-              "y": 620,
-              "width": 137,
-              "height": 84
-            }
-          },
-          "bounds": {
-            "x": 84,
-            "y": 620,
-            "width": 137,
-            "height": 84
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button",
-          "detail": {
-            "role": "button",
-            "bounds": {
-              "x": 84,
-              "y": 946,
-              "width": 329,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 84,
-            "y": 946,
-            "width": 329,
+            "x": 42,
+            "y": 1248,
+            "width": 431,
             "height": 105
           }
         },
@@ -4295,319 +3573,16 @@
           "detail": {
             "role": "button",
             "bounds": {
-              "x": 705,
-              "y": 1210,
-              "width": 303,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 705,
-            "y": 1210,
-            "width": 303,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button",
-          "detail": {
-            "role": "button",
-            "bounds": {
-              "x": 851,
-              "y": 1441,
-              "width": 105,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 851,
-            "y": 1441,
-            "width": 105,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "switch",
-          "detail": {
-            "role": "switch",
-            "bounds": {
-              "x": 84,
-              "y": 1577,
-              "width": 882,
-              "height": 126
-            }
-          },
-          "bounds": {
-            "x": 84,
-            "y": 1577,
-            "width": 882,
-            "height": 126
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button \"Refresh Morning podcasts now\"",
-          "detail": {
-            "role": "button",
-            "label": "Refresh Morning podcasts now",
-            "bounds": {
-              "x": 84,
-              "y": 1830,
-              "width": 401,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 84,
-            "y": 1830,
-            "width": 401,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button",
-          "detail": {
-            "role": "button",
-            "bounds": {
-              "x": 851,
-              "y": 2072,
-              "width": 105,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 851,
-            "y": 2072,
-            "width": 105,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "switch",
-          "detail": {
-            "role": "switch",
-            "bounds": {
-              "x": 84,
-              "y": 2208,
-              "width": 882,
-              "height": 126
-            }
-          },
-          "bounds": {
-            "x": 84,
-            "y": 2208,
-            "width": 882,
-            "height": 126
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button \"Refresh Swim mixes now\"",
-          "detail": {
-            "role": "button",
-            "label": "Refresh Swim mixes now",
-            "bounds": {
-              "x": 84,
-              "y": 2366,
-              "width": 401,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 84,
-            "y": 2366,
-            "width": 401,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button",
-          "detail": {
-            "role": "button",
-            "bounds": {
-              "x": 851,
-              "y": 2608,
-              "width": 105,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 851,
-            "y": 2608,
-            "width": 105,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "switch",
-          "detail": {
-            "role": "switch",
-            "bounds": {
-              "x": 84,
-              "y": 2744,
-              "width": 882,
-              "height": 137
-            }
-          },
-          "bounds": {
-            "x": 84,
-            "y": 2744,
-            "width": 882,
-            "height": 137
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button \"Refresh Audiobooks now\"",
-          "detail": {
-            "role": "button",
-            "label": "Refresh Audiobooks now",
-            "bounds": {
-              "x": 84,
-              "y": 2913,
-              "width": 401,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 84,
-            "y": 2913,
-            "width": 401,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button",
-          "detail": {
-            "role": "button",
-            "bounds": {
-              "x": 406,
-              "y": 3187,
-              "width": 311,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 406,
-            "y": 3187,
-            "width": 311,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button",
-          "detail": {
-            "role": "button",
-            "bounds": {
-              "x": 738,
-              "y": 3187,
-              "width": 270,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 738,
-            "y": 3187,
-            "width": 270,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button",
-          "detail": {
-            "role": "button",
-            "bounds": {
-              "x": 620,
-              "y": 3519,
+              "x": 42,
+              "y": 1406,
               "width": 356,
               "height": 105
             }
           },
           "bounds": {
-            "x": 620,
-            "y": 3519,
+            "x": 42,
+            "y": 1406,
             "width": 356,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button",
-          "detail": {
-            "role": "button",
-            "bounds": {
-              "x": 851,
-              "y": 3851,
-              "width": 105,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 851,
-            "y": 3851,
-            "width": 105,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button",
-          "detail": {
-            "role": "button",
-            "bounds": {
-              "x": 851,
-              "y": 4135,
-              "width": 105,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 851,
-            "y": 4135,
-            "width": 105,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button",
-          "detail": {
-            "role": "button",
-            "bounds": {
-              "x": 851,
-              "y": 4419,
-              "width": 105,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 851,
-            "y": 4419,
-            "width": 105,
             "height": 105
           }
         }
@@ -4616,304 +3591,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 158,
-            "width": 351,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 414,
-            "y": 158,
-            "width": 406,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 42,
-            "y": 305,
-            "width": 966,
-            "height": 798
-          },
-          "cornerRadius": 12
-        },
-        {
-          "bounds": {
-            "x": 84,
-            "y": 431,
-            "width": 882,
-            "height": 147
-          },
-          "cornerRadius": 4
-        },
-        {
-          "bounds": {
-            "x": 84,
-            "y": 620,
-            "width": 137,
-            "height": 84
-          },
-          "role": "Switch",
-          "cornerRadius": 16
-        },
-        {
-          "bounds": {
-            "x": 147,
-            "y": 631,
-            "width": 63,
-            "height": 63
-          },
-          "cornerRadius": 12
-        },
-        {
-          "bounds": {
-            "x": 84,
-            "y": 746,
-            "width": 882,
-            "height": 168
-          },
-          "padding": {
-            "start": 0,
-            "top": 8,
-            "end": 0,
-            "bottom": 0
-          }
-        },
-        {
-          "bounds": {
-            "x": 84,
-            "y": 767,
-            "width": 882,
-            "height": 147
-          },
-          "cornerRadius": 4
-        },
-        {
-          "bounds": {
-            "x": 84,
-            "y": 946,
-            "width": 329,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 705,
-            "y": 1210,
-            "width": 303,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 42,
-            "y": 1388,
-            "width": 966,
-            "height": 599
-          },
-          "cornerRadius": 12
-        },
-        {
-          "bounds": {
-            "x": 851,
-            "y": 1441,
-            "width": 105,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 84,
-            "y": 1598,
-            "width": 137,
-            "height": 84
-          },
-          "cornerRadius": 16
-        },
-        {
-          "bounds": {
-            "x": 147,
-            "y": 1609,
-            "width": 63,
-            "height": 63
-          },
-          "cornerRadius": 12
-        },
-        {
-          "bounds": {
-            "x": 84,
-            "y": 1698,
-            "width": 882,
-            "height": 63
-          },
-          "padding": {
-            "start": 0,
-            "top": 10,
-            "end": 0,
-            "bottom": 10
-          }
-        },
-        {
-          "bounds": {
-            "x": 84,
-            "y": 1830,
-            "width": 401,
-            "height": 105
-          },
-          "role": "Button",
-          "label": "Refresh Morning podcasts now",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 42,
-            "y": 2019,
-            "width": 966,
-            "height": 504
-          },
-          "cornerRadius": 12
-        },
-        {
-          "bounds": {
-            "x": 851,
-            "y": 2072,
-            "width": 105,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 84,
-            "y": 2229,
-            "width": 137,
-            "height": 84
-          },
-          "cornerRadius": 16
-        },
-        {
-          "bounds": {
-            "x": 105,
-            "y": 2250,
-            "width": 42,
-            "height": 42
-          },
-          "cornerRadius": 8
-        },
-        {
-          "bounds": {
-            "x": 84,
-            "y": 2366,
-            "width": 401,
-            "height": 105
-          },
-          "role": "Button",
-          "label": "Refresh Swim mixes now",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 42,
-            "y": 2555,
-            "width": 966,
-            "height": 515
-          },
-          "cornerRadius": 12
-        },
-        {
-          "bounds": {
-            "x": 851,
-            "y": 2608,
-            "width": 105,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 84,
-            "y": 2771,
-            "width": 137,
-            "height": 84
-          },
-          "cornerRadius": 16
-        },
-        {
-          "bounds": {
-            "x": 105,
-            "y": 2792,
-            "width": 42,
-            "height": 42
-          },
-          "cornerRadius": 8
-        },
-        {
-          "bounds": {
-            "x": 84,
-            "y": 2913,
-            "width": 401,
-            "height": 105
-          },
-          "role": "Button",
-          "label": "Refresh Audiobooks now",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 406,
-            "y": 3187,
-            "width": 311,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 738,
-            "y": 3187,
-            "width": 270,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 42,
-            "y": 3407,
-            "width": 966,
-            "height": 327
-          },
-          "cornerRadius": 12
-        },
-        {
-          "bounds": {
-            "x": 620,
-            "y": 3519,
-            "width": 356,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 42,
-            "y": 3766,
+            "y": 227,
             "width": 966,
             "height": 273
           },
@@ -4922,7 +3600,7 @@
         {
           "bounds": {
             "x": 851,
-            "y": 3851,
+            "y": 312,
             "width": 105,
             "height": 105
           },
@@ -4932,7 +3610,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 4071,
+            "y": 532,
             "width": 966,
             "height": 231
           },
@@ -4941,7 +3619,7 @@
         {
           "bounds": {
             "x": 851,
-            "y": 4135,
+            "y": 596,
             "width": 105,
             "height": 105
           },
@@ -4951,7 +3629,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 4334,
+            "y": 795,
             "width": 966,
             "height": 273
           },
@@ -4960,8 +3638,38 @@
         {
           "bounds": {
             "x": 851,
-            "y": 4419,
+            "y": 880,
             "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 1111,
+            "width": 351,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 1248,
+            "width": 431,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 1406,
+            "width": 356,
             "height": 105
           },
           "role": "Button",
@@ -5438,222 +4146,14 @@
           "previewParams": {
             "showBackground": true
           },
-          "density": 2.625,
-          "figmaSvg": "https://preview.coo.ee/cadence/render/composeapp-podcastimportedpreview__ideal__default.svg"
+          "density": 2.625
         }
       ],
-      "greenlines": [
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button",
-          "detail": {
-            "role": "button",
-            "bounds": {
-              "x": 42,
-              "y": 222,
-              "width": 289,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 42,
-            "y": 222,
-            "width": 289,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button",
-          "detail": {
-            "role": "button",
-            "bounds": {
-              "x": 84,
-              "y": 501,
-              "width": 312,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 84,
-            "y": 501,
-            "width": 312,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button",
-          "detail": {
-            "role": "button",
-            "bounds": {
-              "x": 84,
-              "y": 1033,
-              "width": 312,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 84,
-            "y": 1033,
-            "width": 312,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button",
-          "detail": {
-            "role": "button",
-            "bounds": {
-              "x": 42,
-              "y": 1802,
-              "width": 557,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 42,
-            "y": 1802,
-            "width": 557,
-            "height": 105
-          }
-        }
-      ],
-      "redlines": [
-        {
-          "bounds": {
-            "x": 42,
-            "y": 222,
-            "width": 289,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 42,
-            "y": 369,
-            "width": 966,
-            "height": 500
-          },
-          "cornerRadius": 12
-        },
-        {
-          "bounds": {
-            "x": 84,
-            "y": 501,
-            "width": 312,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 58,
-            "y": 706,
-            "width": 934,
-            "height": 116
-          },
-          "label": "Position in 412 — Tides of the Pacific",
-          "padding": {
-            "start": 10,
-            "top": 0,
-            "end": 10,
-            "bottom": 0
-          }
-        },
-        {
-          "bounds": {
-            "x": 436,
-            "y": 706,
-            "width": 11,
-            "height": 116
-          },
-          "cornerRadius": 2.1
-        },
-        {
-          "bounds": {
-            "x": 42,
-            "y": 901,
-            "width": 966,
-            "height": 500
-          },
-          "cornerRadius": 12
-        },
-        {
-          "bounds": {
-            "x": 84,
-            "y": 1033,
-            "width": 312,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 58,
-            "y": 1238,
-            "width": 934,
-            "height": 116
-          },
-          "label": "Position in 411 — Lighthouses",
-          "padding": {
-            "start": 10,
-            "top": 0,
-            "end": 10,
-            "bottom": 0
-          }
-        },
-        {
-          "bounds": {
-            "x": 181,
-            "y": 1238,
-            "width": 11,
-            "height": 116
-          },
-          "cornerRadius": 2.1
-        },
-        {
-          "bounds": {
-            "x": 42,
-            "y": 1433,
-            "width": 966,
-            "height": 147
-          },
-          "cornerRadius": 12
-        },
-        {
-          "bounds": {
-            "x": 42,
-            "y": 1612,
-            "width": 966,
-            "height": 147
-          },
-          "cornerRadius": 12
-        },
-        {
-          "bounds": {
-            "x": 42,
-            "y": 1802,
-            "width": 557,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        }
-      ],
+      "greenlines": [],
+      "redlines": [],
       "section": ":composeApp",
       "group": "Previews",
       "caption": "Podcast sync — imported",
-      "wireframe": "wireframes/composeapp-podcastimportedpreview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastPreviews.kt",
       "sourceModule": ":composeApp",
       "bodyLine": 103,
@@ -5674,314 +4174,14 @@
           "previewParams": {
             "showBackground": true
           },
-          "density": 2.625,
-          "figmaSvg": "https://preview.coo.ee/cadence/render/composeapp-podcastpreparedpreview__ideal__default.svg"
+          "density": 2.625
         }
       ],
-      "greenlines": [
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button",
-          "detail": {
-            "role": "button",
-            "bounds": {
-              "x": 42,
-              "y": 222,
-              "width": 459,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 42,
-            "y": 222,
-            "width": 459,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button",
-          "detail": {
-            "role": "button",
-            "bounds": {
-              "x": 84,
-              "y": 543,
-              "width": 312,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 84,
-            "y": 543,
-            "width": 312,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button \"Send position for 412 — Tides of the Pacific\"",
-          "detail": {
-            "role": "button",
-            "label": "Send position for 412 — Tides of the Pacific",
-            "bounds": {
-              "x": 84,
-              "y": 896,
-              "width": 550,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 84,
-            "y": 896,
-            "width": 550,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button",
-          "detail": {
-            "role": "button",
-            "bounds": {
-              "x": 84,
-              "y": 1038,
-              "width": 276,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 84,
-            "y": 1038,
-            "width": 276,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button",
-          "detail": {
-            "role": "button",
-            "bounds": {
-              "x": 84,
-              "y": 1359,
-              "width": 312,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 84,
-            "y": 1359,
-            "width": 312,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button",
-          "detail": {
-            "role": "button",
-            "bounds": {
-              "x": 84,
-              "y": 1712,
-              "width": 276,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 84,
-            "y": 1712,
-            "width": 276,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button",
-          "detail": {
-            "role": "button",
-            "bounds": {
-              "x": 42,
-              "y": 2270,
-              "width": 557,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 42,
-            "y": 2270,
-            "width": 557,
-            "height": 105
-          }
-        }
-      ],
-      "redlines": [
-        {
-          "bounds": {
-            "x": 42,
-            "y": 222,
-            "width": 459,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 42,
-            "y": 411,
-            "width": 966,
-            "height": 784
-          },
-          "cornerRadius": 12
-        },
-        {
-          "bounds": {
-            "x": 84,
-            "y": 543,
-            "width": 312,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 58,
-            "y": 748,
-            "width": 934,
-            "height": 116
-          },
-          "label": "Position in 412 — Tides of the Pacific",
-          "padding": {
-            "start": 10,
-            "top": 0,
-            "end": 10,
-            "bottom": 0
-          }
-        },
-        {
-          "bounds": {
-            "x": 687,
-            "y": 748,
-            "width": 11,
-            "height": 116
-          },
-          "cornerRadius": 2.1
-        },
-        {
-          "bounds": {
-            "x": 84,
-            "y": 896,
-            "width": 550,
-            "height": 105
-          },
-          "role": "Button",
-          "label": "Send position for 412 — Tides of the Pacific",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 84,
-            "y": 1038,
-            "width": 276,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 42,
-            "y": 1227,
-            "width": 966,
-            "height": 642
-          },
-          "cornerRadius": 12
-        },
-        {
-          "bounds": {
-            "x": 84,
-            "y": 1359,
-            "width": 312,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 58,
-            "y": 1564,
-            "width": 934,
-            "height": 116
-          },
-          "label": "Position in 411 — Lighthouses",
-          "padding": {
-            "start": 10,
-            "top": 0,
-            "end": 10,
-            "bottom": 0
-          }
-        },
-        {
-          "bounds": {
-            "x": 181,
-            "y": 1564,
-            "width": 11,
-            "height": 116
-          },
-          "cornerRadius": 2.1
-        },
-        {
-          "bounds": {
-            "x": 84,
-            "y": 1712,
-            "width": 276,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 42,
-            "y": 1901,
-            "width": 966,
-            "height": 147
-          },
-          "cornerRadius": 12
-        },
-        {
-          "bounds": {
-            "x": 42,
-            "y": 2080,
-            "width": 966,
-            "height": 147
-          },
-          "cornerRadius": 12
-        },
-        {
-          "bounds": {
-            "x": 42,
-            "y": 2270,
-            "width": 557,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        }
-      ],
+      "greenlines": [],
+      "redlines": [],
       "section": ":composeApp",
       "group": "Previews",
       "caption": "Podcast sync — prepared",
-      "wireframe": "wireframes/composeapp-podcastpreparedpreview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastPreviews.kt",
       "sourceModule": ":composeApp",
       "bodyLine": 111,
@@ -9319,7 +7519,8 @@
             "widthDp": 411,
             "heightDp": 731
           },
-          "density": 2.625
+          "density": 2.625,
+          "figmaSvg": "https://preview.coo.ee/cadence/render/composeapp-playstorephonemanage__ideal__default__compact.svg"
         }
       ],
       "greenlines": [
@@ -9330,96 +7531,16 @@
           "detail": {
             "role": "button",
             "bounds": {
-              "x": 42,
-              "y": 158,
-              "width": 351,
+              "x": 877,
+              "y": 291,
+              "width": 105,
               "height": 105
             }
           },
           "bounds": {
-            "x": 42,
-            "y": 158,
-            "width": 351,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button",
-          "detail": {
-            "role": "button",
-            "bounds": {
-              "x": 414,
-              "y": 158,
-              "width": 406,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 414,
-            "y": 158,
-            "width": 406,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "switch",
-          "detail": {
-            "role": "switch",
-            "bounds": {
-              "x": 84,
-              "y": 620,
-              "width": 137,
-              "height": 84
-            }
-          },
-          "bounds": {
-            "x": 84,
-            "y": 620,
-            "width": 137,
-            "height": 84
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button",
-          "detail": {
-            "role": "button",
-            "bounds": {
-              "x": 84,
-              "y": 946,
-              "width": 329,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 84,
-            "y": 946,
-            "width": 329,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button",
-          "detail": {
-            "role": "button",
-            "bounds": {
-              "x": 731,
-              "y": 1210,
-              "width": 303,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 731,
-            "y": 1210,
-            "width": 303,
+            "x": 877,
+            "y": 291,
+            "width": 105,
             "height": 105
           }
         },
@@ -9431,14 +7552,14 @@
             "role": "button",
             "bounds": {
               "x": 877,
-              "y": 1441,
+              "y": 554,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 877,
-            "y": 1441,
+            "y": 554,
             "width": 105,
             "height": 105
           }
@@ -9446,41 +7567,80 @@
         {
           "kind": "a11y",
           "severity": "info",
-          "message": "switch",
+          "message": "button",
           "detail": {
-            "role": "switch",
+            "role": "button",
             "bounds": {
-              "x": 84,
-              "y": 1577,
-              "width": 908,
-              "height": 126
+              "x": 877,
+              "y": 838,
+              "width": 105,
+              "height": 105
             }
           },
           "bounds": {
-            "x": 84,
-            "y": 1577,
-            "width": 908,
-            "height": 126
+            "x": 877,
+            "y": 838,
+            "width": 105,
+            "height": 105
           }
         },
         {
           "kind": "a11y",
           "severity": "info",
-          "message": "button \"Refresh Morning podcasts now\"",
+          "message": "button",
           "detail": {
             "role": "button",
-            "label": "Refresh Morning podcasts now",
             "bounds": {
-              "x": 84,
-              "y": 1735,
-              "width": 401,
+              "x": 42,
+              "y": 1069,
+              "width": 351,
               "height": 105
             }
           },
           "bounds": {
-            "x": 84,
-            "y": 1735,
-            "width": 401,
+            "x": 42,
+            "y": 1069,
+            "width": 351,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 42,
+              "y": 1206,
+              "width": 431,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 42,
+            "y": 1206,
+            "width": 431,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 42,
+              "y": 1364,
+              "width": 356,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 42,
+            "y": 1364,
+            "width": 356,
             "height": 105
           }
         }
@@ -9489,116 +7649,16 @@
         {
           "bounds": {
             "x": 42,
-            "y": 158,
-            "width": 351,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 414,
-            "y": 158,
-            "width": 406,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 42,
-            "y": 305,
+            "y": 227,
             "width": 992,
-            "height": 798
-          },
-          "cornerRadius": 12
-        },
-        {
-          "bounds": {
-            "x": 84,
-            "y": 431,
-            "width": 908,
-            "height": 147
-          },
-          "cornerRadius": 4
-        },
-        {
-          "bounds": {
-            "x": 84,
-            "y": 620,
-            "width": 137,
-            "height": 84
-          },
-          "role": "Switch",
-          "cornerRadius": 16
-        },
-        {
-          "bounds": {
-            "x": 147,
-            "y": 631,
-            "width": 63,
-            "height": 63
-          },
-          "cornerRadius": 12
-        },
-        {
-          "bounds": {
-            "x": 84,
-            "y": 746,
-            "width": 908,
-            "height": 168
-          },
-          "padding": {
-            "start": 0,
-            "top": 8,
-            "end": 0,
-            "bottom": 0
-          }
-        },
-        {
-          "bounds": {
-            "x": 84,
-            "y": 767,
-            "width": 908,
-            "height": 147
-          },
-          "cornerRadius": 4
-        },
-        {
-          "bounds": {
-            "x": 84,
-            "y": 946,
-            "width": 329,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 731,
-            "y": 1210,
-            "width": 303,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 42,
-            "y": 1388,
-            "width": 992,
-            "height": 504
+            "height": 231
           },
           "cornerRadius": 12
         },
         {
           "bounds": {
             "x": 877,
-            "y": 1441,
+            "y": 291,
             "width": 105,
             "height": 105
           },
@@ -9607,31 +7667,70 @@
         },
         {
           "bounds": {
-            "x": 84,
-            "y": 1598,
-            "width": 137,
-            "height": 84
-          },
-          "cornerRadius": 16
-        },
-        {
-          "bounds": {
-            "x": 147,
-            "y": 1609,
-            "width": 63,
-            "height": 63
+            "x": 42,
+            "y": 490,
+            "width": 992,
+            "height": 231
           },
           "cornerRadius": 12
         },
         {
           "bounds": {
-            "x": 84,
-            "y": 1735,
-            "width": 401,
+            "x": 877,
+            "y": 554,
+            "width": 105,
             "height": 105
           },
           "role": "Button",
-          "label": "Refresh Morning podcasts now",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 753,
+            "width": 992,
+            "height": 273
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 877,
+            "y": 838,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 1069,
+            "width": 351,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 1206,
+            "width": 431,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 1364,
+            "width": 356,
+            "height": 105
+          },
+          "role": "Button",
           "cornerRadius": 20
         }
       ],
@@ -11987,7 +10086,7 @@
     "ee.schimke.cadence (CadenceTheme)"
   ],
   "renderer": "compose-preview 2.79.0",
-  "generatedAt": "2026-11-02T06:43:41.379Z",
+  "generatedAt": "2026-11-02T06:55:12.530Z",
   "failures": [
     {
       "id": "render-failed--googleoauthactivity--activity-googleoauthactivity",
@@ -12059,7 +10158,7 @@
   "componentsFile": "components.json",
   "source": {
     "repo": "yschimke/cadence",
-    "ref": "89c73a8b4589fee4f87f0a632786540a504dcbe1",
+    "ref": "f30e9e059c629ed4695e641e614542cb43bf42a4",
     "module": ""
   }
 }
