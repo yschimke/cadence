@@ -263,7 +263,7 @@ fun HomeContent(
   ) { padding ->
     if (empty && loading) return@Scaffold
     LazyColumn(
-      contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 96.dp),
+      contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 24.dp),
       verticalArrangement = Arrangement.spacedBy(16.dp),
       modifier = Modifier.padding(padding).fillMaxSize(),
     ) {
@@ -430,7 +430,7 @@ private fun HomeOverview(
       )
     CloudSyncHomeCard(
       status = cloudStatus,
-      onOpen = onConnectSource,
+      onOpen = if (cloudStatus.hasSource) actions.onOpenPodcasts else onConnectSource,
       onRefresh = podcastWork.refresh,
       onDownload = podcastWork.download,
       onProcess = podcastWork.process,

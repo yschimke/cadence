@@ -34,7 +34,10 @@ fun CloudSyncWidgetContent(status: CloudSyncStatus, onOpen: Action? = null, onRe
   ) {
     RemoteRow(modifier = RemoteModifier.fillMaxWidth(), horizontalArrangement = RemoteArrangement.spacedBy((8 * scale).rdp), verticalAlignment = RemoteAlignment.CenterVertically) {
       SyncStatusIcon(Icons.Default.Cloud, CadencePalette.Blue80, (20 * scale).toInt())
-      RemoteColumn(modifier = RemoteModifier.width((headerWidth - 20 * scale).coerceAtLeast(60f).rdp)) {
+      RemoteColumn(modifier = RemoteModifier.width((headerWidth - 20 * scale).coerceAtLeast(60f).rdp)
+        .height(48.rdp)
+        .let { if (onOpen != null) it.semantics { contentDescription = (if (status.hasSource) "Open podcasts" else "Connect podcasts").rs; role = Role.Button }.clickable(onOpen) else it },
+        verticalArrangement = RemoteArrangement.Center) {
         RemoteText("CLOUD SYNC".rs, color = CadencePalette.GreyVariant80.rc, fontSize = (10 * scale).rsp, fontWeight = FontWeight.Medium, maxLines = 1)
         RemoteText(status.source.rs, color = CadencePalette.Grey90.rc, fontSize = (12 * scale).rsp, fontWeight = FontWeight.Medium, maxLines = 1, overflow = TextOverflow.Ellipsis)
       }
@@ -53,9 +56,9 @@ fun CloudSyncWidgetContent(status: CloudSyncStatus, onOpen: Action? = null, onRe
     }
     if (status.hasSource && status.downloadNeeded != null && status.processingNeeded != null) {
       RemoteRow(modifier = RemoteModifier.fillMaxWidth(), horizontalArrangement = RemoteArrangement.SpaceEvenly) {
-        CloudMetric(status.downloadNeeded, "to download", Icons.Default.Download, scale, cellWidth, onDownload.takeIf { status.canDownload }, "Download ${status.downloadNeeded} episodes")
-        CloudMetric(status.processingNeeded, "to process", Icons.Default.GraphicEq, scale, cellWidth, onProcess.takeIf { status.canProcess }, "Process ${status.processingNeeded} episodes")
-        status.downloadedCount?.let { CloudMetric(it, "downloaded", Icons.Default.Cloud, scale, cellWidth) }
+        CloudMetric(status.downloadNeeded, "to download", Icons.Default.Download, scale, cellWidth, onDownload.takeIf { status.canDownload } ?: onOpen, if (status.canDownload) "Download ${status.downloadNeeded} episodes" else "Open podcasts", status.canDownload)
+        CloudMetric(status.processingNeeded, "to process", Icons.Default.GraphicEq, scale, cellWidth, onProcess.takeIf { status.canProcess } ?: onOpen, if (status.canProcess) "Process ${status.processingNeeded} episodes" else "Open podcasts", status.canProcess)
+        status.downloadedCount?.let { CloudMetric(it, "downloaded", Icons.Default.Cloud, scale, cellWidth, onOpen, "Open podcasts", false) }
       }
       RemoteText((status.progress ?: status.checked).rs, color = CadencePalette.GreyVariant80.rc, fontSize = (10 * scale).rsp, maxLines = 1, overflow = TextOverflow.Ellipsis)
     } else if (status.hasSource) {
@@ -72,11 +75,11 @@ fun CloudSyncWidgetContent(status: CloudSyncStatus, onOpen: Action? = null, onRe
 }
 
 @Composable @RemoteComposable
-private fun CloudMetric(value: Int, label: String, icon: ImageVector, scale: Float, width: Float, action: Action? = null, description: String = "") {
+private fun CloudMetric(value: Int, label: String, icon: ImageVector, scale: Float, width: Float, action: Action? = null, description: String = "", emphasize: Boolean = true) {
   val color = if (value > 0 && label != "downloaded") CadencePalette.Orange80 else CadencePalette.Aqua80
   RemoteColumn(modifier = RemoteModifier.width(width.rdp).height((60 * scale).coerceAtLeast(48f).rdp)
     .clip(RemoteRoundedCornerShape(12.rdp))
-    .let { if (action != null) it.background(CadencePalette.GreyVariant30.rc).semantics { contentDescription = description.rs; role = Role.Button }.clickable(action) else it }
+    .let { if (action != null) it.let { item -> if (emphasize) item.background(CadencePalette.GreyVariant30.rc) else item }.semantics { contentDescription = description.rs; role = Role.Button }.clickable(action) else it }
     .padding((4 * scale).rdp), verticalArrangement = RemoteArrangement.Center) {
     RemoteRow(horizontalArrangement = RemoteArrangement.spacedBy(4.rdp), verticalAlignment = RemoteAlignment.CenterVertically) {
       SyncStatusIcon(icon, color, (14 * scale).toInt())

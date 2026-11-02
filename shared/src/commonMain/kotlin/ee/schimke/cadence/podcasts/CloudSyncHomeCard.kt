@@ -27,7 +27,7 @@ fun CloudSyncHomeFallback(
   onDownload: () -> Unit,
   onProcess: () -> Unit,
 ) {
-  OutlinedCard(Modifier.fillMaxWidth()) {
+  OutlinedCard(onClick = onOpen, modifier = Modifier.fillMaxWidth()) {
     Column(Modifier.padding(16.dp)) {
       Row(Modifier.fillMaxWidth()) {
         Column(Modifier.weight(1f)) {

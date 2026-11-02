@@ -8,6 +8,8 @@ import java.nio.file.Files
 import java.nio.file.StandardCopyOption.*
 import javax.xml.parsers.DocumentBuilderFactory
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
 import org.w3c.dom.Element
 
@@ -217,6 +219,7 @@ abstract class FilePodcastPlatform(protected val root: File) : PodcastPlatform {
             temp.outputStream().use { output ->
               val buffer = ByteArray(64 * 1024)
               while (true) {
+                currentCoroutineContext().ensureActive()
                 val read = source.read(buffer)
                 if (read < 0) break
                 count += read
@@ -226,6 +229,7 @@ abstract class FilePodcastPlatform(protected val root: File) : PodcastPlatform {
               output.fd.sync()
             }
           }
+          currentCoroutineContext().ensureActive()
           require(count > 0 && (conn.contentLengthLong < 0 || conn.contentLengthLong == count))
           replacePodcastFile(temp, destination)
         } finally {

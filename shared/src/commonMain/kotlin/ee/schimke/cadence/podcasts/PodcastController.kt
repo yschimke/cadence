@@ -241,6 +241,7 @@ class PodcastController(val platform: PodcastPlatform) {
       state.value.library.playlist?.episodes ?: throw PodcastProblem("Connect a source first")
     episodes.forEachIndexed { index, episode ->
       status.value = "Downloading ${index + 1} of ${episodes.size}: ${episode.title}"
+      publish()
       platform.downloadOriginal(episode)
       save(
         state.value.copy(downloadedEpisodeKeys = state.value.downloadedEpisodeKeys + episode.key)

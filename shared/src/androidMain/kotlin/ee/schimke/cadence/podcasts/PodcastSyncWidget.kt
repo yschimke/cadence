@@ -134,12 +134,16 @@ class PodcastSyncWidget : AppWidgetProvider() {
       context.packageManager.getLaunchIntentForPackage(context.packageName)
 
     private fun legacyViews(context: Context): RemoteViews {
-      val prefs = prefs(context)
-      val views = RemoteViews(context.packageName, android.R.layout.simple_list_item_2)
-      views.setTextViewText(android.R.id.text1, copied(context))
-      views.setTextViewText(android.R.id.text2, listOfNotNull(available(context), battery(context)).joinToString(" · "))
+      val layout = context.resources.getIdentifier("podcast_sync_widget", "layout", context.packageName)
+      val root = context.resources.getIdentifier("podcast_widget_root", "id", context.packageName)
+      val title = context.resources.getIdentifier("podcast_widget_title", "id", context.packageName)
+      val details = context.resources.getIdentifier("podcast_widget_details", "id", context.packageName)
+      val views = RemoteViews(context.packageName, layout)
+      views.setTextViewText(title, copied(context))
+      views.setTextViewText(details, listOfNotNull(available(context), battery(context)).joinToString(" · "))
       launchIntent(context)?.let { intent ->
-        views.setOnClickPendingIntent(android.R.id.text1, PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE))
+        val open = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+        views.setOnClickPendingIntent(root, open)
       }
       return views
     }

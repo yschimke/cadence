@@ -493,6 +493,26 @@ class PodcastTest {
     assertNull(platform.pocketWrite)
   }
 
+  @Test
+  fun downloadReportsEachEpisodeAndPersistsCompletedDownloads() = runBlocking {
+    val platform = FakePlatform()
+    val second = episode.copy(id = "episode-2", title = "Second episode")
+    val controller = PodcastController(platform)
+    controller.state.value =
+      LocalPodcastState(
+        library =
+          PodcastLibrary(
+            playlist = PlaylistSnapshot(name = "Test", episodes = listOf(episode, second))
+          )
+      )
+
+    assertTrue(controller.run { downloadOriginals() })
+    assertEquals(listOf(episode.key, second.key), platform.originals)
+    assertTrue(platform.statuses.any { it.startsWith("Downloading 1 of 2: ${episode.title}") })
+    assertTrue(platform.statuses.any { it.startsWith("Downloading 2 of 2: ${second.title}") })
+    assertEquals(setOf(episode.key, second.key), controller.state.value.downloadedEpisodeKeys)
+  }
+
   private class FakePlatform(override val splitFormats: Set<String> = setOf("mp3", "m4a")) :
     PodcastPlatform {
     override val description = "Fixture"
@@ -506,6 +526,16 @@ class PodcastTest {
     var pocketEpisode: String? = null
     var pocketWrite: String? = null
     val files = mutableSetOf<String>()
+    val originals = mutableListOf<String>()
+    val statuses = mutableListOf<String>()
+
+    override suspend fun downloadOriginal(episode: Episode) {
+      originals += episode.key
+    }
+
+    override fun publishStatus(status: String, state: LocalPodcastState) {
+      statuses += status
+    }
 
     override suspend fun readState() = saved
 

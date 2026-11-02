@@ -4,7 +4,7 @@
     android:minHeight="80dp"
     android:minResizeWidth="200dp"
     android:minResizeHeight="64dp"
-    android:initialLayout="@android:layout/simple_list_item_2"
+    android:initialLayout="@layout/podcast_sync_widget"
     android:resizeMode="horizontal|vertical"
     android:widgetCategory="home_screen"
     android:updatePeriodMillis="0"
