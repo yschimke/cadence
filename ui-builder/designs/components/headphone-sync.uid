@@ -1,0 +1,640 @@
+{
+  "schema": "compose-ui-builder-document/v1-candidate",
+  "id": "cadence-component-headphone-sync",
+  "title": "Cadence \u00b7 Sync with headphones",
+  "revision": 2,
+  "catalogPin": {
+    "systemId": "m3-catalog",
+    "catalogRevision": "candidate",
+    "capabilityDigest": "candidate",
+    "nativeRuntimeId": "candidate"
+  },
+  "environment": {
+    "widthDp": 411,
+    "heightDp": 320,
+    "density": 1.0,
+    "theme": "dark",
+    "dynamicColor": false,
+    "locale": "en-US",
+    "fontScale": 1.0,
+    "layoutDirection": "ltr",
+    "windowPosture": "flat",
+    "browserZoomPercent": 100,
+    "fixedTime": "2024-05-16T12:00:00Z",
+    "animations": "settled",
+    "networkAccess": false,
+    "background": null,
+    "typeface": null,
+    "exportDevices": [
+      "id:pixel_4a",
+      "id:pixel_9",
+      "id:pixel_9_pro_xl",
+      "id:pixel_9_pro_fold",
+      "id:pixel_tablet"
+    ]
+  },
+  "stateVariables": {},
+  "roots": [
+    "root"
+  ],
+  "nodes": {
+    "section-0": {
+      "id": "section-0",
+      "componentId": "m3/card",
+      "properties": {
+        "containerColor": {
+          "type": "color",
+          "value": "#FF1B2024"
+        }
+      },
+      "slots": {
+        "content": [
+          "section-0-stack"
+        ]
+      },
+      "modifiers": [
+        {
+          "type": "fillMaxWidth"
+        }
+      ],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "root": {
+      "id": "root",
+      "componentId": "layout/scaffold",
+      "properties": {},
+      "slots": {
+        "content": [
+          "content"
+        ]
+      },
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "content": {
+      "id": "content",
+      "componentId": "layout/column",
+      "properties": {
+        "verticalSpacingDp": {
+          "type": "float",
+          "value": 12.0
+        }
+      },
+      "slots": {
+        "children": [
+          "section-0"
+        ]
+      },
+      "modifiers": [
+        {
+          "type": "padding",
+          "startDp": 16,
+          "topDp": 16,
+          "endDp": 16,
+          "bottomDp": 16
+        }
+      ],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-0-action-0": {
+      "id": "section-0-action-0",
+      "componentId": "m3/button",
+      "properties": {
+        "style": {
+          "type": "enum",
+          "value": "filled"
+        }
+      },
+      "slots": {
+        "content": [
+          "section-0-action-0-label"
+        ]
+      },
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-0-action-0-label": {
+      "id": "section-0-action-0-label",
+      "componentId": "m3/text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "Sync"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-0-row-0-icon": {
+      "id": "section-0-row-0-icon",
+      "componentId": "m3/icon",
+      "properties": {
+        "iconKey": {
+          "type": "string",
+          "value": "filled/headphones"
+        },
+        "sizeDp": {
+          "type": "float",
+          "value": 18
+        },
+        "tint": {
+          "type": "color",
+          "value": "#9CCBF0"
+        },
+        "contentDescription": {
+          "type": "string",
+          "value": "On headphones"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-0-row-0-count": {
+      "id": "section-0-row-0-count",
+      "componentId": "m3/text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "3"
+        },
+        "style": {
+          "type": "enum",
+          "value": "titleLarge"
+        },
+        "fontWeight": {
+          "type": "enum",
+          "value": "medium"
+        },
+        "color": {
+          "type": "color",
+          "value": "#9CCBF0"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-0-row-0-text": {
+      "id": "section-0-row-0-text",
+      "componentId": "m3/text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "on headphones \u00b7 139m \u00b7 0 played"
+        },
+        "style": {
+          "type": "enum",
+          "value": "bodySmall"
+        },
+        "color": {
+          "type": "color",
+          "value": "#E2E7EB"
+        },
+        "maxLines": {
+          "type": "int",
+          "value": 1
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-0-row-0": {
+      "id": "section-0-row-0",
+      "componentId": "layout/row",
+      "properties": {
+        "horizontalSpacingDp": {
+          "type": "float",
+          "value": 6
+        },
+        "verticalAlignment": {
+          "type": "enum",
+          "value": "center"
+        }
+      },
+      "slots": {
+        "children": [
+          "section-0-row-0-icon",
+          "section-0-row-0-count",
+          "section-0-row-0-text"
+        ]
+      },
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-0-row-1-icon": {
+      "id": "section-0-row-1-icon",
+      "componentId": "m3/icon",
+      "properties": {
+        "iconKey": {
+          "type": "string",
+          "value": "filled/sync"
+        },
+        "sizeDp": {
+          "type": "float",
+          "value": 18
+        },
+        "tint": {
+          "type": "color",
+          "value": "#9CCBE8"
+        },
+        "contentDescription": {
+          "type": "string",
+          "value": "Ready to sync"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-0-row-1-count": {
+      "id": "section-0-row-1-count",
+      "componentId": "m3/text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "3"
+        },
+        "style": {
+          "type": "enum",
+          "value": "titleLarge"
+        },
+        "fontWeight": {
+          "type": "enum",
+          "value": "medium"
+        },
+        "color": {
+          "type": "color",
+          "value": "#9CCBE8"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-0-row-1-text": {
+      "id": "section-0-row-1-text",
+      "componentId": "m3/text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "ready to sync \u00b7 130m"
+        },
+        "style": {
+          "type": "enum",
+          "value": "bodySmall"
+        },
+        "color": {
+          "type": "color",
+          "value": "#E2E7EB"
+        },
+        "maxLines": {
+          "type": "int",
+          "value": 1
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-0-row-1": {
+      "id": "section-0-row-1",
+      "componentId": "layout/row",
+      "properties": {
+        "horizontalSpacingDp": {
+          "type": "float",
+          "value": 6
+        },
+        "verticalAlignment": {
+          "type": "enum",
+          "value": "center"
+        }
+      },
+      "slots": {
+        "children": [
+          "section-0-row-1-icon",
+          "section-0-row-1-count",
+          "section-0-row-1-text"
+        ]
+      },
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-0-row-2-icon": {
+      "id": "section-0-row-2-icon",
+      "componentId": "m3/icon",
+      "properties": {
+        "iconKey": {
+          "type": "string",
+          "value": "filled/batteryFull"
+        },
+        "sizeDp": {
+          "type": "float",
+          "value": 18
+        },
+        "tint": {
+          "type": "color",
+          "value": "#C0C8CF"
+        },
+        "contentDescription": {
+          "type": "string",
+          "value": "Battery"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-0-row-2-text": {
+      "id": "section-0-row-2-text",
+      "componentId": "m3/text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "50% \u00b7 ~3h MP3 \u00b7 ~4h 30m BT"
+        },
+        "style": {
+          "type": "enum",
+          "value": "bodySmall"
+        },
+        "color": {
+          "type": "color",
+          "value": "#C0C8CF"
+        },
+        "maxLines": {
+          "type": "int",
+          "value": 1
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-0-row-2": {
+      "id": "section-0-row-2",
+      "componentId": "layout/row",
+      "properties": {
+        "horizontalSpacingDp": {
+          "type": "float",
+          "value": 6
+        },
+        "verticalAlignment": {
+          "type": "enum",
+          "value": "center"
+        }
+      },
+      "slots": {
+        "children": [
+          "section-0-row-2-icon",
+          "section-0-row-2-text"
+        ]
+      },
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-0-metrics": {
+      "id": "section-0-metrics",
+      "componentId": "layout/column",
+      "properties": {
+        "verticalSpacingDp": {
+          "type": "float",
+          "value": 3
+        },
+        "weight": {
+          "type": "float",
+          "value": 1
+        }
+      },
+      "slots": {
+        "children": [
+          "section-0-row-0",
+          "section-0-row-1",
+          "section-0-row-2"
+        ]
+      },
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-0-content": {
+      "id": "section-0-content",
+      "componentId": "layout/row",
+      "properties": {
+        "horizontalSpacingDp": {
+          "type": "float",
+          "value": 8
+        },
+        "verticalAlignment": {
+          "type": "enum",
+          "value": "center"
+        }
+      },
+      "slots": {
+        "children": [
+          "section-0-metrics",
+          "section-0-action-0"
+        ]
+      },
+      "modifiers": [
+        {
+          "type": "padding",
+          "startDp": 12,
+          "endDp": 12,
+          "topDp": 12,
+          "bottomDp": 12
+        }
+      ],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-0-pool": {
+      "id": "section-0-pool",
+      "componentId": "layout/box",
+      "properties": {
+        "contentAlignment": {
+          "type": "string",
+          "value": "centerEnd"
+        }
+      },
+      "slots": {
+        "children": [
+          "section-0-pool-swimmer"
+        ]
+      },
+      "modifiers": [
+        {
+          "type": "fillMaxWidth"
+        },
+        {
+          "type": "height",
+          "heightDp": 42
+        },
+        {
+          "type": "background",
+          "color": {
+            "type": "color",
+            "value": "#195480"
+          }
+        }
+      ],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-0-pool-swimmer": {
+      "id": "section-0-pool-swimmer",
+      "componentId": "m3/icon",
+      "properties": {
+        "iconKey": {
+          "type": "string",
+          "value": "filled/pool"
+        },
+        "contentDescription": {
+          "type": "string",
+          "value": "Swimmer in a pool"
+        },
+        "tint": {
+          "type": "color",
+          "value": "#9CCBF0"
+        },
+        "sizeDp": {
+          "type": "float",
+          "value": 22
+        }
+      },
+      "slots": {},
+      "modifiers": [
+        {
+          "type": "padding",
+          "endDp": 12
+        }
+      ],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-0-stack": {
+      "id": "section-0-stack",
+      "componentId": "layout/column",
+      "properties": {},
+      "slots": {
+        "children": [
+          "section-0-content",
+          "section-0-pool"
+        ]
+      },
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    }
+  },
+  "assets": {},
+  "tokenBindings": {},
+  "createdAtEpochMillis": 1793610947203,
+  "updatedAtEpochMillis": 1793610947203,
+  "components": {},
+  "home": {
+    "kind": "repo",
+    "path": "ui-builder/designs/components/headphone-sync.uid"
+  }
+}

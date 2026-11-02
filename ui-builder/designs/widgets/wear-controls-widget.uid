@@ -1,0 +1,160 @@
+{
+  "schema": "compose-ui-builder-document/v1-candidate",
+  "id": "cadence-wear-controls-widget",
+  "title": "Cadence · Controls",
+  "revision": 0,
+  "catalogPin": {
+    "systemId": "remote-m3",
+    "catalogRevision": "wear-widget-scaffolds-v1",
+    "capabilityDigest": "candidate",
+    "nativeRuntimeId": "candidate"
+  },
+  "environment": {
+    "widthDp": 225,
+    "heightDp": 225,
+    "density": 1.0,
+    "theme": "dark",
+    "dynamicColor": false,
+    "locale": "en-US",
+    "fontScale": 1.0,
+    "layoutDirection": "ltr",
+    "windowPosture": "flat",
+    "browserZoomPercent": 100,
+    "fixedTime": "2024-05-16T12:00:00Z",
+    "animations": "settled",
+    "networkAccess": false,
+    "background": null,
+    "typeface": null,
+    "exportDevices": []
+  },
+  "stateVariables": {},
+  "roots": [
+    "root"
+  ],
+  "nodes": {
+    "text-0": {
+      "id": "text-0",
+      "componentId": "remote-m3/remote-text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "Controls"
+        },
+        "style": {
+          "type": "enum",
+          "value": "titleSmall"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "text-1": {
+      "id": "text-1",
+      "componentId": "remote-m3/remote-text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "MP3 mode"
+        },
+        "style": {
+          "type": "enum",
+          "value": "bodySmall"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "text-2": {
+      "id": "text-2",
+      "componentId": "remote-m3/remote-text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "Previous · Play · Next"
+        },
+        "style": {
+          "type": "enum",
+          "value": "bodySmall"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "body": {
+      "id": "body",
+      "componentId": "layout/column",
+      "properties": {
+        "verticalSpacingDp": {
+          "type": "float",
+          "value": 4.0
+        }
+      },
+      "slots": {
+        "children": [
+          "text-0",
+          "text-1",
+          "text-2"
+        ]
+      },
+      "modifiers": [
+        {
+          "type": "padding",
+          "startDp": 16,
+          "topDp": 16,
+          "endDp": 16,
+          "bottomDp": 16
+        }
+      ],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "root": {
+      "id": "root",
+      "componentId": "remote-m3/widget-container-large",
+      "properties": {},
+      "slots": {
+        "content": [
+          "body"
+        ]
+      },
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    }
+  },
+  "assets": {},
+  "tokenBindings": {},
+  "createdAtEpochMillis": 1793610947203,
+  "updatedAtEpochMillis": 1793610947203,
+  "components": {},
+  "home": {
+    "kind": "repo",
+    "path": "ui-builder/designs/widgets/wear-controls-widget.uid"
+  }
+}

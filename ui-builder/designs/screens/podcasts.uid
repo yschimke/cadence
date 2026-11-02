@@ -1,0 +1,1079 @@
+{
+  "schema": "compose-ui-builder-document/v1-candidate",
+  "id": "cadence-screen-podcasts",
+  "title": "Cadence · Swim Series",
+  "revision": 0,
+  "catalogPin": {
+    "systemId": "m3-catalog",
+    "catalogRevision": "candidate",
+    "capabilityDigest": "candidate",
+    "nativeRuntimeId": "candidate"
+  },
+  "environment": {
+    "widthDp": 411,
+    "heightDp": 850,
+    "density": 1.0,
+    "theme": "dark",
+    "dynamicColor": false,
+    "locale": "en-US",
+    "fontScale": 1.0,
+    "layoutDirection": "ltr",
+    "windowPosture": "flat",
+    "browserZoomPercent": 100,
+    "fixedTime": "2024-05-16T12:00:00Z",
+    "animations": "settled",
+    "networkAccess": false,
+    "background": null,
+    "typeface": null,
+    "exportDevices": [
+      "id:pixel_4a",
+      "id:pixel_9",
+      "id:pixel_9_pro_xl",
+      "id:pixel_9_pro_fold",
+      "id:pixel_tablet"
+    ]
+  },
+  "stateVariables": {},
+  "roots": [
+    "root"
+  ],
+  "nodes": {
+    "title": {
+      "id": "title",
+      "componentId": "m3/text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "Swim Series"
+        },
+        "style": {
+          "type": "enum",
+          "value": "headlineSmall"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-0-title": {
+      "id": "section-0-title",
+      "componentId": "m3/text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "Pocket Casts · Swim Series"
+        },
+        "style": {
+          "type": "enum",
+          "value": "titleMedium"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-0-detail-0": {
+      "id": "section-0-detail-0",
+      "componentId": "m3/text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "1 to download · 1 to process"
+        },
+        "style": {
+          "type": "enum",
+          "value": "bodyMedium"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-0-detail-1": {
+      "id": "section-0-detail-1",
+      "componentId": "m3/text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "2 downloaded · Last checked just now"
+        },
+        "style": {
+          "type": "enum",
+          "value": "bodyMedium"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-0-action-0-label": {
+      "id": "section-0-action-0-label",
+      "componentId": "m3/text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "Refresh"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-0-action-0": {
+      "id": "section-0-action-0",
+      "componentId": "m3/button",
+      "properties": {
+        "style": {
+          "type": "enum",
+          "value": "filled"
+        }
+      },
+      "slots": {
+        "content": [
+          "section-0-action-0-label"
+        ]
+      },
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-0-action-1-label": {
+      "id": "section-0-action-1-label",
+      "componentId": "m3/text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "Download"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-0-action-1": {
+      "id": "section-0-action-1",
+      "componentId": "m3/button",
+      "properties": {
+        "style": {
+          "type": "enum",
+          "value": "text"
+        }
+      },
+      "slots": {
+        "content": [
+          "section-0-action-1-label"
+        ]
+      },
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-0-action-2-label": {
+      "id": "section-0-action-2-label",
+      "componentId": "m3/text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "Process"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-0-action-2": {
+      "id": "section-0-action-2",
+      "componentId": "m3/button",
+      "properties": {
+        "style": {
+          "type": "enum",
+          "value": "text"
+        }
+      },
+      "slots": {
+        "content": [
+          "section-0-action-2-label"
+        ]
+      },
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-0-actions": {
+      "id": "section-0-actions",
+      "componentId": "layout/flow-row",
+      "properties": {
+        "horizontalSpacingDp": {
+          "type": "float",
+          "value": 4.0
+        }
+      },
+      "slots": {
+        "children": [
+          "section-0-action-0",
+          "section-0-action-1",
+          "section-0-action-2"
+        ]
+      },
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-0-content": {
+      "id": "section-0-content",
+      "componentId": "layout/column",
+      "properties": {
+        "verticalSpacingDp": {
+          "type": "float",
+          "value": 4.0
+        }
+      },
+      "slots": {
+        "children": [
+          "section-0-title",
+          "section-0-detail-0",
+          "section-0-detail-1",
+          "section-0-actions"
+        ]
+      },
+      "modifiers": [
+        {
+          "type": "padding",
+          "startDp": 16,
+          "topDp": 16,
+          "endDp": 16,
+          "bottomDp": 16
+        }
+      ],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-0": {
+      "id": "section-0",
+      "componentId": "m3/card",
+      "properties": {},
+      "slots": {
+        "content": [
+          "section-0-content"
+        ]
+      },
+      "modifiers": [
+        {
+          "type": "fillMaxWidth"
+        }
+      ],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-1-title": {
+      "id": "section-1-title",
+      "componentId": "m3/text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "Episodes from this source"
+        },
+        "style": {
+          "type": "enum",
+          "value": "titleMedium"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-1-detail-0": {
+      "id": "section-1-detail-0",
+      "componentId": "m3/text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "Up to 3 episodes"
+        },
+        "style": {
+          "type": "enum",
+          "value": "bodyMedium"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-1-action-0-label": {
+      "id": "section-1-action-0-label",
+      "componentId": "m3/text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "Fewer"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-1-action-0": {
+      "id": "section-1-action-0",
+      "componentId": "m3/button",
+      "properties": {
+        "style": {
+          "type": "enum",
+          "value": "filled"
+        }
+      },
+      "slots": {
+        "content": [
+          "section-1-action-0-label"
+        ]
+      },
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-1-action-1-label": {
+      "id": "section-1-action-1-label",
+      "componentId": "m3/text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "More"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-1-action-1": {
+      "id": "section-1-action-1",
+      "componentId": "m3/button",
+      "properties": {
+        "style": {
+          "type": "enum",
+          "value": "text"
+        }
+      },
+      "slots": {
+        "content": [
+          "section-1-action-1-label"
+        ]
+      },
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-1-action-2-label": {
+      "id": "section-1-action-2-label",
+      "componentId": "m3/text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "Apply and refresh"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-1-action-2": {
+      "id": "section-1-action-2",
+      "componentId": "m3/button",
+      "properties": {
+        "style": {
+          "type": "enum",
+          "value": "text"
+        }
+      },
+      "slots": {
+        "content": [
+          "section-1-action-2-label"
+        ]
+      },
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-1-actions": {
+      "id": "section-1-actions",
+      "componentId": "layout/flow-row",
+      "properties": {
+        "horizontalSpacingDp": {
+          "type": "float",
+          "value": 4.0
+        }
+      },
+      "slots": {
+        "children": [
+          "section-1-action-0",
+          "section-1-action-1",
+          "section-1-action-2"
+        ]
+      },
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-1-content": {
+      "id": "section-1-content",
+      "componentId": "layout/column",
+      "properties": {
+        "verticalSpacingDp": {
+          "type": "float",
+          "value": 4.0
+        }
+      },
+      "slots": {
+        "children": [
+          "section-1-title",
+          "section-1-detail-0",
+          "section-1-actions"
+        ]
+      },
+      "modifiers": [
+        {
+          "type": "padding",
+          "startDp": 16,
+          "topDp": 16,
+          "endDp": 16,
+          "bottomDp": 16
+        }
+      ],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-1": {
+      "id": "section-1",
+      "componentId": "m3/card",
+      "properties": {},
+      "slots": {
+        "content": [
+          "section-1-content"
+        ]
+      },
+      "modifiers": [
+        {
+          "type": "fillMaxWidth"
+        }
+      ],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-2-title": {
+      "id": "section-2-title",
+      "componentId": "m3/text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "Doktoro Esperanto"
+        },
+        "style": {
+          "type": "enum",
+          "value": "titleMedium"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-2-detail-0": {
+      "id": "section-2-detail-0",
+      "componentId": "m3/text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "99% Invisible"
+        },
+        "style": {
+          "type": "enum",
+          "value": "bodyMedium"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-2-detail-1": {
+      "id": "section-2-detail-1",
+      "componentId": "m3/text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "12:30 of 35:18 heard"
+        },
+        "style": {
+          "type": "enum",
+          "value": "bodyMedium"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-2-detail-2": {
+      "id": "section-2-detail-2",
+      "componentId": "m3/text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "Sync to headphones"
+        },
+        "style": {
+          "type": "enum",
+          "value": "bodyMedium"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-2-action-0-label": {
+      "id": "section-2-action-0-label",
+      "componentId": "m3/text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "Episode details"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-2-action-0": {
+      "id": "section-2-action-0",
+      "componentId": "m3/button",
+      "properties": {
+        "style": {
+          "type": "enum",
+          "value": "filled"
+        }
+      },
+      "slots": {
+        "content": [
+          "section-2-action-0-label"
+        ]
+      },
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-2-action-1-label": {
+      "id": "section-2-action-1-label",
+      "componentId": "m3/text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "Show parts"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-2-action-1": {
+      "id": "section-2-action-1",
+      "componentId": "m3/button",
+      "properties": {
+        "style": {
+          "type": "enum",
+          "value": "text"
+        }
+      },
+      "slots": {
+        "content": [
+          "section-2-action-1-label"
+        ]
+      },
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-2-actions": {
+      "id": "section-2-actions",
+      "componentId": "layout/flow-row",
+      "properties": {
+        "horizontalSpacingDp": {
+          "type": "float",
+          "value": 4.0
+        }
+      },
+      "slots": {
+        "children": [
+          "section-2-action-0",
+          "section-2-action-1"
+        ]
+      },
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-2-content": {
+      "id": "section-2-content",
+      "componentId": "layout/column",
+      "properties": {
+        "verticalSpacingDp": {
+          "type": "float",
+          "value": 4.0
+        }
+      },
+      "slots": {
+        "children": [
+          "section-2-title",
+          "section-2-detail-0",
+          "section-2-detail-1",
+          "section-2-detail-2",
+          "section-2-actions"
+        ]
+      },
+      "modifiers": [
+        {
+          "type": "padding",
+          "startDp": 16,
+          "topDp": 16,
+          "endDp": 16,
+          "bottomDp": 16
+        }
+      ],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-2": {
+      "id": "section-2",
+      "componentId": "m3/card",
+      "properties": {},
+      "slots": {
+        "content": [
+          "section-2-content"
+        ]
+      },
+      "modifiers": [
+        {
+          "type": "fillMaxWidth"
+        }
+      ],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-3-title": {
+      "id": "section-3-title",
+      "componentId": "m3/text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "Audio options"
+        },
+        "style": {
+          "type": "enum",
+          "value": "titleMedium"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-3-detail-0": {
+      "id": "section-3-detail-0",
+      "componentId": "m3/text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "Prepare episodes for listening on headphones."
+        },
+        "style": {
+          "type": "enum",
+          "value": "bodyMedium"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-3-action-0-label": {
+      "id": "section-3-action-0-label",
+      "componentId": "m3/text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "Chunk length"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-3-action-0": {
+      "id": "section-3-action-0",
+      "componentId": "m3/button",
+      "properties": {
+        "style": {
+          "type": "enum",
+          "value": "filled"
+        }
+      },
+      "slots": {
+        "content": [
+          "section-3-action-0-label"
+        ]
+      },
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-3-action-1-label": {
+      "id": "section-3-action-1-label",
+      "componentId": "m3/text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "Skip listened"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-3-action-1": {
+      "id": "section-3-action-1",
+      "componentId": "m3/button",
+      "properties": {
+        "style": {
+          "type": "enum",
+          "value": "text"
+        }
+      },
+      "slots": {
+        "content": [
+          "section-3-action-1-label"
+        ]
+      },
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-3-actions": {
+      "id": "section-3-actions",
+      "componentId": "layout/flow-row",
+      "properties": {
+        "horizontalSpacingDp": {
+          "type": "float",
+          "value": 4.0
+        }
+      },
+      "slots": {
+        "children": [
+          "section-3-action-0",
+          "section-3-action-1"
+        ]
+      },
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-3-content": {
+      "id": "section-3-content",
+      "componentId": "layout/column",
+      "properties": {
+        "verticalSpacingDp": {
+          "type": "float",
+          "value": 4.0
+        }
+      },
+      "slots": {
+        "children": [
+          "section-3-title",
+          "section-3-detail-0",
+          "section-3-actions"
+        ]
+      },
+      "modifiers": [
+        {
+          "type": "padding",
+          "startDp": 16,
+          "topDp": 16,
+          "endDp": 16,
+          "bottomDp": 16
+        }
+      ],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-3": {
+      "id": "section-3",
+      "componentId": "m3/card",
+      "properties": {},
+      "slots": {
+        "content": [
+          "section-3-content"
+        ]
+      },
+      "modifiers": [
+        {
+          "type": "fillMaxWidth"
+        }
+      ],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "root": {
+      "id": "root",
+      "componentId": "layout/scaffold",
+      "properties": {},
+      "slots": {
+        "content": [
+          "content"
+        ]
+      },
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "content": {
+      "id": "content",
+      "componentId": "layout/lazy-column",
+      "properties": {
+        "verticalSpacingDp": {
+          "type": "float",
+          "value": 12.0
+        },
+        "scrollStateKey": {
+          "type": "string",
+          "value": "screenScroll"
+        }
+      },
+      "slots": {
+        "items": [
+          "title",
+          "section-0",
+          "section-1",
+          "section-2",
+          "section-3"
+        ]
+      },
+      "modifiers": [
+        {
+          "type": "padding",
+          "startDp": 16,
+          "topDp": 16,
+          "endDp": 16,
+          "bottomDp": 16
+        }
+      ],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    }
+  },
+  "assets": {},
+  "tokenBindings": {},
+  "createdAtEpochMillis": 1793610947203,
+  "updatedAtEpochMillis": 1793610947203,
+  "components": {},
+  "home": {
+    "kind": "repo",
+    "path": "ui-builder/designs/screens/podcasts.uid"
+  }
+}

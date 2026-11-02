@@ -1,0 +1,604 @@
+{
+  "schema": "compose-ui-builder-document/v1-candidate",
+  "id": "cadence-screen-device-files",
+  "title": "Cadence · On headphones",
+  "revision": 0,
+  "catalogPin": {
+    "systemId": "m3-catalog",
+    "catalogRevision": "candidate",
+    "capabilityDigest": "candidate",
+    "nativeRuntimeId": "candidate"
+  },
+  "environment": {
+    "widthDp": 411,
+    "heightDp": 850,
+    "density": 1.0,
+    "theme": "dark",
+    "dynamicColor": false,
+    "locale": "en-US",
+    "fontScale": 1.0,
+    "layoutDirection": "ltr",
+    "windowPosture": "flat",
+    "browserZoomPercent": 100,
+    "fixedTime": "2024-05-16T12:00:00Z",
+    "animations": "settled",
+    "networkAccess": false,
+    "background": null,
+    "typeface": null,
+    "exportDevices": [
+      "id:pixel_4a",
+      "id:pixel_9",
+      "id:pixel_9_pro_xl",
+      "id:pixel_9_pro_fold",
+      "id:pixel_tablet"
+    ]
+  },
+  "stateVariables": {},
+  "roots": [
+    "root"
+  ],
+  "nodes": {
+    "title": {
+      "id": "title",
+      "componentId": "m3/text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "On headphones"
+        },
+        "style": {
+          "type": "enum",
+          "value": "headlineSmall"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-0-title": {
+      "id": "section-0-title",
+      "componentId": "m3/text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "OpenSwim Pro"
+        },
+        "style": {
+          "type": "enum",
+          "value": "titleMedium"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-0-detail-0": {
+      "id": "section-0-detail-0",
+      "componentId": "m3/text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "Connected headphones"
+        },
+        "style": {
+          "type": "enum",
+          "value": "bodyMedium"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-0-action-0-label": {
+      "id": "section-0-action-0-label",
+      "componentId": "m3/text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "Open"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-0-action-0": {
+      "id": "section-0-action-0",
+      "componentId": "m3/button",
+      "properties": {
+        "style": {
+          "type": "enum",
+          "value": "filled"
+        }
+      },
+      "slots": {
+        "content": [
+          "section-0-action-0-label"
+        ]
+      },
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-0-actions": {
+      "id": "section-0-actions",
+      "componentId": "layout/flow-row",
+      "properties": {
+        "horizontalSpacingDp": {
+          "type": "float",
+          "value": 4.0
+        }
+      },
+      "slots": {
+        "children": [
+          "section-0-action-0"
+        ]
+      },
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-0-content": {
+      "id": "section-0-content",
+      "componentId": "layout/column",
+      "properties": {
+        "verticalSpacingDp": {
+          "type": "float",
+          "value": 4.0
+        }
+      },
+      "slots": {
+        "children": [
+          "section-0-title",
+          "section-0-detail-0",
+          "section-0-actions"
+        ]
+      },
+      "modifiers": [
+        {
+          "type": "padding",
+          "startDp": 16,
+          "topDp": 16,
+          "endDp": 16,
+          "bottomDp": 16
+        }
+      ],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-0": {
+      "id": "section-0",
+      "componentId": "m3/card",
+      "properties": {},
+      "slots": {
+        "content": [
+          "section-0-content"
+        ]
+      },
+      "modifiers": [
+        {
+          "type": "fillMaxWidth"
+        }
+      ],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-1-title": {
+      "id": "section-1-title",
+      "componentId": "m3/text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "What happens if Trump loses these midterms?"
+        },
+        "style": {
+          "type": "enum",
+          "value": "titleMedium"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-1-detail-0": {
+      "id": "section-1-detail-0",
+      "componentId": "m3/text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "The News Agents · 43 min left"
+        },
+        "style": {
+          "type": "enum",
+          "value": "bodyMedium"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-1-action-0-label": {
+      "id": "section-1-action-0-label",
+      "componentId": "m3/text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "Play"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-1-action-0": {
+      "id": "section-1-action-0",
+      "componentId": "m3/button",
+      "properties": {
+        "style": {
+          "type": "enum",
+          "value": "filled"
+        }
+      },
+      "slots": {
+        "content": [
+          "section-1-action-0-label"
+        ]
+      },
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-1-actions": {
+      "id": "section-1-actions",
+      "componentId": "layout/flow-row",
+      "properties": {
+        "horizontalSpacingDp": {
+          "type": "float",
+          "value": 4.0
+        }
+      },
+      "slots": {
+        "children": [
+          "section-1-action-0"
+        ]
+      },
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-1-content": {
+      "id": "section-1-content",
+      "componentId": "layout/column",
+      "properties": {
+        "verticalSpacingDp": {
+          "type": "float",
+          "value": 4.0
+        }
+      },
+      "slots": {
+        "children": [
+          "section-1-title",
+          "section-1-detail-0",
+          "section-1-actions"
+        ]
+      },
+      "modifiers": [
+        {
+          "type": "padding",
+          "startDp": 16,
+          "topDp": 16,
+          "endDp": 16,
+          "bottomDp": 16
+        }
+      ],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-1": {
+      "id": "section-1",
+      "componentId": "m3/card",
+      "properties": {},
+      "slots": {
+        "content": [
+          "section-1-content"
+        ]
+      },
+      "modifiers": [
+        {
+          "type": "fillMaxWidth"
+        }
+      ],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-2-title": {
+      "id": "section-2-title",
+      "componentId": "m3/text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "Episode audio"
+        },
+        "style": {
+          "type": "enum",
+          "value": "titleMedium"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-2-detail-0": {
+      "id": "section-2-detail-0",
+      "componentId": "m3/text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "Podcast · 42 MB"
+        },
+        "style": {
+          "type": "enum",
+          "value": "bodyMedium"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-2-action-0-label": {
+      "id": "section-2-action-0-label",
+      "componentId": "m3/text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "More"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-2-action-0": {
+      "id": "section-2-action-0",
+      "componentId": "m3/button",
+      "properties": {
+        "style": {
+          "type": "enum",
+          "value": "filled"
+        }
+      },
+      "slots": {
+        "content": [
+          "section-2-action-0-label"
+        ]
+      },
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-2-actions": {
+      "id": "section-2-actions",
+      "componentId": "layout/flow-row",
+      "properties": {
+        "horizontalSpacingDp": {
+          "type": "float",
+          "value": 4.0
+        }
+      },
+      "slots": {
+        "children": [
+          "section-2-action-0"
+        ]
+      },
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-2-content": {
+      "id": "section-2-content",
+      "componentId": "layout/column",
+      "properties": {
+        "verticalSpacingDp": {
+          "type": "float",
+          "value": 4.0
+        }
+      },
+      "slots": {
+        "children": [
+          "section-2-title",
+          "section-2-detail-0",
+          "section-2-actions"
+        ]
+      },
+      "modifiers": [
+        {
+          "type": "padding",
+          "startDp": 16,
+          "topDp": 16,
+          "endDp": 16,
+          "bottomDp": 16
+        }
+      ],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "section-2": {
+      "id": "section-2",
+      "componentId": "m3/card",
+      "properties": {},
+      "slots": {
+        "content": [
+          "section-2-content"
+        ]
+      },
+      "modifiers": [
+        {
+          "type": "fillMaxWidth"
+        }
+      ],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "root": {
+      "id": "root",
+      "componentId": "layout/scaffold",
+      "properties": {},
+      "slots": {
+        "content": [
+          "content"
+        ]
+      },
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "content": {
+      "id": "content",
+      "componentId": "layout/lazy-column",
+      "properties": {
+        "verticalSpacingDp": {
+          "type": "float",
+          "value": 12.0
+        },
+        "scrollStateKey": {
+          "type": "string",
+          "value": "screenScroll"
+        }
+      },
+      "slots": {
+        "items": [
+          "title",
+          "section-0",
+          "section-1",
+          "section-2"
+        ]
+      },
+      "modifiers": [
+        {
+          "type": "padding",
+          "startDp": 16,
+          "topDp": 16,
+          "endDp": 16,
+          "bottomDp": 16
+        }
+      ],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    }
+  },
+  "assets": {},
+  "tokenBindings": {},
+  "createdAtEpochMillis": 1793610947203,
+  "updatedAtEpochMillis": 1793610947203,
+  "components": {},
+  "home": {
+    "kind": "repo",
+    "path": "ui-builder/designs/screens/device-files.uid"
+  }
+}
