@@ -74,13 +74,21 @@ fun CloudSyncWidgetContent(
   val cellWidth =
     if (metricCount == 0) 48f
     else ((widthDp - padding * 2 - 8 * scale * (metricCount - 1)) / metricCount).coerceAtLeast(72f)
+  // Short footprints (250×160) cannot afford 10dp gaps once the open/connect
+  // target is a full 48dp and the status line is ≥12sp.
+  val columnGap = (if (heightDp < 170) 6f else 10f) * scale
+  val connectAction = onOpen.takeIf { !status.hasSource }
+  val downloadAction =
+    onDownload.takeIf { status.hasSource && status.downloadNeeded == null && status.canDownload }
+  val processAction =
+    onProcess.takeIf { status.hasSource && status.processingNeeded == null && status.canProcess }
   // No outer clip: the launcher applies its own system corner radius to the widget.
   RemoteColumn(
     modifier =
       RemoteModifier.fillMaxSize()
         .background(colors.background.rc)
         .padding((12 * scale).rdp),
-    verticalArrangement = RemoteArrangement.spacedBy((10 * scale).rdp),
+    verticalArrangement = RemoteArrangement.spacedBy(columnGap.rdp),
   ) {
     RemoteRow(
       modifier = RemoteModifier.fillMaxWidth(),
@@ -91,7 +99,8 @@ fun CloudSyncWidgetContent(
       RemoteColumn(
         modifier =
           RemoteModifier.width((headerWidth - 20 * scale).coerceAtLeast(60f).rdp)
-            .heightIn(40.rdp, 72.rdp)
+            // 48dp minimum: ATF TouchTargetSizeCheck on Open/Connect podcasts.
+            .heightIn(48.rdp, 72.rdp)
             .let {
               if (onOpen != null)
                 it
@@ -221,15 +230,16 @@ fun CloudSyncWidgetContent(
     } else if (status.progress != null) {
       RemoteText(status.progress.rs, color = colors.primary.rc, fontSize = 12.rsp, maxLines = 1)
     }
-    RemoteRow(
-      modifier = RemoteModifier.fillMaxWidth(),
-      horizontalArrangement = RemoteArrangement.spacedBy((14 * scale).rdp),
-    ) {
-      if (!status.hasSource && onOpen != null) CloudAction("Connect", onOpen, scale, colors)
-      if (status.hasSource && status.downloadNeeded == null && status.canDownload && onDownload != null)
-        CloudAction("Download", onDownload, scale, colors)
-      if (status.hasSource && status.processingNeeded == null && status.canProcess && onProcess != null)
-        CloudAction("Process", onProcess, scale, colors)
+    // Omit an empty action row so metric + status layouts keep their vertical budget.
+    if (connectAction != null || downloadAction != null || processAction != null) {
+      RemoteRow(
+        modifier = RemoteModifier.fillMaxWidth(),
+        horizontalArrangement = RemoteArrangement.spacedBy((14 * scale).rdp),
+      ) {
+        connectAction?.let { CloudAction("Connect", it, scale, colors) }
+        downloadAction?.let { CloudAction("Download", it, scale, colors) }
+        processAction?.let { CloudAction("Process", it, scale, colors) }
+      }
     }
   }
 }
