@@ -1,11 +1,27 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-02T22:08:55.726Z",
+  "generatedAt": "2026-11-02T22:34:10.013Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "3b5eeb57ca4b51526910a543056ceb238e4096eb",
+        "subject": "fix: stop clipping cloud-sync source on small widgets (#491)",
+        "at": "2026-11-02T22:22:47Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "f956bee91c439a04bdcbf0b8b44c2a0394ec901a",
+        "subject": "fix: meet 48dp cloud-sync open/connect targets (#490)",
+        "at": "2026-11-02T22:08:14Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "bf2a0879df9d218e13573c8742486ecf5bb101f5",
         "subject": "fix: theme Remote Compose widgets for light and dark (#489)",
@@ -466,22 +482,6 @@
         "sha": "ee42303f4371491db10b6348c39c3b822c985db3",
         "subject": "chore(deps): update anthropics/claude-code-action action to v1.0.266 (#433)",
         "at": "2026-10-31T01:13:36Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "49da04c83ec1e87505b353df37aa6cedffd6056e",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.77.0 (#432)",
-        "at": "2026-10-31T01:06:24Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "8a68598d1893fd76b3c548aabfb73f2d3236f295",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.76.0 (#431)",
-        "at": "2026-10-30T20:34:15Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
