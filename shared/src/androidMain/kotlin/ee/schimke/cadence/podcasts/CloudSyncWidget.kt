@@ -57,7 +57,7 @@ class CloudSyncWidget : AppWidgetProvider() {
           val active = info?.state in setOf(WorkInfo.State.ENQUEUED, WorkInfo.State.RUNNING, WorkInfo.State.BLOCKED)
           val status = when (info?.state) {
             WorkInfo.State.ENQUEUED, WorkInfo.State.BLOCKED -> "Waiting to start…"
-            WorkInfo.State.RUNNING -> "Running"
+            WorkInfo.State.RUNNING -> info.progress.getString(PROGRESS_STATUS) ?: "Running"
             WorkInfo.State.FAILED -> info.outputData.getString(ERROR) ?: "Could not complete. Try again."
             else -> null
           }
@@ -142,7 +142,11 @@ class CloudSyncWidget : AppWidgetProvider() {
       fun view(name: String) = context.resources.getIdentifier(name, "id", context.packageName)
       views.setTextViewText(view("cloud_source"), state.source)
       views.setTextViewText(view("cloud_details"), listOfNotNull(state.downloadedCount?.let { "$it downloaded" }, state.progress ?: state.checked).filter { it.isNotBlank() }.joinToString(" · "))
-      appIntent(context)?.let { views.setOnClickPendingIntent(view("cloud_source"), PendingIntent.getActivity(context, 0, it, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)) }
+      appIntent(context)?.let {
+        val open = PendingIntent.getActivity(context, 0, it, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+        views.setOnClickPendingIntent(view("cloud_source"), open)
+        views.setOnClickPendingIntent(view("cloud_details"), open)
+      }
       views.setTextViewText(view("cloud_download"), state.downloadNeeded?.let { "$it to download" } ?: state.downloads)
       views.setTextViewText(view("cloud_process"), state.processingNeeded?.let { "$it to process" } ?: state.processing)
       listOf(Triple("cloud_refresh", "refresh", state.canRefresh), Triple("cloud_download", "download", state.canDownload), Triple("cloud_process", "process", state.canProcess)).forEachIndexed { index, (name, payload, enabled) ->

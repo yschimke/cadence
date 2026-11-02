@@ -414,9 +414,12 @@ fun PodcastScreen(
   modifier: Modifier = Modifier,
 ) {
   val local by controller.state.collectAsState()
-  val busy by controller.busy.collectAsState()
-  val status by controller.status.collectAsState()
-  KeepPodcastScreenAwake(busy)
+  val controllerBusy by controller.busy.collectAsState()
+  val controllerStatus by controller.status.collectAsState()
+  val work = rememberPodcastWork(controller)
+  val busy = controllerBusy || work.active
+  val status = work.status ?: controllerStatus
+  KeepPodcastScreenAwake(controllerBusy && !work.active)
   val snackbar = remember { SnackbarHostState() }
   val scope = rememberCoroutineScope()
   fun action(block: suspend PodcastController.() -> Unit) {
@@ -433,9 +436,9 @@ fun PodcastScreen(
       contentPadding = PaddingValues(16.dp),
       verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-      if (busy)
+      if (busy || work.status != null)
         item {
-          LinearProgressIndicator(Modifier.fillMaxWidth())
+          if (busy) LinearProgressIndicator(Modifier.fillMaxWidth())
           Text(status, style = MaterialTheme.typography.bodySmall)
         }
       if (playlist == null) {
@@ -457,9 +460,12 @@ fun PodcastScreen(
       item {
         val prepared = library.manifests.isNotEmpty() && local.readyForDevice()
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-          if (!prepared)
-            Button(enabled = !busy, onClick = { action { prepare() } }) { Text("Download") }
-          else
+          if (!prepared) {
+            val missing = playlist.episodes.count { it.key !in local.downloadedEpisodeKeys }
+            if (work.supportsDownload && missing > 0)
+              Button(enabled = !busy, onClick = work.download) { Text("Download $missing") }
+            else Button(enabled = !busy, onClick = work.process) { Text("Prepare for headphones") }
+          } else
             Button(
               enabled = !busy,
               onClick = {
@@ -469,9 +475,7 @@ fun PodcastScreen(
               Text("Copy to headphones")
             }
           if (controller.canRefresh)
-            OutlinedButton(enabled = !busy, onClick = { action { refreshSource() } }) {
-              Text("Refresh")
-            }
+            OutlinedButton(enabled = !busy, onClick = work.refresh) { Text("Refresh") }
         }
         if (prepared && local.target.isBlank())
           Text(
@@ -622,33 +626,6 @@ private fun EpisodeCard(
         maxLines = 2,
         overflow = TextOverflow.Ellipsis,
       )
-      TextButton(onClick = { showDetails = !showDetails }) {
-        Text(if (showDetails) "Hide episode details" else "Episode details")
-      }
-      if (showDetails) {
-        if (episode.published.isNotBlank())
-          Text(episode.published, style = MaterialTheme.typography.labelMedium)
-        when {
-          detailsLoading ->
-            Text("Loading episode details…", style = MaterialTheme.typography.bodySmall)
-          detailsFailed ->
-            Text(
-              "Couldn’t load episode details. Close and reopen to retry.",
-              style = MaterialTheme.typography.bodySmall,
-            )
-          details != null -> {
-            val info = details!!
-            if (info.summary.isNotBlank())
-              Text(info.summary, style = MaterialTheme.typography.bodyMedium)
-            else Text("No episode summary available.", style = MaterialTheme.typography.bodySmall)
-            info.transcriptUrl?.let { url ->
-              TextButton(onClick = { runCatching { uriHandler.openUri(url) } }) {
-                Text("Open transcript")
-              }
-            }
-          }
-        }
-      }
       Text(
         "${formatTime(displayedPosition)} of ${formatTime(episode.durationMs)} heard",
         style = MaterialTheme.typography.bodyMedium,
@@ -694,9 +671,37 @@ private fun EpisodeCard(
             style = MaterialTheme.typography.bodySmall,
           )
       }
-      if (manifest != null) {
-        TextButton(onClick = { showParts = !showParts }) {
-          Text(if (showParts) "Hide parts" else "Show ${manifest.sections.size} parts")
+      Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        TextButton(onClick = { showDetails = !showDetails }) {
+          Text(if (showDetails) "Hide details" else "Episode details")
+        }
+        if (manifest != null)
+          TextButton(onClick = { showParts = !showParts }) {
+            Text(if (showParts) "Hide parts" else "Show ${manifest.sections.size} parts")
+          }
+      }
+      if (showDetails) {
+        if (episode.published.isNotBlank())
+          Text(episode.published, style = MaterialTheme.typography.labelMedium)
+        when {
+          detailsLoading ->
+            Text("Loading episode details…", style = MaterialTheme.typography.bodySmall)
+          detailsFailed ->
+            Text(
+              "Couldn’t load episode details. Close and reopen to retry.",
+              style = MaterialTheme.typography.bodySmall,
+            )
+          details != null -> {
+            val info = details!!
+            if (info.summary.isNotBlank())
+              Text(info.summary, style = MaterialTheme.typography.bodyMedium)
+            else Text("No episode summary available.", style = MaterialTheme.typography.bodySmall)
+            info.transcriptUrl?.let { url ->
+              TextButton(onClick = { runCatching { uriHandler.openUri(url) } }) {
+                Text("Open transcript")
+              }
+            }
+          }
         }
       }
       if (showParts)

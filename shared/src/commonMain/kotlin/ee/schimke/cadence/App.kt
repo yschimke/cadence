@@ -135,6 +135,8 @@ fun App() {
       }
       composable<ManageSync> {
         ManageSyncScreen(
+          podcastSource = podcastState.library.playlist?.name,
+          onOpenPodcasts = { navController.navigate(Podcasts) },
           modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
           onAddPodcasts = { navController.navigate(AddPodcasts) },
           onCloudBackup = { navController.navigate(CloudSync) },

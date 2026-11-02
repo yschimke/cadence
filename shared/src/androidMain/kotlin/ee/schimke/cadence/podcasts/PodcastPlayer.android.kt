@@ -1,14 +1,12 @@
 package ee.schimke.cadence.podcasts
 
+import android.app.PendingIntent
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.provider.Settings
-import android.media.session.MediaController as PlatformMediaController
-import android.media.session.MediaSessionManager
-import android.media.session.PlaybackState
-import android.os.Handler
-import android.os.Looper
+import android.net.Uri
+import android.widget.Toast
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
@@ -25,7 +23,6 @@ import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
 import com.google.common.util.concurrent.Futures
 import com.google.common.util.concurrent.FutureCallback
-import ee.schimke.cadence.bluetooth.NowPlayingNotificationListener
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -36,13 +33,14 @@ private const val POCKET_CASTS = "au.com.shiftyjelly.pocketcasts"
 actual fun rememberPodcastPlayer(controller: PodcastController, mediaAccess: Boolean): PodcastPlayerUi {
   val context = LocalContext.current.applicationContext
   val state by PodcastPlaybackService.playerState.collectAsState()
-  val manager = remember(context) { context.getSystemService(Context.MEDIA_SESSION_SERVICE) as MediaSessionManager }
   val mediaAppsInstalled = remember(context) {
     listOf(POCKET_CASTS, "com.spotify.music", "de.danoeh.antennapod").any { packageName ->
       runCatching { context.packageManager.getPackageInfo(packageName, 0) }.isSuccess
     }
   }
-  var pocketCasts by remember { mutableStateOf<MediaController?>(null) }
+  val pocketCastsInstalled = remember(context) {
+    runCatching { context.packageManager.getPackageInfo(POCKET_CASTS, 0) }.isSuccess
+  }
   var localPlayer by remember { mutableStateOf<MediaController?>(null) }
   // Robolectric's service binding returns a null ComponentName to Media3. App-tour previews
   // render without a real playback service; devices use the normal MediaController connection.
@@ -55,64 +53,30 @@ actual fun rememberPodcastPlayer(controller: PodcastController, mediaAccess: Boo
     }, ContextCompat.getMainExecutor(context))
     onDispose { disposed = true; localPlayer = null; MediaController.releaseFuture(future) }
   }
-  DisposableEffect(manager, mediaAccess) {
-    val component = ComponentName(context, NowPlayingNotificationListener::class.java)
-    var generation = 0
-    var platformToken: android.media.session.MediaSession.Token? = null
-    val executor = ContextCompat.getMainExecutor(context)
-    fun update(controllers: List<PlatformMediaController>?) {
-      val selected = controllers?.firstOrNull {
-        it.packageName == POCKET_CASTS &&
-          (it.playbackState?.actions ?: 0L) and PlaybackState.ACTION_PLAY_FROM_MEDIA_ID != 0L
-      }
-      if (selected?.sessionToken == platformToken) return
-      platformToken = selected?.sessionToken
-      val request = ++generation
-      pocketCasts?.release()
-      pocketCasts = null
-      if (selected == null) return
-      Futures.addCallback(SessionToken.createSessionToken(context, selected.sessionToken), object : FutureCallback<SessionToken> {
-        override fun onFailure(t: Throwable) = Unit
-        override fun onSuccess(token: SessionToken?) {
-          if (token == null || request != generation) return
-          Futures.addCallback(MediaController.Builder(context, token).buildAsync(), object : FutureCallback<MediaController> {
-            override fun onFailure(t: Throwable) = Unit
-            override fun onSuccess(player: MediaController?) {
-              if (request != generation) player?.release()
-              else pocketCasts = player?.takeIf { it.isCommandAvailable(Player.COMMAND_SET_MEDIA_ITEM) }
-                .also { if (it == null) player?.release() }
-            }
-          }, executor)
-        }
-      }, executor)
-    }
-    val listener = MediaSessionManager.OnActiveSessionsChangedListener { update(it) }
-    val registered = runCatching {
-      manager.addOnActiveSessionsChangedListener(listener, component, Handler(Looper.getMainLooper()))
-      update(manager.getActiveSessions(component))
-    }.isSuccess
-    onDispose {
-      generation++
-      pocketCasts?.release()
-      pocketCasts = null
-      if (registered) manager.removeOnActiveSessionsChangedListener(listener)
-    }
-  }
   return state.copy(
-    supported = localPlayer != null || pocketCasts != null,
-    pocketCastsAvailable = pocketCasts != null,
+    supported = localPlayer != null || pocketCastsInstalled,
+    pocketCastsAvailable = pocketCastsInstalled,
     suggestMediaAccess = mediaAppsInstalled && !mediaAccess,
     requestMediaAccess = {
       context.startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
     },
     playEpisode = { episode ->
-      val external = pocketCasts.takeIf { episode.backend == "pocket-casts" }
-      if (external != null) {
-        external.setMediaItem(MediaItem.Builder().setMediaId(episode.id).build())
-        external.prepare()
-        external.play()
-      }
-      else {
+      if (episode.backend == "pocket-casts" && pocketCastsInstalled) {
+        // Pocket Casts can open and play a specific episode even when its media session is absent.
+        val uri = Uri.Builder().scheme("https").authority("pca.st")
+          .appendPath("episode").appendPath(episode.id)
+          .appendQueryParameter("auto_play", "true").build()
+        val intent = Intent(Intent.ACTION_VIEW, uri).setPackage(POCKET_CASTS)
+          .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        try {
+          if (localPlayer?.isPlaying == true) localPlayer?.pause()
+          context.startActivity(intent)
+        } catch (_: android.content.ActivityNotFoundException) {
+          Toast.makeText(context, "Couldn't open this episode in Pocket Casts", Toast.LENGTH_LONG).show()
+        } catch (_: SecurityException) {
+          Toast.makeText(context, "Couldn't open this episode in Pocket Casts", Toast.LENGTH_LONG).show()
+        }
+      } else {
         val file = AndroidPodcastPlatform.instance(context).originalForPlayback(episode)
         if (file != null) localPlayer?.let { player ->
           val metadata = MediaMetadata.Builder().setTitle(episode.title).setArtist(episode.podcastTitle).build()
@@ -155,7 +119,11 @@ class PodcastPlaybackService : MediaSessionService() {
         override fun onPlaybackStateChanged(playbackState: Int) { publish(); if (playbackState == Player.STATE_ENDED) savePosition() }
       })
     }
-    session = MediaSession.Builder(this, player).build()
+    val launchIntent = requireNotNull(packageManager.getLaunchIntentForPackage(packageName))
+    val sessionActivity = PendingIntent.getActivity(
+      this, 0, launchIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+    )
+    session = MediaSession.Builder(this, player).setSessionActivity(sessionActivity).build()
     scope.launch {
       var seconds = 0
       while (isActive) {

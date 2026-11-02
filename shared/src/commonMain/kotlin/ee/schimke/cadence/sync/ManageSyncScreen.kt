@@ -5,11 +5,15 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeContentPadding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.toggleable
@@ -35,6 +39,7 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -43,6 +48,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -62,6 +68,8 @@ fun ManageSyncScreen(
   modifier: Modifier = Modifier,
   onAddPodcasts: () -> Unit = {},
   onCloudBackup: () -> Unit = {},
+  podcastSource: String? = null,
+  onOpenPodcasts: () -> Unit = {},
 ) {
   val viewModel = metroViewModel<FileSyncViewModel>()
   val state by viewModel.collectState()
@@ -120,6 +128,8 @@ fun ManageSyncScreen(
     onSetUsbMatch = viewModel::setUsbMatch,
     onAddPodcasts = onAddPodcasts,
     onCloudBackup = onCloudBackup,
+    podcastSource = podcastSource,
+    onOpenPodcasts = onOpenPodcasts,
   )
 }
 
@@ -140,87 +150,110 @@ fun ManageSyncContent(
   onSetUsbMatch: (String) -> Unit,
   onAddPodcasts: () -> Unit = {},
   onCloudBackup: () -> Unit = {},
+  podcastSource: String? = null,
+  onOpenPodcasts: () -> Unit = {},
 ) {
-  LazyColumn(
-    modifier = modifier.fillMaxWidth().safeContentPadding(),
-    contentPadding = PaddingValues(16.dp),
-    verticalArrangement = Arrangement.spacedBy(12.dp),
-  ) {
-    item {
-      Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Text("Manage sources", style = MaterialTheme.typography.headlineSmall)
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-          OutlinedButton(onClick = onAddPodcasts) { Text("Add podcasts") }
-          TextButton(onClick = onCloudBackup) { Text("Cross-device backup") }
+  var advanced by rememberSaveable { mutableStateOf(false) }
+  var headphones by rememberSaveable { mutableStateOf(false) }
+  Surface(modifier = modifier, color = MaterialTheme.colorScheme.background) {
+    LazyColumn(
+      modifier =
+        Modifier.fillMaxWidth()
+          .windowInsetsPadding(
+            WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal + WindowInsetsSides.Bottom)
+          ),
+      contentPadding = PaddingValues(16.dp),
+      verticalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+      item {
+        Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+          Text("Manage sources", style = MaterialTheme.typography.headlineSmall)
+          Text(
+            "Choose where your audio comes from.",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+          )
         }
       }
-    }
-    item {
-      TargetDeviceCard(
-        state = state,
-        onSelectTargetDevice = onSelectTargetDevice,
-        onSetAutoSync = onSetAutoSync,
-        onSetUsbMatch = onSetUsbMatch,
-      )
-    }
-    item { CrossDeviceSyncCard() }
-    item {
-      SectionHeader(
-        title = "Sync profiles",
-        subtitle =
-          "Each profile pulls from a set of sources into its own local folder, " +
-            "ready to copy to the headphones on USB connect.",
-        trailing = {
-          Button(onClick = onAddProfile, enabled = state.sources.isNotEmpty()) {
-            Text("Add profile")
+      if (podcastSource != null) {
+        item {
+          ElevatedCard(Modifier.fillMaxWidth()) {
+            Row(
+              Modifier.fillMaxWidth().padding(16.dp),
+              verticalAlignment = Alignment.CenterVertically,
+            ) {
+              Icon(Icons.Filled.Cloud, contentDescription = null)
+              Gap(12)
+              Column(Modifier.weight(1f)) {
+                Text("Podcasts", style = MaterialTheme.typography.titleMedium)
+                Text(
+                  podcastSource,
+                  style = MaterialTheme.typography.bodySmall,
+                  color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+              }
+              TextButton(onClick = onOpenPodcasts) { Text("Manage") }
+            }
           }
-        },
-      )
-    }
-    if (state.profiles.isEmpty()) {
-      item {
-        Text(
-          if (state.sources.isEmpty())
-            "Add a source first, then create a profile to combine sources into a single staging area."
-          else "No profiles yet. Add one — its first refresh will run immediately.",
-          style = MaterialTheme.typography.bodyMedium,
-        )
+        }
       }
-    }
-    items(state.profiles, key = { it.id }, contentType = { "profile" }) { profile ->
-      ProfileCard(
-        profile = profile,
-        sources = state.sources,
-        refresh = state.refresh,
-        onRefreshNow = { onRefreshProfile(profile.id) },
-        onToggleAuto = { onToggleAutoRefresh(profile, it) },
-        onDelete = { onDeleteProfile(profile.id) },
-      )
-    }
-    item {
-      SectionHeader(
-        title = "Sources",
-        subtitle =
-          "Pick any folder reachable through Android's system file picker — local, cloud, SMB, etc.",
-        trailing = {
-          OutlinedButton(onClick = onAddLocalDirectory) { Text("Add source") }
-          Gap(8)
-          OutlinedButton(onClick = onAddNfsShare) { Text("Add NFS") }
-        },
-      )
-    }
-    item { DiscoverAppsRow(onDiscoverApps = onDiscoverApps) }
-    if (state.sources.isEmpty()) {
-      item {
-        Text(
-          "No sources yet. Tap “Add source” to pick a local folder, Drive, OneDrive, " +
-            "or any folder exposed by an installed file manager.",
-          style = MaterialTheme.typography.bodyMedium,
-        )
+      items(state.sources, key = { it.id }, contentType = { "source" }) { source ->
+        SourceCard(source = source, onRemove = { onRemoveSource(source.id) })
       }
-    }
-    items(state.sources, key = { it.id }, contentType = { "source" }) { source ->
-      SourceCard(source = source, onRemove = { onRemoveSource(source.id) })
+      item {
+        Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+          if (podcastSource == null)
+            OutlinedButton(onClick = onAddPodcasts) { Text("Add podcasts") }
+          OutlinedButton(onClick = onAddLocalDirectory) { Text("Add files or folders") }
+        }
+      }
+      item {
+        TextButton(onClick = { advanced = !advanced }) {
+          Text(if (advanced) "Hide advanced options" else "Advanced options")
+        }
+      }
+      if (advanced) {
+        item { TextButton(onClick = onCloudBackup) { Text("Cross-device backup") } }
+        if (podcastSource != null)
+          item { TextButton(onClick = onAddPodcasts) { Text("Change podcast source") } }
+        item { OutlinedButton(onClick = onAddNfsShare) { Text("Add NFS share") } }
+        item { DiscoverAppsRow(onDiscoverApps = onDiscoverApps) }
+        item {
+          TextButton(onClick = { headphones = !headphones }) {
+            Text(if (headphones) "Hide headphone sync settings" else "Headphone sync settings")
+          }
+        }
+        if (headphones)
+          item { TargetDeviceCard(state, onSelectTargetDevice, onSetAutoSync, onSetUsbMatch) }
+        item {
+          SectionHeader(
+            title = "Sync profiles",
+            subtitle = "Combine file sources and refresh them in the background.",
+            trailing = {
+              Button(onClick = onAddProfile, enabled = state.sources.isNotEmpty()) {
+                Text("Add profile")
+              }
+            },
+          )
+        }
+        if (state.profiles.isEmpty())
+          item {
+            Text(
+              "Add a file source to create a sync profile.",
+              style = MaterialTheme.typography.bodyMedium,
+            )
+          }
+        items(state.profiles, key = { it.id }, contentType = { "profile" }) { profile ->
+          ProfileCard(
+            profile = profile,
+            sources = state.sources,
+            refresh = state.refresh,
+            onRefreshNow = { onRefreshProfile(profile.id) },
+            onToggleAuto = { onToggleAutoRefresh(profile, it) },
+            onDelete = { onDeleteProfile(profile.id) },
+          )
+        }
+      }
     }
   }
 }

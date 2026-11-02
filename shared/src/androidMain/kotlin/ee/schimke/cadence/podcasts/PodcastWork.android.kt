@@ -1,22 +1,37 @@
 package ee.schimke.cadence.podcasts
 
+import android.Manifest
+import android.app.PendingIntent
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.content.pm.ServiceInfo
+import android.content.pm.PackageManager
 import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.app.NotificationCompat
 import androidx.work.*
+import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.drop
+import kotlinx.coroutines.launch
 
 internal const val WORK_NAME = "podcast-prepare-now"
 internal const val TASK = "task"
 internal const val ERROR = "error"
+internal const val PROGRESS_STATUS = "progress-status"
 
 internal fun enqueuePodcastWork(context: Context, task: String): Operation {
   val request = OneTimeWorkRequestBuilder<PodcastPreparationWorker>()
     .setInputData(workDataOf(TASK to task))
+    .apply {
+      if (task == "download" || task == "refresh") {
+        setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build())
+      }
+    }
     .build()
   return WorkManager.getInstance(context.applicationContext).enqueueUniqueWork(WORK_NAME, ExistingWorkPolicy.KEEP, request)
 }
@@ -29,6 +44,10 @@ actual fun rememberPodcastWork(controller: PodcastController): PodcastWorkUi {
   val current = infos.firstOrNull { !it.state.isFinished } ?: infos.lastOrNull()
   val active = current?.state in setOf(WorkInfo.State.ENQUEUED, WorkInfo.State.RUNNING, WorkInfo.State.BLOCKED)
   val status by controller.status.collectAsState()
+  // Notification permission is optional for the work itself. Start it even if the user declines.
+  val notificationPermission = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {
+    enqueuePodcastWork(context, "download")
+  }
   return PodcastWorkUi(
     supportsDownload = true,
     active = active,
@@ -38,7 +57,13 @@ actual fun rememberPodcastWork(controller: PodcastController): PodcastWorkUi {
       current?.state == WorkInfo.State.FAILED -> current.outputData.getString(ERROR) ?: "Could not complete. Try again."
       else -> null
     },
-    download = { enqueuePodcastWork(context, "download") },
+    download = {
+      if (Build.VERSION.SDK_INT >= 33 && context.checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+        notificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
+      } else {
+        enqueuePodcastWork(context, "download")
+      }
+    },
     process = { enqueuePodcastWork(context, "process") },
     refresh = { enqueuePodcastWork(context, "refresh") },
   )
@@ -49,14 +74,32 @@ class PodcastPreparationWorker(context: Context, params: WorkerParameters) : Cor
     val task = inputData.getString(TASK)
     val manager = applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     manager.createNotificationChannel(NotificationChannel("podcast-preparation", "Podcast preparation", NotificationManager.IMPORTANCE_LOW))
-    val notification = NotificationCompat.Builder(applicationContext, "podcast-preparation")
+    val title = when (task) { "download" -> "Downloading podcasts"; "refresh" -> "Refreshing podcasts"; else -> "Processing podcasts" }
+    val openIntent = applicationContext.packageManager.getLaunchIntentForPackage(applicationContext.packageName)
+      ?.let { PendingIntent.getActivity(applicationContext, 0, it, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE) }
+    fun notification(message: String) = NotificationCompat.Builder(applicationContext, "podcast-preparation")
       .setSmallIcon(android.R.drawable.stat_sys_download)
-      .setContentTitle(when (task) { "download" -> "Downloading podcasts"; "refresh" -> "Refreshing podcasts"; else -> "Processing podcasts" })
-      .setContentText("Cadence is working in the background")
-      .setOngoing(true).build()
-    setForeground(if (Build.VERSION.SDK_INT >= 29) ForegroundInfo(9013, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC) else ForegroundInfo(9013, notification))
+      .setContentTitle(title)
+      .setContentText(message)
+      .setStyle(NotificationCompat.BigTextStyle().bigText(message))
+      .setContentIntent(openIntent)
+      .setOnlyAlertOnce(true)
+      .setProgress(0, 0, true)
+      .setOngoing(true)
+      .addAction(android.R.drawable.ic_menu_close_clear_cancel, "Cancel", WorkManager.getInstance(applicationContext).createCancelPendingIntent(id))
+      .build()
+    val initial = notification("Preparing…")
+    setForeground(if (Build.VERSION.SDK_INT >= 29) ForegroundInfo(9013, initial, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC) else ForegroundInfo(9013, initial))
     val controller = AndroidPodcastPlatform.instance(applicationContext).controller()
-    val ok = controller.run {
+    val ok = coroutineScope {
+      val updates = launch(start = CoroutineStart.UNDISPATCHED) {
+        controller.status.drop(1).collect { message ->
+          setProgress(workDataOf(PROGRESS_STATUS to message))
+          manager.notify(9013, notification(message))
+        }
+      }
+      try {
+        controller.run {
       if (!loaded.value) load()
       when (task) {
         "download" -> downloadOriginals()
@@ -67,6 +110,10 @@ class PodcastPreparationWorker(context: Context, params: WorkerParameters) : Cor
         }
         "process" -> prepare()
         else -> throw PodcastProblem("Unknown podcast task")
+      }
+        }
+      } finally {
+        updates.cancel()
       }
     }
     return if (ok) Result.success() else Result.failure(workDataOf(ERROR to controller.status.value))
