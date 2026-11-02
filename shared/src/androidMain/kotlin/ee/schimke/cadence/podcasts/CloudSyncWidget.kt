@@ -3,15 +3,18 @@ package ee.schimke.cadence.podcasts
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
+import android.content.ComponentCallbacks
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.widget.RemoteViews
 import androidx.annotation.RequiresApi
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
+import ee.schimke.cadence.widgets.systemWidgetColors
 import ee.schimke.composeai.rcwidget.creation.rcWidgetHostAction
 import ee.schimke.composeai.rcwidget.launcher.RcLauncherWidgets
 import ee.schimke.composeai.rcwidget.launcher.RcWidgetSizing
@@ -51,6 +54,14 @@ class CloudSyncWidget : AppWidgetProvider() {
       val app = context.applicationContext
       // A previous process may have died during a controller operation.
       prefs(app).edit().putBoolean("busy", false).apply()
+      // Captured documents hold resolved colours: recapture when light/dark changes.
+      app.registerComponentCallbacks(
+        object : ComponentCallbacks {
+          override fun onConfigurationChanged(newConfig: Configuration) = updateAll(app)
+
+          @Deprecated("Deprecated in Java") override fun onLowMemory() = Unit
+        }
+      )
       scope.launch {
         WorkManager.getInstance(app).getWorkInfosForUniqueWorkFlow(WORK_NAME).distinctUntilChanged().collect { infos ->
           val info = infos.firstOrNull { !it.state.isFinished } ?: infos.lastOrNull()
@@ -124,12 +135,16 @@ class CloudSyncWidget : AppWidgetProvider() {
     private suspend fun remoteViews(context: Context, manager: AppWidgetManager, id: Int, state: CloudSyncStatus): RemoteViews {
       val slot = RcWidgetSizing.slotOf(manager, id)
       val capture = captureLauncherWidget(context, slot) {
-        CloudSyncWidgetContent(state,
+        CloudSyncWidgetContent(
+          state,
           onOpen = rcWidgetHostAction(name = "open", payload = "open"),
           onRefresh = rcWidgetHostAction(name = "refresh", payload = "refresh"),
           onDownload = rcWidgetHostAction(name = "download", payload = "download"),
           onProcess = rcWidgetHostAction(name = "process", payload = "process"),
-          widthDp = slot.widthDp, heightDp = slot.heightDp)
+          widthDp = slot.widthDp,
+          heightDp = slot.heightDp,
+          colors = context.systemWidgetColors(),
+        )
       }
       val taps = capture.actions.mapNotNull { (actionId, payload) ->
         val intent = if (payload == "open") appIntent(context)?.let { RcLauncherWidgets.actionActivity(context, it, id, actionId) } else broadcast(context, id, actionId, payload)

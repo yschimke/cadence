@@ -12,8 +12,10 @@ Roboto Flex is loaded through the Google Fonts downloadable provider, so it adds
 nothing to the APK. Material 3 sizes and tracking are kept; only the family
 changes.
 
-The fixed `CadencePalette` remains only for surfaces that can't follow the app
-theme, such as the home screen widget.
+Launcher Remote Compose widgets follow the system light/dark Material scheme
+via `WidgetColors` (dynamic colour on device, baseline light/dark in previews),
+and recapture when the configuration changes. The fixed `CadencePalette` remains
+only for non-themed decorative accents that sit outside that path.
 
 ## Content first
 
