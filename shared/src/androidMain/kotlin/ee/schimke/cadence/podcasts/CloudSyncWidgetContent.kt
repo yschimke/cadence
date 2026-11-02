@@ -58,7 +58,13 @@ fun CloudSyncWidgetContent(
 ) {
   val scale = minOf(widthDp / 250f, heightDp / 180f).coerceIn(0.85f, 1.35f)
   val padding = 12 * scale
-  val headerWidth = (widthDp - padding * 2 - 48 - 16 * scale).coerceAtLeast(90f)
+  val refreshDp = if (status.hasSource) 48f else 0f
+  val headerGap = 8 * scale
+  // Source title gets the full remaining width beside refresh — not a shared line with
+  // the 48dp control (that clipped "Swimming" on 250dp; Remote ellipsis does not draw).
+  val titleWidth =
+    (widthDp - padding * 2 - refreshDp - if (status.hasSource) headerGap else 0f)
+      .coerceAtLeast(90f)
   // Body/eyebrow stay at least 12sp after scale (launcher.type.min-size).
   val labelSp = (12 * scale).coerceAtLeast(12f)
   val titleSp = (13 * scale).coerceAtLeast(12f)
@@ -92,15 +98,14 @@ fun CloudSyncWidgetContent(
   ) {
     RemoteRow(
       modifier = RemoteModifier.fillMaxWidth(),
-      horizontalArrangement = RemoteArrangement.spacedBy((8 * scale).rdp),
-      verticalAlignment = RemoteAlignment.CenterVertically,
+      horizontalArrangement = RemoteArrangement.spacedBy(headerGap.rdp),
+      verticalAlignment = RemoteAlignment.Top,
     ) {
-      SyncStatusIcon(Icons.Default.Cloud, colors.primary, (20 * scale).toInt())
       RemoteColumn(
         modifier =
-          RemoteModifier.width((headerWidth - 20 * scale).coerceAtLeast(60f).rdp)
+          RemoteModifier.width(titleWidth.rdp)
             // 48dp minimum: ATF TouchTargetSizeCheck on Open/Connect podcasts.
-            .heightIn(48.rdp, 72.rdp)
+            .heightIn(48.rdp, 96.rdp)
             .let {
               if (onOpen != null)
                 it
@@ -112,15 +117,21 @@ fun CloudSyncWidgetContent(
                   .clickable(onOpen)
               else it
             },
-        verticalArrangement = RemoteArrangement.Center,
+        verticalArrangement = RemoteArrangement.spacedBy((2 * scale).rdp),
       ) {
-        RemoteText(
-          "CLOUD SYNC".rs,
-          color = colors.supporting.rc,
-          fontSize = labelSp.rsp,
-          fontWeight = FontWeight.Medium,
-          maxLines = 1,
-        )
+        RemoteRow(
+          horizontalArrangement = RemoteArrangement.spacedBy(headerGap.rdp),
+          verticalAlignment = RemoteAlignment.CenterVertically,
+        ) {
+          SyncStatusIcon(Icons.Default.Cloud, colors.primary, (20 * scale).toInt())
+          RemoteText(
+            "CLOUD SYNC".rs,
+            color = colors.supporting.rc,
+            fontSize = labelSp.rsp,
+            fontWeight = FontWeight.Medium,
+            maxLines = 1,
+          )
+        }
         RemoteText(
           status.source.rs,
           color = colors.onBackground.rc,
