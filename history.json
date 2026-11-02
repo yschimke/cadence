@@ -1,10 +1,17 @@
 {
     "formatVersion": "compose-preview-history/v1",
-    "generatedFrom": "e068a157482dda74d77514e13fa010aea2d8cddb",
+    "generatedFrom": "978e1f9d1fce0ae3fb97acdc5deacd7ac325cced",
     "previews": {
         "composeApp/activity__MainActivity": {
             "path": "renders/composeApp/activity__MainActivity.png",
             "versions": [
+                {
+                    "blob": "9e7ab78db78f57b764ea9765609d87f98a08abe2",
+                    "commit": "978e1f9d1fce0ae3fb97acdc5deacd7ac325cced",
+                    "date": "2026-11-02T22:13:13Z",
+                    "sourceSha": "f956bee9",
+                    "commits": 1
+                },
                 {
                     "blob": "245dc4ef54c871e32b41f41ff5e61bd38cadaccd",
                     "commit": "e068a157482dda74d77514e13fa010aea2d8cddb",
@@ -83,7 +90,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 11,
+            "observations": 12,
             "unstable": false,
             "flapCount": 1
         },
@@ -662,6 +669,13 @@
             "path": "renders/composeApp/CloudSyncWidgetLightPreview_Cloud_sync_widget_light-b8e2ad8c.png",
             "versions": [
                 {
+                    "blob": "f708a3c5665d13edc6854115000f28cc57837b32",
+                    "commit": "978e1f9d1fce0ae3fb97acdc5deacd7ac325cced",
+                    "date": "2026-11-02T22:13:13Z",
+                    "sourceSha": "f956bee9",
+                    "commits": 1
+                },
+                {
                     "blob": "ddfce3bd172236d39109e1e3b1978ff73297f1ad",
                     "commit": "e068a157482dda74d77514e13fa010aea2d8cddb",
                     "date": "2026-11-02T22:00:27Z",
@@ -669,13 +683,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.CloudSyncWidgetPreview_Cloud sync widget": {
             "path": "renders/composeApp/CloudSyncWidgetPreview_Cloud_sync_widget-761df7cb.png",
             "versions": [
+                {
+                    "blob": "40a409bd9005a9f041236c971cf9d08af09f8058",
+                    "commit": "978e1f9d1fce0ae3fb97acdc5deacd7ac325cced",
+                    "date": "2026-11-02T22:13:13Z",
+                    "sourceSha": "f956bee9",
+                    "commits": 1
+                },
                 {
                     "blob": "74e4c49f7f5d8a16078ed9a596af4ad553396024",
                     "commit": "e068a157482dda74d77514e13fa010aea2d8cddb",
@@ -698,13 +719,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 3,
+            "observations": 4,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.CloudSyncWidgetSmallPreview_Cloud sync widget · small": {
             "path": "renders/composeApp/CloudSyncWidgetSmallPreview_Cloud_sync_widget_small-f212ff03.png",
             "versions": [
+                {
+                    "blob": "5b5de11d6ff82ebf39a324d7234636813f633b47",
+                    "commit": "978e1f9d1fce0ae3fb97acdc5deacd7ac325cced",
+                    "date": "2026-11-02T22:13:13Z",
+                    "sourceSha": "f956bee9",
+                    "commits": 1
+                },
                 {
                     "blob": "4bcf2cbe0eed9812c05020091f204339ea39575c",
                     "commit": "e068a157482dda74d77514e13fa010aea2d8cddb",
@@ -727,7 +755,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 3,
+            "observations": 4,
             "unstable": false,
             "flapCount": 0
         },
@@ -822,6 +850,13 @@
             "path": "renders/composeApp/PodcastWidgetMp3LargePreview_Podcast_widget_MP3_large-06e82c93.png",
             "versions": [
                 {
+                    "blob": "9f2733ff71007ec02d67759757c28ba02004ca1f",
+                    "commit": "978e1f9d1fce0ae3fb97acdc5deacd7ac325cced",
+                    "date": "2026-11-02T22:13:13Z",
+                    "sourceSha": "f956bee9",
+                    "commits": 1
+                },
+                {
                     "blob": "5258b76a16283bc9f5339414704b3b927c6899e2",
                     "commit": "e068a157482dda74d77514e13fa010aea2d8cddb",
                     "date": "2026-11-02T22:00:27Z",
@@ -906,13 +941,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 12,
+            "observations": 13,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetMp3LightPreview_Podcast widget · MP3 · light": {
             "path": "renders/composeApp/PodcastWidgetMp3LightPreview_Podcast_widget_MP3_light-cdc23576.png",
             "versions": [
+                {
+                    "blob": "852b97a298bf6b8398d8c4218d3d992bf1e05f6b",
+                    "commit": "978e1f9d1fce0ae3fb97acdc5deacd7ac325cced",
+                    "date": "2026-11-02T22:13:13Z",
+                    "sourceSha": "f956bee9",
+                    "commits": 1
+                },
                 {
                     "blob": "d52db64ff8c7f0b29b70e86005d68ed0b6fe396d",
                     "commit": "e068a157482dda74d77514e13fa010aea2d8cddb",
@@ -921,13 +963,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetMp3Preview_Podcast widget · MP3": {
             "path": "renders/composeApp/PodcastWidgetMp3Preview_Podcast_widget_MP3-3525244f.png",
             "versions": [
+                {
+                    "blob": "b6c30123ea91b50315e357b7853e78db56c1bcdb",
+                    "commit": "978e1f9d1fce0ae3fb97acdc5deacd7ac325cced",
+                    "date": "2026-11-02T22:13:13Z",
+                    "sourceSha": "f956bee9",
+                    "commits": 1
+                },
                 {
                     "blob": "7b5b6424d23cee04d206dd2d1227edaecff73ba9",
                     "commit": "e068a157482dda74d77514e13fa010aea2d8cddb",
@@ -1013,7 +1062,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 12,
+            "observations": 13,
             "unstable": false,
             "flapCount": 0
         },
@@ -1383,6 +1432,13 @@
             "path": "renders/composeApp/HomeEmptyPreview_Home_empty-571e68af.png",
             "versions": [
                 {
+                    "blob": "92069f4f7668ef842f9e4a4d88101d32c78ef5f0",
+                    "commit": "978e1f9d1fce0ae3fb97acdc5deacd7ac325cced",
+                    "date": "2026-11-02T22:13:13Z",
+                    "sourceSha": "f956bee9",
+                    "commits": 1
+                },
+                {
                     "blob": "8cb4e6e887cfce173ef48978f6211e41153d51b6",
                     "commit": "e068a157482dda74d77514e13fa010aea2d8cddb",
                     "date": "2026-11-02T22:00:27Z",
@@ -1432,7 +1488,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 7,
+            "observations": 8,
             "unstable": false,
             "flapCount": 0
         },
