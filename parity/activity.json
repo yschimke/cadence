@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-02T08:40:19.903Z",
+  "generatedAt": "2026-11-02T21:50:57.891Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "31f12913123ac80d149828e56457b7388ed08807",
+        "subject": "fix: polish headphone and podcast launcher widgets (#487)",
+        "at": "2026-11-02T21:39:23Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "e89a3e4a0e85d9524dac174edf55c8aa34beae00",
         "subject": "chore(main): release 0.1.13 (#486)",
@@ -475,14 +483,6 @@
         "subject": "fix: put the AppState transform path behind a flag, off by default (#429)",
         "at": "2026-10-30T18:37:20Z",
         "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "67836c1ae63d16447b6872a07cec1178e543a50d",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.75.0 (#428)",
-        "at": "2026-10-30T10:13:41Z",
-        "author": "renovate[bot]",
         "previewIds": [],
         "components": []
       }
