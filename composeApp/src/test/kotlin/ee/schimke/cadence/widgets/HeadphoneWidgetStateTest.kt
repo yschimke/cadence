@@ -61,10 +61,10 @@ class HeadphoneWidgetStateTest {
   }
 
   @Test
-  fun mp3DetailIsBatteryAndOrderAndExtraIsSettings() {
+  fun mp3DetailIsBatteryAndExtraIsSettingsIncludingOrder() {
     val state = mp3(playing = true)
-    assertEquals("78% · ~4h 45m MP3 · ~7h BT · Shuffle", state.detail)
-    assertEquals("Swimming EQ · Volume 56%", state.extra)
+    assertEquals("78% · ~4h 45m MP3 · ~7h BT", state.detail)
+    assertEquals("Shuffle · Swimming EQ · Volume 56%", state.extra)
   }
 
   @Test
@@ -165,6 +165,14 @@ class HeadphoneWidgetStateTest {
     assertFalse(fourByTwo.showExtra)
     assertTrue(fourByTwo.showModeSwitch)
     assertTrue(HeadphoneWidgetLayout.of(mp3(), 300, 252).showExtra)
+  }
+
+  @Test
+  fun narrowTallDropsDetailToAvoidClippingBatteryLine() {
+    val threeByTwo = HeadphoneWidgetLayout.of(mp3(), widthDp = 232, heightDp = 152)
+    assertFalse(threeByTwo.singleRow)
+    assertFalse(threeByTwo.showDetail)
+    assertTrue(HeadphoneWidgetLayout.of(mp3(), widthDp = 312, heightDp = 152).showDetail)
   }
 
   @Test

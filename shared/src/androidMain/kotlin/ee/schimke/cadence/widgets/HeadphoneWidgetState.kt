@@ -26,8 +26,9 @@ enum class HeadphoneWidgetAction(val wireName: String, val label: String) {
  *
  * - [title], the largest text, is what is happening now: the track playing, whether the headset is
  *   playing from its own storage, or that nothing is connected.
- * - [detail] is what the user checks at a glance: the artist, or battery and playback order.
- * - [extra], shown only at the largest sizes, holds the settings that rarely change.
+ * - [detail] is what the user checks at a glance: the artist, or battery and playtime.
+ * - [extra], shown only at the largest sizes, holds the settings that rarely change
+ *   (EQ, volume, playback order).
  *
  * The device's name is not a heading: for the OpenSwim Pro the widget exists for, it is constant
  * and says nothing. It appears only when some other headset is connected. The mode is carried by
@@ -74,8 +75,15 @@ data class HeadphoneWidgetState(
         return HeadphoneWidgetState(
           title = title,
           shortTitle = short,
-          detail = joined(battery, bluetooth.playbackOrder?.label),
-          extra = joined(eq(bluetooth), bluetooth.headsetVolumePercent?.let { "Volume $it%" }),
+          // Battery alone is the glance line; order sits with EQ/volume so a 3×2
+          // slot does not clip "… · Shuffle" off the end of a long battery string.
+          detail = battery,
+          extra =
+            joined(
+              bluetooth.playbackOrder?.label,
+              eq(bluetooth),
+              bluetooth.headsetVolumePercent?.let { "Volume $it%" },
+            ),
           transport = transport(playing = bluetooth.headsetPlaying == true),
           modeSwitch = HeadphoneWidgetAction.SwitchToBluetooth,
           showWater = true,
@@ -174,10 +182,11 @@ data class HeadphoneWidgetLayout(
           showModeSwitch = false,
         )
       }
+      // Detail needs width as well as height: a 3×2 (~232dp) clips the battery line.
       return HeadphoneWidgetLayout(
         singleRow = false,
         showTitle = true,
-        showDetail = heightDp >= 150 && state.detail != null,
+        showDetail = heightDp >= 150 && widthDp >= 280 && state.detail != null,
         showExtra = heightDp >= 190 && state.extra != null,
         transport = fit(state.transport, transportRoom),
         showModeSwitch = modeSwitch,

@@ -60,6 +60,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -387,7 +388,7 @@ private fun HomeOverview(
       Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
         Text(
           "Sync with headphones",
-          Modifier.weight(1f),
+          Modifier.weight(1f).semantics { heading() },
           style = MaterialTheme.typography.titleMedium,
         )
         if (device != null)
@@ -550,6 +551,7 @@ private fun SectionHeader(
         style = MaterialTheme.typography.titleMedium,
         maxLines = 1,
         overflow = TextOverflow.Ellipsis,
+        modifier = Modifier.semantics { heading() },
       )
       Text(
         detail,
