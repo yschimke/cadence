@@ -8,7 +8,14 @@ import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.GraphicEq
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.remote.creation.compose.action.Action
-import androidx.compose.remote.creation.compose.layout.*
+import androidx.compose.remote.creation.compose.layout.RemoteAlignment
+import androidx.compose.remote.creation.compose.layout.RemoteArrangement
+import androidx.compose.remote.creation.compose.layout.RemoteBox
+import androidx.compose.remote.creation.compose.layout.RemoteCanvas
+import androidx.compose.remote.creation.compose.layout.RemoteColumn
+import androidx.compose.remote.creation.compose.layout.RemoteComposable
+import androidx.compose.remote.creation.compose.layout.RemoteRow
+import androidx.compose.remote.creation.compose.layout.RemoteText
 import androidx.compose.remote.creation.compose.modifier.RemoteModifier
 import androidx.compose.remote.creation.compose.modifier.background
 import androidx.compose.remote.creation.compose.modifier.clickable
@@ -35,7 +42,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import ee.schimke.cadence.theme.CadencePalette
+import ee.schimke.cadence.widgets.WidgetColors
 
 @Composable
 @RemoteComposable
@@ -47,6 +54,7 @@ fun CloudSyncWidgetContent(
   onProcess: Action? = null,
   widthDp: Int = 250,
   heightDp: Int = 180,
+  colors: WidgetColors = WidgetColors.Dark,
 ) {
   val scale = minOf(widthDp / 250f, heightDp / 180f).coerceIn(0.85f, 1.35f)
   val padding = 12 * scale
@@ -70,7 +78,7 @@ fun CloudSyncWidgetContent(
   RemoteColumn(
     modifier =
       RemoteModifier.fillMaxSize()
-        .background(CadencePalette.Grey20.rc)
+        .background(colors.background.rc)
         .padding((12 * scale).rdp),
     verticalArrangement = RemoteArrangement.spacedBy((10 * scale).rdp),
   ) {
@@ -79,7 +87,7 @@ fun CloudSyncWidgetContent(
       horizontalArrangement = RemoteArrangement.spacedBy((8 * scale).rdp),
       verticalAlignment = RemoteAlignment.CenterVertically,
     ) {
-      SyncStatusIcon(Icons.Default.Cloud, CadencePalette.Blue80, (20 * scale).toInt())
+      SyncStatusIcon(Icons.Default.Cloud, colors.primary, (20 * scale).toInt())
       RemoteColumn(
         modifier =
           RemoteModifier.width((headerWidth - 20 * scale).coerceAtLeast(60f).rdp)
@@ -99,14 +107,14 @@ fun CloudSyncWidgetContent(
       ) {
         RemoteText(
           "CLOUD SYNC".rs,
-          color = CadencePalette.GreyVariant80.rc,
+          color = colors.supporting.rc,
           fontSize = labelSp.rsp,
           fontWeight = FontWeight.Medium,
           maxLines = 1,
         )
         RemoteText(
           status.source.rs,
-          color = CadencePalette.Grey90.rc,
+          color = colors.onBackground.rc,
           fontSize = titleSp.rsp,
           fontWeight = FontWeight.Medium,
           maxLines = 1,
@@ -128,7 +136,7 @@ fun CloudSyncWidgetContent(
         ) {
           SyncStatusIcon(
             Icons.Default.Refresh,
-            if (refresh != null) CadencePalette.Blue80 else CadencePalette.GreyVariant80,
+            if (refresh != null) colors.primary else colors.supporting,
             (22 * scale).toInt(),
           )
         }
@@ -146,9 +154,11 @@ fun CloudSyncWidgetContent(
           scale,
           cellWidth,
           labelSp,
+          colors,
           onDownload.takeIf { status.canDownload } ?: onOpen,
           if (status.canDownload) "Download ${status.downloadNeeded} episodes" else "Open podcasts",
           emphasize = status.canDownload,
+          pending = true,
         )
         CloudMetric(
           status.processingNeeded,
@@ -157,9 +167,11 @@ fun CloudSyncWidgetContent(
           scale,
           cellWidth,
           labelSp,
+          colors,
           onProcess.takeIf { status.canProcess } ?: onOpen,
           if (status.canProcess) "Process ${status.processingNeeded} episodes" else "Open podcasts",
           emphasize = status.canProcess,
+          pending = true,
         )
         // Smallest footprints keep only the actionable metrics.
         if (!compact) {
@@ -171,46 +183,53 @@ fun CloudSyncWidgetContent(
               scale,
               cellWidth,
               labelSp,
+              colors,
               onOpen,
               "Open podcasts",
               emphasize = false,
+              pending = false,
             )
           }
         }
       }
       RemoteText(
         (status.progress ?: status.checked).rs,
-        color = CadencePalette.GreyVariant80.rc,
+        color = colors.supporting.rc,
         fontSize = labelSp.rsp,
         maxLines = 1,
         overflow = TextOverflow.Ellipsis,
       )
     } else if (status.hasSource) {
-      RemoteText(status.downloads.rs, color = CadencePalette.Grey90.rc, fontSize = 12.rsp, maxLines = 1)
+      RemoteText(
+        status.downloads.rs,
+        color = colors.onBackground.rc,
+        fontSize = 12.rsp,
+        maxLines = 1,
+      )
       RemoteText(
         status.processing.rs,
-        color = CadencePalette.GreyVariant80.rc,
+        color = colors.supporting.rc,
         fontSize = 12.rsp,
         maxLines = 1,
       )
       RemoteText(
         (status.progress ?: status.checked).rs,
-        color = CadencePalette.GreyVariant80.rc,
+        color = colors.supporting.rc,
         fontSize = labelSp.rsp,
         maxLines = 1,
       )
     } else if (status.progress != null) {
-      RemoteText(status.progress.rs, color = CadencePalette.Blue80.rc, fontSize = 12.rsp, maxLines = 1)
+      RemoteText(status.progress.rs, color = colors.primary.rc, fontSize = 12.rsp, maxLines = 1)
     }
     RemoteRow(
       modifier = RemoteModifier.fillMaxWidth(),
       horizontalArrangement = RemoteArrangement.spacedBy((14 * scale).rdp),
     ) {
-      if (!status.hasSource && onOpen != null) CloudAction("Connect", onOpen, scale)
+      if (!status.hasSource && onOpen != null) CloudAction("Connect", onOpen, scale, colors)
       if (status.hasSource && status.downloadNeeded == null && status.canDownload && onDownload != null)
-        CloudAction("Download", onDownload, scale)
+        CloudAction("Download", onDownload, scale, colors)
       if (status.hasSource && status.processingNeeded == null && status.canProcess && onProcess != null)
-        CloudAction("Process", onProcess, scale)
+        CloudAction("Process", onProcess, scale, colors)
     }
   }
 }
@@ -224,19 +243,24 @@ private fun CloudMetric(
   scale: Float,
   width: Float,
   labelSp: Float,
+  colors: WidgetColors,
   action: Action? = null,
   description: String = "",
   emphasize: Boolean = true,
+  pending: Boolean = true,
 ) {
   val color =
-    if (value > 0 && label != "downloaded") CadencePalette.Orange80 else CadencePalette.Aqua80
+    when {
+      value > 0 && pending -> colors.warning
+      else -> colors.tertiary
+    }
   // Same chip chrome for every metric so "downloaded" does not look like a broken cell.
   RemoteColumn(
     modifier =
       RemoteModifier.width(width.rdp)
         .height((60 * scale).coerceAtLeast(48f).rdp)
         .clip(RemoteRoundedCornerShape(12.rdp))
-        .background(CadencePalette.GreyVariant30.rc)
+        .background(colors.tonal.rc)
         .let {
           if (action != null)
             it
@@ -265,7 +289,7 @@ private fun CloudMetric(
     }
     RemoteText(
       label.rs,
-      color = CadencePalette.GreyVariant80.rc,
+      color = colors.supporting.rc,
       fontSize = labelSp.rsp,
       maxLines = 1,
       overflow = TextOverflow.Ellipsis,
@@ -282,11 +306,11 @@ internal fun SyncStatusIcon(icon: ImageVector, color: Color, size: Int) {
 
 @Composable
 @RemoteComposable
-private fun CloudAction(label: String, action: Action, scale: Float) {
+private fun CloudAction(label: String, action: Action, scale: Float, colors: WidgetColors) {
   RemoteBox(
     modifier = RemoteModifier.height((48 * scale.coerceAtLeast(1f)).rdp).clickable(action),
     contentAlignment = RemoteAlignment.Center,
   ) {
-    RemoteText(label.rs, color = CadencePalette.Blue80.rc, fontSize = (13 * scale).rsp, maxLines = 1)
+    RemoteText(label.rs, color = colors.primary.rc, fontSize = (13 * scale).rsp, maxLines = 1)
   }
 }

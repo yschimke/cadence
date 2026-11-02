@@ -14,8 +14,6 @@ import android.util.SizeF
 import android.view.View
 import android.widget.RemoteViews
 import androidx.annotation.RequiresApi
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
 import androidx.media3.common.util.UnstableApi
 import ee.schimke.cadence.R
 import ee.schimke.cadence.bluetooth.BluetoothController
@@ -148,16 +146,6 @@ class HeadphoneControlsWidget : AppWidgetProvider() {
       scope.launch { render(context, manager, ids) }
     }
 
-    /** The system's dynamic scheme for the current light or dark mode. */
-    private fun widgetColors(context: Context): WidgetColors {
-      val dark =
-        context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK ==
-          Configuration.UI_MODE_NIGHT_YES
-      return WidgetColors.from(
-        if (dark) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-      )
-    }
-
     private fun controller(context: Context): BluetoothController? =
       (context.applicationContext as? AppGraphProvider)?.appGraph?.bluetoothController
 
@@ -190,7 +178,7 @@ class HeadphoneControlsWidget : AppWidgetProvider() {
           HeadphoneControlsWidgetContent(
             state = state,
             layout = HeadphoneWidgetLayout.of(state, slot.widthDp, slot.heightDp),
-            colors = widgetColors(context),
+            colors = context.systemWidgetColors(),
             onOpen = rcWidgetHostAction(name = OPEN_APP, payload = OPEN_APP),
             onAction = { action ->
               rcWidgetHostAction(name = action.wireName, payload = action.wireName)
