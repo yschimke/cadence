@@ -1,6 +1,6 @@
 # Accessibility Report
 
-_Auto-generated from `compose-preview/a11y/pr`. 22 preview(s) across 1 module(s) · 34 error(s) · 0 warning(s) · 0 info._
+_Auto-generated from `compose-preview/a11y/pr`. 20 preview(s) across 1 module(s) · 34 error(s) · 0 warning(s) · 0 info._
 
 Browse inline; image URLs are pinned to the commit SHA on the baseline branch so links keep resolving after merge.
 
@@ -9,6 +9,12 @@ Browse inline; image URLs are pinned to the commit SHA on the baseline branch so
 ### `CloudSyncWidgetLargePreview`
 
 <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/CloudSyncWidgetLargePreview_Cloud_sync_widget_large-2f8e7fdc.png" width="400" />
+
+_No findings._
+
+### `CloudSyncWidgetLightPreview`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/CloudSyncWidgetLightPreview_Cloud_sync_widget_light-b8e2ad8c.png" width="400" />
 
 _No findings._
 
@@ -21,30 +27,6 @@ _No findings._
 ### `CloudSyncWidgetSmallPreview`
 
 <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/CloudSyncWidgetSmallPreview_Cloud_sync_widget_small-f212ff03.png" width="400" />
-
-_No findings._
-
-### `HeadphoneWidgetLightPreview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/HeadphoneWidgetLightPreview_Headphone_widget_light-98937184.png" width="400" />
-
-_No findings._
-
-### `HeadphoneWidgetMp33x2Preview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/HeadphoneWidgetMp33x2Preview_Headphone_widget_MP3_3_2-c9d5ee48.png" width="400" />
-
-_No findings._
-
-### `HeadphoneWidgetMp35x3Preview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/HeadphoneWidgetMp35x3Preview_Headphone_widget_MP3_5_3-c18f130c.png" width="400" />
-
-_No findings._
-
-### `HeadphoneWidgetMp3Preview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/HeadphoneWidgetMp3Preview_Headphone_widget_MP3-d6a1c3d9.png" width="400" />
 
 _No findings._
 
@@ -166,6 +148,12 @@ _No findings._
 ### `PodcastWidgetMp3LargePreview`
 
 <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/PodcastWidgetMp3LargePreview_Podcast_widget_MP3_large-06e82c93.png" width="400" />
+
+_No findings._
+
+### `PodcastWidgetMp3LightPreview`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/PodcastWidgetMp3LightPreview_Podcast_widget_MP3_light-cdc23576.png" width="400" />
 
 _No findings._
 
