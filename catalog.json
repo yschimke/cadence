@@ -4528,7 +4528,7 @@
       "caption": "Podcast widget · Bluetooth",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 46,
+      "bodyLine": 51,
       "sourceDirectory": "composeApp",
       "sourceFunction": "PodcastWidgetBluetoothPreview",
       "parameters": [
@@ -4539,6 +4539,11 @@
         {
           "name": "battery",
           "type": "String?",
+          "hasDefault": true
+        },
+        {
+          "name": "colors",
+          "type": "WidgetColors",
           "hasDefault": true
         }
       ]
@@ -4565,7 +4570,7 @@
       "caption": "Podcast widget · MP3",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 53,
+      "bodyLine": 58,
       "sourceDirectory": "composeApp",
       "sourceFunction": "PodcastWidgetMp3Preview",
       "parameters": [
@@ -4576,6 +4581,57 @@
         {
           "name": "battery",
           "type": "String?",
+          "hasDefault": true
+        },
+        {
+          "name": "colors",
+          "type": "WidgetColors",
+          "hasDefault": true
+        }
+      ]
+    },
+    {
+      "componentId": "composeApp/PodcastWidgetMp3LightPreview",
+      "images": [
+        {
+          "variant": "ideal",
+          "path": "images/composeapp-podcastwidgetmp3lightpreview/ideal__default__light__compact.png",
+          "state": "default",
+          "width": 819,
+          "height": 399,
+          "theme": "light",
+          "size": "compact",
+          "livePreview": "https://preview.coo.ee/cadence/p/composeapp-podcastwidgetmp3lightpreview__ideal__default__light__compact",
+          "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetMp3LightPreview_Podcast_widget___MP3___light",
+          "previewParams": {
+            "uiMode": 16
+          },
+          "density": 2.625
+        }
+      ],
+      "greenlines": [],
+      "redlines": [],
+      "section": ":composeApp",
+      "group": "Previews",
+      "caption": "Podcast widget · MP3 · light",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
+      "sourceModule": ":composeApp",
+      "bodyLine": 70,
+      "sourceDirectory": "composeApp",
+      "sourceFunction": "PodcastWidgetMp3LightPreview",
+      "parameters": [
+        {
+          "name": "swimming",
+          "type": "Boolean"
+        },
+        {
+          "name": "battery",
+          "type": "String?",
+          "hasDefault": true
+        },
+        {
+          "name": "colors",
+          "type": "WidgetColors",
           "hasDefault": true
         }
       ]
@@ -4602,7 +4658,7 @@
       "caption": "Podcast widget · Bluetooth pool",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 60,
+      "bodyLine": 77,
       "sourceDirectory": "composeApp",
       "sourceFunction": "PodcastWidgetBluetoothPoolPreview",
       "parameters": [
@@ -4613,6 +4669,11 @@
         {
           "name": "battery",
           "type": "String?",
+          "hasDefault": true
+        },
+        {
+          "name": "colors",
+          "type": "WidgetColors",
           "hasDefault": true
         }
       ]
@@ -4639,7 +4700,7 @@
       "caption": "Podcast widget · MP3 small",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 67,
+      "bodyLine": 84,
       "sourceDirectory": "composeApp",
       "sourceFunction": "PodcastWidgetMp3SmallPreview",
       "parameters": [
@@ -4650,6 +4711,11 @@
         {
           "name": "battery",
           "type": "String?",
+          "hasDefault": true
+        },
+        {
+          "name": "colors",
+          "type": "WidgetColors",
           "hasDefault": true
         }
       ]
@@ -4676,7 +4742,7 @@
       "caption": "Podcast widget · disconnected",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 74,
+      "bodyLine": 91,
       "sourceDirectory": "composeApp",
       "sourceFunction": "PodcastWidgetDisconnectedPreview",
       "parameters": [
@@ -4688,6 +4754,11 @@
           "name": "battery",
           "type": "String?",
           "hasDefault": true
+        },
+        {
+          "name": "colors",
+          "type": "WidgetColors",
+          "hasDefault": true
         }
       ]
     },
@@ -4696,13 +4767,17 @@
       "images": [
         {
           "variant": "ideal",
-          "path": "images/composeapp-cloudsyncwidgetpreview/ideal__default__compact.png",
+          "path": "images/composeapp-cloudsyncwidgetpreview/ideal__default__dark__compact.png",
           "state": "default",
           "width": 819,
           "height": 504,
+          "theme": "dark",
           "size": "compact",
-          "livePreview": "https://preview.coo.ee/cadence/p/composeapp-cloudsyncwidgetpreview__ideal__default__compact",
+          "livePreview": "https://preview.coo.ee/cadence/p/composeapp-cloudsyncwidgetpreview__ideal__default__dark__compact",
           "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.CloudSyncWidgetPreview_Cloud_sync_widget",
+          "previewParams": {
+            "uiMode": 32
+          },
           "density": 2.625
         }
       ],
@@ -4713,9 +4788,51 @@
       "caption": "Cloud sync widget",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 81,
+      "bodyLine": 131,
       "sourceDirectory": "composeApp",
-      "sourceFunction": "CloudSyncWidgetPreview"
+      "sourceFunction": "CloudSyncWidgetPreview",
+      "parameters": [
+        {
+          "name": "colors",
+          "type": "WidgetColors"
+        }
+      ]
+    },
+    {
+      "componentId": "composeApp/CloudSyncWidgetLightPreview",
+      "images": [
+        {
+          "variant": "ideal",
+          "path": "images/composeapp-cloudsyncwidgetlightpreview/ideal__default__light__compact.png",
+          "state": "default",
+          "width": 819,
+          "height": 504,
+          "theme": "light",
+          "size": "compact",
+          "livePreview": "https://preview.coo.ee/cadence/p/composeapp-cloudsyncwidgetlightpreview__ideal__default__light__compact",
+          "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.CloudSyncWidgetLightPreview_Cloud_sync_widget___light",
+          "previewParams": {
+            "uiMode": 16
+          },
+          "density": 2.625
+        }
+      ],
+      "greenlines": [],
+      "redlines": [],
+      "section": ":composeApp",
+      "group": "Previews",
+      "caption": "Cloud sync widget · light",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
+      "sourceModule": ":composeApp",
+      "bodyLine": 143,
+      "sourceDirectory": "composeApp",
+      "sourceFunction": "CloudSyncWidgetLightPreview",
+      "parameters": [
+        {
+          "name": "colors",
+          "type": "WidgetColors"
+        }
+      ]
     },
     {
       "componentId": "composeApp/CloudSyncWidgetSmallPreview",
@@ -4739,9 +4856,15 @@
       "caption": "Cloud sync widget · small",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 113,
+      "bodyLine": 150,
       "sourceDirectory": "composeApp",
-      "sourceFunction": "CloudSyncWidgetSmallPreview"
+      "sourceFunction": "CloudSyncWidgetSmallPreview",
+      "parameters": [
+        {
+          "name": "colors",
+          "type": "WidgetColors"
+        }
+      ]
     },
     {
       "componentId": "composeApp/CloudSyncWidgetLargePreview",
@@ -4765,9 +4888,15 @@
       "caption": "Cloud sync widget · large",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 120,
+      "bodyLine": 157,
       "sourceDirectory": "composeApp",
-      "sourceFunction": "CloudSyncWidgetLargePreview"
+      "sourceFunction": "CloudSyncWidgetLargePreview",
+      "parameters": [
+        {
+          "name": "colors",
+          "type": "WidgetColors"
+        }
+      ]
     },
     {
       "componentId": "composeApp/PodcastWidgetMp3LargePreview",
@@ -4791,7 +4920,7 @@
       "caption": "Podcast widget · MP3 large",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 127,
+      "bodyLine": 164,
       "sourceDirectory": "composeApp",
       "sourceFunction": "PodcastWidgetMp3LargePreview",
       "parameters": [
@@ -4802,6 +4931,11 @@
         {
           "name": "battery",
           "type": "String?",
+          "hasDefault": true
+        },
+        {
+          "name": "colors",
+          "type": "WidgetColors",
           "hasDefault": true
         }
       ]
@@ -10086,7 +10220,7 @@
     "ee.schimke.cadence (CadenceTheme)"
   ],
   "renderer": "compose-preview 2.79.0",
-  "generatedAt": "2026-11-02T21:50:54.820Z",
+  "generatedAt": "2026-11-02T22:08:52.154Z",
   "failures": [
     {
       "id": "render-failed--googleoauthactivity--activity-googleoauthactivity",
@@ -10158,7 +10292,7 @@
   "componentsFile": "components.json",
   "source": {
     "repo": "yschimke/cadence",
-    "ref": "31f12913123ac80d149828e56457b7388ed08807",
+    "ref": "bf2a0879df9d218e13573c8742486ecf5bb101f5",
     "module": ""
   }
 }

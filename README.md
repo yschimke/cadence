@@ -38,8 +38,8 @@ customising the live render are two ends of one workflow.
 
 | | |
 | --- | --- |
-| Components | **75** |
-| Rendered images (PNG) | **87** |
+| Components | **77** |
+| Rendered images (PNG) | **89** |
 | Editable wireframes (SVG) | **46** |
 | Editable design vectors (figma-svg) | **46** |
 | Components with a11y greenlines | **30** |
@@ -52,7 +52,7 @@ customising the live render are two ends of one workflow.
 
 | Group | Count |
 | --- | ---: |
-| Previews | 43 |
+| Previews | 45 |
 | Play Store | 9 |
 | Bluetooth | 4 |
 | Launcher widgets | 4 |

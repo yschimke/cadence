@@ -919,6 +919,75 @@
             "overloads": []
         },
         {
+            "canonicalId": "composeApp/ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.CloudSyncPreviewBody",
+            "componentIds": [],
+            "symbol": {
+                "jvmOwner": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt",
+                "callable": "ee.schimke.cadence.preview.CloudSyncPreviewBody",
+                "name": "CloudSyncPreviewBody",
+                "origin": "PROJECT",
+                "jvmName": "CloudSyncPreviewBody",
+                "descriptor": "(Lee/schimke/cadence/widgets/WidgetColors;Landroidx/compose/runtime/Composer;I)V",
+                "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
+                "docs": "unavailable",
+                "receiver": null
+            },
+            "parameters": [
+                {
+                    "name": "colors",
+                    "type": "WidgetColors",
+                    "typeFqn": "ee.schimke.cadence.widgets.WidgetColors",
+                    "hasDefault": false,
+                    "composableSlot": false,
+                    "composableSlotReceiver": null,
+                    "nullable": false,
+                    "noArgConstructible": false,
+                    "noArgFactory": null,
+                    "scopeDslReceiver": null,
+                    "lambdaReturnTypeFqn": null
+                }
+            ],
+            "slots": [],
+            "bindings": [
+                {
+                    "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.CloudSyncWidgetLargePreview_Cloud_sync_widget___large",
+                    "componentId": null,
+                    "group": null
+                },
+                {
+                    "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.CloudSyncWidgetLightPreview_Cloud_sync_widget___light",
+                    "componentId": null,
+                    "group": null
+                },
+                {
+                    "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.CloudSyncWidgetPreview_Cloud_sync_widget",
+                    "componentId": null,
+                    "group": null
+                },
+                {
+                    "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.CloudSyncWidgetSmallPreview_Cloud_sync_widget___small",
+                    "componentId": null,
+                    "group": null
+                }
+            ],
+            "code": {
+                "call": null,
+                "imports": [],
+                "refusedReason": "not public or internal, so a generated file cannot call it",
+                "requiredOptIns": [],
+                "androidxOptIns": []
+            },
+            "signatureKnown": true,
+            "callableFromAnotherFile": false,
+            "hasTypeParameters": false,
+            "hasContextReceivers": false,
+            "overloadsCollided": false,
+            "builder": null,
+            "requiredOptIns": [],
+            "androidxOptIns": [],
+            "overloads": []
+        },
+        {
             "canonicalId": "composeApp/ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetPreview",
             "componentIds": [],
             "symbol": {
@@ -927,7 +996,7 @@
                 "name": "PodcastWidgetPreview",
                 "origin": "PROJECT",
                 "jvmName": "PodcastWidgetPreview",
-                "descriptor": "(ZLjava/lang/String;Landroidx/compose/runtime/Composer;II)V",
+                "descriptor": "(ZLjava/lang/String;Lee/schimke/cadence/widgets/WidgetColors;Landroidx/compose/runtime/Composer;II)V",
                 "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
                 "docs": "unavailable",
                 "receiver": null
@@ -958,6 +1027,19 @@
                     "noArgFactory": null,
                     "scopeDslReceiver": null,
                     "lambdaReturnTypeFqn": null
+                },
+                {
+                    "name": "colors",
+                    "type": "WidgetColors",
+                    "typeFqn": "ee.schimke.cadence.widgets.WidgetColors",
+                    "hasDefault": true,
+                    "composableSlot": false,
+                    "composableSlotReceiver": null,
+                    "nullable": false,
+                    "noArgConstructible": false,
+                    "noArgFactory": null,
+                    "scopeDslReceiver": null,
+                    "lambdaReturnTypeFqn": null
                 }
             ],
             "slots": [],
@@ -979,6 +1061,11 @@
                 },
                 {
                     "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetMp3LargePreview_Podcast_widget___MP3_large",
+                    "componentId": null,
+                    "group": null
+                },
+                {
+                    "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetMp3LightPreview_Podcast_widget___MP3___light",
                     "componentId": null,
                     "group": null
                 },
