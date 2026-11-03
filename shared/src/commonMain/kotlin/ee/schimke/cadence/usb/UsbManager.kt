@@ -6,6 +6,10 @@ interface UsbManager {
   val connection: Flow<UsbConnection>
     get() = kotlinx.coroutines.flow.flowOf(UsbConnection())
 
+  /** Whether connecting is a step people take here; on Android the system handles it. */
+  val explicitConnection: Boolean
+    get() = false
+
   fun requestConnection() {}
 
   fun disconnect() {}

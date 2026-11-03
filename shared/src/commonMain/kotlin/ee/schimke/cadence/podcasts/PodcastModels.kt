@@ -592,9 +592,21 @@ fun validateAudioFileName(name: String) {
   }
 }
 
+/**
+ * Every episode with audio left to hear is prepared. An episode added since the last preparation (a
+ * refresh, or a new release added to the source) has no manifest yet, so it makes this false rather
+ * than being left off the next copy.
+ */
 fun LocalPodcastState.readyForDevice(): Boolean {
   val sections = library.manifests.flatMap { it.sections }
-  return sections.isNotEmpty() && sections.all { it.id in readySectionIds }
+  if (sections.isEmpty() || sections.any { it.id !in readySectionIds }) return false
+  val prepared = library.manifests.map { it.episode.key }.toSet()
+  return library.playlist?.episodes.orEmpty().all { episode ->
+    episode.key in prepared ||
+      runCatching { segment(episode, library.configFor(episode)) }
+        .getOrDefault(emptyList())
+        .isEmpty()
+  }
 }
 
 /** Whether the headphones already hold every prepared section. */

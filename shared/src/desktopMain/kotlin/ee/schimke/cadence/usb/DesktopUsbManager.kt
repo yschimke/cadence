@@ -12,6 +12,8 @@ class DesktopUsbManager(scope: CoroutineScope) : UsbManager {
     )
   private var watching = true
 
+  override val explicitConnection = true
+
   override fun requestConnection() {
     watching = true
     connection.value =

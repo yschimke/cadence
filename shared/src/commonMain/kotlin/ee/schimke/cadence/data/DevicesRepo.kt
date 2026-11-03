@@ -20,6 +20,12 @@ class DevicesRepo(private val dataStore: SettingsStore) {
     }
   }
 
+  suspend fun removeDevice(id: String) {
+    dataStore.updateData { settings ->
+      settings.copy(devices = settings.devices.filterNot { it.id == id })
+    }
+  }
+
   suspend fun getDevice(id: String): Device? {
     return devices.first().devices.find { it.id == id }
   }

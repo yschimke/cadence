@@ -38,6 +38,10 @@ class DevicesViewModel(private val devicesRepo: DevicesRepo, val usbManager: Usb
     }
   }
 
+  fun forgetDevice(id: String) {
+    viewModelScope.launch { devicesRepo.removeDevice(id) }
+  }
+
   val uiState: StateFlow<UiState> =
     combine(devicesRepo.devices, usbManager.listDevices()) { devices, usbDevices ->
         UiState.Devices(devices.devices, usbDevices)

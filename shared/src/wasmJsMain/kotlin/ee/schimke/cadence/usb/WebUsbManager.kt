@@ -33,6 +33,8 @@ class WebUsbManager {
     object : UsbManager {
       override val connection: Flow<UsbConnection> = status
 
+      override val explicitConnection = true
+
       override fun listDevices(): Flow<List<UsbDevice>> = devices
 
       override fun requestConnection() {
