@@ -49,6 +49,8 @@ Auto-generated from `main`. Browse inline or compare against PR branches.
 | `HomeEmptyPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HomeEmptyPreview_Home_empty-571e68af.png" width="150" /> |
 | `HomeHeadphonesPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HomeHeadphonesPreview_Home_headphones_connected-71a28d46.png" width="150" /> |
 | `HomeLibraryPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HomeLibraryPreview_Home_library-7701225c.png" width="150" /> |
+| `HomeReadyToCopyPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HomeReadyToCopyPreview_Home_ready_to_copy-3a801e9d.png" width="150" /> |
+| `HomeUpToDatePreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HomeUpToDatePreview_Home_up_to_date-2cbd5a11.png" width="150" /> |
 | `ManageEmptyPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/ManageEmptyPreview_Manage_empty-55c57410.png" width="150" /> |
 | `ManagePopulatedPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/ManagePopulatedPreview_Manage_populated-41ab32cd.png" width="150" /> |
 | `ManageRefreshingPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/ManageRefreshingPreview_Manage_refreshing-fe8bc7dc.png" width="150" /> |
