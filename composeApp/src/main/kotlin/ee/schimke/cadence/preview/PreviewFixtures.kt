@@ -17,10 +17,13 @@ import ee.schimke.cadence.datastore.proto.SyncSource
 import ee.schimke.cadence.home.HomeViewModel
 import ee.schimke.cadence.podcasts.Episode
 import ee.schimke.cadence.podcasts.LocalPodcastState
+import ee.schimke.cadence.podcasts.Manifest
 import ee.schimke.cadence.podcasts.POCKET_CASTS_UP_NEXT
 import ee.schimke.cadence.podcasts.PlaylistSnapshot
 import ee.schimke.cadence.podcasts.PodcastLibrary
 import ee.schimke.cadence.podcasts.PodcastSourceKind
+import ee.schimke.cadence.podcasts.Section
+import ee.schimke.cadence.podcasts.Segmentation
 import ee.schimke.cadence.sync.BrowsedItem
 import ee.schimke.cadence.sync.FileSyncViewModel
 import ee.schimke.cadence.sync.RefreshProgress
@@ -382,4 +385,31 @@ internal object PreviewFixtures {
           lastBackendSync = "2026-10-28T08:15:00Z",
         )
     )
+
+  /** Set up and prepared overnight: plugging in copies these. */
+  val preparedPodcastState = podcastState.let { state ->
+    val manifests =
+      state.library.playlist!!.episodes.map { episode ->
+        Manifest(
+          episode,
+          Segmentation(),
+          listOf(
+            Section(
+              "section-${episode.id}",
+              episode.key,
+              episode.audioVersion,
+              episode.positionMs,
+              episode.durationMs,
+              "${episode.id}.m4a",
+            )
+          ),
+        )
+      }
+    state.copy(
+      library = state.library.copy(manifests = manifests),
+      readySectionIds = manifests.flatMap { it.sections }.map { it.id }.toSet(),
+      downloadedEpisodeKeys = manifests.map { it.episode.key }.toSet(),
+      target = "content://com.android.externalstorage.documents/tree/SWIM%3A",
+    )
+  }
 }

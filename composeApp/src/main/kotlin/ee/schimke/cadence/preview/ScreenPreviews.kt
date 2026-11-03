@@ -72,6 +72,34 @@ internal fun HomeHeadphonesPreview() {
   }
 }
 
+@Preview(name = "Home — ready to copy", showBackground = true, heightDp = 900)
+@Composable
+internal fun HomeReadyToCopyPreview() {
+  AndroidMaterialTheme {
+    HomeContent(
+      state =
+        PreviewFixtures.libraryState.copy(attachedDevice = PreviewFixtures.usbDevices.first()),
+      podcasts = PreviewFixtures.preparedPodcastState,
+      actions = HomeActions(),
+      modifier = themedModifier,
+    )
+  }
+}
+
+@Preview(name = "Home — up to date", showBackground = true, heightDp = 900)
+@Composable
+internal fun HomeUpToDatePreview() {
+  AndroidMaterialTheme {
+    HomeContent(
+      state = PreviewFixtures.libraryState,
+      podcasts =
+        PreviewFixtures.preparedPodcastState.let { it.copy(copiedSectionIds = it.readySectionIds) },
+      actions = HomeActions(),
+      modifier = themedModifier,
+    )
+  }
+}
+
 @Preview(name = "Devices - loaded", showBackground = true)
 @Composable
 internal fun DevicesScreenLoadedPreview() {

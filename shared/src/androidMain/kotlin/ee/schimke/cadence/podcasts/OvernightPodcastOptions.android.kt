@@ -1,6 +1,7 @@
 package ee.schimke.cadence.podcasts
 
 import android.app.NotificationChannel
+import android.app.PendingIntent
 import android.app.NotificationManager
 import android.content.Context
 import android.content.pm.ServiceInfo
@@ -56,8 +57,41 @@ class OvernightPodcastWorker(context: Context, params: WorkerParameters) : Corou
         prepare()
       }
     }
+    if (ok) notifyReady(applicationContext, controller.state.value)
     return if (ok) Result.success() else Result.retry()
   }
+}
+
+internal const val READY_NOTIFICATION = 9014
+
+/**
+ * A silent morning note that episodes are waiting, so the routine is just "plug in". Cleared by
+ * [AndroidPodcastPlatform.publishStatus] once the headphones hold them.
+ */
+private fun notifyReady(context: Context, state: LocalPodcastState) {
+  if (!state.readyForDevice() || state.upToDateOnDevice()) return
+  val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+  if (!manager.areNotificationsEnabled()) return
+  manager.createNotificationChannel(
+    NotificationChannel("podcast-ready", "Podcasts ready", NotificationManager.IMPORTANCE_LOW)
+  )
+  val episodes = state.library.manifests.size
+  val openIntent =
+    context.packageManager.getLaunchIntentForPackage(context.packageName)?.let {
+      PendingIntent.getActivity(context, 0, it, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+    }
+  val notification =
+    NotificationCompat.Builder(context, "podcast-ready")
+      .setSmallIcon(android.R.drawable.stat_sys_download_done)
+      .setContentTitle("$episodes ${if (episodes == 1) "episode" else "episodes"} ready")
+      .setContentText(
+        if (state.target.isBlank()) "Plug in your headphones to finish setup"
+        else "Plug in your headphones to copy them"
+      )
+      .setContentIntent(openIntent)
+      .setAutoCancel(true)
+      .build()
+  manager.notify(READY_NOTIFICATION, notification)
 }
 
 @Composable actual fun OvernightPodcastOptions() {

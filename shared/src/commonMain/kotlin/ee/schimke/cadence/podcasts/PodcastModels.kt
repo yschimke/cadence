@@ -585,3 +585,9 @@ fun LocalPodcastState.readyForDevice(): Boolean {
   val sections = library.manifests.flatMap { it.sections }
   return sections.isNotEmpty() && sections.all { it.id in readySectionIds }
 }
+
+/** Whether the headphones already hold every prepared section. */
+fun LocalPodcastState.upToDateOnDevice(): Boolean {
+  val sections = library.manifests.flatMap { it.sections }
+  return readyForDevice() && target.isNotBlank() && sections.all { it.id in copiedSectionIds }
+}

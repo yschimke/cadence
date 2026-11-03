@@ -1,5 +1,9 @@
 package ee.schimke.cadence.home
 
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,6 +16,7 @@ import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
@@ -20,17 +25,29 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.InsertDriveFile
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Bedtime
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Cloud
 import androidx.compose.material.icons.filled.Folder
+import androidx.compose.material.icons.filled.Headphones
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Podcasts
-import androidx.compose.material3.AlertDialog
+import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.SdStorage
+import androidx.compose.material.icons.filled.Sync
+import androidx.compose.material.icons.filled.Usb
+import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -39,6 +56,7 @@ import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Slider
@@ -48,6 +66,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -57,16 +76,20 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import ee.schimke.cadence.bluetooth.MediaInfo
 import ee.schimke.cadence.datastore.proto.SourceKind
 import ee.schimke.cadence.datastore.proto.SyncSource
+import ee.schimke.cadence.devices.rememberFileExplorerOpenLauncher
 import ee.schimke.cadence.metro.metroViewModel
 import ee.schimke.cadence.podcasts.CloudSyncHomeCard
 import ee.schimke.cadence.podcasts.Episode
@@ -88,6 +111,7 @@ import ee.schimke.cadence.sync.BrowsedItem
 import ee.schimke.cadence.sync.SourceSuggestion
 import ee.schimke.cadence.sync.formatLastRefreshed
 import ee.schimke.cadence.sync.rememberDirectorySourceLauncher
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 /** Everything the home screen can ask for; defaults keep previews short. */
@@ -102,6 +126,8 @@ data class HomeActions(
   val onFindApp: (SourceSuggestion) -> Unit = {},
   val onCopyToHeadphones: () -> Unit = {},
   val onSyncPodcasts: () -> Unit = {},
+  val onPreparePodcasts: () -> Unit = {},
+  val onChooseHeadphoneStorage: () -> Unit = {},
   val onCloudSync: () -> Unit = {},
   val onBluetoothControls: () -> Unit = {},
   val onManageSources: () -> Unit = {},
@@ -168,6 +194,16 @@ fun HomeScreen(
       if (!podcasts.run(block)) snackbar.showSnackbar(podcasts.status.value)
     }
   }
+  val chooseHeadphoneStorage = rememberFileExplorerOpenLauncher { _, path ->
+    podcastAction { setTarget(path.toString()) }
+  }
+  CopyWhenHeadphonesConnect(
+    podcasts = podcasts,
+    step =
+      headphoneSyncStep(podcastState, state.sources.isNotEmpty(), state.attachedDevice != null),
+    attachedDeviceId = state.attachedDevice?.id,
+    snackbar = snackbar,
+  )
   HomeContent(
     state = state,
     podcasts = podcastState,
@@ -190,6 +226,8 @@ fun HomeScreen(
         onFindApp = viewModel::openSuggestion,
         onCopyToHeadphones = onCopyToHeadphones,
         onSyncPodcasts = { podcastAction { copyToDevice() } },
+        onPreparePodcasts = podcastWork.process,
+        onChooseHeadphoneStorage = chooseHeadphoneStorage,
         onCloudSync = onCloudSync,
         onBluetoothControls = onBluetoothControls,
         onManageSources = onManageSources,
@@ -204,8 +242,42 @@ fun HomeScreen(
 }
 
 /**
- * The library: what each source currently holds, newest source last. With no sources it only offers
- * ways to add one.
+ * The daily routine: plugging in prepared headphones copies to them without another tap. Runs once
+ * per connection, and only when the copy is clearly the next step (set up, prepared, not yet
+ * copied).
+ */
+@Composable
+private fun CopyWhenHeadphonesConnect(
+  podcasts: PodcastController,
+  step: HeadphoneSyncStep,
+  attachedDeviceId: Int?,
+  snackbar: SnackbarHostState,
+) {
+  // Outlives the effect: the copy itself changes the step, which would otherwise cancel it.
+  val scope = rememberCoroutineScope()
+  var copiedFor by rememberSaveable { mutableStateOf<Int?>(null) }
+  val copyNow = shouldCopyOnConnect(step)
+  LaunchedEffect(attachedDeviceId, copyNow) {
+    if (attachedDeviceId == null) {
+      copiedFor = null
+      return@LaunchedEffect
+    }
+    if (!copyNow || copiedFor == attachedDeviceId) return@LaunchedEffect
+    copiedFor = attachedDeviceId
+    scope.launch {
+      // The volume mounts a moment after the USB device appears, so retry briefly.
+      for (wait in listOf(1_000L, 2_000L, 4_000L, 8_000L)) {
+        delay(wait)
+        if (podcasts.run { copyToDevice() }) break
+      }
+      snackbar.showSnackbar(podcasts.status.value)
+    }
+  }
+}
+
+/**
+ * The library: what each source currently holds, newest source last. With no sources it shows a
+ * short welcome that only offers ways to add one, and gets out of the way once anything is added.
  */
 @Composable
 fun HomeContent(
@@ -268,6 +340,10 @@ fun HomeContent(
       verticalArrangement = Arrangement.spacedBy(16.dp),
       modifier = Modifier.padding(padding).fillMaxSize(),
     ) {
+      if (empty) {
+        item(key = "welcome") { WelcomeCard(suggestions, actions) }
+        return@LazyColumn
+      }
       item(key = "overview") {
         HomeOverview(
           state,
@@ -372,19 +448,12 @@ private fun HomeOverview(
   onConnectSource: () -> Unit,
 ) {
   val device = state.bluetooth.connectedDevice
-  var showUsbPrompt by rememberSaveable { mutableStateOf(false) }
-  if (showUsbPrompt) {
-    AlertDialog(
-      onDismissRequest = { showUsbPrompt = false },
-      title = { Text("Connect your headphones") },
-      text = { Text("Connect your headphones to this phone by USB, then return here to sync.") },
-      confirmButton = { TextButton(onClick = { showUsbPrompt = false }) { Text("OK") } },
-    )
-  }
+  val pluggedIn = state.attachedDevice != null
+  val step = headphoneSyncStep(podcasts, state.sources.isNotEmpty(), pluggedIn)
   Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
     val summary = podcastWidgetSummary(podcasts)
     val battery = podcastWidgetBattery(device, podcasts.target)
-    Column(Modifier.fillMaxWidth()) {
+    Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
       Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
         Text(
           "Sync with headphones",
@@ -401,25 +470,12 @@ private fun HomeOverview(
         ready = podcasts.readyForDevice(),
         showSwimming = state.bluetooth.localAudioControls,
       )
-      if (podcastBusy && !podcastWork.active)
-        Text(
-          "Working…",
-          style = MaterialTheme.typography.bodySmall,
-        )
-      Row {
-        TextButton(
-          enabled = !podcastBusy,
-          onClick = {
-            if (state.attachedDevice == null) showUsbPrompt = true
-            else if (podcasts.readyForDevice() && podcasts.target.isNotBlank())
-              actions.onSyncPodcasts()
-            else if (podcasts.library.playlist != null) actions.onOpenPodcasts()
-            else actions.onCopyToHeadphones()
-          },
-        ) {
-          Text("Sync")
-        }
-      }
+      HeadphoneSyncPrompt(
+        step = step,
+        busy = podcastBusy || podcastWork.active,
+        progress = podcastWork.status,
+        actions = actions,
+      )
     }
     val cloudStatus =
       cloudSyncStatus(
@@ -436,16 +492,171 @@ private fun HomeOverview(
       onDownload = podcastWork.download,
       onProcess = podcastWork.process,
     )
-    if (state.profiles.isNotEmpty()) {
-      TextButton(
-        enabled = !state.refresh.running,
-        onClick = { state.profiles.forEach { actions.onRefreshFolder(it.id) } },
-      ) {
-        Text(if (state.refresh.running) "Refreshing folders…" else "Refresh folders")
+    if (state.profiles.isNotEmpty() || podcasts.library.playlist != null)
+      Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        if (podcasts.library.playlist != null)
+          OutlinedButton(onClick = actions.onOpenPodcasts) {
+            Icon(Icons.Filled.Podcasts, contentDescription = null, Modifier.size(18.dp))
+            Spacer(Modifier.width(8.dp))
+            Text("All episodes")
+          }
+        if (state.profiles.isNotEmpty())
+          OutlinedButton(
+            enabled = !state.refresh.running,
+            onClick = { state.profiles.forEach { actions.onRefreshFolder(it.id) } },
+          ) {
+            Icon(Icons.Filled.Refresh, contentDescription = null, Modifier.size(18.dp))
+            Spacer(Modifier.width(8.dp))
+            Text(if (state.refresh.running) "Refreshing…" else "Refresh folders")
+          }
+      }
+  }
+}
+
+/** One status line and, at most, one button: whatever [step] says to do next. */
+@Composable
+private fun HeadphoneSyncPrompt(
+  step: HeadphoneSyncStep,
+  busy: Boolean,
+  progress: String?,
+  actions: HomeActions,
+) {
+  val colors = MaterialTheme.colorScheme
+  // The moment to act stands out; everything else is a calm, tonal status.
+  val (targetContainer, targetContent) =
+    when {
+      busy -> colors.surfaceContainerHigh to colors.onSurface
+      step is HeadphoneSyncStep.ReadyToCopy && step.pluggedIn ->
+        colors.primaryContainer to colors.onPrimaryContainer
+      step == HeadphoneSyncStep.ChooseStorage ->
+        colors.primaryContainer to colors.onPrimaryContainer
+      step is HeadphoneSyncStep.UpToDate -> colors.tertiaryContainer to colors.onTertiaryContainer
+      else -> colors.surfaceContainerHigh to colors.onSurface
+    }
+  val container by animateColorAsState(targetContainer)
+  val content by animateColorAsState(targetContent)
+  Surface(
+    color = container,
+    contentColor = content,
+    shape = RoundedCornerShape(20.dp),
+    modifier = Modifier.fillMaxWidth().animateContentSize(),
+  ) {
+    Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+      Row(verticalAlignment = Alignment.CenterVertically) {
+        Box(
+          Modifier.size(40.dp).clip(CircleShape).background(content.copy(alpha = 0.12f)),
+          contentAlignment = Alignment.Center,
+        ) {
+          Icon(step.icon(busy), contentDescription = null, modifier = Modifier.size(22.dp))
+        }
+        Spacer(Modifier.width(12.dp))
+        Text(
+          if (busy) progress ?: "Working…" else progress ?: step.message,
+          style = MaterialTheme.typography.bodyLarge,
+          modifier = Modifier.weight(1f).semantics { liveRegion = LiveRegionMode.Polite },
+        )
+      }
+      if (busy) LinearProgressIndicator(Modifier.fillMaxWidth())
+      val wide = Modifier.fillMaxWidth().heightIn(min = 48.dp)
+      when (step) {
+        HeadphoneSyncStep.NoSource,
+        HeadphoneSyncStep.PlugInToSetUp -> Unit
+        HeadphoneSyncStep.ChooseStorage ->
+          Button(enabled = !busy, onClick = actions.onChooseHeadphoneStorage, modifier = wide) {
+            Text("Choose headphone storage")
+          }
+        is HeadphoneSyncStep.Prepare ->
+          if (!busy)
+            FilledTonalButton(onClick = actions.onPreparePodcasts, modifier = wide) {
+              Text("Prepare now")
+            }
+        is HeadphoneSyncStep.ReadyToCopy ->
+          if (step.pluggedIn)
+            Button(enabled = !busy, onClick = actions.onSyncPodcasts, modifier = wide) {
+              Text("Copy to headphones")
+            }
+        is HeadphoneSyncStep.UpToDate ->
+          if (step.pluggedIn && !busy)
+            TextButton(onClick = actions.onSyncPodcasts) { Text("Copy again", color = content) }
+        is HeadphoneSyncStep.Folders ->
+          if (step.pluggedIn)
+            Button(enabled = !busy, onClick = actions.onCopyToHeadphones, modifier = wide) {
+              Text("Copy folders")
+            }
       }
     }
-    if (podcasts.library.playlist != null)
-      TextButton(onClick = actions.onOpenPodcasts) { Text("Podcasts") }
+  }
+}
+
+private fun HeadphoneSyncStep.icon(busy: Boolean): ImageVector =
+  when {
+    busy -> Icons.Filled.Sync
+    this == HeadphoneSyncStep.NoSource -> Icons.Filled.Add
+    this == HeadphoneSyncStep.PlugInToSetUp -> Icons.Filled.Usb
+    this == HeadphoneSyncStep.ChooseStorage -> Icons.Filled.SdStorage
+    this is HeadphoneSyncStep.Prepare -> Icons.Filled.Bedtime
+    this is HeadphoneSyncStep.ReadyToCopy ->
+      if (pluggedIn) Icons.Filled.Headphones else Icons.Filled.Usb
+    this is HeadphoneSyncStep.UpToDate -> Icons.Filled.CheckCircle
+    else -> Icons.Filled.Folder
+  }
+
+/**
+ * First run only: what Cadence does, in three steps, and the ways to add something to sync.
+ * Replaced by the library as soon as a source exists.
+ */
+@Composable
+private fun WelcomeCard(suggestions: List<SourceSuggestion>, actions: HomeActions) {
+  val colors = MaterialTheme.colorScheme
+  Column(verticalArrangement = Arrangement.spacedBy(20.dp)) {
+    Surface(
+      color = colors.primaryContainer,
+      contentColor = colors.onPrimaryContainer,
+      shape = RoundedCornerShape(28.dp),
+      modifier = Modifier.fillMaxWidth(),
+    ) {
+      Column(Modifier.padding(24.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        Box(
+          Modifier.size(56.dp).clip(CircleShape).background(colors.primary),
+          contentAlignment = Alignment.Center,
+        ) {
+          Icon(
+            Icons.Filled.Headphones,
+            contentDescription = null,
+            tint = colors.onPrimary,
+            modifier = Modifier.size(30.dp),
+          )
+        }
+        Text(
+          "Your podcasts, ready every morning",
+          style = MaterialTheme.typography.headlineSmall,
+          modifier = Modifier.semantics { heading() },
+        )
+        Text(
+          "Set up once. After that, the daily routine is just plugging in.",
+          style = MaterialTheme.typography.bodyLarge,
+        )
+        Spacer(Modifier.height(4.dp))
+        WelcomeStep(Icons.Filled.Podcasts, "Choose what to listen to")
+        WelcomeStep(Icons.Filled.Bedtime, "Episodes are prepared overnight while charging")
+        WelcomeStep(Icons.Filled.Usb, "Plug in your headphones and they're copied")
+      }
+    }
+    Text(
+      "Start with",
+      style = MaterialTheme.typography.titleMedium,
+      modifier = Modifier.padding(horizontal = 4.dp).semantics { heading() },
+    )
+    SourceOptions(suggestions, actions, onChosen = {}, tiles = true)
+  }
+}
+
+@Composable
+private fun WelcomeStep(icon: ImageVector, text: String) {
+  Row(verticalAlignment = Alignment.CenterVertically) {
+    Icon(icon, contentDescription = null, modifier = Modifier.size(20.dp))
+    Spacer(Modifier.width(12.dp))
+    Text(text, style = MaterialTheme.typography.bodyMedium)
   }
 }
 
@@ -467,19 +678,38 @@ private fun AddSourceSheet(
   }
 }
 
-/** The three kinds of source: a folder, an app that provides files, or a podcast service. */
+/**
+ * The three kinds of source: a folder, an app that provides files, or a podcast service. As [tiles]
+ * (the first-run welcome) podcasts come first and stand out, since that is what most people want.
+ */
 @Composable
 private fun SourceOptions(
   suggestions: List<SourceSuggestion>,
   actions: HomeActions,
   onChosen: () -> Unit,
+  tiles: Boolean = false,
 ) {
   var findingApps by remember { mutableStateOf(false) }
-  Column {
+  val podcastOption =
+    @Composable {
+      SourceOption(
+        Icons.Filled.Podcasts,
+        "Podcasts",
+        "Pocket Casts, a podcast feed, or apps that sync with gpodder",
+        tile = tiles,
+        highlighted = tiles,
+      ) {
+        onChosen()
+        actions.onAddPodcasts()
+      }
+    }
+  Column(verticalArrangement = Arrangement.spacedBy(if (tiles) 8.dp else 0.dp)) {
+    if (tiles) podcastOption()
     SourceOption(
       Icons.Filled.Folder,
       "Folder",
       "Music or audiobooks already on this device",
+      tile = tiles,
     ) {
       onChosen()
       actions.onAddFolder()
@@ -490,6 +720,7 @@ private fun SourceOptions(
         Icons.Filled.Cloud,
         "Files from an app",
         "Google Drive, Dropbox, Nextcloud and other storage apps",
+        tile = tiles,
       ) {
         if (suggestions.any { it.installed }) {
           onChosen()
@@ -505,27 +736,61 @@ private fun SourceOptions(
           modifier = Modifier.clickable { actions.onFindApp(app) }.padding(start = 40.dp),
         )
       }
-    SourceOption(
-      Icons.Filled.Podcasts,
-      "Podcasts",
-      "Pocket Casts, a podcast feed, or apps that sync with gpodder",
-    ) {
-      onChosen()
-      actions.onAddPodcasts()
-    }
+    if (!tiles) podcastOption()
   }
 }
 
 @Composable
-private fun SourceOption(icon: ImageVector, title: String, detail: String, onClick: () -> Unit) {
-  ListItem(
-    leadingContent = { Icon(icon, contentDescription = null) },
-    headlineContent = { Text(title) },
-    supportingContent = { Text(detail) },
-    // Takes the colour of whatever it sits on: the empty-state card or the sheet.
-    colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-    modifier = Modifier.clickable(onClick = onClick),
-  )
+private fun SourceOption(
+  icon: ImageVector,
+  title: String,
+  detail: String,
+  tile: Boolean = false,
+  highlighted: Boolean = false,
+  onClick: () -> Unit,
+) {
+  val colors = MaterialTheme.colorScheme
+  val item =
+    @Composable {
+      ListItem(
+        leadingContent = {
+          if (tile)
+            Box(
+              Modifier.size(40.dp)
+                .clip(CircleShape)
+                .background(if (highlighted) colors.primary else colors.secondaryContainer),
+              contentAlignment = Alignment.Center,
+            ) {
+              Icon(
+                icon,
+                contentDescription = null,
+                tint = if (highlighted) colors.onPrimary else colors.onSecondaryContainer,
+              )
+            }
+          else Icon(icon, contentDescription = null)
+        },
+        headlineContent = { Text(title) },
+        supportingContent = { Text(detail) },
+        trailingContent =
+          if (tile) {
+            { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = null) }
+          } else null,
+        // Takes the colour of whatever it sits on: the tile or the sheet.
+        colors = ListItemDefaults.colors(containerColor = Color.Transparent),
+        modifier = if (tile) Modifier else Modifier.clickable(onClick = onClick),
+      )
+    }
+  if (tile)
+    Surface(
+      onClick = onClick,
+      shape = RoundedCornerShape(20.dp),
+      color = if (highlighted) colors.secondaryContainer else colors.surfaceContainerLow,
+      border = if (highlighted) null else BorderStroke(1.dp, colors.outlineVariant),
+      modifier = Modifier.fillMaxWidth(),
+    ) {
+      item()
+    }
+  else item()
 }
 
 @Composable

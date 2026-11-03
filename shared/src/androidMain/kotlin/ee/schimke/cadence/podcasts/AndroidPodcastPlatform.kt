@@ -134,6 +134,8 @@ open class AndroidPodcastPlatform(private val context: Context) : FilePodcastPla
   override fun publishStatus(status: String, state: LocalPodcastState) {
     val summary = podcastWidgetSummary(state)
     context.getSharedPreferences("podcast-widget", Context.MODE_PRIVATE).edit().putString("status", status).putBoolean("ready", state.readyForDevice()).putString("copied", summary.copied).putString("available", summary.available).putString("target", state.target).apply()
+    if (state.upToDateOnDevice())
+      (context.getSystemService(Context.NOTIFICATION_SERVICE) as android.app.NotificationManager).cancel(READY_NOTIFICATION)
     PodcastSyncWidget.updateAll(context)
     CloudSyncWidget.publish(context, state, sharedController.canRefresh, sharedController.busy.value, status)
   }
