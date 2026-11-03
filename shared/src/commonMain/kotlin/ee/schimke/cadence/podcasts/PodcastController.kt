@@ -55,6 +55,12 @@ interface PodcastPlatform {
 
   fun publishStatus(status: String, state: LocalPodcastState) {}
 
+  /**
+   * An unexpected failure that was caught and shown as a generic message. Platforms with crash
+   * reporting record it as non-fatal; messages are left out, since they can hold signed URLs.
+   */
+  fun reportFailure(error: Throwable) {}
+
   suspend fun readDeviceManifest(target: String): DeviceManifest? = null
 
   /**
@@ -120,7 +126,8 @@ class PodcastController(val platform: PodcastPlatform) {
     } catch (e: PodcastProblem) {
       status.value = e.message ?: "Operation failed"
       false
-    } catch (_: Exception) {
+    } catch (e: Exception) {
+      platform.reportFailure(e)
       // Network exceptions can contain signed enclosure URLs or credentials. Never surface raw
       // errors.
       status.value =

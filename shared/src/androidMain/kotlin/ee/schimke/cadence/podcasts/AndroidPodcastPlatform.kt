@@ -17,6 +17,7 @@ import ee.schimke.cadence.data.toUri
 import java.io.File
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import ee.schimke.cadence.platform.reportNonFatal
 import okio.Path.Companion.toPath
 
 @Composable actual fun rememberPodcastPlatform(): PodcastPlatform {
@@ -92,6 +93,7 @@ open class AndroidPodcastPlatform(private val context: Context) : FilePodcastPla
     } catch (e: Exception) {
       // The generic failure hides why a copy failed; name the cause and keep the detail in logcat.
       android.util.Log.w("Cadence", "Copy to headphones failed", e)
+      reportFailure(e)
       throw PodcastProblem(explainExportFailure(e, target))
     }
   }
@@ -160,6 +162,8 @@ open class AndroidPodcastPlatform(private val context: Context) : FilePodcastPla
       podcastJson.decodeFromString<DeviceManifest>(json).takeIf { it.schema == 1 }
     }.getOrNull()
   }
+
+  override fun reportFailure(error: Throwable) = reportNonFatal(error)
 
   override fun publishStatus(status: String, state: LocalPodcastState) {
     val summary = podcastWidgetSummary(state)

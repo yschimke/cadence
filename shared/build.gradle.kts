@@ -21,6 +21,9 @@ kotlin {
     compileSdk = libs.versions.android.compileSdk.get().toInt()
     minSdk = libs.versions.android.minSdk.get().toInt()
 
+    // Kept for the reflective Crashlytics lookup in NonFatalReporting.kt.
+    optimization { consumerKeepRules.files.add(project.file("consumer-rules.pro")) }
+
     withDeviceTestBuilder { sourceSetTreeName = "test" }
       .configure { instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner" }
   }
