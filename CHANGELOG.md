@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.15](https://github.com/yschimke/cadence/compare/v0.1.14...v0.1.15) (2026-11-03)
+
+
+### Features
+
+* archive played episodes and triage Pocket Casts new releases ([#495](https://github.com/yschimke/cadence/issues/495)) ([a886812](https://github.com/yschimke/cadence/commit/a8868124cf5184bf7fe35bd522a4d33a76411850))
+* explain the storage screen and require new episodes to be prepared ([#497](https://github.com/yschimke/cadence/issues/497)) ([22599a1](https://github.com/yschimke/cadence/commit/22599a1988ddc1ac01e7f41e737597423e2ac115))
+
 ## [0.1.14](https://github.com/yschimke/cadence/compare/v0.1.13...v0.1.14) (2026-11-03)
 
 
