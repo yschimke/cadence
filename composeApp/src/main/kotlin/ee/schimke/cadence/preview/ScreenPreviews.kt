@@ -72,7 +72,11 @@ internal fun HomeHeadphonesPreview() {
   }
 }
 
-@Preview(name = "Home — ready to copy", showBackground = true, heightDp = 900)
+@Preview(
+  name = "Home — ready to copy",
+  showBackground = true,
+  device = "spec:width=411dp,height=900dp,dpi=420",
+)
 @Composable
 internal fun HomeReadyToCopyPreview() {
   AndroidMaterialTheme {
@@ -86,7 +90,11 @@ internal fun HomeReadyToCopyPreview() {
   }
 }
 
-@Preview(name = "Home — up to date", showBackground = true, heightDp = 900)
+@Preview(
+  name = "Home — up to date",
+  showBackground = true,
+  device = "spec:width=411dp,height=900dp,dpi=420",
+)
 @Composable
 internal fun HomeUpToDatePreview() {
   AndroidMaterialTheme {

@@ -11,6 +11,7 @@ import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.app.NotificationCompat
 import androidx.work.*
@@ -45,7 +46,8 @@ actual fun rememberPodcastWork(controller: PodcastController): PodcastWorkUi {
   val active = current?.state in setOf(WorkInfo.State.ENQUEUED, WorkInfo.State.RUNNING, WorkInfo.State.BLOCKED)
   val status by controller.status.collectAsState()
   // Notification permission is optional for the work itself. Start it even if the user declines.
-  var pendingTask by remember { mutableStateOf("download") }
+  // Saveable: the permission result can arrive in a recreated activity.
+  var pendingTask by rememberSaveable { mutableStateOf("download") }
   val notificationPermission = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {
     enqueuePodcastWork(context, pendingTask)
   }

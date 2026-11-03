@@ -255,22 +255,30 @@ private fun CopyWhenHeadphonesConnect(
 ) {
   // Outlives the effect: the copy itself changes the step, which would otherwise cancel it.
   val scope = rememberCoroutineScope()
-  var copiedFor by rememberSaveable { mutableStateOf<Int?>(null) }
+  // Saved only once an attempt finishes, so leaving Home mid-copy (which cancels it) retries on
+  // return instead of skipping this connection.
+  var handledFor by rememberSaveable { mutableStateOf<Int?>(null) }
+  var attempting by remember { mutableStateOf(false) }
   val copyNow = shouldCopyOnConnect(step)
   LaunchedEffect(attachedDeviceId, copyNow) {
     if (attachedDeviceId == null) {
-      copiedFor = null
+      handledFor = null
       return@LaunchedEffect
     }
-    if (!copyNow || copiedFor == attachedDeviceId) return@LaunchedEffect
-    copiedFor = attachedDeviceId
+    if (!copyNow || handledFor == attachedDeviceId || attempting) return@LaunchedEffect
+    attempting = true
     scope.launch {
-      // The volume mounts a moment after the USB device appears, so retry briefly.
-      for (wait in listOf(1_000L, 2_000L, 4_000L, 8_000L)) {
-        delay(wait)
-        if (podcasts.run { copyToDevice() }) break
+      try {
+        // The volume mounts a moment after the USB device appears, so retry briefly.
+        for (wait in listOf(1_000L, 2_000L, 4_000L, 8_000L)) {
+          delay(wait)
+          if (podcasts.run { copyToDevice() }) break
+        }
+        handledFor = attachedDeviceId
+        snackbar.showSnackbar(podcasts.status.value)
+      } finally {
+        attempting = false
       }
-      snackbar.showSnackbar(podcasts.status.value)
     }
   }
 }
