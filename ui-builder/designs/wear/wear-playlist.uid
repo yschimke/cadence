@@ -1,0 +1,215 @@
+{
+  "schema": "compose-ui-builder-document/v1-candidate",
+  "id": "cadence-wear-playlist",
+  "title": "Cadence \u00b7 On headphones",
+  "revision": 1,
+  "catalogPin": {
+    "systemId": "wear-m3",
+    "catalogRevision": "sha256:828449e0959511f3741301c6e714b95c",
+    "capabilityDigest": "candidate",
+    "nativeRuntimeId": "wear-m3-p2-6df8118a0d29"
+  },
+  "environment": {
+    "widthDp": 225,
+    "heightDp": 225,
+    "density": 1.0,
+    "theme": "dark",
+    "dynamicColor": false,
+    "locale": "en-US",
+    "fontScale": 1.0,
+    "layoutDirection": "ltr",
+    "windowPosture": "flat",
+    "browserZoomPercent": 100,
+    "fixedTime": "2024-05-16T12:00:00Z",
+    "animations": "settled",
+    "networkAccess": false,
+    "background": null,
+    "typeface": null,
+    "exportDevices": []
+  },
+  "stateVariables": {},
+  "roots": [
+    "root"
+  ],
+  "nodes": {
+    "text-0": {
+      "id": "text-0",
+      "componentId": "wear-m3/text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "On headphones"
+        },
+        "style": {
+          "type": "enum",
+          "value": "titleSmall"
+        },
+        "fontSizeSp": {
+          "type": "float",
+          "value": 13.0
+        },
+        "maxLines": {
+          "type": "int",
+          "value": 1
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "text-1": {
+      "id": "text-1",
+      "componentId": "wear-m3/text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "99% Invisible"
+        },
+        "style": {
+          "type": "enum",
+          "value": "bodySmall"
+        },
+        "fontSizeSp": {
+          "type": "float",
+          "value": 11.0
+        },
+        "maxLines": {
+          "type": "int",
+          "value": 1
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "text-2": {
+      "id": "text-2",
+      "componentId": "wear-m3/text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "Doktoro Esperanto"
+        },
+        "style": {
+          "type": "enum",
+          "value": "bodySmall"
+        },
+        "fontSizeSp": {
+          "type": "float",
+          "value": 11.0
+        },
+        "maxLines": {
+          "type": "int",
+          "value": 1
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "text-3": {
+      "id": "text-3",
+      "componentId": "wear-m3/text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "The News Agents"
+        },
+        "style": {
+          "type": "enum",
+          "value": "bodySmall"
+        },
+        "fontSizeSp": {
+          "type": "float",
+          "value": 11.0
+        },
+        "maxLines": {
+          "type": "int",
+          "value": 1
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "body": {
+      "id": "body",
+      "componentId": "layout/column",
+      "properties": {
+        "verticalSpacingDp": {
+          "type": "float",
+          "value": 4.0
+        }
+      },
+      "slots": {
+        "children": [
+          "text-0",
+          "text-1",
+          "text-2",
+          "text-3"
+        ]
+      },
+      "modifiers": [
+        {
+          "type": "padding",
+          "startDp": 40,
+          "topDp": 44,
+          "endDp": 40,
+          "bottomDp": 28
+        }
+      ],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "root": {
+      "id": "root",
+      "componentId": "wear-m3/screen-scaffold",
+      "properties": {},
+      "slots": {
+        "content": [
+          "body"
+        ]
+      },
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    }
+  },
+  "assets": {},
+  "tokenBindings": {},
+  "createdAtEpochMillis": 1793610947203,
+  "updatedAtEpochMillis": 1793610947203,
+  "components": {},
+  "home": {
+    "kind": "repo",
+    "path": "ui-builder/designs/wear/wear-playlist.uid"
+  }
+}

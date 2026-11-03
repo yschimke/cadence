@@ -1,0 +1,772 @@
+{
+  "schema": "compose-ui-builder-document/v1-candidate",
+  "id": "cadence-headphone-sync-widget",
+  "title": "Cadence \u00b7 Headphone sync",
+  "revision": 2,
+  "catalogPin": {
+    "systemId": "remote-m3",
+    "catalogRevision": "wear-widget-scaffolds-v1",
+    "capabilityDigest": "candidate",
+    "nativeRuntimeId": "candidate"
+  },
+  "environment": {
+    "widthDp": 312,
+    "heightDp": 152,
+    "density": 1.0,
+    "theme": "dark",
+    "dynamicColor": false,
+    "locale": "en-US",
+    "fontScale": 1.0,
+    "layoutDirection": "ltr",
+    "windowPosture": "flat",
+    "browserZoomPercent": 100,
+    "fixedTime": "2024-05-16T12:00:00Z",
+    "animations": "settled",
+    "networkAccess": false,
+    "background": null,
+    "typeface": null,
+    "exportDevices": []
+  },
+  "stateVariables": {},
+  "roots": [
+    "root"
+  ],
+  "nodes": {
+    "metric-0-icon": {
+      "id": "metric-0-icon",
+      "componentId": "remote-m3/remote-icon",
+      "properties": {
+        "imageVector": {
+          "type": "string",
+          "value": "filled/headphones"
+        },
+        "tint": {
+          "type": "string",
+          "value": "#9CCBF0"
+        },
+        "contentDescription": {
+          "type": "string",
+          "value": "On headphones"
+        }
+      },
+      "slots": {},
+      "modifiers": [
+        {
+          "type": "size",
+          "widthDp": 16,
+          "heightDp": 16
+        }
+      ],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "metric-0-count": {
+      "id": "metric-0-count",
+      "componentId": "remote-m3/remote-text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "3"
+        },
+        "fontSize": {
+          "type": "float",
+          "value": 18
+        },
+        "color": {
+          "type": "string",
+          "value": "#9CCBF0"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "metric-0-text": {
+      "id": "metric-0-text",
+      "componentId": "remote-m3/remote-text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "on headphones \u00b7 139m \u00b7 0 played"
+        },
+        "fontSize": {
+          "type": "float",
+          "value": 11
+        },
+        "color": {
+          "type": "string",
+          "value": "#E2E7EB"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "metric-0": {
+      "id": "metric-0",
+      "componentId": "layout/row",
+      "properties": {
+        "horizontalSpacingDp": {
+          "type": "float",
+          "value": 4
+        },
+        "verticalAlignment": {
+          "type": "enum",
+          "value": "center"
+        }
+      },
+      "slots": {
+        "children": [
+          "metric-0-icon",
+          "metric-0-count",
+          "metric-0-text"
+        ]
+      },
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "metric-1-icon": {
+      "id": "metric-1-icon",
+      "componentId": "remote-m3/remote-icon",
+      "properties": {
+        "imageVector": {
+          "type": "string",
+          "value": "filled/sync"
+        },
+        "tint": {
+          "type": "string",
+          "value": "#9CCBE8"
+        },
+        "contentDescription": {
+          "type": "string",
+          "value": "Ready to sync"
+        }
+      },
+      "slots": {},
+      "modifiers": [
+        {
+          "type": "size",
+          "widthDp": 16,
+          "heightDp": 16
+        }
+      ],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "metric-1-count": {
+      "id": "metric-1-count",
+      "componentId": "remote-m3/remote-text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "3"
+        },
+        "fontSize": {
+          "type": "float",
+          "value": 18
+        },
+        "color": {
+          "type": "string",
+          "value": "#9CCBE8"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "metric-1-text": {
+      "id": "metric-1-text",
+      "componentId": "remote-m3/remote-text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "ready to sync \u00b7 130m"
+        },
+        "fontSize": {
+          "type": "float",
+          "value": 11
+        },
+        "color": {
+          "type": "string",
+          "value": "#E2E7EB"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "metric-1": {
+      "id": "metric-1",
+      "componentId": "layout/row",
+      "properties": {
+        "horizontalSpacingDp": {
+          "type": "float",
+          "value": 4
+        },
+        "verticalAlignment": {
+          "type": "enum",
+          "value": "center"
+        }
+      },
+      "slots": {
+        "children": [
+          "metric-1-icon",
+          "metric-1-count",
+          "metric-1-text"
+        ]
+      },
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "metric-2-icon": {
+      "id": "metric-2-icon",
+      "componentId": "remote-m3/remote-icon",
+      "properties": {
+        "imageVector": {
+          "type": "string",
+          "value": "filled/batteryFull"
+        },
+        "tint": {
+          "type": "string",
+          "value": "#C0C8CF"
+        },
+        "contentDescription": {
+          "type": "string",
+          "value": "Battery"
+        }
+      },
+      "slots": {},
+      "modifiers": [
+        {
+          "type": "size",
+          "widthDp": 16,
+          "heightDp": 16
+        }
+      ],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "metric-2-text": {
+      "id": "metric-2-text",
+      "componentId": "remote-m3/remote-text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "50% \u00b7 ~3h MP3 \u00b7 ~4h 30m BT"
+        },
+        "fontSize": {
+          "type": "float",
+          "value": 11
+        },
+        "color": {
+          "type": "string",
+          "value": "#C0C8CF"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "metric-2": {
+      "id": "metric-2",
+      "componentId": "layout/row",
+      "properties": {
+        "horizontalSpacingDp": {
+          "type": "float",
+          "value": 4
+        },
+        "verticalAlignment": {
+          "type": "enum",
+          "value": "center"
+        }
+      },
+      "slots": {
+        "children": [
+          "metric-2-icon",
+          "metric-2-text"
+        ]
+      },
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "metrics": {
+      "id": "metrics",
+      "componentId": "layout/column",
+      "properties": {
+        "verticalSpacingDp": {
+          "type": "float",
+          "value": 1
+        },
+        "weight": {
+          "type": "float",
+          "value": 1
+        }
+      },
+      "slots": {
+        "children": [
+          "metric-0",
+          "metric-1",
+          "metric-2"
+        ]
+      },
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "sync-label": {
+      "id": "sync-label",
+      "componentId": "remote-m3/remote-text",
+      "properties": {
+        "text": {
+          "type": "string",
+          "value": "Sync"
+        },
+        "fontSize": {
+          "type": "float",
+          "value": 12
+        },
+        "color": {
+          "type": "string",
+          "value": "#9CCBF0"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "sync-action": {
+      "id": "sync-action",
+      "componentId": "remote-m3/remote-text-button",
+      "properties": {},
+      "slots": {
+        "content": [
+          "sync-label"
+        ]
+      },
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "header": {
+      "id": "header",
+      "componentId": "layout/row",
+      "properties": {
+        "horizontalSpacingDp": {
+          "type": "float",
+          "value": 4
+        },
+        "verticalAlignment": {
+          "type": "enum",
+          "value": "center"
+        }
+      },
+      "slots": {
+        "children": [
+          "metrics",
+          "sync-action"
+        ]
+      },
+      "modifiers": [
+        {
+          "type": "fillMaxWidth"
+        },
+        {
+          "type": "padding",
+          "startDp": 8,
+          "topDp": 8,
+          "endDp": 8,
+          "bottomDp": 8
+        }
+      ],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "water": {
+      "id": "water",
+      "componentId": "draw/rect",
+      "properties": {
+        "xDp": {
+          "type": "float",
+          "value": 0
+        },
+        "yDp": {
+          "type": "float",
+          "value": 0
+        },
+        "widthDp": {
+          "type": "float",
+          "value": 312
+        },
+        "heightDp": {
+          "type": "float",
+          "value": 42
+        },
+        "color": {
+          "type": "string",
+          "value": "#195480"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "wave": {
+      "id": "wave",
+      "componentId": "draw/path",
+      "properties": {
+        "pathData": {
+          "type": "string",
+          "value": "M 0 5 C 35 3 65 8 100 5 C 140 2 170 8 210 5 C 250 2 280 8 312 5"
+        },
+        "viewportWidth": {
+          "type": "float",
+          "value": 312
+        },
+        "viewportHeight": {
+          "type": "float",
+          "value": 42
+        },
+        "color": {
+          "type": "string",
+          "value": "#81BCD9"
+        },
+        "style": {
+          "type": "enum",
+          "value": "stroke"
+        },
+        "strokeWidthDp": {
+          "type": "float",
+          "value": 2
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "swimmer-arm": {
+      "id": "swimmer-arm",
+      "componentId": "draw/line",
+      "properties": {
+        "startXDp": {
+          "type": "float",
+          "value": 262
+        },
+        "startYDp": {
+          "type": "float",
+          "value": 8
+        },
+        "endXDp": {
+          "type": "float",
+          "value": 279
+        },
+        "endYDp": {
+          "type": "float",
+          "value": 12
+        },
+        "color": {
+          "type": "string",
+          "value": "#F7BC91"
+        },
+        "strokeWidthDp": {
+          "type": "float",
+          "value": 5
+        },
+        "strokeCap": {
+          "type": "enum",
+          "value": "round"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "swimmer-body": {
+      "id": "swimmer-body",
+      "componentId": "draw/oval",
+      "properties": {
+        "xDp": {
+          "type": "float",
+          "value": 275
+        },
+        "yDp": {
+          "type": "float",
+          "value": 7
+        },
+        "widthDp": {
+          "type": "float",
+          "value": 20
+        },
+        "heightDp": {
+          "type": "float",
+          "value": 9
+        },
+        "color": {
+          "type": "string",
+          "value": "#27314B"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "swimmer-head": {
+      "id": "swimmer-head",
+      "componentId": "draw/circle",
+      "properties": {
+        "centerXDp": {
+          "type": "float",
+          "value": 298
+        },
+        "centerYDp": {
+          "type": "float",
+          "value": 10
+        },
+        "radiusDp": {
+          "type": "float",
+          "value": 5
+        },
+        "color": {
+          "type": "string",
+          "value": "#F7BC91"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "swimmer-cap": {
+      "id": "swimmer-cap",
+      "componentId": "draw/arc",
+      "properties": {
+        "xDp": {
+          "type": "float",
+          "value": 293
+        },
+        "yDp": {
+          "type": "float",
+          "value": 5
+        },
+        "widthDp": {
+          "type": "float",
+          "value": 10
+        },
+        "heightDp": {
+          "type": "float",
+          "value": 9
+        },
+        "startAngle": {
+          "type": "float",
+          "value": 180
+        },
+        "sweepAngle": {
+          "type": "float",
+          "value": 180
+        },
+        "useCenter": {
+          "type": "bool",
+          "value": true
+        },
+        "color": {
+          "type": "string",
+          "value": "#F64D79"
+        }
+      },
+      "slots": {},
+      "modifiers": [],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "pool": {
+      "id": "pool",
+      "componentId": "draw/canvas",
+      "properties": {},
+      "slots": {
+        "ops": [
+          "water",
+          "wave",
+          "swimmer-arm",
+          "swimmer-body",
+          "swimmer-head",
+          "swimmer-cap"
+        ]
+      },
+      "modifiers": [
+        {
+          "type": "fillMaxWidth"
+        },
+        {
+          "type": "height",
+          "heightDp": 42
+        }
+      ],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "body": {
+      "id": "body",
+      "componentId": "layout/column",
+      "properties": {
+        "verticalArrangement": {
+          "type": "enum",
+          "value": "spaceBetween"
+        }
+      },
+      "slots": {
+        "children": [
+          "header",
+          "pool"
+        ]
+      },
+      "modifiers": [
+        {
+          "type": "fillMaxSize"
+        }
+      ],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    },
+    "root": {
+      "id": "root",
+      "componentId": "layout/box",
+      "properties": {},
+      "slots": {
+        "children": [
+          "body"
+        ]
+      },
+      "modifiers": [
+        {
+          "type": "fillMaxSize"
+        },
+        {
+          "type": "background",
+          "color": {
+            "type": "color",
+            "value": "#1B2024"
+          }
+        }
+      ],
+      "eventBindings": {},
+      "predicate": null,
+      "accessibility": null,
+      "assetBindings": {},
+      "tokenBindings": {},
+      "component": null
+    }
+  },
+  "assets": {},
+  "tokenBindings": {},
+  "createdAtEpochMillis": 1793610947203,
+  "updatedAtEpochMillis": 1793610947203,
+  "components": {},
+  "home": {
+    "kind": "repo",
+    "path": "ui-builder/designs/widgets/headphone-sync-widget.uid"
+  }
+}

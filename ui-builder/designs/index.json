@@ -1,0 +1,485 @@
+{
+  "schema": "cadence/ui-builder-index/v1",
+  "designs": [
+    {
+      "id": "cadence-component-headphone-sync",
+      "title": "Cadence \u00b7 Sync with headphones",
+      "file": "components/headphone-sync.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/podcasts/PodcastSyncHomeCard.kt",
+      "kind": "components",
+      "note": "Editable Material 3 study of the component; behavior and live state are not connected."
+    },
+    {
+      "id": "cadence-component-cloud-sync",
+      "title": "Cadence \u00b7 Pocket Casts \u00b7 Swim Series",
+      "file": "components/cloud-sync.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/podcasts/CloudSyncHomeCard.kt",
+      "kind": "components",
+      "note": "Editable Material 3 study of the component; behavior and live state are not connected."
+    },
+    {
+      "id": "cadence-component-episode",
+      "title": "Cadence \u00b7 Doktoro Esperanto",
+      "file": "components/episode.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/podcasts/PodcastScreen.kt",
+      "kind": "components",
+      "note": "Editable Material 3 study of the component; behavior and live state are not connected."
+    },
+    {
+      "id": "cadence-component-episode-row",
+      "title": "Cadence \u00b7 What happens if Trump loses these midterms?",
+      "file": "components/episode-row.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/home/HomeScreen.kt",
+      "kind": "components",
+      "note": "Editable Material 3 study of the component; behavior and live state are not connected."
+    },
+    {
+      "id": "cadence-component-phone-player",
+      "title": "Cadence \u00b7 Now playing",
+      "file": "components/phone-player.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/home/HomeScreen.kt",
+      "kind": "components",
+      "note": "Editable Material 3 study of the component; behavior and live state are not connected."
+    },
+    {
+      "id": "cadence-component-connection",
+      "title": "Cadence \u00b7 OpenSwim Pro",
+      "file": "components/connection.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/bluetooth/BluetoothControlsScreen.kt",
+      "kind": "components",
+      "note": "Editable Material 3 study of the component; behavior and live state are not connected."
+    },
+    {
+      "id": "cadence-component-permission-warning",
+      "title": "Cadence \u00b7 Bluetooth permission required",
+      "file": "components/permission-warning.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/bluetooth/BluetoothControlsScreen.kt",
+      "kind": "components",
+      "note": "Editable Material 3 study of the component; behavior and live state are not connected."
+    },
+    {
+      "id": "cadence-component-now-playing",
+      "title": "Cadence \u00b7 Now playing",
+      "file": "components/now-playing.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/bluetooth/BluetoothControlsScreen.kt",
+      "kind": "components",
+      "note": "Editable Material 3 study of the component; behavior and live state are not connected."
+    },
+    {
+      "id": "cadence-component-transport",
+      "title": "Cadence \u00b7 Playback",
+      "file": "components/transport.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/bluetooth/BluetoothControlsScreen.kt",
+      "kind": "components",
+      "note": "Editable Material 3 study of the component; behavior and live state are not connected."
+    },
+    {
+      "id": "cadence-component-headphone-volume",
+      "title": "Cadence \u00b7 Headphone volume",
+      "file": "components/headphone-volume.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/bluetooth/BluetoothControlsScreen.kt",
+      "kind": "components",
+      "note": "Editable Material 3 study of the component; behavior and live state are not connected."
+    },
+    {
+      "id": "cadence-component-working-mode",
+      "title": "Cadence \u00b7 Listening mode",
+      "file": "components/working-mode.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/bluetooth/BluetoothControlsScreen.kt",
+      "kind": "components",
+      "note": "Editable Material 3 study of the component; behavior and live state are not connected."
+    },
+    {
+      "id": "cadence-component-equalizer",
+      "title": "Cadence \u00b7 Equalizer",
+      "file": "components/equalizer.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/bluetooth/BluetoothControlsScreen.kt",
+      "kind": "components",
+      "note": "Editable Material 3 study of the component; behavior and live state are not connected."
+    },
+    {
+      "id": "cadence-component-playback-order",
+      "title": "Cadence \u00b7 Playback order",
+      "file": "components/playback-order.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/bluetooth/BluetoothControlsScreen.kt",
+      "kind": "components",
+      "note": "Editable Material 3 study of the component; behavior and live state are not connected."
+    },
+    {
+      "id": "cadence-component-advanced-commands",
+      "title": "Cadence \u00b7 Advanced commands",
+      "file": "components/advanced-commands.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/bluetooth/BluetoothControlsScreen.kt",
+      "kind": "components",
+      "note": "Editable Material 3 study of the component; behavior and live state are not connected."
+    },
+    {
+      "id": "cadence-component-source",
+      "title": "Cadence \u00b7 Pocket Casts",
+      "file": "components/source.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/sync/ManageSyncScreen.kt",
+      "kind": "components",
+      "note": "Editable Material 3 study of the component; behavior and live state are not connected."
+    },
+    {
+      "id": "cadence-component-target-device",
+      "title": "Cadence \u00b7 Target headphones",
+      "file": "components/target-device.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/sync/ManageSyncScreen.kt",
+      "kind": "components",
+      "note": "Editable Material 3 study of the component; behavior and live state are not connected."
+    },
+    {
+      "id": "cadence-component-sync-profile",
+      "title": "Cadence \u00b7 Files to sync",
+      "file": "components/sync-profile.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/sync/ManageSyncScreen.kt",
+      "kind": "components",
+      "note": "Editable Material 3 study of the component; behavior and live state are not connected."
+    },
+    {
+      "id": "cadence-component-sync-progress",
+      "title": "Cadence \u00b7 Syncing to headphones",
+      "file": "components/sync-progress.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/sync/FileSyncScreen.kt",
+      "kind": "components",
+      "note": "Editable Material 3 study of the component; behavior and live state are not connected."
+    },
+    {
+      "id": "cadence-component-sync-complete",
+      "title": "Cadence \u00b7 Sync complete",
+      "file": "components/sync-complete.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/sync/FileSyncScreen.kt",
+      "kind": "components",
+      "note": "Editable Material 3 study of the component; behavior and live state are not connected."
+    },
+    {
+      "id": "cadence-component-source-option",
+      "title": "Cadence \u00b7 Pocket Casts",
+      "file": "components/source-option.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/podcasts/PodcastScreen.kt",
+      "kind": "components",
+      "note": "Editable Material 3 study of the component; behavior and live state are not connected."
+    },
+    {
+      "id": "cadence-component-episode-count",
+      "title": "Cadence \u00b7 Episodes from this source",
+      "file": "components/episode-count.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/podcasts/PodcastScreen.kt",
+      "kind": "components",
+      "note": "Editable Material 3 study of the component; behavior and live state are not connected."
+    },
+    {
+      "id": "cadence-component-audio-options",
+      "title": "Cadence \u00b7 Audio options",
+      "file": "components/audio-options.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/podcasts/PodcastScreen.kt",
+      "kind": "components",
+      "note": "Editable Material 3 study of the component; behavior and live state are not connected."
+    },
+    {
+      "id": "cadence-component-podcast-trim",
+      "title": "Cadence \u00b7 Trim this podcast",
+      "file": "components/podcast-trim.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/podcasts/PodcastScreen.kt",
+      "kind": "components",
+      "note": "Editable Material 3 study of the component; behavior and live state are not connected."
+    },
+    {
+      "id": "cadence-component-cloud-backup",
+      "title": "Cadence \u00b7 Cross-device backup",
+      "file": "components/cloud-backup.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/podcasts/PodcastScreen.kt",
+      "kind": "components",
+      "note": "Editable Material 3 study of the component; behavior and live state are not connected."
+    },
+    {
+      "id": "cadence-component-file-row",
+      "title": "Cadence \u00b7 Episode audio",
+      "file": "components/file-row.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/home/HomeScreen.kt",
+      "kind": "components",
+      "note": "Editable Material 3 study of the component; behavior and live state are not connected."
+    },
+    {
+      "id": "cadence-component-source-row",
+      "title": "Cadence \u00b7 Podcasts",
+      "file": "components/source-row.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/home/HomeScreen.kt",
+      "kind": "components",
+      "note": "Editable Material 3 study of the component; behavior and live state are not connected."
+    },
+    {
+      "id": "cadence-component-device-row",
+      "title": "Cadence \u00b7 OpenSwim Pro",
+      "file": "components/device-row.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/devices/DevicesScreen.kt",
+      "kind": "components",
+      "note": "Editable Material 3 study of the component; behavior and live state are not connected."
+    },
+    {
+      "id": "cadence-component-bookmark-row",
+      "title": "Cadence \u00b7 Saved article",
+      "file": "components/bookmark-row.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/bookmarks/BookmarksScreen.kt",
+      "kind": "components",
+      "note": "Editable Material 3 study of the component; behavior and live state are not connected."
+    },
+    {
+      "id": "cadence-screen-home",
+      "title": "Cadence \u00b7 Home",
+      "file": "screens/home.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/home/HomeScreen.kt",
+      "kind": "screens",
+      "note": "Editable Material 3 study; real application components and state are not imported."
+    },
+    {
+      "id": "cadence-screen-manage-sources",
+      "title": "Cadence \u00b7 Manage sources",
+      "file": "screens/manage-sources.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/sync/ManageSyncScreen.kt",
+      "kind": "screens",
+      "note": "Editable Material 3 study; real application components and state are not imported."
+    },
+    {
+      "id": "cadence-screen-headphone-controls",
+      "title": "Cadence \u00b7 Headphone controls",
+      "file": "screens/headphone-controls.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/bluetooth/BluetoothControlsScreen.kt",
+      "kind": "screens",
+      "note": "Editable Material 3 study; real application components and state are not imported."
+    },
+    {
+      "id": "cadence-screen-podcasts",
+      "title": "Cadence \u00b7 Swim Series",
+      "file": "screens/podcasts.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/podcasts/PodcastScreen.kt",
+      "kind": "screens",
+      "note": "Editable Material 3 study; real application components and state are not imported."
+    },
+    {
+      "id": "cadence-screen-add-podcasts",
+      "title": "Cadence \u00b7 Add podcasts",
+      "file": "screens/add-podcasts.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/podcasts/PodcastScreen.kt",
+      "kind": "screens",
+      "note": "Editable Material 3 study; real application components and state are not imported."
+    },
+    {
+      "id": "cadence-screen-file-sync",
+      "title": "Cadence \u00b7 Sync with headphones",
+      "file": "screens/file-sync.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/sync/FileSyncScreen.kt",
+      "kind": "screens",
+      "note": "Editable Material 3 study; real application components and state are not imported."
+    },
+    {
+      "id": "cadence-screen-device-files",
+      "title": "Cadence \u00b7 On headphones",
+      "file": "screens/device-files.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/files/DeviceFilesScreen.kt",
+      "kind": "screens",
+      "note": "Editable Material 3 study; real application components and state are not imported."
+    },
+    {
+      "id": "cadence-screen-devices",
+      "title": "Cadence \u00b7 Devices",
+      "file": "screens/devices.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/devices/DevicesScreen.kt",
+      "kind": "screens",
+      "note": "Editable Material 3 study; real application components and state are not imported."
+    },
+    {
+      "id": "cadence-screen-bookmarks",
+      "title": "Cadence \u00b7 Bookmarks",
+      "file": "screens/bookmarks.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/bookmarks/BookmarksScreen.kt",
+      "kind": "screens",
+      "note": "Editable Material 3 study; real application components and state are not imported."
+    },
+    {
+      "id": "cadence-screen-browser",
+      "title": "Cadence \u00b7 Browser",
+      "file": "screens/browser.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/browser/BrowserScreen.kt",
+      "kind": "screens",
+      "note": "Editable Material 3 study; real application components and state are not imported."
+    },
+    {
+      "id": "cadence-screen-cloud-backup",
+      "title": "Cadence \u00b7 Cross-device backup",
+      "file": "screens/cloud-backup.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/podcasts/PodcastScreen.kt",
+      "kind": "screens",
+      "note": "Editable Material 3 study; real application components and state are not imported."
+    },
+    {
+      "id": "cadence-wear-player",
+      "title": "Cadence \u00b7 Headphones",
+      "file": "wear/wear-player.uid",
+      "source": "wearApp/src/main/kotlin/ee/schimke/cadence/wear/WearCompanionApp.kt",
+      "kind": "wear",
+      "note": "Wear catalog study; not an exact representation of the live app."
+    },
+    {
+      "id": "cadence-wear-playlist",
+      "title": "Cadence \u00b7 On headphones",
+      "file": "wear/wear-playlist.uid",
+      "source": "wearApp/src/main/kotlin/ee/schimke/cadence/wear/WearCompanionApp.kt",
+      "kind": "wear",
+      "note": "Wear catalog study; not an exact representation of the live app."
+    },
+    {
+      "id": "cadence-wear-settings",
+      "title": "Cadence \u00b7 Settings",
+      "file": "wear/wear-settings.uid",
+      "source": "wearApp/src/main/kotlin/ee/schimke/cadence/wear/WearCompanionApp.kt",
+      "kind": "wear",
+      "note": "Wear catalog study; not an exact representation of the live app."
+    },
+    {
+      "id": "cadence-headphone-sync-widget",
+      "title": "Cadence \u00b7 Headphone sync",
+      "file": "widgets/headphone-sync-widget.uid",
+      "source": "shared/src/androidMain/kotlin/ee/schimke/cadence/podcasts/PodcastSyncWidgetContent.kt",
+      "kind": "widgets",
+      "note": "Remote Compose catalog study; custom artwork and actions are not imported."
+    },
+    {
+      "id": "cadence-cloud-sync-widget",
+      "title": "Cadence \u00b7 Cloud sync",
+      "file": "widgets/cloud-sync-widget.uid",
+      "source": "shared/src/androidMain/kotlin/ee/schimke/cadence/podcasts/CloudSyncWidgetContent.kt",
+      "kind": "widgets",
+      "note": "Remote Compose catalog study; custom artwork and actions are not imported."
+    },
+    {
+      "id": "cadence-headphone-controls-widget",
+      "title": "Cadence \u00b7 Headphone controls",
+      "file": "widgets/headphone-controls-widget.uid",
+      "source": "composeApp/src/main/java/ee/schimke/cadence/widgets/HeadphoneControlsWidget.kt",
+      "kind": "widgets",
+      "note": "Remote Compose catalog study; custom artwork and actions are not imported."
+    },
+    {
+      "id": "cadence-wear-controls-widget",
+      "title": "Cadence \u00b7 Controls",
+      "file": "widgets/wear-controls-widget.uid",
+      "source": "wearApp/src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt",
+      "kind": "widgets",
+      "note": "Remote Compose catalog study; custom artwork and actions are not imported."
+    },
+    {
+      "id": "cadence-wear-playlist-widget",
+      "title": "Cadence \u00b7 Playlist",
+      "file": "widgets/wear-playlist-widget.uid",
+      "source": "wearApp/src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt",
+      "kind": "widgets",
+      "note": "Remote Compose catalog study; custom artwork and actions are not imported."
+    },
+    {
+      "id": "cadence-wear-sync-widget",
+      "title": "Cadence \u00b7 Sync",
+      "file": "widgets/wear-sync-widget.uid",
+      "source": "wearApp/src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt",
+      "kind": "widgets",
+      "note": "Remote Compose catalog study; custom artwork and actions are not imported."
+    },
+    {
+      "id": "cadence-component-pocket-casts-sign-in",
+      "title": "Cadence \u00b7 Pocket Casts sign in",
+      "file": "components/pocket-casts-sign-in.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/podcasts/PodcastScreen.kt",
+      "kind": "components",
+      "note": "Editable Material 3 study; behavior and live state are not connected."
+    },
+    {
+      "id": "cadence-component-rss-source",
+      "title": "Cadence \u00b7 Add podcast feed",
+      "file": "components/rss-source.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/podcasts/PodcastScreen.kt",
+      "kind": "components",
+      "note": "Editable Material 3 study; behavior and live state are not connected."
+    },
+    {
+      "id": "cadence-component-gpodder-source",
+      "title": "Cadence \u00b7 gpodder or Nextcloud",
+      "file": "components/gpodder-source.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/podcasts/PodcastScreen.kt",
+      "kind": "components",
+      "note": "Editable Material 3 study; behavior and live state are not connected."
+    },
+    {
+      "id": "cadence-component-import-source",
+      "title": "Cadence \u00b7 Import podcasts",
+      "file": "components/import-source.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/podcasts/PodcastScreen.kt",
+      "kind": "components",
+      "note": "Editable Material 3 study; behavior and live state are not connected."
+    },
+    {
+      "id": "cadence-component-add-nfs-share",
+      "title": "Cadence \u00b7 Add NFS share",
+      "file": "components/add-nfs-share.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/sync/ManageSyncScreen.kt",
+      "kind": "components",
+      "note": "Editable Material 3 study; behavior and live state are not connected."
+    },
+    {
+      "id": "cadence-component-add-sync-profile",
+      "title": "Cadence \u00b7 Create sync profile",
+      "file": "components/add-sync-profile.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/sync/ManageSyncScreen.kt",
+      "kind": "components",
+      "note": "Editable Material 3 study; behavior and live state are not connected."
+    },
+    {
+      "id": "cadence-component-source-suggestions",
+      "title": "Cadence \u00b7 Add source",
+      "file": "components/source-suggestions.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/sync/ManageSyncScreen.kt",
+      "kind": "components",
+      "note": "Editable Material 3 study; behavior and live state are not connected."
+    },
+    {
+      "id": "cadence-component-headphone-association",
+      "title": "Cadence \u00b7 Headphone match",
+      "file": "components/headphone-association.uid",
+      "source": "shared/src/androidMain/kotlin/ee/schimke/cadence/podcasts/HeadphoneAssociation.android.kt",
+      "kind": "components",
+      "note": "Editable Material 3 study; behavior and live state are not connected."
+    },
+    {
+      "id": "cadence-component-sync-device-hero",
+      "title": "Cadence \u00b7 Headphones",
+      "file": "components/sync-device-hero.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/sync/FileSyncScreen.kt",
+      "kind": "components",
+      "note": "Editable Material 3 study; behavior and live state are not connected."
+    },
+    {
+      "id": "cadence-component-sync-ready-row",
+      "title": "Cadence \u00b7 Ready to sync",
+      "file": "components/sync-ready-row.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/sync/FileSyncScreen.kt",
+      "kind": "components",
+      "note": "Editable Material 3 study; behavior and live state are not connected."
+    },
+    {
+      "id": "cadence-component-source-picker",
+      "title": "Cadence \u00b7 Add a source",
+      "file": "components/source-picker.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/home/HomeScreen.kt",
+      "kind": "components",
+      "note": "Editable Material 3 study; behavior and live state are not connected."
+    },
+    {
+      "id": "cadence-component-episode-details",
+      "title": "Cadence \u00b7 Episode details",
+      "file": "components/episode-details.uid",
+      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/podcasts/PodcastScreen.kt",
+      "kind": "components",
+      "note": "Editable Material 3 study; behavior and live state are not connected."
+    }
+  ]
+}
