@@ -42,7 +42,7 @@
                     <text x="42" y="234.99" font-size="42" font-family="Roboto Flex" font-weight="500" letter-spacing="0.53" fill="#30323A">Sync with headphones</text>
                   </g>
                   <g id="AndroidViewHolder">
-                    <image href="composeapp-homelibrarypreview.figma-raster/615.png" x="42" y="273" width="966" height="399"/>
+                    <image href="composeapp-homelibrarypreview.figma-raster/572.png" x="42" y="273" width="966" height="399"/>
                   </g>
                   <g id="Box">
                     <rect x="42" y="693" width="966" height="210" rx="52.5" ry="52.5" fill="#E7E7F1"/>
@@ -64,7 +64,7 @@
                   </g>
                 </g>
                 <g id="AndroidViewHolder">
-                  <image href="composeapp-homelibrarypreview.figma-raster/613.png" x="42" y="935" width="966" height="504"/>
+                  <image href="composeapp-homelibrarypreview.figma-raster/570.png" x="42" y="935" width="966" height="504"/>
                 </g>
                 <g id="Row">
                   <g id="Box">
@@ -117,7 +117,7 @@
               </g>
               <clipPath id="clip-2"><rect x="42" y="2060" width="966" height="745" rx="31.5" ry="31.5"/></clipPath>
               <g id="Box">
-                <rect x="43" y="2061" width="964" height="743" rx="30.5" ry="30.5" fill="#FAF8FE" stroke="#B0B1BC" stroke-width="2.62"/>
+                  <rect x="43" y="2061" width="964" height="743" rx="30.5" ry="30.5" fill="#FAF8FE" stroke="#B0B1BC" stroke-width="2.62"/>
                 <g clip-path="url(#clip-2)">
                   <g id="Column">
                     <g id="Row">
@@ -150,20 +150,25 @@
                       </g>
                     </g>
                     <g id="Box">
-                      <rect x="42" y="2232" width="966" height="189" fill="#FAF8FE"/>
-                      <g id="MultiContentMeasurePolicyImpl">
-                        <g id="Empty">
-                          <text x="84" y="2300.98" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">412 — Tides of the Pacific</text>
-                        </g>
-                        <g id="Column">
+                      <g id="Box">
+                        <image href="composeapp-homelibrarypreview.figma-raster/399.png" x="105" y="2232" width="840" height="189"/>
+                      </g>
+                      <g id="Box">
+                        <rect x="42" y="2232" width="966" height="189" fill="#FAF8FE"/>
+                        <g id="MultiContentMeasurePolicyImpl">
                           <g id="Empty">
-                            <text x="84" y="2356.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">31:00 left</text>
+                            <text x="84" y="2300.98" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">412 — Tides of the Pacific</text>
                           </g>
-                          <g id="Spacer">
-                            <g transform="translate(84 2387) scale(1 1)">
-                              <path d="M377.69,5.5 L876.5,5.5" fill="none" stroke="#DCE2F9" stroke-width="11" stroke-linecap="round"/>
-                              <path d="M5.5,5.5 L356.19,5.5" fill="none" stroke="#4C5E8B" stroke-width="11" stroke-linecap="round"/>
-                              <path d="M871.25,5.5 A5.25,5.25 0 1 0 881.75,5.5 A5.25,5.25 0 1 0 871.25,5.5 Z" fill="#4C5E8B"/>
+                          <g id="Column">
+                            <g id="Empty">
+                              <text x="84" y="2356.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">31:00 left</text>
+                            </g>
+                            <g id="Spacer">
+                              <g transform="translate(84 2387) scale(1 1)">
+                                <path d="M377.69,5.5 L876.5,5.5" fill="none" stroke="#DCE2F9" stroke-width="11" stroke-linecap="round"/>
+                                <path d="M5.5,5.5 L356.19,5.5" fill="none" stroke="#4C5E8B" stroke-width="11" stroke-linecap="round"/>
+                                <path d="M871.25,5.5 A5.25,5.25 0 1 0 881.75,5.5 A5.25,5.25 0 1 0 871.25,5.5 Z" fill="#4C5E8B"/>
+                              </g>
                             </g>
                           </g>
                         </g>
@@ -175,20 +180,25 @@
                       </g>
                     </g>
                     <g id="Box">
-                      <rect x="42" y="2424" width="966" height="189" fill="#FAF8FE"/>
-                      <g id="MultiContentMeasurePolicyImpl">
-                        <g id="Empty">
-                          <text x="84" y="2492.98" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">Lighthouses of the North Sea</text>
-                        </g>
-                        <g id="Column">
+                      <g id="Box">
+                        <image href="composeapp-homelibrarypreview.figma-raster/415.png" x="105" y="2424" width="840" height="189"/>
+                      </g>
+                      <g id="Box">
+                        <rect x="42" y="2424" width="966" height="189" fill="#FAF8FE"/>
+                        <g id="MultiContentMeasurePolicyImpl">
                           <g id="Empty">
-                            <text x="84" y="2548.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">40:00 left</text>
+                            <text x="84" y="2492.98" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">Lighthouses of the North Sea</text>
                           </g>
-                          <g id="Spacer">
-                            <g transform="translate(84 2579) scale(1 1)">
-                              <path d="M119.5,5.5 L876.5,5.5" fill="none" stroke="#DCE2F9" stroke-width="11" stroke-linecap="round"/>
-                              <path d="M5.5,5.5 L98,5.5" fill="none" stroke="#4C5E8B" stroke-width="11" stroke-linecap="round"/>
-                              <path d="M871.25,5.5 A5.25,5.25 0 1 0 881.75,5.5 A5.25,5.25 0 1 0 871.25,5.5 Z" fill="#4C5E8B"/>
+                          <g id="Column">
+                            <g id="Empty">
+                              <text x="84" y="2548.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">40:00 left</text>
+                            </g>
+                            <g id="Spacer">
+                              <g transform="translate(84 2579) scale(1 1)">
+                                <path d="M119.5,5.5 L876.5,5.5" fill="none" stroke="#DCE2F9" stroke-width="11" stroke-linecap="round"/>
+                                <path d="M5.5,5.5 L98,5.5" fill="none" stroke="#4C5E8B" stroke-width="11" stroke-linecap="round"/>
+                                <path d="M871.25,5.5 A5.25,5.25 0 1 0 881.75,5.5 A5.25,5.25 0 1 0 871.25,5.5 Z" fill="#4C5E8B"/>
+                              </g>
                             </g>
                           </g>
                         </g>
@@ -200,13 +210,18 @@
                       </g>
                     </g>
                     <g id="Box">
-                      <rect x="42" y="2616" width="966" height="189" fill="#FAF8FE"/>
-                      <g id="MultiContentMeasurePolicyImpl">
-                        <g id="Empty">
-                          <text x="84" y="2698.99" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">Why the ocean is salty</text>
-                        </g>
-                        <g id="Empty">
-                          <text x="84" y="2754.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">38:00</text>
+                      <g id="Box">
+                        <image href="composeapp-homelibrarypreview.figma-raster/431.png" x="105" y="2616" width="840" height="189"/>
+                      </g>
+                      <g id="Box">
+                        <rect x="42" y="2616" width="966" height="189" fill="#FAF8FE"/>
+                        <g id="MultiContentMeasurePolicyImpl">
+                          <g id="Empty">
+                            <text x="84" y="2698.99" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">Why the ocean is salty</text>
+                          </g>
+                          <g id="Empty">
+                            <text x="84" y="2754.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">38:00</text>
+                          </g>
                         </g>
                       </g>
                     </g>

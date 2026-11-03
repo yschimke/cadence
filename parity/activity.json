@@ -1,11 +1,35 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-03T06:37:48.053Z",
+  "generatedAt": "2026-11-03T08:18:06.660Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "22599a1988ddc1ac01e7f41e737597423e2ac115",
+        "subject": "feat: explain the storage screen and require new episodes to be prepared (#497)",
+        "at": "2026-11-03T08:08:11Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "a8868124cf5184bf7fe35bd522a4d33a76411850",
+        "subject": "feat: archive played episodes and triage Pocket Casts new releases (#495)",
+        "at": "2026-11-03T07:34:12Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "355d0495571079ec044a48e96b96f53f4095433b",
+        "subject": "chore(deps): update anthropics/claude-code-action action to v1.0.267 (#494)",
+        "at": "2026-11-03T06:32:15Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "f650ed13bbc14ec117429cc63944b4c00cb068b4",
         "subject": "chore(main): release 0.1.14 (#488)",
@@ -458,30 +482,6 @@
         "sha": "2526d975ffb09912bdfba5d30652747c80972721",
         "subject": "feat(wear): add capability-gated OpenSwim companion (#439)",
         "at": "2026-10-31T15:20:06Z",
-        "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "4b0d032b68e03956c4e26a2da98ec9b380922272",
-        "subject": "feat: add OpenSwim mode and audio controls (#441)",
-        "at": "2026-10-31T15:01:10Z",
-        "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "eade30ec9c16734d5286b51256d074d0baf6d226",
-        "subject": "feat(sync): opt-in Google Drive manifest for cross-host awareness (#437)",
-        "at": "2026-10-31T14:33:51Z",
-        "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "2fa81304e36eee105d8caf6307b89ab751cbffa5",
-        "subject": "feat: add capability-gated RCSP library (#435)",
-        "at": "2026-10-31T13:39:48Z",
         "author": "Yuri Schimke",
         "previewIds": [],
         "components": []

@@ -38,10 +38,10 @@ customising the live render are two ends of one workflow.
 
 | | |
 | --- | --- |
-| Components | **79** |
-| Rendered images (PNG) | **91** |
-| Editable wireframes (SVG) | **48** |
-| Editable design vectors (figma-svg) | **48** |
+| Components | **80** |
+| Rendered images (PNG) | **92** |
+| Editable wireframes (SVG) | **49** |
+| Editable design vectors (figma-svg) | **49** |
 | Components with a11y greenlines | **32** |
 | Library | `androidx.compose.material3:material3`<br>`ee.schimke.cadence (CadenceTheme)` |
 | Renderer | compose-preview 2.79.0 |
@@ -52,7 +52,7 @@ customising the live render are two ends of one workflow.
 
 | Group | Count |
 | --- | ---: |
-| Previews | 47 |
+| Previews | 48 |
 | Play Store | 9 |
 | Bluetooth | 4 |
 | Launcher widgets | 4 |
