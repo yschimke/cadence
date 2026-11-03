@@ -297,7 +297,18 @@ data class LocalPodcastState(
   // Positions this device sent to the source, by episode key, for the status shown per episode.
   val sentPositions: Map<String, Long> = emptyMap(),
   val pocketCasts: PocketCastsSession = PocketCastsSession(),
-)
+  // New episodes offered on Home to add to the source or dismiss, from Pocket Casts New Releases.
+  val fresh: List<Episode> = emptyList(),
+  val dismissedFresh: Set<String> = emptySet(),
+  val showFresh: Boolean = true,
+) {
+  /** Fresh episodes still to decide on: not dismissed and not already in the source. */
+  val freshToReview: List<Episode>
+    get() {
+      val inSource = library.playlist?.episodes.orEmpty().map { it.key }.toSet()
+      return fresh.filter { it.key !in dismissedFresh && it.key !in inSource }
+    }
+}
 
 /** Capability checks precede any authentication, download or write. */
 data class BackendCapabilities(

@@ -366,7 +366,19 @@ class PodcastController(val platform: PodcastPlatform) {
   suspend fun refreshSource() {
     val library = state.value.library
     when (library.source) {
-      PodcastSourceKind.PocketCasts -> importPocketCasts(library.sourceList, library.feedLatest)
+      PodcastSourceKind.PocketCasts -> {
+        importPocketCasts(library.sourceList, library.feedLatest)
+        // Best effort: the import is what was asked for, new releases are a bonus.
+        val imported = notice
+        try {
+          refreshFresh()
+        } catch (e: CancellationException) {
+          throw e
+        } catch (e: PodcastProblem) {
+          if (e.status == 401) throw e
+        } catch (_: Exception) {}
+        notice = imported
+      }
       PodcastSourceKind.Rss -> importRss(library.feedUrl, library.feedLatest)
       PodcastSourceKind.Gpodder ->
         if (gpodderPassword.isBlank())
@@ -462,6 +474,123 @@ class PodcastController(val platform: PodcastPlatform) {
     notice =
       "Imported ${count(snapshot.episodes.size, "episode")} from ${snapshot.name}" +
         if (skipped > 0) " · skipped $skipped without HTTPS audio or a known length" else ""
+  }
+
+  /** Writes need the token on this device; the web-player capture and servers only read. */
+  private val pocketCastsWritable: Boolean
+    get() =
+      pocketCastsCapture == null &&
+        !state.value.pocketCasts.server &&
+        state.value.pocketCasts.signedIn
+
+  /** Whether an episode can be archived in its source from here. */
+  val canArchive: Boolean
+    get() = state.value.library.source == PodcastSourceKind.PocketCasts && pocketCastsWritable
+
+  /** Whether a fresh episode can be added to the source: only Up Next takes new episodes. */
+  val canAddFresh: Boolean
+    get() = canArchive && state.value.library.sourceList == POCKET_CASTS_UP_NEXT
+
+  /** Whether this source offers fresh episodes at all. */
+  val supportsFresh: Boolean
+    get() = canArchive
+
+  private fun pocketCastsWriter() =
+    PocketCastsApi(platform, state.value.pocketCasts, ::nowMs) { session ->
+      save(state.value.copy(pocketCasts = session))
+    }
+
+  private suspend fun podcastUuid(api: PocketCastsApi, episode: Episode): String =
+    episode.pocketCastsPodcast
+      .ifBlank {
+        pocketCastsEpisodes(api.episode(episode.id)).singleOrNull()?.podcastUuid.orEmpty()
+      }
+      .ifBlank { throw PodcastProblem("Pocket Casts didn't return the episode's podcast ID") }
+
+  /**
+   * Done with an episode: marks it played in Pocket Casts, takes it out of Up Next when that is the
+   * source, archives it, and drops it from this library so it isn't copied again.
+   */
+  suspend fun archiveEpisode(episodeKey: String) {
+    if (!canArchive) throw PodcastProblem("Sign in to Pocket Casts in Cadence to archive episodes")
+    val library = state.value.library
+    val playlist = library.playlist ?: throw PodcastProblem("Connect a source first")
+    val episode =
+      playlist.episodes.firstOrNull { it.key == episodeKey }
+        ?: throw PodcastProblem("Episode no longer available")
+    val api = pocketCastsWriter()
+    val podcast = podcastUuid(api, episode)
+    api.sendPosition(episode.id, podcast, episode.durationMs, episode.durationMs)
+    if (library.sourceList == POCKET_CASTS_UP_NEXT) api.upNext(UP_NEXT_REMOVE, episode, podcast)
+    // Archiving is a web-player call; played and out of Up Next is already the important part.
+    val archived =
+      try {
+        api.archive(episode.id, podcast)
+        true
+      } catch (e: PodcastProblem) {
+        if (e.status == 401) throw e
+        false
+      }
+    val current = state.value
+    save(
+      current.copy(
+        library =
+          current.library.copy(
+            playlist =
+              playlist.copy(episodes = playlist.episodes.filterNot { it.key == episodeKey }),
+            manifests = current.library.manifests.filterNot { it.episode.key == episodeKey },
+          )
+      )
+    )
+    notice =
+      if (archived) "Archived ${episode.title}"
+      else "Marked ${episode.title} played in Pocket Casts"
+  }
+
+  /** Reads Pocket Casts New Releases into [LocalPodcastState.fresh]. */
+  suspend fun refreshFresh() {
+    if (!supportsFresh || !state.value.showFresh) return
+    val inSource = state.value.library.playlist?.episodes.orEmpty().map { it.key }.toSet()
+    val fresh = pocketCastsFresh(pocketCastsWriter().newReleases(), inSource)
+    val keys = fresh.map { it.key }.toSet()
+    // Dismissals only need remembering while Pocket Casts still lists the episode.
+    save(
+      state.value.copy(fresh = fresh, dismissedFresh = state.value.dismissedFresh.intersect(keys))
+    )
+  }
+
+  /** Adds a fresh episode to the end of Up Next, and to this library ready to prepare. */
+  suspend fun addFresh(episodeKey: String) {
+    if (!canAddFresh) throw PodcastProblem("Only a Pocket Casts Up Next source takes new episodes")
+    val episode =
+      state.value.fresh.firstOrNull { it.key == episodeKey }
+        ?: throw PodcastProblem("Episode no longer available")
+    val api = pocketCastsWriter()
+    api.upNext(UP_NEXT_PLAY_LAST, episode, podcastUuid(api, episode))
+    val current = state.value
+    val playlist = current.library.playlist ?: throw PodcastProblem("Connect a source first")
+    save(
+      current.copy(
+        library =
+          current.library.copy(
+            playlist =
+              if (playlist.episodes.any { it.key == episodeKey }) playlist
+              else playlist.copy(episodes = playlist.episodes + episode)
+          ),
+        fresh = current.fresh.filterNot { it.key == episodeKey },
+      )
+    )
+    notice = "Added ${episode.title} to Up Next"
+  }
+
+  /** Hides a fresh episode here only; Pocket Casts is unchanged. */
+  suspend fun dismissFresh(episodeKey: String) {
+    save(state.value.copy(dismissedFresh = state.value.dismissedFresh + episodeKey))
+    notice = "Dismissed"
+  }
+
+  suspend fun setShowFresh(show: Boolean) {
+    save(state.value.copy(showFresh = show, fresh = if (show) state.value.fresh else emptyList()))
   }
 
   suspend fun signOutPocketCasts() {

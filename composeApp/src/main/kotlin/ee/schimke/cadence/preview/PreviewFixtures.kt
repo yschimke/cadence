@@ -412,4 +412,18 @@ internal object PreviewFixtures {
       target = "content://com.android.externalstorage.documents/tree/SWIM%3A",
     )
   }
+
+  /** Signed in to Pocket Casts with New releases waiting to be triaged. */
+  val freshPodcastState =
+    preparedPodcastState.copy(
+      fresh =
+        listOf(
+          episode("n1", "Deep sea vents and the origin of life", 48, 0)
+            .copy(podcastTitle = "Ocean Hour", published = "2026-11-02T06:00:00Z"),
+          episode("n2", "Tide tables, explained", 22, 0)
+            .copy(podcastTitle = "Coastal Notes", published = "2026-11-01T18:30:00Z"),
+          episode("n3", "Swimming the Strait of Gibraltar", 61, 0)
+            .copy(podcastTitle = "Open Water", published = "2026-10-31T09:00:00Z"),
+        )
+    )
 }

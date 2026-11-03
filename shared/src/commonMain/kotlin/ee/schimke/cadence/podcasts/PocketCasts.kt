@@ -182,6 +182,29 @@ internal fun pocketCastsUsable(episode: PocketCastsEpisode) =
     episode.durationSeconds > 0 &&
     pocketCastsExtension(episode) != null
 
+/** The Cadence episode for a playable Pocket Casts episode, or null if it can't be played. */
+fun pocketCastsToEpisode(episode: PocketCastsEpisode): Episode? {
+  val durationMs = (episode.durationSeconds * 1000).toLong()
+  val extension = pocketCastsExtension(episode)
+  if (!pocketCastsUsable(episode) || durationMs <= 0 || extension == null) return null
+  val positionMs = (episode.playedUpToSeconds * 1000).toLong().coerceIn(0, durationMs)
+  return Episode(
+    "pocket-casts",
+    episode.uuid,
+    episode.title.ifBlank { "Episode" },
+    episode.url,
+    durationMs,
+    positionMs,
+    "pocketcasts:$positionMs",
+    digest("${episode.url}|$durationMs"),
+    extension,
+    podcastId =
+      episode.podcastUuid.takeIf { it.isNotBlank() }?.let { "pocket-casts:$it" }.orEmpty(),
+    podcastTitle = episode.podcastTitle,
+    published = episode.published,
+  )
+}
+
 /** Keeps playable episodes in order, up to [limit]; the second value counts skipped ones. */
 fun pocketCastsSnapshot(
   name: String,
@@ -192,30 +215,7 @@ fun pocketCastsSnapshot(
   val usable =
     episodes
       .distinctBy { it.uuid }
-      .mapNotNull { episode ->
-        val durationMs = (episode.durationSeconds * 1000).toLong()
-        val extension = pocketCastsExtension(episode)
-        if (!pocketCastsUsable(episode) || durationMs <= 0 || extension == null) {
-          skipped++
-          return@mapNotNull null
-        }
-        val positionMs = (episode.playedUpToSeconds * 1000).toLong().coerceIn(0, durationMs)
-        Episode(
-          "pocket-casts",
-          episode.uuid,
-          episode.title.ifBlank { "Episode" },
-          episode.url,
-          durationMs,
-          positionMs,
-          "pocketcasts:$positionMs",
-          digest("${episode.url}|$durationMs"),
-          extension,
-          podcastId =
-            episode.podcastUuid.takeIf { it.isNotBlank() }?.let { "pocket-casts:$it" }.orEmpty(),
-          podcastTitle = episode.podcastTitle,
-          published = episode.published,
-        )
-      }
+      .mapNotNull { episode -> pocketCastsToEpisode(episode).also { if (it == null) skipped++ } }
       .take(limit)
   if (usable.isEmpty())
     throw PodcastProblem(
@@ -224,6 +224,70 @@ fun pocketCastsSnapshot(
     )
   return PlaylistSnapshot(name = name, episodes = usable) to skipped
 }
+
+/**
+ * New releases worth offering: unplayed, not archived, playable, and not already in the source.
+ * Newest first, as Pocket Casts returns them.
+ */
+fun pocketCastsFresh(body: String, exclude: Set<String>, limit: Int = 20): List<Episode> =
+  pocketCastsEpisodes(body)
+    .asSequence()
+    .filter { !it.archived && it.playingStatus != PLAYED }
+    .distinctBy { it.uuid }
+    .mapNotNull(::pocketCastsToEpisode)
+    .filter { it.key !in exclude }
+    .take(limit)
+    .toList()
+
+/** `playingStatus` and `/sync/update_episode` status for a finished episode. */
+private const val PLAYED = 3
+
+/** Up Next change actions, as the official Android client sends them to `/up_next/sync`. */
+const val UP_NEXT_PLAY_LAST = 3
+const val UP_NEXT_REMOVE = 4
+
+/** The Pocket Casts podcast UUID Cadence keeps in [Episode.podcastId], or blank. */
+val Episode.pocketCastsPodcast: String
+  get() =
+    podcastId
+      .removePrefix("pocket-casts:")
+      .takeIf { podcastId.startsWith("pocket-casts:") }
+      .orEmpty()
+
+/** One change to Up Next, in the JSON shape of the official client's `UpNextSyncRequest`. */
+fun pocketCastsUpNextChange(action: Int, episode: Episode, podcast: String, nowMs: Long): String =
+  buildJsonObject {
+    put("deviceTime", nowMs)
+    put("version", "2")
+    putJsonObject("upNext") {
+      // 0 asks for no merge base: the change is applied by its own timestamp.
+      put("serverModified", 0)
+      putJsonArray("changes") {
+        addJsonObject {
+          put("action", action)
+          put("modified", nowMs)
+          put("uuid", episode.id)
+          put("title", episode.title)
+          put("url", episode.audioUrl)
+          put("podcast", podcast)
+          if (episode.published.isNotBlank()) put("published", episode.published)
+        }
+      }
+    }
+  }
+  .toString()
+
+/** The web player's archive request for one episode. */
+fun pocketCastsArchiveBody(uuid: String, podcast: String): String = buildJsonObject {
+  put("archive", true)
+  putJsonArray("episodes") {
+    addJsonObject {
+      put("uuid", uuid)
+      put("podcast", podcast)
+    }
+  }
+}
+  .toString()
 
 /** Where account data comes from: the API with a token, or responses the web player received. */
 interface PocketCastsReader {
@@ -335,6 +399,9 @@ abstract class PocketCastsCalls : PocketCastsReader {
 
   override suspend fun episode(uuid: String) =
     call("/user/episode", body = buildJsonObject { put("uuid", uuid) }.toString())
+
+  /** New episodes from subscribed podcasts: the web player's New Releases. */
+  suspend fun newReleases() = call("/user/new_releases")
 }
 
 /** Reads through a [PocketCastsServer]; [onSignedOut] runs when it has lost the sign-in. */
@@ -374,6 +441,15 @@ class PocketCastsApi(
         }
           .toString(),
     )
+  }
+
+  suspend fun upNext(action: Int, episode: Episode, podcast: String) {
+    call("/up_next/sync", body = pocketCastsUpNextChange(action, episode, podcast, now()))
+  }
+
+  /** Archives one episode. Observed in the web player, not in the official Android client. */
+  suspend fun archive(uuid: String, podcast: String) {
+    call("/sync/update_episodes_archive", body = pocketCastsArchiveBody(uuid, podcast))
   }
 
   private suspend fun send(path: String, method: String, body: String?) =

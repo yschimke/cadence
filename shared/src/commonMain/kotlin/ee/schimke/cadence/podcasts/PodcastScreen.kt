@@ -497,6 +497,29 @@ fun PodcastScreen(
       item {
         Expandable("Advanced settings") {
           OvernightPodcastOptions()
+          if (controller.supportsFresh)
+            Row(
+              Modifier.fillMaxWidth(),
+              verticalAlignment = Alignment.CenterVertically,
+            ) {
+              Column(Modifier.weight(1f)) {
+                Text("New releases on Home", style = MaterialTheme.typography.titleSmall)
+                Text(
+                  "New episodes from your Pocket Casts subscriptions, to add to Up Next or dismiss.",
+                  style = MaterialTheme.typography.bodySmall,
+                )
+              }
+              Switch(
+                checked = local.showFresh,
+                enabled = !busy,
+                onCheckedChange = { show ->
+                  action {
+                    setShowFresh(show)
+                    if (show) refreshFresh()
+                  }
+                },
+              )
+            }
           if (local.target.isNotBlank()) {
             Text("Headphone storage selected", style = MaterialTheme.typography.bodyMedium)
             TextButton(enabled = !busy, onClick = selectTarget) { Text("Change headphone storage") }

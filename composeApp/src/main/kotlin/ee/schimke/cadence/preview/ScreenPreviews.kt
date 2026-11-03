@@ -108,6 +108,25 @@ internal fun HomeUpToDatePreview() {
   }
 }
 
+@Preview(
+  name = "Home — new releases",
+  showBackground = true,
+  device = "spec:width=411dp,height=1600dp,dpi=420",
+)
+@Composable
+internal fun HomeFreshPreview() {
+  AndroidMaterialTheme {
+    HomeContent(
+      state = PreviewFixtures.libraryState,
+      podcasts = PreviewFixtures.freshPodcastState,
+      actions = HomeActions(),
+      canArchive = true,
+      canAddFresh = true,
+      modifier = themedModifier,
+    )
+  }
+}
+
 @Preview(name = "Devices - loaded", showBackground = true)
 @Composable
 internal fun DevicesScreenLoadedPreview() {
