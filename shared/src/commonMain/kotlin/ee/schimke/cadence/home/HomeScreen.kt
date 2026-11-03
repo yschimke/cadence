@@ -461,7 +461,7 @@ private fun LibraryTopBar(
         item("Manage sources", actions.onManageSources)()
         if (state.bluetoothSupported && state.bluetooth.connectedDevice == null)
           item("Bluetooth controls", actions.onBluetoothControls)()
-        item("File explorer", actions.onFileExplorer)()
+        item("Storage", actions.onFileExplorer)()
         item("Bookmarks", actions.onBookmarks)()
       }
     }

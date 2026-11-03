@@ -848,7 +848,7 @@ class PodcastController(val platform: PodcastPlatform) {
   suspend fun copyToDevice() {
     recheckReady()
     val sections = state.value.library.manifests.flatMap { it.sections }
-    if (sections.isEmpty() || sections.any { it.id !in state.value.readySectionIds })
+    if (!state.value.readyForDevice())
       throw PodcastProblem("Prepare all audio on this device before copying to headphones.")
     require(state.value.target.isNotBlank())
     platform.export(

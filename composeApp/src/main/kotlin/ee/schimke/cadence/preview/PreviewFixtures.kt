@@ -46,8 +46,13 @@ internal object PreviewFixtures {
       ),
       Device(
         id = "dev-2",
-        name = "Headphones (alt)",
-        path = "content://com.android.externalstorage.documents/tree/1111-1111%3A",
+        name = "Podcasts",
+        path = "content://com.android.externalstorage.documents/tree/0000-0000%3APodcasts",
+      ),
+      Device(
+        id = "dev-3",
+        name = "Music",
+        path = "content://com.android.externalstorage.documents/tree/primary%3AMusic",
       ),
     )
 

@@ -316,6 +316,8 @@ class PocketCastsTest {
         .jsonObject
     assertEquals(UP_NEXT_PLAY_LAST, added.getValue("action").jsonPrimitive.int)
     assertEquals("n1", controller.state.value.library.playlist!!.episodes.last().id)
+    // The added episode isn't prepared, so the library is no longer ready to copy.
+    assertFalse(controller.state.value.readyForDevice())
 
     assertTrue(controller.run { dismissFresh(n2.key) })
     assertTrue(controller.state.value.freshToReview.isEmpty())
