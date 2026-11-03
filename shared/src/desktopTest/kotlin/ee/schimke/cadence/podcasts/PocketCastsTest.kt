@@ -284,7 +284,7 @@ class PocketCastsTest {
     assertEquals(UP_NEXT_REMOVE, removed.getValue("action").jsonPrimitive.int)
     assertEquals(listOf("e2"), controller.state.value.library.playlist!!.episodes.map { it.id })
 
-    // Archive is best effort: played and out of Up Next still counts.
+    // Archive is best effort: played and out of Up Next still counts, even on a server error.
     platform.archiveFails = true
     val e2 = controller.state.value.library.playlist!!.episodes.single()
     assertTrue(controller.run { archiveEpisode(e2.key) })
@@ -319,6 +319,21 @@ class PocketCastsTest {
 
     assertTrue(controller.run { dismissFresh(n2.key) })
     assertTrue(controller.state.value.freshToReview.isEmpty())
+
+    // Dismissed releases don't use up the limit, and the dismissal is kept while still listed.
+    platform.newReleases =
+      """{"episodes":[${episode("n2", 700, 0)},${(3..30).joinToString(",") { episode("n$it", 600, 0) }}]}"""
+    controller.refreshFresh()
+    assertEquals(20, controller.state.value.fresh.size)
+    assertEquals("n3", controller.state.value.freshToReview.first().id)
+    assertEquals(setOf(n2.key), controller.state.value.dismissedFresh)
+
+    // An emptied Up Next fails the import, but new releases still refresh first.
+    platform.newReleases = """{"episodes":[${episode("n40", 600, 0)}]}"""
+    platform.upNextBody = """{"serverModified":1,"episodes":[],"episodeSync":[]}"""
+    assertFalse(controller.run { refreshSource() })
+    assertEquals(listOf("n40"), controller.state.value.fresh.map { it.id })
+    platform.upNextBody = upNext
 
     // Other sources can't take new episodes.
     controller.importPocketCasts(POCKET_CASTS_IN_PROGRESS, 5)
@@ -359,6 +374,7 @@ class PocketCastsTest {
     var outage = false
     var playlistsBody = playlists
     var archiveFails = false
+    var upNextBody = upNext
     var newReleases = """{"episodes":[]}"""
     val bodies = mutableMapOf<String, String>()
     val headers = mutableListOf<String>()
@@ -393,7 +409,7 @@ class PocketCastsTest {
       if (auth != "Bearer $validToken") throw PodcastProblem("The server refused the sign-in.", 401)
       this.headers += auth
       return when (path) {
-        "/up_next/list" -> upNext
+        "/up_next/list" -> upNextBody
         "/user/in_progress" -> inProgress
         "/user/playlists" -> playlistsBody.also { assertEquals("GET", method) }
         "/user/episode" -> {
@@ -404,8 +420,7 @@ class PocketCastsTest {
         }
         "/sync/update_episode",
         "/up_next/sync" -> "{}"
-        "/sync/update_episodes_archive" ->
-          if (archiveFails) throw PodcastProblem("Not found", 404) else "{}"
+        "/sync/update_episodes_archive" -> if (archiveFails) error("HTTP 500") else "{}"
         "/user/new_releases" -> newReleases
         else -> error("Unexpected $path")
       }

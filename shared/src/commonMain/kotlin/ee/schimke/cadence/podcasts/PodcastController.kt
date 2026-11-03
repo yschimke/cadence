@@ -367,9 +367,8 @@ class PodcastController(val platform: PodcastPlatform) {
     val library = state.value.library
     when (library.source) {
       PodcastSourceKind.PocketCasts -> {
-        importPocketCasts(library.sourceList, library.feedLatest)
-        // Best effort: the import is what was asked for, new releases are a bonus.
-        val imported = notice
+        // First and best effort: new releases still refresh when the import finds the source
+        // empty, which is exactly when there is room for them.
         try {
           refreshFresh()
         } catch (e: CancellationException) {
@@ -377,7 +376,7 @@ class PodcastController(val platform: PodcastPlatform) {
         } catch (e: PodcastProblem) {
           if (e.status == 401) throw e
         } catch (_: Exception) {}
-        notice = imported
+        importPocketCasts(library.sourceList, library.feedLatest)
       }
       PodcastSourceKind.Rss -> importRss(library.feedUrl, library.feedLatest)
       PodcastSourceKind.Gpodder ->
@@ -527,8 +526,13 @@ class PodcastController(val platform: PodcastPlatform) {
       try {
         api.archive(episode.id, podcast)
         true
+      } catch (e: CancellationException) {
+        throw e
       } catch (e: PodcastProblem) {
         if (e.status == 401) throw e
+        false
+      } catch (_: Exception) {
+        // Timeouts and server errors surface as other exceptions on Android and desktop.
         false
       }
     val current = state.value
@@ -551,12 +555,13 @@ class PodcastController(val platform: PodcastPlatform) {
   suspend fun refreshFresh() {
     if (!supportsFresh || !state.value.showFresh) return
     val inSource = state.value.library.playlist?.episodes.orEmpty().map { it.key }.toSet()
-    val fresh = pocketCastsFresh(pocketCastsWriter().newReleases(), inSource)
-    val keys = fresh.map { it.key }.toSet()
+    val dismissed = state.value.dismissedFresh
+    val body = pocketCastsWriter().newReleases()
+    // Dismissed episodes are left out before the limit, so later releases move up into view.
+    val fresh = pocketCastsFresh(body, inSource + dismissed)
     // Dismissals only need remembering while Pocket Casts still lists the episode.
-    save(
-      state.value.copy(fresh = fresh, dismissedFresh = state.value.dismissedFresh.intersect(keys))
-    )
+    val listed = pocketCastsFresh(body, emptySet(), limit = Int.MAX_VALUE).map { it.key }.toSet()
+    save(state.value.copy(fresh = fresh, dismissedFresh = dismissed.intersect(listed)))
   }
 
   /** Adds a fresh episode to the end of Up Next, and to this library ready to prepare. */
