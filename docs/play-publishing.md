@@ -23,6 +23,10 @@ Use a new version code for each new upload; rerunning a published version
 will be rejected by Play. Existing version codes are derived from the
 release-please version and must exceed the highest uploaded Play version.
 
+Play Console's foreground service declarations need a video for each
+permission. Record them with `scripts/record-fgs-videos.py`; see
+[foreground service evidence videos](play-fgs-videos.md).
+
 ## Firebase project
 
 - Project: [cadence-yschimke](https://console.firebase.google.com/project/cadence-yschimke/overview)
