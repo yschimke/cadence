@@ -47,6 +47,7 @@ Auto-generated from `main`. Browse inline or compare against PR branches.
 | `DevicesScreenLoadedPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/DevicesScreenLoadedPreview_Devices_loaded-cfb106a7.png" width="150" /> |
 | `DevicesScreenLoadingPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/DevicesScreenLoadingPreview_Devices_loading-8e171a67.png" width="150" /> |
 | `HomeEmptyPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HomeEmptyPreview_Home_empty-571e68af.png" width="150" /> |
+| `HomeFreshPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HomeFreshPreview_Home_new_releases-638a4962.png" width="150" /> |
 | `HomeHeadphonesPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HomeHeadphonesPreview_Home_headphones_connected-71a28d46.png" width="150" /> |
 | `HomeLibraryPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HomeLibraryPreview_Home_library-7701225c.png" width="150" /> |
 | `HomeReadyToCopyPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HomeReadyToCopyPreview_Home_ready_to_copy-3a801e9d.png" width="150" /> |

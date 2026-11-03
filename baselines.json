@@ -204,7 +204,7 @@
     "functionName": "PodcastWidgetMp3LargePreview",
     "module": "composeApp",
     "renderBasename": "PodcastWidgetMp3LargePreview_Podcast_widget_MP3_large-06e82c93.png",
-    "sha256": "eb2d2666ff323c1aef8006f9447f45d1a45677b8de9efe7b1bd5786a90623b96",
+    "sha256": "8f11e1a0220b4426f8f1f9bfb2d863a338145f2d4c01a75751fee44d5b8ba454",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetMp3LightPreview_Podcast widget \u00b7 MP3 \u00b7 light": {
@@ -212,7 +212,7 @@
     "functionName": "PodcastWidgetMp3LightPreview",
     "module": "composeApp",
     "renderBasename": "PodcastWidgetMp3LightPreview_Podcast_widget_MP3_light-cdc23576.png",
-    "sha256": "e22422b6fa64008b3f8aadf66ede2470fc94cb1d22b4cf00e1692e2d5c8d759b",
+    "sha256": "4c726c049787aa7401291e2fbb15d711ba036a0fd244ff8e1a694604917ad3ab",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetMp3Preview_Podcast widget \u00b7 MP3": {
@@ -220,7 +220,7 @@
     "functionName": "PodcastWidgetMp3Preview",
     "module": "composeApp",
     "renderBasename": "PodcastWidgetMp3Preview_Podcast_widget_MP3-3525244f.png",
-    "sha256": "b777c7a39b71282a60ceec414c0f6ae6c40618652936d4053455e812f2f97b7b",
+    "sha256": "817a5b35aaf534bb8da9315aa1e4a7ed2aa26965de08e15b9fb75b14fc95843c",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetMp3SmallPreview_Podcast widget \u00b7 MP3 small": {
@@ -325,6 +325,14 @@
     "module": "composeApp",
     "renderBasename": "HomeEmptyPreview_Home_empty-571e68af.png",
     "sha256": "bf72225a31fb981f0906b0aace5b8532a1bf5c0c1a951609e9999a1a7a688788",
+    "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt"
+  },
+  "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.HomeFreshPreview_Home \u2014 new releases": {
+    "captureLabel": "",
+    "functionName": "HomeFreshPreview",
+    "module": "composeApp",
+    "renderBasename": "HomeFreshPreview_Home_new_releases-638a4962.png",
+    "sha256": "04846052ca446383eb8b153e9b904187991183137f2360ff20f5a600076f8e09",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.HomeHeadphonesPreview_Home \u2014 headphones connected": {
