@@ -1,11 +1,35 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-02T22:34:10.013Z",
+  "generatedAt": "2026-11-03T06:37:48.053Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "f650ed13bbc14ec117429cc63944b4c00cb068b4",
+        "subject": "chore(main): release 0.1.14 (#488)",
+        "at": "2026-11-03T06:25:49Z",
+        "author": "github-actions[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "398fadaebd1a2168fc8a044a871007fa26d84ee3",
+        "subject": "feat: guide first run and make plugging in the daily sync (#493)",
+        "at": "2026-11-03T00:45:05Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "ae5a0622a39ae0303705dddef8e018b3c1b2f56a",
+        "subject": "chore: add UI Builder design studies (#492)",
+        "at": "2026-11-03T00:20:54Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "3b5eeb57ca4b51526910a543056ceb238e4096eb",
         "subject": "fix: stop clipping cloud-sync source on small widgets (#491)",
@@ -459,30 +483,6 @@
         "subject": "feat: add capability-gated RCSP library (#435)",
         "at": "2026-10-31T13:39:48Z",
         "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "356aab5523f6996508ee1af1e517c0ded1566eb4",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.79.0 (#436)",
-        "at": "2026-10-31T12:52:41Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "f662df97fdcd7cd79116697696c1db4b293f463e",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.78.0 (#434)",
-        "at": "2026-10-31T09:29:51Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "ee42303f4371491db10b6348c39c3b822c985db3",
-        "subject": "chore(deps): update anthropics/claude-code-action action to v1.0.266 (#433)",
-        "at": "2026-10-31T01:13:36Z",
-        "author": "renovate[bot]",
         "previewIds": [],
         "components": []
       }
