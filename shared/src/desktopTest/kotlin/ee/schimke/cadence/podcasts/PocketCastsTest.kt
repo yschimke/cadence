@@ -221,6 +221,126 @@ class PocketCastsTest {
   }
 
   /** Holds the sign-in and calls through an [ApiPlatform], as a Wasmo would. */
+  @Test
+  fun upNextChangesUseTheOfficialClientShape() {
+    val episode = pocketCastsToEpisode(pocketCastsEpisodes(episodes.getValue("e1")).single())!!
+    assertEquals("p1", episode.pocketCastsPodcast)
+    val body =
+      Json.parseToJsonElement(pocketCastsUpNextChange(UP_NEXT_REMOVE, episode, "p1", 42)).jsonObject
+    assertEquals("2", body.getValue("version").jsonPrimitive.content)
+    val change =
+      body.getValue("upNext").jsonObject.getValue("changes").jsonArray.single().jsonObject
+    assertEquals(4, change.getValue("action").jsonPrimitive.int)
+    assertEquals("e1", change.getValue("uuid").jsonPrimitive.content)
+    assertEquals("p1", change.getValue("podcast").jsonPrimitive.content)
+    assertEquals(42, change.getValue("modified").jsonPrimitive.long)
+    val archive = Json.parseToJsonElement(pocketCastsArchiveBody("e1", "p1")).jsonObject
+    assertTrue(archive.getValue("archive").jsonPrimitive.boolean)
+    assertEquals(
+      "e1",
+      archive
+        .getValue("episodes")
+        .jsonArray
+        .single()
+        .jsonObject
+        .getValue("uuid")
+        .jsonPrimitive
+        .content,
+    )
+  }
+
+  @Test
+  fun freshSkipsPlayedArchivedUnplayableAndAlreadyQueued() {
+    val played = episode("e6", 600, 600).replace("\"playingStatus\":2", "\"playingStatus\":3")
+    val body =
+      """{"episodes":[${episodes.getValue("e1")},${episodes.getValue("e2")},${episodes.getValue("e3")},${episodes.getValue("e5")},$played]}"""
+    val inQueue = pocketCastsToEpisode(pocketCastsEpisodes(episodes.getValue("e1")).single())!!.key
+    assertEquals(listOf("e2"), pocketCastsFresh(body, setOf(inQueue)).map { it.id })
+  }
+
+  @Test
+  fun archivingMarksPlayedLeavesUpNextAndDropsTheEpisode() = runBlocking {
+    val platform = ApiPlatform()
+    val controller = PodcastController(platform)
+    controller.signInPocketCasts("listener@example.com", "secret")
+    controller.importPocketCasts(POCKET_CASTS_UP_NEXT, 5)
+    assertTrue(controller.canArchive)
+    val e1 = controller.state.value.library.playlist!!.episodes.first()
+
+    assertTrue(controller.run { archiveEpisode(e1.key) })
+    assertEquals("Archived Episode e1", controller.status.value)
+    val played =
+      Json.parseToJsonElement(platform.bodies.getValue("/sync/update_episode")).jsonObject
+    assertEquals(3, played.getValue("status").jsonPrimitive.int)
+    val removed =
+      Json.parseToJsonElement(platform.bodies.getValue("/up_next/sync"))
+        .jsonObject
+        .getValue("upNext")
+        .jsonObject
+        .getValue("changes")
+        .jsonArray
+        .single()
+        .jsonObject
+    assertEquals(UP_NEXT_REMOVE, removed.getValue("action").jsonPrimitive.int)
+    assertEquals(listOf("e2"), controller.state.value.library.playlist!!.episodes.map { it.id })
+
+    // Archive is best effort: played and out of Up Next still counts, even on a server error.
+    platform.archiveFails = true
+    val e2 = controller.state.value.library.playlist!!.episodes.single()
+    assertTrue(controller.run { archiveEpisode(e2.key) })
+    assertEquals("Marked Episode e2 played in Pocket Casts", controller.status.value)
+  }
+
+  @Test
+  fun freshEpisodesCanBeAddedToUpNextOrDismissed() = runBlocking {
+    val platform = ApiPlatform()
+    platform.newReleases =
+      """{"episodes":[${episode("n1", 600, 0)},${episode("n2", 700, 0)},${episodes.getValue("e1")}]}"""
+    val controller = PodcastController(platform)
+    controller.signInPocketCasts("listener@example.com", "secret")
+    controller.importPocketCasts(POCKET_CASTS_UP_NEXT, 5)
+    controller.refreshSource()
+    // e1 is already in Up Next.
+    assertEquals(listOf("n1", "n2"), controller.state.value.freshToReview.map { it.id })
+
+    val (n1, n2) = controller.state.value.freshToReview
+    assertTrue(controller.run { addFresh(n1.key) })
+    val added =
+      Json.parseToJsonElement(platform.bodies.getValue("/up_next/sync"))
+        .jsonObject
+        .getValue("upNext")
+        .jsonObject
+        .getValue("changes")
+        .jsonArray
+        .single()
+        .jsonObject
+    assertEquals(UP_NEXT_PLAY_LAST, added.getValue("action").jsonPrimitive.int)
+    assertEquals("n1", controller.state.value.library.playlist!!.episodes.last().id)
+
+    assertTrue(controller.run { dismissFresh(n2.key) })
+    assertTrue(controller.state.value.freshToReview.isEmpty())
+
+    // Dismissed releases don't use up the limit, and the dismissal is kept while still listed.
+    platform.newReleases =
+      """{"episodes":[${episode("n2", 700, 0)},${(3..30).joinToString(",") { episode("n$it", 600, 0) }}]}"""
+    controller.refreshFresh()
+    assertEquals(20, controller.state.value.fresh.size)
+    assertEquals("n3", controller.state.value.freshToReview.first().id)
+    assertEquals(setOf(n2.key), controller.state.value.dismissedFresh)
+
+    // An emptied Up Next fails the import, but new releases still refresh first.
+    platform.newReleases = """{"episodes":[${episode("n40", 600, 0)}]}"""
+    platform.upNextBody = """{"serverModified":1,"episodes":[],"episodeSync":[]}"""
+    assertFalse(controller.run { refreshSource() })
+    assertEquals(listOf("n40"), controller.state.value.fresh.map { it.id })
+    platform.upNextBody = upNext
+
+    // Other sources can't take new episodes.
+    controller.importPocketCasts(POCKET_CASTS_IN_PROGRESS, 5)
+    assertFalse(controller.canAddFresh)
+    assertTrue(controller.canArchive)
+  }
+
   private inner class FakeServer : PocketCastsServer {
     var email: String? = null
     private val api = ApiPlatform()
@@ -253,6 +373,9 @@ class PocketCastsTest {
     var refreshes = true
     var outage = false
     var playlistsBody = playlists
+    var archiveFails = false
+    var upNextBody = upNext
+    var newReleases = """{"episodes":[]}"""
     val bodies = mutableMapOf<String, String>()
     val headers = mutableListOf<String>()
     val episodeReads = mutableListOf<String>()
@@ -286,7 +409,7 @@ class PocketCastsTest {
       if (auth != "Bearer $validToken") throw PodcastProblem("The server refused the sign-in.", 401)
       this.headers += auth
       return when (path) {
-        "/up_next/list" -> upNext
+        "/up_next/list" -> upNextBody
         "/user/in_progress" -> inProgress
         "/user/playlists" -> playlistsBody.also { assertEquals("GET", method) }
         "/user/episode" -> {
@@ -295,6 +418,10 @@ class PocketCastsTest {
           episodeReads += uuid
           extraEpisodes[uuid] ?: episodes.getValue(uuid)
         }
+        "/sync/update_episode",
+        "/up_next/sync" -> "{}"
+        "/sync/update_episodes_archive" -> if (archiveFails) error("HTTP 500") else "{}"
+        "/user/new_releases" -> newReleases
         else -> error("Unexpected $path")
       }
     }

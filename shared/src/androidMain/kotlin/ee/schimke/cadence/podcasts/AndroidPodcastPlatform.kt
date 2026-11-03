@@ -83,21 +83,51 @@ open class AndroidPodcastPlatform(private val context: Context) : FilePodcastPla
   }
 
   override suspend fun export(sections: List<Section>, target: String, manifest: String) = withContext(Dispatchers.IO) {
-    val volume = requireNotNull(DocumentFile.fromTreeUri(context, target.toPath().toUri()))
+    try {
+      exportTo(sections, target, manifest)
+    } catch (e: PodcastProblem) {
+      throw e
+    } catch (e: kotlinx.coroutines.CancellationException) {
+      throw e
+    } catch (e: Exception) {
+      // The generic failure hides why a copy failed; name the cause and keep the detail in logcat.
+      android.util.Log.w("Cadence", "Copy to headphones failed", e)
+      throw PodcastProblem(explainExportFailure(e, target))
+    }
+  }
+
+  private fun explainExportFailure(e: Exception, target: String): String {
+    val uri = target.toPath().toUri()
+    val granted = context.contentResolver.persistedUriPermissions.any { it.uri == uri && it.isWritePermission }
+    val message = generateSequence<Throwable>(e) { it.cause }.mapNotNull { it.message }.joinToString(" ")
+    return when {
+      !granted || e is SecurityException ->
+        "Cadence no longer has access to the headphone storage. Choose it again under Change headphone storage."
+      e is java.io.FileNotFoundException || DocumentFile.fromTreeUri(context, uri)?.exists() != true ->
+        "The headphone storage isn't available. Check it's plugged in and mounted, then try again."
+      message.contains("ENOSPC") || message.contains("No space", ignoreCase = true) ->
+        "The headphones are full. Remove files from them, then try again."
+      e is IllegalArgumentException && message.isNotBlank() -> "Couldn't copy: $message"
+      else -> "Couldn't copy to the headphones (${e::class.simpleName}). Unplug, plug back in and try again."
+    }
+  }
+
+  private fun exportTo(sections: List<Section>, target: String, manifest: String) {
+    val volume = requireNotNull(DocumentFile.fromTreeUri(context, target.toPath().toUri())) { "The headphone storage isn't available" }
     fun directory(parent: DocumentFile, name: String): DocumentFile =
-      (parent.findFile(name) ?: parent.createDirectory(name))!!.also { require(it.isDirectory) }
+      requireNotNull(parent.findFile(name) ?: parent.createDirectory(name)) { "Couldn't create $name on the headphones" }.also { require(it.isDirectory) { "$name on the headphones is a file, not a folder" } }
     val folder = directory(directory(volume, "Cadence"), "podcasts")
     val marker = folder.findFile(".cadence-owner")
     if (marker == null) {
-      require(folder.listFiles().isEmpty()) { "Existing folder is not owned by Cadence" }
+      require(folder.listFiles().isEmpty()) { "Cadence/podcasts on the headphones holds files Cadence did not put there. Move them out, then try again" }
       val created = requireNotNull(folder.createFile("application/octet-stream", ".cadence-owner"))
       requireNotNull(context.contentResolver.openOutputStream(created.uri, "wt")).use { it.write("cadence-podcasts-v1".toByteArray()) }
     } else {
-      require(context.contentResolver.openInputStream(marker.uri)?.bufferedReader()?.use { it.readText() } == "cadence-podcasts-v1")
+      require(context.contentResolver.openInputStream(marker.uri)?.bufferedReader()?.use { it.readText() } == "cadence-podcasts-v1") { "Cadence/podcasts on the headphones has an unexpected owner file" }
     }
     fun write(parent: DocumentFile, name: String, mime: String, writer: (java.io.OutputStream) -> Unit) {
       val targetFile = parent.findFile(name) ?: requireNotNull(parent.createFile(mime, name))
-      require(targetFile.isFile)
+      require(targetFile.isFile) { "$name on the headphones is a folder, not a file" }
       requireNotNull(context.contentResolver.openOutputStream(targetFile.uri, "wt")).use(writer)
     }
     // SAF does not promise atomic replace. A failed copy is retryable and never marks readiness copied.
@@ -113,7 +143,7 @@ open class AndroidPodcastPlatform(private val context: Context) : FilePodcastPla
           val created = requireNotNull(dir.createFile("application/octet-stream", ".cadence-owner"))
           requireNotNull(context.contentResolver.openOutputStream(created.uri, "wt")).use { it.write("cadence-podcasts-v1".toByteArray()) }
         } else {
-          require(context.contentResolver.openInputStream(owner.uri)?.bufferedReader()?.use { it.readText() } == "cadence-podcasts-v1")
+          require(context.contentResolver.openInputStream(owner.uri)?.bufferedReader()?.use { it.readText() } == "cadence-podcasts-v1") { "A podcast folder on the headphones has an unexpected owner file" }
         }
         dir
       }

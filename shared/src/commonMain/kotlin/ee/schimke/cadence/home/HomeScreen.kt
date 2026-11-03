@@ -69,6 +69,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -121,6 +122,10 @@ data class HomeActions(
   val onOpenPodcasts: () -> Unit = {},
   val onRefreshPodcasts: () -> Unit = {},
   val onRemovePodcasts: () -> Unit = {},
+  /** Each reports whether it worked, so a failed swipe springs back. */
+  val onArchiveEpisode: suspend (episodeKey: String) -> Boolean = { true },
+  val onAddFresh: suspend (episodeKey: String) -> Boolean = { true },
+  val onDismissFresh: suspend (episodeKey: String) -> Boolean = { true },
   val onRefreshFolder: (profileId: String) -> Unit = {},
   val onRemoveSource: (sourceId: String) -> Unit = {},
   val onFindApp: (SourceSuggestion) -> Unit = {},
@@ -188,6 +193,12 @@ fun HomeScreen(
       },
     )
   val addFolder = rememberDirectorySourceLauncher(viewModel::addFolder)
+  /** Runs a swipe's action and always says what happened, since the row itself just vanishes. */
+  suspend fun podcastResult(block: suspend PodcastController.() -> Unit): Boolean {
+    val ok = podcasts.run(block)
+    scope.launch { snackbar.showSnackbar(podcasts.status.value) }
+    return ok
+  }
   fun podcastAction(block: suspend PodcastController.() -> Unit) {
     scope.launch {
       // Failures are reported here; successes show up in the list itself.
@@ -208,6 +219,8 @@ fun HomeScreen(
     state = state,
     podcasts = podcastState,
     canRefreshPodcasts = podcasts.canRefresh,
+    canArchive = podcasts.canArchive,
+    canAddFresh = podcasts.canAddFresh,
     podcastBusy = podcastBusy,
     podcastWork = podcastWork,
     podcastPlayer = podcastPlayer,
@@ -221,6 +234,9 @@ fun HomeScreen(
         onOpenPodcasts = onOpenPodcasts,
         onRefreshPodcasts = podcastWork.refresh,
         onRemovePodcasts = { podcastAction { removeSource() } },
+        onArchiveEpisode = { key -> podcastResult { archiveEpisode(key) } },
+        onAddFresh = { key -> podcastResult { addFresh(key) } },
+        onDismissFresh = { key -> podcastResult { dismissFresh(key) } },
         onRefreshFolder = viewModel::refreshNow,
         onRemoveSource = viewModel::removeSource,
         onFindApp = viewModel::openSuggestion,
@@ -294,6 +310,8 @@ fun HomeContent(
   actions: HomeActions,
   modifier: Modifier = Modifier,
   canRefreshPodcasts: Boolean = false,
+  canArchive: Boolean = false,
+  canAddFresh: Boolean = false,
   podcastBusy: Boolean = false,
   podcastWork: PodcastWorkUi = PodcastWorkUi(),
   podcastPlayer: PodcastPlayerUi = PodcastPlayerUi(),
@@ -381,7 +399,12 @@ fun HomeContent(
         item(key = "phone-player") { PhonePodcastPlayer(podcastPlayer) }
       if (playlist != null)
         item(key = "podcasts") {
-          PodcastSection(podcasts, canRefreshPodcasts, actions, podcastPlayer)
+          PodcastSection(podcasts, canRefreshPodcasts, canArchive, actions, podcastPlayer)
+        }
+      val fresh = if (podcasts.showFresh) podcasts.freshToReview else emptyList()
+      if (fresh.isNotEmpty())
+        item(key = "fresh") {
+          FreshSection(fresh, canAddFresh, actions.onAddFresh, actions.onDismissFresh)
         }
       items(state.sources, key = { it.id }, contentType = { "source" }) { source ->
         // One scan of the profiles per source instead of three.
@@ -859,6 +882,7 @@ private fun SectionHeader(
 private fun PodcastSection(
   podcasts: LocalPodcastState,
   canRefresh: Boolean,
+  canArchive: Boolean,
   actions: HomeActions,
   player: PodcastPlayerUi,
 ) {
@@ -879,22 +903,37 @@ private fun PodcastSection(
       },
       onClick = actions.onOpenPodcasts,
     )
-    playlist.episodes.forEach { episode ->
-      HorizontalDivider()
-      EpisodeRow(
-        episode,
-        episodePosition(episode, library),
-        downloaded = episode.key in podcasts.downloadedEpisodeKeys,
-        onClick = actions.onOpenPodcasts,
-        onPlay =
-          if (
-            player.supported &&
-              (episode.key in podcasts.downloadedEpisodeKeys ||
-                (episode.backend == "pocket-casts" && player.pocketCastsAvailable))
-          ) {
-            { player.playEpisode(episode) }
-          } else null,
+    if (canArchive)
+      Text(
+        "Swipe right on an episode you've finished to archive it",
+        style = MaterialTheme.typography.bodySmall,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+        modifier = Modifier.padding(start = 56.dp, end = 16.dp, bottom = 8.dp),
       )
+    playlist.episodes.forEach { episode ->
+      key(episode.key) {
+        HorizontalDivider()
+        SwipeActionRow(
+          onSwipeRight =
+            if (canArchive) archiveAction { actions.onArchiveEpisode(episode.key) } else null,
+          onSwipeLeft = null,
+        ) {
+          EpisodeRow(
+            episode,
+            episodePosition(episode, library),
+            downloaded = episode.key in podcasts.downloadedEpisodeKeys,
+            onClick = actions.onOpenPodcasts,
+            onPlay =
+              if (
+                player.supported &&
+                  (episode.key in podcasts.downloadedEpisodeKeys ||
+                    (episode.backend == "pocket-casts" && player.pocketCastsAvailable))
+              ) {
+                { player.playEpisode(episode) }
+              } else null,
+          )
+        }
+      }
     }
   }
 }
@@ -933,6 +972,7 @@ private fun EpisodeRow(
           }
         }
       },
+    colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surface),
     modifier = Modifier.clickable(onClick = onClick),
   )
 }
