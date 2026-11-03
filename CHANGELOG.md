@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.1.14](https://github.com/yschimke/cadence/compare/v0.1.13...v0.1.14) (2026-11-03)
+
+
+### Features
+
+* guide first run and make plugging in the daily sync ([#493](https://github.com/yschimke/cadence/issues/493)) ([398fada](https://github.com/yschimke/cadence/commit/398fadaebd1a2168fc8a044a871007fa26d84ee3))
+
+
+### Bug Fixes
+
+* meet 48dp cloud-sync open/connect targets ([#490](https://github.com/yschimke/cadence/issues/490)) ([f956bee](https://github.com/yschimke/cadence/commit/f956bee91c439a04bdcbf0b8b44c2a0394ec901a))
+* polish headphone and podcast launcher widgets ([#487](https://github.com/yschimke/cadence/issues/487)) ([31f1291](https://github.com/yschimke/cadence/commit/31f12913123ac80d149828e56457b7388ed08807))
+* stop clipping cloud-sync source on small widgets ([#491](https://github.com/yschimke/cadence/issues/491)) ([3b5eeb5](https://github.com/yschimke/cadence/commit/3b5eeb57ca4b51526910a543056ceb238e4096eb))
+* theme Remote Compose widgets for light and dark ([#489](https://github.com/yschimke/cadence/issues/489)) ([bf2a087](https://github.com/yschimke/cadence/commit/bf2a0879df9d218e13573c8742486ecf5bb101f5))
+
 ## [0.1.13](https://github.com/yschimke/cadence/compare/v0.1.12...v0.1.13) (2026-11-02)
 
 
