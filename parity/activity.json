@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-03T08:18:06.660Z",
+  "generatedAt": "2026-11-03T08:27:02.410Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "27057efb6e22a37658da52fc4b96c472eacc13aa",
+        "subject": "chore(main): release 0.1.15 (#496)",
+        "at": "2026-11-03T08:09:01Z",
+        "author": "github-actions[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "22599a1988ddc1ac01e7f41e737597423e2ac115",
         "subject": "feat: explain the storage screen and require new episodes to be prepared (#497)",
@@ -474,14 +482,6 @@
         "sha": "6cfd5a0b4896b5c3aab25321780f4fdaa735a9fe",
         "subject": "feat(sync): wire Android Google Drive sign-in via AppAuth (#440)",
         "at": "2026-10-31T15:30:50Z",
-        "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "2526d975ffb09912bdfba5d30652747c80972721",
-        "subject": "feat(wear): add capability-gated OpenSwim companion (#439)",
-        "at": "2026-10-31T15:20:06Z",
         "author": "Yuri Schimke",
         "previewIds": [],
         "components": []
