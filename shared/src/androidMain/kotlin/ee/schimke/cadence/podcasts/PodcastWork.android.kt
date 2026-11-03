@@ -11,6 +11,7 @@ import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.app.NotificationCompat
 import androidx.work.*
@@ -45,8 +46,19 @@ actual fun rememberPodcastWork(controller: PodcastController): PodcastWorkUi {
   val active = current?.state in setOf(WorkInfo.State.ENQUEUED, WorkInfo.State.RUNNING, WorkInfo.State.BLOCKED)
   val status by controller.status.collectAsState()
   // Notification permission is optional for the work itself. Start it even if the user declines.
+  // Saveable: the permission result can arrive in a recreated activity.
+  var pendingTask by rememberSaveable { mutableStateOf("download") }
   val notificationPermission = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {
-    enqueuePodcastWork(context, "download")
+    enqueuePodcastWork(context, pendingTask)
+  }
+  // Asked once, with the first long task: it shows progress and, later, the overnight "ready" note.
+  fun withNotifications(task: String) {
+    if (Build.VERSION.SDK_INT >= 33 && context.checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+      pendingTask = task
+      notificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
+    } else {
+      enqueuePodcastWork(context, task)
+    }
   }
   return PodcastWorkUi(
     supportsDownload = true,
@@ -57,14 +69,8 @@ actual fun rememberPodcastWork(controller: PodcastController): PodcastWorkUi {
       current?.state == WorkInfo.State.FAILED -> current.outputData.getString(ERROR) ?: "Could not complete. Try again."
       else -> null
     },
-    download = {
-      if (Build.VERSION.SDK_INT >= 33 && context.checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-        notificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
-      } else {
-        enqueuePodcastWork(context, "download")
-      }
-    },
-    process = { enqueuePodcastWork(context, "process") },
+    download = { withNotifications("download") },
+    process = { withNotifications("process") },
     refresh = { enqueuePodcastWork(context, "refresh") },
   )
 }
