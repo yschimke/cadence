@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-04T22:45:21.730Z",
+  "generatedAt": "2026-11-04T22:57:18.537Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "be9bd141fbf8b2bd6112a59fadc1f40bc7f645a7",
+        "subject": "chore(deps): update actions/setup-java action to v6.2.0 (#505)",
+        "at": "2026-11-04T22:46:21Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "9c3942a390c4b5ba1f0275df2f0815b48caac303",
         "subject": "chore(deps): update dependency dev.zacsweers.metro to v1.5.2 (#501)",
@@ -474,14 +482,6 @@
         "sha": "7841799edef4c855d384bbac974d7a07f7a8d9b3",
         "subject": "chore(deps): update dependency dev.zacsweers.metro to v1.5.1 (#415)",
         "at": "2026-10-31T16:32:25Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "550079f811a210bc4fd16f3a081f4c72ebf2e7e7",
-        "subject": "fix(deps): update androidx-compose to v1.0.0-alpha22 (#443)",
-        "at": "2026-10-31T16:31:11Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
