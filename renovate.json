@@ -18,6 +18,22 @@
       ],
       "schedule": ["at any time"],
       "automerge": true
+    },
+    {
+      "description": "Offline Robolectric tests select API 35 with @Config. android-all-instrumented is an exact platform/provider image, not a library upgrade: replacing Android 15's jar with Android 17 removes the SDK Robolectric requests. Keep the catalog's SDK 35 pin until the test SDK and Robolectric provider change together.",
+      "matchPackageNames": ["org.robolectric:android-all-instrumented"],
+      "enabled": false
+    },
+    {
+      "description": "Remote Compose, its Wear widget layer and Glance Wear must move together — `remote-material3` and `glance-wear` both declare `androidx.compose.remote:remote-creation*` in their POMs, and a skewed set fails compilation or preview render — so group them into ONE PR.",
+      "groupName": "remote-compose",
+      "matchPackageNames": [
+        "/^androidx\\.compose\\.remote($|[.:])/",
+        "/^androidx\\.wear\\.compose\\.remote($|[.:])/",
+        "/^androidx\\.glance\\.wear($|[.:])/",
+        "/^ee\\.schimke\\.composeai:rc-widget/"
+      ],
+      "automerge": false
     }
   ]
 }

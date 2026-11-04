@@ -7,7 +7,7 @@ import androidx.compose.material.icons.filled.Cloud
 import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.GraphicEq
 import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.remote.creation.compose.action.Action
+import androidx.compose.remote.creation.compose.action.RemoteAction
 import androidx.compose.remote.creation.compose.layout.RemoteAlignment
 import androidx.compose.remote.creation.compose.layout.RemoteArrangement
 import androidx.compose.remote.creation.compose.layout.RemoteBox
@@ -48,10 +48,10 @@ import ee.schimke.cadence.widgets.WidgetColors
 @RemoteComposable
 fun CloudSyncWidgetContent(
   status: CloudSyncStatus,
-  onOpen: Action? = null,
-  onRefresh: Action? = null,
-  onDownload: Action? = null,
-  onProcess: Action? = null,
+  onOpen: RemoteAction? = null,
+  onRefresh: RemoteAction? = null,
+  onDownload: RemoteAction? = null,
+  onProcess: RemoteAction? = null,
   widthDp: Int = 250,
   heightDp: Int = 180,
   colors: WidgetColors = WidgetColors.Dark,
@@ -265,7 +265,7 @@ private fun CloudMetric(
   width: Float,
   labelSp: Float,
   colors: WidgetColors,
-  action: Action? = null,
+  action: RemoteAction? = null,
   description: String = "",
   emphasize: Boolean = true,
   pending: Boolean = true,
@@ -327,7 +327,7 @@ internal fun SyncStatusIcon(icon: ImageVector, color: Color, size: Int) {
 
 @Composable
 @RemoteComposable
-private fun CloudAction(label: String, action: Action, scale: Float, colors: WidgetColors) {
+private fun CloudAction(label: String, action: RemoteAction, scale: Float, colors: WidgetColors) {
   RemoteBox(
     modifier = RemoteModifier.height((48 * scale.coerceAtLeast(1f)).rdp).clickable(action),
     contentAlignment = RemoteAlignment.Center,

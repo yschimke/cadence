@@ -2,7 +2,7 @@
 
 package ee.schimke.cadence.widgets
 
-import androidx.compose.remote.creation.compose.action.Action
+import androidx.compose.remote.creation.compose.action.RemoteAction
 import androidx.compose.remote.creation.compose.layout.RemoteBox
 import androidx.compose.remote.creation.compose.layout.RemoteComposable
 import androidx.compose.remote.creation.compose.layout.RemoteStateLayout
@@ -164,8 +164,8 @@ object HeadphoneControlsTemplate {
 @RemoteComposable
 fun HeadphoneControlsTemplateContent(
   tier: HeadphoneControlsTemplate.Tier,
-  onOpen: Action?,
-  onAction: @Composable (HeadphoneWidgetAction) -> Action?,
+  onOpen: RemoteAction?,
+  onAction: @Composable (HeadphoneWidgetAction) -> RemoteAction?,
   look: HeadphoneLook = HeadphoneLook.Default,
 ) {
   val t = HeadphoneControlsTemplate
@@ -179,7 +179,8 @@ fun HeadphoneControlsTemplateContent(
       extra = named(t.EXTRA),
     )
   val defaults = WidgetColors.Dark
-  fun color(role: String) = RemoteColor.createNamedRemoteColor(role, t.COLORS.getValue(role)(defaults), user)
+  fun color(role: String) =
+    RemoteColor.createNamedRemoteColor(role, t.COLORS.getValue(role)(defaults).toArgb(), user)
   val palette =
     look.colors?.let { RemotePalette.of(it) }
       ?: RemotePalette(
