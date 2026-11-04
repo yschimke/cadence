@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-04T22:57:18.537Z",
+  "generatedAt": "2026-11-04T23:08:18.865Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "4b913bad8985a8966f3ec902d93fe0944aa3cec5",
+        "subject": "fix(deps): update compose-ai-tools (#506)",
+        "at": "2026-11-04T22:49:17Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "be9bd141fbf8b2bd6112a59fadc1f40bc7f645a7",
         "subject": "chore(deps): update actions/setup-java action to v6.2.0 (#505)",
@@ -475,14 +483,6 @@
         "subject": "feat: bring OpenSwim controls and a headphone widget to the phone app (#446)",
         "at": "2026-10-31T16:34:07Z",
         "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "7841799edef4c855d384bbac974d7a07f7a8d9b3",
-        "subject": "chore(deps): update dependency dev.zacsweers.metro to v1.5.1 (#415)",
-        "at": "2026-10-31T16:32:25Z",
-        "author": "renovate[bot]",
         "previewIds": [],
         "components": []
       }
