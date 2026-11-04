@@ -1,6 +1,6 @@
 {
     "formatVersion": "compose-preview-history/v1",
-    "generatedFrom": "40639f49273dd1cd7e23fb0e714f6c806f27961e",
+    "generatedFrom": "ab46282a779562c7498260b4e4b7604bcc8b45e0",
     "previews": {
         "composeApp/activity__MainActivity": {
             "path": "renders/composeApp/activity__MainActivity.png",
@@ -892,6 +892,13 @@
             "path": "renders/composeApp/PodcastWidgetMp3LargePreview_Podcast_widget_MP3_large-06e82c93.png",
             "versions": [
                 {
+                    "blob": "3e4b418102e70cce351e3b2017650f6d5f02644e",
+                    "commit": "ab46282a779562c7498260b4e4b7604bcc8b45e0",
+                    "date": "2026-11-04T22:39:42Z",
+                    "sourceSha": "9c3942a3",
+                    "commits": 1
+                },
+                {
                     "blob": "406897200c43ee9b6ccf8309b53ade7b03b8f1a9",
                     "commit": "40639f49273dd1cd7e23fb0e714f6c806f27961e",
                     "date": "2026-11-04T00:57:44Z",
@@ -1060,13 +1067,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 24,
+            "observations": 25,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetMp3LightPreview_Podcast widget · MP3 · light": {
             "path": "renders/composeApp/PodcastWidgetMp3LightPreview_Podcast_widget_MP3_light-cdc23576.png",
             "versions": [
+                {
+                    "blob": "2ebf2efaacc217ebe027e8dcecb29222fa02e3d7",
+                    "commit": "ab46282a779562c7498260b4e4b7604bcc8b45e0",
+                    "date": "2026-11-04T22:39:42Z",
+                    "sourceSha": "9c3942a3",
+                    "commits": 1
+                },
                 {
                     "blob": "ac3e2d54b04ae9949485dabad31bf109cc46308d",
                     "commit": "40639f49273dd1cd7e23fb0e714f6c806f27961e",
@@ -1159,13 +1173,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 13,
+            "observations": 14,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetMp3Preview_Podcast widget · MP3": {
             "path": "renders/composeApp/PodcastWidgetMp3Preview_Podcast_widget_MP3-3525244f.png",
             "versions": [
+                {
+                    "blob": "43bfe275c62352f60dc93e5662d0689a927ee79f",
+                    "commit": "ab46282a779562c7498260b4e4b7604bcc8b45e0",
+                    "date": "2026-11-04T22:39:42Z",
+                    "sourceSha": "9c3942a3",
+                    "commits": 1
+                },
                 {
                     "blob": "340f485ec9974ba59c5d1f702ffa20c0b1c86e8f",
                     "commit": "40639f49273dd1cd7e23fb0e714f6c806f27961e",
@@ -1335,7 +1356,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 24,
+            "observations": 25,
             "unstable": false,
             "flapCount": 0
         },
@@ -1804,6 +1825,13 @@
             "path": "renders/composeApp/HomeFreshPreview_Home_new_releases-638a4962.png",
             "versions": [
                 {
+                    "blob": "7589447a4e4119c81f978de33aecee0aac5fca1f",
+                    "commit": "ab46282a779562c7498260b4e4b7604bcc8b45e0",
+                    "date": "2026-11-04T22:39:42Z",
+                    "sourceSha": "9c3942a3",
+                    "commits": 1
+                },
+                {
                     "blob": "63ebc8bfd465af0f82546a558710b08544347dde",
                     "commit": "8c63d16b5a5db3ab318e77be624b822a66360ced",
                     "date": "2026-11-03T08:19:20Z",
@@ -1818,13 +1846,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 2,
+            "observations": 3,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.HomeHeadphonesPreview_Home — headphones connected": {
             "path": "renders/composeApp/HomeHeadphonesPreview_Home_headphones_connected-71a28d46.png",
             "versions": [
+                {
+                    "blob": "3109e61246497fb1d7eea0e55f086c3cafc1537c",
+                    "commit": "ab46282a779562c7498260b4e4b7604bcc8b45e0",
+                    "date": "2026-11-04T22:39:42Z",
+                    "sourceSha": "9c3942a3",
+                    "commits": 1
+                },
                 {
                     "blob": "2f89d649ba49d69b24618f274b48fc2ce0c80d16",
                     "commit": "8c63d16b5a5db3ab318e77be624b822a66360ced",
@@ -1889,13 +1924,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 9,
+            "observations": 10,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.HomeLibraryPreview_Home — library": {
             "path": "renders/composeApp/HomeLibraryPreview_Home_library-7701225c.png",
             "versions": [
+                {
+                    "blob": "c0b7a5777909bf2482579d982081a026b271c89f",
+                    "commit": "ab46282a779562c7498260b4e4b7604bcc8b45e0",
+                    "date": "2026-11-04T22:39:42Z",
+                    "sourceSha": "9c3942a3",
+                    "commits": 1
+                },
                 {
                     "blob": "a50e327cc34965aba94f7ff9d856f24175842fbb",
                     "commit": "8c63d16b5a5db3ab318e77be624b822a66360ced",
@@ -1960,13 +2002,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 9,
+            "observations": 10,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.HomeReadyToCopyPreview_Home — ready to copy": {
             "path": "renders/composeApp/HomeReadyToCopyPreview_Home_ready_to_copy-3a801e9d.png",
             "versions": [
+                {
+                    "blob": "a36fa863c233ff86e510d04837914a35114d1ff7",
+                    "commit": "ab46282a779562c7498260b4e4b7604bcc8b45e0",
+                    "date": "2026-11-04T22:39:42Z",
+                    "sourceSha": "9c3942a3",
+                    "commits": 1
+                },
                 {
                     "blob": "6e3ca3c567f885fb32a1f8fc4c42c73ab9d76a40",
                     "commit": "8c63d16b5a5db3ab318e77be624b822a66360ced",
@@ -1982,13 +2031,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 2,
+            "observations": 3,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.HomeUpToDatePreview_Home — up to date": {
             "path": "renders/composeApp/HomeUpToDatePreview_Home_up_to_date-2cbd5a11.png",
             "versions": [
+                {
+                    "blob": "f9de571ab11dffbced8d4e6b42125b629479a185",
+                    "commit": "ab46282a779562c7498260b4e4b7604bcc8b45e0",
+                    "date": "2026-11-04T22:39:42Z",
+                    "sourceSha": "9c3942a3",
+                    "commits": 1
+                },
                 {
                     "blob": "12045fecfa01f64f630e0abf29f207a4b1e2af36",
                     "commit": "8c63d16b5a5db3ab318e77be624b822a66360ced",
@@ -2004,7 +2060,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 2,
+            "observations": 3,
             "unstable": false,
             "flapCount": 0
         },
@@ -2177,6 +2233,13 @@
             "path": "renders/composeApp/PlayStorePhoneHomeDark_Play_Store_phone_Home_dark-aef8b2b7.png",
             "versions": [
                 {
+                    "blob": "445647d1b00b46020f9959ed90fbc283901ba0a9",
+                    "commit": "ab46282a779562c7498260b4e4b7604bcc8b45e0",
+                    "date": "2026-11-04T22:39:42Z",
+                    "sourceSha": "9c3942a3",
+                    "commits": 1
+                },
+                {
                     "blob": "64f6749a7f87fddeb78e7c59edb0115aec733ba6",
                     "commit": "8c63d16b5a5db3ab318e77be624b822a66360ced",
                     "date": "2026-11-03T08:19:20Z",
@@ -2247,13 +2310,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 10,
+            "observations": 11,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStorePhoneHomeLight_Play Store · phone · Home (light)": {
             "path": "renders/composeApp/PlayStorePhoneHomeLight_Play_Store_phone_Home_light-a1bae343.png",
             "versions": [
+                {
+                    "blob": "727a7a2938530352853bd7b2396dcf91194ab4cf",
+                    "commit": "ab46282a779562c7498260b4e4b7604bcc8b45e0",
+                    "date": "2026-11-04T22:39:42Z",
+                    "sourceSha": "9c3942a3",
+                    "commits": 1
+                },
                 {
                     "blob": "89881c4ceca5f170c0a19c4e980545fc83cb3a37",
                     "commit": "8c63d16b5a5db3ab318e77be624b822a66360ced",
@@ -2325,7 +2395,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 10,
+            "observations": 11,
             "unstable": false,
             "flapCount": 0
         },
@@ -2405,6 +2475,13 @@
             "path": "renders/composeApp/PlayStoreSevenInchHomeDark_Play_Store_7_tablet_Home_dark-79090521.png",
             "versions": [
                 {
+                    "blob": "d69aba13b5315796b07685ca88bb01dfdbb6cf42",
+                    "commit": "ab46282a779562c7498260b4e4b7604bcc8b45e0",
+                    "date": "2026-11-04T22:39:42Z",
+                    "sourceSha": "9c3942a3",
+                    "commits": 1
+                },
+                {
                     "blob": "1e548834e353b5c87b0b0eea51d2d52e51dc3fdc",
                     "commit": "8c63d16b5a5db3ab318e77be624b822a66360ced",
                     "date": "2026-11-03T08:19:20Z",
@@ -2475,13 +2552,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 10,
+            "observations": 11,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStoreSevenInchHomeLight_Play Store · 7_ tablet · Home (light)": {
             "path": "renders/composeApp/PlayStoreSevenInchHomeLight_Play_Store_7_tablet_Home_light-59744afc.png",
             "versions": [
+                {
+                    "blob": "96331d6e8004111a78b3025b519389d47373bb7b",
+                    "commit": "ab46282a779562c7498260b4e4b7604bcc8b45e0",
+                    "date": "2026-11-04T22:39:42Z",
+                    "sourceSha": "9c3942a3",
+                    "commits": 1
+                },
                 {
                     "blob": "d4437cfd021f64368c4a8b6c9dea2d224c7f72a2",
                     "commit": "8c63d16b5a5db3ab318e77be624b822a66360ced",
@@ -2553,13 +2637,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 10,
+            "observations": 11,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStoreTenInchHomeDark_Play Store · 10_ tablet · Home (dark)": {
             "path": "renders/composeApp/PlayStoreTenInchHomeDark_Play_Store_10_tablet_Home_dark-91cf4524.png",
             "versions": [
+                {
+                    "blob": "bf2e411c6e2602d066ef1de123f58887b8f68e74",
+                    "commit": "ab46282a779562c7498260b4e4b7604bcc8b45e0",
+                    "date": "2026-11-04T22:39:42Z",
+                    "sourceSha": "9c3942a3",
+                    "commits": 1
+                },
                 {
                     "blob": "c6a7a111a8c76d64eb13731f626fd304c8bfbbb1",
                     "commit": "8c63d16b5a5db3ab318e77be624b822a66360ced",
@@ -2631,13 +2722,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 10,
+            "observations": 11,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStoreTenInchHomeLight_Play Store · 10_ tablet · Home (light)": {
             "path": "renders/composeApp/PlayStoreTenInchHomeLight_Play_Store_10_tablet_Home_light-536fa195.png",
             "versions": [
+                {
+                    "blob": "33c7f3dd1c7c0e42f0e729b74bc83530350e805a",
+                    "commit": "ab46282a779562c7498260b4e4b7604bcc8b45e0",
+                    "date": "2026-11-04T22:39:42Z",
+                    "sourceSha": "9c3942a3",
+                    "commits": 1
+                },
                 {
                     "blob": "e8b9458d10c1b728c1652c57dee6a315f0cbd982",
                     "commit": "8c63d16b5a5db3ab318e77be624b822a66360ced",
@@ -2709,7 +2807,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 10,
+            "observations": 11,
             "unstable": false,
             "flapCount": 0
         },
