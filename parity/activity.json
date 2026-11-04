@@ -1,11 +1,43 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-03T08:27:02.410Z",
+  "generatedAt": "2026-11-04T22:45:21.730Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "9c3942a390c4b5ba1f0275df2f0815b48caac303",
+        "subject": "chore(deps): update dependency dev.zacsweers.metro to v1.5.2 (#501)",
+        "at": "2026-11-04T22:34:02Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "0950368fa5cb45881f06c35c3fcba5ed9733f6bf",
+        "subject": "chore(deps): update anthropics/claude-code-action action to v1.0.268 (#502)",
+        "at": "2026-11-04T00:53:49Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "e82b02ac8df976b16c4e67075993cca904d4bea3",
+        "subject": "chore: record Play foreground service evidence videos (#500)",
+        "at": "2026-11-03T20:13:42Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "caa0271af7aada07ded7621e5c299de18540e73a",
+        "subject": "feat: report caught podcast failures to Crashlytics as non-fatals (#498)",
+        "at": "2026-11-03T09:09:11Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "27057efb6e22a37658da52fc4b96c472eacc13aa",
         "subject": "chore(main): release 0.1.15 (#496)",
@@ -451,38 +483,6 @@
         "subject": "fix(deps): update androidx-compose to v1.0.0-alpha22 (#443)",
         "at": "2026-10-31T16:31:11Z",
         "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "fef577539bfc91af8b26f859913371837ff7c2a8",
-        "subject": "fix(wear): fill the small playlist widget and centre transport controls (#447)",
-        "at": "2026-10-31T16:30:25Z",
-        "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "38aa1bbf4d2ff508ef167c40edbcce849da8cae6",
-        "subject": "feat(wear): focus each widget on one job (#445)",
-        "at": "2026-10-31T16:07:24Z",
-        "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "586587e275ffe5631498272a029ada07c0cb2ab8",
-        "subject": "chore(deps): update plugin com.squareup.wire to v7.1.2 (#396)",
-        "at": "2026-10-31T15:33:49Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "6cfd5a0b4896b5c3aab25321780f4fdaa735a9fe",
-        "subject": "feat(sync): wire Android Google Drive sign-in via AppAuth (#440)",
-        "at": "2026-10-31T15:30:50Z",
-        "author": "Yuri Schimke",
         "previewIds": [],
         "components": []
       }
