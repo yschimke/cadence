@@ -7,7 +7,7 @@ with `GITHUB_TOKEN` do not trigger another workflow. Direct `v*` tag pushes
 also publish. Production promotion remains a Play Console action.
 
 The workflow builds and publishes `:composeApp:publishReleaseBundle` to the phone
-internal track and `:wearApp:publishReleaseBundle` to `wear:qa`, the Wear OS
+internal track and `:wearApp:publishReleaseBundle` to `wear:internal`, the Wear OS
 internal track. Both bundles use the same upload key. Wear version codes use a
 1,000,000,000 offset from the phone version code to keep the two artifacts
 distinct. Release Please updates both version names. The workflow then publishes

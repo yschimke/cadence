@@ -55,7 +55,7 @@ android {
 }
 
 play {
-  track.set("wear:qa")
+  track.set("wear:internal")
   defaultToAppBundles.set(true)
   releaseStatus.set(ReleaseStatus.COMPLETED)
   enabled.set(System.getenv("ANDROID_PUBLISHER_CREDENTIALS") != null)
