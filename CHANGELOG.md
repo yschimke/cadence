@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.18](https://github.com/yschimke/cadence/compare/v0.1.17...v0.1.18) (2026-11-05)
+
+
+### Features
+
+* draw the headphone widget from a Livery template baked into the APK ([#511](https://github.com/yschimke/cadence/issues/511)) ([8692d06](https://github.com/yschimke/cadence/commit/8692d06c15200b9d8ba4bd04af4c8b3d0c5a178b))
+* prompt for Play updates, at once for testers and after a week for everyone ([#509](https://github.com/yschimke/cadence/issues/509)) ([ad328eb](https://github.com/yschimke/cadence/commit/ad328eb4f26f6530b59ddaf15d9cd9cddbc7c9ca))
+
 ## [0.1.17](https://github.com/yschimke/cadence/compare/v0.1.16...v0.1.17) (2026-11-05)
 
 
