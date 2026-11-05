@@ -1,11 +1,27 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-05T07:11:32.029Z",
+  "generatedAt": "2026-11-05T08:47:03.182Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "0102feef708294f353307f167bee8d4a689abc58",
+        "subject": "chore(main): release 0.1.17 (#508)",
+        "at": "2026-11-05T08:36:53Z",
+        "author": "github-actions[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "463d57494a7051991e1206dd46de96aabaf742b2",
+        "subject": "fix(release): unblock Play publishing for phone and Wear (#507)",
+        "at": "2026-11-05T08:11:33Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "147d4a9bb845b51050111b989e73a0c7c90c8b96",
         "subject": "chore(main): release 0.1.16 (#499)",
@@ -467,22 +483,6 @@
         "subject": "fix(wear): single-row small now-playing widget, fix remote-material3 crash (#449)",
         "at": "2026-10-31T17:06:15Z",
         "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "4979e31b97c27726b06a11a46c8d41a0fdb16139",
-        "subject": "fix(deps): update androidx to v1.0.0-alpha21 (#442)",
-        "at": "2026-10-31T16:35:57Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "a336254d797eac3a70fcdfa44f45ae0a5acfb36a",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.79.1 (#448)",
-        "at": "2026-10-31T16:35:27Z",
-        "author": "renovate[bot]",
         "previewIds": [],
         "components": []
       }
