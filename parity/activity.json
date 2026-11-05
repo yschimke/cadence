@@ -1,11 +1,27 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-05T20:18:30.102Z",
+  "generatedAt": "2026-11-05T21:06:40.631Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "797622b81f1a75a3b0d90c3bbeef7e8553985d3c",
+        "subject": "chore(main): release 0.1.18 (#510)",
+        "at": "2026-11-05T20:55:22Z",
+        "author": "github-actions[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "8692d06c15200b9d8ba4bd04af4c8b3d0c5a178b",
+        "subject": "feat: draw the headphone widget from a Livery template baked into the APK (#511)",
+        "at": "2026-11-05T20:34:14Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "58ddb19b6dbf5a8b5370c39dd67b66818d6ff2d4",
         "subject": "chore(deps): update agp to v9.5.1 (#512)",
@@ -467,22 +483,6 @@
         "subject": "fix(swim): animate on Android 16 launchers; drop drawWithContent water (#454)",
         "at": "2026-10-31T19:43:19Z",
         "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "6edcf047e7c45c10ff202007795699d72c909ad8",
-        "subject": "feat(widgets): swimming pool animations for launcher and Wear widgets (#451)",
-        "at": "2026-10-31T19:01:05Z",
-        "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "faee231cc715bba3a130958614af35143dc00ca4",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.79.2 (#453)",
-        "at": "2026-10-31T18:38:03Z",
-        "author": "renovate[bot]",
         "previewIds": [],
         "components": []
       }
