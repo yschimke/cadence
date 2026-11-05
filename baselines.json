@@ -204,7 +204,7 @@
     "functionName": "PodcastWidgetMp3LargePreview",
     "module": "composeApp",
     "renderBasename": "PodcastWidgetMp3LargePreview_Podcast_widget_MP3_large-06e82c93.png",
-    "sha256": "62e7467f9e6e5737c003bf213b634224dbaed8f2305cee303b117c2b56899612",
+    "sha256": "0c9a11675e9de424b8d792ed8dc2340865dbd1e4a6bbbb137eb73d05020182f7",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetMp3LightPreview_Podcast widget \u00b7 MP3 \u00b7 light": {
@@ -212,7 +212,7 @@
     "functionName": "PodcastWidgetMp3LightPreview",
     "module": "composeApp",
     "renderBasename": "PodcastWidgetMp3LightPreview_Podcast_widget_MP3_light-cdc23576.png",
-    "sha256": "1f0395c7601c6820b84c0db8b892f81c650d8dbd6116b9ecf9a9007d0fa5202c",
+    "sha256": "b1e7b110543ba73928e8097b78a5eb985dbb4b5eba8917fa43f7322ef4c3658a",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetMp3Preview_Podcast widget \u00b7 MP3": {
@@ -220,7 +220,7 @@
     "functionName": "PodcastWidgetMp3Preview",
     "module": "composeApp",
     "renderBasename": "PodcastWidgetMp3Preview_Podcast_widget_MP3-3525244f.png",
-    "sha256": "364cac5932641eb48e31934fbd6e53b19a2eb170c09a9d5884a3d1dd8cb982cb",
+    "sha256": "1f0e59583c501c3f7e407a7bb5a82a0e74a77f75f062e786609e4a9cc7c52d98",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetMp3SmallPreview_Podcast widget \u00b7 MP3 small": {
@@ -404,7 +404,7 @@
     "functionName": "PlayStorePhoneHomeDark",
     "module": "composeApp",
     "renderBasename": "PlayStorePhoneHomeDark_Play_Store_phone_Home_dark-aef8b2b7.png",
-    "sha256": "d97c6c4ca8c9a48cc5f9c6f8e33c85c4345b7dc0bc9b18d7c4d9bbfd0974cb96",
+    "sha256": "bf41ffff169663aeb7685946a355b3fba1ae65a40353207504742d3dbd4c4ff9",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/playstore/PlayStorePreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStorePhoneHomeLight_Play Store \u00b7 phone \u00b7 Home (light)": {
@@ -412,7 +412,7 @@
     "functionName": "PlayStorePhoneHomeLight",
     "module": "composeApp",
     "renderBasename": "PlayStorePhoneHomeLight_Play_Store_phone_Home_light-a1bae343.png",
-    "sha256": "ca699e49008f6406b116e77a81bb6275d66a637e2810d896e5b3bc585b94ca3b",
+    "sha256": "62e0e8ce8e934c997f766fcbf52bf759bd342d743562de53b088a5257fcbacdc",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/playstore/PlayStorePreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStorePhoneManage_Play Store \u00b7 phone \u00b7 Manage": {
