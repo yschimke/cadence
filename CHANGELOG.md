@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.17](https://github.com/yschimke/cadence/compare/v0.1.16...v0.1.17) (2026-11-05)
+
+
+### Bug Fixes
+
+* **release:** unblock Play publishing for phone and Wear ([#507](https://github.com/yschimke/cadence/issues/507)) ([463d574](https://github.com/yschimke/cadence/commit/463d57494a7051991e1206dd46de96aabaf742b2))
+
 ## [0.1.16](https://github.com/yschimke/cadence/compare/v0.1.15...v0.1.16) (2026-11-04)
 
 
