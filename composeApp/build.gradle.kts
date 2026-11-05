@@ -107,6 +107,7 @@ dependencies {
   implementation(project(":rcsp"))
   implementation(project(":wearCompanionContract"))
   implementation(libs.kotlinx.coroutines.android)
+  implementation(libs.play.app.update)
   implementation(libs.play.services.wearable)
   implementation(libs.rc.widget.launcher)
   implementation(libs.compose.remote.tooling.preview)

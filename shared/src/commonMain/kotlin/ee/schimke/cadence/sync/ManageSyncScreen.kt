@@ -1,5 +1,6 @@
 package ee.schimke.cadence.sync
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -62,6 +63,8 @@ import ee.schimke.cadence.datastore.proto.SourceKind
 import ee.schimke.cadence.datastore.proto.SyncProfile
 import ee.schimke.cadence.datastore.proto.SyncSource
 import ee.schimke.cadence.metro.metroViewModel
+import ee.schimke.cadence.platform.LocalPlayUpdateSettings
+import ee.schimke.cadence.platform.PlayUpdateSettings
 
 @Composable
 fun ManageSyncScreen(
@@ -155,6 +158,7 @@ fun ManageSyncContent(
 ) {
   var advanced by rememberSaveable { mutableStateOf(false) }
   var headphones by rememberSaveable { mutableStateOf(false) }
+  val playUpdates = LocalPlayUpdateSettings.current
   Surface(modifier = modifier, color = MaterialTheme.colorScheme.background) {
     LazyColumn(
       modifier =
@@ -253,6 +257,49 @@ fun ManageSyncContent(
             onDelete = { onDeleteProfile(profile.id) },
           )
         }
+        playUpdates?.let { settings -> item { AppVersionRow(settings) } }
+      }
+    }
+  }
+}
+
+/** Taps on [AppVersionRow] that turn on early Play updates for internal testers. */
+private const val TESTER_TAPS = 7
+
+/**
+ * The installed version. Tapping it [TESTER_TAPS] times opts this device in to Play updates as soon
+ * as they appear (internal testers); otherwise updates are offered once they are a week old. While
+ * opted in, a switch shows the choice and turns it back off.
+ */
+@Composable
+private fun AppVersionRow(settings: PlayUpdateSettings) {
+  var taps by remember { mutableStateOf(0) }
+  Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+    Text(
+      "Version ${settings.version}",
+      style = MaterialTheme.typography.bodySmall,
+      color = MaterialTheme.colorScheme.onSurfaceVariant,
+      modifier =
+        Modifier.clickable(enabled = !settings.tester) {
+            taps++
+            if (taps >= TESTER_TAPS) {
+              taps = 0
+              settings.onTesterChange(true)
+            }
+          }
+          .padding(vertical = 8.dp),
+    )
+    if (settings.tester) {
+      Row(verticalAlignment = Alignment.CenterVertically) {
+        Column(Modifier.weight(1f)) {
+          Text("Early updates", style = MaterialTheme.typography.titleSmall)
+          Text(
+            "Update as soon as a new version is on Play, for testers.",
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+          )
+        }
+        Switch(checked = true, onCheckedChange = settings.onTesterChange)
       }
     }
   }
