@@ -57,6 +57,7 @@ wearCompose = "1.7.1"
 wearWidgets = "1.0.0-alpha21"
 composeRemote = "1.0.0-alpha22"
 wearComposeRemote = "1.0.0-alpha14"
+playAppUpdate = "2.1.0"
 playServicesWearable = "20.0.1"
 
 [libraries]
@@ -131,6 +132,7 @@ glance-wear = { module = "androidx.glance.wear:wear", version.ref = "wearWidgets
 glance-wear-core = { module = "androidx.glance.wear:wear-core", version.ref = "wearWidgets" }
 glance-wear-tooling-preview = { module = "androidx.glance.wear:wear-tooling-preview", version.ref = "wearWidgets" }
 wear-compose-remote-material3 = { module = "androidx.wear.compose.remote:remote-material3", version.ref = "wearComposeRemote" }
+play-app-update = { module = "com.google.android.play:app-update", version.ref = "playAppUpdate" }
 play-services-wearable = { module = "com.google.android.gms:play-services-wearable", version.ref = "playServicesWearable" }
 
 [plugins]
