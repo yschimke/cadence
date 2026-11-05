@@ -13,9 +13,6 @@ pluginManagement {
     }
     mavenCentral()
     gradlePluginPortal()
-    // Livery snapshots from a local checkout (`./gradlew publishToMavenLocal` in livery), until
-    // its first release is on Maven Central.
-    mavenLocal { mavenContent { includeModuleByRegex("ee\\.schimke\\.composeai.*", ".*livery.*") } }
   }
 }
 
@@ -28,9 +25,6 @@ dependencyResolutionManagement {
         includeGroupAndSubgroups("com.google")
       }
     }
-    // Livery snapshots from a local checkout (`./gradlew publishToMavenLocal` in livery), until
-    // its first release is on Maven Central.
-    mavenLocal { mavenContent { includeModuleByRegex("ee\\.schimke\\.composeai.*", ".*livery.*") } }
     mavenCentral()
     maven {
       url = uri("https://jogamp.org/deployment/maven")
