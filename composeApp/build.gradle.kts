@@ -12,6 +12,8 @@ plugins {
   alias(libs.plugins.tapmoc)
   alias(libs.plugins.metro)
   alias(libs.plugins.playPublisher)
+  // Builds composeApp/livery (the headphone widget's templates) into the APK's assets.
+  alias(libs.plugins.liveryCatalog)
 }
 
 // Configuration is injected before Gradle starts in release CI. Firebase's
@@ -71,6 +73,8 @@ android {
   }
   buildFeatures { buildConfig = true }
   packaging { resources { excludes += "/META-INF/{AL2.0,LGPL2.1}" } }
+  // Robolectric (HeadphoneTemplatesTest) reads the app's resources.
+  testOptions { unitTests { isIncludeAndroidResources = true } }
   val releaseKeystorePath = System.getenv("CADENCE_KEYSTORE_PATH")
   signingConfigs {
     if (releaseKeystorePath != null) {
@@ -133,12 +137,56 @@ dependencies {
   implementation(libs.androidx.ui.text.google.fonts)
   implementation(libs.ktor.client.core) // io.ktor.http.Url, used by BookmarksScreen previews
 
+  implementation(libs.livery.client)
+  implementation(libs.livery.launcher.widgets)
+
   testImplementation(libs.kotlin.test.junit)
+  // HeadphoneTemplatesTest: captures the widget's Livery templates with AndroidX, as the device
+  // does, and checks the committed ones.
+  testImplementation(libs.robolectric)
+  testImplementation(libs.livery.instantiate)
 
   androidTestImplementation(libs.junit)
   androidTestImplementation(libs.androidx.test.junit)
   androidTestImplementation(libs.androidx.runner)
 }
+
+// The catalog the APK ships (AndroidBundled.fromAssets in HeadphoneControlsWidget).
+livery { source.set(layout.projectDirectory.dir("livery")) }
+
+// Robolectric's SDK jar, resolved by Gradle so tests run offline (as ha-rc's capture tests do).
+val robolectricSdk by configurations.creating {
+  isCanBeConsumed = false
+  isTransitive = false
+}
+
+dependencies { robolectricSdk(libs.robolectric.sdk35) }
+
+val prepareRobolectricSdk by
+  tasks.registering(Sync::class) {
+    from(robolectricSdk)
+    into(layout.buildDirectory.dir("robolectric-sdk"))
+  }
+
+// Only the app's own unit tests (testDebugUnitTest, ...): other Test tasks, such as the preview
+// renderer's, run Robolectric against their own SDK.
+tasks
+  .withType<Test>()
+  .matching { it.name.startsWith("test") && it.name.endsWith("UnitTest") }
+  .configureEach {
+    dependsOn(prepareRobolectricSdk)
+    inputs.files(robolectricSdk)
+    systemProperty("robolectric.offline", "true")
+    systemProperty(
+      "robolectric.dependency.dir",
+      layout.buildDirectory.dir("robolectric-sdk").get().asFile.absolutePath,
+    )
+    systemProperty("cadence.livery.dir", layout.projectDirectory.dir("livery").asFile.absolutePath)
+    providers.gradleProperty("cadence.livery.regenerate").orNull?.let {
+      systemProperty("cadence.livery.regenerate", it)
+    }
+    inputs.dir(layout.projectDirectory.dir("livery"))
+  }
 
 play {
   track.set("internal")

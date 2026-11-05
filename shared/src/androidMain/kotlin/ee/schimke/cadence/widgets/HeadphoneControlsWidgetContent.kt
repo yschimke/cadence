@@ -36,6 +36,8 @@ import androidx.compose.remote.creation.compose.modifier.semantics
 import androidx.compose.remote.creation.compose.modifier.size
 import androidx.compose.remote.creation.compose.modifier.width
 import androidx.compose.remote.creation.compose.shapes.RemoteRoundedCornerShape
+import androidx.compose.remote.creation.compose.state.RemoteColor
+import androidx.compose.remote.creation.compose.state.RemoteString
 import androidx.compose.remote.creation.compose.state.rc
 import androidx.compose.remote.creation.compose.state.rdp
 import androidx.compose.remote.creation.compose.state.rf
@@ -69,30 +71,98 @@ fun HeadphoneControlsWidgetContent(
   onOpen: Action?,
   onAction: @Composable (HeadphoneWidgetAction) -> Action?,
 ) {
+  HeadphoneControlsBody(
+    texts =
+      HeadphoneWidgetTexts(
+        title = state.title.rs,
+        shortTitle = state.shortTitle.rs,
+        detail = state.detail?.rs,
+        extra = state.extra?.rs,
+      ),
+    palette = RemotePalette.of(colors),
+    layout = layout,
+    modeSwitch = state.modeSwitch,
+    showWater = state.showWater,
+    onOpen = onOpen,
+    onAction = onAction,
+    transportButton = { action, button -> button(action) },
+  )
+}
+
+/** The widget's text: constants for a capture with data, named values for a template. */
+class HeadphoneWidgetTexts(
+  val title: RemoteString,
+  val shortTitle: RemoteString,
+  /** Null when the slot shows no detail line (the layout drops its row). */
+  val detail: RemoteString?,
+  val extra: RemoteString?,
+)
+
+/**
+ * The widget's layout and controls, drawn from remote values so the same code makes a document with
+ * data written in ([HeadphoneControlsWidgetContent]) and a values-free template
+ * ([HeadphoneControlsTemplate]). [transportButton] draws each transport control: as itself, or
+ * inside a conditional layout that picks Play or Pause from a named value.
+ */
+@Composable
+@RemoteComposable
+internal fun HeadphoneControlsBody(
+  texts: HeadphoneWidgetTexts,
+  palette: RemotePalette,
+  layout: HeadphoneWidgetLayout,
+  modeSwitch: HeadphoneWidgetAction?,
+  showWater: Boolean,
+  onOpen: Action?,
+  onAction: @Composable (HeadphoneWidgetAction) -> Action?,
+  transportButton:
+    @Composable
+    (HeadphoneWidgetAction, @Composable (HeadphoneWidgetAction) -> Unit) -> Unit,
+) {
   // No outer clip: the launcher applies its own system corner radius to the widget.
   val root =
     RemoteModifier.fillMaxSize()
-      .background(colors.background.rc)
+      .background(palette.background)
       .padding(HeadphoneWidgetLayout.PaddingDp.rdp)
+  // [spaced]: a gap before every button but the first. A one-row slot spaces with these rather
+  // than spacedBy: the player shares a weighted row's width out before spacing, so spacedBy would
+  // run the last button off the edge.
+  val buttons: @Composable (spaced: Boolean) -> Unit = { spaced ->
+    layout.transport.forEachIndexed { i, action ->
+      if (spaced && i > 0) Gap()
+      transportButton(action) { shown ->
+        WidgetIconButton(
+          action = shown,
+          primary = shown == HeadphoneWidgetAction.Play || shown == HeadphoneWidgetAction.Pause,
+          showWater = showWater,
+          palette = palette,
+          onClick = onAction(shown),
+        )
+      }
+    }
+    if (layout.showModeSwitch) {
+      modeSwitch?.let {
+        if (spaced) Gap()
+        WidgetIconButton(it, primary = false, palette = palette, onClick = onAction(it))
+      }
+    }
+  }
   if (layout.singleRow) {
-    RemoteRow(
-      modifier = root,
-      horizontalArrangement = RemoteArrangement.spacedBy(HeadphoneWidgetLayout.ButtonGapDp.rdp),
-      verticalAlignment = RemoteAlignment.CenterVertically,
-    ) {
+    RemoteRow(modifier = root, verticalAlignment = RemoteAlignment.CenterVertically) {
       if (layout.showTitle) {
-        // The open-app tap target spans the row's 48dp height, not just the text line.
+        // The open-app tap target spans the row's 48dp height, not just the text line. It takes
+        // what the buttons leave, so one template fits every width in its tier.
         RemoteColumn(
           modifier =
-            RemoteModifier.width(layout.titleWidthDp.rdp)
+            RemoteModifier.weight(1f)
               .height(HeadphoneWidgetLayout.ButtonDp.rdp)
               .openOnTap(onOpen),
           verticalArrangement = RemoteArrangement.Center,
         ) {
-          Headline(if (layout.shortTitle) state.shortTitle else state.title, colors)
+          Headline(if (layout.shortTitle) texts.shortTitle else texts.title, palette)
         }
+        Gap()
       }
-      Buttons(state, layout, colors, onAction)
+      buttons(true)
     }
     return
   }
@@ -106,12 +176,12 @@ fun HeadphoneControlsWidgetContent(
       verticalArrangement = RemoteArrangement.spacedBy(2.rdp),
     ) {
       // Hierarchy by size and colour: what is happening, then what to check, then settings.
-      Headline(state.title, colors, fontSize = 17)
+      Headline(texts.title, palette, fontSize = 17)
       if (layout.showDetail) {
-        state.detail?.let {
+        texts.detail?.let {
           RemoteText(
-            it.rs,
-            color = colors.onBackground.rc,
+            it,
+            color = palette.onBackground,
             fontSize = 13.rsp,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
@@ -119,10 +189,10 @@ fun HeadphoneControlsWidgetContent(
         }
       }
       if (layout.showExtra) {
-        state.extra?.let {
+        texts.extra?.let {
           RemoteText(
-            it.rs,
-            color = colors.supporting.rc,
+            it,
+            color = palette.supporting,
             fontSize = 12.rsp,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
@@ -135,46 +205,28 @@ fun HeadphoneControlsWidgetContent(
       horizontalArrangement = RemoteArrangement.SpaceEvenly,
       verticalAlignment = RemoteAlignment.CenterVertically,
     ) {
-      Buttons(state, layout, colors, onAction)
+      buttons(false)
     }
   }
 }
 
 @Composable
 @RemoteComposable
-private fun Headline(text: String, colors: WidgetColors, fontSize: Int = 15) {
+private fun Gap() {
+  RemoteBox(RemoteModifier.width(HeadphoneWidgetLayout.ButtonGapDp.rdp))
+}
+
+@Composable
+@RemoteComposable
+private fun Headline(text: RemoteString, palette: RemotePalette, fontSize: Int = 15) {
   RemoteText(
-    text.rs,
-    color = colors.onBackground.rc,
+    text,
+    color = palette.onBackground,
     fontSize = fontSize.rsp,
     fontWeight = FontWeight.Medium,
     maxLines = 1,
     overflow = TextOverflow.Ellipsis,
   )
-}
-
-@Composable
-@RemoteComposable
-private fun Buttons(
-  state: HeadphoneWidgetState,
-  layout: HeadphoneWidgetLayout,
-  colors: WidgetColors,
-  onAction: @Composable (HeadphoneWidgetAction) -> Action?,
-) {
-  layout.transport.forEach { action ->
-    WidgetIconButton(
-      action = action,
-      primary = action == HeadphoneWidgetAction.Play || action == HeadphoneWidgetAction.Pause,
-      showWater = state.showWater,
-      colors = colors,
-      onClick = onAction(action),
-    )
-  }
-  if (layout.showModeSwitch) {
-    state.modeSwitch?.let {
-      WidgetIconButton(it, primary = false, colors = colors, onClick = onAction(it))
-    }
-  }
 }
 
 private fun RemoteModifier.openOnTap(onOpen: Action?): RemoteModifier =
@@ -186,11 +238,11 @@ private fun WidgetIconButton(
   action: HeadphoneWidgetAction,
   primary: Boolean,
   showWater: Boolean = false,
-  colors: WidgetColors,
+  palette: RemotePalette,
   onClick: Action?,
 ) {
   val water = primary && showWater
-  val content = if (water) OnWater else if (primary) colors.onPrimary else colors.onTonal
+  val content = if (water) OnWater.rc else if (primary) palette.onPrimary else palette.onTonal
   val size = HeadphoneWidgetLayout.ButtonDp
   // Shown as Pause while audio plays: that is when the water moves.
   val playing = action == HeadphoneWidgetAction.Pause
@@ -198,9 +250,7 @@ private fun WidgetIconButton(
     modifier =
       RemoteModifier.size(size.rdp)
         .clip(RemoteRoundedCornerShape((size / 2).rdp))
-        .let {
-          if (water) it else it.background((if (primary) colors.primary else colors.tonal).rc)
-        }
+        .let { if (water) it else it.background(if (primary) palette.primary else palette.tonal) }
         .semantics {
           contentDescription = action.label.rs
           role = Role.Button
@@ -222,8 +272,32 @@ private fun WidgetIconButton(
     // Drawn in a canvas of its own, not as a painter background: a background painter is a
     // drawWithContent, whose DrawContent Android 16's player repaints forever
     // (yschimke/rc-players#776).
-    val icon = painterRemoteVector(action.icon, content.rc)
+    val icon = painterRemoteVector(action.icon, content)
     RemoteCanvas(RemoteModifier.size(24.rdp)) { with(icon) { draw() } }
+  }
+}
+
+/** The widget's colour roles as remote colours: constants, or named values a template reads. */
+class RemotePalette(
+  val background: RemoteColor,
+  val onBackground: RemoteColor,
+  val supporting: RemoteColor,
+  val tonal: RemoteColor,
+  val onTonal: RemoteColor,
+  val primary: RemoteColor,
+  val onPrimary: RemoteColor,
+) {
+  companion object {
+    fun of(colors: WidgetColors) =
+      RemotePalette(
+        background = colors.background.rc,
+        onBackground = colors.onBackground.rc,
+        supporting = colors.supporting.rc,
+        tonal = colors.tonal.rc,
+        onTonal = colors.onTonal.rc,
+        primary = colors.primary.rc,
+        onPrimary = colors.onPrimary.rc,
+      )
   }
 }
 

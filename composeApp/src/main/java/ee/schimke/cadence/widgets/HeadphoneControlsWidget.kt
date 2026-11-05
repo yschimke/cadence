@@ -1,37 +1,31 @@
 package ee.schimke.cadence.widgets
 
 import android.app.PendingIntent
-import android.appwidget.AppWidgetManager
-import android.appwidget.AppWidgetProvider
 import android.content.ComponentCallbacks
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
-import android.os.Build
-import android.os.Bundle
 import android.util.SizeF
 import android.view.View
 import android.widget.RemoteViews
-import androidx.annotation.RequiresApi
 import androidx.media3.common.util.UnstableApi
 import ee.schimke.cadence.R
 import ee.schimke.cadence.bluetooth.BluetoothController
 import ee.schimke.cadence.bluetooth.ShokzPlayer
 import ee.schimke.cadence.bluetooth.WorkingMode
 import ee.schimke.cadence.metro.AppGraphProvider
-import ee.schimke.composeai.rcwidget.creation.rcWidgetHostAction
 import ee.schimke.composeai.rcwidget.launcher.RcLauncherWidgets
-import ee.schimke.composeai.rcwidget.launcher.RcWidgetSizing
-import ee.schimke.composeai.rcwidget.launcher.captureLauncherWidget
+import ee.schimke.livery.client.ImageResolver
+import ee.schimke.livery.client.PlanResult
+import ee.schimke.livery.instantiate.WidgetTap
+import ee.schimke.livery.widgets.launcher.LiveryLauncherWidgetProvider
+import ee.schimke.livery.widgets.launcher.WidgetSlot
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 
 /**
@@ -39,78 +33,80 @@ import kotlinx.coroutines.withContext
  *
  * Every control goes through the app's [BluetoothController], the only code allowed to reach the
  * OpenSwim Pro vendor transport, so the widget follows the same mode gating as the controls screen.
- * Android 16+ launchers draw a Remote Compose document captured per slot; older launchers get a
- * `RemoteViews` layout with the same controls.
+ *
+ * Android 16+ launchers draw a Livery template (contract [HeadphoneControlsTemplate.CONTRACT]) from
+ * the catalog the APK ships (`composeApp/livery`, built into the assets): Livery picks the template
+ * for the slot's size tier, writes the state and the system's colours in, keeps the live branch of
+ * its conditional layout, and publishes it. Older launchers, and any template that can't be drawn,
+ * get a `RemoteViews` layout with the same controls.
  */
 @androidx.annotation.OptIn(UnstableApi::class)
-class HeadphoneControlsWidget : AppWidgetProvider() {
-  override fun onUpdate(context: Context, manager: AppWidgetManager, appWidgetIds: IntArray) {
-    val pending = goAsync()
-    scope.launch {
-      try {
-        render(context, manager, appWidgetIds)
-      } finally {
-        pending.finish()
-      }
-    }
-  }
+class HeadphoneControlsWidget : LiveryLauncherWidgetProvider() {
+  override suspend fun plan(context: Context, slot: WidgetSlot): PlanResult =
+    livery(context)
+      .planner
+      .forAppData(
+        slot.query(HeadphoneControlsTemplate.CONTRACT),
+        HeadphoneControlsTemplate.data(latest, context.systemWidgetColors()),
+      )
 
-  override fun onAppWidgetOptionsChanged(
+  override fun images(context: Context): ImageResolver = livery(context).images
+
+  /**
+   * Every state's branch stays in the document the launcher gets (the player picks the live one):
+   * rc-players only drops a branch that holds no values, and every captured branch does.
+   */
+  override val documentMaxBytes: Long = DOCUMENT_MAX_BYTES
+
+  override fun fallback(context: Context, widgetId: Int, reason: String): RemoteViews =
+    legacyViews(context, widgetId, latest)
+
+  // Opening Cadence is an activity, which a broadcast receiver may not start.
+  override fun tapIntent(
     context: Context,
-    manager: AppWidgetManager,
-    appWidgetId: Int,
-    newOptions: Bundle,
-  ) {
-    onUpdate(context, manager, intArrayOf(appWidgetId))
+    widgetId: Int,
+    actionId: Int,
+    action: String,
+  ): PendingIntent {
+    val launch = launchIntent(context)
+    return if (action == HeadphoneControlsTemplate.OPEN && launch != null)
+      RcLauncherWidgets.actionActivity(context, launch, widgetId, actionId)
+    else super.tapIntent(context, widgetId, actionId, action)
   }
 
-  override fun onReceive(context: Context, intent: Intent) {
-    if (intent.action != RcLauncherWidgets.ACTION_WIDGET_ACTION) {
-      super.onReceive(context, intent)
-      return
-    }
-    val action =
-      HeadphoneWidgetAction.fromWire(intent.getStringExtra(RcLauncherWidgets.EXTRA_ACTION_PAYLOAD))
-        ?: return
+  override suspend fun onTap(context: Context, widgetId: Int, tap: WidgetTap) {
+    val action = HeadphoneWidgetAction.fromWire(tap.action) ?: return
     val controller = controller(context) ?: return
-    val pending = goAsync()
-    scope.launch {
-      try {
-        withContext(Dispatchers.Main.immediate) {
-          val player = shokzPlayer
-          if (latest.showWater && player != null)
-            when (action) {
-              HeadphoneWidgetAction.Previous -> player.previousTrack()
-              HeadphoneWidgetAction.Play -> player.play()
-              HeadphoneWidgetAction.Pause -> player.pause()
-              HeadphoneWidgetAction.Next -> player.nextTrack()
-              HeadphoneWidgetAction.SwitchToMp3 -> controller.setWorkingMode(WorkingMode.Mp3)
-              HeadphoneWidgetAction.SwitchToBluetooth ->
-                controller.setWorkingMode(WorkingMode.Bluetooth)
-            }
-          else
-            when (action) {
-              HeadphoneWidgetAction.Previous -> controller.previous()
-              HeadphoneWidgetAction.Play -> controller.play()
-              HeadphoneWidgetAction.Pause -> controller.pause()
-              HeadphoneWidgetAction.Next -> controller.next()
-              HeadphoneWidgetAction.SwitchToMp3 -> controller.setWorkingMode(WorkingMode.Mp3)
-              HeadphoneWidgetAction.SwitchToBluetooth ->
-                controller.setWorkingMode(WorkingMode.Bluetooth)
-            }
+    withContext(Dispatchers.Main.immediate) {
+      val player = shokzPlayer
+      if (latest.showWater && player != null)
+        when (action) {
+          HeadphoneWidgetAction.Previous -> player.previousTrack()
+          HeadphoneWidgetAction.Play -> player.play()
+          HeadphoneWidgetAction.Pause -> player.pause()
+          HeadphoneWidgetAction.Next -> player.nextTrack()
+          HeadphoneWidgetAction.SwitchToMp3 -> controller.setWorkingMode(WorkingMode.Mp3)
+          HeadphoneWidgetAction.SwitchToBluetooth ->
+            controller.setWorkingMode(WorkingMode.Bluetooth)
         }
-      } finally {
-        pending.finish()
-      }
+      else
+        when (action) {
+          HeadphoneWidgetAction.Previous -> controller.previous()
+          HeadphoneWidgetAction.Play -> controller.play()
+          HeadphoneWidgetAction.Pause -> controller.pause()
+          HeadphoneWidgetAction.Next -> controller.next()
+          HeadphoneWidgetAction.SwitchToMp3 -> controller.setWorkingMode(WorkingMode.Mp3)
+          HeadphoneWidgetAction.SwitchToBluetooth ->
+            controller.setWorkingMode(WorkingMode.Bluetooth)
+        }
     }
   }
 
   companion object {
-    /** Payload of the header tap: open Cadence. */
-    private const val OPEN_APP = "open"
+    /** The largest instantiated document this widget hands the launcher. */
+    const val DOCUMENT_MAX_BYTES: Long = 100_000
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
-    private val updates = Mutex()
     private var shokzPlayer: ShokzPlayer? = null
 
     /** Latest controller state; the widget never queries Bluetooth itself. */
@@ -122,8 +118,8 @@ class HeadphoneControlsWidget : AppWidgetProvider() {
     fun start(context: Context, controller: BluetoothController) {
       if (shokzPlayer == null) shokzPlayer = ShokzPlayer(controller)
       val appContext = context.applicationContext
-      // Captured documents hold resolved colours: recapture when light/dark or the wallpaper
-      // palette changes so the widget keeps following the system theme.
+      // The system's colours are written into each render: render again when light/dark or the
+      // wallpaper palette changes so the widget keeps following the system theme.
       appContext.registerComponentCallbacks(
         object : ComponentCallbacks {
           override fun onConfigurationChanged(newConfig: Configuration) = updateAll(appContext)
@@ -139,67 +135,19 @@ class HeadphoneControlsWidget : AppWidgetProvider() {
       }
     }
 
-    private fun updateAll(context: Context) {
-      val manager = AppWidgetManager.getInstance(context)
-      val ids = manager.getAppWidgetIds(ComponentName(context, HeadphoneControlsWidget::class.java))
-      if (ids.isEmpty()) return
-      scope.launch { render(context, manager, ids) }
-    }
+    private fun updateAll(context: Context) =
+      LiveryLauncherWidgetProvider.updateAll(context, HeadphoneControlsWidget::class.java)
 
     private fun controller(context: Context): BluetoothController? =
       (context.applicationContext as? AppGraphProvider)?.appGraph?.bluetoothController
 
-    private suspend fun render(context: Context, manager: AppWidgetManager, ids: IntArray) =
-      updates.withLock {
-        val state = latest
-        for (id in ids) {
-          val views =
-            if (Build.VERSION.SDK_INT >= RcLauncherWidgets.MIN_HOST_API) {
-              runCatching { remoteComposeViews(context, manager, id, state) }
-                // A capture that fails still leaves working controls on screen.
-                .getOrElse { legacyViews(context, id, state) }
-            } else {
-              legacyViews(context, id, state)
-            }
-          manager.updateAppWidget(id, views)
-        }
-      }
+    @Volatile private var catalog: WidgetLivery? = null
 
-    @RequiresApi(RcLauncherWidgets.MIN_HOST_API)
-    private suspend fun remoteComposeViews(
-      context: Context,
-      manager: AppWidgetManager,
-      id: Int,
-      state: HeadphoneWidgetState,
-    ): RemoteViews {
-      val slot = RcWidgetSizing.slotOf(manager, id)
-      val capture =
-        captureLauncherWidget(context, slot) {
-          HeadphoneControlsWidgetContent(
-            state = state,
-            layout = HeadphoneWidgetLayout.of(state, slot.widthDp, slot.heightDp),
-            colors = context.systemWidgetColors(),
-            onOpen = rcWidgetHostAction(name = OPEN_APP, payload = OPEN_APP),
-            onAction = { action ->
-              rcWidgetHostAction(name = action.wireName, payload = action.wireName)
-            },
-          )
+    private fun livery(context: Context): WidgetLivery =
+      catalog
+        ?: synchronized(this) {
+          catalog ?: WidgetLivery(context.applicationContext).also { catalog = it }
         }
-      val launch = launchIntent(context)
-      val taps =
-        capture.actions
-          .mapNotNull { (actionId, payload) ->
-            val intent =
-              if (payload == OPEN_APP) {
-                launch?.let { RcLauncherWidgets.actionActivity(context, Intent(it), id, actionId) }
-              } else {
-                broadcast(context, id, actionId, payload)
-              }
-            intent?.let { actionId to it }
-          }
-          .toMap()
-      return RcLauncherWidgets.remoteViews(capture.bytes, taps)
-    }
 
     /**
      * Pre-Android 16 launchers: one `RemoteViews` per size step, and the launcher shows the largest
