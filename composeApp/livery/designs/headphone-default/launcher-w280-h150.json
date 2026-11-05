@@ -1,0 +1,6 @@
+{
+  "target": { "surface": "launcher-widget", "rcApiLevel": 7, "profiles": ["widgets"], "size": { "minWidthDp": 280, "maxWidthDp": 287, "minHeightDp": 150, "maxHeightDp": 189 } },
+  "reads": ["detail", "has_detail", "has_extra", "mode", "playing", "theme.background", "theme.on_background", "theme.on_primary", "theme.on_tonal", "theme.primary", "theme.tonal", "title"],
+  "emits": ["mode_bluetooth", "mode_mp3", "next", "open", "pause", "play", "previous"],
+  "source": { "tool": "cadence-capture", "composable": "HeadphoneControlsTemplateContent" }
+}

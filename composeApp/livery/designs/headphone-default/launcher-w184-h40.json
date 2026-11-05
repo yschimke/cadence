@@ -1,0 +1,6 @@
+{
+  "target": { "surface": "launcher-widget", "rcApiLevel": 7, "profiles": ["widgets"], "size": { "minWidthDp": 184, "maxWidthDp": 231, "minHeightDp": 40, "maxHeightDp": 119 } },
+  "reads": ["has_detail", "has_extra", "mode", "playing", "short_title", "theme.background", "theme.on_background", "theme.on_primary", "theme.primary"],
+  "emits": ["open", "pause", "play"],
+  "source": { "tool": "cadence-capture", "composable": "HeadphoneControlsTemplateContent" }
+}
