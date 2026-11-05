@@ -302,7 +302,7 @@
     "renderBasename": "resources/mipmap/ic_launcher_xhdpi_SHAPE_circle.png",
     "resourceId": "mipmap/ic_launcher",
     "resourceType": "ADAPTIVE_ICON",
-    "sha256": "95bf2730f72baedd60264174e60b0080b410502b96aac45060f3750d88af61ed",
+    "sha256": "ce01413b9caee8854241d052d9ee1e815457fff79fcf436c1a481c5faa94df75",
     "shape": "CIRCLE"
   },
   "wearApp::mipmap/ic_launcher::renders/resources/mipmap/ic_launcher_xhdpi_SHAPE_circle_themed-dark.png": {
@@ -320,7 +320,7 @@
     "renderBasename": "resources/mipmap/ic_launcher_xhdpi_SHAPE_circle_themed-light.png",
     "resourceId": "mipmap/ic_launcher",
     "resourceType": "ADAPTIVE_ICON",
-    "sha256": "402d9102f618f51394803086a97cffa6a1b4c10749c7e26ff3eb2090802771ff",
+    "sha256": "6f00fe0d1f893d169c31a7a43b41bce6c10c910a6b294f8a72c5a0ccc5e5c37e",
     "shape": "CIRCLE"
   },
   "wearApp::mipmap/ic_launcher::renders/resources/mipmap/ic_launcher_xhdpi_SHAPE_rounded_square.png": {
@@ -329,7 +329,7 @@
     "renderBasename": "resources/mipmap/ic_launcher_xhdpi_SHAPE_rounded_square.png",
     "resourceId": "mipmap/ic_launcher",
     "resourceType": "ADAPTIVE_ICON",
-    "sha256": "4a28c868e28809485351cd7ca9eb6a89d9da738d25782eece157f44fc94e9bcb",
+    "sha256": "f3e2b491b17e377077f6c4d119f06a682403a447684aaf7e6f936a3c9a1c613b",
     "shape": "ROUNDED_SQUARE"
   },
   "wearApp::mipmap/ic_launcher::renders/resources/mipmap/ic_launcher_xhdpi_SHAPE_rounded_square_themed-dark.png": {
@@ -356,7 +356,7 @@
     "renderBasename": "resources/mipmap/ic_launcher_xhdpi_SHAPE_square.png",
     "resourceId": "mipmap/ic_launcher",
     "resourceType": "ADAPTIVE_ICON",
-    "sha256": "2d8a4a888608fa31ab2eb8dec0f66f6dd47536a2b85d1434134f7f661ff4fda3",
+    "sha256": "f54ab1c683b9fd5a625705a8418a060db01fbe0a0b46f323ecb74b4adb101d4c",
     "shape": "SQUARE"
   },
   "wearApp::mipmap/ic_launcher::renders/resources/mipmap/ic_launcher_xhdpi_SHAPE_square_themed-dark.png": {
@@ -383,7 +383,7 @@
     "renderBasename": "resources/mipmap/ic_launcher_xhdpi_SHAPE_squircle.png",
     "resourceId": "mipmap/ic_launcher",
     "resourceType": "ADAPTIVE_ICON",
-    "sha256": "7c8b0f21eb0a63e0f9063867cbe5f59392e0e0cc6d76c7469959337cb1b8c415",
+    "sha256": "7c8c32980543711b16b9ce833dacd8fa22d4d43b194cde8eb5ded5c90c1ef02a",
     "shape": "SQUIRCLE"
   },
   "wearApp::mipmap/ic_launcher::renders/resources/mipmap/ic_launcher_xhdpi_SHAPE_squircle_themed-dark.png": {
@@ -419,7 +419,7 @@
     "renderBasename": "resources/mipmap/ic_launcher_round_xhdpi_SHAPE_circle.png",
     "resourceId": "mipmap/ic_launcher_round",
     "resourceType": "ADAPTIVE_ICON",
-    "sha256": "acf2c7ddc2a5bc7c2baa805f3defdd4f1487e1e8f0041f0e22ec65d60bb3f34b",
+    "sha256": "ce01413b9caee8854241d052d9ee1e815457fff79fcf436c1a481c5faa94df75",
     "shape": "CIRCLE"
   },
   "wearApp::mipmap/ic_launcher_round::renders/resources/mipmap/ic_launcher_round_xhdpi_SHAPE_circle_themed-dark.png": {
@@ -446,7 +446,7 @@
     "renderBasename": "resources/mipmap/ic_launcher_round_xhdpi_SHAPE_rounded_square.png",
     "resourceId": "mipmap/ic_launcher_round",
     "resourceType": "ADAPTIVE_ICON",
-    "sha256": "4a28c868e28809485351cd7ca9eb6a89d9da738d25782eece157f44fc94e9bcb",
+    "sha256": "f3e2b491b17e377077f6c4d119f06a682403a447684aaf7e6f936a3c9a1c613b",
     "shape": "ROUNDED_SQUARE"
   },
   "wearApp::mipmap/ic_launcher_round::renders/resources/mipmap/ic_launcher_round_xhdpi_SHAPE_rounded_square_themed-dark.png": {
@@ -473,7 +473,7 @@
     "renderBasename": "resources/mipmap/ic_launcher_round_xhdpi_SHAPE_square.png",
     "resourceId": "mipmap/ic_launcher_round",
     "resourceType": "ADAPTIVE_ICON",
-    "sha256": "2d8a4a888608fa31ab2eb8dec0f66f6dd47536a2b85d1434134f7f661ff4fda3",
+    "sha256": "f54ab1c683b9fd5a625705a8418a060db01fbe0a0b46f323ecb74b4adb101d4c",
     "shape": "SQUARE"
   },
   "wearApp::mipmap/ic_launcher_round::renders/resources/mipmap/ic_launcher_round_xhdpi_SHAPE_square_themed-dark.png": {
@@ -500,7 +500,7 @@
     "renderBasename": "resources/mipmap/ic_launcher_round_xhdpi_SHAPE_squircle.png",
     "resourceId": "mipmap/ic_launcher_round",
     "resourceType": "ADAPTIVE_ICON",
-    "sha256": "7c8b0f21eb0a63e0f9063867cbe5f59392e0e0cc6d76c7469959337cb1b8c415",
+    "sha256": "7c8c32980543711b16b9ce833dacd8fa22d4d43b194cde8eb5ded5c90c1ef02a",
     "shape": "SQUIRCLE"
   },
   "wearApp::mipmap/ic_launcher_round::renders/resources/mipmap/ic_launcher_round_xhdpi_SHAPE_squircle_themed-dark.png": {
