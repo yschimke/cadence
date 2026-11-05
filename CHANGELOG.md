@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.1.16](https://github.com/yschimke/cadence/compare/v0.1.15...v0.1.16) (2026-11-04)
+
+
+### Features
+
+* report caught podcast failures to Crashlytics as non-fatals ([#498](https://github.com/yschimke/cadence/issues/498)) ([caa0271](https://github.com/yschimke/cadence/commit/caa0271af7aada07ded7621e5c299de18540e73a))
+
+
+### Bug Fixes
+
+* **deps:** update compose-ai-tools ([#506](https://github.com/yschimke/cadence/issues/506)) ([4b913ba](https://github.com/yschimke/cadence/commit/4b913bad8985a8966f3ec902d93fe0944aa3cec5))
+
 ## [0.1.15](https://github.com/yschimke/cadence/compare/v0.1.14...v0.1.15) (2026-11-03)
 
 
