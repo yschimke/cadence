@@ -168,20 +168,25 @@ val prepareRobolectricSdk by
     into(layout.buildDirectory.dir("robolectric-sdk"))
   }
 
-tasks.withType<Test>().configureEach {
-  dependsOn(prepareRobolectricSdk)
-  inputs.files(robolectricSdk)
-  systemProperty("robolectric.offline", "true")
-  systemProperty(
-    "robolectric.dependency.dir",
-    layout.buildDirectory.dir("robolectric-sdk").get().asFile.absolutePath,
-  )
-  systemProperty("cadence.livery.dir", layout.projectDirectory.dir("livery").asFile.absolutePath)
-  providers.gradleProperty("cadence.livery.regenerate").orNull?.let {
-    systemProperty("cadence.livery.regenerate", it)
+// Only the app's own unit tests (testDebugUnitTest, ...): other Test tasks, such as the preview
+// renderer's, run Robolectric against their own SDK.
+tasks
+  .withType<Test>()
+  .matching { it.name.startsWith("test") && it.name.endsWith("UnitTest") }
+  .configureEach {
+    dependsOn(prepareRobolectricSdk)
+    inputs.files(robolectricSdk)
+    systemProperty("robolectric.offline", "true")
+    systemProperty(
+      "robolectric.dependency.dir",
+      layout.buildDirectory.dir("robolectric-sdk").get().asFile.absolutePath,
+    )
+    systemProperty("cadence.livery.dir", layout.projectDirectory.dir("livery").asFile.absolutePath)
+    providers.gradleProperty("cadence.livery.regenerate").orNull?.let {
+      systemProperty("cadence.livery.regenerate", it)
+    }
+    inputs.dir(layout.projectDirectory.dir("livery"))
   }
-  inputs.dir(layout.projectDirectory.dir("livery"))
-}
 
 play {
   track.set("internal")
