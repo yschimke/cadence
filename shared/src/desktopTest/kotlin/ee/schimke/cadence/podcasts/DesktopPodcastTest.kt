@@ -41,7 +41,11 @@ class DesktopPodcastTest {
       )
       val platform =
         object : DesktopPodcastPlatform(File(root, "app")) {
-          override suspend fun download(episode: Episode, destination: File) {
+          override suspend fun download(
+            episode: Episode,
+            destination: File,
+            onProgress: (Long, Long) -> Unit,
+          ) {
             destination.parentFile!!.mkdirs()
             fixture.copyTo(destination, overwrite = true)
           }
@@ -102,7 +106,11 @@ class DesktopPodcastTest {
       var downloads = 0
       val platform =
         object : DesktopPodcastPlatform(File(root, "app")) {
-          override suspend fun download(episode: Episode, destination: File) {
+          override suspend fun download(
+            episode: Episode,
+            destination: File,
+            onProgress: (Long, Long) -> Unit,
+          ) {
             downloads++
             destination.parentFile!!.mkdirs()
             fixture.copyTo(destination, overwrite = true)

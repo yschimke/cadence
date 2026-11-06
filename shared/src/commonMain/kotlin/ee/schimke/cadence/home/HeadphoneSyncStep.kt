@@ -30,28 +30,28 @@ sealed interface HeadphoneSyncStep {
   /** Episodes still need downloading or processing before a copy. */
   data class Prepare(val pluggedIn: Boolean) : HeadphoneSyncStep {
     override val message =
-      if (pluggedIn) "Prepare episodes, then copy them to the headphones."
-      else "Episodes are prepared overnight while charging, or prepare them now."
+      if (pluggedIn) "New episodes on this phone need processing before they can sync."
+      else "New episodes on this phone are processed overnight while charging, or process them now."
   }
 
   /** Prepared and not on the headphones yet. */
   data class ReadyToCopy(val pluggedIn: Boolean) : HeadphoneSyncStep {
     override val message =
-      if (pluggedIn) "Ready to copy to your headphones."
-      else "Ready. Plug in your headphones to copy."
+      if (pluggedIn) "Not in sync: this phone has episodes your headphones don't."
+      else "Not in sync: this phone has new episodes. Plug in your headphones to sync."
   }
 
   /** The headphones already hold everything prepared. */
   data class UpToDate(val pluggedIn: Boolean) : HeadphoneSyncStep {
     override val message =
-      if (pluggedIn) "Headphones are up to date. Eject the volume before unplugging."
-      else "Headphones are up to date."
+      if (pluggedIn) "In sync with this phone. Eject the volume before unplugging."
+      else "In sync with this phone."
   }
 
   /** Only folders: their copy runs from the folder sync screen. */
   data class Folders(val pluggedIn: Boolean) : HeadphoneSyncStep {
     override val message =
-      if (pluggedIn) "Headphones connected." else "Plug in your headphones to copy your folders."
+      if (pluggedIn) "Headphones connected." else "Plug in your headphones to sync your folders."
   }
 }
 

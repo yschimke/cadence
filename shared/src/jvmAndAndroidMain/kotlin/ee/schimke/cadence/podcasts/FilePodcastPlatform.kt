@@ -7,6 +7,7 @@ import java.nio.file.AtomicMoveNotSupportedException
 import java.nio.file.Files
 import java.nio.file.StandardCopyOption.*
 import javax.xml.parsers.DocumentBuilderFactory
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
@@ -19,16 +20,31 @@ abstract class FilePodcastPlatform(protected val root: File) : PodcastPlatform {
   override suspend fun originalAvailable(episode: Episode): Boolean =
     withContext(Dispatchers.IO) { source(episode).let { it.isFile && it.length() > 0 } }
 
-  override suspend fun downloadOriginal(episode: Episode) {
-    cachedSource(episode)
+  override suspend fun downloadOriginal(
+    episode: Episode,
+    onProgress: (downloaded: Long, total: Long) -> Unit,
+  ) {
+    cachedSource(episode, onProgress)
   }
 
   protected fun source(episode: Episode): File =
     File(root, "source/${episode.key}-${digest(episode.audioVersion)}.${episode.extension}")
 
-  protected suspend fun cachedSource(episode: Episode): File {
+  protected suspend fun cachedSource(
+    episode: Episode,
+    onProgress: (downloaded: Long, total: Long) -> Unit = { _, _ -> },
+  ): File {
     val file = source(episode)
-    if (!withContext(Dispatchers.IO) { file.isFile && file.length() > 0 }) download(episode, file)
+    if (!withContext(Dispatchers.IO) { file.isFile && file.length() > 0 })
+      try {
+        download(episode, file, onProgress)
+      } catch (e: PodcastProblem) {
+        throw httpProblem(e.status) ?: e
+      } catch (e: CancellationException) {
+        throw e
+      } catch (e: Exception) {
+        throw downloadProblem(e) ?: e
+      }
     return file
   }
 
@@ -170,11 +186,16 @@ abstract class FilePodcastPlatform(protected val root: File) : PodcastPlatform {
       if (code !in listOf(301, 302, 303, 307, 308)) {
         if (code == 200) return conn
         conn.disconnect()
-        throw PodcastProblem("The server answered HTTP $code. Check the URL is public.")
+        throw PodcastProblem("The server answered HTTP $code. Check the URL is public.", code)
       }
       val next = conn.getHeaderField("Location")
       conn.disconnect()
-      location = URI(location).resolve(requireNotNull(next)).toString()
+      location =
+        URI(location)
+          .resolve(next ?: throw PodcastProblem("Redirect without a location"))
+          .toString()
+      if (!location.startsWith("https://"))
+        throw PodcastProblem("The server redirected to an insecure (HTTP) address")
     }
     throw PodcastProblem("Too many redirects")
   }
@@ -199,7 +220,11 @@ abstract class FilePodcastPlatform(protected val root: File) : PodcastPlatform {
       }
     }
 
-  protected open suspend fun download(episode: Episode, destination: File) =
+  protected open suspend fun download(
+    episode: Episode,
+    destination: File,
+    onProgress: (downloaded: Long, total: Long) -> Unit = { _, _ -> },
+  ) =
     withContext(Dispatchers.IO) {
       episode.validate()
       destination.parentFile!!.mkdirs()
@@ -207,14 +232,12 @@ abstract class FilePodcastPlatform(protected val root: File) : PodcastPlatform {
       try {
         val conn = openPublic(episode.audioUrl)
         try {
-          require(
-            conn.contentType?.substringBefore(';')?.let {
-              it.startsWith("audio/") || it == "application/octet-stream"
-            } == true
-          ) {
-            "Not downloadable audio"
-          }
+          val type = conn.contentType?.substringBefore(';')?.trim()?.lowercase()
+          if (type != null && !type.isAudioDownload())
+            throw PodcastProblem("the server sent $type instead of audio")
+          val total = conn.contentLengthLong
           var count = 0L
+          onProgress(0, total)
           conn.inputStream.use { source ->
             temp.outputStream().use { output ->
               val buffer = ByteArray(64 * 1024)
@@ -223,14 +246,17 @@ abstract class FilePodcastPlatform(protected val root: File) : PodcastPlatform {
                 val read = source.read(buffer)
                 if (read < 0) break
                 count += read
-                require(count <= 2_000_000_000L) { "Audio exceeds 2 GB limit" }
+                if (count > 2_000_000_000L) throw PodcastProblem("the audio is over 2 GB")
                 output.write(buffer, 0, read)
+                onProgress(count, total)
               }
               output.fd.sync()
             }
           }
           currentCoroutineContext().ensureActive()
-          require(count > 0 && (conn.contentLengthLong < 0 || conn.contentLengthLong == count))
+          if (count == 0L) throw PodcastProblem("the server sent an empty file")
+          if (total >= 0 && total != count)
+            throw PodcastProblem("the download stopped early, at ${count * 100 / total}%")
           replacePodcastFile(temp, destination)
         } finally {
           conn.disconnect()
@@ -299,3 +325,53 @@ fun replacePodcastFile(source: File, target: File) {
     Files.move(source.toPath(), target.toPath(), REPLACE_EXISTING)
   }
 }
+
+/** Podcast hosts label audio loosely; anything that is clearly a web page or text is rejected. */
+private fun String.isAudioDownload() =
+  startsWith("audio/") ||
+    this in
+      setOf(
+        "application/octet-stream",
+        "binary/octet-stream",
+        "application/binary",
+        "application/mp4",
+        "video/mp4",
+        "application/ogg",
+        "application/x-download",
+        "application/force-download",
+      )
+
+/** Why an audio download got [status], in words that suggest what to do. */
+private fun httpProblem(status: Int): PodcastProblem? =
+  when (status) {
+    0 -> null
+    401,
+    403 -> PodcastProblem("the server refused access (HTTP $status)", status)
+    404,
+    410 -> PodcastProblem("the audio is no longer at its address (HTTP $status)", status)
+    429 -> PodcastProblem("the server is limiting downloads (HTTP 429), try later", status)
+    in 500..599 -> PodcastProblem("the server had an error (HTTP $status), try later", status)
+    else -> PodcastProblem("the server answered HTTP $status", status)
+  }
+
+/**
+ * A short, URL-free reason for common network failures; null when there's nothing useful to say.
+ */
+private fun downloadProblem(e: Exception): PodcastProblem? =
+  when (e) {
+    is java.net.UnknownHostException -> PodcastProblem("no internet connection")
+    is java.net.SocketTimeoutException -> PodcastProblem("the server stopped responding")
+    is java.net.ConnectException -> PodcastProblem("couldn't reach the server")
+    is javax.net.ssl.SSLException -> PodcastProblem("the secure connection failed")
+    is java.io.IOException ->
+      if (e.message?.contains("No space left", ignoreCase = true) == true)
+        PodcastProblem("the phone is out of storage")
+      else PodcastProblem("the connection dropped")
+    // Our own checks (episode validation, HTTPS only) carry fixed, URL-free messages.
+    is IllegalArgumentException ->
+      PodcastProblem(
+        e.message?.takeUnless { it == "Failed requirement." }
+          ?: "the audio address isn't a valid HTTPS URL"
+      )
+    else -> null
+  }

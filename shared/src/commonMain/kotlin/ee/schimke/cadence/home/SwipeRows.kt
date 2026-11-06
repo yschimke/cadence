@@ -12,11 +12,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Archive
+import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.NewReleases
 import androidx.compose.material.icons.filled.PlaylistAdd
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
@@ -24,6 +26,7 @@ import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -139,7 +142,7 @@ private const val FRESH_SHOWN = 8
 
 /**
  * New episodes to triage: swipe right to dismiss, left to add to the source. Only shown while there
- * is something to decide on.
+ * is something to decide on, and on Home only once asked for ([onCollapse] folds it away again).
  */
 @Composable
 fun FreshSection(
@@ -147,6 +150,8 @@ fun FreshSection(
   canAdd: Boolean,
   onAdd: suspend (String) -> Boolean,
   onDismiss: suspend (String) -> Boolean,
+  onCollapse: (() -> Unit)? = null,
+  onTurnOff: (() -> Unit)? = null,
 ) {
   val colors = MaterialTheme.colorScheme
   OutlinedCard(Modifier.fillMaxWidth()) {
@@ -169,7 +174,18 @@ fun FreshSection(
           color = colors.onSurfaceVariant,
         )
       }
+      if (onCollapse != null)
+        IconButton(onClick = onCollapse) {
+          Icon(Icons.Filled.ExpandLess, contentDescription = "Hide new releases")
+        }
     }
+    if (onTurnOff != null)
+      TextButton(
+        onClick = onTurnOff,
+        modifier = Modifier.padding(start = 48.dp),
+      ) {
+        Text("Don't suggest new releases")
+      }
     fresh.take(FRESH_SHOWN).forEach { episode ->
       key(episode.key) {
         HorizontalDivider()

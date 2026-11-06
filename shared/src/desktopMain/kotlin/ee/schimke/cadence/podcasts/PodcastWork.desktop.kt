@@ -6,10 +6,20 @@ import kotlinx.coroutines.launch
 @Composable
 actual fun rememberPodcastWork(controller: PodcastController): PodcastWorkUi {
   val scope = rememberCoroutineScope()
+  val fraction by controller.progress.collectAsState()
+  var failure by remember { mutableStateOf<Pair<String, String>?>(null) }
+  fun start(task: String, block: suspend PodcastController.() -> Unit) {
+    failure = null
+    scope.launch { if (!controller.run(block)) failure = task to controller.status.value }
+  }
   return PodcastWorkUi(
     supportsDownload = controller.platform.supportsOriginalDownloads,
-    download = { scope.launch { controller.run { downloadOriginals() } } },
-    process = { scope.launch { controller.run { prepare() } } },
-    refresh = { scope.launch { controller.run { refreshSource() } } },
+    fraction = fraction,
+    error = failure?.second,
+    failedTask = failure?.first,
+    dismissError = { failure = null },
+    download = { start("download") { downloadOriginals() } },
+    process = { start("process") { prepare() } },
+    refresh = { start("refresh") { refreshSource() } },
   )
 }

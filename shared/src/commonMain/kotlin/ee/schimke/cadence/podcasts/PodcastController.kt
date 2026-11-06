@@ -42,7 +42,15 @@ interface PodcastPlatform {
 
   suspend fun originalAvailable(episode: Episode): Boolean = false
 
-  suspend fun downloadOriginal(episode: Episode) {
+  /**
+   * Downloads [episode]'s original audio unless it is already cached. [onProgress] reports bytes
+   * read and the expected total (or -1 when the server doesn't say), possibly from another thread.
+   * Failures worth showing are thrown as [PodcastProblem] with a short reason.
+   */
+  suspend fun downloadOriginal(
+    episode: Episode,
+    onProgress: (downloaded: Long, total: Long) -> Unit = { _, _ -> },
+  ) {
     throw PodcastProblem("Downloading originals is not supported on this platform")
   }
 
@@ -96,6 +104,8 @@ class PodcastController(val platform: PodcastPlatform) {
     )
   val status = MutableStateFlow("Loading library…")
   val busy = MutableStateFlow(false)
+  /** How far through the current task, 0 to 1, when it can tell; null while it can't. */
+  val progress = MutableStateFlow<Float?>(null)
   val signedIn = MutableStateFlow(false)
   // Set once the saved library, including any Pocket Casts session, has been read.
   val loaded = MutableStateFlow(false)
@@ -115,6 +125,7 @@ class PodcastController(val platform: PodcastPlatform) {
     busy.value = true
     try {
       status.value = "Working…"
+      progress.value = null
       publish()
       notice = null
       action()
@@ -135,6 +146,7 @@ class PodcastController(val platform: PodcastPlatform) {
       false
     } finally {
       busy.value = false
+      progress.value = null
       publish()
     }
   }
@@ -243,18 +255,65 @@ class PodcastController(val platform: PodcastPlatform) {
     save(state.value.copy(downloadedEpisodeKeys = downloaded))
   }
 
+  /**
+   * Downloads every episode not already on the phone. One bad episode doesn't stop the rest: each
+   * finished download is kept, and the failures are summarised at the end (as a [PodcastProblem],
+   * so a retry only fetches what is still missing).
+   */
   suspend fun downloadOriginals() {
     val episodes =
       state.value.library.playlist?.episodes ?: throw PodcastProblem("Connect a source first")
-    episodes.forEachIndexed { index, episode ->
-      status.value = "Downloading ${index + 1} of ${episodes.size}: ${episode.title}"
-      publish()
-      platform.downloadOriginal(episode)
-      save(
-        state.value.copy(downloadedEpisodeKeys = state.value.downloadedEpisodeKeys + episode.key)
-      )
+    val missing = episodes.filterNot { platform.originalAvailable(it) }
+    if (missing.size < episodes.size) recheckDownloads()
+    if (missing.isEmpty()) {
+      notice = "All ${count(episodes.size, "episode")} already downloaded"
+      return
     }
-    notice = "Downloaded ${count(episodes.size, "episode")}"
+    val failures = mutableListOf<Pair<Episode, String>>()
+    missing.forEachIndexed { index, episode ->
+      val label = "Downloading ${index + 1} of ${missing.size}: ${episode.title}"
+      status.value = label
+      progress.value = index.toFloat() / missing.size
+      publish()
+      var shownPercent = -1
+      try {
+        platform.downloadOriginal(episode) { bytes, total ->
+          if (total <= 0) return@downloadOriginal
+          val fraction = (bytes.toFloat() / total).coerceIn(0f, 1f)
+          progress.value = (index + fraction) / missing.size
+          val percent = (fraction * 100).toInt()
+          if (percent != shownPercent) {
+            shownPercent = percent
+            status.value = "$label · $percent%"
+          }
+        }
+        save(
+          state.value.copy(downloadedEpisodeKeys = state.value.downloadedEpisodeKeys + episode.key)
+        )
+      } catch (e: CancellationException) {
+        throw e
+      } catch (e: PodcastProblem) {
+        failures +=
+          episode to
+            (e.message?.trimEnd('.')?.replaceFirstChar { it.lowercase() } ?: "download failed")
+      } catch (e: Exception) {
+        platform.reportFailure(e)
+        // Raw messages can carry signed enclosure URLs; never show them.
+        failures += episode to "download failed"
+      }
+    }
+    progress.value = 1f
+    val done = missing.size - failures.size
+    if (failures.isEmpty()) {
+      notice = "Downloaded ${count(done, "episode")}"
+      return
+    }
+    val (first, reason) = failures.first()
+    val others = if (failures.size > 1) " (and ${failures.size - 1} more)" else ""
+    throw PodcastProblem(
+      (if (done > 0) "Downloaded $done of ${missing.size}. " else "") +
+        "Couldn't download “${first.title}”$others: $reason. Try again to retry the rest."
+    )
   }
 
   suspend fun importRss(url: String, latest: Int = state.value.library.feedLatest) {
