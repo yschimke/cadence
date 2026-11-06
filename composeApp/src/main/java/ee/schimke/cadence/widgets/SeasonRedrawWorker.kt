@@ -7,6 +7,7 @@ import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
+import ee.schimke.cadence.podcasts.PodcastSyncWidget
 import ee.schimke.livery.protocol.Manifest
 import java.util.concurrent.TimeUnit
 
@@ -24,8 +25,11 @@ import java.util.concurrent.TimeUnit
 class SeasonRedrawWorker(context: Context, params: WorkerParameters) :
   CoroutineWorker(context, params) {
   override suspend fun doWork(): Result {
-    if (inputData.getBoolean(KEY_REDRAW, true))
+    if (inputData.getBoolean(KEY_REDRAW, true)) {
       HeadphoneControlsWidget.updateAll(applicationContext)
+      // The sync card's pool follows the same season.
+      PodcastSyncWidget.updateAll(applicationContext)
+    }
     scheduleNext(applicationContext)
     return Result.success()
   }
