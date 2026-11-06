@@ -35,10 +35,11 @@ import kotlinx.coroutines.withContext
  * OpenSwim Pro vendor transport, so the widget follows the same mode gating as the controls screen.
  *
  * Android 16+ launchers draw a Livery template (contract [HeadphoneControlsTemplate.CONTRACT]) from
- * the catalog the APK ships (`composeApp/livery`, built into the assets): Livery picks the template
- * for the slot's size tier, writes the state and the system's colours in, keeps the live branch of
- * its conditional layout, and publishes it. Older launchers, and any template that can't be drawn,
- * get a `RemoteViews` layout with the same controls.
+ * the newest signed catalog on the device, or else the one the APK ships (`composeApp/livery`,
+ * built into the assets; see [WidgetLivery]). Livery picks the design (a season's while it runs)
+ * and the template for the slot's size tier, writes the state and the system's colours in, keeps
+ * the live branch of its conditional layout, and publishes it. Older launchers, and any template
+ * that can't be drawn, get a `RemoteViews` layout with the same controls.
  */
 @androidx.annotation.OptIn(UnstableApi::class)
 class HeadphoneControlsWidget : LiveryLauncherWidgetProvider() {
@@ -138,19 +139,13 @@ class HeadphoneControlsWidget : LiveryLauncherWidgetProvider() {
       }
     }
 
-    private fun updateAll(context: Context) =
+    internal fun updateAll(context: Context) =
       LiveryLauncherWidgetProvider.updateAll(context, HeadphoneControlsWidget::class.java)
 
     private fun controller(context: Context): BluetoothController? =
       (context.applicationContext as? AppGraphProvider)?.appGraph?.bluetoothController
 
-    @Volatile private var catalog: WidgetLivery? = null
-
-    private fun livery(context: Context): WidgetLivery =
-      catalog
-        ?: synchronized(this) {
-          catalog ?: WidgetLivery(context.applicationContext).also { catalog = it }
-        }
+    private fun livery(context: Context): WidgetLivery = WidgetLivery.get(context)
 
     /**
      * Pre-Android 16 launchers: one `RemoteViews` per size step, and the launcher shows the largest
