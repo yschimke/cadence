@@ -31,14 +31,24 @@ Without the property the same test fails when a committed template is stale.
 
 ## Seasons
 
-A season swaps the widget's design for everyone between two dates, without an app release: add a
-design with `"install": "Always"` and `"automatic": false` (so it draws only in its season), and a
-file in `seasons/`:
+A season swaps the widget's design for everyone between two dates, without an app release. Each
+seasonal design has `"install": "Always"` and `"automatic": false`, so apps ship it ahead of time but
+draw it only in its season, and a file in `seasons/` sets the dates:
 
-```json
-{ "id": "winter_2026", "start": "2026-12-01", "end": "2027-01-07",
-  "designs": { "cadence/headphone-controls@1": "headphone-winter" } }
-```
+| Season | Design | Dates (UTC, end exclusive) |
+|---|---|---|
+| `winter_2026` | `headphone-winter`: night sky, snow | 1 Dec to 20 Dec 2026 |
+| `christmas_2026` | `headphone-christmas`: pine and red, twinkling lights | 20 Dec to 28 Dec 2026 |
+| `new_year_2027` | `headphone-new-year`: midnight and gold, fireworks | 28 Dec 2026 to 4 Jan 2027 |
+| `winter_2027` | `headphone-winter` | 4 Jan to 1 Feb 2027 |
+| `halloween_2027` | `headphone-halloween`: purple night, moon and embers | 24 Oct to 2 Nov 2027 |
 
-`start` is inclusive and `end` exclusive (midnight UTC). Merge it well ahead of `start`: apps
-download the design with the catalog, so on the day the switch needs no network.
+Two seasons can't overlap on one contract (`livery build` refuses it), so winter is split around
+Christmas and New Year. The looks are `HeadphoneLook` in the shared module, and their backdrops
+move only while audio plays. Merge a season well ahead of its start: apps download its design with
+the catalog, so the switch itself needs no network.
+
+To add a look, add it to `HeadphoneLook`, write its `designs/<id>/design.json`, capture its
+templates with the command above, and add a season file. While the new design has no templates
+yet, add `-x :composeApp:buildLiveryCatalog` to that command, because the catalog build refuses a
+design with no templates.

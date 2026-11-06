@@ -70,23 +70,39 @@ fun HeadphoneControlsWidgetContent(
   colors: WidgetColors,
   onOpen: Action?,
   onAction: @Composable (HeadphoneWidgetAction) -> Action?,
+  /** A seasonal look's palette and backdrop in place of [colors]; the template draws the same. */
+  look: HeadphoneLook = HeadphoneLook.Default,
 ) {
-  HeadphoneControlsBody(
-    texts =
-      HeadphoneWidgetTexts(
-        title = state.title.rs,
-        shortTitle = state.shortTitle.rs,
-        detail = state.detail?.rs,
-        extra = state.extra?.rs,
-      ),
-    palette = RemotePalette.of(colors),
-    layout = layout,
-    modeSwitch = state.modeSwitch,
-    showWater = state.showWater,
-    onOpen = onOpen,
-    onAction = onAction,
-    transportButton = { action, button -> button(action) },
-  )
+  val palette = RemotePalette.of(look.colors ?: colors)
+  val body: @Composable @RemoteComposable () -> Unit = {
+    HeadphoneControlsBody(
+      texts =
+        HeadphoneWidgetTexts(
+          title = state.title.rs,
+          shortTitle = state.shortTitle.rs,
+          detail = state.detail?.rs,
+          extra = state.extra?.rs,
+        ),
+      palette = palette,
+      layout = layout,
+      modeSwitch = state.modeSwitch,
+      showWater = state.showWater,
+      onOpen = onOpen,
+      onAction = onAction,
+      transportButton = { action, button -> button(action) },
+      drawBackground = look.backdrop == null,
+    )
+  }
+  val backdrop = look.backdrop
+  if (backdrop == null) {
+    body()
+  } else {
+    RemoteBox(RemoteModifier.fillMaxSize().background(palette.background)) {
+      val playing = HeadphoneWidgetAction.Pause in state.transport
+      backdrop(if (playing) LocalSwimClock.current else 7.5f.rf)
+      body()
+    }
+  }
 }
 
 /** The widget's text: constants for a capture with data, named values for a template. */
@@ -117,12 +133,37 @@ internal fun HeadphoneControlsBody(
   transportButton:
     @Composable
     (HeadphoneWidgetAction, @Composable (HeadphoneWidgetAction) -> Unit) -> Unit,
+  /**
+   * False when the caller draws the widget's background itself (a seasonal design's backdrop, drawn
+   * once under every state's branch).
+   */
+  drawBackground: Boolean = true,
 ) {
   // No outer clip: the launcher applies its own system corner radius to the widget.
   val root =
     RemoteModifier.fillMaxSize()
-      .background(palette.background)
+      .let { if (drawBackground) it.background(palette.background) else it }
       .padding(HeadphoneWidgetLayout.PaddingDp.rdp)
+  HeadphoneControlsContent(
+    texts, palette, layout, modeSwitch, showWater, onOpen, onAction, transportButton, root,
+  )
+}
+
+@Composable
+@RemoteComposable
+private fun HeadphoneControlsContent(
+  texts: HeadphoneWidgetTexts,
+  palette: RemotePalette,
+  layout: HeadphoneWidgetLayout,
+  modeSwitch: HeadphoneWidgetAction?,
+  showWater: Boolean,
+  onOpen: Action?,
+  onAction: @Composable (HeadphoneWidgetAction) -> Action?,
+  transportButton:
+    @Composable
+    (HeadphoneWidgetAction, @Composable (HeadphoneWidgetAction) -> Unit) -> Unit,
+  root: RemoteModifier,
+) {
   // [spaced]: a gap before every button but the first. A one-row slot spaces with these rather
   // than spacedBy: the player shares a weighted row's width out before spacing, so spacedBy would
   // run the last button off the edge.

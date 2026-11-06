@@ -14,6 +14,7 @@ import ee.schimke.cadence.bluetooth.BluetoothState
 import ee.schimke.cadence.swim.SwimClockAt
 import ee.schimke.cadence.swim.rememberPreviewSeconds
 import ee.schimke.cadence.widgets.HeadphoneControlsWidgetContent
+import ee.schimke.cadence.widgets.HeadphoneLook
 import ee.schimke.cadence.widgets.HeadphoneWidgetLayout
 import ee.schimke.cadence.widgets.HeadphoneWidgetState
 import ee.schimke.cadence.widgets.WidgetColors
@@ -31,9 +32,12 @@ private fun HeadphoneWidgetPreview(
   bluetooth: BluetoothState,
   colors: WidgetColors = WidgetColors.Dark,
   animated: Boolean = false,
+  look: HeadphoneLook = HeadphoneLook.Default,
+  /** The moment a still preview pins the clock to (a seasonal backdrop mid-animation). */
+  stillSeconds: Float = 0f,
 ) {
   // Animated previews re-capture every frame with the water's clock pinned to it.
-  val seconds = if (animated) rememberPreviewSeconds() else 0f
+  val seconds = if (animated) rememberPreviewSeconds() else stillSeconds
   BoxWithConstraints(Modifier.fillMaxSize()) {
     val state = HeadphoneWidgetState.from(bluetooth)
     val layout = HeadphoneWidgetLayout.of(state, maxWidth.value.toInt(), maxHeight.value.toInt())
@@ -47,6 +51,7 @@ private fun HeadphoneWidgetPreview(
             colors = colors,
             onOpen = null,
             onAction = { null },
+            look = look,
           )
         }
         // Still previews pin second 0, so they render the same water every time.
@@ -136,4 +141,58 @@ internal fun HeadphoneWidgetPlayingAnimatedPreview() {
     ),
     animated = true,
   )
+}
+
+/** The seasonal looks (`composeApp/livery/seasons/`), playing, at one moment of their backdrop. */
+private val playingOnHeadphones
+  get() =
+    PreviewFixtures.btConnectedPlaying.copy(
+      connectedDevice = PreviewFixtures.connectedDevice.copy(name = "OpenSwim Pro")
+    )
+
+@Preview(name = "Headphone widget · winter", widthDp = 312, heightDp = 152)
+@LauncherWidgetPreview(width = 4, height = 2)
+@Composable
+internal fun HeadphoneWidgetWinterPreview() {
+  HeadphoneWidgetPreview(playingOnHeadphones, look = HeadphoneLook.Winter, stillSeconds = 4f)
+}
+
+@Preview(name = "Headphone widget · Christmas", widthDp = 312, heightDp = 152)
+@LauncherWidgetPreview(width = 4, height = 2)
+@Composable
+internal fun HeadphoneWidgetChristmasPreview() {
+  HeadphoneWidgetPreview(playingOnHeadphones, look = HeadphoneLook.Christmas, stillSeconds = 4f)
+}
+
+@Preview(name = "Headphone widget · New Year", widthDp = 312, heightDp = 152)
+@LauncherWidgetPreview(width = 4, height = 2)
+@Composable
+internal fun HeadphoneWidgetNewYearPreview() {
+  HeadphoneWidgetPreview(playingOnHeadphones, look = HeadphoneLook.NewYear, stillSeconds = 1.5f)
+}
+
+@Preview(name = "Headphone widget · Halloween", widthDp = 312, heightDp = 152)
+@LauncherWidgetPreview(width = 4, height = 2)
+@Composable
+internal fun HeadphoneWidgetHalloweenPreview() {
+  HeadphoneWidgetPreview(playingOnHeadphones, look = HeadphoneLook.Halloween, stillSeconds = 4f)
+}
+
+@Preview(name = "Headphone widget · Christmas · MP3 · 3×1", widthDp = 232, heightDp = 72)
+@LauncherWidgetPreview(width = 3, height = 1)
+@Composable
+internal fun HeadphoneWidgetChristmas3x1Preview() {
+  HeadphoneWidgetPreview(
+    PreviewFixtures.btMp3Mode,
+    look = HeadphoneLook.Christmas,
+    stillSeconds = 4f,
+  )
+}
+
+/** Fireworks while playing. */
+@Preview(name = "Headphone widget · New Year · animated", widthDp = 312, heightDp = 152)
+@AnimatedPreview(durationMs = 3000, frameIntervalMs = 80, showCurves = false)
+@Composable
+internal fun HeadphoneWidgetNewYearAnimatedPreview() {
+  HeadphoneWidgetPreview(playingOnHeadphones, animated = true, look = HeadphoneLook.NewYear)
 }

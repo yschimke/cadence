@@ -1,5 +1,6 @@
 package ee.schimke.cadence.widgets
 
+import ee.schimke.livery.client.Clock
 import ee.schimke.livery.client.PlanResult
 import ee.schimke.livery.client.TemplateQuery
 import ee.schimke.livery.protocol.Contract
@@ -7,6 +8,7 @@ import ee.schimke.livery.protocol.PlayerCapabilities
 import ee.schimke.livery.protocol.Surfaces
 import ee.schimke.livery.widgets.launcher.LiveryLauncherWidgetProvider
 import java.io.File
+import java.time.Instant
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
@@ -30,26 +32,66 @@ class WidgetLiveryTest {
     File(requireNotNull(System.getProperty("cadence.livery.dir")) { "no cadence.livery.dir" })
   private val json = Json { ignoreUnknownKeys = true }
 
+  private val contract =
+    json.decodeFromString(
+      Contract.serializer(),
+      File(catalogDir, "contracts/headphone-controls.json").readText(),
+    )
+  private val caps =
+    PlayerCapabilities(
+      Surfaces.LAUNCHER_WIDGET,
+      maxRcApiLevel = 7,
+      profiles = setOf("widgets"),
+      livePush = false,
+      maxBytes = LiveryLauncherWidgetProvider.DEFAULT_TEMPLATE_MAX_BYTES,
+    )
+
   @Test
   fun drawsTheBundledCatalogBeforeAnyDownload() = runBlocking {
-    val livery = WidgetLivery(RuntimeEnvironment.getApplication())
-    val manifest = livery.repository.current()
-    assertTrue(manifest != null, "the APK's catalog is in the assets")
+    val livery =
+      WidgetLivery(
+        RuntimeEnvironment.getApplication(),
+        Clock { Instant.parse("2026-11-20T00:00:00Z").toEpochMilli() },
+      )
+    assertTrue(livery.repository.current() != null, "the APK's catalog is in the assets")
+    for ((name, plan) in plans(livery)) {
+      assertEquals("headphone-default", plan.template.design?.id, "example '$name'")
+      assertEquals(emptyMap(), plan.experiments, "example '$name': no season runs yet")
+    }
+  }
 
-    val contract =
-      json.decodeFromString(
-        Contract.serializer(),
-        File(catalogDir, "contracts/headphone-controls.json").readText(),
+  @Test
+  fun drawsEachSeasonsDesignOnlyInItsSeason() = runBlocking {
+    val app = RuntimeEnvironment.getApplication()
+    // At -> (design, the season on the plan, or null for none).
+    val calendar =
+      listOf(
+        "2026-11-20T00:00:00Z" to ("headphone-default" to null),
+        "2026-12-01T00:00:00Z" to ("headphone-winter" to "winter_2026"),
+        "2026-12-19T12:00:00Z" to ("headphone-winter" to "winter_2026"),
+        "2026-12-20T00:00:00Z" to ("headphone-christmas" to "christmas_2026"),
+        "2026-12-25T00:00:00Z" to ("headphone-christmas" to "christmas_2026"),
+        "2026-12-28T00:00:00Z" to ("headphone-new-year" to "new_year_2027"),
+        "2026-12-31T23:00:00Z" to ("headphone-new-year" to "new_year_2027"),
+        "2027-01-04T00:00:00Z" to ("headphone-winter" to "winter_2027"),
+        "2027-01-20T00:00:00Z" to ("headphone-winter" to "winter_2027"),
+        "2027-02-01T00:00:00Z" to ("headphone-default" to null),
+        "2027-10-31T00:00:00Z" to ("headphone-halloween" to "halloween_2027"),
+        "2027-11-02T00:00:00Z" to ("headphone-default" to null),
       )
-    val caps =
-      PlayerCapabilities(
-        Surfaces.LAUNCHER_WIDGET,
-        maxRcApiLevel = 7,
-        profiles = setOf("widgets"),
-        livePush = false,
-        maxBytes = LiveryLauncherWidgetProvider.DEFAULT_TEMPLATE_MAX_BYTES,
-      )
-    for ((name, example) in contract.examples) {
+    for ((at, expected) in calendar) {
+      val (design, season) = expected
+      val now = Instant.parse(at).toEpochMilli()
+      for ((name, plan) in plans(WidgetLivery(app, Clock { now }))) {
+        assertEquals(design, plan.template.design?.id, "example '$name' at $at")
+        assertEquals(setOfNotNull(season), plan.experiments.keys, "the season on the plan at $at")
+      }
+    }
+  }
+
+  /** The widget's plan for every contract example, as the launcher widget provider asks for it. */
+  private suspend fun plans(livery: WidgetLivery) =
+    contract.examples.map { (name, example) ->
       val result =
         livery.planner.forAppData(
           TemplateQuery(
@@ -61,11 +103,8 @@ class WidgetLiveryTest {
           ),
           example,
         )
-      val plan = assertIs<PlanResult.Ready>(result, "example '$name'").plan
-      assertEquals("headphone-default", plan.template.design?.id, "example '$name'")
-      assertEquals(emptyMap(), plan.experiments, "no season runs in the bundled catalog")
+      name to assertIs<PlanResult.Ready>(result, "example '$name'").plan
     }
-  }
 
   @Test
   fun trustsOnlyTheCatalogKey() {

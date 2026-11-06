@@ -1,0 +1,33 @@
+{
+    "target": {
+        "surface": "launcher-widget",
+        "rcApiLevel": 7,
+        "profiles": [
+            "widgets"
+        ],
+        "size": {
+            "minWidthDp": 176,
+            "maxWidthDp": 183,
+            "minHeightDp": 150,
+            "maxHeightDp": 189
+        }
+    },
+    "reads": [
+        "has_detail",
+        "has_extra",
+        "mode",
+        "playing",
+        "title"
+    ],
+    "emits": [
+        "next",
+        "open",
+        "pause",
+        "play"
+    ],
+    "source": {
+        "tool": "capture",
+        "composable": "HeadphoneControlsTemplateContent",
+        "look": "Halloween"
+    }
+}
