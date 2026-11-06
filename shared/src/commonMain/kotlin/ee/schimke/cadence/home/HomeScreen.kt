@@ -356,12 +356,12 @@ fun HomeContent(
       val headphonesConnected =
         state.attachedDevice != null || state.bluetooth.connectedDevice != null
       val playingOnPhone = podcastPlayer.title != null && !state.bluetooth.localAudioControls
-      if (headphonesConnected)
+      // The phone's own player (with seeking) stays whenever something plays here; the headphone
+      // transport joins it over Bluetooth, or on USB explains why there is none.
+      if (headphonesConnected || podcastPlayer.title != null)
         item(key = "controls") {
           AudioControlsSection(state, podcastPlayer, playingOnPhone, actions)
         }
-      if (podcastPlayer.title != null && !(headphonesConnected && playingOnPhone))
-        item(key = "phone-player") { PhonePodcastPlayer(podcastPlayer) }
       item(key = "phone") {
         PhoneSection(state, podcasts, canRefreshPodcasts, podcastWork, actions) { adding = true }
       }
@@ -534,17 +534,22 @@ private fun AudioControlsSection(
           )
       )
     else state.bluetooth
+  val bluetoothConnected = state.bluetooth.connectedDevice != null
   Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
     SectionTitle("Audio controls") {
-      if (state.bluetooth.connectedDevice != null)
+      if (bluetoothConnected)
         TextButton(onClick = actions.onBluetoothControls) { Text("All controls") }
     }
-    HomeMiniPlayer(
-      bluetooth,
-      actions.onPrevious,
-      if (playingOnPhone) podcastPlayer.playPause else actions.onPlayPause,
-      actions.onNext,
-    )
+    if (podcastPlayer.title != null) PhonePodcastPlayer(podcastPlayer)
+    // Over Bluetooth this drives the headphones; plugged in over USB with nothing playing on the
+    // phone, it says why there are no controls.
+    if (bluetoothConnected || podcastPlayer.title == null)
+      HomeMiniPlayer(
+        bluetooth,
+        actions.onPrevious,
+        if (playingOnPhone) podcastPlayer.playPause else actions.onPlayPause,
+        actions.onNext,
+      )
   }
 }
 
