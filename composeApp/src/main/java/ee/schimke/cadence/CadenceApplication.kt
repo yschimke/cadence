@@ -9,6 +9,7 @@ import ee.schimke.cadence.metro.CadenceAppGraph
 import ee.schimke.cadence.wear.PhoneWearDataPublisher
 import ee.schimke.cadence.widgets.CatalogRefreshWorker
 import ee.schimke.cadence.widgets.HeadphoneControlsWidget
+import ee.schimke.cadence.widgets.SeasonRedrawWorker
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -38,6 +39,7 @@ class CadenceApplication : Application(), AppGraphProvider, Configuration.Provid
       .start()
     HeadphoneControlsWidget.start(applicationContext, appGraph.bluetoothController)
     CatalogRefreshWorker.schedule(applicationContext)
+    SeasonRedrawWorker.ensureScheduled(applicationContext)
     ee.schimke.cadence.podcasts.PodcastSyncWidget.start(
       applicationContext,
       appGraph.bluetoothController,

@@ -28,6 +28,8 @@ class CatalogRefreshWorker(context: Context, params: WorkerParameters) :
       is RefreshResult.Updated -> {
         Log.i(TAG, "widget catalog updated to serial ${result.serial}")
         HeadphoneControlsWidget.updateAll(applicationContext)
+        // The new catalog may move, add or drop seasons.
+        SeasonRedrawWorker.ensureScheduled(applicationContext, replace = true)
       }
       is RefreshResult.Failed -> Log.w(TAG, "widget catalog refresh failed: ${result.reason}")
       is RefreshResult.Skipped -> Log.d(TAG, "widget catalog refresh skipped: ${result.reason}")

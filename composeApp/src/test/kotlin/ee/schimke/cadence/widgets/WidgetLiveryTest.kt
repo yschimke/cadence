@@ -89,6 +89,20 @@ class WidgetLiveryTest {
     }
   }
 
+  @Test
+  fun redrawsAtEachSeasonBoundary() = runBlocking {
+    val manifest = WidgetLivery(RuntimeEnvironment.getApplication()).repository.current()
+    fun next(at: String) =
+      SeasonRedrawWorker.nextBoundary(manifest, Instant.parse(at).toEpochMilli())?.let {
+        Instant.ofEpochMilli(it).toString()
+      }
+    assertEquals("2026-12-01T00:00:00Z", next("2026-11-20T00:00:00Z"))
+    assertEquals("2026-12-20T00:00:00Z", next("2026-12-01T00:00:00Z"))
+    assertEquals("2027-01-04T00:00:00Z", next("2026-12-31T23:00:00Z"))
+    assertEquals("2027-10-24T00:00:00Z", next("2027-02-01T00:00:00Z"))
+    assertEquals(null, next("2027-11-02T00:00:00Z"))
+  }
+
   /** The widget's plan for every contract example, as the launcher widget provider asks for it. */
   private suspend fun plans(livery: WidgetLivery) =
     contract.examples.map { (name, example) ->
