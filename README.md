@@ -2,6 +2,17 @@
 
 Auto-generated from `main`. Browse inline or compare against PR branches.
 
+> [!WARNING]
+> 1 preview(s) failed to render in the latest update (1 retained from the prior baseline). See **Render Failures** below.
+
+## Render Failures
+
+The render task completed but no PNG was produced for these previews. Entries with a prior baseline keep their previous image; the rest are absent from the gallery until a successful render lands.
+
+| Preview | Module | Function | Source | Baseline |
+|---------|--------|----------|--------|----------|
+| `composeApp/ee.schimke.cadence.preview.PodcastPreviewsKt.PodcastImportedPreview_Podcast sync — imported` | composeApp | `PodcastImportedPreview` | `src/main/kotlin/ee/schimke/cadence/preview/PodcastPreviews.kt` | retained |
+
 ## composeApp
 
 | Preview | Image |
@@ -11,7 +22,10 @@ Auto-generated from `main`. Browse inline or compare against PR branches.
 | `FoundationMaterial3LightPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/FoundationMaterial3LightPreview_Foundation_Material_3_light-8a361022.png" width="150" /> |
 | `HeadphoneAssociationPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HeadphoneAssociationPreview_Suggested_headphone_match-90144fb5.png" width="150" /> |
 | `HeadphoneWidgetBluetoothPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HeadphoneWidgetBluetoothPreview_Headphone_widget_Bluetooth-672bb261.png" width="150" /> |
+| `HeadphoneWidgetChristmas3x1Preview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HeadphoneWidgetChristmas3x1Preview_Headphone_widget_Christmas_MP3_3_1-65188605.png" width="150" /> |
+| `HeadphoneWidgetChristmasPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HeadphoneWidgetChristmasPreview_Headphone_widget_Christmas-83a2914f.png" width="150" /> |
 | `HeadphoneWidgetDisconnectedPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HeadphoneWidgetDisconnectedPreview_Headphone_widget_disconnected-b8bab80a.png" width="150" /> |
+| `HeadphoneWidgetHalloweenPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HeadphoneWidgetHalloweenPreview_Headphone_widget_Halloween-02705a4c.png" width="150" /> |
 | `HeadphoneWidgetLightPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HeadphoneWidgetLightPreview_Headphone_widget_light-98937184.png" width="150" /> |
 | `HeadphoneWidgetMp32x1Preview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HeadphoneWidgetMp32x1Preview_Headphone_widget_MP3_2_1-820e2ca9.png" width="150" /> |
 | `HeadphoneWidgetMp33x1Preview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HeadphoneWidgetMp33x1Preview_Headphone_widget_MP3_3_1-0abd2b18.png" width="150" /> |
@@ -19,9 +33,11 @@ Auto-generated from `main`. Browse inline or compare against PR branches.
 | `HeadphoneWidgetMp35x1Preview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HeadphoneWidgetMp35x1Preview_Headphone_widget_MP3_5_1-32dd6d60.png" width="150" /> |
 | `HeadphoneWidgetMp35x3Preview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HeadphoneWidgetMp35x3Preview_Headphone_widget_MP3_5_3-c18f130c.png" width="150" /> |
 | `HeadphoneWidgetMp3Preview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HeadphoneWidgetMp3Preview_Headphone_widget_MP3-d6a1c3d9.png" width="150" /> |
+| `HeadphoneWidgetNewYearAnimatedPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HeadphoneWidgetNewYearAnimatedPreview_Headphone_widget_New_Year_animated-51b6488c.gif" width="150" /> |
+| `HeadphoneWidgetNewYearPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HeadphoneWidgetNewYearPreview_Headphone_widget_New_Year-655c9ae0.png" width="150" /> |
 | `HeadphoneWidgetPlayingAnimatedPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HeadphoneWidgetPlayingAnimatedPreview_Headphone_widget_playing_animated-157e750e.gif" width="150" /> |
+| `HeadphoneWidgetWinterPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HeadphoneWidgetWinterPreview_Headphone_widget_winter-fa859d91.png" width="150" /> |
 | `AddPodcastsPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/AddPodcastsPreview_Add_podcasts-e09ca4b7.png" width="150" /> |
-| `PodcastImportedPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/PodcastImportedPreview_Podcast_sync_imported-8403888a.png" width="150" /> |
 | `PodcastPocketCastsPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/PodcastPocketCastsPreview_Add_podcasts_Pocket_Casts_signed_in-cd7341fe.png" width="150" /> |
 | `PodcastPreparedPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/PodcastPreparedPreview_Podcast_sync_prepared-2db5b8ad.png" width="150" /> |
 | `CloudSyncWidgetLargePreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/CloudSyncWidgetLargePreview_Cloud_sync_widget_large-2f8e7fdc.png" width="150" /> |
@@ -30,11 +46,17 @@ Auto-generated from `main`. Browse inline or compare against PR branches.
 | `CloudSyncWidgetSmallPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/CloudSyncWidgetSmallPreview_Cloud_sync_widget_small-f212ff03.png" width="150" /> |
 | `PodcastWidgetBluetoothPoolPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/PodcastWidgetBluetoothPoolPreview_Podcast_widget_Bluetooth_pool-ba4b2667.png" width="150" /> |
 | `PodcastWidgetBluetoothPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/PodcastWidgetBluetoothPreview_Podcast_widget_Bluetooth-2f84c33e.png" width="150" /> |
+| `PodcastWidgetChristmasAnimatedPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/PodcastWidgetChristmasAnimatedPreview_Podcast_widget_Christmas_animated-2855f3f7.gif" width="150" /> |
+| `PodcastWidgetChristmasPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/PodcastWidgetChristmasPreview_Podcast_widget_Christmas-4cf9d5c0.png" width="150" /> |
+| `PodcastWidgetChristmasStandingPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/PodcastWidgetChristmasStandingPreview_Podcast_widget_Christmas_Bluetooth-cbc54ced.png" width="150" /> |
 | `PodcastWidgetDisconnectedPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/PodcastWidgetDisconnectedPreview_Podcast_widget_disconnected-f475e778.png" width="150" /> |
+| `PodcastWidgetHalloweenPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/PodcastWidgetHalloweenPreview_Podcast_widget_Halloween-fcbd6c77.png" width="150" /> |
 | `PodcastWidgetMp3LargePreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/PodcastWidgetMp3LargePreview_Podcast_widget_MP3_large-06e82c93.png" width="150" /> |
 | `PodcastWidgetMp3LightPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/PodcastWidgetMp3LightPreview_Podcast_widget_MP3_light-cdc23576.png" width="150" /> |
 | `PodcastWidgetMp3Preview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/PodcastWidgetMp3Preview_Podcast_widget_MP3-3525244f.png" width="150" /> |
 | `PodcastWidgetMp3SmallPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/PodcastWidgetMp3SmallPreview_Podcast_widget_MP3_small-aa8827a4.png" width="150" /> |
+| `PodcastWidgetNewYearPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/PodcastWidgetNewYearPreview_Podcast_widget_New_Year-52299ab0.png" width="150" /> |
+| `PodcastWidgetWinterPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/PodcastWidgetWinterPreview_Podcast_widget_winter-c44e8291.png" width="150" /> |
 | `BluetoothConnectedPlayingPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/BluetoothConnectedPlayingPreview_BT_controls_connected_playing-45366603.png" width="150" /> |
 | `BluetoothDisconnectedPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/BluetoothDisconnectedPreview_BT_controls_disconnected-42332e99.png" width="150" /> |
 | `BluetoothMp3ModePreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/BluetoothMp3ModePreview_BT_controls_MP3_mode-f13f654e.png" width="150" /> |
