@@ -35,6 +35,8 @@ import androidx.compose.material.icons.filled.Bedtime
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Cloud
 import androidx.compose.material.icons.filled.ErrorOutline
+import androidx.compose.material.icons.filled.ExpandLess
+import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.Folder
 import androidx.compose.material.icons.filled.Headphones
 import androidx.compose.material.icons.filled.MoreVert
@@ -42,6 +44,7 @@ import androidx.compose.material.icons.filled.NewReleases
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Podcasts
 import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.SdStorage
 import androidx.compose.material.icons.filled.Sync
 import androidx.compose.material.icons.filled.Usb
@@ -507,6 +510,9 @@ private fun HeadphonesSection(
       enabled = !podcastWork.active,
       progress = podcastWork.status.takeIf { copying },
       actions = actions,
+      // Only meaningful once there is something prepared to copy.
+      changes =
+        if (step is HeadphoneSyncStep.ReadyToCopy) headphoneSyncChanges(podcasts) else emptyList(),
     )
   }
 }
@@ -688,6 +694,7 @@ private fun HeadphoneSyncPrompt(
   enabled: Boolean,
   progress: String?,
   actions: HomeActions,
+  changes: List<HeadphoneSyncChange> = emptyList(),
 ) {
   val colors = MaterialTheme.colorScheme
   // The moment to act stands out; everything else is a calm, tonal status.
@@ -768,7 +775,81 @@ private fun HeadphoneSyncPrompt(
               Text("Sync folders")
             }
       }
+      if (changes.isNotEmpty() && !busy) SyncChanges(changes, content)
     }
+  }
+}
+
+/** The episodes the next sync adds, updates and drops, folded behind a one-line summary. */
+@Composable
+private fun SyncChanges(changes: List<HeadphoneSyncChange>, content: Color) {
+  var expanded by rememberSaveable { mutableStateOf(false) }
+  Column {
+    Row(
+      Modifier.fillMaxWidth()
+        .clip(RoundedCornerShape(12.dp))
+        .clickable(onClickLabel = if (expanded) "Hide changes" else "Show changes") {
+          expanded = !expanded
+        }
+        .heightIn(min = 48.dp)
+        .padding(horizontal = 4.dp),
+      verticalAlignment = Alignment.CenterVertically,
+    ) {
+      Column(Modifier.weight(1f)) {
+        Text("What will change", style = MaterialTheme.typography.labelLarge)
+        Text(
+          changes.summary(),
+          style = MaterialTheme.typography.bodySmall,
+          color = content.copy(alpha = 0.8f),
+        )
+      }
+      Icon(
+        if (expanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
+        contentDescription = null,
+      )
+    }
+    if (expanded)
+      Column(
+        Modifier.padding(top = 4.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+      ) {
+        changes.forEach { change ->
+          Row(verticalAlignment = Alignment.Top) {
+            Icon(
+              when (change.kind) {
+                HeadphoneSyncChange.Kind.Add -> Icons.Filled.Add
+                HeadphoneSyncChange.Kind.Update -> Icons.Filled.Sync
+                HeadphoneSyncChange.Kind.Remove -> Icons.Filled.Remove
+              },
+              contentDescription =
+                when (change.kind) {
+                  HeadphoneSyncChange.Kind.Add -> "New"
+                  HeadphoneSyncChange.Kind.Update -> "Updated"
+                  HeadphoneSyncChange.Kind.Remove -> "Removed"
+                },
+              modifier = Modifier.padding(top = 2.dp).size(18.dp),
+            )
+            Spacer(Modifier.width(12.dp))
+            Column(Modifier.weight(1f)) {
+              Text(
+                change.title,
+                style = MaterialTheme.typography.bodyMedium,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+              )
+              Text(
+                listOf(change.podcast, change.detail)
+                  .filter { it.isNotBlank() }
+                  .joinToString(" · "),
+                style = MaterialTheme.typography.bodySmall,
+                color = content.copy(alpha = 0.8f),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+              )
+            }
+          }
+        }
+      }
   }
 }
 
