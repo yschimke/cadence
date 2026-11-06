@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-06T12:11:47.289Z",
+  "generatedAt": "2026-11-06T12:22:47.386Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "6cb909ee5379e0cfa7017e50fa99f1db8633713c",
+        "subject": "build: adopt Livery 0.2.0 (#519)",
+        "at": "2026-11-06T12:03:11Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "f07efd73327167182c20cf80cb7b30fa75b0bb04",
         "subject": "feat: delete stale episodes from the headphones on sync, throttle download progress (#518)",
@@ -474,14 +482,6 @@
         "sha": "8012f1f0d9678e0cab25d793492bac557bcf6218",
         "subject": "fix(build): swap java.net.http for OkHttp in Google sync + enable release unit tests (#457)",
         "at": "2026-10-31T21:58:23Z",
-        "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "cc2a8592284f0aa3d02c2501f6d78aee52229550",
-        "subject": "fix(widgets): draw headphone widget icons in a canvas; Remote Compose on Android 16 again (#455)",
-        "at": "2026-10-31T20:18:12Z",
         "author": "Yuri Schimke",
         "previewIds": [],
         "components": []
