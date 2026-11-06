@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-06T12:22:47.386Z",
+  "generatedAt": "2026-11-06T15:53:56.270Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "ad7e15c3c160172e2e7e06c1bd367f30d95e0772",
+        "subject": "chore(main): release 0.1.19 (#517)",
+        "at": "2026-11-06T15:42:07Z",
+        "author": "github-actions[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "6cb909ee5379e0cfa7017e50fa99f1db8633713c",
         "subject": "build: adopt Livery 0.2.0 (#519)",
@@ -475,14 +483,6 @@
         "subject": "fix(deps): update dependency com.squareup.okhttp3:okhttp to v5.5.1 (#458)",
         "at": "2026-10-31T22:07:04Z",
         "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "8012f1f0d9678e0cab25d793492bac557bcf6218",
-        "subject": "fix(build): swap java.net.http for OkHttp in Google sync + enable release unit tests (#457)",
-        "at": "2026-10-31T21:58:23Z",
-        "author": "Yuri Schimke",
         "previewIds": [],
         "components": []
       }
