@@ -42,7 +42,11 @@ class Media3ClippingTest {
         )
       val platform =
         object : AndroidPodcastPlatform(context) {
-          override suspend fun download(episode: Episode, destination: File) {
+          override suspend fun download(
+            episode: Episode,
+            destination: File,
+            onProgress: (Long, Long) -> Unit,
+          ) {
             destination.parentFile!!.mkdirs()
             source.copyTo(destination, overwrite = true)
           }

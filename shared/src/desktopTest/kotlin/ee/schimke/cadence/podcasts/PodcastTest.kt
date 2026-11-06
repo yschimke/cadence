@@ -513,6 +513,29 @@ class PodcastTest {
     assertEquals(setOf(episode.key, second.key), controller.state.value.downloadedEpisodeKeys)
   }
 
+  @Test
+  fun downloadKeepsGoingPastAFailureAndSaysWhichEpisodeFailed() = runBlocking {
+    val platform = FakePlatform()
+    val second = episode.copy(id = "episode-2", title = "Second episode")
+    platform.failDownloads += episode.key
+    val controller = PodcastController(platform)
+    controller.state.value =
+      LocalPodcastState(
+        library =
+          PodcastLibrary(
+            playlist = PlaylistSnapshot(name = "Test", episodes = listOf(episode, second))
+          )
+      )
+
+    assertFalse(controller.run { downloadOriginals() })
+    assertEquals(listOf(second.key), platform.originals)
+    assertEquals(setOf(second.key), controller.state.value.downloadedEpisodeKeys)
+    val message = controller.status.value
+    assertTrue(message.startsWith("Downloaded 1 of 2."), message)
+    assertTrue(message.contains("“${episode.title}”: the server answered HTTP 404"), message)
+    assertNull(controller.progress.value)
+  }
+
   private class FakePlatform(override val splitFormats: Set<String> = setOf("mp3", "m4a")) :
     PodcastPlatform {
     override val description = "Fixture"
@@ -529,7 +552,12 @@ class PodcastTest {
     val originals = mutableListOf<String>()
     val statuses = mutableListOf<String>()
 
-    override suspend fun downloadOriginal(episode: Episode) {
+    val failDownloads = mutableSetOf<String>()
+
+    override suspend fun downloadOriginal(episode: Episode, onProgress: (Long, Long) -> Unit) {
+      if (episode.key in failDownloads) throw PodcastProblem("The server answered HTTP 404")
+      onProgress(50, 100)
+      onProgress(100, 100)
       originals += episode.key
     }
 
