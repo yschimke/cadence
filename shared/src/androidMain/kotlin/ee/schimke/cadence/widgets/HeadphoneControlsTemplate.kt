@@ -3,16 +3,22 @@
 package ee.schimke.cadence.widgets
 
 import androidx.compose.remote.creation.compose.action.Action
+import androidx.compose.remote.creation.compose.layout.RemoteBox
 import androidx.compose.remote.creation.compose.layout.RemoteComposable
 import androidx.compose.remote.creation.compose.layout.RemoteStateLayout
+import androidx.compose.remote.creation.compose.modifier.RemoteModifier
+import androidx.compose.remote.creation.compose.modifier.background
+import androidx.compose.remote.creation.compose.modifier.fillMaxSize
 import androidx.compose.remote.creation.compose.state.RemoteBoolean
 import androidx.compose.remote.creation.compose.state.RemoteColor
 import androidx.compose.remote.creation.compose.state.RemoteInt
 import androidx.compose.remote.creation.compose.state.RemoteState
 import androidx.compose.remote.creation.compose.state.RemoteString
+import androidx.compose.remote.creation.compose.state.rf
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import ee.schimke.cadence.swim.LocalSwimClock
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
@@ -148,8 +154,11 @@ object HeadphoneControlsTemplate {
 }
 
 /**
- * The template for [tier]: [HeadphoneControlsBody] with every value named. [onOpen] and [onAction]
- * are the host actions its taps fire (the contract's action names).
+ * The template for [tier] in [look]: [HeadphoneControlsBody] with every value named. [onOpen] and
+ * [onAction] are the host actions its taps fire (the contract's action names).
+ *
+ * [HeadphoneLook.Default] reads the system's colours (`theme.*`); a seasonal look draws its own
+ * palette over its backdrop, which moves while audio plays.
  */
 @Composable
 @RemoteComposable
@@ -157,6 +166,7 @@ fun HeadphoneControlsTemplateContent(
   tier: HeadphoneControlsTemplate.Tier,
   onOpen: Action?,
   onAction: @Composable (HeadphoneWidgetAction) -> Action?,
+  look: HeadphoneLook = HeadphoneLook.Default,
 ) {
   val t = HeadphoneControlsTemplate
   val user = RemoteState.Domain.User
@@ -171,42 +181,57 @@ fun HeadphoneControlsTemplateContent(
   val defaults = WidgetColors.Dark
   fun color(role: String) = RemoteColor.createNamedRemoteColor(role, t.COLORS.getValue(role)(defaults), user)
   val palette =
-    RemotePalette(
-      background = color("theme.background"),
-      onBackground = color("theme.on_background"),
-      supporting = color("theme.supporting"),
-      tonal = color("theme.tonal"),
-      onTonal = color("theme.on_tonal"),
-      primary = color("theme.primary"),
-      onPrimary = color("theme.on_primary"),
-    )
+    look.colors?.let { RemotePalette.of(it) }
+      ?: RemotePalette(
+        background = color("theme.background"),
+        onBackground = color("theme.on_background"),
+        supporting = color("theme.supporting"),
+        tonal = color("theme.tonal"),
+        onTonal = color("theme.on_tonal"),
+        primary = color("theme.primary"),
+        onPrimary = color("theme.on_primary"),
+      )
   val mode = RemoteInt.createNamedRemoteInt(t.MODE, t.MODE_NONE, user)
   val hasDetail = RemoteBoolean.createNamedRemoteBoolean(t.HAS_DETAIL, false, user)
   val hasExtra = RemoteBoolean.createNamedRemoteBoolean(t.HAS_EXTRA, false, user)
   val playing = RemoteBoolean.createNamedRemoteBoolean(t.PLAYING, false, user)
-  RemoteStateLayout(mode, t.MODE_NONE, t.MODE_TO_MP3, t.MODE_TO_BLUETOOTH) { m: Int ->
-    RemoteStateLayout(hasDetail) { d ->
-      RemoteStateLayout(hasExtra) { e ->
-        val state = t.variantState(m, d, e)
-        HeadphoneControlsBody(
-          texts = texts,
-          palette = palette,
-          layout = HeadphoneWidgetLayout.of(state, tier.widthDp, tier.heightDp),
-          modeSwitch = state.modeSwitch,
-          showWater = state.showWater,
-          onOpen = onOpen,
-          onAction = onAction,
-          transportButton = { action, button ->
-            if (action == HeadphoneWidgetAction.Play || action == HeadphoneWidgetAction.Pause) {
-              RemoteStateLayout(playing) { p ->
-                button(if (p) HeadphoneWidgetAction.Pause else HeadphoneWidgetAction.Play)
+  val branches: @Composable @RemoteComposable () -> Unit = {
+    RemoteStateLayout(mode, t.MODE_NONE, t.MODE_TO_MP3, t.MODE_TO_BLUETOOTH) { m: Int ->
+      RemoteStateLayout(hasDetail) { d ->
+        RemoteStateLayout(hasExtra) { e ->
+          val state = t.variantState(m, d, e)
+          HeadphoneControlsBody(
+            texts = texts,
+            palette = palette,
+            layout = HeadphoneWidgetLayout.of(state, tier.widthDp, tier.heightDp),
+            modeSwitch = state.modeSwitch,
+            showWater = state.showWater,
+            onOpen = onOpen,
+            onAction = onAction,
+            drawBackground = look.backdrop == null,
+            transportButton = { action, button ->
+              if (action == HeadphoneWidgetAction.Play || action == HeadphoneWidgetAction.Pause) {
+                RemoteStateLayout(playing) { p ->
+                  button(if (p) HeadphoneWidgetAction.Pause else HeadphoneWidgetAction.Play)
+                }
+              } else {
+                button(action)
               }
-            } else {
-              button(action)
-            }
-          },
-        )
+            },
+          )
+        }
       }
+    }
+  }
+  val backdrop = look.backdrop
+  if (backdrop == null) {
+    branches()
+  } else {
+    // One backdrop under every state's branch, not one per branch: it is the same for all of them.
+    RemoteBox(RemoteModifier.fillMaxSize().background(palette.background)) {
+      val clock = LocalSwimClock.current
+      RemoteStateLayout(playing) { p -> backdrop(if (p) clock else 7.5f.rf) }
+      branches()
     }
   }
 }

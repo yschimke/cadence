@@ -6,6 +6,7 @@ import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.remote.creation.compose.layout.RemoteComposable
 import androidx.compose.remote.tooling.preview.RemoteContentPreview
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.key
@@ -14,7 +15,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import ee.schimke.cadence.podcasts.CloudSyncStatus
 import ee.schimke.cadence.podcasts.CloudSyncWidgetContent
 import ee.schimke.cadence.podcasts.PodcastSyncWidgetContent
+import ee.schimke.cadence.swim.PoolSeason
+import ee.schimke.cadence.swim.SwimClockAt
+import ee.schimke.cadence.swim.rememberPreviewSeconds
 import ee.schimke.cadence.widgets.WidgetColors
+import ee.schimke.composeai.preview.AnimatedPreview
 import ee.schimke.composeai.preview.LauncherWidgetPreview
 import ee.schimke.composeai.rcwidget.creation.rcWidgetHostAction
 import ee.schimke.composeai.rcwidget.launcher.RcLauncherWidgets
@@ -24,22 +29,29 @@ private fun PodcastWidgetPreview(
   swimming: Boolean,
   battery: String? = "50% · ~3h MP3 · ~4h 30m BT",
   colors: WidgetColors = WidgetColors.Dark,
+  season: PoolSeason = PoolSeason.None,
+  /** Pins the pool's clock to this second; null leaves it on the wall clock. */
+  seconds: Float? = null,
 ) {
   BoxWithConstraints(Modifier.fillMaxSize()) {
     val width = maxWidth.value.toInt()
     val height = maxHeight.value.toInt()
-    key(width, height, colors) {
+    key(width, height, colors, seconds) {
       RemoteContentPreview(Modifier.fillMaxSize(), RcLauncherWidgets.profileFor()) {
-        PodcastSyncWidgetContent(
-          true,
-          "Last copy: 3 eps · 138m · 0 marked",
-          "Ready: 3 eps · 138m",
-          battery,
-          swimming,
-          height,
-          widthDp = width,
-          colors = colors,
-        )
+        val content: @Composable @RemoteComposable () -> Unit = {
+          PodcastSyncWidgetContent(
+            true,
+            "Last copy: 3 eps · 138m · 0 marked",
+            "Ready: 3 eps · 138m",
+            battery,
+            swimming,
+            height,
+            widthDp = width,
+            colors = colors,
+            season = season,
+          )
+        }
+        if (seconds != null) SwimClockAt(seconds, content) else content()
       }
     }
   }
@@ -163,4 +175,49 @@ internal fun CloudSyncWidgetLargePreview() {
 @Composable
 internal fun PodcastWidgetMp3LargePreview() {
   PodcastWidgetPreview(true)
+}
+
+// The seasons' pools (`composeApp/livery/seasons/`), swimming, each pinned to one moment.
+
+@Preview(name = "Podcast widget · winter", widthDp = 312, heightDp = 152)
+@LauncherWidgetPreview(width = 4, height = 2)
+@Composable
+internal fun PodcastWidgetWinterPreview() {
+  PodcastWidgetPreview(true, season = PoolSeason.Winter, seconds = 3.2f)
+}
+
+@Preview(name = "Podcast widget · Christmas", widthDp = 312, heightDp = 152)
+@LauncherWidgetPreview(width = 4, height = 2)
+@Composable
+internal fun PodcastWidgetChristmasPreview() {
+  PodcastWidgetPreview(true, season = PoolSeason.Christmas, seconds = 3.2f)
+}
+
+@Preview(name = "Podcast widget · New Year", widthDp = 312, heightDp = 152)
+@LauncherWidgetPreview(width = 4, height = 2)
+@Composable
+internal fun PodcastWidgetNewYearPreview() {
+  PodcastWidgetPreview(true, season = PoolSeason.NewYear, seconds = 1.2f)
+}
+
+@Preview(name = "Podcast widget · Halloween", widthDp = 312, heightDp = 152)
+@LauncherWidgetPreview(width = 4, height = 2)
+@Composable
+internal fun PodcastWidgetHalloweenPreview() {
+  PodcastWidgetPreview(true, season = PoolSeason.Halloween, seconds = 18f)
+}
+
+@Preview(name = "Podcast widget · Christmas · Bluetooth", widthDp = 312, heightDp = 152)
+@LauncherWidgetPreview(width = 4, height = 2)
+@Composable
+internal fun PodcastWidgetChristmasStandingPreview() {
+  PodcastWidgetPreview(false, season = PoolSeason.Christmas, seconds = 0f)
+}
+
+/** Christmas while swimming: snow falling into the pool. */
+@Preview(name = "Podcast widget · Christmas · animated", widthDp = 312, heightDp = 152)
+@AnimatedPreview(durationMs = 4000, frameIntervalMs = 80, showCurves = false)
+@Composable
+internal fun PodcastWidgetChristmasAnimatedPreview() {
+  PodcastWidgetPreview(true, season = PoolSeason.Christmas, seconds = rememberPreviewSeconds())
 }

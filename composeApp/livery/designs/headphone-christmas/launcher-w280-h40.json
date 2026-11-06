@@ -1,0 +1,33 @@
+{
+    "target": {
+        "surface": "launcher-widget",
+        "rcApiLevel": 7,
+        "profiles": [
+            "widgets"
+        ],
+        "size": {
+            "minWidthDp": 280,
+            "maxWidthDp": 287,
+            "minHeightDp": 40,
+            "maxHeightDp": 119
+        }
+    },
+    "reads": [
+        "has_detail",
+        "has_extra",
+        "mode",
+        "playing",
+        "short_title"
+    ],
+    "emits": [
+        "next",
+        "open",
+        "pause",
+        "play"
+    ],
+    "source": {
+        "tool": "capture",
+        "composable": "HeadphoneControlsTemplateContent",
+        "look": "Christmas"
+    }
+}

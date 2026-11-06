@@ -1,0 +1,43 @@
+# The headphone widget's Livery catalog (composeApp/livery), in repository mode: a pull request that
+# changes it gets a review comment saying what the change does (templates, designs, seasons), and
+# merging it to main signs the catalog and publishes it to the rolling `catalog` release, which the
+# app downloads (see composeApp/src/main/java/ee/schimke/cadence/widgets/WidgetLivery.kt).
+# A weekly run publishes it again with a fresh expiry, so a downloaded catalog (and the season in it)
+# never lapses back to the APK's own copy between changes.
+name: Livery catalog
+
+on:
+  pull_request:
+    paths: ['composeApp/livery/**', '.github/workflows/livery-catalog.yml']
+  push:
+    branches: [main]
+    paths: ['composeApp/livery/**', '.github/workflows/livery-catalog.yml']
+  schedule:
+    - cron: '37 3 * * 1'
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  review:
+    if: github.event_name == 'pull_request'
+    uses: yschimke/livery/.github/workflows/catalog-review.yml@v0.3.0
+    with:
+      source: composeApp/livery
+      livery-version: 0.3.0
+    permissions:
+      contents: read
+      pull-requests: write
+
+  publish:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    uses: yschimke/livery/.github/workflows/catalog-publish.yml@v0.3.0
+    with:
+      source: composeApp/livery
+      livery-version: 0.3.0
+      key-id: cadence-1
+      tag: catalog
+    secrets:
+      signing-key: ${{ secrets.LIVERY_SIGNING_KEY }}
+    permissions:
+      contents: write

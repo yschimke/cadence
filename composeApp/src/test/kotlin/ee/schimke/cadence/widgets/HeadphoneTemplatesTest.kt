@@ -25,9 +25,10 @@ import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
 
 /**
- * Captures the headphone widget's Livery templates (one per [HeadphoneControlsTemplate.Tier]) and
- * checks they are the ones committed in `composeApp/livery/designs/headphone-default/`. Run with
- * `-Pcadence.livery.regenerate=true` to write them instead, after changing the widget's drawing.
+ * Captures the headphone widget's Livery templates (one per [HeadphoneControlsTemplate.Tier] and
+ * [HeadphoneLook]) and checks they are the ones committed in `composeApp/livery/designs/<look>/`.
+ * Run with `-Pcadence.livery.regenerate=true` to write them instead, after changing the widget's
+ * drawing.
  *
  * Livery's `livery-capture` captures each tier and writes or checks the design folder: each
  * sidecar's reads and emits come from the captured document itself, so they can't drift from what
@@ -36,43 +37,46 @@ import org.robolectric.annotation.Config
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [35], qualifiers = "mdpi")
 class HeadphoneTemplatesTest {
-  private val design =
-    File(
-      requireNotNull(System.getProperty("cadence.livery.dir")) { "no cadence.livery.dir" },
-      "designs/headphone-default",
-    )
+  private val catalog =
+    File(requireNotNull(System.getProperty("cadence.livery.dir")) { "no cadence.livery.dir" })
   private val regenerate = System.getProperty("cadence.livery.regenerate") == "true"
 
   @Test
   fun templatesAreCurrent() = runBlocking {
     val context = RuntimeEnvironment.getApplication()
-    val templates =
-      HeadphoneControlsTemplate.tiers().associate { tier ->
-        tier.name to
-          LiveryCapture.capture(
-            context,
-            target(tier),
-            tier.widthDp,
-            tier.heightDp,
-            source = mapOf("composable" to "HeadphoneControlsTemplateContent"),
-          ) {
-            HeadphoneControlsTemplateContent(
-              tier,
-              onOpen =
-                rcWidgetHostAction(
-                  name = HeadphoneControlsTemplate.OPEN,
-                  payload = HeadphoneControlsTemplate.OPEN,
-                ),
-              onAction = { rcWidgetHostAction(name = it.wireName, payload = it.wireName) },
-            )
-          }
+    for (look in HeadphoneLook.entries) {
+      val design = File(catalog, "designs/${look.designId}")
+      val templates =
+        HeadphoneControlsTemplate.tiers().associate { tier ->
+          tier.name to
+            LiveryCapture.capture(
+              context,
+              target(tier),
+              tier.widthDp,
+              tier.heightDp,
+              source =
+                mapOf("composable" to "HeadphoneControlsTemplateContent") +
+                  (if (look == HeadphoneLook.Default) emptyMap() else mapOf("look" to look.name)),
+            ) {
+              HeadphoneControlsTemplateContent(
+                tier,
+                onOpen =
+                  rcWidgetHostAction(
+                    name = HeadphoneControlsTemplate.OPEN,
+                    payload = HeadphoneControlsTemplate.OPEN,
+                  ),
+                onAction = { rcWidgetHostAction(name = it.wireName, payload = it.wireName) },
+                look = look,
+              )
+            }
+        }
+      val folder = DesignFolder(design)
+      if (regenerate) {
+        folder.write(templates)
+        println("Livery: wrote ${templates.size} ${look.designId} templates to $design")
+      } else {
+        assertEquals(emptyList(), folder.check(templates), "${look.designId}: $STALE")
       }
-    val folder = DesignFolder(design)
-    if (regenerate) {
-      folder.write(templates)
-      println("Livery: wrote ${templates.size} headphone templates to $design")
-    } else {
-      assertEquals(emptyList(), folder.check(templates), STALE)
     }
   }
 
@@ -87,10 +91,17 @@ class HeadphoneTemplatesTest {
     val contract =
       json.decodeFromString(
         Contract.serializer(),
-        File(design.parentFile.parentFile, "contracts/headphone-controls.json").readText(),
+        File(catalog, "contracts/headphone-controls.json").readText(),
       )
     val instantiator = TemplateInstantiator { _, _, _ -> null }
-    for (rc in design.listFiles().orEmpty().filter { it.extension == "rc" }) {
+    val templates =
+      HeadphoneLook.entries.flatMap { look ->
+        File(catalog, "designs/${look.designId}").listFiles().orEmpty().filter {
+          it.extension == "rc"
+        }
+      }
+    assertTrue(templates.isNotEmpty(), "no captured templates")
+    for (rc in templates) {
       for ((name, example) in contract.examples) {
         val bindings = (ContractBinder.bind(contract, example) as BindResult.Ok).bindings
         val out =
@@ -102,7 +113,10 @@ class HeadphoneTemplatesTest {
             maxBytes = HeadphoneControlsWidget.DOCUMENT_MAX_BYTES,
             numericActions = true,
           )
-        assertTrue(out is InstantiateResult.Ok, "${rc.name} with '$name': $out")
+        assertTrue(
+          out is InstantiateResult.Ok,
+          "${rc.parentFile.name}/${rc.name} with '$name': $out",
+        )
       }
     }
   }
