@@ -616,7 +616,9 @@ fun validateAudioFileName(name: String) {
  */
 fun LocalPodcastState.readyForDevice(): Boolean {
   val sections = library.manifests.flatMap { it.sections }
-  if (sections.isEmpty() || sections.any { it.id !in readySectionIds }) return false
+  // Nothing left to copy is still worth a sync once something was copied: it deletes what left.
+  if (sections.isEmpty() && lastCopied == null) return false
+  if (sections.any { it.id !in readySectionIds }) return false
   val prepared = library.manifests.map { it.episode.key }.toSet()
   return library.playlist?.episodes.orEmpty().all { episode ->
     episode.key in prepared ||
@@ -626,8 +628,14 @@ fun LocalPodcastState.readyForDevice(): Boolean {
   }
 }
 
-/** Whether the headphones already hold every prepared section. */
+/**
+ * Whether the headphones hold exactly the prepared sections: nothing to copy, nothing to delete.
+ */
 fun LocalPodcastState.upToDateOnDevice(): Boolean {
-  val sections = library.manifests.flatMap { it.sections }
-  return readyForDevice() && target.isNotBlank() && sections.all { it.id in copiedSectionIds }
+  val sections = library.manifests.flatMap { it.sections }.map { it.id }.toSet()
+  val copied = lastCopied?.episodes.orEmpty().flatMap { it.sections }.map { it.id }.toSet()
+  return readyForDevice() &&
+    target.isNotBlank() &&
+    sections.all { it in copiedSectionIds } &&
+    (lastCopied == null || copied == sections)
 }
