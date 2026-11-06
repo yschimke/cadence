@@ -279,11 +279,11 @@ class PodcastController(val platform: PodcastPlatform) {
       try {
         platform.downloadOriginal(episode) { bytes, total ->
           if (total <= 0) return@downloadOriginal
-          val fraction = (bytes.toFloat() / total).coerceIn(0f, 1f)
-          progress.value = (index + fraction) / missing.size
-          val percent = (fraction * 100).toInt()
+          // Reported per buffer; only whole-percent steps reach the UI and notification.
+          val percent = (bytes * 100 / total).toInt().coerceIn(0, 100)
           if (percent != shownPercent) {
             shownPercent = percent
+            progress.value = (index + percent / 100f) / missing.size
             status.value = "$label · $percent%"
           }
         }
