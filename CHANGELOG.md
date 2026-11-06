@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.20](https://github.com/yschimke/cadence/compare/v0.1.19...v0.1.20) (2026-11-06)
+
+
+### Features
+
+* **widgets:** publish the widget's Livery catalog, with seasonal looks for the headphone widget and the sync card ([#521](https://github.com/yschimke/cadence/issues/521)) ([729f074](https://github.com/yschimke/cadence/commit/729f07434234aebd454eb3276574015ea7897193))
+
 ## [0.1.19](https://github.com/yschimke/cadence/compare/v0.1.18...v0.1.19) (2026-11-06)
 
 
