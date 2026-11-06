@@ -11,10 +11,11 @@ import ee.schimke.livery.protocol.Manifest
 import java.util.concurrent.TimeUnit
 
 /**
- * Redraws the headphone widgets when a season starts or ends. A season is an experiment with a
- * start and an end, and the widget picks its design only when it is drawn. Launcher widgets aren't
- * redrawn on a timer (`updatePeriodMillis` is 0), so without this an idle widget would keep the old
- * season's look until something else redraws it.
+ * Redraws the headphone widgets, and the podcast sync card whose pool follows the same season, when
+ * a season starts or ends. A season is an experiment with a start and an end, and the widget picks
+ * its design only when it is drawn. Launcher widgets aren't redrawn on a timer
+ * (`updatePeriodMillis` is 0), so without this an idle widget would keep the old season's look
+ * until something else redraws it.
  *
  * Each run redraws and then schedules itself for the next boundary in the catalog the widget draws
  * from: the downloaded one, else the APK's. It needs no network, because a season's design is

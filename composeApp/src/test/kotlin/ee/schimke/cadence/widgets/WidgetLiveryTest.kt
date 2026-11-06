@@ -90,6 +90,22 @@ class WidgetLiveryTest {
   }
 
   @Test
+  fun theSyncCardFollowsTheSameSeason() = runBlocking {
+    val app = RuntimeEnvironment.getApplication()
+    for ((at, look) in
+      listOf(
+        "2026-11-20T00:00:00Z" to HeadphoneLook.Default,
+        "2026-12-10T00:00:00Z" to HeadphoneLook.Winter,
+        "2026-12-24T00:00:00Z" to HeadphoneLook.Christmas,
+        "2027-01-01T00:00:00Z" to HeadphoneLook.NewYear,
+        "2027-10-31T00:00:00Z" to HeadphoneLook.Halloween,
+      )) {
+      val now = Instant.parse(at).toEpochMilli()
+      assertEquals(look, WidgetLivery(app, Clock { now }).seasonLook(), at)
+    }
+  }
+
+  @Test
   fun redrawsAtEachSeasonBoundary() = runBlocking {
     val manifest = WidgetLivery(RuntimeEnvironment.getApplication()).repository.current()
     fun next(at: String) =

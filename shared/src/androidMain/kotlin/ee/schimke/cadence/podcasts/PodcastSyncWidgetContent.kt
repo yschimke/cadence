@@ -30,6 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import ee.schimke.cadence.swim.PoolSeason
 import ee.schimke.cadence.swim.SwimmingPool
 import ee.schimke.cadence.widgets.WidgetColors
 import ee.schimke.cadence.widgets.waterColors
@@ -55,6 +56,8 @@ fun PodcastSyncWidgetContent(
   onTap: Action? = null,
   widthDp: Int = 232,
   colors: WidgetColors = WidgetColors.Dark,
+  /** The season's pool: its water, the swimmer's hat and what's going on around them. */
+  season: PoolSeason = PoolSeason.None,
 ) {
   val lane = heightDp >= 140
   val scale = minOf(widthDp / 232f, heightDp / if (lane) 152f else 72f).coerceIn(0.8f, 1.35f)
@@ -121,6 +124,7 @@ fun PodcastSyncWidgetContent(
           amplitude = 0.025f,
           swimmerSize = 0.48f,
           standing = !showSwimming,
+          season = season,
         )
       }
     }

@@ -10,6 +10,8 @@ import ee.schimke.cadence.wear.PhoneWearDataPublisher
 import ee.schimke.cadence.widgets.CatalogRefreshWorker
 import ee.schimke.cadence.widgets.HeadphoneControlsWidget
 import ee.schimke.cadence.widgets.SeasonRedrawWorker
+import ee.schimke.cadence.widgets.WidgetLivery
+import ee.schimke.cadence.widgets.WidgetSeason
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -37,6 +39,8 @@ class CadenceApplication : Application(), AppGraphProvider, Configuration.Provid
         syncOrchestrator = appGraph.syncOrchestrator,
       )
       .start()
+    // Cadence's other widgets follow the headphone widget's season.
+    WidgetSeason.current = { WidgetLivery.get(applicationContext).seasonLook() }
     HeadphoneControlsWidget.start(applicationContext, appGraph.bluetoothController)
     CatalogRefreshWorker.schedule(applicationContext)
     SeasonRedrawWorker.ensureScheduled(applicationContext)

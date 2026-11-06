@@ -15,6 +15,8 @@ import androidx.annotation.RequiresApi
 import ee.schimke.cadence.bluetooth.BluetoothController
 import ee.schimke.cadence.bluetooth.ConnectedDevice
 import ee.schimke.cadence.bluetooth.batterySummary
+import ee.schimke.cadence.swim.PoolSeason
+import ee.schimke.cadence.widgets.WidgetSeason
 import ee.schimke.cadence.widgets.systemWidgetColors
 import ee.schimke.composeai.rcwidget.creation.rcWidgetHostAction
 import ee.schimke.composeai.rcwidget.launcher.RcLauncherWidgets
@@ -170,6 +172,7 @@ class PodcastSyncWidget : AppWidgetProvider() {
       val copied = copied(context)
       val available = available(context)
       val launch = launchIntent(context)
+      val season = runCatching { WidgetSeason.current().pool }.getOrDefault(PoolSeason.None)
       for (id in ids) {
         val slot = RcWidgetSizing.slotOf(manager, id)
         val views =
@@ -186,6 +189,7 @@ class PodcastSyncWidget : AppWidgetProvider() {
                     widthDp = slot.widthDp,
                     onTap = rcWidgetHostAction(name = OPEN_APP, payload = OPEN_APP),
                     colors = context.systemWidgetColors(),
+                    season = season,
                   )
                 }
               val taps =

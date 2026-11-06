@@ -14,6 +14,7 @@ import androidx.compose.remote.creation.compose.state.rc
 import androidx.compose.remote.creation.compose.state.sin
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import ee.schimke.cadence.swim.PoolSeason
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin as sinOf
@@ -32,12 +33,26 @@ enum class HeadphoneLook(
   val designId: String,
   val colors: WidgetColors?,
   val backdrop: (@Composable @RemoteComposable (clock: RemoteFloat) -> Unit)?,
+  /** The same season in the swimming pool of Cadence's other widgets (the podcast sync card). */
+  val pool: PoolSeason,
 ) {
-  Default("headphone-default", colors = null, backdrop = null),
-  Winter("headphone-winter", WinterWidgetColors, { Snowfall(it) }),
-  Christmas("headphone-christmas", ChristmasWidgetColors, { ChristmasLights(it) }),
-  NewYear("headphone-new-year", NewYearWidgetColors, { Fireworks(it) }),
-  Halloween("headphone-halloween", HalloweenWidgetColors, { HalloweenNight(it) }),
+  Default("headphone-default", colors = null, backdrop = null, PoolSeason.None),
+  Winter("headphone-winter", WinterWidgetColors, { Snowfall(it) }, PoolSeason.Winter),
+  Christmas("headphone-christmas", ChristmasWidgetColors, { ChristmasLights(it) }, PoolSeason.Christmas),
+  NewYear("headphone-new-year", NewYearWidgetColors, { Fireworks(it) }, PoolSeason.NewYear),
+  Halloween("headphone-halloween", HalloweenWidgetColors, { HalloweenNight(it) }, PoolSeason.Halloween);
+
+  companion object {
+    fun ofDesign(designId: String?): HeadphoneLook = entries.firstOrNull { it.designId == designId } ?: Default
+  }
+}
+
+/**
+ * The look the season running now gives Cadence's widgets. The app sets [current] to ask its
+ * Livery catalog, which decides the seasons; until then, and in previews, it is [HeadphoneLook.Default].
+ */
+object WidgetSeason {
+  @Volatile var current: suspend () -> HeadphoneLook = { HeadphoneLook.Default }
 }
 
 /** Night sky and ice. */

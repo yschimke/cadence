@@ -9,6 +9,7 @@ import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
+import ee.schimke.cadence.podcasts.PodcastSyncWidget
 import ee.schimke.livery.client.RefreshResult
 import java.util.concurrent.TimeUnit
 
@@ -28,6 +29,7 @@ class CatalogRefreshWorker(context: Context, params: WorkerParameters) :
       is RefreshResult.Updated -> {
         Log.i(TAG, "widget catalog updated to serial ${result.serial}")
         HeadphoneControlsWidget.updateAll(applicationContext)
+        PodcastSyncWidget.updateAll(applicationContext)
         // The new catalog may move, add or drop seasons.
         SeasonRedrawWorker.ensureScheduled(applicationContext, replace = true)
       }

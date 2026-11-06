@@ -112,7 +112,8 @@ fun SwimLaneLaps(
 /**
  * Open water with no lane: [WaterBackground] with the swimmer at the surface, doing endless laps of
  * the canvas width with a flip turn at each edge when [swimming], or treading water by the left
- * edge when not. [swimmerSize] is the swimmer's band as a fraction of the height.
+ * edge when not. [swimmerSize] is the swimmer's band as a fraction of the height. A [season] swaps
+ * the water and the swimmer's cap and adds its own scene, moving on the same clock.
  */
 @Composable
 @RemoteComposable
@@ -130,10 +131,14 @@ fun SwimmingPool(
   clock: RemoteFloat = LocalSwimClock.current,
   amplitude: Float = 0.05f,
   standing: Boolean = false,
+  season: PoolSeason = PoolSeason.None,
 ) {
+  val water = season.water ?: water
+  val swimmer = season.swimmer ?: swimmer
   RemoteCanvas(modifier) {
     val w = width
     val h = height
+    val sceneClock = if (standing) 0f.rf else clock
     drawWater(
       water,
       level,
@@ -143,6 +148,7 @@ fun SwimmingPool(
       bubbleScale = bubbleScale,
       amplitude = amplitude,
     )
+    drawSeasonSky(season, level, sceneClock)
     val band = h * swimmerSize
     clipRect(0f.rf, 0f.rf, w, h) {
       if (standing) {
@@ -187,6 +193,7 @@ fun SwimmingPool(
         }
       }
     }
+    drawSeasonFront(season, level, sceneClock)
   }
 }
 
@@ -214,6 +221,7 @@ private fun RemoteDrawScope.drawStandingSwimmer(colors: SwimmerColors) {
     RemoteOffset(-0.17f, -0.38f),
     RemoteSize(0.34f.rf, 0.34f.rf),
   )
+  drawCapTrim(colors, hx = 0f, hy = -0.20f, trailing = 0f)
   drawCircle(fill(colors.goggles), 0.045f.rf, RemoteOffset(-0.07f, -0.20f))
   drawCircle(fill(colors.goggles), 0.045f.rf, RemoteOffset(0.07f, -0.20f))
 }
@@ -466,6 +474,7 @@ private fun RemoteDrawScope.drawSwimmerFigure(
     RemoteOffset(0.17f, -0.215f),
     RemoteSize(0.34f.rf, 0.34f.rf),
   )
+  drawCapTrim(colors, hx = 0.34f, hy = -0.04f, trailing = -1f)
   drawCircle(fill(colors.goggles), 0.055f.rf, RemoteOffset(0.45f, -0.05f))
   drawCircle(fill(Color.White.copy(alpha = 0.8f)), 0.018f.rf, RemoteOffset(0.465f, -0.068f))
   rotate(armAngle, shoulder) {
@@ -475,4 +484,28 @@ private fun RemoteDrawScope.drawSwimmerFigure(
   val splash = clampZero(kick) * 0.6f + 0.02f
   drawCircle(fill(colors.splash.copy(alpha = 0.8f)), splash, RemoteOffset(-0.66f.rf, kick * -1f))
   drawCircle(fill(colors.splash.copy(alpha = 0.6f)), splash * 0.7f, RemoteOffset(-0.74f, -0.1f))
+}
+
+/**
+ * The cap's trim, for a head of radius ~0.16 centred on ([hx], [hy]): a band along its edge and a
+ * bobble at the crown, pushed [trailing] (-1 behind a swimmer facing +x, 0 straight up for one
+ * standing).
+ */
+private fun RemoteDrawScope.drawCapTrim(
+  colors: SwimmerColors,
+  hx: Float,
+  hy: Float,
+  trailing: Float,
+) {
+  colors.brim?.let {
+    drawRoundRect(
+      fill(it),
+      RemoteOffset(hx - 0.18f, hy - 0.05f),
+      RemoteSize(0.36f.rf, 0.07f.rf),
+      RemoteOffset(0.035f, 0.035f),
+    )
+  }
+  colors.pompom?.let {
+    drawCircle(fill(it), 0.07f.rf, RemoteOffset(hx + 0.16f * trailing, hy - 0.19f))
+  }
 }

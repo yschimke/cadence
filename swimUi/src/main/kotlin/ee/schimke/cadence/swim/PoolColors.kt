@@ -86,6 +86,10 @@ data class SwimmerColors(
   val cap: Color,
   val goggles: Color,
   val splash: Color,
+  /** A band round the cap's edge (a Santa hat's fur trim); null for a plain cap. */
+  val brim: Color? = null,
+  /** A bobble on the back of the cap; null for none. */
+  val pompom: Color? = null,
 ) {
   companion object {
     val Default =

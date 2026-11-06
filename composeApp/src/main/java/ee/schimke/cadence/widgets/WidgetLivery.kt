@@ -89,6 +89,21 @@ internal class WidgetLivery(
 
   val planner = SlotPlanner(repository, EventSink {}, clock, experiments)
 
+  /**
+   * The look the season running now gives the headphone widget, for Cadence's widgets that aren't
+   * Livery templates (the podcast sync card's pool): the design a season picks for the headphone
+   * contract, else [HeadphoneLook.Default]. Only seasons are read: a partial experiment on the
+   * contract isn't a season.
+   */
+  suspend fun seasonLook(): HeadphoneLook {
+    val arm =
+      experiments.designFor(HeadphoneControlsTemplate.CONTRACT) ?: return HeadphoneLook.Default
+    val season = repository.current()?.experiments?.firstOrNull { it.id == arm.experiment }
+    return if (season?.allocationBasisPoints == 10_000 && season.arms.size == 1)
+      HeadphoneLook.ofDesign(arm.designId)
+    else HeadphoneLook.Default
+  }
+
   /** The headphone templates draw no images; the resolver is here for the provider's contract. */
   val images by lazy { ImageResolver(repository, KtorFetcher(), JavaCrypto) }
 
