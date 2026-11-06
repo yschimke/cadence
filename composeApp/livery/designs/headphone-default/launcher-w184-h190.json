@@ -1,6 +1,40 @@
 {
-  "target": { "surface": "launcher-widget", "rcApiLevel": 7, "profiles": ["widgets"], "size": { "minWidthDp": 184, "maxWidthDp": 231, "minHeightDp": 190 } },
-  "reads": ["extra", "has_detail", "has_extra", "mode", "playing", "theme.background", "theme.on_background", "theme.on_primary", "theme.on_tonal", "theme.primary", "theme.supporting", "theme.tonal", "title"],
-  "emits": ["next", "open", "pause", "play", "previous"],
-  "source": { "tool": "cadence-capture", "composable": "HeadphoneControlsTemplateContent" }
+    "target": {
+        "surface": "launcher-widget",
+        "rcApiLevel": 7,
+        "profiles": [
+            "widgets"
+        ],
+        "size": {
+            "minWidthDp": 184,
+            "maxWidthDp": 231,
+            "minHeightDp": 190
+        }
+    },
+    "reads": [
+        "extra",
+        "has_detail",
+        "has_extra",
+        "mode",
+        "playing",
+        "theme.background",
+        "theme.on_background",
+        "theme.on_primary",
+        "theme.on_tonal",
+        "theme.primary",
+        "theme.supporting",
+        "theme.tonal",
+        "title"
+    ],
+    "emits": [
+        "next",
+        "open",
+        "pause",
+        "play",
+        "previous"
+    ],
+    "source": {
+        "tool": "capture",
+        "composable": "HeadphoneControlsTemplateContent"
+    }
 }

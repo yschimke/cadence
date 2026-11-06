@@ -46,7 +46,10 @@ class HeadphoneControlsWidget : LiveryLauncherWidgetProvider() {
     livery(context)
       .planner
       .forAppData(
-        slot.query(HeadphoneControlsTemplate.CONTRACT),
+        slot.query(
+          HeadphoneControlsTemplate.CONTRACT,
+          minor = HeadphoneControlsTemplate.CONTRACT_MINOR,
+        ),
         HeadphoneControlsTemplate.data(latest, context.systemWidgetColors()),
       )
 

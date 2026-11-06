@@ -145,6 +145,8 @@ dependencies {
   // does, and checks the committed ones.
   testImplementation(libs.robolectric)
   testImplementation(libs.livery.instantiate)
+  // Captures the widget's templates and keeps their catalog files current.
+  testImplementation(libs.livery.capture)
 
   androidTestImplementation(libs.junit)
   androidTestImplementation(libs.androidx.test.junit)
