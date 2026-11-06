@@ -4,6 +4,9 @@ package ee.schimke.cadence.podcasts
 
 import androidx.compose.runtime.Composable
 import kotlin.time.Clock
+import kotlin.time.Duration.Companion.seconds
+import kotlin.time.TimeMark
+import kotlin.time.TimeSource
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.sync.Mutex
@@ -276,13 +279,17 @@ class PodcastController(val platform: PodcastPlatform) {
       progress.value = index.toFloat() / missing.size
       publish()
       var shownPercent = -1
+      var shownAt: TimeMark? = null
       try {
         platform.downloadOriginal(episode) { bytes, total ->
           if (total <= 0) return@downloadOriginal
-          // Reported per buffer; only whole-percent steps reach the UI and notification.
+          // Reported per buffer; the UI and notification get whole-percent steps, at most once a
+          // second (plus the first and the last).
           val percent = (bytes * 100 / total).toInt().coerceIn(0, 100)
-          if (percent != shownPercent) {
+          val due = shownAt.let { it == null || it.elapsedNow() >= 1.seconds } || percent == 100
+          if (percent != shownPercent && due) {
             shownPercent = percent
+            shownAt = TimeSource.Monotonic.markNow()
             progress.value = (index + percent / 100f) / missing.size
             status.value = "$label · $percent%"
           }
