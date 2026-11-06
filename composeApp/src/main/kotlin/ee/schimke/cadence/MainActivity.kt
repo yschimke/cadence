@@ -18,9 +18,12 @@ import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.binding
 import ee.schimke.cadence.metro.ActivityKey
 import ee.schimke.cadence.platform.LocalPlayUpdateSettings
+import ee.schimke.cadence.platform.LocalWidgetDesigns
 import ee.schimke.cadence.platform.PlayUpdateSettings
+import ee.schimke.cadence.platform.WidgetDesigns
 import ee.schimke.cadence.sync.google.GoogleSyncController
 import ee.schimke.cadence.sync.google.LocalGoogleSyncController
+import ee.schimke.cadence.widgets.CatalogRefreshWorker
 
 @ContributesIntoMap(AppScope::class, binding<Activity>())
 @ActivityKey(MainActivity::class)
@@ -48,10 +51,14 @@ class MainActivity(
             setPlayUpdateTester(this, it)
           },
         )
+      val widgetDesigns = remember {
+        WidgetDesigns(refresh = { CatalogRefreshWorker.refreshNow(applicationContext) })
+      }
       AndroidMaterialTheme {
         CompositionLocalProvider(
           LocalGoogleSyncController provides googleSync,
           LocalPlayUpdateSettings provides playUpdates,
+          LocalWidgetDesigns provides widgetDesigns,
         ) {
           App()
         }
