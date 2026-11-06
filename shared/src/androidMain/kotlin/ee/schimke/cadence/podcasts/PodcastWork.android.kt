@@ -17,6 +17,8 @@ import androidx.core.app.NotificationCompat
 import androidx.work.*
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.launch
 
@@ -45,6 +47,7 @@ actual fun rememberPodcastWork(controller: PodcastController): PodcastWorkUi {
   val current = infos.firstOrNull { !it.state.isFinished } ?: infos.lastOrNull()
   val active = current?.state in setOf(WorkInfo.State.ENQUEUED, WorkInfo.State.RUNNING, WorkInfo.State.BLOCKED)
   val status by controller.status.collectAsState()
+  val fraction by controller.progress.collectAsState()
   // Notification permission is optional for the work itself. Start it even if the user declines.
   // Saveable: the permission result can arrive in a recreated activity.
   var pendingTask by rememberSaveable { mutableStateOf("download") }
@@ -63,12 +66,19 @@ actual fun rememberPodcastWork(controller: PodcastController): PodcastWorkUi {
   return PodcastWorkUi(
     supportsDownload = true,
     active = active,
-    status = when {
-      current?.state == WorkInfo.State.ENQUEUED || current?.state == WorkInfo.State.BLOCKED -> "Waiting to start…"
-      current?.state == WorkInfo.State.RUNNING -> status
-      current?.state == WorkInfo.State.FAILED -> current.outputData.getString(ERROR) ?: "Could not complete. Try again."
+    status = when (current?.state) {
+      // Only network tasks have constraints, so a wait is almost always for a connection.
+      WorkInfo.State.ENQUEUED, WorkInfo.State.BLOCKED -> "Waiting for a network connection…"
+      WorkInfo.State.RUNNING -> status
       else -> null
     },
+    fraction = fraction.takeIf { current?.state == WorkInfo.State.RUNNING },
+    error = current?.takeIf { it.state == WorkInfo.State.FAILED }?.let {
+      it.outputData.getString(ERROR) ?: "Couldn't finish. Try again."
+    },
+    failedTask = current?.takeIf { it.state == WorkInfo.State.FAILED }?.outputData?.getString(TASK),
+    // Forgets finished work, which is all that holds the error.
+    dismissError = { work.pruneWork() },
     download = { withNotifications("download") },
     process = { withNotifications("process") },
     refresh = { enqueuePodcastWork(context, "refresh") },
@@ -83,14 +93,14 @@ class PodcastPreparationWorker(context: Context, params: WorkerParameters) : Cor
     val title = when (task) { "download" -> "Downloading podcasts"; "refresh" -> "Refreshing podcasts"; else -> "Processing podcasts" }
     val openIntent = applicationContext.packageManager.getLaunchIntentForPackage(applicationContext.packageName)
       ?.let { PendingIntent.getActivity(applicationContext, 0, it, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE) }
-    fun notification(message: String) = NotificationCompat.Builder(applicationContext, "podcast-preparation")
+    fun notification(message: String, fraction: Float? = null) = NotificationCompat.Builder(applicationContext, "podcast-preparation")
       .setSmallIcon(android.R.drawable.stat_sys_download)
       .setContentTitle(title)
       .setContentText(message)
       .setStyle(NotificationCompat.BigTextStyle().bigText(message))
       .setContentIntent(openIntent)
       .setOnlyAlertOnce(true)
-      .setProgress(0, 0, true)
+      .setProgress(100, ((fraction ?: 0f) * 100).toInt(), fraction == null)
       .setOngoing(true)
       .addAction(android.R.drawable.ic_menu_close_clear_cancel, "Cancel", WorkManager.getInstance(applicationContext).createCancelPendingIntent(id))
       .build()
@@ -99,10 +109,14 @@ class PodcastPreparationWorker(context: Context, params: WorkerParameters) : Cor
     val controller = AndroidPodcastPlatform.instance(applicationContext).controller()
     val ok = coroutineScope {
       val updates = launch(start = CoroutineStart.UNDISPATCHED) {
-        controller.status.drop(1).collect { message ->
-          setProgress(workDataOf(PROGRESS_STATUS to message))
-          manager.notify(9013, notification(message))
-        }
+        // Percent updates arrive often; the notification only needs whole steps.
+        combine(controller.status, controller.progress) { message, fraction -> message to fraction }
+          .drop(1)
+          .distinctUntilChanged()
+          .collect { (message, fraction) ->
+            setProgress(workDataOf(PROGRESS_STATUS to message))
+            manager.notify(9013, notification(message, fraction))
+          }
       }
       try {
         controller.run {
@@ -122,6 +136,21 @@ class PodcastPreparationWorker(context: Context, params: WorkerParameters) : Cor
         updates.cancel()
       }
     }
-    return if (ok) Result.success() else Result.failure(workDataOf(ERROR to controller.status.value))
+    if (ok) return Result.success()
+    val error = controller.status.value
+    // The progress notification goes with the worker; leave one behind that says what went wrong.
+    if (Build.VERSION.SDK_INT < 33 || applicationContext.checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED)
+      manager.notify(
+        9014,
+        NotificationCompat.Builder(applicationContext, "podcast-preparation")
+          .setSmallIcon(android.R.drawable.stat_notify_error)
+          .setContentTitle(when (task) { "download" -> "Download stopped"; "refresh" -> "Refresh failed"; else -> "Processing stopped" })
+          .setContentText(error)
+          .setStyle(NotificationCompat.BigTextStyle().bigText(error))
+          .setContentIntent(openIntent)
+          .setAutoCancel(true)
+          .build(),
+      )
+    return Result.failure(workDataOf(ERROR to error, TASK to task))
   }
 }

@@ -109,6 +109,79 @@ internal fun HomeUpToDatePreview() {
 }
 
 @Preview(
+  name = "Home — headphones and controls",
+  showBackground = true,
+  device = "spec:width=411dp,height=1200dp,dpi=420",
+)
+@Composable
+internal fun HomeConnectedControlsPreview() {
+  AndroidMaterialTheme {
+    HomeContent(
+      state =
+        PreviewFixtures.libraryState.copy(
+          attachedDevice = PreviewFixtures.usbDevices.first(),
+          bluetooth = PreviewFixtures.btConnectedPlaying,
+        ),
+      podcasts = PreviewFixtures.preparedPodcastState,
+      actions = HomeActions(),
+      podcastWork = PodcastWorkUi(supportsDownload = true),
+      modifier = themedModifier,
+    )
+  }
+}
+
+@Preview(
+  name = "Home — downloading",
+  showBackground = true,
+  device = "spec:width=411dp,height=1200dp,dpi=420",
+)
+@Composable
+internal fun HomeDownloadingPreview() {
+  AndroidMaterialTheme {
+    HomeContent(
+      state = PreviewFixtures.libraryState,
+      podcasts = PreviewFixtures.podcastState,
+      actions = HomeActions(),
+      canRefreshPodcasts = true,
+      podcastWork =
+        PodcastWorkUi(
+          supportsDownload = true,
+          active = true,
+          status = "Downloading 2 of 5: Tides of the Pacific · 42%",
+          fraction = 0.28f,
+        ),
+      modifier = themedModifier,
+    )
+  }
+}
+
+@Preview(
+  name = "Home — download failed",
+  showBackground = true,
+  device = "spec:width=411dp,height=1200dp,dpi=420",
+)
+@Composable
+internal fun HomeDownloadFailedPreview() {
+  AndroidMaterialTheme {
+    HomeContent(
+      state = PreviewFixtures.libraryState,
+      podcasts = PreviewFixtures.podcastState,
+      actions = HomeActions(),
+      canRefreshPodcasts = true,
+      podcastWork =
+        PodcastWorkUi(
+          supportsDownload = true,
+          error =
+            "Downloaded 3 of 5. Couldn't download “Tides of the Pacific” (and 1 more): the " +
+              "server stopped responding. Try again to retry the rest.",
+          failedTask = "download",
+        ),
+      modifier = themedModifier,
+    )
+  }
+}
+
+@Preview(
   name = "Home — new releases",
   showBackground = true,
   device = "spec:width=411dp,height=1600dp,dpi=420",
