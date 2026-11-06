@@ -108,9 +108,10 @@ internal class WidgetLivery(
 
     /**
      * `cadence.pub` from `livery keygen cadence`: the raw Ed25519 public key in Base64. The private
-     * half is the `LIVERY_SIGNING_KEY` repository secret. Blank trusts no downloaded catalog.
+     * half is the `LIVERY_SIGNING_KEY` repository secret (and in 1Password). Rotating it means a
+     * new key id here and in `livery-catalog.yml`, in an app release before the catalog switches.
      */
-    const val CATALOG_PUBLIC_KEY = ""
+    const val CATALOG_PUBLIC_KEY = "4cr3vfcTkeAsjKwPcILKtp8MttydyDiyWAlwoFupJyk="
 
     private const val BUCKETING_KEY = "cadence.bucketing-id"
 

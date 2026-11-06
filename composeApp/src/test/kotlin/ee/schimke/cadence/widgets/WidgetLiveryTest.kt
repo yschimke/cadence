@@ -69,10 +69,9 @@ class WidgetLiveryTest {
 
   @Test
   fun trustsOnlyTheCatalogKey() {
-    // Blank until the key is generated; once set it must be a raw Ed25519 key.
-    for (key in WidgetLivery.trustedKeys) {
-      assertEquals(WidgetLivery.CATALOG_KEY_ID, key.keyId)
-      assertEquals(32, key.publicKey.size)
-    }
+    val key = WidgetLivery.trustedKeys.single()
+    assertEquals(WidgetLivery.CATALOG_KEY_ID, key.keyId)
+    assertEquals(32, key.publicKey.size, "a raw Ed25519 public key")
+    assertTrue(key.contractPrefixes.isEmpty(), "Cadence's own key signs every contract")
   }
 }
