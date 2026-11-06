@@ -125,6 +125,8 @@ open class DesktopPodcastPlatform(root: File) : FilePodcastPlatform(root) {
         }
       }
       val folders = podcastExportFolders(sections, manifest)
+      // Stale episodes go first, which also frees room on a nearly full volume for the new ones.
+      pruneStaleAudio(path, podcastExportPaths(sections, folders), folders.values.toSet())
       val destinations = mutableMapOf<String, java.nio.file.Path>()
       sections.forEach { section ->
         val show = folders[section.fileName]
@@ -160,4 +162,45 @@ open class DesktopPodcastPlatform(root: File) : FilePodcastPlatform(root) {
       // Commit manifest last; a failed transfer never advertises a completed new manifest.
       commit(path, "cadence-manifest.json") { Files.writeString(it, manifest) }
     }
+
+  /**
+   * Removes Cadence audio files that aren't in [keep] from the owned podcasts folder and its owned
+   * show folders, then any show folder left holding only its owner marker. Anything not named like
+   * Cadence audio, and any folder without Cadence's marker, is left alone.
+   */
+  private fun pruneStaleAudio(
+    root: java.nio.file.Path,
+    keep: Set<String>,
+    keepFolders: Set<String>,
+  ) {
+    fun entries(dir: java.nio.file.Path) = Files.list(dir).use { it.toList() }
+    fun prune(dir: java.nio.file.Path, prefix: String) =
+      entries(dir).forEach { entry ->
+        val name = entry.fileName.toString()
+        if (
+          Files.isRegularFile(entry, NOFOLLOW_LINKS) &&
+            isCadenceAudioFile(name) &&
+            "$prefix$name" !in keep
+        )
+          Files.delete(entry)
+      }
+    prune(root, "")
+    entries(root)
+      .filter { Files.isDirectory(it, NOFOLLOW_LINKS) && !Files.isSymbolicLink(it) }
+      .forEach { dir ->
+        val owner = dir.resolve(".cadence-owner")
+        val owned =
+          Files.isRegularFile(owner, NOFOLLOW_LINKS) &&
+            Files.readString(owner) == "cadence-podcasts-v1"
+        if (!owned) return@forEach
+        val name = dir.fileName.toString()
+        prune(dir, "$name/")
+        if (
+          name !in keepFolders && entries(dir).all { it.fileName.toString() == ".cadence-owner" }
+        ) {
+          Files.delete(owner)
+          Files.delete(dir)
+        }
+      }
+  }
 }

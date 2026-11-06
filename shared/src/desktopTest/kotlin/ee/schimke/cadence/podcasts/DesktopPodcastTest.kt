@@ -150,8 +150,8 @@ class DesktopPodcastTest {
       val showFolder = File(target, "Cadence/podcasts/${grouped.episodes.single().folder}")
       assertTrue(sections.all { File(showFolder, it.fileName).length() > 0 })
       assertTrue(
-        sections.all { File(target, "Cadence/podcasts/${it.fileName}").length() > 0 },
-        "existing copies remain untouched",
+        sections.none { File(target, "Cadence/podcasts/${it.fileName}").exists() },
+        "flat copies from the old layout are deleted once the episode moves into its show folder",
       )
       assertEquals("keep me", File(target, "personal.mp3").readText())
       assertTrue(

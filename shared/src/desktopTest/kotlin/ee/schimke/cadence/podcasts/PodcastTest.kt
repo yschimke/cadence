@@ -514,6 +514,27 @@ class PodcastTest {
   }
 
   @Test
+  fun syncWithNothingLeftStillClearsTheHeadphones() = runBlocking {
+    val platform = FakePlatform()
+    val controller = PodcastController(platform)
+    controller.state.value =
+      LocalPodcastState(
+        library =
+          PodcastLibrary(playlist = PlaylistSnapshot(name = "Test", episodes = emptyList())),
+        target = "fixture-device",
+        lastCopied =
+          DeviceManifest(
+            episodes = listOf(DeviceEpisode("rss", "gone", "Gone", "v1", emptyList()))
+          ),
+      )
+
+    assertTrue(controller.run { copyToDevice() }, controller.status.value)
+    assertTrue(platform.exported)
+    assertTrue(controller.state.value.lastCopied!!.episodes.isEmpty())
+    assertTrue(controller.state.value.upToDateOnDevice())
+  }
+
+  @Test
   fun downloadKeepsGoingPastAFailureAndSaysWhichEpisodeFailed() = runBlocking {
     val platform = FakePlatform()
     val second = episode.copy(id = "episode-2", title = "Second episode")

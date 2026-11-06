@@ -7,6 +7,7 @@ import ee.schimke.cadence.podcasts.PlaylistSnapshot
 import ee.schimke.cadence.podcasts.PodcastLibrary
 import ee.schimke.cadence.podcasts.Section
 import ee.schimke.cadence.podcasts.Segmentation
+import ee.schimke.cadence.podcasts.deviceManifest
 import ee.schimke.cadence.podcasts.upToDateOnDevice
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -80,6 +81,32 @@ class HeadphoneSyncStepTest {
       )
     )
     assertFalse(shouldCopyOnConnect(headphoneSyncStep(prepared, false, true)))
+  }
+
+  @Test
+  fun aSyncThatOnlyDeletesIsStillOffered() {
+    val synced =
+      prepared.copy(
+        target = "t",
+        copiedSectionIds = setOf("s1"),
+        lastCopied = deviceManifest(prepared.library),
+      )
+    assertTrue(synced.upToDateOnDevice())
+    // The last episode leaves the playlist: nothing to copy, but it's still on the headphones.
+    val emptied =
+      synced.copy(
+        library =
+          PodcastLibrary(playlist = PlaylistSnapshot(name = "Up Next", episodes = emptyList()))
+      )
+    assertEquals(
+      HeadphoneSyncStep.ReadyToCopy(pluggedIn = true),
+      headphoneSyncStep(emptied, false, true),
+    )
+    val cleared = emptied.copy(lastCopied = deviceManifest(emptied.library))
+    assertEquals(
+      HeadphoneSyncStep.UpToDate(pluggedIn = true),
+      headphoneSyncStep(cleared, false, true),
+    )
   }
 
   @Test

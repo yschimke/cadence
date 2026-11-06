@@ -519,6 +519,23 @@ fun podcastFolder(episode: Episode): String {
   return "${title.ifBlank { "Podcast" }}-${digest("${episode.backend}\u0000$identity").take(8)}"
 }
 
+/** Whether [name] follows Cadence's own audio naming, so a sync may remove it once it's stale. */
+fun isCadenceAudioFile(name: String): Boolean = runCatching {
+  validateAudioFileName(name)
+}
+  .isSuccess
+
+/**
+ * Where each of [sections] goes under `Cadence/podcasts`, as "folder/name" ("name" at the top). A
+ * sync keeps exactly these and removes any other Cadence audio file in folders it owns.
+ */
+fun podcastExportPaths(sections: List<Section>, folders: Map<String, String>): Set<String> =
+  sections
+    .map { section ->
+      folders[section.fileName]?.let { "$it/${section.fileName}" } ?: section.fileName
+    }
+    .toSet()
+
 /** Resolve only manifest-declared filenames; old manifests retain the flat export layout. */
 fun podcastExportFolders(sections: List<Section>, manifest: String): Map<String, String> {
   val device =
@@ -599,7 +616,9 @@ fun validateAudioFileName(name: String) {
  */
 fun LocalPodcastState.readyForDevice(): Boolean {
   val sections = library.manifests.flatMap { it.sections }
-  if (sections.isEmpty() || sections.any { it.id !in readySectionIds }) return false
+  // Nothing left to copy is still worth a sync once something was copied: it deletes what left.
+  if (sections.isEmpty() && lastCopied == null) return false
+  if (sections.any { it.id !in readySectionIds }) return false
   val prepared = library.manifests.map { it.episode.key }.toSet()
   return library.playlist?.episodes.orEmpty().all { episode ->
     episode.key in prepared ||
@@ -609,8 +628,14 @@ fun LocalPodcastState.readyForDevice(): Boolean {
   }
 }
 
-/** Whether the headphones already hold every prepared section. */
+/**
+ * Whether the headphones hold exactly the prepared sections: nothing to copy, nothing to delete.
+ */
 fun LocalPodcastState.upToDateOnDevice(): Boolean {
-  val sections = library.manifests.flatMap { it.sections }
-  return readyForDevice() && target.isNotBlank() && sections.all { it.id in copiedSectionIds }
+  val sections = library.manifests.flatMap { it.sections }.map { it.id }.toSet()
+  val copied = lastCopied?.episodes.orEmpty().flatMap { it.sections }.map { it.id }.toSet()
+  return readyForDevice() &&
+    target.isNotBlank() &&
+    sections.all { it in copiedSectionIds } &&
+    (lastCopied == null || copied == sections)
 }

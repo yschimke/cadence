@@ -227,6 +227,31 @@
             marker = await folder.getFileHandle('.cadence-owner', { create: true });
             const writer = await marker.createWritable(); await writer.write('cadence-podcasts-v1'); await writer.close();
           } else if (await (await marker.getFile()).text() !== 'cadence-podcasts-v1') throw new Error('Invalid ownership marker');
+          // Stale episodes go first: remove Cadence-named audio that this sync doesn't write, only in
+          // folders carrying Cadence's marker, then show folders left with just the marker.
+          const keep = new Set(args.files.map(f => f.folder ? f.folder + '/' + f.name : f.name));
+          const keepFolders = new Set(args.files.map(f => f.folder).filter(Boolean));
+          const isCadenceAudio = name => /^[a-zA-Z0-9_-]{1,60}-[0-9]{12}-[a-f0-9]{64}\.(mp3|m4a|ogg|opus|flac|wav)$/.test(name);
+          async function prune(dir, prefix) {
+            const stale = [];
+            for await (const [name, entry] of dir.entries())
+              if (entry.kind === 'file' && isCadenceAudio(name) && !keep.has(prefix + name)) stale.push(name);
+            for (const name of stale) await dir.removeEntry(name);
+          }
+          await prune(folder, '');
+          const shows = [];
+          for await (const [name, entry] of folder.entries()) if (entry.kind === 'directory') shows.push([name, entry]);
+          for (const [name, show] of shows) {
+            let owner;
+            try { owner = await show.getFileHandle('.cadence-owner'); }
+            catch (e) { if (e.name !== 'NotFoundError') throw e; }
+            if (!owner || await (await owner.getFile()).text() !== 'cadence-podcasts-v1') continue;
+            await prune(show, name + '/');
+            if (keepFolders.has(name)) continue;
+            let onlyMarker = true;
+            for await (const [entryName] of show.entries()) if (entryName !== '.cadence-owner') { onlyMarker = false; break; }
+            if (onlyMarker) await folder.removeEntry(name, { recursive: true });
+          }
           const destinations = new Map();
           for (const file of args.files) {
             const source = await (await podcastFile(file.name)).getFile();
