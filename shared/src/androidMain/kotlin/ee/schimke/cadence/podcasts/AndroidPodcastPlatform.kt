@@ -134,6 +134,8 @@ open class AndroidPodcastPlatform(private val context: Context) : FilePodcastPla
     }
     // SAF does not promise atomic replace. A failed copy is retryable and never marks readiness copied.
     val folders = podcastExportFolders(sections, manifest)
+    // Stale episodes go first, which also frees room on nearly full headphones for the new ones.
+    pruneStaleAudio(folder, podcastExportPaths(sections, folders), folders.values.toSet())
     val destinations = mutableMapOf<String, DocumentFile>()
     sections.forEach { section ->
       val show = folders[section.fileName]
@@ -152,6 +154,29 @@ open class AndroidPodcastPlatform(private val context: Context) : FilePodcastPla
       write(destination, section.fileName, if (section.fileName.endsWith(".mp3")) "audio/mpeg" else "application/octet-stream") { output -> audio(section).inputStream().use { it.copyTo(output) } }
     }
     write(folder, "cadence-manifest.json", "application/json") { it.write(manifest.toByteArray()) }
+  }
+
+  /**
+   * Removes Cadence audio files that aren't in [keep] from the owned podcasts folder and its owned
+   * show folders, then any show folder left holding only its owner marker. Anything not named like
+   * Cadence audio, and any folder without Cadence's marker, is left alone.
+   */
+  private fun pruneStaleAudio(root: DocumentFile, keep: Set<String>, keepFolders: Set<String>) {
+    fun owned(dir: DocumentFile): Boolean {
+      val owner = dir.findFile(".cadence-owner")?.takeIf { it.isFile } ?: return false
+      return context.contentResolver.openInputStream(owner.uri)?.bufferedReader()?.use { it.readText() } == "cadence-podcasts-v1"
+    }
+    fun prune(dir: DocumentFile, prefix: String) = dir.listFiles().forEach { entry ->
+      val name = entry.name ?: return@forEach
+      if (entry.isFile && isCadenceAudioFile(name) && "$prefix$name" !in keep)
+        check(entry.delete()) { "Couldn't remove an old episode from the headphones" }
+    }
+    prune(root, "")
+    root.listFiles().filter { it.isDirectory && owned(it) }.forEach { dir ->
+      val name = dir.name ?: return@forEach
+      prune(dir, "$name/")
+      if (name !in keepFolders && dir.listFiles().all { it.name == ".cadence-owner" }) dir.delete()
+    }
   }
 
   override suspend fun readDeviceManifest(target: String): DeviceManifest? = withContext(Dispatchers.IO) {

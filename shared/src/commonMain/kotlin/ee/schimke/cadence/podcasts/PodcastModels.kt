@@ -519,6 +519,23 @@ fun podcastFolder(episode: Episode): String {
   return "${title.ifBlank { "Podcast" }}-${digest("${episode.backend}\u0000$identity").take(8)}"
 }
 
+/** Whether [name] follows Cadence's own audio naming, so a sync may remove it once it's stale. */
+fun isCadenceAudioFile(name: String): Boolean = runCatching {
+  validateAudioFileName(name)
+}
+  .isSuccess
+
+/**
+ * Where each of [sections] goes under `Cadence/podcasts`, as "folder/name" ("name" at the top). A
+ * sync keeps exactly these and removes any other Cadence audio file in folders it owns.
+ */
+fun podcastExportPaths(sections: List<Section>, folders: Map<String, String>): Set<String> =
+  sections
+    .map { section ->
+      folders[section.fileName]?.let { "$it/${section.fileName}" } ?: section.fileName
+    }
+    .toSet()
+
 /** Resolve only manifest-declared filenames; old manifests retain the flat export layout. */
 fun podcastExportFolders(sections: List<Section>, manifest: String): Map<String, String> {
   val device =

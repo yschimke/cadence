@@ -52,7 +52,7 @@ fun headphoneSyncChanges(state: LocalPodcastState): List<HeadphoneSyncChange> {
   val removed =
     before.values
       .filter { it.episodeKey !in afterKeys }
-      .map { change(HeadphoneSyncChange.Kind.Remove, it, "No longer in your playlist") }
+      .map { change(HeadphoneSyncChange.Kind.Remove, it, "Deleted from the headphones") }
   return added + updated + removed
 }
 
