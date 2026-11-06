@@ -284,7 +284,7 @@
     "functionName": "PodcastWidgetMp3LargePreview",
     "module": "composeApp",
     "renderBasename": "PodcastWidgetMp3LargePreview_Podcast_widget_MP3_large-06e82c93.png",
-    "sha256": "93626bd24031acd5e9f9d03f39e159f012210638a3c515d9fc2b5f45e7d73265",
+    "sha256": "25003bce468b2a027a155682070165cb86b73f6889ec91bcde3af8c982d59587",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetMp3LightPreview_Podcast widget \u00b7 MP3 \u00b7 light": {
@@ -292,7 +292,7 @@
     "functionName": "PodcastWidgetMp3LightPreview",
     "module": "composeApp",
     "renderBasename": "PodcastWidgetMp3LightPreview_Podcast_widget_MP3_light-cdc23576.png",
-    "sha256": "73c62e40c532530cea9ddf424b9a25fd121246f8a01c9e62d00136c52146cba9",
+    "sha256": "d7a3ad8f8f6f125b7588ef16dc440258ed8a9fa07913dc9b0352dc2266353eb2",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetMp3Preview_Podcast widget \u00b7 MP3": {
@@ -300,7 +300,7 @@
     "functionName": "PodcastWidgetMp3Preview",
     "module": "composeApp",
     "renderBasename": "PodcastWidgetMp3Preview_Podcast_widget_MP3-3525244f.png",
-    "sha256": "07a1656e6bcb4e99cce886b7a82b825dc80363f9ef7283594a091c6178aff98c",
+    "sha256": "09f14a59c553c769d471ee1d7ff04e5b0e2eeabd5b1baa0e1d271673100631af",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetMp3SmallPreview_Podcast widget \u00b7 MP3 small": {
