@@ -28,76 +28,79 @@
           <g id="LayoutNodeSubcompositionsState">
             <g clip-path="url(#clip-1)">
               <g id="Column">
-                <g id="Column">
-                  <g id="Empty">
-                    <text x="42" y="234.99" font-size="42" font-family="Roboto Flex" font-weight="500" letter-spacing="0.53" fill="#30323A">Sync with headphones</text>
-                  </g>
-                  <g id="AndroidViewHolder">
-                    <image href="ideal__default__compact.figma-raster/328.png" x="42" y="273" width="992" height="399"/>
-                  </g>
-                  <g id="Box">
-                    <rect x="42" y="693" width="992" height="189" rx="52.5" ry="52.5" fill="#E1C8F8"/>
-                    <g id="Row">
-                      <g id="Box">
-                        <rect x="84" y="735" width="105" height="105" rx="52.5" ry="52.5" fill="#523F67" fill-opacity="0.12"/>
-                        <g id="BoxKt" data-material-icon="check_circle" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/check_circle/v1/24px.svg">
-                          <g transform="translate(108 759) scale(2.41 2.41)">
-                            <use href="#material-icon-materialicons-check_circle" xlink:href="#material-icon-materialicons-check_circle"/>
-                          </g>
+                <g id="Empty">
+                  <text x="42" y="266.99" font-size="42" font-family="Roboto Flex" font-weight="500" letter-spacing="0.53" fill="#30323A">On your headphones</text>
+                </g>
+                <g id="AndroidViewHolder">
+                  <image href="ideal__default__compact.figma-raster/753.png" x="42" y="336" width="992" height="399"/>
+                </g>
+                <g id="Box">
+                  <rect x="42" y="756" width="992" height="189" rx="52.5" ry="52.5" fill="#E1C8F8"/>
+                  <g id="Row">
+                    <g id="Box">
+                      <rect x="84" y="798" width="105" height="105" rx="52.5" ry="52.5" fill="#523F67" fill-opacity="0.12"/>
+                      <g id="BoxKt" data-material-icon="check_circle" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/check_circle/v1/24px.svg">
+                        <g transform="translate(108 822) scale(2.41 2.41)">
+                          <use href="#material-icon-materialicons-check_circle" xlink:href="#material-icon-materialicons-check_circle"/>
                         </g>
                       </g>
-                      <g id="Spacer">
-                      </g>
-                      <g id="Empty">
-                        <text x="221" y="801.99" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#523F67">Headphones are up to date.</text>
-                      </g>
+                    </g>
+                    <g id="Spacer">
+                    </g>
+                    <g id="Empty">
+                      <text x="221" y="864.99" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#523F67">In sync with this phone.</text>
                     </g>
                   </g>
                 </g>
+              </g>
+              <g id="Column">
+                <g id="Empty">
+                  <text x="42" y="1064.99" font-size="42" font-family="Roboto Flex" font-weight="500" letter-spacing="0.53" fill="#30323A">On this phone</text>
+                </g>
                 <g id="AndroidViewHolder">
-                  <image href="ideal__default__compact.figma-raster/326.png" x="42" y="914" width="992" height="504"/>
+                  <image href="ideal__default__compact.figma-raster/751.png" x="42" y="1134" width="992" height="504"/>
                 </g>
                 <g id="Row">
                   <g id="Box">
-                    <rect x="43" y="1462" width="391" height="103" rx="51.5" ry="51.5" fill="none" stroke="#B0B1BC" stroke-width="2.62"/>
+                    <rect x="43" y="1671" width="391" height="103" rx="51.5" ry="51.5" fill="none" stroke="#B0B1BC" stroke-width="2.62"/>
                     <g id="Row">
                       <g id="BoxKt" data-material-icon="podcasts" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/podcasts/v1/24px.svg">
-                        <g transform="translate(105 1490) scale(1.95 1.95)">
+                        <g transform="translate(105 1699) scale(1.95 1.95)">
                           <use href="#material-icon-materialicons-podcasts" xlink:href="#material-icon-materialicons-podcasts"/>
                         </g>
                       </g>
                       <g id="Spacer">
                       </g>
                       <g id="Empty">
-                        <text x="173" y="1525.92" font-size="36.75" font-family="Roboto Flex" font-weight="500" letter-spacing="0.26" fill="#5D5F68">All episodes</text>
+                        <text x="173" y="1734.92" font-size="36.75" font-family="Roboto Flex" font-weight="500" letter-spacing="0.26" fill="#5D5F68">All episodes</text>
                       </g>
                     </g>
                   </g>
                   <g id="Box">
-                    <rect x="457" y="1462" width="437" height="103" rx="51.5" ry="51.5" fill="none" stroke="#B0B1BC" stroke-width="2.62"/>
+                    <rect x="457" y="1671" width="437" height="103" rx="51.5" ry="51.5" fill="none" stroke="#B0B1BC" stroke-width="2.62"/>
                     <g id="Row">
                       <g id="BoxKt" data-material-icon="refresh" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/refresh/v1/24px.svg">
-                        <g transform="translate(519 1490) scale(1.95 1.95)">
+                        <g transform="translate(519 1699) scale(1.95 1.95)">
                           <use href="#material-icon-materialicons-refresh" xlink:href="#material-icon-materialicons-refresh"/>
                         </g>
                       </g>
                       <g id="Spacer">
                       </g>
                       <g id="Empty">
-                        <text x="587" y="1525.92" font-size="36.75" font-family="Roboto Flex" font-weight="500" letter-spacing="0.26" fill="#5D5F68">Refresh folders</text>
+                        <text x="587" y="1734.92" font-size="36.75" font-family="Roboto Flex" font-weight="500" letter-spacing="0.26" fill="#5D5F68">Refresh folders</text>
                       </g>
                     </g>
                   </g>
                 </g>
               </g>
-              <clipPath id="clip-2"><rect x="42" y="1618" width="992" height="745" rx="31.5" ry="31.5"/></clipPath>
+              <clipPath id="clip-2"><rect x="42" y="1827" width="992" height="745" rx="31.5" ry="31.5"/></clipPath>
               <g id="Box">
-                  <rect x="43" y="1619" width="990" height="743" rx="30.5" ry="30.5" fill="#FAF8FE" stroke="#B0B1BC" stroke-width="2.62"/>
+                  <rect x="43" y="1828" width="990" height="743" rx="30.5" ry="30.5" fill="#FAF8FE" stroke="#B0B1BC" stroke-width="2.62"/>
                 <g clip-path="url(#clip-2)">
                   <g id="Column">
                     <g id="Row">
                       <g id="BoxKt" data-material-icon="podcasts" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/podcasts/v1/24px.svg">
-                        <g transform="translate(84 1682) scale(2.62 2.62)">
+                        <g transform="translate(84 1891) scale(2.62 2.62)">
                           <use href="#material-icon-materialicons-podcasts-2" xlink:href="#material-icon-materialicons-podcasts-2"/>
                         </g>
                       </g>
@@ -105,41 +108,41 @@
                       </g>
                       <g id="Column">
                         <g id="Empty">
-                          <text x="189" y="1706.99" font-size="42" font-family="Roboto Flex" font-weight="500" letter-spacing="0.53" fill="#30323A">Pocket Casts Up Next</text>
+                          <text x="189" y="1915.99" font-size="42" font-family="Roboto Flex" font-weight="500" letter-spacing="0.53" fill="#30323A">Pocket Casts Up Next</text>
                         </g>
                         <g id="Empty">
-                          <text x="189" y="1755.86" font-size="31.5" font-family="Roboto Flex" font-weight="400" letter-spacing="1.05" fill="#5D5F68">3 episodes · 3 downloaded</text>
+                          <text x="189" y="1964.86" font-size="31.5" font-family="Roboto Flex" font-weight="400" letter-spacing="1.05" fill="#5D5F68">3 episodes · 3 downloaded</text>
                         </g>
                       </g>
                       <g id="Box">
                         <g id="BoxKt" data-material-icon="more_vert" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/more_vert/v1/24px.svg">
-                          <g transform="translate(940 1682) scale(2.62 2.62)">
+                          <g transform="translate(940 1891) scale(2.62 2.62)">
                             <use href="#material-icon-materialicons-more_vert" xlink:href="#material-icon-materialicons-more_vert"/>
                           </g>
                         </g>
                       </g>
                     </g>
                     <g id="Spacer">
-                      <g transform="translate(42 1787) scale(1 1)">
+                      <g transform="translate(42 1996) scale(1 1)">
                         <path d="M0,1.31 L992,1.31" fill="none" stroke="#B0B1BC" stroke-width="2.62"/>
                       </g>
                     </g>
                     <g id="Box">
                       <g id="Box">
-                        <image href="ideal__default__compact.figma-raster/279.png" x="105" y="1790" width="866" height="189"/>
+                        <image href="ideal__default__compact.figma-raster/704.png" x="105" y="1999" width="866" height="189"/>
                       </g>
                       <g id="Box">
-                        <rect x="42" y="1790" width="992" height="189" fill="#FAF8FE"/>
+                        <rect x="42" y="1999" width="992" height="189" fill="#FAF8FE"/>
                         <g id="MultiContentMeasurePolicyImpl">
                           <g id="Empty">
-                            <text x="84" y="1858.99" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">412 — Tides of the Pacific</text>
+                            <text x="84" y="2067.98" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">412 — Tides of the Pacific</text>
                           </g>
                           <g id="Column">
                             <g id="Empty">
-                              <text x="84" y="1914.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">31:00 left · Downloaded</text>
+                              <text x="84" y="2123.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">31:00 left · Downloaded</text>
                             </g>
                             <g id="Spacer">
-                              <g transform="translate(84 1945) scale(1 1)">
+                              <g transform="translate(84 2154) scale(1 1)">
                                 <path d="M388.19,5.5 L902.5,5.5" fill="none" stroke="#DCE2F9" stroke-width="11" stroke-linecap="round"/>
                                 <path d="M5.5,5.5 L366.69,5.5" fill="none" stroke="#4C5E8B" stroke-width="11" stroke-linecap="round"/>
                                 <path d="M897.25,5.5 A5.25,5.25 0 1 0 907.75,5.5 A5.25,5.25 0 1 0 897.25,5.5 Z" fill="#4C5E8B"/>
@@ -150,26 +153,26 @@
                       </g>
                     </g>
                     <g id="Spacer">
-                      <g transform="translate(42 1979) scale(1 1)">
+                      <g transform="translate(42 2188) scale(1 1)">
                         <path d="M0,1.31 L992,1.31" fill="none" stroke="#B0B1BC" stroke-width="2.62"/>
                       </g>
                     </g>
                     <g id="Box">
                       <g id="Box">
-                        <image href="ideal__default__compact.figma-raster/295.png" x="105" y="1982" width="866" height="189"/>
+                        <image href="ideal__default__compact.figma-raster/720.png" x="105" y="2191" width="866" height="189"/>
                       </g>
                       <g id="Box">
-                        <rect x="42" y="1982" width="992" height="189" fill="#FAF8FE"/>
+                        <rect x="42" y="2191" width="992" height="189" fill="#FAF8FE"/>
                         <g id="MultiContentMeasurePolicyImpl">
                           <g id="Empty">
-                            <text x="84" y="2050.98" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">Lighthouses of the North Sea</text>
+                            <text x="84" y="2259.98" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">Lighthouses of the North Sea</text>
                           </g>
                           <g id="Column">
                             <g id="Empty">
-                              <text x="84" y="2106.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">40:00 left · Downloaded</text>
+                              <text x="84" y="2315.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">40:00 left · Downloaded</text>
                             </g>
                             <g id="Spacer">
-                              <g transform="translate(84 2137) scale(1 1)">
+                              <g transform="translate(84 2346) scale(1 1)">
                                 <path d="M122.39,5.5 L902.5,5.5" fill="none" stroke="#DCE2F9" stroke-width="11" stroke-linecap="round"/>
                                 <path d="M5.5,5.5 L100.89,5.5" fill="none" stroke="#4C5E8B" stroke-width="11" stroke-linecap="round"/>
                                 <path d="M897.25,5.5 A5.25,5.25 0 1 0 907.75,5.5 A5.25,5.25 0 1 0 897.25,5.5 Z" fill="#4C5E8B"/>
@@ -180,22 +183,21 @@
                       </g>
                     </g>
                     <g id="Spacer">
-                      <g transform="translate(42 2171) scale(1 1)">
+                      <g transform="translate(42 2380) scale(1 1)">
                         <path d="M0,1.31 L992,1.31" fill="none" stroke="#B0B1BC" stroke-width="2.62"/>
                       </g>
                     </g>
                     <g id="Box">
                       <g id="Box">
-                        <image href="ideal__default__compact.figma-raster/311.png" x="105" y="2174" width="866" height="189"/>
                       </g>
                       <g id="Box">
-                        <rect x="42" y="2174" width="992" height="189" fill="#FAF8FE"/>
+                        <rect x="42" y="2383" width="992" height="189" fill="#FAF8FE"/>
                         <g id="MultiContentMeasurePolicyImpl">
                           <g id="Empty">
-                            <text x="84" y="2256.98" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">Why the ocean is salty</text>
+                            <text x="84" y="2465.98" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">Why the ocean is salty</text>
                           </g>
                           <g id="Empty">
-                            <text x="84" y="2312.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">38:00 · Downloaded</text>
+                            <text x="84" y="2521.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">38:00 · Downloaded</text>
                           </g>
                         </g>
                       </g>

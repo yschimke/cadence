@@ -643,7 +643,7 @@
       "wireframe": "wireframes/devices-loaded.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 132,
+      "bodyLine": 205,
       "sourceDirectory": "composeApp",
       "sourceFunction": "DevicesScreenLoadedPreview"
     },
@@ -672,7 +672,7 @@
       "wireframe": "wireframes/devices-loading.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 150,
+      "bodyLine": 223,
       "sourceDirectory": "composeApp",
       "sourceFunction": "DevicesScreenLoadingPreview"
     },
@@ -733,7 +733,7 @@
       "wireframe": "wireframes/devices-empty.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 163,
+      "bodyLine": 236,
       "sourceDirectory": "composeApp",
       "sourceFunction": "DevicesScreenEmptyPreview"
     },
@@ -781,7 +781,7 @@
       "wireframe": "wireframes/bookmarks-loaded.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 176,
+      "bodyLine": 249,
       "sourceDirectory": "composeApp",
       "sourceFunction": "BookmarksScreenLoadedPreview"
     },
@@ -810,7 +810,7 @@
       "wireframe": "wireframes/bookmarks-loading.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 188,
+      "bodyLine": 261,
       "sourceDirectory": "composeApp",
       "sourceFunction": "BookmarksScreenLoadingPreview"
     },
@@ -839,7 +839,7 @@
       "wireframe": "wireframes/devicefiles-loading.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 200,
+      "bodyLine": 273,
       "sourceDirectory": "composeApp",
       "sourceFunction": "DeviceFilesLoadingPreview"
     },
@@ -868,7 +868,7 @@
       "wireframe": "wireframes/devicefiles-notavailable.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 211,
+      "bodyLine": 284,
       "sourceDirectory": "composeApp",
       "sourceFunction": "DeviceFilesNotAvailablePreview"
     },
@@ -1444,7 +1444,7 @@
       "wireframe": "wireframes/bluetooth-disconnected.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 225,
+      "bodyLine": 298,
       "sourceDirectory": "composeApp",
       "sourceFunction": "BluetoothDisconnectedPreview"
     },
@@ -2073,7 +2073,7 @@
       "wireframe": "wireframes/bluetooth-connectedplaying.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 253,
+      "bodyLine": 326,
       "sourceDirectory": "composeApp",
       "sourceFunction": "BluetoothConnectedPlayingPreview"
     },
@@ -2718,7 +2718,7 @@
       "wireframe": "wireframes/bluetooth-permissionmissing.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 281,
+      "bodyLine": 354,
       "sourceDirectory": "composeApp",
       "sourceFunction": "BluetoothPermissionMissingPreview"
     },
@@ -3204,7 +3204,7 @@
       "wireframe": "wireframes/bluetooth-mp3mode.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 309,
+      "bodyLine": 382,
       "sourceDirectory": "composeApp",
       "sourceFunction": "BluetoothMp3ModePreview"
     },
@@ -3325,7 +3325,7 @@
       "wireframe": "wireframes/manage-empty.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 358,
+      "bodyLine": 431,
       "sourceDirectory": "composeApp",
       "sourceFunction": "ManageEmptyPreview"
     },
@@ -3563,7 +3563,7 @@
       "wireframe": "wireframes/manage-populated.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 380,
+      "bodyLine": 453,
       "sourceDirectory": "composeApp",
       "sourceFunction": "ManagePopulatedPreview"
     },
@@ -3801,7 +3801,7 @@
       "wireframe": "wireframes/manage-refreshing.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 402,
+      "bodyLine": 475,
       "sourceDirectory": "composeApp",
       "sourceFunction": "ManageRefreshingPreview"
     },
@@ -5086,14 +5086,14 @@
             "role": "button",
             "bounds": {
               "x": 42,
-              "y": 1482,
+              "y": 1691,
               "width": 393,
               "height": 105
             }
           },
           "bounds": {
             "x": 42,
-            "y": 1482,
+            "y": 1691,
             "width": 393,
             "height": 105
           }
@@ -5106,14 +5106,14 @@
             "role": "button",
             "bounds": {
               "x": 456,
-              "y": 1482,
+              "y": 1691,
               "width": 439,
               "height": 105
             }
           },
           "bounds": {
             "x": 456,
-            "y": 1482,
+            "y": 1691,
             "width": 439,
             "height": 105
           }
@@ -5126,14 +5126,14 @@
             "role": "button",
             "bounds": {
               "x": 84,
-              "y": 1861,
+              "y": 2070,
               "width": 387,
               "height": 105
             }
           },
           "bounds": {
             "x": 84,
-            "y": 1861,
+            "y": 2070,
             "width": 387,
             "height": 105
           }
@@ -5147,14 +5147,14 @@
             "label": "Options for Pocket Casts Up Next",
             "bounds": {
               "x": 893,
-              "y": 2103,
+              "y": 2312,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 893,
-            "y": 2103,
+            "y": 2312,
             "width": 105,
             "height": 105
           }
@@ -5168,57 +5168,16 @@
             "label": "Options for Podbean — staged",
             "bounds": {
               "x": 893,
-              "y": 2890,
+              "y": 3099,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 893,
-            "y": 2890,
+            "y": 3099,
             "width": 105,
             "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button \"Options for Drive — Swim Mixes\"",
-          "detail": {
-            "role": "button",
-            "label": "Options for Drive — Swim Mixes",
-            "bounds": {
-              "x": 0,
-              "y": 0,
-              "width": 0,
-              "height": 0
-            }
-          },
-          "bounds": {
-            "x": 0,
-            "y": 0,
-            "width": 0,
-            "height": 0
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button",
-          "detail": {
-            "role": "button",
-            "bounds": {
-              "x": 0,
-              "y": 0,
-              "width": 0,
-              "height": 0
-            }
-          },
-          "bounds": {
-            "x": 0,
-            "y": 0,
-            "width": 0,
-            "height": 0
           }
         },
         {
@@ -5246,7 +5205,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 693,
+            "y": 756,
             "width": 966,
             "height": 210
           },
@@ -5255,7 +5214,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 746,
+            "y": 809,
             "width": 105,
             "height": 105
           },
@@ -5264,7 +5223,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 1482,
+            "y": 1691,
             "width": 393,
             "height": 105
           },
@@ -5274,7 +5233,7 @@
         {
           "bounds": {
             "x": 456,
-            "y": 1482,
+            "y": 1691,
             "width": 439,
             "height": 105
           },
@@ -5284,7 +5243,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 1639,
+            "y": 1848,
             "width": 966,
             "height": 379
           },
@@ -5293,7 +5252,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 1861,
+            "y": 2070,
             "width": 387,
             "height": 105
           },
@@ -5303,7 +5262,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 2060,
+            "y": 2269,
             "width": 966,
             "height": 745
           },
@@ -5312,7 +5271,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 2060,
+            "y": 2269,
             "width": 966,
             "height": 169
           },
@@ -5326,7 +5285,7 @@
         {
           "bounds": {
             "x": 893,
-            "y": 2103,
+            "y": 2312,
             "width": 105,
             "height": 105
           },
@@ -5337,7 +5296,7 @@
         {
           "bounds": {
             "x": 105,
-            "y": 2232,
+            "y": 2441,
             "width": 840,
             "height": 189
           },
@@ -5351,7 +5310,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 2361,
+            "y": 2570,
             "width": 882,
             "height": 60
           },
@@ -5365,7 +5324,7 @@
         {
           "bounds": {
             "x": 105,
-            "y": 2424,
+            "y": 2633,
             "width": 840,
             "height": 189
           },
@@ -5379,7 +5338,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 2553,
+            "y": 2762,
             "width": 882,
             "height": 60
           },
@@ -5393,7 +5352,7 @@
         {
           "bounds": {
             "x": 105,
-            "y": 2616,
+            "y": 2825,
             "width": 840,
             "height": 189
           },
@@ -5407,57 +5366,21 @@
         {
           "bounds": {
             "x": 42,
-            "y": 2847,
+            "y": 3056,
             "width": 966,
-            "height": 745
+            "height": 619
           },
           "cornerRadius": 12
         },
         {
           "bounds": {
             "x": 893,
-            "y": 2890,
+            "y": 3099,
             "width": 105,
             "height": 105
           },
           "role": "Button",
           "label": "Options for Podbean — staged",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 42,
-            "y": 3634,
-            "width": 966,
-            "height": 41
-          },
-          "cornerRadius": 12
-        },
-        {
-          "bounds": {
-            "x": 0,
-            "y": 0,
-            "width": 0,
-            "height": 0
-          },
-          "role": "Button",
-          "label": "Options for Drive — Swim Mixes",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 0,
-            "y": 0,
-            "width": 0,
-            "height": 0
-          },
-          "role": "Button",
-          "padding": {
-            "start": 8,
-            "top": 0,
-            "end": 8,
-            "bottom": 0
-          },
           "cornerRadius": 20
         },
         {
@@ -5507,16 +5430,16 @@
             "role": "button",
             "bounds": {
               "x": 84,
-              "y": 893,
+              "y": 956,
               "width": 882,
-              "height": 126
+              "height": 147
             }
           },
           "bounds": {
             "x": 84,
-            "y": 893,
+            "y": 956,
             "width": 882,
-            "height": 126
+            "height": 147
           }
         },
         {
@@ -5527,16 +5450,16 @@
             "role": "button",
             "bounds": {
               "x": 42,
-              "y": 1640,
+              "y": 2269,
               "width": 393,
-              "height": 105
+              "height": 93
             }
           },
           "bounds": {
             "x": 42,
-            "y": 1640,
+            "y": 2269,
             "width": 393,
-            "height": 105
+            "height": 93
           }
         },
         {
@@ -5547,37 +5470,16 @@
             "role": "button",
             "bounds": {
               "x": 456,
-              "y": 1640,
+              "y": 2269,
               "width": 439,
-              "height": 105
+              "height": 93
             }
           },
           "bounds": {
             "x": 456,
-            "y": 1640,
+            "y": 2269,
             "width": 439,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button \"Options for Pocket Casts Up Next\"",
-          "detail": {
-            "role": "button",
-            "label": "Options for Pocket Casts Up Next",
-            "bounds": {
-              "x": 893,
-              "y": 1840,
-              "width": 105,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 893,
-            "y": 1840,
-            "width": 105,
-            "height": 105
+            "height": 93
           }
         },
         {
@@ -5605,16 +5507,16 @@
         {
           "bounds": {
             "x": 42,
-            "y": 693,
+            "y": 756,
             "width": 966,
-            "height": 368
+            "height": 389
           },
           "cornerRadius": 20
         },
         {
           "bounds": {
             "x": 84,
-            "y": 746,
+            "y": 809,
             "width": 105,
             "height": 105
           },
@@ -5623,19 +5525,19 @@
         {
           "bounds": {
             "x": 84,
-            "y": 893,
+            "y": 956,
             "width": 882,
-            "height": 126
+            "height": 147
           },
           "role": "Button",
-          "cornerRadius": 24
+          "cornerRadius": 28
         },
         {
           "bounds": {
             "x": 42,
-            "y": 1640,
+            "y": 2269,
             "width": 393,
-            "height": 105
+            "height": 93
           },
           "role": "Button",
           "cornerRadius": 20
@@ -5643,116 +5545,12 @@
         {
           "bounds": {
             "x": 456,
-            "y": 1640,
+            "y": 2269,
             "width": 439,
-            "height": 105
+            "height": 93
           },
           "role": "Button",
           "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 42,
-            "y": 1797,
-            "width": 966,
-            "height": 355
-          },
-          "cornerRadius": 12
-        },
-        {
-          "bounds": {
-            "x": 42,
-            "y": 1797,
-            "width": 966,
-            "height": 169
-          },
-          "padding": {
-            "start": 16,
-            "top": 12,
-            "end": 0,
-            "bottom": 4
-          }
-        },
-        {
-          "bounds": {
-            "x": 893,
-            "y": 1840,
-            "width": 105,
-            "height": 105
-          },
-          "role": "Button",
-          "label": "Options for Pocket Casts Up Next",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 105,
-            "y": 1969,
-            "width": 840,
-            "height": 183
-          },
-          "padding": {
-            "start": 24,
-            "top": 0,
-            "end": 24,
-            "bottom": 0
-          }
-        },
-        {
-          "bounds": {
-            "x": 84,
-            "y": 2098,
-            "width": 882,
-            "height": 54
-          },
-          "padding": {
-            "start": 0,
-            "top": 10,
-            "end": 0,
-            "bottom": 10
-          }
-        },
-        {
-          "bounds": {
-            "x": 0,
-            "y": 0,
-            "width": 0,
-            "height": 0
-          },
-          "padding": {
-            "start": 24,
-            "top": 0,
-            "end": 24,
-            "bottom": 0
-          }
-        },
-        {
-          "bounds": {
-            "x": 0,
-            "y": 0,
-            "width": 0,
-            "height": 0
-          },
-          "padding": {
-            "start": 0,
-            "top": 10,
-            "end": 0,
-            "bottom": 10
-          }
-        },
-        {
-          "bounds": {
-            "x": 0,
-            "y": 0,
-            "width": 0,
-            "height": 0
-          },
-          "padding": {
-            "start": 24,
-            "top": 0,
-            "end": 24,
-            "bottom": 0
-          }
         },
         {
           "bounds": {
@@ -5805,16 +5603,16 @@
             "role": "button",
             "bounds": {
               "x": 84,
-              "y": 872,
+              "y": 956,
               "width": 908,
-              "height": 126
+              "height": 147
             }
           },
           "bounds": {
             "x": 84,
-            "y": 872,
+            "y": 956,
             "width": 908,
-            "height": 126
+            "height": 147
           }
         },
         {
@@ -5824,17 +5622,17 @@
           "detail": {
             "role": "button",
             "bounds": {
-              "x": 42,
-              "y": 1619,
-              "width": 393,
-              "height": 105
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
             }
           },
           "bounds": {
-            "x": 42,
-            "y": 1619,
-            "width": 393,
-            "height": 105
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
           }
         },
         {
@@ -5844,38 +5642,17 @@
           "detail": {
             "role": "button",
             "bounds": {
-              "x": 456,
-              "y": 1619,
-              "width": 439,
-              "height": 105
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
             }
           },
           "bounds": {
-            "x": 456,
-            "y": 1619,
-            "width": 439,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button \"Options for Pocket Casts Up Next\"",
-          "detail": {
-            "role": "button",
-            "label": "Options for Pocket Casts Up Next",
-            "bounds": {
-              "x": 919,
-              "y": 1819,
-              "width": 105,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 919,
-            "y": 1819,
-            "width": 105,
-            "height": 105
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
           }
         },
         {
@@ -5903,16 +5680,16 @@
         {
           "bounds": {
             "x": 42,
-            "y": 693,
+            "y": 756,
             "width": 992,
-            "height": 347
+            "height": 547
           },
           "cornerRadius": 20
         },
         {
           "bounds": {
             "x": 84,
-            "y": 735,
+            "y": 809,
             "width": 105,
             "height": 105
           },
@@ -5921,136 +5698,47 @@
         {
           "bounds": {
             "x": 84,
-            "y": 872,
+            "y": 956,
+            "width": 908,
+            "height": 147
+          },
+          "role": "Button",
+          "cornerRadius": 28
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 1135,
             "width": 908,
             "height": 126
           },
-          "role": "Button",
-          "cornerRadius": 24
-        },
-        {
-          "bounds": {
-            "x": 42,
-            "y": 1619,
-            "width": 393,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 456,
-            "y": 1619,
-            "width": 439,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 42,
-            "y": 1776,
-            "width": 992,
-            "height": 373
+          "padding": {
+            "start": 4,
+            "top": 0,
+            "end": 4,
+            "bottom": 0
           },
           "cornerRadius": 12
         },
         {
           "bounds": {
-            "x": 42,
-            "y": 1776,
-            "width": 992,
-            "height": 169
-          },
-          "padding": {
-            "start": 16,
-            "top": 12,
-            "end": 0,
-            "bottom": 4
-          }
-        },
-        {
-          "bounds": {
-            "x": 919,
-            "y": 1819,
-            "width": 105,
-            "height": 105
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
           },
           "role": "Button",
-          "label": "Options for Pocket Casts Up Next",
           "cornerRadius": 20
         },
         {
           "bounds": {
-            "x": 105,
-            "y": 1948,
-            "width": 866,
-            "height": 189
-          },
-          "padding": {
-            "start": 24,
-            "top": 0,
-            "end": 24,
-            "bottom": 0
-          }
-        },
-        {
-          "bounds": {
-            "x": 84,
-            "y": 2077,
-            "width": 908,
-            "height": 60
-          },
-          "padding": {
-            "start": 0,
-            "top": 10,
-            "end": 0,
-            "bottom": 10
-          }
-        },
-        {
-          "bounds": {
-            "x": 105,
-            "y": 2140,
-            "width": 866,
-            "height": 9
-          },
-          "padding": {
-            "start": 24,
-            "top": 0,
-            "end": 24,
-            "bottom": 0
-          }
-        },
-        {
-          "bounds": {
             "x": 0,
             "y": 0,
             "width": 0,
             "height": 0
           },
-          "padding": {
-            "start": 0,
-            "top": 10,
-            "end": 0,
-            "bottom": 10
-          }
-        },
-        {
-          "bounds": {
-            "x": 0,
-            "y": 0,
-            "width": 0,
-            "height": 0
-          },
-          "padding": {
-            "start": 24,
-            "top": 0,
-            "end": 24,
-            "bottom": 0
-          }
+          "role": "Button",
+          "cornerRadius": 20
         },
         {
           "bounds": {
@@ -6103,14 +5791,14 @@
             "role": "button",
             "bounds": {
               "x": 42,
-              "y": 1461,
+              "y": 1670,
               "width": 393,
               "height": 105
             }
           },
           "bounds": {
             "x": 42,
-            "y": 1461,
+            "y": 1670,
             "width": 393,
             "height": 105
           }
@@ -6123,14 +5811,14 @@
             "role": "button",
             "bounds": {
               "x": 456,
-              "y": 1461,
+              "y": 1670,
               "width": 439,
               "height": 105
             }
           },
           "bounds": {
             "x": 456,
-            "y": 1461,
+            "y": 1670,
             "width": 439,
             "height": 105
           }
@@ -6144,14 +5832,14 @@
             "label": "Options for Pocket Casts Up Next",
             "bounds": {
               "x": 919,
-              "y": 1661,
+              "y": 1870,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 919,
-            "y": 1661,
+            "y": 1870,
             "width": 105,
             "height": 105
           }
@@ -6181,7 +5869,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 693,
+            "y": 756,
             "width": 992,
             "height": 189
           },
@@ -6190,7 +5878,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 735,
+            "y": 798,
             "width": 105,
             "height": 105
           },
@@ -6199,7 +5887,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 1461,
+            "y": 1670,
             "width": 393,
             "height": 105
           },
@@ -6209,7 +5897,7 @@
         {
           "bounds": {
             "x": 456,
-            "y": 1461,
+            "y": 1670,
             "width": 439,
             "height": 105
           },
@@ -6219,16 +5907,16 @@
         {
           "bounds": {
             "x": 42,
-            "y": 1618,
+            "y": 1827,
             "width": 992,
-            "height": 741
+            "height": 532
           },
           "cornerRadius": 12
         },
         {
           "bounds": {
             "x": 42,
-            "y": 1618,
+            "y": 1827,
             "width": 992,
             "height": 169
           },
@@ -6242,7 +5930,7 @@
         {
           "bounds": {
             "x": 919,
-            "y": 1661,
+            "y": 1870,
             "width": 105,
             "height": 105
           },
@@ -6253,7 +5941,7 @@
         {
           "bounds": {
             "x": 105,
-            "y": 1790,
+            "y": 1999,
             "width": 866,
             "height": 189
           },
@@ -6267,7 +5955,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 1919,
+            "y": 2128,
             "width": 908,
             "height": 60
           },
@@ -6281,9 +5969,9 @@
         {
           "bounds": {
             "x": 105,
-            "y": 1982,
+            "y": 2191,
             "width": 866,
-            "height": 189
+            "height": 168
           },
           "padding": {
             "start": 24,
@@ -6295,9 +5983,9 @@
         {
           "bounds": {
             "x": 84,
-            "y": 2111,
+            "y": 2320,
             "width": 908,
-            "height": 60
+            "height": 39
           },
           "padding": {
             "start": 0,
@@ -6308,10 +5996,10 @@
         },
         {
           "bounds": {
-            "x": 105,
-            "y": 2174,
-            "width": 866,
-            "height": 185
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
           },
           "padding": {
             "start": 24,
@@ -6340,6 +6028,1059 @@
       "bodyLine": 99,
       "sourceDirectory": "composeApp",
       "sourceFunction": "HomeUpToDatePreview"
+    },
+    {
+      "componentId": "composeApp/HomeConnectedControlsPreview",
+      "images": [
+        {
+          "variant": "ideal",
+          "path": "images/composeapp-homeconnectedcontrolspreview/ideal__default__compact.png",
+          "state": "default",
+          "width": 1078,
+          "height": 3150,
+          "size": "compact",
+          "livePreview": "https://preview.coo.ee/cadence/p/composeapp-homeconnectedcontrolspreview__ideal__default__compact",
+          "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.HomeConnectedControlsPreview_Home___headphones_and_controls",
+          "previewParams": {
+            "showBackground": true,
+            "device": "spec:width=411dp,height=1200dp,dpi=420",
+            "widthDp": 411,
+            "heightDp": 1200
+          },
+          "density": 2.625
+        }
+      ],
+      "greenlines": [
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 84,
+              "y": 956,
+              "width": 908,
+              "height": 147
+            }
+          },
+          "bounds": {
+            "x": 84,
+            "y": 956,
+            "width": 908,
+            "height": 147
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 787,
+              "y": 1356,
+              "width": 247,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 787,
+            "y": 1356,
+            "width": 247,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 42,
+              "y": 2427,
+              "width": 393,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 42,
+            "y": 2427,
+            "width": 393,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 456,
+              "y": 2427,
+              "width": 439,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 456,
+            "y": 2427,
+            "width": 439,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button \"Options for Pocket Casts Up Next\"",
+          "detail": {
+            "role": "button",
+            "label": "Options for Pocket Casts Up Next",
+            "bounds": {
+              "x": 919,
+              "y": 2627,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 919,
+            "y": 2627,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 950,
+              "y": 32,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 950,
+            "y": 32,
+            "width": 105,
+            "height": 105
+          }
+        }
+      ],
+      "redlines": [
+        {
+          "bounds": {
+            "x": 42,
+            "y": 756,
+            "width": 992,
+            "height": 547
+          },
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 809,
+            "width": 105,
+            "height": 105
+          },
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 956,
+            "width": 908,
+            "height": 147
+          },
+          "role": "Button",
+          "cornerRadius": 28
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 1135,
+            "width": 908,
+            "height": 126
+          },
+          "padding": {
+            "start": 4,
+            "top": 0,
+            "end": 4,
+            "bottom": 0
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 787,
+            "y": 1356,
+            "width": 247,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 2427,
+            "width": 393,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 456,
+            "y": 2427,
+            "width": 439,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 2584,
+            "width": 992,
+            "height": 566
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 2584,
+            "width": 992,
+            "height": 169
+          },
+          "padding": {
+            "start": 16,
+            "top": 12,
+            "end": 0,
+            "bottom": 4
+          }
+        },
+        {
+          "bounds": {
+            "x": 919,
+            "y": 2627,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "label": "Options for Pocket Casts Up Next",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 105,
+            "y": 2756,
+            "width": 866,
+            "height": 189
+          },
+          "padding": {
+            "start": 24,
+            "top": 0,
+            "end": 24,
+            "bottom": 0
+          }
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 2885,
+            "width": 908,
+            "height": 60
+          },
+          "padding": {
+            "start": 0,
+            "top": 10,
+            "end": 0,
+            "bottom": 10
+          }
+        },
+        {
+          "bounds": {
+            "x": 105,
+            "y": 2948,
+            "width": 866,
+            "height": 189
+          },
+          "padding": {
+            "start": 24,
+            "top": 0,
+            "end": 24,
+            "bottom": 0
+          }
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 3077,
+            "width": 908,
+            "height": 60
+          },
+          "padding": {
+            "start": 0,
+            "top": 10,
+            "end": 0,
+            "bottom": 10
+          }
+        },
+        {
+          "bounds": {
+            "x": 105,
+            "y": 3140,
+            "width": 866,
+            "height": 10
+          },
+          "padding": {
+            "start": 24,
+            "top": 0,
+            "end": 24,
+            "bottom": 0
+          }
+        },
+        {
+          "bounds": {
+            "x": 950,
+            "y": 32,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        }
+      ],
+      "section": ":composeApp",
+      "group": "Previews",
+      "caption": "Home — headphones and controls",
+      "wireframe": "wireframes/composeapp-homeconnectedcontrolspreview.svg",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "sourceModule": ":composeApp",
+      "bodyLine": 117,
+      "sourceDirectory": "composeApp",
+      "sourceFunction": "HomeConnectedControlsPreview"
+    },
+    {
+      "componentId": "composeApp/HomeDownloadingPreview",
+      "images": [
+        {
+          "variant": "ideal",
+          "path": "images/composeapp-homedownloadingpreview/ideal__default__compact.png",
+          "state": "default",
+          "width": 1078,
+          "height": 3150,
+          "size": "compact",
+          "livePreview": "https://preview.coo.ee/cadence/p/composeapp-homedownloadingpreview__ideal__default__compact",
+          "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.HomeDownloadingPreview_Home___downloading",
+          "previewParams": {
+            "showBackground": true,
+            "device": "spec:width=411dp,height=1200dp,dpi=420",
+            "widthDp": 411,
+            "heightDp": 1200
+          },
+          "density": 2.625
+        }
+      ],
+      "greenlines": [
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 42,
+              "y": 1792,
+              "width": 393,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 42,
+            "y": 1792,
+            "width": 393,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 456,
+              "y": 1792,
+              "width": 439,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 456,
+            "y": 1792,
+            "width": 439,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button \"Options for Pocket Casts Up Next\"",
+          "detail": {
+            "role": "button",
+            "label": "Options for Pocket Casts Up Next",
+            "bounds": {
+              "x": 919,
+              "y": 1992,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 919,
+            "y": 1992,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button \"Options for Podbean — staged\"",
+          "detail": {
+            "role": "button",
+            "label": "Options for Podbean — staged",
+            "bounds": {
+              "x": 919,
+              "y": 2779,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 919,
+            "y": 2779,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 950,
+              "y": 32,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 950,
+            "y": 32,
+            "width": 105,
+            "height": 105
+          }
+        }
+      ],
+      "redlines": [
+        {
+          "bounds": {
+            "x": 42,
+            "y": 756,
+            "width": 992,
+            "height": 210
+          },
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 809,
+            "width": 105,
+            "height": 105
+          },
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 1680,
+            "width": 992,
+            "height": 80
+          },
+          "gap": 6
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 1723,
+            "width": 992,
+            "height": 63
+          },
+          "padding": {
+            "start": 0,
+            "top": 10,
+            "end": 0,
+            "bottom": 10
+          }
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 1792,
+            "width": 393,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 456,
+            "y": 1792,
+            "width": 439,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 1949,
+            "width": 992,
+            "height": 745
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 1949,
+            "width": 992,
+            "height": 169
+          },
+          "padding": {
+            "start": 16,
+            "top": 12,
+            "end": 0,
+            "bottom": 4
+          }
+        },
+        {
+          "bounds": {
+            "x": 919,
+            "y": 1992,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "label": "Options for Pocket Casts Up Next",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 105,
+            "y": 2121,
+            "width": 866,
+            "height": 189
+          },
+          "padding": {
+            "start": 24,
+            "top": 0,
+            "end": 24,
+            "bottom": 0
+          }
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 2250,
+            "width": 908,
+            "height": 60
+          },
+          "padding": {
+            "start": 0,
+            "top": 10,
+            "end": 0,
+            "bottom": 10
+          }
+        },
+        {
+          "bounds": {
+            "x": 105,
+            "y": 2313,
+            "width": 866,
+            "height": 189
+          },
+          "padding": {
+            "start": 24,
+            "top": 0,
+            "end": 24,
+            "bottom": 0
+          }
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 2442,
+            "width": 908,
+            "height": 60
+          },
+          "padding": {
+            "start": 0,
+            "top": 10,
+            "end": 0,
+            "bottom": 10
+          }
+        },
+        {
+          "bounds": {
+            "x": 105,
+            "y": 2505,
+            "width": 866,
+            "height": 189
+          },
+          "padding": {
+            "start": 24,
+            "top": 0,
+            "end": 24,
+            "bottom": 0
+          }
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 2736,
+            "width": 992,
+            "height": 414
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 919,
+            "y": 2779,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "label": "Options for Podbean — staged",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 950,
+            "y": 32,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        }
+      ],
+      "section": ":composeApp",
+      "group": "Previews",
+      "caption": "Home — downloading",
+      "wireframe": "wireframes/composeapp-homedownloadingpreview.svg",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "sourceModule": ":composeApp",
+      "bodyLine": 139,
+      "sourceDirectory": "composeApp",
+      "sourceFunction": "HomeDownloadingPreview"
+    },
+    {
+      "componentId": "composeApp/HomeDownloadFailedPreview",
+      "images": [
+        {
+          "variant": "ideal",
+          "path": "images/composeapp-homedownloadfailedpreview/ideal__default__compact.png",
+          "state": "default",
+          "width": 1078,
+          "height": 3150,
+          "size": "compact",
+          "livePreview": "https://preview.coo.ee/cadence/p/composeapp-homedownloadfailedpreview__ideal__default__compact",
+          "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.HomeDownloadFailedPreview_Home___download_failed",
+          "previewParams": {
+            "showBackground": true,
+            "device": "spec:width=411dp,height=1200dp,dpi=420",
+            "widthDp": 411,
+            "heightDp": 1200
+          },
+          "density": 2.625
+        }
+      ],
+      "greenlines": [
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 607,
+              "y": 1882,
+              "width": 194,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 607,
+            "y": 1882,
+            "width": 194,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 801,
+              "y": 1882,
+              "width": 212,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 801,
+            "y": 1882,
+            "width": 212,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 42,
+              "y": 2040,
+              "width": 393,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 42,
+            "y": 2040,
+            "width": 393,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 456,
+              "y": 2040,
+              "width": 439,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 456,
+            "y": 2040,
+            "width": 439,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button \"Options for Pocket Casts Up Next\"",
+          "detail": {
+            "role": "button",
+            "label": "Options for Pocket Casts Up Next",
+            "bounds": {
+              "x": 919,
+              "y": 2240,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 919,
+            "y": 2240,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button \"Options for Podbean — staged\"",
+          "detail": {
+            "role": "button",
+            "label": "Options for Podbean — staged",
+            "bounds": {
+              "x": 919,
+              "y": 3027,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 919,
+            "y": 3027,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 950,
+              "y": 32,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 950,
+            "y": 32,
+            "width": 105,
+            "height": 105
+          }
+        }
+      ],
+      "redlines": [
+        {
+          "bounds": {
+            "x": 42,
+            "y": 756,
+            "width": 992,
+            "height": 210
+          },
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 809,
+            "width": 105,
+            "height": 105
+          },
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 1680,
+            "width": 992,
+            "height": 328
+          },
+          "cornerRadius": 16
+        },
+        {
+          "bounds": {
+            "x": 607,
+            "y": 1882,
+            "width": 194,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 801,
+            "y": 1882,
+            "width": 212,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 2040,
+            "width": 393,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 456,
+            "y": 2040,
+            "width": 439,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 2197,
+            "width": 992,
+            "height": 745
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 2197,
+            "width": 992,
+            "height": 169
+          },
+          "padding": {
+            "start": 16,
+            "top": 12,
+            "end": 0,
+            "bottom": 4
+          }
+        },
+        {
+          "bounds": {
+            "x": 919,
+            "y": 2240,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "label": "Options for Pocket Casts Up Next",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 105,
+            "y": 2369,
+            "width": 866,
+            "height": 189
+          },
+          "padding": {
+            "start": 24,
+            "top": 0,
+            "end": 24,
+            "bottom": 0
+          }
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 2498,
+            "width": 908,
+            "height": 60
+          },
+          "padding": {
+            "start": 0,
+            "top": 10,
+            "end": 0,
+            "bottom": 10
+          }
+        },
+        {
+          "bounds": {
+            "x": 105,
+            "y": 2561,
+            "width": 866,
+            "height": 189
+          },
+          "padding": {
+            "start": 24,
+            "top": 0,
+            "end": 24,
+            "bottom": 0
+          }
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 2690,
+            "width": 908,
+            "height": 60
+          },
+          "padding": {
+            "start": 0,
+            "top": 10,
+            "end": 0,
+            "bottom": 10
+          }
+        },
+        {
+          "bounds": {
+            "x": 105,
+            "y": 2753,
+            "width": 866,
+            "height": 189
+          },
+          "padding": {
+            "start": 24,
+            "top": 0,
+            "end": 24,
+            "bottom": 0
+          }
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 2984,
+            "width": 992,
+            "height": 166
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 919,
+            "y": 3027,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "label": "Options for Podbean — staged",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 950,
+            "y": 32,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        }
+      ],
+      "section": ":composeApp",
+      "group": "Previews",
+      "caption": "Home — download failed",
+      "wireframe": "wireframes/composeapp-homedownloadfailedpreview.svg",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "sourceModule": ":composeApp",
+      "bodyLine": 164,
+      "sourceDirectory": "composeApp",
+      "sourceFunction": "HomeDownloadFailedPreview"
     },
     {
       "componentId": "composeApp/HomeFreshPreview",
@@ -6371,14 +7112,14 @@
             "role": "button",
             "bounds": {
               "x": 42,
-              "y": 1482,
+              "y": 1912,
               "width": 393,
               "height": 105
             }
           },
           "bounds": {
             "x": 42,
-            "y": 1482,
+            "y": 1912,
             "width": 393,
             "height": 105
           }
@@ -6391,14 +7132,14 @@
             "role": "button",
             "bounds": {
               "x": 456,
-              "y": 1482,
+              "y": 1912,
               "width": 439,
               "height": 105
             }
           },
           "bounds": {
             "x": 456,
-            "y": 1482,
+            "y": 1912,
             "width": 439,
             "height": 105
           }
@@ -6412,14 +7153,14 @@
             "label": "Options for Pocket Casts Up Next",
             "bounds": {
               "x": 919,
-              "y": 1682,
+              "y": 2112,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 919,
-            "y": 1682,
+            "y": 2112,
             "width": 105,
             "height": 105
           }
@@ -6433,14 +7174,14 @@
             "label": "Options for Podbean — staged",
             "bounds": {
               "x": 919,
-              "y": 3434,
+              "y": 3193,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 919,
-            "y": 3434,
+            "y": 3193,
             "width": 105,
             "height": 105
           }
@@ -6453,17 +7194,17 @@
             "role": "button",
             "label": "Options for Drive — Swim Mixes",
             "bounds": {
-              "x": 0,
-              "y": 0,
-              "width": 0,
-              "height": 0
+              "x": 919,
+              "y": 3980,
+              "width": 105,
+              "height": 105
             }
           },
           "bounds": {
-            "x": 0,
-            "y": 0,
-            "width": 0,
-            "height": 0
+            "x": 919,
+            "y": 3980,
+            "width": 105,
+            "height": 105
           }
         },
         {
@@ -6511,16 +7252,16 @@
         {
           "bounds": {
             "x": 42,
-            "y": 693,
+            "y": 756,
             "width": 992,
-            "height": 210
+            "height": 431
           },
           "cornerRadius": 20
         },
         {
           "bounds": {
             "x": 84,
-            "y": 746,
+            "y": 840,
             "width": 105,
             "height": 105
           },
@@ -6528,8 +7269,23 @@
         },
         {
           "bounds": {
+            "x": 84,
+            "y": 1019,
+            "width": 908,
+            "height": 126
+          },
+          "padding": {
+            "start": 4,
+            "top": 0,
+            "end": 4,
+            "bottom": 0
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
             "x": 42,
-            "y": 1482,
+            "y": 1912,
             "width": 393,
             "height": 105
           },
@@ -6539,7 +7295,7 @@
         {
           "bounds": {
             "x": 456,
-            "y": 1482,
+            "y": 1912,
             "width": 439,
             "height": 105
           },
@@ -6549,7 +7305,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 1639,
+            "y": 2069,
             "width": 992,
             "height": 808
           },
@@ -6558,7 +7314,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 1639,
+            "y": 2069,
             "width": 992,
             "height": 169
           },
@@ -6572,7 +7328,7 @@
         {
           "bounds": {
             "x": 919,
-            "y": 1682,
+            "y": 2112,
             "width": 105,
             "height": 105
           },
@@ -6583,7 +7339,7 @@
         {
           "bounds": {
             "x": 189,
-            "y": 1808,
+            "y": 2238,
             "width": 793,
             "height": 42
           },
@@ -6598,7 +7354,7 @@
         {
           "bounds": {
             "x": 105,
-            "y": 1874,
+            "y": 2304,
             "width": 866,
             "height": 189
           },
@@ -6612,7 +7368,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 2003,
+            "y": 2433,
             "width": 908,
             "height": 60
           },
@@ -6626,7 +7382,7 @@
         {
           "bounds": {
             "x": 105,
-            "y": 2066,
+            "y": 2496,
             "width": 866,
             "height": 189
           },
@@ -6640,7 +7396,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 2195,
+            "y": 2625,
             "width": 908,
             "height": 60
           },
@@ -6654,7 +7410,7 @@
         {
           "bounds": {
             "x": 105,
-            "y": 2258,
+            "y": 2688,
             "width": 866,
             "height": 189
           },
@@ -6668,58 +7424,16 @@
         {
           "bounds": {
             "x": 42,
-            "y": 2489,
+            "y": 2919,
             "width": 992,
-            "height": 860
+            "height": 189
           },
           "cornerRadius": 12
         },
         {
           "bounds": {
-            "x": 105,
-            "y": 2650,
-            "width": 866,
-            "height": 231
-          },
-          "padding": {
-            "start": 24,
-            "top": 0,
-            "end": 24,
-            "bottom": 0
-          }
-        },
-        {
-          "bounds": {
-            "x": 105,
-            "y": 2884,
-            "width": 866,
-            "height": 231
-          },
-          "padding": {
-            "start": 24,
-            "top": 0,
-            "end": 24,
-            "bottom": 0
-          }
-        },
-        {
-          "bounds": {
-            "x": 105,
-            "y": 3118,
-            "width": 866,
-            "height": 231
-          },
-          "padding": {
-            "start": 24,
-            "top": 0,
-            "end": 24,
-            "bottom": 0
-          }
-        },
-        {
-          "bounds": {
             "x": 42,
-            "y": 3391,
+            "y": 3150,
             "width": 992,
             "height": 745
           },
@@ -6728,7 +7442,7 @@
         {
           "bounds": {
             "x": 919,
-            "y": 3434,
+            "y": 3193,
             "width": 105,
             "height": 105
           },
@@ -6739,18 +7453,18 @@
         {
           "bounds": {
             "x": 42,
-            "y": 4178,
+            "y": 3937,
             "width": 992,
-            "height": 22
+            "height": 263
           },
           "cornerRadius": 12
         },
         {
           "bounds": {
-            "x": 0,
-            "y": 0,
-            "width": 0,
-            "height": 0
+            "x": 919,
+            "y": 3980,
+            "width": 105,
+            "height": 105
           },
           "role": "Button",
           "label": "Options for Drive — Swim Mixes",
@@ -6789,7 +7503,7 @@
       "wireframe": "wireframes/composeapp-homefreshpreview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 117,
+      "bodyLine": 190,
       "sourceDirectory": "composeApp",
       "sourceFunction": "HomeFreshPreview"
     },
@@ -7802,14 +8516,14 @@
             "role": "button",
             "bounds": {
               "x": 787,
-              "y": 200,
+              "y": 1019,
               "width": 247,
               "height": 105
             }
           },
           "bounds": {
             "x": 787,
-            "y": 200,
+            "y": 1019,
             "width": 247,
             "height": 105
           }
@@ -7821,17 +8535,17 @@
           "detail": {
             "role": "button",
             "bounds": {
-              "x": 42,
-              "y": 1545,
-              "width": 393,
-              "height": 105
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
             }
           },
           "bounds": {
-            "x": 42,
-            "y": 1545,
-            "width": 393,
-            "height": 105
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
           }
         },
         {
@@ -7840,27 +8554,6 @@
           "message": "button",
           "detail": {
             "role": "button",
-            "bounds": {
-              "x": 456,
-              "y": 1545,
-              "width": 439,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 456,
-            "y": 1545,
-            "width": 439,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button \"Options for Pocket Casts Up Next\"",
-          "detail": {
-            "role": "button",
-            "label": "Options for Pocket Casts Up Next",
             "bounds": {
               "x": 0,
               "y": 0,
@@ -7899,16 +8592,6 @@
       "redlines": [
         {
           "bounds": {
-            "x": 787,
-            "y": 200,
-            "width": 247,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
             "x": 42,
             "y": 756,
             "width": 992,
@@ -7927,9 +8610,9 @@
         },
         {
           "bounds": {
-            "x": 42,
-            "y": 1545,
-            "width": 393,
+            "x": 787,
+            "y": 1019,
+            "width": 247,
             "height": 105
           },
           "role": "Button",
@@ -7937,46 +8620,12 @@
         },
         {
           "bounds": {
-            "x": 456,
-            "y": 1545,
-            "width": 439,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 42,
-            "y": 1702,
-            "width": 992,
-            "height": 4
-          },
-          "cornerRadius": 12
-        },
-        {
-          "bounds": {
-            "x": 42,
-            "y": 1702,
-            "width": 992,
-            "height": 4
-          },
-          "padding": {
-            "start": 16,
-            "top": 12,
-            "end": 0,
-            "bottom": 4
-          }
-        },
-        {
-          "bounds": {
             "x": 0,
             "y": 0,
             "width": 0,
             "height": 0
           },
           "role": "Button",
-          "label": "Options for Pocket Casts Up Next",
           "cornerRadius": 20
         },
         {
@@ -7986,68 +8635,8 @@
             "width": 0,
             "height": 0
           },
-          "padding": {
-            "start": 24,
-            "top": 0,
-            "end": 24,
-            "bottom": 0
-          }
-        },
-        {
-          "bounds": {
-            "x": 0,
-            "y": 0,
-            "width": 0,
-            "height": 0
-          },
-          "padding": {
-            "start": 0,
-            "top": 10,
-            "end": 0,
-            "bottom": 10
-          }
-        },
-        {
-          "bounds": {
-            "x": 0,
-            "y": 0,
-            "width": 0,
-            "height": 0
-          },
-          "padding": {
-            "start": 24,
-            "top": 0,
-            "end": 24,
-            "bottom": 0
-          }
-        },
-        {
-          "bounds": {
-            "x": 0,
-            "y": 0,
-            "width": 0,
-            "height": 0
-          },
-          "padding": {
-            "start": 0,
-            "top": 10,
-            "end": 0,
-            "bottom": 10
-          }
-        },
-        {
-          "bounds": {
-            "x": 0,
-            "y": 0,
-            "width": 0,
-            "height": 0
-          },
-          "padding": {
-            "start": 24,
-            "top": 0,
-            "end": 24,
-            "bottom": 0
-          }
+          "role": "Button",
+          "cornerRadius": 20
         },
         {
           "bounds": {
@@ -8101,14 +8690,14 @@
             "role": "button",
             "bounds": {
               "x": 787,
-              "y": 200,
+              "y": 1019,
               "width": 247,
               "height": 105
             }
           },
           "bounds": {
             "x": 787,
-            "y": 200,
+            "y": 1019,
             "width": 247,
             "height": 105
           }
@@ -8120,17 +8709,17 @@
           "detail": {
             "role": "button",
             "bounds": {
-              "x": 42,
-              "y": 1545,
-              "width": 393,
-              "height": 105
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
             }
           },
           "bounds": {
-            "x": 42,
-            "y": 1545,
-            "width": 393,
-            "height": 105
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
           }
         },
         {
@@ -8139,27 +8728,6 @@
           "message": "button",
           "detail": {
             "role": "button",
-            "bounds": {
-              "x": 456,
-              "y": 1545,
-              "width": 439,
-              "height": 105
-            }
-          },
-          "bounds": {
-            "x": 456,
-            "y": 1545,
-            "width": 439,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button \"Options for Pocket Casts Up Next\"",
-          "detail": {
-            "role": "button",
-            "label": "Options for Pocket Casts Up Next",
             "bounds": {
               "x": 0,
               "y": 0,
@@ -8198,16 +8766,6 @@
       "redlines": [
         {
           "bounds": {
-            "x": 787,
-            "y": 200,
-            "width": 247,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
             "x": 42,
             "y": 756,
             "width": 992,
@@ -8226,9 +8784,9 @@
         },
         {
           "bounds": {
-            "x": 42,
-            "y": 1545,
-            "width": 393,
+            "x": 787,
+            "y": 1019,
+            "width": 247,
             "height": 105
           },
           "role": "Button",
@@ -8236,46 +8794,12 @@
         },
         {
           "bounds": {
-            "x": 456,
-            "y": 1545,
-            "width": 439,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 42,
-            "y": 1702,
-            "width": 992,
-            "height": 4
-          },
-          "cornerRadius": 12
-        },
-        {
-          "bounds": {
-            "x": 42,
-            "y": 1702,
-            "width": 992,
-            "height": 4
-          },
-          "padding": {
-            "start": 16,
-            "top": 12,
-            "end": 0,
-            "bottom": 4
-          }
-        },
-        {
-          "bounds": {
             "x": 0,
             "y": 0,
             "width": 0,
             "height": 0
           },
           "role": "Button",
-          "label": "Options for Pocket Casts Up Next",
           "cornerRadius": 20
         },
         {
@@ -8285,68 +8809,8 @@
             "width": 0,
             "height": 0
           },
-          "padding": {
-            "start": 24,
-            "top": 0,
-            "end": 24,
-            "bottom": 0
-          }
-        },
-        {
-          "bounds": {
-            "x": 0,
-            "y": 0,
-            "width": 0,
-            "height": 0
-          },
-          "padding": {
-            "start": 0,
-            "top": 10,
-            "end": 0,
-            "bottom": 10
-          }
-        },
-        {
-          "bounds": {
-            "x": 0,
-            "y": 0,
-            "width": 0,
-            "height": 0
-          },
-          "padding": {
-            "start": 24,
-            "top": 0,
-            "end": 24,
-            "bottom": 0
-          }
-        },
-        {
-          "bounds": {
-            "x": 0,
-            "y": 0,
-            "width": 0,
-            "height": 0
-          },
-          "padding": {
-            "start": 0,
-            "top": 10,
-            "end": 0,
-            "bottom": 10
-          }
-        },
-        {
-          "bounds": {
-            "x": 0,
-            "y": 0,
-            "width": 0,
-            "height": 0
-          },
-          "padding": {
-            "start": 24,
-            "top": 0,
-            "end": 24,
-            "bottom": 0
-          }
+          "role": "Button",
+          "cornerRadius": 20
         },
         {
           "bounds": {
@@ -9363,14 +9827,14 @@
             "role": "button",
             "bounds": {
               "x": 975,
-              "y": 152,
+              "y": 760,
               "width": 193,
               "height": 80
             }
           },
           "bounds": {
             "x": 975,
-            "y": 152,
+            "y": 760,
             "width": 193,
             "height": 80
           }
@@ -9383,14 +9847,14 @@
             "role": "button",
             "bounds": {
               "x": 32,
-              "y": 1160,
+              "y": 1576,
               "width": 304,
               "height": 80
             }
           },
           "bounds": {
             "x": 32,
-            "y": 1160,
+            "y": 1576,
             "width": 304,
             "height": 80
           }
@@ -9403,14 +9867,14 @@
             "role": "button",
             "bounds": {
               "x": 352,
-              "y": 1160,
+              "y": 1576,
               "width": 340,
               "height": 80
             }
           },
           "bounds": {
             "x": 352,
-            "y": 1160,
+            "y": 1576,
             "width": 340,
             "height": 80
           }
@@ -9424,14 +9888,14 @@
             "label": "Options for Pocket Casts Up Next",
             "bounds": {
               "x": 1080,
-              "y": 1312,
+              "y": 1728,
               "width": 80,
               "height": 80
             }
           },
           "bounds": {
             "x": 1080,
-            "y": 1312,
+            "y": 1728,
             "width": 80,
             "height": 80
           }
@@ -9460,16 +9924,6 @@
       "redlines": [
         {
           "bounds": {
-            "x": 975,
-            "y": 152,
-            "width": 193,
-            "height": 80
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
             "x": 32,
             "y": 576,
             "width": 1136,
@@ -9488,8 +9942,18 @@
         },
         {
           "bounds": {
+            "x": 975,
+            "y": 760,
+            "width": 193,
+            "height": 80
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
             "x": 32,
-            "y": 1160,
+            "y": 1576,
             "width": 304,
             "height": 80
           },
@@ -9499,7 +9963,7 @@
         {
           "bounds": {
             "x": 352,
-            "y": 1160,
+            "y": 1576,
             "width": 340,
             "height": 80
           },
@@ -9509,16 +9973,16 @@
         {
           "bounds": {
             "x": 32,
-            "y": 1280,
+            "y": 1696,
             "width": 1136,
-            "height": 480
+            "height": 224
           },
           "cornerRadius": 12
         },
         {
           "bounds": {
             "x": 32,
-            "y": 1280,
+            "y": 1696,
             "width": 1136,
             "height": 128
           },
@@ -9532,7 +9996,7 @@
         {
           "bounds": {
             "x": 1080,
-            "y": 1312,
+            "y": 1728,
             "width": 80,
             "height": 80
           },
@@ -9543,9 +10007,9 @@
         {
           "bounds": {
             "x": 80,
-            "y": 1410,
+            "y": 1826,
             "width": 1040,
-            "height": 144
+            "height": 94
           },
           "padding": {
             "start": 24,
@@ -9556,10 +10020,10 @@
         },
         {
           "bounds": {
-            "x": 64,
-            "y": 1508,
-            "width": 1072,
-            "height": 46
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
           },
           "padding": {
             "start": 0,
@@ -9570,10 +10034,10 @@
         },
         {
           "bounds": {
-            "x": 80,
-            "y": 1556,
-            "width": 1040,
-            "height": 144
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
           },
           "padding": {
             "start": 24,
@@ -9584,10 +10048,10 @@
         },
         {
           "bounds": {
-            "x": 64,
-            "y": 1654,
-            "width": 1072,
-            "height": 46
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
           },
           "padding": {
             "start": 0,
@@ -9598,10 +10062,10 @@
         },
         {
           "bounds": {
-            "x": 80,
-            "y": 1702,
-            "width": 1040,
-            "height": 58
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
           },
           "padding": {
             "start": 24,
@@ -9662,14 +10126,14 @@
             "role": "button",
             "bounds": {
               "x": 975,
-              "y": 152,
+              "y": 760,
               "width": 193,
               "height": 80
             }
           },
           "bounds": {
             "x": 975,
-            "y": 152,
+            "y": 760,
             "width": 193,
             "height": 80
           }
@@ -9682,14 +10146,14 @@
             "role": "button",
             "bounds": {
               "x": 32,
-              "y": 1160,
+              "y": 1576,
               "width": 304,
               "height": 80
             }
           },
           "bounds": {
             "x": 32,
-            "y": 1160,
+            "y": 1576,
             "width": 304,
             "height": 80
           }
@@ -9702,14 +10166,14 @@
             "role": "button",
             "bounds": {
               "x": 352,
-              "y": 1160,
+              "y": 1576,
               "width": 340,
               "height": 80
             }
           },
           "bounds": {
             "x": 352,
-            "y": 1160,
+            "y": 1576,
             "width": 340,
             "height": 80
           }
@@ -9723,14 +10187,14 @@
             "label": "Options for Pocket Casts Up Next",
             "bounds": {
               "x": 1080,
-              "y": 1312,
+              "y": 1728,
               "width": 80,
               "height": 80
             }
           },
           "bounds": {
             "x": 1080,
-            "y": 1312,
+            "y": 1728,
             "width": 80,
             "height": 80
           }
@@ -9759,16 +10223,6 @@
       "redlines": [
         {
           "bounds": {
-            "x": 975,
-            "y": 152,
-            "width": 193,
-            "height": 80
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
             "x": 32,
             "y": 576,
             "width": 1136,
@@ -9787,8 +10241,18 @@
         },
         {
           "bounds": {
+            "x": 975,
+            "y": 760,
+            "width": 193,
+            "height": 80
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
             "x": 32,
-            "y": 1160,
+            "y": 1576,
             "width": 304,
             "height": 80
           },
@@ -9798,7 +10262,7 @@
         {
           "bounds": {
             "x": 352,
-            "y": 1160,
+            "y": 1576,
             "width": 340,
             "height": 80
           },
@@ -9808,16 +10272,16 @@
         {
           "bounds": {
             "x": 32,
-            "y": 1280,
+            "y": 1696,
             "width": 1136,
-            "height": 480
+            "height": 224
           },
           "cornerRadius": 12
         },
         {
           "bounds": {
             "x": 32,
-            "y": 1280,
+            "y": 1696,
             "width": 1136,
             "height": 128
           },
@@ -9831,7 +10295,7 @@
         {
           "bounds": {
             "x": 1080,
-            "y": 1312,
+            "y": 1728,
             "width": 80,
             "height": 80
           },
@@ -9842,9 +10306,9 @@
         {
           "bounds": {
             "x": 80,
-            "y": 1410,
+            "y": 1826,
             "width": 1040,
-            "height": 144
+            "height": 94
           },
           "padding": {
             "start": 24,
@@ -9855,10 +10319,10 @@
         },
         {
           "bounds": {
-            "x": 64,
-            "y": 1508,
-            "width": 1072,
-            "height": 46
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
           },
           "padding": {
             "start": 0,
@@ -9869,10 +10333,10 @@
         },
         {
           "bounds": {
-            "x": 80,
-            "y": 1556,
-            "width": 1040,
-            "height": 144
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
           },
           "padding": {
             "start": 24,
@@ -9883,10 +10347,10 @@
         },
         {
           "bounds": {
-            "x": 64,
-            "y": 1654,
-            "width": 1072,
-            "height": 46
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
           },
           "padding": {
             "start": 0,
@@ -9897,10 +10361,10 @@
         },
         {
           "bounds": {
-            "x": 80,
-            "y": 1702,
-            "width": 1040,
-            "height": 58
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
           },
           "padding": {
             "start": 24,
@@ -9961,14 +10425,14 @@
             "role": "button",
             "bounds": {
               "x": 1375,
-              "y": 152,
+              "y": 760,
               "width": 193,
               "height": 80
             }
           },
           "bounds": {
             "x": 1375,
-            "y": 152,
+            "y": 760,
             "width": 193,
             "height": 80
           }
@@ -9981,14 +10445,14 @@
             "role": "button",
             "bounds": {
               "x": 32,
-              "y": 1160,
+              "y": 1576,
               "width": 304,
               "height": 80
             }
           },
           "bounds": {
             "x": 32,
-            "y": 1160,
+            "y": 1576,
             "width": 304,
             "height": 80
           }
@@ -10001,14 +10465,14 @@
             "role": "button",
             "bounds": {
               "x": 352,
-              "y": 1160,
+              "y": 1576,
               "width": 340,
               "height": 80
             }
           },
           "bounds": {
             "x": 352,
-            "y": 1160,
+            "y": 1576,
             "width": 340,
             "height": 80
           }
@@ -10022,14 +10486,14 @@
             "label": "Options for Pocket Casts Up Next",
             "bounds": {
               "x": 1480,
-              "y": 1312,
+              "y": 1728,
               "width": 80,
               "height": 80
             }
           },
           "bounds": {
             "x": 1480,
-            "y": 1312,
+            "y": 1728,
             "width": 80,
             "height": 80
           }
@@ -10043,14 +10507,14 @@
             "label": "Options for Podbean — staged",
             "bounds": {
               "x": 1480,
-              "y": 1910,
+              "y": 2326,
               "width": 80,
               "height": 80
             }
           },
           "bounds": {
             "x": 1480,
-            "y": 1910,
+            "y": 2326,
             "width": 80,
             "height": 80
           }
@@ -10079,16 +10543,6 @@
       "redlines": [
         {
           "bounds": {
-            "x": 1375,
-            "y": 152,
-            "width": 193,
-            "height": 80
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
             "x": 32,
             "y": 576,
             "width": 1536,
@@ -10107,8 +10561,18 @@
         },
         {
           "bounds": {
+            "x": 1375,
+            "y": 760,
+            "width": 193,
+            "height": 80
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
             "x": 32,
-            "y": 1160,
+            "y": 1576,
             "width": 304,
             "height": 80
           },
@@ -10118,7 +10582,7 @@
         {
           "bounds": {
             "x": 352,
-            "y": 1160,
+            "y": 1576,
             "width": 340,
             "height": 80
           },
@@ -10128,7 +10592,7 @@
         {
           "bounds": {
             "x": 32,
-            "y": 1280,
+            "y": 1696,
             "width": 1536,
             "height": 566
           },
@@ -10137,7 +10601,7 @@
         {
           "bounds": {
             "x": 32,
-            "y": 1280,
+            "y": 1696,
             "width": 1536,
             "height": 128
           },
@@ -10151,7 +10615,7 @@
         {
           "bounds": {
             "x": 1480,
-            "y": 1312,
+            "y": 1728,
             "width": 80,
             "height": 80
           },
@@ -10162,7 +10626,7 @@
         {
           "bounds": {
             "x": 80,
-            "y": 1410,
+            "y": 1826,
             "width": 1440,
             "height": 144
           },
@@ -10176,7 +10640,7 @@
         {
           "bounds": {
             "x": 64,
-            "y": 1508,
+            "y": 1924,
             "width": 1472,
             "height": 46
           },
@@ -10190,7 +10654,7 @@
         {
           "bounds": {
             "x": 80,
-            "y": 1556,
+            "y": 1972,
             "width": 1440,
             "height": 144
           },
@@ -10204,7 +10668,7 @@
         {
           "bounds": {
             "x": 64,
-            "y": 1654,
+            "y": 2070,
             "width": 1472,
             "height": 46
           },
@@ -10218,7 +10682,7 @@
         {
           "bounds": {
             "x": 80,
-            "y": 1702,
+            "y": 2118,
             "width": 1440,
             "height": 144
           },
@@ -10232,16 +10696,16 @@
         {
           "bounds": {
             "x": 32,
-            "y": 1878,
+            "y": 2294,
             "width": 1536,
-            "height": 522
+            "height": 266
           },
           "cornerRadius": 12
         },
         {
           "bounds": {
             "x": 1480,
-            "y": 1910,
+            "y": 2326,
             "width": 80,
             "height": 80
           },
@@ -10301,14 +10765,14 @@
             "role": "button",
             "bounds": {
               "x": 1375,
-              "y": 152,
+              "y": 760,
               "width": 193,
               "height": 80
             }
           },
           "bounds": {
             "x": 1375,
-            "y": 152,
+            "y": 760,
             "width": 193,
             "height": 80
           }
@@ -10321,14 +10785,14 @@
             "role": "button",
             "bounds": {
               "x": 32,
-              "y": 1160,
+              "y": 1576,
               "width": 304,
               "height": 80
             }
           },
           "bounds": {
             "x": 32,
-            "y": 1160,
+            "y": 1576,
             "width": 304,
             "height": 80
           }
@@ -10341,14 +10805,14 @@
             "role": "button",
             "bounds": {
               "x": 352,
-              "y": 1160,
+              "y": 1576,
               "width": 340,
               "height": 80
             }
           },
           "bounds": {
             "x": 352,
-            "y": 1160,
+            "y": 1576,
             "width": 340,
             "height": 80
           }
@@ -10362,14 +10826,14 @@
             "label": "Options for Pocket Casts Up Next",
             "bounds": {
               "x": 1480,
-              "y": 1312,
+              "y": 1728,
               "width": 80,
               "height": 80
             }
           },
           "bounds": {
             "x": 1480,
-            "y": 1312,
+            "y": 1728,
             "width": 80,
             "height": 80
           }
@@ -10383,14 +10847,14 @@
             "label": "Options for Podbean — staged",
             "bounds": {
               "x": 1480,
-              "y": 1910,
+              "y": 2326,
               "width": 80,
               "height": 80
             }
           },
           "bounds": {
             "x": 1480,
-            "y": 1910,
+            "y": 2326,
             "width": 80,
             "height": 80
           }
@@ -10419,16 +10883,6 @@
       "redlines": [
         {
           "bounds": {
-            "x": 1375,
-            "y": 152,
-            "width": 193,
-            "height": 80
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
             "x": 32,
             "y": 576,
             "width": 1536,
@@ -10447,8 +10901,18 @@
         },
         {
           "bounds": {
+            "x": 1375,
+            "y": 760,
+            "width": 193,
+            "height": 80
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
             "x": 32,
-            "y": 1160,
+            "y": 1576,
             "width": 304,
             "height": 80
           },
@@ -10458,7 +10922,7 @@
         {
           "bounds": {
             "x": 352,
-            "y": 1160,
+            "y": 1576,
             "width": 340,
             "height": 80
           },
@@ -10468,7 +10932,7 @@
         {
           "bounds": {
             "x": 32,
-            "y": 1280,
+            "y": 1696,
             "width": 1536,
             "height": 566
           },
@@ -10477,7 +10941,7 @@
         {
           "bounds": {
             "x": 32,
-            "y": 1280,
+            "y": 1696,
             "width": 1536,
             "height": 128
           },
@@ -10491,7 +10955,7 @@
         {
           "bounds": {
             "x": 1480,
-            "y": 1312,
+            "y": 1728,
             "width": 80,
             "height": 80
           },
@@ -10502,7 +10966,7 @@
         {
           "bounds": {
             "x": 80,
-            "y": 1410,
+            "y": 1826,
             "width": 1440,
             "height": 144
           },
@@ -10516,7 +10980,7 @@
         {
           "bounds": {
             "x": 64,
-            "y": 1508,
+            "y": 1924,
             "width": 1472,
             "height": 46
           },
@@ -10530,7 +10994,7 @@
         {
           "bounds": {
             "x": 80,
-            "y": 1556,
+            "y": 1972,
             "width": 1440,
             "height": 144
           },
@@ -10544,7 +11008,7 @@
         {
           "bounds": {
             "x": 64,
-            "y": 1654,
+            "y": 2070,
             "width": 1472,
             "height": 46
           },
@@ -10558,7 +11022,7 @@
         {
           "bounds": {
             "x": 80,
-            "y": 1702,
+            "y": 2118,
             "width": 1440,
             "height": 144
           },
@@ -10572,16 +11036,16 @@
         {
           "bounds": {
             "x": 32,
-            "y": 1878,
+            "y": 2294,
             "width": 1536,
-            "height": 522
+            "height": 266
           },
           "cornerRadius": 12
         },
         {
           "bounds": {
             "x": 1480,
-            "y": 1910,
+            "y": 2326,
             "width": 80,
             "height": 80
           },
@@ -11794,7 +12258,7 @@
     "ee.schimke.cadence (CadenceTheme)"
   ],
   "renderer": "compose-preview 2.79.0",
-  "generatedAt": "2026-11-05T21:06:36.765Z",
+  "generatedAt": "2026-11-06T12:11:43.809Z",
   "failures": [
     {
       "id": "render-failed--googleoauthactivity--activity-googleoauthactivity",
@@ -11866,7 +12330,7 @@
   "componentsFile": "components.json",
   "source": {
     "repo": "yschimke/cadence",
-    "ref": "797622b81f1a75a3b0d90c3bbeef7e8553985d3c",
+    "ref": "f07efd73327167182c20cf80cb7b30fa75b0bb04",
     "module": ""
   }
 }

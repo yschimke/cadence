@@ -1,11 +1,27 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-05T21:06:40.631Z",
+  "generatedAt": "2026-11-06T12:11:47.289Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "f07efd73327167182c20cf80cb7b30fa75b0bb04",
+        "subject": "feat: delete stale episodes from the headphones on sync, throttle download progress (#518)",
+        "at": "2026-11-06T12:01:39Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "6d64dd39605c53882e434fa132352be45a85f4b3",
+        "subject": "feat: order Home around the sync routine and show download progress and errors (#516)",
+        "at": "2026-11-06T10:07:58Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "797622b81f1a75a3b0d90c3bbeef7e8553985d3c",
         "subject": "chore(main): release 0.1.18 (#510)",
@@ -466,22 +482,6 @@
         "sha": "cc2a8592284f0aa3d02c2501f6d78aee52229550",
         "subject": "fix(widgets): draw headphone widget icons in a canvas; Remote Compose on Android 16 again (#455)",
         "at": "2026-10-31T20:18:12Z",
-        "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "0b3e08c8857b710d61b58798f5012089ac513848",
-        "subject": "chore(main): release 0.1.8 (#430)",
-        "at": "2026-10-31T19:48:18Z",
-        "author": "github-actions[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "ba0e1cc0626cc9f3aee783fc2ca81dcba0bd458c",
-        "subject": "fix(swim): animate on Android 16 launchers; drop drawWithContent water (#454)",
-        "at": "2026-10-31T19:43:19Z",
         "author": "Yuri Schimke",
         "previewIds": [],
         "components": []
