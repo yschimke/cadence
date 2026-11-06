@@ -341,6 +341,14 @@ private fun String.isAudioDownload() =
         "application/force-download",
       )
 
+/** Fixed, URL-free messages from [Episode.validate] and the download's own checks. */
+private val SAFE_VALIDATION_MESSAGES =
+  setOf(
+    "Invalid episode duration or position",
+    "Unsupported audio format",
+    "Audio requires an HTTPS enclosure URL",
+  )
+
 /** Why an audio download got [status], in words that suggest what to do. */
 private fun httpProblem(status: Int): PodcastProblem? =
   when (status) {
@@ -367,11 +375,13 @@ private fun downloadProblem(e: Exception): PodcastProblem? =
       if (e.message?.contains("No space left", ignoreCase = true) == true)
         PodcastProblem("the phone is out of storage")
       else PodcastProblem("the connection dropped")
-    // Our own checks (episode validation, HTTPS only) carry fixed, URL-free messages.
+    // Only our own validation messages are shown verbatim: others (URI parsing, for one) can
+    // carry the whole redirect URL, signed tokens included.
     is IllegalArgumentException ->
       PodcastProblem(
-        e.message?.takeUnless { it == "Failed requirement." }
+        e.message?.takeIf { it in SAFE_VALIDATION_MESSAGES }
           ?: "the audio address isn't a valid HTTPS URL"
       )
+    is java.net.URISyntaxException -> PodcastProblem("the audio address isn't a valid HTTPS URL")
     else -> null
   }
