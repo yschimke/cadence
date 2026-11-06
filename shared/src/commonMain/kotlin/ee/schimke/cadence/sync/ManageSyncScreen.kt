@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -29,6 +30,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -49,6 +51,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -64,7 +67,10 @@ import ee.schimke.cadence.datastore.proto.SyncProfile
 import ee.schimke.cadence.datastore.proto.SyncSource
 import ee.schimke.cadence.metro.metroViewModel
 import ee.schimke.cadence.platform.LocalPlayUpdateSettings
+import ee.schimke.cadence.platform.LocalWidgetDesigns
 import ee.schimke.cadence.platform.PlayUpdateSettings
+import ee.schimke.cadence.platform.WidgetDesigns
+import kotlinx.coroutines.launch
 
 @Composable
 fun ManageSyncScreen(
@@ -159,6 +165,7 @@ fun ManageSyncContent(
   var advanced by rememberSaveable { mutableStateOf(false) }
   var headphones by rememberSaveable { mutableStateOf(false) }
   val playUpdates = LocalPlayUpdateSettings.current
+  val widgetDesigns = LocalWidgetDesigns.current
   Surface(modifier = modifier, color = MaterialTheme.colorScheme.background) {
     LazyColumn(
       modifier =
@@ -257,7 +264,48 @@ fun ManageSyncContent(
             onDelete = { onDeleteProfile(profile.id) },
           )
         }
+        widgetDesigns?.let { designs -> item { WidgetDesignsRow(designs) } }
         playUpdates?.let { settings -> item { AppVersionRow(settings) } }
+      }
+    }
+  }
+}
+
+/**
+ * Fetches the widgets' designs now rather than waiting for the daily refresh: to pick up a design
+ * or season just published, or to check what the widgets draw.
+ */
+@Composable
+private fun WidgetDesignsRow(designs: WidgetDesigns) {
+  val scope = rememberCoroutineScope()
+  var refreshing by remember { mutableStateOf(false) }
+  var result by remember { mutableStateOf<String?>(null) }
+  Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+    Column(Modifier.weight(1f)) {
+      Text("Widget designs", style = MaterialTheme.typography.titleSmall)
+      Text(
+        result ?: "Seasonal looks for the home-screen widgets, updated daily.",
+        style = MaterialTheme.typography.bodySmall,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+      )
+    }
+    if (refreshing) {
+      CircularProgressIndicator(Modifier.size(24.dp), strokeWidth = 2.dp)
+    } else {
+      TextButton(
+        onClick = {
+          refreshing = true
+          scope.launch {
+            result =
+              try {
+                designs.refresh()
+              } finally {
+                refreshing = false
+              }
+          }
+        }
+      ) {
+        Text("Refresh")
       }
     }
   }

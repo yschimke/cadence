@@ -41,6 +41,28 @@ class CatalogRefreshWorker(context: Context, params: WorkerParameters) :
   }
 
   companion object {
+    /**
+     * Fetches the catalog now (Settings' refresh), whatever the daily schedule says, and redraws
+     * both widgets either way, so they pick up the current season's look. Returns a line for the
+     * user.
+     */
+    suspend fun refreshNow(context: Context): String {
+      val app = context.applicationContext
+      val result =
+        if (WidgetLivery.trustedKeys.isEmpty()) null
+        else WidgetLivery.get(app).repository.refresh(force = true)
+      HeadphoneControlsWidget.updateAll(app)
+      PodcastSyncWidget.updateAll(app)
+      if (result is RefreshResult.Updated) SeasonRedrawWorker.ensureScheduled(app, replace = true)
+      return when (result) {
+        null -> "This build doesn't download widget designs."
+        is RefreshResult.Updated -> "Updated to the latest designs."
+        RefreshResult.Unchanged -> "Already up to date."
+        is RefreshResult.Skipped -> "Not refreshed: ${result.reason}"
+        is RefreshResult.Failed -> "Couldn't refresh: ${result.reason}"
+      }
+    }
+
     private const val TAG = "CatalogRefresh"
     private const val WORK_NAME = "livery-catalog-refresh"
 
