@@ -29,6 +29,12 @@ import kotlinx.serialization.json.put
 object HeadphoneControlsTemplate {
   const val CONTRACT = "cadence/headphone-controls@1"
 
+  /**
+   * The minor of [CONTRACT] this app implements (`composeApp/livery/contracts`): Livery never picks a
+   * template that needs a newer one, which a later catalog may carry for newer app versions.
+   */
+  const val CONTRACT_MINOR = 0
+
   const val TITLE = "title"
   const val SHORT_TITLE = "short_title"
   const val DETAIL = "detail"

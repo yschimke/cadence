@@ -47,7 +47,7 @@ playPublisher = "4.1.1"
 # rc-players: the podcast widget is a Remote Compose launcher widget captured on the device.
 rcWidget = "2.23.0"
 # Livery: the headphone widget's templates, baked into the APK and played on the launcher.
-livery = "0.1.1"
+livery = "0.2.0"
 robolectric = "4.17"
 robolectric-sdk35 = "15-robolectric-13954326-i7"
 runner = "1.7.0"
@@ -67,6 +67,7 @@ rc-widget-launcher = { module = "ee.schimke.composeai:rc-widget-launcher", versi
 livery-client = { module = "ee.schimke.composeai:livery-client", version.ref = "livery" }
 livery-instantiate = { module = "ee.schimke.composeai:livery-instantiate", version.ref = "livery" }
 livery-launcher-widgets = { module = "ee.schimke.composeai:livery-launcher-widgets", version.ref = "livery" }
+livery-capture = { module = "ee.schimke.composeai:livery-capture", version.ref = "livery" }
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
 robolectric-sdk35 = { module = "org.robolectric:android-all-instrumented", version.ref = "robolectric-sdk35" }
 composeai-preview-annotations = { module = "ee.schimke.composeai:preview-annotations", version = "3.27.1" }
