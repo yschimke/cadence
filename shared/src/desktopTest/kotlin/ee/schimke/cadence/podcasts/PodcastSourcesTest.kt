@@ -64,7 +64,7 @@ class PodcastSourcesTest {
         "In progress",
         listOf(
           remote(
-            "https://track.example/x/cdn.example/one.mp3"
+            "https://track.example/x/cdn.example/one.mp3",
           ), // file name after a tracking prefix
           remote("https://elsewhere.example/a", guid = "g3"),
           remote("https://cdn.example/two.mp3", duration = 2_400_000), // 40 min, feed says 30

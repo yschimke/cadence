@@ -19,7 +19,7 @@ class HeadsetGatewayTest {
           capabilities =
             RcspCapabilities().withSupported(RcspCommand.Play.id, RcspCommand.NextTrack.id),
           media = HeadsetMedia(playing = false),
-        )
+        ),
       )
 
     assertIs<HeadsetActionResult.Unsupported>(gateway.execute(HeadsetAction.PreviousTrack))
@@ -41,7 +41,7 @@ class HeadsetGatewayTest {
       )
     val withoutPlaylist =
       withPlaylist.copy(
-        capabilities = RcspCapabilities().withSupported(RcspCommand.PlayLocalAudio(2u).id)
+        capabilities = RcspCapabilities().withSupported(RcspCommand.PlayLocalAudio(2u).id),
       )
 
     assertEquals(true, withPlaylist.isSupported(RcspCommand.ListLocalAudio))
@@ -74,7 +74,7 @@ class HeadsetGatewayTest {
     val unsupported = FakeGateway(HeadsetSnapshot(capabilities = RcspCapabilities()))
     val supported =
       FakeGateway(
-        HeadsetSnapshot(capabilities = RcspCapabilities().withSupported(action.command.id))
+        HeadsetSnapshot(capabilities = RcspCapabilities().withSupported(action.command.id)),
       )
 
     assertIs<HeadsetActionResult.Unsupported>(unsupported.execute(action))

@@ -44,7 +44,7 @@ class HeadphoneWidgetStateTest {
         playbackOrder = PlaybackOrder.Shuffle,
         headsetVolumePercent = 56,
         headsetPlaying = playing,
-      )
+      ),
     )
 
   @Test
@@ -110,7 +110,7 @@ class HeadphoneWidgetStateTest {
           connectedDevice = openSwim.copy(name = "Other buds", batteryPercent = null),
           workingMode = WorkingMode.Mp3,
           equalizer = EqualizerPreset.Vocal,
-        )
+        ),
       )
     assertEquals("Nothing playing", state.title)
     assertEquals("Other buds", state.extra)

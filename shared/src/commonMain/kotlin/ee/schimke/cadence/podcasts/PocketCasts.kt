@@ -220,7 +220,7 @@ fun pocketCastsSnapshot(
   if (usable.isEmpty())
     throw PodcastProblem(
       if (episodes.isEmpty()) "$name is empty in Pocket Casts"
-      else "None of $name has HTTPS audio with a known length"
+      else "None of $name has HTTPS audio with a known length",
     )
   return PlaylistSnapshot(name = name, episodes = usable) to skipped
 }

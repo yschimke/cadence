@@ -15,7 +15,7 @@ class DevicesRepo(private val dataStore: SettingsStore) {
       else
         settings.copy(
           devices =
-            settings.devices.map { if (it.id == existing.id) it.copy(name = device.name) else it }
+            settings.devices.map { if (it.id == existing.id) it.copy(name = device.name) else it },
         )
     }
   }

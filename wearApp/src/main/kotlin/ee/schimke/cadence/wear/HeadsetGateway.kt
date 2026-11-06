@@ -236,7 +236,7 @@ object WearCompanionServices {
 
   @Synchronized
   fun gateway(
-    context: android.content.Context
+    context: android.content.Context,
   ): ee.schimke.cadence.wear.datalayer.DataLayerHeadsetGateway {
     (headsetGateway as? ee.schimke.cadence.wear.datalayer.DataLayerHeadsetGateway)?.let {
       return it

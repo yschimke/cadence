@@ -63,8 +63,7 @@ fun CloudSyncWidgetContent(
   // Source title gets the full remaining width beside refresh — not a shared line with
   // the 48dp control (that clipped "Swimming" on 250dp; Remote ellipsis does not draw).
   val titleWidth =
-    (widthDp - padding * 2 - refreshDp - if (status.hasSource) headerGap else 0f)
-      .coerceAtLeast(90f)
+    (widthDp - padding * 2 - refreshDp - if (status.hasSource) headerGap else 0f).coerceAtLeast(90f)
   // Body/eyebrow stay at least 12sp after scale (launcher.type.min-size).
   val labelSp = (12 * scale).coerceAtLeast(12f)
   val titleSp = (13 * scale).coerceAtLeast(12f)
@@ -84,16 +83,16 @@ fun CloudSyncWidgetContent(
   // target is a full 48dp and the status line is ≥12sp.
   val columnGap = (if (heightDp < 170) 6f else 10f) * scale
   val connectAction = onOpen.takeIf { !status.hasSource }
-  val downloadAction =
-    onDownload.takeIf { status.hasSource && status.downloadNeeded == null && status.canDownload }
-  val processAction =
-    onProcess.takeIf { status.hasSource && status.processingNeeded == null && status.canProcess }
+  val downloadAction = onDownload.takeIf {
+    status.hasSource && status.downloadNeeded == null && status.canDownload
+  }
+  val processAction = onProcess.takeIf {
+    status.hasSource && status.processingNeeded == null && status.canProcess
+  }
   // No outer clip: the launcher applies its own system corner radius to the widget.
   RemoteColumn(
     modifier =
-      RemoteModifier.fillMaxSize()
-        .background(colors.background.rc)
-        .padding((12 * scale).rdp),
+      RemoteModifier.fillMaxSize().background(colors.background.rc).padding((12 * scale).rdp),
     verticalArrangement = RemoteArrangement.spacedBy(columnGap.rdp),
   ) {
     RemoteRow(

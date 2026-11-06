@@ -12,10 +12,9 @@ fun Context.systemWidgetColors(): WidgetColors {
     resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK ==
       Configuration.UI_MODE_NIGHT_YES
   return WidgetColors.from(
-    if (dark) dynamicDarkColorScheme(this) else dynamicLightColorScheme(this)
+    if (dark) dynamicDarkColorScheme(this) else dynamicLightColorScheme(this),
   )
 }
 
 /** Swim strip that sits on the widget surface: night water on dark chrome, pool on light. */
-fun WidgetColors.waterColors(): WaterColors =
-  if (isDark) WaterColors.Night else WaterColors.Pool
+fun WidgetColors.waterColors(): WaterColors = if (isDark) WaterColors.Night else WaterColors.Pool

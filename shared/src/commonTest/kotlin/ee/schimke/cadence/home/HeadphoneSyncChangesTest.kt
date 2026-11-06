@@ -37,7 +37,7 @@ class HeadphoneSyncChangesTest {
           startMs,
           600_000,
           "f.m4a",
-        )
+        ),
       ),
     )
 
@@ -47,14 +47,14 @@ class HeadphoneSyncChangesTest {
         PodcastLibrary(
           playlist = PlaylistSnapshot(name = "Up Next", episodes = manifests.map { it.episode }),
           manifests = manifests.toList(),
-        )
+        ),
     )
 
   @Test
   fun nothingChangesRightAfterACopy() {
     val current = state(manifest(episode("a")))
     assertTrue(
-      headphoneSyncChanges(current.copy(lastCopied = deviceManifest(current.library))).isEmpty()
+      headphoneSyncChanges(current.copy(lastCopied = deviceManifest(current.library))).isEmpty(),
     )
   }
 

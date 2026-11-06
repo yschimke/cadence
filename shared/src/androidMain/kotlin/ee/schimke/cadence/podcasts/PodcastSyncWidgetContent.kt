@@ -69,14 +69,13 @@ fun PodcastSyncWidgetContent(
     modifier =
       RemoteModifier.fillMaxSize()
         .let { if (onTap != null) it.clickable(onTap) else it }
-        .background(colors.background.rc)
+        .background(colors.background.rc),
   ) {
     // Metrics hug the top; the pool sits on the bottom edge. SpaceBetween avoids an empty
     // middle band when the slot is taller than the three status lines.
     RemoteColumn(
       modifier = RemoteModifier.fillMaxSize(),
-      verticalArrangement =
-        if (lane) RemoteArrangement.SpaceBetween else RemoteArrangement.Center,
+      verticalArrangement = if (lane) RemoteArrangement.SpaceBetween else RemoteArrangement.Center,
     ) {
       RemoteColumn(
         modifier = RemoteModifier.fillMaxWidth().padding((8 * scale).rdp),

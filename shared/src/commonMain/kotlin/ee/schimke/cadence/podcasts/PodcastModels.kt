@@ -33,7 +33,7 @@ data class Episode(
 
   fun validate() {
     require(
-      backend.isNotBlank() && id.isNotBlank() && revision.isNotBlank() && audioVersion.isNotBlank()
+      backend.isNotBlank() && id.isNotBlank() && revision.isNotBlank() && audioVersion.isNotBlank(),
     )
     require(durationMs in 1..2_592_000_000L && positionMs in 0..durationMs) {
       "Invalid episode duration or position"
@@ -253,7 +253,7 @@ data class PodcastLibrary(
     completions.forEach {
       require(it.observedRevision.isNotBlank() && it.startMs >= 0 && it.endMs > it.startMs)
       require(
-        it.sectionId == digest("${it.episodeKey}|${it.audioVersion}|${it.startMs}|${it.endMs}")
+        it.sectionId == digest("${it.episodeKey}|${it.audioVersion}|${it.startMs}|${it.endMs}"),
       ) {
         "Invalid completion"
       }
@@ -441,7 +441,7 @@ fun rssSnapshot(url: String, feed: RssFeed, latest: Int): RssImport {
   }
   if (episodes.isEmpty())
     throw PodcastProblem(
-      "No downloadable episodes found. Items need an HTTPS audio enclosure and an itunes:duration."
+      "No downloadable episodes found. Items need an HTTPS audio enclosure and an itunes:duration.",
     )
   val snapshot = PlaylistSnapshot(name = feed.name.ifBlank { "RSS podcast" }, episodes = episodes)
   snapshot.validate()
@@ -508,7 +508,7 @@ fun deviceManifest(library: PodcastLibrary): DeviceManifest =
           it.episode.durationMs,
           podcastFolder(it.episode),
         )
-      }
+      },
   )
 
 /** A stable, filesystem-safe show folder; source identifiers are never written to the device. */
@@ -603,7 +603,7 @@ class PodcastProblem(message: String, val status: Int = 0) : Exception(message)
 
 fun validateAudioFileName(name: String) {
   require(
-    name.matches(Regex("[a-zA-Z0-9_-]{1,60}-[0-9]{12}-[a-f0-9]{64}\\.(mp3|m4a|ogg|opus|flac|wav)"))
+    name.matches(Regex("[a-zA-Z0-9_-]{1,60}-[0-9]{12}-[a-f0-9]{64}\\.(mp3|m4a|ogg|opus|flac|wav)")),
   ) {
     "Invalid podcast filename"
   }

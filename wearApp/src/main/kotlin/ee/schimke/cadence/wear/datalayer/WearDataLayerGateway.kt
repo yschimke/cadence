@@ -29,8 +29,8 @@ class DataLayerHeadsetGateway(private val context: Context) : HeadsetGateway {
   private val state =
     MutableStateFlow(
       HeadsetSnapshot(
-        connection = HeadsetConnection.Unavailable("Waiting for Cadence on your phone")
-      )
+        connection = HeadsetConnection.Unavailable("Waiting for Cadence on your phone"),
+      ),
     )
   override val snapshot: StateFlow<HeadsetSnapshot> = state.asStateFlow()
 
@@ -69,7 +69,7 @@ class DataLayerHeadsetGateway(private val context: Context) : HeadsetGateway {
     val connection =
       if (map.getString(WearCompanionProtocol.ConnectionKey) == "phone_connected") {
         HeadsetConnection.PhoneConnected(
-          map.getString(WearCompanionProtocol.DeviceNameKey) ?: "OpenSwim Pro"
+          map.getString(WearCompanionProtocol.DeviceNameKey) ?: "OpenSwim Pro",
         )
       } else {
         HeadsetConnection.Disconnected
@@ -84,7 +84,7 @@ class DataLayerHeadsetGateway(private val context: Context) : HeadsetGateway {
           .getStringArrayList(WearCompanionProtocol.CapabilityIdsKey)
           .orEmpty()
           .mapNotNull { runCatching { RcspCommandId.valueOf(it) }.getOrNull() }
-          .toSet()
+          .toSet(),
       )
     state.value =
       HeadsetSnapshot(
@@ -135,7 +135,7 @@ private fun com.google.android.gms.wearable.DataMap.toSyncStatus(): CompanionSyn
       )
     "failed" ->
       CompanionSyncStatus.Failed(
-        getString(WearCompanionProtocol.SyncDetailKey) ?: "Unknown sync error"
+        getString(WearCompanionProtocol.SyncDetailKey) ?: "Unknown sync error",
       )
     else -> CompanionSyncStatus.Unavailable
   }

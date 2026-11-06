@@ -24,7 +24,7 @@ fun PortableApp(factory: PortableViewModelFactory) {
     LocalViewModelStoreOwner provides owner,
   ) {
     MaterialTheme(
-      colorScheme = if (isSystemInDarkTheme()) darkColorScheme() else lightColorScheme()
+      colorScheme = if (isSystemInDarkTheme()) darkColorScheme() else lightColorScheme(),
     ) {
       App()
     }

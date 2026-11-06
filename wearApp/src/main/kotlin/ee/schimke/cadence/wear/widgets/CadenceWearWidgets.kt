@@ -129,7 +129,7 @@ class LocalAudioPlaylistWearWidget : GlanceWearWidget() {
   ): WearWidgetDocument {
     val snapshot = WearCompanionServices.gateway(context).snapshot.value
     return WearWidgetDocument(
-      background = WearWidgetBrush.color(playlistBackground(snapshot, params.isCompact).rc)
+      background = WearWidgetBrush.color(playlistBackground(snapshot, params.isCompact).rc),
     ) {
       RemoteMaterialTheme { PlaylistWidget(snapshot, params.isCompact) }
     }
@@ -664,7 +664,7 @@ class WearWidgetActionReceiver : BroadcastReceiver() {
             WidgetAction.Pause -> HeadsetAction.Pause
             WidgetAction.Next -> HeadsetAction.NextTrack
             WidgetAction.PlayTrack -> HeadsetAction.PlayLocalAudio(trackId.toUInt())
-          }
+          },
         )
       } finally {
         WearWidgets.updateAll(context.applicationContext)
@@ -825,7 +825,7 @@ private val WearWidgetParams.isCompact: Boolean
 @Preview(name = "Now playing · rectangular", showBackground = true, backgroundColor = 0xFF8A8A8E)
 @Composable
 fun ModeAndControlsWearWidgetRectangularPreview(
-  @PreviewParameter(RectangularAllWidgetPreviewParams::class) params: WearWidgetParams
+  @PreviewParameter(RectangularAllWidgetPreviewParams::class) params: WearWidgetParams,
 ) {
   WidgetPreview(params) { ModeAndControlsWidgetContent(previewSnapshot, params.isCompact) }
 }
@@ -837,7 +837,7 @@ fun ModeAndControlsWearWidgetRectangularPreview(
 )
 @Composable
 fun ModeAndControlsWearWidgetRoundPreview(
-  @PreviewParameter(RoundAllWidgetPreviewParams::class) params: WearWidgetParams
+  @PreviewParameter(RoundAllWidgetPreviewParams::class) params: WearWidgetParams,
 ) {
   WidgetPreview(params) { ModeAndControlsWidgetContent(previewSnapshot, params.isCompact) }
 }
@@ -845,7 +845,7 @@ fun ModeAndControlsWearWidgetRoundPreview(
 @Preview(name = "Now playing · squircle", showBackground = true, backgroundColor = 0xFF8A8A8E)
 @Composable
 fun ModeAndControlsWearWidgetSquirclePreview(
-  @PreviewParameter(SquircleAllWidgetPreviewParams::class) params: WearWidgetParams
+  @PreviewParameter(SquircleAllWidgetPreviewParams::class) params: WearWidgetParams,
 ) {
   WidgetPreview(params) { ModeAndControlsWidgetContent(previewSnapshot, params.isCompact) }
 }
@@ -861,7 +861,7 @@ fun ModeAndControlsWearWidgetSquirclePreview(
 @AnimatedPreview(durationMs = 3000, frameIntervalMs = 80, showCurves = false)
 @Composable
 fun ModeAndControlsWearWidgetAnimatedPreview(
-  @PreviewParameter(RoundAllWidgetPreviewParams::class) params: WearWidgetParams
+  @PreviewParameter(RoundAllWidgetPreviewParams::class) params: WearWidgetParams,
 ) {
   val seconds = rememberPreviewSeconds()
   key(seconds) {
@@ -874,7 +874,7 @@ fun ModeAndControlsWearWidgetAnimatedPreview(
 @Preview(name = "Playlist · rectangular", showBackground = true, backgroundColor = 0xFF8A8A8E)
 @Composable
 fun LocalAudioPlaylistWearWidgetRectangularPreview(
-  @PreviewParameter(RectangularAllWidgetPreviewParams::class) params: WearWidgetParams
+  @PreviewParameter(RectangularAllWidgetPreviewParams::class) params: WearWidgetParams,
 ) {
   WidgetPreview(params, playlistBackground(previewSnapshot, params.isCompact)) {
     PlaylistWidget(previewSnapshot, params.isCompact)
@@ -884,7 +884,7 @@ fun LocalAudioPlaylistWearWidgetRectangularPreview(
 @Preview(name = "Playlist · round (Samsung)", showBackground = true, backgroundColor = 0xFF8A8A8E)
 @Composable
 fun LocalAudioPlaylistWearWidgetRoundPreview(
-  @PreviewParameter(RoundAllWidgetPreviewParams::class) params: WearWidgetParams
+  @PreviewParameter(RoundAllWidgetPreviewParams::class) params: WearWidgetParams,
 ) {
   WidgetPreview(params, playlistBackground(previewSnapshot, params.isCompact)) {
     PlaylistWidget(previewSnapshot, params.isCompact)
@@ -894,7 +894,7 @@ fun LocalAudioPlaylistWearWidgetRoundPreview(
 @Preview(name = "Playlist · squircle", showBackground = true, backgroundColor = 0xFF8A8A8E)
 @Composable
 fun LocalAudioPlaylistWearWidgetSquirclePreview(
-  @PreviewParameter(SquircleAllWidgetPreviewParams::class) params: WearWidgetParams
+  @PreviewParameter(SquircleAllWidgetPreviewParams::class) params: WearWidgetParams,
 ) {
   WidgetPreview(params, playlistBackground(previewSnapshot, params.isCompact)) {
     PlaylistWidget(previewSnapshot, params.isCompact)
@@ -904,7 +904,7 @@ fun LocalAudioPlaylistWearWidgetSquirclePreview(
 @Preview(name = "Sync · rectangular", showBackground = true, backgroundColor = 0xFF8A8A8E)
 @Composable
 fun SyncStatusWearWidgetRectangularPreview(
-  @PreviewParameter(RectangularAllWidgetPreviewParams::class) params: WearWidgetParams
+  @PreviewParameter(RectangularAllWidgetPreviewParams::class) params: WearWidgetParams,
 ) {
   WidgetPreview(params) { SyncStatusWidgetContent(previewSnapshot, params.isCompact) }
 }
@@ -912,7 +912,7 @@ fun SyncStatusWearWidgetRectangularPreview(
 @Preview(name = "Sync · round (Samsung)", showBackground = true, backgroundColor = 0xFF8A8A8E)
 @Composable
 fun SyncStatusWearWidgetRoundPreview(
-  @PreviewParameter(RoundAllWidgetPreviewParams::class) params: WearWidgetParams
+  @PreviewParameter(RoundAllWidgetPreviewParams::class) params: WearWidgetParams,
 ) {
   WidgetPreview(params) { SyncStatusWidgetContent(previewSnapshot, params.isCompact) }
 }
@@ -920,7 +920,7 @@ fun SyncStatusWearWidgetRoundPreview(
 @Preview(name = "Sync · squircle", showBackground = true, backgroundColor = 0xFF8A8A8E)
 @Composable
 fun SyncStatusWearWidgetSquirclePreview(
-  @PreviewParameter(SquircleAllWidgetPreviewParams::class) params: WearWidgetParams
+  @PreviewParameter(SquircleAllWidgetPreviewParams::class) params: WearWidgetParams,
 ) {
   WidgetPreview(params) { SyncStatusWidgetContent(previewSnapshot, params.isCompact) }
 }

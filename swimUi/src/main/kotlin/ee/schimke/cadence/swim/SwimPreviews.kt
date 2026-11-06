@@ -176,7 +176,7 @@ fun SwimmingPoolPreview() {
         RemoteBox(
           RemoteModifier.fillMaxSize()
             .clip(RemoteRoundedCornerShape(16.rdp))
-            .background(Color(0xFF1B2024).rc)
+            .background(Color(0xFF1B2024).rc),
         ) {
           SwimmingPool(RemoteModifier.fillMaxSize(), swimming = swimming, clock = t.rf)
         }

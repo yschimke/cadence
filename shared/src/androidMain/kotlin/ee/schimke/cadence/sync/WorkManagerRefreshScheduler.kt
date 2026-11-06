@@ -23,54 +23,59 @@ import java.util.concurrent.TimeUnit
 @SingleIn(AppScope::class)
 @Inject
 class WorkManagerRefreshScheduler(
-    private val context: Context,
+  private val context: Context,
 ) : RefreshScheduler {
 
-    private val workManager: WorkManager get() = WorkManager.getInstance(context)
+  private val workManager: WorkManager
+    get() = WorkManager.getInstance(context)
 
-    override fun schedule(profile: SyncProfile) {
-        val tag = RefreshWorker.periodicTag(profile.id)
-        if (!profile.auto_refresh || profile.refresh_interval_minutes <= 0) {
-            workManager.cancelUniqueWork(tag)
-            return
-        }
-        val request = PeriodicWorkRequestBuilder<RefreshWorker>(
-            profile.refresh_interval_minutes.toLong().coerceAtLeast(15),
-            TimeUnit.MINUTES,
+  override fun schedule(profile: SyncProfile) {
+    val tag = RefreshWorker.periodicTag(profile.id)
+    if (!profile.auto_refresh || profile.refresh_interval_minutes <= 0) {
+      workManager.cancelUniqueWork(tag)
+      return
+    }
+    val request =
+      PeriodicWorkRequestBuilder<RefreshWorker>(
+          profile.refresh_interval_minutes.toLong().coerceAtLeast(15),
+          TimeUnit.MINUTES,
         )
-            .setConstraints(profile.network_constraint.toConstraints())
-            .setInputData(Data.Builder().putString(RefreshWorker.KEY_PROFILE_ID, profile.id).build())
-            .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 30, TimeUnit.MINUTES)
-            .addTag(tag)
-            .build()
-        workManager.enqueueUniquePeriodicWork(
-            tag,
-            ExistingPeriodicWorkPolicy.UPDATE,
-            request,
-        )
-    }
+        .setConstraints(profile.network_constraint.toConstraints())
+        .setInputData(Data.Builder().putString(RefreshWorker.KEY_PROFILE_ID, profile.id).build())
+        .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 30, TimeUnit.MINUTES)
+        .addTag(tag)
+        .build()
+    workManager.enqueueUniquePeriodicWork(
+      tag,
+      ExistingPeriodicWorkPolicy.UPDATE,
+      request,
+    )
+  }
 
-    override fun cancel(profileId: String) {
-        workManager.cancelUniqueWork(RefreshWorker.periodicTag(profileId))
-    }
+  override fun cancel(profileId: String) {
+    workManager.cancelUniqueWork(RefreshWorker.periodicTag(profileId))
+  }
 
-    override fun runNow(profileId: String) {
-        val tag = RefreshWorker.oneShotTag(profileId)
-        val request = OneTimeWorkRequestBuilder<RefreshWorker>()
-            .setInputData(Data.Builder().putString(RefreshWorker.KEY_PROFILE_ID, profileId).build())
-            .addTag(tag)
-            // Manual refreshes ignore the network gate so the user can force a run.
-            .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 1, TimeUnit.MINUTES)
-            .build()
-        workManager.enqueueUniqueWork(tag, ExistingWorkPolicy.REPLACE, request)
-    }
+  override fun runNow(profileId: String) {
+    val tag = RefreshWorker.oneShotTag(profileId)
+    val request =
+      OneTimeWorkRequestBuilder<RefreshWorker>()
+        .setInputData(Data.Builder().putString(RefreshWorker.KEY_PROFILE_ID, profileId).build())
+        .addTag(tag)
+        // Manual refreshes ignore the network gate so the user can force a run.
+        .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 1, TimeUnit.MINUTES)
+        .build()
+    workManager.enqueueUniqueWork(tag, ExistingWorkPolicy.REPLACE, request)
+  }
 
-    private fun NetworkConstraint.toConstraints(): Constraints =
-        Constraints.Builder().setRequiredNetworkType(
-            when (this) {
-                NetworkConstraint.ANY -> NetworkType.NOT_REQUIRED
-                NetworkConstraint.CONNECTED -> NetworkType.CONNECTED
-                NetworkConstraint.UNMETERED -> NetworkType.UNMETERED
-            }
-        ).build()
+  private fun NetworkConstraint.toConstraints(): Constraints =
+    Constraints.Builder()
+      .setRequiredNetworkType(
+        when (this) {
+          NetworkConstraint.ANY -> NetworkType.NOT_REQUIRED
+          NetworkConstraint.CONNECTED -> NetworkType.CONNECTED
+          NetworkConstraint.UNMETERED -> NetworkType.UNMETERED
+        },
+      )
+      .build()
 }

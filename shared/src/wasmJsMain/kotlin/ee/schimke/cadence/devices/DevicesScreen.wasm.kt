@@ -14,7 +14,7 @@ import okio.Path.Companion.toPath
 
 @Composable
 actual fun rememberFileExplorerOpenLauncher(
-  onGranted: (name: String, path: Path) -> Unit
+  onGranted: (name: String, path: Path) -> Unit,
 ): () -> Unit {
   var error by remember { mutableStateOf<String?>(null) }
   val callback by rememberUpdatedState(onGranted)

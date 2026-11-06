@@ -29,14 +29,15 @@ class AndroidShokzOpenSwimTransport(
     return byteArrayOf(0xA5.toByte(), 0x5A) + header + input.readExactly(payloadLength)
   }
 
-  private fun InputStream.readExactly(size: Int): ByteArray = ByteArray(size).also { bytes ->
-    var offset = 0
-    while (offset < bytes.size) {
-      val count = read(bytes, offset, bytes.size - offset)
-      if (count < 0) throw EOFException("RFCOMM stream ended mid-frame")
-      offset += count
+  private fun InputStream.readExactly(size: Int): ByteArray =
+    ByteArray(size).also { bytes ->
+      var offset = 0
+      while (offset < bytes.size) {
+        val count = read(bytes, offset, bytes.size - offset)
+        if (count < 0) throw EOFException("RFCOMM stream ended mid-frame")
+        offset += count
+      }
     }
-  }
 
   private fun InputStream.readRequired(): Int {
     val value = read()

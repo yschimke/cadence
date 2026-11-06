@@ -35,7 +35,7 @@ val generateBuildConfig =
           const val GOOGLE_CLIENT_SECRET: String = "${secret.replace("\"", "\\\"")}"
         }
         """
-          .trimIndent() + "\n"
+          .trimIndent() + "\n",
       )
     }
   }

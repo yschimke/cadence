@@ -73,7 +73,7 @@ internal class GoogleOAuthActivity : ComponentActivity() {
               val accessToken =
                 tokens?.accessToken
                   ?: throw IllegalStateException(
-                    "Token exchange returned no access token (${tokenEx?.message ?: "unknown error"})"
+                    "Token exchange returned no access token (${tokenEx?.message ?: "unknown error"})",
                   )
               val email = fetchGoogleUserEmail(accessToken)
               deferred.complete(
@@ -82,9 +82,8 @@ internal class GoogleOAuthActivity : ComponentActivity() {
                   refreshToken = tokens.refreshToken.orEmpty(),
                   accessToken = accessToken,
                   accessTokenExpiresAtMillis =
-                    tokens.accessTokenExpirationTime
-                      ?: (System.currentTimeMillis() + 3_600_000L),
-                )
+                    tokens.accessTokenExpirationTime ?: (System.currentTimeMillis() + 3_600_000L),
+                ),
               )
             } catch (e: Throwable) {
               deferred.completeExceptionally(e)
@@ -119,23 +118,26 @@ internal class GoogleOAuthActivity : ComponentActivity() {
      */
     private fun reversedClientRedirectUri(clientId: String): String {
       val reversed =
-        "com.googleusercontent.apps." +
-          clientId.substringBefore(".apps.googleusercontent.com")
+        "com.googleusercontent.apps." + clientId.substringBefore(".apps.googleusercontent.com")
       return "$reversed:/oauth2redirect"
     }
 
     private val pendingSlot =
       AtomicReference<Pair<OAuthConfig, CompletableDeferred<GoogleAccount>>?>()
 
-    fun launch(context: Context, config: OAuthConfig, deferred: CompletableDeferred<GoogleAccount>) {
+    fun launch(
+      context: Context,
+      config: OAuthConfig,
+      deferred: CompletableDeferred<GoogleAccount>,
+    ) {
       if (!pendingSlot.compareAndSet(null, config to deferred)) {
         deferred.completeExceptionally(
-          IllegalStateException("Another Google sign-in is already in progress")
+          IllegalStateException("Another Google sign-in is already in progress"),
         )
         return
       }
       context.startActivity(
-        Intent(context, GoogleOAuthActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        Intent(context, GoogleOAuthActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
       )
     }
   }

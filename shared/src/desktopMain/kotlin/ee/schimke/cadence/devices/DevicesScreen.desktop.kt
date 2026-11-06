@@ -10,7 +10,7 @@ import okio.Path.Companion.toOkioPath
 
 @Composable
 actual fun rememberFileExplorerOpenLauncher(
-  onGranted: (name: String, path: Path) -> Unit
+  onGranted: (name: String, path: Path) -> Unit,
 ): () -> Unit {
   val scope = rememberCoroutineScope()
   val callback by rememberUpdatedState(onGranted)

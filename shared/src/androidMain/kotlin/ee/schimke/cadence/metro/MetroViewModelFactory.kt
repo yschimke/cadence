@@ -10,21 +10,22 @@ import kotlin.collections.get
 import kotlin.invoke
 
 /**
- * A [androidx.lifecycle.ViewModelProvider.Factory] that uses an injected map of [kotlin.reflect.KClass] to [dev.zacsweers.metro.Provider] of [androidx.lifecycle.ViewModel]
- * to create ViewModels.
+ * A [androidx.lifecycle.ViewModelProvider.Factory] that uses an injected map of
+ * [kotlin.reflect.KClass] to [dev.zacsweers.metro.Provider] of [androidx.lifecycle.ViewModel] to
+ * create ViewModels.
  */
 @ContributesBinding(AppScope::class)
 @Inject
 class MetroViewModelFactory(val appGraph: AndroidAppGraph) : ViewModelProvider.Factory {
 
-    override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
-        val viewModelGraph = appGraph.viewModelGraphFactory.create(extras)
+  override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
+    val viewModelGraph = appGraph.viewModelGraphFactory.create(extras)
 
-        val provider =
-            viewModelGraph.viewModelProviders[modelClass.kotlin]
-                ?: throw IllegalArgumentException("Unknown model class $modelClass")
+    val provider =
+      viewModelGraph.viewModelProviders[modelClass.kotlin]
+        ?: throw IllegalArgumentException("Unknown model class $modelClass")
 
-        @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-        return modelClass.cast(provider())
-    }
+    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+    return modelClass.cast(provider())
+  }
 }

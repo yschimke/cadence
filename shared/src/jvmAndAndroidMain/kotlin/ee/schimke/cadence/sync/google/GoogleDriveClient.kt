@@ -87,7 +87,7 @@ class GoogleDriveClient(private val tokenProvider: suspend () -> String) {
     val request =
       Request.Builder()
         .url(
-          "https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&spaces=appDataFolder"
+          "https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&spaces=appDataFolder",
         )
         .header("Authorization", "Bearer ${tokenProvider()}")
         .post(body.toRequestBody("multipart/related; boundary=$boundary".toMediaType()))

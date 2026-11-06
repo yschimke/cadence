@@ -29,7 +29,7 @@ class PortableRefresh(private val repo: SyncRepo, private val backend: Directory
           }
           backend.files(
             if (source.subpath.isBlank()) source.location
-            else joinDirectory(source.location, source.subpath)
+            else joinDirectory(source.location, source.subpath),
           )
         }
       require(files.map { it.relativePath }.distinct().size == files.size) {

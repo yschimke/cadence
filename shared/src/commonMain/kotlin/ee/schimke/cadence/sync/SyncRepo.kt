@@ -112,7 +112,7 @@ class SyncRepo(private val dataStore: SettingsStore) {
   suspend fun updateProfile(id: String, transform: (SyncProfile) -> SyncProfile) {
     dataStore.updateData { settings ->
       settings.copy(
-        sync_profiles = settings.sync_profiles.map { if (it.id == id) transform(it) else it }
+        sync_profiles = settings.sync_profiles.map { if (it.id == id) transform(it) else it },
       )
     }
   }
