@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.19](https://github.com/yschimke/cadence/compare/v0.1.18...v0.1.19) (2026-11-06)
+
+
+### Features
+
+* delete stale episodes from the headphones on sync, throttle download progress ([#518](https://github.com/yschimke/cadence/issues/518)) ([f07efd7](https://github.com/yschimke/cadence/commit/f07efd73327167182c20cf80cb7b30fa75b0bb04))
+* order Home around the sync routine and show download progress and errors ([#516](https://github.com/yschimke/cadence/issues/516)) ([6d64dd3](https://github.com/yschimke/cadence/commit/6d64dd39605c53882e434fa132352be45a85f4b3))
+
 ## [0.1.18](https://github.com/yschimke/cadence/compare/v0.1.17...v0.1.18) (2026-11-05)
 
 
