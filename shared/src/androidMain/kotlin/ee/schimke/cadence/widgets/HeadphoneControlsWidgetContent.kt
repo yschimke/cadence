@@ -43,8 +43,17 @@ import androidx.compose.remote.creation.compose.state.rdp
 import androidx.compose.remote.creation.compose.state.rf
 import androidx.compose.remote.creation.compose.state.rs
 import androidx.compose.remote.creation.compose.state.rsp
-import androidx.compose.remote.creation.compose.vector.painterRemoteVector
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.vector.VectorPath
+import androidx.compose.ui.graphics.vector.VectorGroup
+import androidx.compose.ui.graphics.vector.PathParser
+import androidx.compose.ui.graphics.vector.PathNode
+import androidx.compose.ui.graphics.PathSegment
+import androidx.compose.ui.graphics.PathIterator
+import androidx.compose.runtime.remember
+import androidx.compose.remote.creation.compose.state.RemotePaint
+import androidx.compose.remote.creation.compose.layout.RemoteOffset
+import androidx.compose.remote.creation.RemotePath
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -308,14 +317,66 @@ private fun WidgetIconButton(
         level = 0.42f,
         bubbles = if (playing) 4 else 0,
         clock = if (playing) LocalSwimClock.current else 1.1f.rf,
+        // The button's own size: the template draws this pool inside conditional layouts.
+        sizePx = size.rdp.toPx(),
       )
     }
-    // Drawn in a canvas of its own, not as a painter background: a background painter is a
-    // drawWithContent, whose DrawContent Android 16's player repaints forever
-    // (yschimke/rc-players#776).
-    val icon = painterRemoteVector(action.icon, content)
-    RemoteCanvas(RemoteModifier.size(24.rdp)) { with(icon) { draw() } }
+    WidgetIcon(action.icon, content)
   }
+}
+
+/**
+ * [icon] in a 24dp canvas of its own, its paths scaled by the screen density.
+ *
+ * Not `painterRemoteVector`: that scales by the canvas's measured width, and the template draws
+ * every button inside conditional layouts. Android 16's platform widget player evaluates a hidden
+ * branch's drawing too, before that branch has a size, and the widget fails with
+ * "FloatExpression ... len = 3". A canvas of its own rather than a painter background: a background
+ * painter is a drawWithContent, whose DrawContent Android 16's player repaints forever
+ * (yschimke/rc-players#776).
+ */
+@Composable
+@RemoteComposable
+private fun WidgetIcon(icon: ImageVector, color: RemoteColor) {
+  val path = remember(icon) { icon.toRemotePath() }
+  val density = 1.rdp.toPx()
+  RemoteCanvas(RemoteModifier.size(IconDp.rdp)) {
+    scale(density, density, RemoteOffset(0f, 0f)) {
+      drawPath(path, RemotePaint { this.color = color })
+    }
+  }
+}
+
+/** The Material icons' viewport, and the size the buttons draw them at. */
+private const val IconDp = 24
+
+/** [this] icon's paths as one path in its viewport's units (no group transforms: Material icons). */
+private fun ImageVector.toRemotePath(): RemotePath {
+  val out = RemotePath()
+  fun append(nodes: List<PathNode>) {
+    val path = PathParser().addPathNodes(nodes).toPath()
+    for (segment in path.iterator(PathIterator.ConicEvaluation.AsQuadratics, 0.25f)) {
+      val p = segment.points
+      when (segment.type) {
+        PathSegment.Type.Move -> out.moveTo(p[0], p[1])
+        PathSegment.Type.Line -> out.lineTo(p[2], p[3])
+        PathSegment.Type.Quadratic -> out.quadTo(p[2], p[3], p[4], p[5])
+        PathSegment.Type.Cubic -> out.cubicTo(p[2], p[3], p[4], p[5], p[6], p[7])
+        PathSegment.Type.Close -> out.close()
+        else -> Unit
+      }
+    }
+  }
+  fun visit(group: VectorGroup) {
+    for (node in group) {
+      when (node) {
+        is VectorGroup -> visit(node)
+        is VectorPath -> append(node.pathData)
+      }
+    }
+  }
+  visit(root)
+  return out
 }
 
 /** The widget's colour roles as remote colours: constants, or named values a template reads. */
