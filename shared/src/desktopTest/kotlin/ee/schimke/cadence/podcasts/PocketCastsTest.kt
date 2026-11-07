@@ -337,10 +337,48 @@ class PocketCastsTest {
     assertEquals(listOf("n40"), controller.state.value.fresh.map { it.id })
     platform.upNextBody = upNext
 
-    // Other sources can't take new episodes.
+    // Other lists take new episodes on this phone only, and keep them across a refresh.
     controller.importPocketCasts(POCKET_CASTS_IN_PROGRESS, 5)
-    assertFalse(controller.canAddFresh)
-    assertTrue(controller.canArchive)
+    assertTrue(controller.canAddFresh)
+    platform.newReleases = """{"episodes":[${episode("n50", 600, 0)}]}"""
+    controller.refreshFresh()
+    platform.bodies.remove("/up_next/sync")
+    val n50 = controller.state.value.freshToReview.single()
+    assertTrue(controller.run { addFresh(n50.key) })
+    assertNull(platform.bodies["/up_next/sync"])
+    assertEquals("n50", controller.state.value.library.playlist!!.episodes.last().id)
+    controller.importPocketCasts(POCKET_CASTS_IN_PROGRESS, 5)
+    assertEquals("n50", controller.state.value.library.playlist!!.episodes.last().id)
+    assertEquals(listOf("n50"), controller.state.value.library.added.map { it.id })
+  }
+
+  @Test
+  fun theWholeListIsShownAndTheNextMovesUpOnArchive() = runBlocking {
+    val platform = ApiPlatform()
+    val controller = PodcastController(platform)
+    controller.signInPocketCasts("listener@example.com", "secret")
+    // Only one is synced, but the rest of Up Next is listed.
+    controller.importPocketCasts(POCKET_CASTS_UP_NEXT, 1)
+    val library = controller.state.value.library
+    assertEquals(listOf("e1"), library.playlist!!.episodes.map { it.id })
+    assertEquals(listOf("e2"), library.upcoming.map { it.id })
+    assertEquals(listOf("e1", "e2"), library.allEpisodes.map { it.id })
+
+    // Archiving makes room, and the next one moves up without another read of Up Next.
+    platform.upNextBody = """{"serverModified":1,"episodes":[],"episodeSync":[]}"""
+    assertTrue(controller.run { archiveEpisode(library.playlist!!.episodes.single().key) })
+    val after = controller.state.value.library
+    assertEquals(listOf("e2"), after.playlist!!.episodes.map { it.id })
+    assertTrue(after.upcoming.isEmpty())
+  }
+
+  @Test
+  fun pocketCastsEpisodesHaveArtwork() {
+    val episode =
+      pocketCastsToEpisode(
+        pocketCastsEpisodes("""{"episodes":[${episodes.getValue("e1")}]}""").single(),
+      )!!
+    assertEquals("https://static.pocketcasts.com/discover/images/200/p1.jpg", episode.artworkUrl)
   }
 
   private inner class FakeServer : PocketCastsServer {

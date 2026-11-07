@@ -214,6 +214,8 @@ class PodcastController(val platform: PodcastPlatform) {
         library =
           state.value.library.copy(
             playlist = snapshot,
+            upcoming = emptyList(),
+            added = emptyList(),
             feedUrl = "",
             manifests = emptyList(),
             lastBackendSync = Clock.System.now().toString(),
@@ -530,9 +532,21 @@ class PodcastController(val platform: PodcastPlatform) {
     pocketCastsLists.value = readPocketCastsLists(pocketCastsReader())
   }
 
+  /**
+   * Reads the whole list (up to [MAX_FEED_EPISODES]): the first [latest] are downloaded and synced,
+   * the rest wait in [PodcastLibrary.upcoming] to move up as those are archived.
+   */
   suspend fun importPocketCasts(list: String, latest: Int = state.value.library.feedLatest) {
-    val (snapshot, skipped) = readPocketCasts(pocketCastsReader(), list, latest)
-    importSnapshot(podcastJson.encodeToString(snapshot))
+    val previous = state.value.library
+    val (snapshot, skipped) = readPocketCasts(pocketCastsReader(), list, MAX_FEED_EPISODES)
+    // Additions made here survive a refresh of the same list, until the list itself has them.
+    val listed = snapshot.episodes.map { it.key }.toSet()
+    val added =
+      if (previous.source == PodcastSourceKind.PocketCasts && previous.sourceList == list)
+        previous.added.filter { it.key !in listed }
+      else emptyList()
+    val all = snapshot.episodes + added
+    importSnapshot(podcastJson.encodeToString(snapshot.copy(episodes = all.take(latest))))
     save(
       state.value.copy(
         library =
@@ -540,11 +554,15 @@ class PodcastController(val platform: PodcastPlatform) {
             feedLatest = latest,
             source = PodcastSourceKind.PocketCasts,
             sourceList = list,
+            upcoming = all.drop(latest),
+            added = added,
           ),
       ),
     )
+    val later = all.size - minOf(all.size, latest)
     notice =
-      "Imported ${count(snapshot.episodes.size, "episode")} from ${snapshot.name}" +
+      "Imported ${count(minOf(all.size, latest), "episode")} from ${snapshot.name}" +
+        (if (later > 0) " · $later more listed" else "") +
         if (skipped > 0) " · skipped $skipped without HTTPS audio or a known length" else ""
   }
 
@@ -559,9 +577,13 @@ class PodcastController(val platform: PodcastPlatform) {
   val canArchive: Boolean
     get() = state.value.library.source == PodcastSourceKind.PocketCasts && pocketCastsWritable
 
-  /** Whether a fresh episode can be added to the source: only Up Next takes new episodes. */
+  /**
+   * Whether a fresh episode can be added to the source. Up Next takes it in Pocket Casts too;
+   * another list only gets it on this phone, since Pocket Casts playlists can't be edited from
+   * here.
+   */
   val canAddFresh: Boolean
-    get() = canArchive && state.value.library.sourceList == POCKET_CASTS_UP_NEXT
+    get() = canArchive
 
   /** Whether this source offers fresh episodes at all. */
   val supportsFresh: Boolean
@@ -588,7 +610,7 @@ class PodcastController(val platform: PodcastPlatform) {
     val library = state.value.library
     val playlist = library.playlist ?: throw PodcastProblem("Connect a source first")
     val episode =
-      playlist.episodes.firstOrNull { it.key == episodeKey }
+      library.allEpisodes.firstOrNull { it.key == episodeKey }
         ?: throw PodcastProblem("Episode no longer available")
     val api = pocketCastsWriter()
     val podcast = podcastUuid(api, episode)
@@ -608,17 +630,26 @@ class PodcastController(val platform: PodcastPlatform) {
         // Timeouts and server errors surface as other exceptions on Android and desktop.
         false
       }
-    val current = state.value
+    val current = state.value.library
+    val kept = (current.playlist ?: playlist).episodes.filterNot { it.key == episodeKey }
+    val waiting = current.upcoming.filterNot { it.key == episodeKey }
+    // The next one in the list moves up into the synced episodes without another refresh.
+    val promoted = waiting.take((current.feedLatest - kept.size).coerceAtLeast(0))
     save(
-      current.copy(
+      state.value.copy(
         library =
-          current.library.copy(
-            playlist =
-              playlist.copy(episodes = playlist.episodes.filterNot { it.key == episodeKey }),
-            manifests = current.library.manifests.filterNot { it.episode.key == episodeKey },
+          current.copy(
+            playlist = (current.playlist ?: playlist).copy(episodes = kept + promoted),
+            upcoming = waiting.drop(promoted.size),
+            added = current.added.filterNot { it.key == episodeKey },
+            manifests = current.manifests.filterNot { it.episode.key == episodeKey },
           ),
       ),
     )
+    if (promoted.isNotEmpty()) {
+      recheckDownloads()
+      recheckCachedProcessing()
+    }
     notice =
       if (archived) "Archived ${episode.title}"
       else "Marked ${episode.title} played in Pocket Casts"
@@ -627,7 +658,7 @@ class PodcastController(val platform: PodcastPlatform) {
   /** Reads Pocket Casts New Releases into [LocalPodcastState.fresh]. */
   suspend fun refreshFresh() {
     if (!supportsFresh || !state.value.showFresh) return
-    val inSource = state.value.library.playlist?.episodes.orEmpty().map { it.key }.toSet()
+    val inSource = state.value.library.allEpisodes.map { it.key }.toSet()
     val dismissed = state.value.dismissedFresh
     val body = pocketCastsWriter().newReleases()
     // Dismissed episodes are left out before the limit, so later releases move up into view.
@@ -637,28 +668,41 @@ class PodcastController(val platform: PodcastPlatform) {
     save(state.value.copy(fresh = fresh, dismissedFresh = dismissed.intersect(listed)))
   }
 
-  /** Adds a fresh episode to the end of Up Next, and to this library ready to prepare. */
+  /**
+   * Adds a fresh episode to the end of the source: Up Next in Pocket Casts as well, any other list
+   * only on this phone. It joins the synced episodes when there's room, else waits in upcoming.
+   */
   suspend fun addFresh(episodeKey: String) {
-    if (!canAddFresh) throw PodcastProblem("Only a Pocket Casts Up Next source takes new episodes")
+    if (!canAddFresh) throw PodcastProblem("Sign in to Pocket Casts in Cadence to add episodes")
     val episode =
       state.value.fresh.firstOrNull { it.key == episodeKey }
         ?: throw PodcastProblem("Episode no longer available")
-    val api = pocketCastsWriter()
-    api.upNext(UP_NEXT_PLAY_LAST, episode, podcastUuid(api, episode))
+    val upNext = state.value.library.sourceList == POCKET_CASTS_UP_NEXT
+    if (upNext) {
+      val api = pocketCastsWriter()
+      api.upNext(UP_NEXT_PLAY_LAST, episode, podcastUuid(api, episode))
+    }
     val current = state.value
-    val playlist = current.library.playlist ?: throw PodcastProblem("Connect a source first")
+    val library = current.library
+    val playlist = library.playlist ?: throw PodcastProblem("Connect a source first")
+    val present = library.allEpisodes.any { it.key == episodeKey }
+    val room = library.upcoming.isEmpty() && playlist.episodes.size < library.feedLatest
     save(
       current.copy(
         library =
-          current.library.copy(
+          library.copy(
             playlist =
-              if (playlist.episodes.any { it.key == episodeKey }) playlist
+              if (present || !room) playlist
               else playlist.copy(episodes = playlist.episodes + episode),
+            upcoming = if (present || room) library.upcoming else library.upcoming + episode,
+            added = if (upNext || present) library.added else library.added + episode,
           ),
         fresh = current.fresh.filterNot { it.key == episodeKey },
       ),
     )
-    notice = "Added ${episode.title} to Up Next"
+    notice =
+      if (upNext) "Added ${episode.title} to Up Next"
+      else "Added ${episode.title} to ${playlist.name} on this phone"
   }
 
   /** Hides a fresh episode here only; Pocket Casts is unchanged. */

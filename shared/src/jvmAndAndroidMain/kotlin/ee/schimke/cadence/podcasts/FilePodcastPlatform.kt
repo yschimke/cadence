@@ -311,6 +311,11 @@ abstract class FilePodcastPlatform(protected val root: File) : PodcastPlatform {
           item.child("pubDate"),
         )
       },
+      channel
+        ?.let { (0 until it.childNodes.length).map(it.childNodes::item) }
+        ?.firstOrNull { it is Element && it.tagName == "itunes:image" }
+        ?.let { (it as Element).getAttribute("href") }
+        .orEmpty(),
     )
   }
 }

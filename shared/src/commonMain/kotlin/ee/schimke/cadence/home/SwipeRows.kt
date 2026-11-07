@@ -2,6 +2,7 @@ package ee.schimke.cadence.home
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -146,9 +147,11 @@ private const val FRESH_SHOWN = 8
 @Composable
 fun FreshSection(
   fresh: List<Episode>,
-  canAdd: Boolean,
+  /** The list a left swipe adds to ("Up Next", a playlist's name), or null when it can't. */
+  addTo: String?,
   onAdd: suspend (String) -> Boolean,
   onDismiss: suspend (String) -> Boolean,
+  onOpen: (Episode) -> Unit = {},
   onCollapse: (() -> Unit)? = null,
 ) {
   val colors = MaterialTheme.colorScheme
@@ -166,7 +169,7 @@ fun FreshSection(
           modifier = Modifier.semantics { heading() },
         )
         Text(
-          if (canAdd) "Swipe left to add to Up Next, right to dismiss"
+          if (addTo != null) "Swipe left to add to $addTo, right to dismiss"
           else "Swipe right to dismiss",
           style = MaterialTheme.typography.bodySmall,
           color = colors.onSurfaceVariant,
@@ -184,11 +187,11 @@ fun FreshSection(
           onSwipeRight =
             SwipeAction("Dismiss", Icons.Filled.VisibilityOff) { onDismiss(episode.key) },
           onSwipeLeft =
-            if (canAdd)
-              SwipeAction("Add to Up Next", Icons.Filled.PlaylistAdd) { onAdd(episode.key) }
+            if (addTo != null)
+              SwipeAction("Add to $addTo", Icons.Filled.PlaylistAdd) { onAdd(episode.key) }
             else null,
         ) {
-          FreshRow(episode)
+          FreshRow(episode) { onOpen(episode) }
         }
       }
     }
@@ -203,8 +206,9 @@ fun FreshSection(
 }
 
 @Composable
-private fun FreshRow(episode: Episode) {
+private fun FreshRow(episode: Episode, onClick: () -> Unit) {
   ListItem(
+    leadingContent = { PodcastArtwork(episode) },
     overlineContent =
       if (episode.podcastTitle.isBlank()) null
       else {
@@ -222,5 +226,6 @@ private fun FreshRow(episode: Episode) {
     },
     // Opaque, so the swipe background only shows where the row has moved away.
     colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surface),
+    modifier = Modifier.clickable(onClickLabel = "Episode details", onClick = onClick),
   )
 }

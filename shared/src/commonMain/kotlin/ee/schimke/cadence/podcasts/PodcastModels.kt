@@ -27,9 +27,25 @@ data class Episode(
   val summary: String = "",
   val transcriptUrl: String = "",
   val published: String = "",
+  // The show's cover art, when the source names one (RSS `itunes:image`).
+  val artwork: String = "",
 ) {
   val key: String
     get() = digest("$backend\u0000$id")
+
+  /**
+   * Cover art to show beside the episode: the source's own, else Pocket Casts' public artwork for
+   * the show. Null when neither is known.
+   */
+  val artworkUrl: String?
+    get() =
+      artwork.takeIf { it.startsWith("https://") }
+        ?: podcastId
+          .removePrefix("pocket-casts:")
+          .takeIf {
+            podcastId.startsWith("pocket-casts:") && it.matches(Regex("[A-Za-z0-9-]{1,100}"))
+          }
+          ?.let { "https://static.pocketcasts.com/discover/images/200/$it.jpg" }
 
   fun validate() {
     require(
@@ -226,6 +242,12 @@ data class PodcastLibrary(
   val sourceList: String = "",
   val feedUrl: String = "",
   val feedLatest: Int = 3,
+  // The rest of the source list past [feedLatest], in order: shown but not downloaded or synced,
+  // and moved up into [playlist] as episodes there are archived.
+  val upcoming: List<Episode> = emptyList(),
+  // New releases added here to a source that can't take them (a Pocket Casts playlist), kept
+  // across refreshes until archived.
+  val added: List<Episode> = emptyList(),
   val config: Segmentation = Segmentation(),
   val manifests: List<Manifest> = emptyList(),
   val completions: List<Completion> = emptyList(),
@@ -260,6 +282,10 @@ data class PodcastLibrary(
     }
   }
 }
+
+/** Everything listed from the source: the synced [PodcastLibrary.playlist], then what's next. */
+val PodcastLibrary.allEpisodes: List<Episode>
+  get() = playlist?.episodes.orEmpty() + upcoming
 
 /** A manually chosen episode position supersedes legacy per-section acknowledgements. */
 fun episodePosition(episode: Episode, library: PodcastLibrary, config: Segmentation? = null): Long {
@@ -305,7 +331,7 @@ data class LocalPodcastState(
   /** Fresh episodes still to decide on: not dismissed and not already in the source. */
   val freshToReview: List<Episode>
     get() {
-      val inSource = library.playlist?.episodes.orEmpty().map { it.key }.toSet()
+      val inSource = library.allEpisodes.map { it.key }.toSet()
       return fresh.filter { it.key !in dismissedFresh && it.key !in inSource }
     }
 }
@@ -387,7 +413,7 @@ data class RssItem(
   val published: String = "",
 )
 
-data class RssFeed(val name: String, val items: List<RssItem>)
+data class RssFeed(val name: String, val items: List<RssItem>, val image: String = "")
 
 data class RssImport(val snapshot: PlaylistSnapshot, val skipped: Int)
 
@@ -433,6 +459,7 @@ fun rssSnapshot(url: String, feed: RssFeed, latest: Int): RssImport {
           summary = item.summary,
           transcriptUrl = item.transcriptUrl,
           published = item.published,
+          artwork = feed.image.takeIf { it.startsWith("https://") }.orEmpty(),
         )
         .also { it.validate() }
     }

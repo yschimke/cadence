@@ -406,6 +406,15 @@ internal object PreviewFixtures {
   /** Signed in to Pocket Casts with New releases waiting to be triaged. */
   val freshPodcastState =
     preparedPodcastState.copy(
+      // Up Next holds more than the three synced; the rest wait their turn.
+      library =
+        preparedPodcastState.library.copy(
+          upcoming =
+            listOf(
+              episode("e4", "The long swim home", 41, 0),
+              episode("e5", "Cold water, warm hearts", 33, 0),
+            ),
+        ),
       fresh =
         listOf(
           episode("n1", "Deep sea vents and the origin of life", 48, 0)
