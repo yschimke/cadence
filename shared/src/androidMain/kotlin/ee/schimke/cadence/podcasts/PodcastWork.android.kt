@@ -14,6 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.core.app.NotificationCompat
 import androidx.work.*
 import kotlinx.coroutines.CoroutineStart
@@ -46,6 +47,10 @@ internal fun enqueuePodcastWork(context: Context, task: String): Operation {
 
 @Composable
 actual fun rememberPodcastWork(controller: PodcastController): PodcastWorkUi {
+  // A preview has no CadenceApplication to configure WorkManager (the app disables its automatic
+  // initializer), so getInstance would throw. Nothing runs in a preview: show the idle state, with
+  // the same buttons the app shows.
+  if (LocalInspectionMode.current) return PodcastWorkUi(supportsDownload = true)
   val context = LocalContext.current.applicationContext
   val work = remember(context) { WorkManager.getInstance(context) }
   val infos by
