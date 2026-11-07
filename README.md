@@ -1,13 +1,195 @@
 # Accessibility Report
 
-_Auto-generated from `compose-preview/a11y/pr`. 19 preview(s) across 3 module(s) · 9 error(s) · 0 warning(s) · 0 info._
+_Auto-generated from `compose-preview/a11y/pr`. 31 preview(s) across 1 module(s) · 19 error(s) · 0 warning(s) · 2 info._
 
 Browse inline; image URLs are pinned to the commit SHA on the baseline branch so links keep resolving after merge.
 
-> [!WARNING]
-> ATF data unavailable for this run — the daemon did not return accessibility findings. The renders below are **not** accessibility-checked.
-
 ## composeApp
+
+### `BluetoothConnectedPlayingPreview`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/BluetoothConnectedPlayingPreview_BT_controls_connected_playing-45366603.a11y.png" width="400" />
+
+_No findings._
+
+### `BluetoothDeveloperPreview`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/BluetoothDeveloperPreview_BT_controls_developer-850e449d.a11y.png" width="400" />
+
+_No findings._
+
+### `BluetoothDisconnectedPreview`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/BluetoothDisconnectedPreview_BT_controls_disconnected-42332e99.a11y.png" width="400" />
+
+_No findings._
+
+### `BluetoothMp3ModePreview`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/BluetoothMp3ModePreview_BT_controls_MP3_mode-f13f654e.a11y.png" width="400" />
+
+_No findings._
+
+### `BluetoothPermissionMissingPreview`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/BluetoothPermissionMissingPreview_BT_controls_permission_missing-a7ac699a.a11y.png" width="400" />
+
+_No findings._
+
+### `DeviceFilesLoadingPreview`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/DeviceFilesLoadingPreview_Device_files_loading-86a4c3d8.a11y.png" width="400" />
+
+_No findings._
+
+### `DeviceFilesNotAvailablePreview`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/DeviceFilesNotAvailablePreview_Device_files_not_available-713d5491.a11y.png" width="400" />
+
+_No findings._
+
+### `DevicesScreenEmptyPreview`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/DevicesScreenEmptyPreview_Devices_empty-af5a9e1c.a11y.png" width="400" />
+
+_No findings._
+
+### `DevicesScreenLoadedPreview`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/DevicesScreenLoadedPreview_Devices_loaded-cfb106a7.a11y.png" width="400" />
+
+_No findings._
+
+### `DevicesScreenLoadingPreview`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/DevicesScreenLoadingPreview_Devices_loading-8e171a67.a11y.png" width="400" />
+
+_No findings._
+
+### `HomeConnectedControlsPreview` · `spec:width=411dp,height=1200dp,dpi=420`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/HomeConnectedControlsPreview_Home_headphones_and_controls-d527acc7.a11y.png" width="400" />
+
+| # | Level | Rule | Element | Message |
+|--:|---|---|---|---|
+| 1 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+| 2 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+| 3 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+
+### `HomeDownloadFailedPreview` · `spec:width=411dp,height=1200dp,dpi=420`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/HomeDownloadFailedPreview_Home_download_failed-c8141de9.a11y.png" width="400" />
+
+| # | Level | Rule | Element | Message |
+|--:|---|---|---|---|
+| 1 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+| 2 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+
+### `HomeDownloadingPreview` · `spec:width=411dp,height=1200dp,dpi=420`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/HomeDownloadingPreview_Home_downloading-1b5958c7.a11y.png" width="400" />
+
+| # | Level | Rule | Element | Message |
+|--:|---|---|---|---|
+| 1 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+| 2 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+
+### `HomeEmptyPreview`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/HomeEmptyPreview_Home_empty-571e68af.a11y.png" width="400" />
+
+_No findings._
+
+### `HomeFreshPreview` · `spec:width=411dp,height=1600dp,dpi=420`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/HomeFreshPreview_Home_new_releases-638a4962.a11y.png" width="400" />
+
+| # | Level | Rule | Element | Message |
+|--:|---|---|---|---|
+| 1 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+| 2 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+
+### `HomeHeadphonesPreview`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/HomeHeadphonesPreview_Home_headphones_connected-71a28d46.a11y.png" width="400" />
+
+| # | Level | Rule | Element | Message |
+|--:|---|---|---|---|
+| 1 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+| 2 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+| 3 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+
+### `HomeLibraryPreview`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/HomeLibraryPreview_Home_library-7701225c.a11y.png" width="400" />
+
+| # | Level | Rule | Element | Message |
+|--:|---|---|---|---|
+| 1 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+| 2 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+
+### `HomeReadyToCopyPreview` · `spec:width=411dp,height=900dp,dpi=420`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/HomeReadyToCopyPreview_Home_ready_to_copy-3a801e9d.a11y.png" width="400" />
+
+| # | Level | Rule | Element | Message |
+|--:|---|---|---|---|
+| 1 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+| 2 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+| 3 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+
+### `HomeUpToDatePreview` · `spec:width=411dp,height=900dp,dpi=420`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/HomeUpToDatePreview_Home_up_to_date-2cbd5a11.a11y.png" width="400" />
+
+| # | Level | Rule | Element | Message |
+|--:|---|---|---|---|
+| 1 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+| 2 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+
+### `ManageEmptyPreview`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/ManageEmptyPreview_Manage_empty-55c57410.a11y.png" width="400" />
+
+_No findings._
+
+### `ManagePopulatedPreview`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/ManagePopulatedPreview_Manage_populated-41ab32cd.a11y.png" width="400" />
+
+| # | Level | Rule | Element | Message |
+|--:|---|---|---|---|
+| 1 | INFO | DuplicateSpeakableTextCheck | android.widget.TextView | This non-clickable item's speakable text: "Folder" is identical to that of 1 other item(s). |
+
+### `ManageRefreshingPreview`
+
+_No findings._
+
+### `PlayStorePhoneBluetooth` · `pixel_2`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/PlayStorePhoneBluetooth_Play_Store_phone_Bluetooth-37d78602.a11y.png" width="400" />
+
+_No findings._
+
+### `PlayStorePhoneManage` · `pixel_2`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/PlayStorePhoneManage_Play_Store_phone_Manage-5865e3ea.a11y.png" width="400" />
+
+| # | Level | Rule | Element | Message |
+|--:|---|---|---|---|
+| 1 | INFO | DuplicateSpeakableTextCheck | android.widget.TextView | This non-clickable item's speakable text: "Folder" is identical to that of 1 other item(s). |
+
+### `PlayStorePhoneSync` · `pixel_2`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/PlayStorePhoneSync_Play_Store_phone_Sync-aa8cb5dd.a11y.png" width="400" />
+
+_No findings._
+
+### `PodcastPreparedPreview`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/PodcastPreparedPreview_Podcast_sync_prepared-2db5b8ad.png" width="400" />
+
+_No findings._
 
 ### `PodcastWidgetMp3LargePreview`
 
@@ -27,118 +209,14 @@ _No findings._
 
 _No findings._
 
-## swimUi
+### `SyncModeReadyDarkPreview`
 
-### `SwimLaneEndlessPreview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/swimUi/SwimLaneEndlessPreview_Swim_lane_endless_laps-3bd8ff30.png" width="400" />
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/SyncModeReadyDarkPreview_Sync_ready_dark-de653549.a11y.png" width="400" />
 
 _No findings._
 
-### `SwimLaneFlipTurnLauncherPreview`
+### `SyncModeReadyPreview`
 
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/swimUi/SwimLaneFlipTurnLauncherPreview_Swim_lane_flip_turn_launcher-ca909f07.png" width="400" />
-
-_No findings._
-
-### `SwimLaneFlipTurnPreview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/swimUi/SwimLaneFlipTurnPreview_Swim_lane_flip_turn-31a2260f.png" width="400" />
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/SyncModeReadyPreview_Sync_ready-ce4e5f0a.a11y.png" width="400" />
 
 _No findings._
-
-### `SwimLaneLapsPreview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/swimUi/SwimLaneLapsPreview_Swim_lane_odd_and_even_laps-35df6d6f.png" width="400" />
-
-_No findings._
-
-### `SwimmingPoolPreview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/swimUi/SwimmingPoolPreview_Swimming_pool-28ed1567.png" width="400" />
-
-_No findings._
-
-### `WaterButtonsLauncherPreview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/swimUi/WaterButtonsLauncherPreview_Water_buttons_launcher-5df3807f.png" width="400" />
-
-_No findings._
-
-### `WaterButtonsWearPreview`
-
-_No findings._
-
-## wearApp
-
-### `LocalAudioPlaylistWearWidgetRectangularPreview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/wearApp/LocalAudioPlaylistWearWidgetRectangularPreview_Playlist_rectangular-a3081eb2.a11y.png" width="400" />
-
-| # | Level | Rule | Element | Message |
-|--:|---|---|---|---|
-| 1 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
-
-### `LocalAudioPlaylistWearWidgetRoundPreview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/wearApp/LocalAudioPlaylistWearWidgetRoundPreview_Playlist_round_Samsung-8676e176.a11y.png" width="400" />
-
-| # | Level | Rule | Element | Message |
-|--:|---|---|---|---|
-| 1 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
-
-### `LocalAudioPlaylistWearWidgetSquirclePreview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/wearApp/LocalAudioPlaylistWearWidgetSquirclePreview_Playlist_squircle-fe5fe95f.a11y.png" width="400" />
-
-| # | Level | Rule | Element | Message |
-|--:|---|---|---|---|
-| 1 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
-
-### `ModeAndControlsWearWidgetRectangularPreview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/wearApp/ModeAndControlsWearWidgetRectangularPreview_Now_playing_rectangular-71381054.a11y.png" width="400" />
-
-| # | Level | Rule | Element | Message |
-|--:|---|---|---|---|
-| 1 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
-
-### `ModeAndControlsWearWidgetRoundPreview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/wearApp/ModeAndControlsWearWidgetRoundPreview_Now_playing_round_Samsung-4f203db6.a11y.png" width="400" />
-
-| # | Level | Rule | Element | Message |
-|--:|---|---|---|---|
-| 1 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
-
-### `ModeAndControlsWearWidgetSquirclePreview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/wearApp/ModeAndControlsWearWidgetSquirclePreview_Now_playing_squircle-f7452489.a11y.png" width="400" />
-
-| # | Level | Rule | Element | Message |
-|--:|---|---|---|---|
-| 1 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
-
-### `SyncStatusWearWidgetRectangularPreview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/wearApp/SyncStatusWearWidgetRectangularPreview_Sync_rectangular-ecd1feeb.a11y.png" width="400" />
-
-| # | Level | Rule | Element | Message |
-|--:|---|---|---|---|
-| 1 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
-
-### `SyncStatusWearWidgetRoundPreview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/wearApp/SyncStatusWearWidgetRoundPreview_Sync_round_Samsung-f0a0a37a.a11y.png" width="400" />
-
-| # | Level | Rule | Element | Message |
-|--:|---|---|---|---|
-| 1 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
-
-### `SyncStatusWearWidgetSquirclePreview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/wearApp/SyncStatusWearWidgetSquirclePreview_Sync_squircle-d27e8677.a11y.png" width="400" />
-
-| # | Level | Rule | Element | Message |
-|--:|---|---|---|---|
-| 1 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
