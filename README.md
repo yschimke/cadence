@@ -3,7 +3,7 @@
 Auto-generated from `main`. Browse inline or compare against PR branches.
 
 > [!WARNING]
-> 1 preview(s) failed to render in the latest update (1 retained from the prior baseline). See **Render Failures** below.
+> 2 preview(s) failed to render in the latest update (2 retained from the prior baseline). See **Render Failures** below.
 
 ## Render Failures
 
@@ -12,6 +12,7 @@ The render task completed but no PNG was produced for these previews. Entries wi
 | Preview | Module | Function | Source | Baseline |
 |---------|--------|----------|--------|----------|
 | `composeApp/ee.schimke.cadence.preview.PodcastPreviewsKt.PodcastImportedPreview_Podcast sync — imported` | composeApp | `PodcastImportedPreview` | `src/main/kotlin/ee/schimke/cadence/preview/PodcastPreviews.kt` | retained |
+| `swimUi/ee.schimke.cadence.swim.SwimPreviewsKt.WaterButtonsWearPreview_Water buttons · Wear` | swimUi | `WaterButtonsWearPreview` | `src/main/kotlin/ee/schimke/cadence/swim/SwimPreviews.kt` | retained |
 
 ## composeApp
 
@@ -109,7 +110,6 @@ The render task completed but no PNG was produced for these previews. Entries wi
 | `SwimLaneLapsPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/swimUi/SwimLaneLapsPreview_Swim_lane_odd_and_even_laps-35df6d6f.png" width="150" /> |
 | `SwimmingPoolPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/swimUi/SwimmingPoolPreview_Swimming_pool-28ed1567.png" width="150" /> |
 | `WaterButtonsLauncherPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/swimUi/WaterButtonsLauncherPreview_Water_buttons_launcher-5df3807f.png" width="150" /> |
-| `WaterButtonsWearPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/swimUi/WaterButtonsWearPreview_Water_buttons_Wear-8eddeafe.png" width="150" /> |
 
 ## wearApp
 
