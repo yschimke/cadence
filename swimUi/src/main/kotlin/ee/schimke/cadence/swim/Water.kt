@@ -70,8 +70,16 @@ fun WaterBackground(
   crests: Int = 2,
   bubbles: Int = 5,
   clock: RemoteFloat = LocalSwimClock.current,
+  /**
+   * The canvas's size in pixels when the caller knows it, so the drawing doesn't read the canvas's
+   * measured size. Pass it for water inside a conditional layout: Android 16's platform widget
+   * player evaluates a hidden branch's drawing too, before that branch has a size, and fails.
+   */
+  sizePx: RemoteFloat? = null,
 ) {
-  RemoteCanvas(modifier) { drawWater(colors, level, crests, bubbles, clock) }
+  RemoteCanvas(modifier) {
+    drawWater(colors, level, crests, bubbles, clock, w = sizePx ?: width, h = sizePx ?: height)
+  }
 }
 
 /** [WaterBackground]'s drawing, for canvases that layer more on top. */
@@ -83,9 +91,9 @@ fun RemoteDrawScope.drawWater(
   clock: RemoteFloat = SwimClock,
   bubbleScale: Float = 1f,
   amplitude: Float = 0.075f,
+  w: RemoteFloat = width,
+  h: RemoteFloat = height,
 ) {
-  val w = width
-  val h = height
   val wavelength = w / crests.coerceAtLeast(1).toFloat()
   clipRect(0f.rf, 0f.rf, w, h) {
     drawRect(fill(colors.air), RemoteOffset(0f, 0f), RemoteSize(w, h))

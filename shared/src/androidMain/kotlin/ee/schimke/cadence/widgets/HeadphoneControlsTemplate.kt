@@ -229,8 +229,9 @@ fun HeadphoneControlsTemplateContent(
   } else {
     // One backdrop under every state's branch, not one per branch: it is the same for all of them.
     RemoteBox(RemoteModifier.fillMaxSize().background(palette.background)) {
-      val clock = LocalSwimClock.current
-      RemoteStateLayout(playing) { p -> backdrop(if (p) clock else 7.5f.rf) }
+      // Not a conditional layout on [playing]: Android 16's platform player evaluates a hidden
+      // branch's drawing too, before it has a size. The clock itself picks: still while paused.
+      backdrop(playing.select(LocalSwimClock.current, 7.5f.rf))
       branches()
     }
   }
