@@ -206,7 +206,15 @@ class PodcastController(val platform: PodcastPlatform) {
     )
   }
 
-  suspend fun importSnapshot(text: String) {
+  /**
+   * Replaces the playlist with [text]'s snapshot. [upcoming] and [added] are saved in the same
+   * write, so a refresh cancelled during the cache checks below never loses them.
+   */
+  suspend fun importSnapshot(
+    text: String,
+    upcoming: List<Episode> = emptyList(),
+    added: List<Episode> = emptyList(),
+  ) {
     val snapshot = podcastJson.decodeFromString<PlaylistSnapshot>(text)
     snapshot.validate()
     save(
@@ -214,8 +222,8 @@ class PodcastController(val platform: PodcastPlatform) {
         library =
           state.value.library.copy(
             playlist = snapshot,
-            upcoming = emptyList(),
-            added = emptyList(),
+            upcoming = upcoming,
+            added = added,
             feedUrl = "",
             manifests = emptyList(),
             lastBackendSync = Clock.System.now().toString(),
@@ -546,7 +554,11 @@ class PodcastController(val platform: PodcastPlatform) {
         previous.added.filter { it.key !in listed }
       else emptyList()
     val all = snapshot.episodes + added
-    importSnapshot(podcastJson.encodeToString(snapshot.copy(episodes = all.take(latest))))
+    importSnapshot(
+      podcastJson.encodeToString(snapshot.copy(episodes = all.take(latest))),
+      upcoming = all.drop(latest),
+      added = added,
+    )
     save(
       state.value.copy(
         library =
@@ -554,8 +566,6 @@ class PodcastController(val platform: PodcastPlatform) {
             feedLatest = latest,
             source = PodcastSourceKind.PocketCasts,
             sourceList = list,
-            upcoming = all.drop(latest),
-            added = added,
           ),
       ),
     )

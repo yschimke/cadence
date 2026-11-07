@@ -121,6 +121,7 @@ import ee.schimke.cadence.sync.BrowsedItem
 import ee.schimke.cadence.sync.SourceSuggestion
 import ee.schimke.cadence.sync.formatLastRefreshed
 import ee.schimke.cadence.sync.rememberDirectorySourceLauncher
+import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -204,9 +205,13 @@ fun HomeScreen(
   val addFolder = rememberDirectorySourceLauncher(viewModel::addFolder)
   /** Runs a swipe's action and always says what happened, since the row itself just vanishes. */
   suspend fun podcastResult(block: suspend PodcastController.() -> Unit): Boolean {
-    val ok = podcasts.run(block)
-    scope.launch { snackbar.showSnackbar(podcasts.status.value) }
-    return ok
+    // In the screen's scope, not the row's: the action removes its own row (an archive, an
+    // add), and work it does afterwards must not be cancelled with it.
+    return scope
+      .async {
+        podcasts.run(block).also { scope.launch { snackbar.showSnackbar(podcasts.status.value) } }
+      }
+      .await()
   }
   fun podcastAction(block: suspend PodcastController.() -> Unit) {
     scope.launch {
