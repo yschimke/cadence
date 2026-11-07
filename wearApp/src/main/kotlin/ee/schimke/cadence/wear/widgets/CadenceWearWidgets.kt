@@ -16,7 +16,7 @@ import androidx.compose.material.icons.filled.PriorityHigh
 import androidx.compose.material.icons.filled.SkipNext
 import androidx.compose.material.icons.filled.SkipPrevious
 import androidx.compose.material.icons.filled.Sync
-import androidx.compose.remote.creation.compose.action.Action
+import androidx.compose.remote.creation.compose.action.RemoteAction
 import androidx.compose.remote.creation.compose.action.pendingIntentAction
 import androidx.compose.remote.creation.compose.capture.toRemoteImageVector
 import androidx.compose.remote.creation.compose.layout.RemoteAlignment
@@ -289,7 +289,7 @@ private fun ModeAndControlsWidgetContent(snapshot: HeadsetSnapshot, compact: Boo
 @Composable
 @RemoteComposable
 private fun TransportButton(
-  action: Action,
+  action: RemoteAction,
   icon: ImageVector,
   label: String,
   enabled: Boolean,
@@ -330,7 +330,7 @@ private fun TransportButton(
 @Composable
 @RemoteComposable
 private fun TransportIconButton(
-  action: Action,
+  action: RemoteAction,
   icon: ImageVector,
   label: String,
   enabled: Boolean,
