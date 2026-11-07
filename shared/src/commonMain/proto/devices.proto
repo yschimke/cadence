@@ -6,7 +6,9 @@ package ee.schimke.cadence.datastore.proto;
 
 message Settings {
   repeated Device devices = 1;
-  repeated Bookmark bookmarks = 2;
+  // Was the in-app browser's bookmarks, removed with the browser.
+  reserved 2;
+  reserved "bookmarks";
   repeated SyncSource sync_sources = 3;
   // Reserved: was a flat staged-files list, replaced by per-profile
   // staging directories. Field number kept aside so older proto blobs
@@ -36,12 +38,6 @@ message Device {
   string id = 1;
   string name = 2;
   string path = 3;
-}
-
-message Bookmark {
-  string name = 1;
-  string url = 2;
-  string favicon = 3;
 }
 
 message SyncSource {

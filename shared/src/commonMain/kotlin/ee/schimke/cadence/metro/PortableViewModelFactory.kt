@@ -6,8 +6,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.CreationExtras
 import ee.schimke.cadence.bluetooth.*
-import ee.schimke.cadence.bookmarks.BookmarksViewModel
-import ee.schimke.cadence.browser.BrowserViewModel
 import ee.schimke.cadence.data.*
 import ee.schimke.cadence.devices.DevicesViewModel
 import ee.schimke.cadence.files.DeviceFilesViewModel
@@ -45,8 +43,6 @@ class PortableViewModelFactory(
       DevicesViewModel::class -> DevicesViewModel(devices, usb)
       DeviceFilesViewModel::class ->
         DeviceFilesViewModel(extras.createSavedStateHandle(), devices, fileSystem, storage)
-      BrowserViewModel::class -> BrowserViewModel(extras.createSavedStateHandle())
-      BookmarksViewModel::class -> BookmarksViewModel()
       BluetoothControlsViewModel::class -> BluetoothControlsViewModel(bluetooth)
       FileSyncViewModel::class ->
         FileSyncViewModel(repo, devices, sync, refresh, scheduler, suggestions)

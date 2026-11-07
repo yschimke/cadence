@@ -21,8 +21,6 @@ import ee.schimke.cadence.platform.LocalPlayUpdateSettings
 import ee.schimke.cadence.platform.LocalWidgetDesigns
 import ee.schimke.cadence.platform.PlayUpdateSettings
 import ee.schimke.cadence.platform.WidgetDesigns
-import ee.schimke.cadence.sync.google.GoogleSyncController
-import ee.schimke.cadence.sync.google.LocalGoogleSyncController
 import ee.schimke.cadence.widgets.CatalogRefreshWorker
 
 @ContributesIntoMap(AppScope::class, binding<Activity>())
@@ -30,7 +28,6 @@ import ee.schimke.cadence.widgets.CatalogRefreshWorker
 @Inject
 class MainActivity(
   private val viewModelFactory: ViewModelProvider.Factory,
-  private val googleSync: GoogleSyncController,
 ) : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     val splashScreen = installSplashScreen()
@@ -56,7 +53,6 @@ class MainActivity(
       }
       AndroidMaterialTheme {
         CompositionLocalProvider(
-          LocalGoogleSyncController provides googleSync,
           LocalPlayUpdateSettings provides playUpdates,
           LocalWidgetDesigns provides widgetDesigns,
         ) {

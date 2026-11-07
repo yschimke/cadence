@@ -11,8 +11,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import ee.schimke.cadence.AndroidMaterialTheme
 import ee.schimke.cadence.DeviceFiles
 import ee.schimke.cadence.bluetooth.BluetoothControlsContent
-import ee.schimke.cadence.bookmarks.BookmarksScreen
-import ee.schimke.cadence.bookmarks.BookmarksViewModel
 import ee.schimke.cadence.devices.DevicesScreen
 import ee.schimke.cadence.devices.DevicesViewModel
 import ee.schimke.cadence.files.DeviceFilesContent
@@ -240,30 +238,6 @@ internal fun DevicesScreenEmptyPreview() {
       uiState = DevicesViewModel.UiState.Devices(emptyList(), emptyList()),
       permissionCheck = {},
       onDeviceClick = {},
-    )
-  }
-}
-
-@Preview(name = "Bookmarks - loaded", showBackground = true)
-@Composable
-internal fun BookmarksScreenLoadedPreview() {
-  AndroidMaterialTheme {
-    BookmarksScreen(
-      modifier = themedModifier,
-      uiState = BookmarksViewModel.Loaded(PreviewFixtures.bookmarks),
-      onNavigateTo = {},
-    )
-  }
-}
-
-@Preview(name = "Bookmarks - loading", showBackground = true)
-@Composable
-internal fun BookmarksScreenLoadingPreview() {
-  AndroidMaterialTheme {
-    BookmarksScreen(
-      modifier = themedModifier,
-      uiState = BookmarksViewModel.Loading,
-      onNavigateTo = {},
     )
   }
 }

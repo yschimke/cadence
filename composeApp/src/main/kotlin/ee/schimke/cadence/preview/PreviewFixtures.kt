@@ -7,7 +7,6 @@ import ee.schimke.cadence.bluetooth.MediaInfo
 import ee.schimke.cadence.bluetooth.PlaybackOrder
 import ee.schimke.cadence.bluetooth.WorkingMode
 import ee.schimke.cadence.data.Volume
-import ee.schimke.cadence.datastore.proto.Bookmark
 import ee.schimke.cadence.datastore.proto.Device
 import ee.schimke.cadence.datastore.proto.NetworkConstraint
 import ee.schimke.cadence.datastore.proto.SourceKind
@@ -75,20 +74,6 @@ internal object PreviewFixtures {
         manufacturerName = "Generic",
         productId = 0x4EE7,
         productName = "Android Debug Bridge",
-      ),
-    )
-
-  val bookmarks: List<Bookmark> =
-    listOf(
-      Bookmark(
-        name = "Podbean",
-        url = "https://www.podbean.com/all",
-        favicon = "https://pbcdn1.podbean.com/fs1/site/images/favicon.ico",
-      ),
-      Bookmark(
-        name = "BBC Sounds",
-        url = "https://www.bbc.co.uk/sounds",
-        favicon = "",
       ),
     )
 

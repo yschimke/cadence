@@ -63,21 +63,6 @@
       ]
     },
     {
-      "name": "Bookmarks",
-      "components": [
-        {
-          "componentId": "Bookmarks/Loaded",
-          "preview": "BookmarksScreenLoadedPreview",
-          "caption": "Bookmarks, loaded."
-        },
-        {
-          "componentId": "Bookmarks/Loading",
-          "preview": "BookmarksScreenLoadingPreview",
-          "caption": "Bookmarks, loading."
-        }
-      ]
-    },
-    {
       "name": "Device files",
       "components": [
         {

@@ -1,12 +1,10 @@
 package ee.schimke.cadence.sync.google
 
-import androidx.compose.runtime.staticCompositionLocalOf
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 /**
- * Common UI-side surface for cross-device sync. The desktop implementation drives it from
- * [GoogleAccountRepo]; other platforms get the no-op until their own account story lands.
+ * Cross-device sync state, driven from [GoogleAccountRepo]. The desktop sync reads it to choose
+ * between the local and the Drive-backed manifest.
  */
 interface GoogleSyncController {
   val state: StateFlow<GoogleSyncState>
@@ -32,20 +30,3 @@ data class GoogleSyncState(
   val signedIn: Boolean
     get() = signedInEmail != null
 }
-
-/** Default: hide the Google card. Any platform without a wired controller gets this. */
-object NoOpGoogleSyncController : GoogleSyncController {
-  override val state = MutableStateFlow(GoogleSyncState(available = false))
-
-  override suspend fun signIn() {}
-
-  override suspend fun signOut() {}
-
-  override suspend fun setEnabled(enabled: Boolean) {}
-
-  override suspend fun refreshConfig() {}
-}
-
-/** Composition local; swap on the desktop entry point to inject the real controller. */
-val LocalGoogleSyncController =
-  staticCompositionLocalOf<GoogleSyncController> { NoOpGoogleSyncController }

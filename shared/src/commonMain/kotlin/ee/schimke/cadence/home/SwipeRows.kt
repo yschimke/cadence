@@ -26,7 +26,6 @@ import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -151,7 +150,6 @@ fun FreshSection(
   onAdd: suspend (String) -> Boolean,
   onDismiss: suspend (String) -> Boolean,
   onCollapse: (() -> Unit)? = null,
-  onTurnOff: (() -> Unit)? = null,
 ) {
   val colors = MaterialTheme.colorScheme
   OutlinedCard(Modifier.fillMaxWidth()) {
@@ -179,13 +177,6 @@ fun FreshSection(
           Icon(Icons.Filled.ExpandLess, contentDescription = "Hide new releases")
         }
     }
-    if (onTurnOff != null)
-      TextButton(
-        onClick = onTurnOff,
-        modifier = Modifier.padding(start = 48.dp),
-      ) {
-        Text("Don't suggest new releases")
-      }
     fresh.take(FRESH_SHOWN).forEach { episode ->
       key(episode.key) {
         HorizontalDivider()

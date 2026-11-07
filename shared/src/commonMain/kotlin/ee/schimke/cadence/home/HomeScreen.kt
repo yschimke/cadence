@@ -131,8 +131,6 @@ data class HomeActions(
   val onArchiveEpisode: suspend (episodeKey: String) -> Boolean = { true },
   val onAddFresh: suspend (episodeKey: String) -> Boolean = { true },
   val onDismissFresh: suspend (episodeKey: String) -> Boolean = { true },
-  /** Turns the New Releases suggestions off; they can be turned back on in podcast settings. */
-  val onHideFresh: () -> Unit = {},
   val onRefreshFolder: (profileId: String) -> Unit = {},
   val onRemoveSource: (sourceId: String) -> Unit = {},
   val onFindApp: (SourceSuggestion) -> Unit = {},
@@ -140,11 +138,9 @@ data class HomeActions(
   val onSyncPodcasts: () -> Unit = {},
   val onPreparePodcasts: () -> Unit = {},
   val onChooseHeadphoneStorage: () -> Unit = {},
-  val onCloudSync: () -> Unit = {},
   val onBluetoothControls: () -> Unit = {},
   val onManageSources: () -> Unit = {},
   val onFileExplorer: () -> Unit = {},
-  val onBookmarks: () -> Unit = {},
   val onPrevious: () -> Unit = {},
   val onPlayPause: () -> Unit = {},
   val onNext: () -> Unit = {},
@@ -156,11 +152,9 @@ fun HomeScreen(
   onAddPodcasts: () -> Unit,
   onOpenPodcasts: () -> Unit,
   onCopyToHeadphones: () -> Unit,
-  onCloudSync: () -> Unit,
   onBluetoothControls: () -> Unit,
   onManageSources: () -> Unit,
   onFileExplorer: () -> Unit,
-  onBookmarks: () -> Unit,
   modifier: Modifier = Modifier,
 ) {
   val viewModel = metroViewModel<HomeViewModel>()
@@ -244,7 +238,6 @@ fun HomeScreen(
         onArchiveEpisode = { key -> podcastResult { archiveEpisode(key) } },
         onAddFresh = { key -> podcastResult { addFresh(key) } },
         onDismissFresh = { key -> podcastResult { dismissFresh(key) } },
-        onHideFresh = { podcastAction { setShowFresh(false) } },
         onRefreshFolder = viewModel::refreshNow,
         onRemoveSource = viewModel::removeSource,
         onFindApp = viewModel::openSuggestion,
@@ -252,11 +245,9 @@ fun HomeScreen(
         onSyncPodcasts = { podcastAction { copyToDevice() } },
         onPreparePodcasts = podcastWork.process,
         onChooseHeadphoneStorage = chooseHeadphoneStorage,
-        onCloudSync = onCloudSync,
         onBluetoothControls = onBluetoothControls,
         onManageSources = onManageSources,
         onFileExplorer = onFileExplorer,
-        onBookmarks = onBookmarks,
         onPrevious = viewModel::previousTrack,
         onPlayPause = viewModel::playPause,
         onNext = viewModel::nextTrack,
@@ -397,7 +388,6 @@ fun HomeContent(
               actions.onAddFresh,
               actions.onDismissFresh,
               onCollapse = { expanded = false },
-              onTurnOff = actions.onHideFresh,
             )
           else FindMoreContent(fresh.size) { expanded = true }
         }
@@ -457,7 +447,6 @@ private fun LibraryTopBar(
         if (state.bluetoothSupported && state.bluetooth.connectedDevice == null)
           item("Bluetooth controls", actions.onBluetoothControls)()
         item("Storage", actions.onFileExplorer)()
-        item("Bookmarks", actions.onBookmarks)()
       }
     }
   }

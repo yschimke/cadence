@@ -142,7 +142,6 @@ dependencies {
   implementation(libs.compose.ui)
   implementation(libs.compose.ui.tooling.preview)
   implementation(libs.androidx.ui.text.google.fonts)
-  implementation(libs.ktor.client.core) // io.ktor.http.Url, used by BookmarksScreen previews
 
   implementation(libs.livery.client)
   implementation(libs.livery.launcher.widgets)

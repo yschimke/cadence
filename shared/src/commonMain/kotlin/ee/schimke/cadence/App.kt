@@ -29,8 +29,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import ee.schimke.cadence.bluetooth.BluetoothControlsScreen
-import ee.schimke.cadence.bookmarks.BookmarksScreen
-import ee.schimke.cadence.browser.BrowserScreen
 import ee.schimke.cadence.devices.DevicesScreen
 import ee.schimke.cadence.files.DeviceFilesScreen
 import ee.schimke.cadence.home.HomeScreen
@@ -88,10 +86,8 @@ fun App() {
           onAddPodcasts = { navController.navigate(AddPodcasts) },
           onOpenPodcasts = { navController.navigate(Podcasts) },
           onCopyToHeadphones = { navController.navigate(FileSync) },
-          onCloudSync = { navController.navigate(CloudSync) },
           onBluetoothControls = { navController.navigate(BluetoothControls) },
           onManageSources = { navController.navigate(ManageSync) },
-          onBookmarks = { navController.navigate(Bookmarks) },
           onFileExplorer = { navController.navigate(Devices) },
         )
       }
@@ -115,17 +111,6 @@ fun App() {
       composable<DeviceFiles> {
         DeviceFilesScreen(
           modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
-        )
-      }
-      composable<Browser> {
-        BrowserScreen(
-          modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
-        )
-      }
-      composable<Bookmarks> {
-        BookmarksScreen(
-          modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
-          onNavigateTo = { navController.navigate(Browser(it.toString())) },
         )
       }
       composable<BluetoothControls> {
@@ -158,10 +143,6 @@ fun App() {
 @Serializable data object Devices
 
 @Serializable data class DeviceFiles(val id: String)
-
-@Serializable data class Browser(val url: String?)
-
-@Serializable data object Bookmarks
 
 @Serializable data object BluetoothControls
 
