@@ -245,16 +245,28 @@ jobs:
           ls -la _release/
           echo "version=${version}" >> "$GITHUB_OUTPUT"
 
+      # `gh release upload` only adds assets. softprops/action-gh-release also
+      # PATCHes the release (re-sending target_commitish), which GITHUB_TOKEN may
+      # not do once main has moved on to a commit that changes .github/workflows:
+      # v0.1.22 failed with "Resource not accessible by integration" that way and
+      # shipped with no assets at all.
       - name: Attach assets to GitHub release
         if: github.event_name == 'push' || inputs.publish_release == true
-        uses: softprops/action-gh-release@v3.0.4
-        with:
-          tag_name: ${{ env.TAG_NAME }}
-          files: |
-            _release/*.apk
-            _release/*.aab
-            _release/cadence.wasmo
-          fail_on_unmatched_files: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          files=(_release/*.apk _release/*.aab _release/cadence.wasmo)
+          for pattern in '_release/*.apk' '_release/*.aab' '_release/cadence.wasmo'; do
+            matches=($pattern)
+            if (( ${#matches[@]} == 0 )); then
+              echo "::error::No release asset matches $pattern"
+              exit 1
+            fi
+          done
+          gh release upload "$TAG_NAME" "${files[@]}" --clobber
 
       - name: Upload workflow artifact
         if: github.event_name != 'push' && inputs.publish_release != true
@@ -273,7 +285,12 @@ jobs:
     name: Attach desktop installers
     needs: [desktop, release]
     # Manual dispatch builds artifacts without modifying an existing release.
-    if: github.event_name == 'push' || inputs.publish_release == true
+    # Runs after `release` but not only on its success: the release already
+    # exists (release-please made it), so an Android failure should not also
+    # withhold the desktop installers.
+    if: >-
+      !cancelled() && needs.desktop.result == 'success' &&
+      (github.event_name == 'push' || inputs.publish_release == true)
     runs-on: ubuntu-latest
     permissions:
       contents: write
