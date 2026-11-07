@@ -1,6 +1,6 @@
 # Accessibility Report
 
-_Auto-generated from `compose-preview/a11y/pr`. 39 preview(s) across 3 module(s) · 9 error(s) · 0 warning(s) · 0 info._
+_Auto-generated from `compose-preview/a11y/pr`. 19 preview(s) across 3 module(s) · 9 error(s) · 0 warning(s) · 0 info._
 
 Browse inline; image URLs are pinned to the commit SHA on the baseline branch so links keep resolving after merge.
 
@@ -8,110 +8,6 @@ Browse inline; image URLs are pinned to the commit SHA on the baseline branch so
 > ATF data unavailable for this run — the daemon did not return accessibility findings. The renders below are **not** accessibility-checked.
 
 ## composeApp
-
-### `AddPodcastsPreview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/AddPodcastsPreview_Add_podcasts-e09ca4b7.a11y.png" width="400" />
-
-_No findings._
-
-### `HeadphoneWidgetBluetoothPreview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/HeadphoneWidgetBluetoothPreview_Headphone_widget_Bluetooth-672bb261.png" width="400" />
-
-_No findings._
-
-### `HeadphoneWidgetChristmas3x1Preview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/HeadphoneWidgetChristmas3x1Preview_Headphone_widget_Christmas_MP3_3_1-65188605.png" width="400" />
-
-_No findings._
-
-### `HeadphoneWidgetChristmasPreview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/HeadphoneWidgetChristmasPreview_Headphone_widget_Christmas-83a2914f.png" width="400" />
-
-_No findings._
-
-### `HeadphoneWidgetDisconnectedPreview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/HeadphoneWidgetDisconnectedPreview_Headphone_widget_disconnected-b8bab80a.png" width="400" />
-
-_No findings._
-
-### `HeadphoneWidgetHalloweenPreview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/HeadphoneWidgetHalloweenPreview_Headphone_widget_Halloween-02705a4c.png" width="400" />
-
-_No findings._
-
-### `HeadphoneWidgetLightPreview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/HeadphoneWidgetLightPreview_Headphone_widget_light-98937184.png" width="400" />
-
-_No findings._
-
-### `HeadphoneWidgetMp32x1Preview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/HeadphoneWidgetMp32x1Preview_Headphone_widget_MP3_2_1-820e2ca9.png" width="400" />
-
-_No findings._
-
-### `HeadphoneWidgetMp33x1Preview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/HeadphoneWidgetMp33x1Preview_Headphone_widget_MP3_3_1-0abd2b18.png" width="400" />
-
-_No findings._
-
-### `HeadphoneWidgetMp33x2Preview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/HeadphoneWidgetMp33x2Preview_Headphone_widget_MP3_3_2-c9d5ee48.png" width="400" />
-
-_No findings._
-
-### `HeadphoneWidgetMp35x1Preview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/HeadphoneWidgetMp35x1Preview_Headphone_widget_MP3_5_1-32dd6d60.png" width="400" />
-
-_No findings._
-
-### `HeadphoneWidgetMp35x3Preview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/HeadphoneWidgetMp35x3Preview_Headphone_widget_MP3_5_3-c18f130c.png" width="400" />
-
-_No findings._
-
-### `HeadphoneWidgetMp3Preview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/HeadphoneWidgetMp3Preview_Headphone_widget_MP3-d6a1c3d9.png" width="400" />
-
-_No findings._
-
-### `HeadphoneWidgetNewYearPreview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/HeadphoneWidgetNewYearPreview_Headphone_widget_New_Year-655c9ae0.png" width="400" />
-
-_No findings._
-
-### `HeadphoneWidgetWinterPreview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/HeadphoneWidgetWinterPreview_Headphone_widget_winter-fa859d91.png" width="400" />
-
-_No findings._
-
-### `PodcastImportedPreview`
-
-_No findings._
-
-### `PodcastPocketCastsPreview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/PodcastPocketCastsPreview_Add_podcasts_Pocket_Casts_signed_in-cd7341fe.a11y.png" width="400" />
-
-_No findings._
-
-### `PodcastPreparedPreview`
-
-_No findings._
 
 ### `PodcastWidgetMp3LargePreview`
 
@@ -171,23 +67,9 @@ _No findings._
 
 ### `WaterButtonsWearPreview`
 
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/swimUi/WaterButtonsWearPreview_Water_buttons_Wear-8eddeafe.png" width="400" />
-
 _No findings._
 
 ## wearApp
-
-### `ConnectedWearCompanionPreview` · `wearos_large_round`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/wearApp/ConnectedWearCompanionPreview_Devices_Large_Round-4b2d8b90.a11y.png" width="400" />
-
-_No findings._
-
-### `LocalAudioPlaylistPreview` · `wearos_large_round`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/wearApp/LocalAudioPlaylistPreview_Devices_Large_Round-a766dc27.a11y.png" width="400" />
-
-_No findings._
 
 ### `LocalAudioPlaylistWearWidgetRectangularPreview`
 
