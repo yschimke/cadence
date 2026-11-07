@@ -3,7 +3,7 @@
 Auto-generated from `main`. Browse inline or compare against PR branches.
 
 > [!WARNING]
-> 1 preview(s) failed to render in the latest update (1 retained from the prior baseline). See **Render Failures** below.
+> 2 preview(s) failed to render in the latest update (1 retained from the prior baseline; 1 with no prior baseline to retain). See **Render Failures** below.
 
 ## Render Failures
 
@@ -11,6 +11,7 @@ The render task completed but no PNG was produced for these previews. Entries wi
 
 | Preview | Module | Function | Source | Baseline |
 |---------|--------|----------|--------|----------|
+| `composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.ManageRefreshingPreview_Manage - developer, refreshing` | composeApp | `ManageRefreshingPreview` | `src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt` | none |
 | `swimUi/ee.schimke.cadence.swim.SwimPreviewsKt.WaterButtonsWearPreview_Water buttons · Wear` | swimUi | `WaterButtonsWearPreview` | `src/main/kotlin/ee/schimke/cadence/swim/SwimPreviews.kt` | retained |
 
 ## composeApp
@@ -59,11 +60,10 @@ The render task completed but no PNG was produced for these previews. Entries wi
 | `PodcastWidgetNewYearPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/PodcastWidgetNewYearPreview_Podcast_widget_New_Year-52299ab0.png" width="150" /> |
 | `PodcastWidgetWinterPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/PodcastWidgetWinterPreview_Podcast_widget_winter-c44e8291.png" width="150" /> |
 | `BluetoothConnectedPlayingPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/BluetoothConnectedPlayingPreview_BT_controls_connected_playing-45366603.png" width="150" /> |
+| `BluetoothDeveloperPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/BluetoothDeveloperPreview_BT_controls_developer-850e449d.png" width="150" /> |
 | `BluetoothDisconnectedPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/BluetoothDisconnectedPreview_BT_controls_disconnected-42332e99.png" width="150" /> |
 | `BluetoothMp3ModePreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/BluetoothMp3ModePreview_BT_controls_MP3_mode-f13f654e.png" width="150" /> |
 | `BluetoothPermissionMissingPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/BluetoothPermissionMissingPreview_BT_controls_permission_missing-a7ac699a.png" width="150" /> |
-| `BookmarksScreenLoadedPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/BookmarksScreenLoadedPreview_Bookmarks_loaded-d8723d62.png" width="150" /> |
-| `BookmarksScreenLoadingPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/BookmarksScreenLoadingPreview_Bookmarks_loading-38d27511.png" width="150" /> |
 | `DeviceFilesLoadingPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/DeviceFilesLoadingPreview_Device_files_loading-86a4c3d8.png" width="150" /> |
 | `DeviceFilesNotAvailablePreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/DeviceFilesNotAvailablePreview_Device_files_not_available-713d5491.png" width="150" /> |
 | `DevicesScreenEmptyPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/DevicesScreenEmptyPreview_Devices_empty-af5a9e1c.png" width="150" /> |
@@ -80,7 +80,6 @@ The render task completed but no PNG was produced for these previews. Entries wi
 | `HomeUpToDatePreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HomeUpToDatePreview_Home_up_to_date-2cbd5a11.png" width="150" /> |
 | `ManageEmptyPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/ManageEmptyPreview_Manage_empty-55c57410.png" width="150" /> |
 | `ManagePopulatedPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/ManagePopulatedPreview_Manage_populated-41ab32cd.png" width="150" /> |
-| `ManageRefreshingPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/ManageRefreshingPreview_Manage_refreshing-fe8bc7dc.png" width="150" /> |
 | `PlayStorePhoneBluetooth` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/PlayStorePhoneBluetooth_Play_Store_phone_Bluetooth-37d78602.png" width="150" /> |
 | `PlayStorePhoneHomeDark` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/PlayStorePhoneHomeDark_Play_Store_phone_Home_dark-aef8b2b7.png" width="150" /> |
 | `PlayStorePhoneHomeLight` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/PlayStorePhoneHomeLight_Play_Store_phone_Home_light-a1bae343.png" width="150" /> |
