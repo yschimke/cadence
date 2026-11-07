@@ -20,6 +20,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -33,6 +34,7 @@ import ee.schimke.cadence.browser.BrowserScreen
 import ee.schimke.cadence.devices.DevicesScreen
 import ee.schimke.cadence.files.DeviceFilesScreen
 import ee.schimke.cadence.home.HomeScreen
+import ee.schimke.cadence.platform.Analytics
 import ee.schimke.cadence.podcasts.*
 import ee.schimke.cadence.sync.FileSyncScreen
 import ee.schimke.cadence.sync.ManageSyncScreen
@@ -41,6 +43,10 @@ import kotlinx.serialization.Serializable
 @Composable
 fun App() {
   val navController = rememberNavController()
+  // One screen_view per destination: the route's type name, without its arguments.
+  val destination by navController.currentBackStackEntryAsState()
+  val screen = destination?.destination?.route?.let(::screenName)
+  LaunchedEffect(screen) { screen?.let { Analytics.current.screen(it) } }
   val podcasts = rememberPodcastController()
   val podcastState by podcasts.state.collectAsState()
   if (podcastState.target.isNotBlank()) AutomaticallyMatchHeadphones(podcastState.target)
@@ -168,3 +174,9 @@ fun App() {
 @Serializable data object CloudSync
 
 @Serializable data object AddPodcasts
+
+/**
+ * `ee.schimke.cadence.DeviceFiles/{id}?x={x}` → `DeviceFiles`: no arguments, which can be personal.
+ */
+internal fun screenName(route: String): String =
+  route.substringBefore('/').substringBefore('?').substringAfterLast('.')

@@ -105,6 +105,13 @@ dependencies {
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.crashlytics)
   }
+  // Compiled against in every build; at runtime Firebase is only there when firebaseEnabled, and
+  // CadenceFirebase checks for it before touching it.
+  compileOnly(platform(libs.firebase.bom))
+  compileOnly(libs.firebase.analytics)
+  // Livery's template events in Firebase's shape (livery_*, exp_* parameters). Its own Firebase
+  // dependencies are compile-only too.
+  implementation(libs.livery.firebase)
 
   implementation(project(":shared"))
   implementation(libs.media3.exoplayer)
