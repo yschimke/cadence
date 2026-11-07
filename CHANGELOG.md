@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.22](https://github.com/yschimke/cadence/compare/v0.1.21...v0.1.22) (2026-11-07)
+
+
+### Features
+
+* developer mode, Material 3 Expressive and fewer options for everyone else ([#535](https://github.com/yschimke/cadence/issues/535)) ([8714206](https://github.com/yschimke/cadence/commit/8714206fe55be726cf45db1ce63fb7b7bf07cc61))
+
 ## [0.1.21](https://github.com/yschimke/cadence/compare/v0.1.20...v0.1.21) (2026-11-07)
 
 
