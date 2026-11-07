@@ -1,5 +1,7 @@
 package ee.schimke.cadence.platform
 
+import kotlin.concurrent.Volatile
+
 /**
  * Product analytics: which screens people use and what they do in them. The Android app sets
  * [current] to Firebase Analytics in release builds (CI injects the Firebase configuration); other
