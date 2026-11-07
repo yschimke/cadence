@@ -28,6 +28,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import ee.schimke.cadence.developer.LocalDeveloperMode
 import ee.schimke.cadence.devices.rememberFileExplorerOpenLauncher
 import kotlinx.coroutines.launch
 
@@ -430,6 +431,7 @@ fun PodcastScreen(
   }
   val library = local.library
   val playlist = library.playlist
+  val developer = LocalDeveloperMode.current.enabled
   Scaffold(modifier = modifier, snackbarHost = { SnackbarHost(snackbar) }) { padding ->
     LazyColumn(
       Modifier.padding(padding).fillMaxSize(),
@@ -491,9 +493,10 @@ fun PodcastScreen(
           busy,
           controller.platform,
           ::action,
+          showPartsToggle = developer,
         )
       }
-      item { AudioOptions(controller, library, busy, ::action) }
+      item { AudioOptions(controller, library, busy, ::action, chooseFormat = developer) }
       item {
         Expandable("Advanced settings") {
           OvernightPodcastOptions()
@@ -612,6 +615,8 @@ private fun EpisodeCard(
   busy: Boolean,
   platform: PodcastPlatform,
   action: (suspend PodcastController.() -> Unit) -> Unit,
+  /** The prepared parts' time ranges, a developer option. */
+  showPartsToggle: Boolean = false,
 ) {
   val library = local.library
   val position = episodePosition(episode, library, manifest?.config)
@@ -698,7 +703,7 @@ private fun EpisodeCard(
         TextButton(onClick = { showDetails = !showDetails }) {
           Text(if (showDetails) "Hide details" else "Episode details")
         }
-        if (manifest != null)
+        if (showPartsToggle && manifest != null)
           TextButton(onClick = { showParts = !showParts }) {
             Text(if (showParts) "Hide parts" else "Show ${manifest.sections.size} parts")
           }
@@ -727,7 +732,7 @@ private fun EpisodeCard(
           }
         }
       }
-      if (showParts)
+      if (showPartsToggle && showParts)
         manifest?.sections?.forEach { section ->
           Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
@@ -771,6 +776,8 @@ private fun AudioOptions(
   library: PodcastLibrary,
   busy: Boolean,
   action: (suspend PodcastController.() -> Unit) -> Unit,
+  /** The MP3/M4A choice, a developer option; everyone else gets the platform's default. */
+  chooseFormat: Boolean = false,
 ) {
   val formats = controller.platform.splitFormats
   var chunks by rememberSaveable { mutableStateOf(library.config.chunkMinutes.toString()) }
@@ -801,7 +808,7 @@ private fun AudioOptions(
       singleLine = true,
       modifier = Modifier.fillMaxWidth(),
     )
-    if (formats.size > 1)
+    if (chooseFormat && formats.size > 1)
       FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
         formats.sorted().forEach { format ->
           FilterChip(

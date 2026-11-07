@@ -138,11 +138,11 @@ dependencies {
   implementation(libs.compose.runtime)
   implementation(libs.compose.foundation)
   implementation(libs.compose.material3)
+  implementation(libs.androidx.compose.material3) // MaterialExpressiveTheme, AndroidMaterialTheme
   implementation(libs.material.icons.extended)
   implementation(libs.compose.ui)
   implementation(libs.compose.ui.tooling.preview)
   implementation(libs.androidx.ui.text.google.fonts)
-  implementation(libs.ktor.client.core) // io.ktor.http.Url, used by BookmarksScreen previews
 
   implementation(libs.livery.client)
   implementation(libs.livery.launcher.widgets)

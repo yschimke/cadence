@@ -6,7 +6,9 @@ package ee.schimke.cadence.datastore.proto;
 
 message Settings {
   repeated Device devices = 1;
-  repeated Bookmark bookmarks = 2;
+  // Was the in-app browser's bookmarks, removed with the browser.
+  reserved 2;
+  reserved "bookmarks";
   repeated SyncSource sync_sources = 3;
   // Reserved: was a flat staged-files list, replaced by per-profile
   // staging directories. Field number kept aside so older proto blobs
@@ -14,34 +16,21 @@ message Settings {
   repeated StagedFile staged_files = 4;
   SyncPreferences sync_preferences = 5;
   repeated SyncProfile sync_profiles = 6;
-  AppearancePreferences appearance = 7;
+  // Was AppearancePreferences (an unused theme choice); the app always follows Material 3.
+  reserved 7;
+  reserved "appearance";
   // Random UUID set once on first run; identifies this install when attributing
   // sync writes in a cross-host manifest.
   string host_id = 8;
-}
-
-// Unused: the app always follows dynamic Material 3. Kept so stored settings still parse.
-message AppearancePreferences {
-  ThemeMode theme_mode = 1;
-}
-
-enum ThemeMode {
-  // System dynamic colours + Roboto Flex typography (the default).
-  SYSTEM = 0;
-  // Cadence design system: Coastal Blue palette + Manrope/Inter typography.
-  CADENCE = 1;
+  // Shows the developer options (sync profiles, NFS, USB auto-sync, diagnostics). Unlocked by
+  // tapping the version in Manage sources.
+  bool developer_mode = 9;
 }
 
 message Device {
   string id = 1;
   string name = 2;
   string path = 3;
-}
-
-message Bookmark {
-  string name = 1;
-  string url = 2;
-  string favicon = 3;
 }
 
 message SyncSource {

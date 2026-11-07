@@ -46,7 +46,8 @@ class DesktopServices(
       configProvider = { oauthConfigLoader.load() },
       scope = scope,
     )
-  val googleSync: GoogleSyncController = PortableGoogleSyncController(googleAccounts, repo, scope)
+  private val googleSync: GoogleSyncController =
+    PortableGoogleSyncController(googleAccounts, repo, scope)
 
   private val devicesRepoForDrive = DevicesRepo(store)
   private val driveManifest =

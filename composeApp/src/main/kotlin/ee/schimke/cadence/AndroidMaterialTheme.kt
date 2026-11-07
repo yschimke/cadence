@@ -1,7 +1,9 @@
 package ee.schimke.cadence
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.MaterialExpressiveTheme
+import androidx.compose.material3.MotionScheme
 import androidx.compose.material3.Typography
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
@@ -13,11 +15,12 @@ import androidx.compose.ui.text.googlefonts.Font
 import androidx.compose.ui.text.googlefonts.GoogleFont
 
 /**
- * System-dynamic Material 3 theme — Material You colours from the device wallpaper paired with
- * **Roboto Flex** as the type stack.
+ * Material 3 Expressive with system-dynamic colours — Material You from the device wallpaper —
+ * expressive motion, and **Roboto Flex** as the type stack.
  *
- * This is the only app theme.
+ * This is the only Android app theme; desktop and the browser use the Cadence brand scheme.
  */
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun AndroidMaterialTheme(
   darkTheme: Boolean = isSystemInDarkTheme(),
@@ -27,7 +30,12 @@ fun AndroidMaterialTheme(
   val colorScheme =
     if (isDark) dynamicDarkColorScheme(LocalContext.current)
     else dynamicLightColorScheme(LocalContext.current)
-  MaterialTheme(colorScheme = colorScheme, typography = RobotoFlexTypography, content = content)
+  MaterialExpressiveTheme(
+    colorScheme = colorScheme,
+    motionScheme = MotionScheme.expressive(),
+    typography = RobotoFlexTypography,
+    content = content,
+  )
 }
 
 private val googleFontsProvider =

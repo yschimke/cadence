@@ -62,7 +62,6 @@ kotlin {
       implementation(libs.media3.transformer)
       implementation(libs.media3.exoplayer)
       implementation(libs.media3.session)
-      implementation(libs.compose.webview.multiplatform)
       implementation(libs.compose.ui.tooling.preview)
       implementation(libs.androidx.activity.compose)
       implementation(libs.androidx.core.splashscreen)

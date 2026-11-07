@@ -218,14 +218,6 @@
       "note": "Editable Material 3 study of the component; behavior and live state are not connected."
     },
     {
-      "id": "cadence-component-bookmark-row",
-      "title": "Cadence \u00b7 Saved article",
-      "file": "components/bookmark-row.uid",
-      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/bookmarks/BookmarksScreen.kt",
-      "kind": "components",
-      "note": "Editable Material 3 study of the component; behavior and live state are not connected."
-    },
-    {
       "id": "cadence-screen-home",
       "title": "Cadence \u00b7 Home",
       "file": "screens/home.uid",
@@ -286,22 +278,6 @@
       "title": "Cadence \u00b7 Devices",
       "file": "screens/devices.uid",
       "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/devices/DevicesScreen.kt",
-      "kind": "screens",
-      "note": "Editable Material 3 study; real application components and state are not imported."
-    },
-    {
-      "id": "cadence-screen-bookmarks",
-      "title": "Cadence \u00b7 Bookmarks",
-      "file": "screens/bookmarks.uid",
-      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/bookmarks/BookmarksScreen.kt",
-      "kind": "screens",
-      "note": "Editable Material 3 study; real application components and state are not imported."
-    },
-    {
-      "id": "cadence-screen-browser",
-      "title": "Cadence \u00b7 Browser",
-      "file": "screens/browser.uid",
-      "source": "shared/src/commonMain/kotlin/ee/schimke/cadence/browser/BrowserScreen.kt",
       "kind": "screens",
       "note": "Editable Material 3 study; real application components and state are not imported."
     },

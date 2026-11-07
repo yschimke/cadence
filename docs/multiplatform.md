@@ -12,7 +12,6 @@ Verified against publisher documentation and Maven metadata on 2026-10-11.
 | Sync on USB attach | Existing Android receiver | While app is open, enabled preference and VID/PID match | Manual only; no silent permission acquisition |
 | Bluetooth/media | Existing OS integration and command feedback | Explicitly unavailable; use Android | Explicitly unavailable; Web Bluetooth does not expose this device's Classic RFCOMM channel |
 | Source providers | SAF providers | Local or already mounted network directories | Picker-accessible mounted directories |
-| Bookmarks | Embedded WebView | Opens system browser | Opens browser tab |
 
 ## USB and browser restrictions
 
@@ -52,7 +51,6 @@ The unpublished-stable modernstorage dependency is removed: Cadence already owne
 | `androidx.test.ext:junit` | 1.3.0 | 1.3.0 | [metadata](https://dl.google.com/dl/android/maven2/androidx/test/ext/junit/maven-metadata.xml) |
 | `androidx.compose.ui:ui-text-google-fonts` | 1.12.1 | 1.12.1 | [metadata](https://dl.google.com/dl/android/maven2/androidx/compose/ui/ui-text-google-fonts/maven-metadata.xml) |
 | `androidx.work:work-runtime-ktx` | 2.12.0 | 2.12.0 | [metadata](https://dl.google.com/dl/android/maven2/androidx/work/work-runtime-ktx/maven-metadata.xml) |
-| `io.github.kevinnzou:compose-webview-multiplatform` | 2.0.3 | 2.0.3 | [metadata](https://repo.maven.apache.org/maven2/io/github/kevinnzou/compose-webview-multiplatform/maven-metadata.xml) |
 | `junit:junit` | 4.13.2 | 4.13.2 | [metadata](https://repo.maven.apache.org/maven2/junit/junit/maven-metadata.xml) |
 | `org.jetbrains.kotlin:kotlin-test` | 2.4.21 | 2.4.21 | [metadata](https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-test/maven-metadata.xml) |
 | `org.jetbrains.kotlin:kotlin-test-junit` | 2.4.21 | 2.4.21 | [metadata](https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-test-junit/maven-metadata.xml) |
