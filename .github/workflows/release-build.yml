@@ -290,15 +290,19 @@ jobs:
       - name: Attach to the release created by release-please
         run: gh release upload "$TAG_NAME" _desktop-release/* --clobber
 
-  # Arch users get the release through the AUR's cadence-desktop-bin once its .deb is attached (the
-  # PKGBUILD downloads it from the release). Off until the repository variable AUR_PUBLISH is
-  # 'true'; aur-publish.yml says how to set it up.
-  aur:
-    name: AUR package
+  # Arch users get the release from the `cadence` pacman repository on the `pacman-repo` release,
+  # and through the AUR's cadence-desktop-bin once AUR_PUBLISH is 'true' (arch-packages.yml says how
+  # to set it up). Both are built from the release's .deb, so they wait until it is attached.
+  arch:
+    name: Arch packages
     needs: publish-desktop
-    if: ${{ !cancelled() && needs.publish-desktop.result == 'success' && vars.AUR_PUBLISH == 'true' }}
-    uses: ./.github/workflows/aur-publish.yml
+    if: ${{ !cancelled() && needs.publish-desktop.result == 'success' }}
+    uses: ./.github/workflows/arch-packages.yml
+    permissions:
+      contents: write
     with:
       tag: ${{ github.ref_type == 'tag' && github.ref_name || inputs.tag }}
+      push_repo: true
+      push_aur: ${{ vars.AUR_PUBLISH == 'true' }}
     secrets:
       AUR_SSH_PRIVATE_KEY: ${{ secrets.AUR_SSH_PRIVATE_KEY }}
