@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import ee.schimke.cadence.metro.AppGraphProvider
+import ee.schimke.cadence.platform.Analytics
 
 class RefreshWorker(
     context: Context,
@@ -17,8 +18,10 @@ class RefreshWorker(
         val orchestrator = app.appGraph.refreshOrchestrator
         return try {
             orchestrator.refresh(profileId)
+            Analytics.current.event("sync_refresh", mapOf("ok" to true))
             Result.success()
         } catch (t: Throwable) {
+            Analytics.current.event("sync_refresh", mapOf("ok" to false))
             // Periodic work runs again on its cadence; one-off work uses the
             // default backoff. Retrying handles transient network failures.
             Result.retry()

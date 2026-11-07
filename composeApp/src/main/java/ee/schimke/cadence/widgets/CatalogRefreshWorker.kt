@@ -9,6 +9,7 @@ import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
+import ee.schimke.cadence.platform.Analytics
 import ee.schimke.cadence.podcasts.PodcastSyncWidget
 import ee.schimke.livery.client.RefreshResult
 import java.util.concurrent.TimeUnit
@@ -54,6 +55,10 @@ class CatalogRefreshWorker(context: Context, params: WorkerParameters) :
       HeadphoneControlsWidget.updateAll(app)
       PodcastSyncWidget.updateAll(app)
       if (result is RefreshResult.Updated) SeasonRedrawWorker.ensureScheduled(app, replace = true)
+      Analytics.current.event(
+        "widget_designs_refresh",
+        mapOf("result" to (result?.let { it::class.simpleName } ?: "disabled")),
+      )
       return when (result) {
         null -> "This build doesn't download widget designs."
         is RefreshResult.Updated -> "Updated to the latest designs."

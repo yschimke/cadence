@@ -3,6 +3,7 @@ package ee.schimke.cadence
 import android.app.Application
 import androidx.work.Configuration
 import dev.zacsweers.metro.createGraphFactory
+import ee.schimke.cadence.analytics.CadenceFirebase
 import ee.schimke.cadence.metro.AndroidAppGraph
 import ee.schimke.cadence.metro.AppGraphProvider
 import ee.schimke.cadence.metro.CadenceAppGraph
@@ -31,6 +32,8 @@ class CadenceApplication : Application(), AppGraphProvider, Configuration.Provid
 
   override fun onCreate() {
     super.onCreate()
+    // First, so the widgets and workers created below report to it.
+    CadenceFirebase.install(this)
     ee.schimke.cadence.podcasts.scheduleOvernightPodcasts(applicationContext)
     ee.schimke.cadence.podcasts.CloudSyncWidget.start(applicationContext)
     PhoneWearDataPublisher(

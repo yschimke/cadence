@@ -2,10 +2,11 @@ package ee.schimke.cadence.widgets
 
 import android.content.Context
 import android.os.Build
+import ee.schimke.cadence.analytics.CadenceFirebase
+import ee.schimke.livery.client.AnalyticsEventSink
 import ee.schimke.livery.client.AndroidBundled
 import ee.schimke.livery.client.Clock
 import ee.schimke.livery.client.DecisionContext
-import ee.schimke.livery.client.EventSink
 import ee.schimke.livery.client.Experiments
 import ee.schimke.livery.client.FileBlobStore
 import ee.schimke.livery.client.FileKeyValueStore
@@ -14,6 +15,7 @@ import ee.schimke.livery.client.ImageResolver
 import ee.schimke.livery.client.JavaCrypto
 import ee.schimke.livery.client.KeyValueStore
 import ee.schimke.livery.client.KtorFetcher
+import ee.schimke.livery.client.PlanResult
 import ee.schimke.livery.client.SlotPlanner
 import ee.schimke.livery.client.TemplateRepository
 import ee.schimke.livery.client.TrustPolicy
@@ -85,9 +87,26 @@ internal class WidgetLivery(
           bucketingId = bucketingId(),
         )
       },
+      // Livery's events in Firebase (livery_*), with one livery_exposure per season the widget
+      // draws, so analytics can split by it.
+      events = AnalyticsEventSink(CadenceFirebase.liverySinks()),
     )
 
-  val planner = SlotPlanner(repository, EventSink {}, clock, experiments)
+  val planner = SlotPlanner(repository, experiments.sink, clock, experiments)
+
+  /**
+   * Reports the season (or experiment arm) [result] draws, once per arm. A launcher widget never
+   * reports impressions itself, so this is what records that its look was shown.
+   */
+  fun drawn(result: PlanResult) {
+    val plan = (result as? PlanResult.Ready)?.plan ?: return
+    for ((experiment, arm) in plan.experiments) experiments.exposed(
+      experiment,
+      arm,
+      clock.nowEpochMs(),
+      designId = plan.template.design?.id,
+    )
+  }
 
   /**
    * The look the season running now gives the headphone widget, for Cadence's widgets that aren't

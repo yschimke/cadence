@@ -1,6 +1,7 @@
 package ee.schimke.cadence.podcasts
 
 import android.Manifest
+import ee.schimke.cadence.platform.Analytics
 import android.app.PendingIntent
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -136,6 +137,7 @@ class PodcastPreparationWorker(context: Context, params: WorkerParameters) : Cor
         updates.cancel()
       }
     }
+    Analytics.current.event("podcast_task", mapOf("task" to (task ?: "unknown"), "ok" to ok))
     if (ok) return Result.success()
     val error = controller.status.value
     // The progress notification goes with the worker; leave one behind that says what went wrong.

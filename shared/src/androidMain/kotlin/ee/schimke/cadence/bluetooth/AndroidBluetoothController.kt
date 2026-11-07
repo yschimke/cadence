@@ -1,5 +1,6 @@
 package ee.schimke.cadence.bluetooth
 
+import ee.schimke.cadence.platform.Analytics
 import android.Manifest
 import android.app.Activity
 import android.app.Application
@@ -242,6 +243,7 @@ class AndroidBluetoothController(
                         applicationContext.getSharedPreferences("headset-mode", Context.MODE_PRIVATE)
                             .edit().putString("device", device.address).putString("mode", mode.name).apply()
                         headsetFlow.update { it.copy(mode = mode, playing = null) }
+                        Analytics.current.event("headphone_mode", mapOf("mode" to mode.name))
                         refresh()
                         when (mode) {
                             WorkingMode.Mp3 -> "OpenSwim Pro switched to MP3 Mode"

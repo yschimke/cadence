@@ -14,6 +14,7 @@ import ee.schimke.cadence.bluetooth.BluetoothController
 import ee.schimke.cadence.bluetooth.ShokzPlayer
 import ee.schimke.cadence.bluetooth.WorkingMode
 import ee.schimke.cadence.metro.AppGraphProvider
+import ee.schimke.cadence.platform.Analytics
 import ee.schimke.composeai.rcwidget.launcher.RcLauncherWidgets
 import ee.schimke.livery.client.ImageResolver
 import ee.schimke.livery.client.PlanResult
@@ -44,15 +45,17 @@ import kotlinx.coroutines.withContext
 @androidx.annotation.OptIn(UnstableApi::class)
 class HeadphoneControlsWidget : LiveryLauncherWidgetProvider() {
   override suspend fun plan(context: Context, slot: WidgetSlot): PlanResult =
-    livery(context)
-      .planner
-      .forAppData(
-        slot.query(
-          HeadphoneControlsTemplate.CONTRACT,
-          minor = HeadphoneControlsTemplate.CONTRACT_MINOR,
-        ),
-        HeadphoneControlsTemplate.data(latest, context.systemWidgetColors()),
-      )
+    livery(context).let { livery ->
+      livery.planner
+        .forAppData(
+          slot.query(
+            HeadphoneControlsTemplate.CONTRACT,
+            minor = HeadphoneControlsTemplate.CONTRACT_MINOR,
+          ),
+          HeadphoneControlsTemplate.data(latest, context.systemWidgetColors()),
+        )
+        .also(livery::drawn)
+    }
 
   override fun images(context: Context): ImageResolver = livery(context).images
 
@@ -80,6 +83,10 @@ class HeadphoneControlsWidget : LiveryLauncherWidgetProvider() {
 
   override suspend fun onTap(context: Context, widgetId: Int, tap: WidgetTap) {
     val action = HeadphoneWidgetAction.fromWire(tap.action) ?: return
+    Analytics.current.event(
+      "widget_action",
+      mapOf("widget" to "headphones", "action" to tap.action),
+    )
     val controller = controller(context) ?: return
     withContext(Dispatchers.Main.immediate) {
       val player = shokzPlayer
