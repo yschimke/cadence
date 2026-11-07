@@ -10,6 +10,7 @@ import ee.schimke.cadence.metro.CadenceAppGraph
 import ee.schimke.cadence.wear.PhoneWearDataPublisher
 import ee.schimke.cadence.widgets.CatalogRefreshWorker
 import ee.schimke.cadence.widgets.HeadphoneControlsWidget
+import ee.schimke.cadence.widgets.NotificationLivery
 import ee.schimke.cadence.widgets.SeasonRedrawWorker
 import ee.schimke.cadence.widgets.WidgetLivery
 import ee.schimke.cadence.widgets.WidgetSeason
@@ -44,6 +45,9 @@ class CadenceApplication : Application(), AppGraphProvider, Configuration.Provid
       .start()
     // Cadence's other widgets follow the headphone widget's season.
     WidgetSeason.current = { WidgetLivery.get(applicationContext).seasonLook() }
+    // Every notification's expanded body is a Remote Compose template from the same catalog.
+    ee.schimke.cadence.notifications.CadenceNotifications.renderer =
+      NotificationLivery(WidgetLivery.get(applicationContext))
     HeadphoneControlsWidget.start(applicationContext, appGraph.bluetoothController)
     CatalogRefreshWorker.schedule(applicationContext)
     SeasonRedrawWorker.ensureScheduled(applicationContext)

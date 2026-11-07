@@ -343,7 +343,7 @@ private fun WidgetIconButton(
  */
 @Composable
 @RemoteComposable
-private fun WidgetIcon(icon: ImageVector, color: RemoteColor) {
+internal fun WidgetIcon(icon: ImageVector, color: RemoteColor) {
   val path = remember(icon) { icon.toRemotePath() }
   val density = 1.rdp.toPx()
   RemoteCanvas(RemoteModifier.size(IconDp.rdp)) {

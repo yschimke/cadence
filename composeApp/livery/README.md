@@ -23,9 +23,15 @@ Every change here is a pull request (Livery's [repository mode]):
   captured from `HeadphoneControlsTemplateContent` (shared module) with every value named and the
   widget's states as conditional layouts.
 
-The templates are generated: after changing the widget's drawing code, run
+- `contracts/notification.json`: what every notification's expanded body reads (title, text, icon,
+  progress, Cancel) and emits (`open`, `cancel`).
+- `designs/notification-default/`: that body, captured from `NotificationTemplateContent` (shared
+  module). SystemUI plays it as Remote Compose on Android 16 and later (`NotificationLivery`);
+  older versions show the plain notification.
 
-    ./gradlew :composeApp:testDebugUnitTest --tests '*HeadphoneTemplatesTest*' -Pcadence.livery.regenerate=true
+The templates are generated: after changing the widget's or notification's drawing code, run
+
+    ./gradlew :composeApp:testDebugUnitTest --tests '*HeadphoneTemplatesTest*' --tests '*NotificationTemplatesTest*' -Pcadence.livery.regenerate=true
 
 Without the property the same test fails when a committed template is stale.
 

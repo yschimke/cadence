@@ -11,6 +11,7 @@ internal fun parseAndroidRss(text: String): RssFeed {
   parser.setInput(text.reader())
   val items = mutableListOf<RssItem>()
   var feedName = ""
+  var feedImage = ""
   var item: MutableMap<String, String>? = null
   var itemDepth = 0
   while (parser.next() != XmlPullParser.END_DOCUMENT) {
@@ -28,6 +29,9 @@ internal fun parseAndroidRss(text: String): RssFeed {
               put("length", parser.getAttributeValue(null, "length").orEmpty())
               put("type", parser.getAttributeValue(null, "type").orEmpty())
             }
+        "itunes:image" ->
+          if (item == null && feedImage.isEmpty())
+            feedImage = parser.getAttributeValue(null, "href").orEmpty()
         "podcast:transcript" ->
           item?.putIfAbsent("transcript", parser.getAttributeValue(null, "url").orEmpty())
         "title",
@@ -72,5 +76,5 @@ internal fun parseAndroidRss(text: String): RssFeed {
       item = null
     }
   }
-  return RssFeed(feedName, items)
+  return RssFeed(feedName, items, feedImage)
 }

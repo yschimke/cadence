@@ -1,0 +1,28 @@
+{
+  "id": "cadence/notification", "major": 1, "title": "Notification body", "dataSource": "App",
+  "inputs": {
+    "title": { "type": "string", "required": true, "maxLength": 80, "description": "What is happening: Downloading podcasts, 3 episodes ready" },
+    "text": { "type": "string", "maxLength": 240, "description": "The detail: the episode being downloaded, or what went wrong" },
+    "icon": { "type": "int", "min": 0, "max": 4, "default": 0, "description": "0: download, 1: process, 2: headphones, 3: done, 4: error" },
+    "has_progress": { "type": "bool", "default": false },
+    "progress": { "type": "float", "min": 0, "max": 1, "default": 0, "description": "How far along, when has_progress" },
+    "has_cancel": { "type": "bool", "default": false, "description": "Shows Cancel, for work that can stop" },
+    "theme.on_background": { "type": "color", "role": "onSurface" },
+    "theme.supporting": { "type": "color", "role": "onSurfaceVariant" },
+    "theme.tonal": { "type": "color", "role": "secondaryContainer" },
+    "theme.on_tonal": { "type": "color", "role": "onSecondaryContainer" },
+    "theme.primary": { "type": "color", "role": "primary" },
+    "theme.on_primary": { "type": "color", "role": "onPrimary" },
+    "theme.tertiary": { "type": "color", "role": "tertiary" }
+  },
+  "actions": {
+    "open": { "kind": "app:open" },
+    "cancel": { "kind": "app:cancel" }
+  },
+  "examples": {
+    "downloading": { "title": "Downloading podcasts", "text": "Lighthouses of the North Sea · 42%", "icon": 0, "has_progress": true, "progress": 0.42, "has_cancel": true },
+    "syncing": { "title": "Syncing files", "text": "2026-10-28.mp3 (3/12)", "icon": 2, "has_progress": true, "progress": 0.25 },
+    "ready": { "title": "3 episodes ready", "text": "Plug in your headphones to copy them", "icon": 3 },
+    "failed": { "title": "Download stopped", "text": "Couldn't download “Tides of the Pacific”: the server sent an empty file. Try again to retry the rest.", "icon": 4 }
+  }
+}

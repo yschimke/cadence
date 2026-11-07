@@ -1,5 +1,8 @@
 package ee.schimke.cadence.podcasts
 
+import ee.schimke.cadence.notifications.CadenceNotifications
+import ee.schimke.cadence.notifications.NotificationBody
+import ee.schimke.cadence.notifications.NotificationIcon
 import ee.schimke.cadence.platform.Analytics
 import android.Manifest
 import android.app.NotificationChannel
@@ -15,7 +18,6 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
-import androidx.core.app.NotificationCompat
 import androidx.work.*
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.coroutineScope
@@ -126,38 +128,30 @@ class PodcastPreparationWorker(context: Context, params: WorkerParameters) :
         "refresh" -> "Refreshing podcasts"
         else -> "Processing podcasts"
       }
-    val openIntent =
-      applicationContext.packageManager
-        .getLaunchIntentForPackage(applicationContext.packageName)
-        ?.let {
-          PendingIntent.getActivity(
-            applicationContext,
-            0,
-            it,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
-          )
-        }
-    fun notification(message: String, fraction: Float? = null) =
-      NotificationCompat.Builder(applicationContext, "podcast-preparation")
-        .setSmallIcon(android.R.drawable.stat_sys_download)
-        .setContentTitle(title)
-        .setContentText(message)
-        .setStyle(NotificationCompat.BigTextStyle().bigText(message))
-        .setContentIntent(openIntent)
-        .setOnlyAlertOnce(true)
-        .setProgress(100, ((fraction ?: 0f) * 100).toInt(), fraction == null)
-        .setOngoing(true)
-        .addAction(
-          android.R.drawable.ic_menu_close_clear_cancel,
-          "Cancel",
-          WorkManager.getInstance(applicationContext).createCancelPendingIntent(id),
-        )
-        .build()
+    val openIntent = CadenceNotifications.openApp(applicationContext)
+    val cancelIntent = WorkManager.getInstance(applicationContext).createCancelPendingIntent(id)
+    suspend fun notification(message: String, fraction: Float? = null) =
+      CadenceNotifications.build(
+        applicationContext,
+        "podcast-preparation",
+        PROGRESS_NOTIFICATION,
+        NotificationBody(
+          title,
+          message,
+          if (task == "process") NotificationIcon.Process else NotificationIcon.Download,
+          progress = fraction,
+          indeterminate = fraction == null,
+          contentIntent = openIntent,
+          cancelIntent = cancelIntent,
+        ),
+      ) {
+        setOngoing(true)
+      }
     val initial = notification("Preparing…")
     setForeground(
       if (Build.VERSION.SDK_INT >= 29)
-        ForegroundInfo(9013, initial, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
-      else ForegroundInfo(9013, initial),
+        ForegroundInfo(PROGRESS_NOTIFICATION, initial, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
+      else ForegroundInfo(PROGRESS_NOTIFICATION, initial),
     )
     val controller = AndroidPodcastPlatform.instance(applicationContext).controller()
     val ok = coroutineScope {
@@ -171,7 +165,7 @@ class PodcastPreparationWorker(context: Context, params: WorkerParameters) :
             .distinctUntilChanged()
             .collect { (message, fraction) ->
               setProgress(workDataOf(PROGRESS_STATUS to message))
-              manager.notify(9013, notification(message, fraction))
+              manager.notify(PROGRESS_NOTIFICATION, notification(message, fraction))
             }
         }
       try {
@@ -202,22 +196,31 @@ class PodcastPreparationWorker(context: Context, params: WorkerParameters) :
           PackageManager.PERMISSION_GRANTED
     )
       manager.notify(
-        9014,
-        NotificationCompat.Builder(applicationContext, "podcast-preparation")
-          .setSmallIcon(android.R.drawable.stat_notify_error)
-          .setContentTitle(
+        ERROR_NOTIFICATION,
+        CadenceNotifications.build(
+          applicationContext,
+          "podcast-preparation",
+          ERROR_NOTIFICATION,
+          NotificationBody(
             when (task) {
               "download" -> "Download stopped"
               "refresh" -> "Refresh failed"
               else -> "Processing stopped"
             },
-          )
-          .setContentText(error)
-          .setStyle(NotificationCompat.BigTextStyle().bigText(error))
-          .setContentIntent(openIntent)
-          .setAutoCancel(true)
-          .build(),
+            error,
+            NotificationIcon.Error,
+            contentIntent = openIntent,
+          ),
+        ) {
+          setAutoCancel(true)
+        },
       )
     return Result.failure(workDataOf(ERROR to error, TASK to task))
   }
 }
+
+/** The podcast worker's progress, and what it leaves behind when it fails. */
+private const val PROGRESS_NOTIFICATION = 9013
+
+/** Its own id: it shared 9014 with [READY_NOTIFICATION], so each replaced the other. */
+private const val ERROR_NOTIFICATION = 9015

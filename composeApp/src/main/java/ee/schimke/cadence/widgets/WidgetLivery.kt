@@ -20,6 +20,7 @@ import ee.schimke.livery.client.SlotPlanner
 import ee.schimke.livery.client.TemplateRepository
 import ee.schimke.livery.client.TrustPolicy
 import ee.schimke.livery.client.TrustedKey
+import ee.schimke.livery.notifications.LiveryNotifications
 import ee.schimke.livery.protocol.PlayerCapabilities
 import ee.schimke.livery.protocol.Surfaces
 import ee.schimke.livery.widgets.launcher.LiveryLauncherWidgetProvider
@@ -29,11 +30,12 @@ import java.util.UUID
 import kotlin.io.encoding.Base64
 
 /**
- * Cadence's widget templates. The APK ships a catalog (`composeApp/livery`, built into the assets
- * by the Livery Gradle plugin), and merging a change to that tree on `main` publishes it, signed,
- * to this repository's rolling `catalog` release (`.github/workflows/livery-catalog.yml`).
- * [CatalogRefreshWorker] downloads it in the background; rendering only reads what is on disk, and
- * falls back to the bundled catalog until a newer signed one is there.
+ * Cadence's widget and notification templates. The APK ships a catalog (`composeApp/livery`, built
+ * into the assets by the Livery Gradle plugin), and merging a change to that tree on `main`
+ * publishes it, signed, to this repository's rolling `catalog` release
+ * (`.github/workflows/livery-catalog.yml`). [CatalogRefreshWorker] downloads it in the background;
+ * rendering only reads what is on disk, and falls back to the bundled catalog until a newer signed
+ * one is there.
  *
  * Seasons (`composeApp/livery/seasons/`) are written into the manifest as experiments that every
  * user is in, so the planner's [Experiments] is what makes the widget draw a season's design.
@@ -64,6 +66,8 @@ internal class WidgetLivery(
             livePush = false,
             maxBytes = LiveryLauncherWidgetProvider.DEFAULT_TEMPLATE_MAX_BYTES,
           ),
+          // Notification bodies (NotificationLivery) download with every refresh too.
+          LiveryNotifications.DEFAULT_CAPABILITIES,
         ),
       bundled = AndroidBundled.fromAssets(context),
     )

@@ -99,8 +99,10 @@ import ee.schimke.cadence.devices.rememberFileExplorerOpenLauncher
 import ee.schimke.cadence.metro.metroViewModel
 import ee.schimke.cadence.podcasts.CloudSyncHomeCard
 import ee.schimke.cadence.podcasts.Episode
+import ee.schimke.cadence.podcasts.EpisodeDetails
 import ee.schimke.cadence.podcasts.KeepPodcastScreenAwake
 import ee.schimke.cadence.podcasts.LocalPodcastState
+import ee.schimke.cadence.podcasts.POCKET_CASTS_UP_NEXT
 import ee.schimke.cadence.podcasts.PodcastController
 import ee.schimke.cadence.podcasts.PodcastPlayerUi
 import ee.schimke.cadence.podcasts.PodcastSyncHomeCard
@@ -108,6 +110,8 @@ import ee.schimke.cadence.podcasts.PodcastWorkUi
 import ee.schimke.cadence.podcasts.cloudSyncStatus
 import ee.schimke.cadence.podcasts.episodePosition
 import ee.schimke.cadence.podcasts.formatTime
+import ee.schimke.cadence.podcasts.loadEpisodeDetails
+import ee.schimke.cadence.podcasts.plainShowNotes
 import ee.schimke.cadence.podcasts.podcastWidgetBattery
 import ee.schimke.cadence.podcasts.podcastWidgetSummary
 import ee.schimke.cadence.podcasts.readyForDevice
@@ -117,6 +121,7 @@ import ee.schimke.cadence.sync.BrowsedItem
 import ee.schimke.cadence.sync.SourceSuggestion
 import ee.schimke.cadence.sync.formatLastRefreshed
 import ee.schimke.cadence.sync.rememberDirectorySourceLauncher
+import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -131,6 +136,10 @@ data class HomeActions(
   val onArchiveEpisode: suspend (episodeKey: String) -> Boolean = { true },
   val onAddFresh: suspend (episodeKey: String) -> Boolean = { true },
   val onDismissFresh: suspend (episodeKey: String) -> Boolean = { true },
+  /** Show notes and transcript for the episode sheet; previews use what the episode carries. */
+  val onLoadDetails: suspend (Episode) -> EpisodeDetails = {
+    EpisodeDetails(plainShowNotes(it.summary), it.transcriptUrl.takeIf(String::isNotBlank))
+  },
   val onRefreshFolder: (profileId: String) -> Unit = {},
   val onRemoveSource: (sourceId: String) -> Unit = {},
   val onFindApp: (SourceSuggestion) -> Unit = {},
@@ -196,9 +205,13 @@ fun HomeScreen(
   val addFolder = rememberDirectorySourceLauncher(viewModel::addFolder)
   /** Runs a swipe's action and always says what happened, since the row itself just vanishes. */
   suspend fun podcastResult(block: suspend PodcastController.() -> Unit): Boolean {
-    val ok = podcasts.run(block)
-    scope.launch { snackbar.showSnackbar(podcasts.status.value) }
-    return ok
+    // In the screen's scope, not the row's: the action removes its own row (an archive, an
+    // add), and work it does afterwards must not be cancelled with it.
+    return scope
+      .async {
+        podcasts.run(block).also { scope.launch { snackbar.showSnackbar(podcasts.status.value) } }
+      }
+      .await()
   }
   fun podcastAction(block: suspend PodcastController.() -> Unit) {
     scope.launch {
@@ -238,6 +251,7 @@ fun HomeScreen(
         onArchiveEpisode = { key -> podcastResult { archiveEpisode(key) } },
         onAddFresh = { key -> podcastResult { addFresh(key) } },
         onDismissFresh = { key -> podcastResult { dismissFresh(key) } },
+        onLoadDetails = { loadEpisodeDetails(podcasts.platform, it) },
         onRefreshFolder = viewModel::refreshNow,
         onRemoveSource = viewModel::removeSource,
         onFindApp = viewModel::openSuggestion,
@@ -321,6 +335,10 @@ fun HomeContent(
   val playlist = podcasts.library.playlist
   val empty = state.sources.isEmpty() && playlist == null
   var adding by rememberSaveable { mutableStateOf(false) }
+  var opened by remember { mutableStateOf<EpisodeInfo?>(null) }
+  opened?.let { info ->
+    EpisodeSheet(info, actions.onLoadDetails, actions.onOpenPodcasts) { opened = null }
+  }
   if (adding)
     AddSourceSheet(
       suggestions = suggestions,
@@ -374,7 +392,9 @@ fun HomeContent(
         }
       if (playlist != null)
         item(key = "podcasts") {
-          PodcastSection(podcasts, canRefreshPodcasts, canArchive, actions, podcastPlayer)
+          PodcastSection(podcasts, canRefreshPodcasts, canArchive, actions, podcastPlayer) {
+            opened = it
+          }
         }
       val fresh = if (podcasts.showFresh) podcasts.freshToReview else emptyList()
       if (fresh.isNotEmpty())
@@ -384,9 +404,13 @@ fun HomeContent(
           if (expanded)
             FreshSection(
               fresh,
-              canAddFresh,
-              actions.onAddFresh,
-              actions.onDismissFresh,
+              addTo =
+                if (!canAddFresh) null
+                else if (podcasts.library.sourceList == POCKET_CASTS_UP_NEXT) "Up Next"
+                else playlist?.name,
+              onAdd = actions.onAddFresh,
+              onDismiss = actions.onDismissFresh,
+              onOpen = { opened = EpisodeInfo(it, status = "New release") },
               onCollapse = { expanded = false },
             )
           else FindMoreContent(fresh.size) { expanded = true }
@@ -1108,6 +1132,7 @@ private fun PodcastSection(
   canArchive: Boolean,
   actions: HomeActions,
   player: PodcastPlayerUi,
+  onOpen: (EpisodeInfo) -> Unit,
 ) {
   val library = podcasts.library
   val playlist = library.playlist ?: return
@@ -1119,6 +1144,7 @@ private fun PodcastSection(
       buildString {
         append(count(playlist.episodes.size, "episode"))
         if (ready > 0) append(" · $ready downloaded")
+        if (library.upcoming.isNotEmpty()) append(" · ${library.upcoming.size} next")
       },
       buildList {
         if (canRefresh) add("Refresh" to actions.onRefreshPodcasts)
@@ -1133,9 +1159,19 @@ private fun PodcastSection(
         color = MaterialTheme.colorScheme.onSurfaceVariant,
         modifier = Modifier.padding(start = 56.dp, end = 16.dp, bottom = 8.dp),
       )
-    playlist.episodes.forEach { episode ->
+    @Composable
+    fun row(episode: Episode, next: Boolean) {
       key(episode.key) {
         HorizontalDivider()
+        val downloaded = episode.key in podcasts.downloadedEpisodeKeys
+        val position = episodePosition(episode, library)
+        val onPlay =
+          if (
+            player.supported &&
+              (downloaded || (episode.backend == "pocket-casts" && player.pocketCastsAvailable))
+          ) {
+            { player.playEpisode(episode) }
+          } else null
         SwipeActionRow(
           onSwipeRight =
             if (canArchive) archiveAction { actions.onArchiveEpisode(episode.key) } else null,
@@ -1143,20 +1179,37 @@ private fun PodcastSection(
         ) {
           EpisodeRow(
             episode,
-            episodePosition(episode, library),
-            downloaded = episode.key in podcasts.downloadedEpisodeKeys,
-            onClick = actions.onOpenPodcasts,
-            onPlay =
-              if (
-                player.supported &&
-                  (episode.key in podcasts.downloadedEpisodeKeys ||
-                    (episode.backend == "pocket-casts" && player.pocketCastsAvailable))
-              ) {
-                { player.playEpisode(episode) }
-              } else null,
+            position,
+            downloaded = downloaded,
+            onClick = {
+              onOpen(
+                EpisodeInfo(
+                  episode,
+                  position,
+                  downloaded,
+                  status = if (next) "Next in ${playlist.name}" else "In ${playlist.name}",
+                  onPlay = onPlay,
+                ),
+              )
+            },
+            onPlay = onPlay,
           )
         }
       }
+    }
+    playlist.episodes.forEach { row(it, next = false) }
+    if (library.upcoming.isNotEmpty()) {
+      HorizontalDivider()
+      Text(
+        "Next in ${playlist.name} · moves up as you archive",
+        style = MaterialTheme.typography.labelLarge,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+        modifier =
+          Modifier.padding(start = 16.dp, end = 16.dp, top = 12.dp, bottom = 4.dp).semantics {
+            heading()
+          },
+      )
+      library.upcoming.forEach { row(it, next = true) }
     }
   }
 }
@@ -1170,6 +1223,7 @@ private fun EpisodeRow(
   onPlay: (() -> Unit)?,
 ) {
   ListItem(
+    leadingContent = { PodcastArtwork(episode) },
     headlineContent = { Text(episode.title, maxLines = 2, overflow = TextOverflow.Ellipsis) },
     supportingContent = {
       Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
@@ -1196,7 +1250,7 @@ private fun EpisodeRow(
         }
       },
     colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surface),
-    modifier = Modifier.clickable(onClick = onClick),
+    modifier = Modifier.clickable(onClickLabel = "Episode details", onClick = onClick),
   )
 }
 

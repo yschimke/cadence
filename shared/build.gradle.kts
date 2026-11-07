@@ -42,6 +42,8 @@ kotlin {
         // OkHttp drives the Google OAuth refresh + Drive v3 calls. Android ships neither
         // java.net.http nor a sync HTTP client of its own, so one dep covers both platforms.
         implementation(libs.okhttp)
+        // Podcast artwork on Home.
+        implementation(libs.coil.network.okhttp)
       }
     }
     androidMain.get().dependsOn(jvmAndAndroidMain)
@@ -90,6 +92,11 @@ kotlin {
       implementation(libs.material.icons.core)
       implementation(libs.material.icons.extended)
       implementation(libs.ktor.client.core)
+      implementation(libs.coil.compose)
+    }
+    wasmJsMain.dependencies {
+      implementation(libs.coil.network.ktor3)
+      implementation(libs.ktor.client.js)
     }
     getByName("androidDeviceTest").dependencies {
       implementation(libs.junit)

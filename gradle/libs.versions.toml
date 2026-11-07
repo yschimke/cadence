@@ -37,6 +37,7 @@ kotlinxCoroutines = "1.11.0"
 kotlinxSerializationJson = "1.12.0"
 ktfmt = "0.28.0"
 ktorClientCore = "3.6.1"
+coil = "3.6.3"
 materialIconsCore = "1.7.3"
 metro = "1.5.2"
 media3 = "1.11.1"
@@ -69,6 +70,7 @@ rc-widget-launcher = { module = "ee.schimke.composeai:rc-widget-launcher", versi
 livery-client = { module = "ee.schimke.composeai:livery-client", version.ref = "livery" }
 livery-instantiate = { module = "ee.schimke.composeai:livery-instantiate", version.ref = "livery" }
 livery-launcher-widgets = { module = "ee.schimke.composeai:livery-launcher-widgets", version.ref = "livery" }
+livery-notifications = { module = "ee.schimke.composeai:livery-notifications", version.ref = "livery" }
 livery-capture = { module = "ee.schimke.composeai:livery-capture", version.ref = "livery" }
 livery-firebase = { module = "ee.schimke.composeai:livery-firebase", version.ref = "livery" }
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
@@ -122,6 +124,10 @@ kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutine
 kotlinx-coroutines-play-services = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "kotlinxCoroutines" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktorClientCore" }
+ktor-client-js = { module = "io.ktor:ktor-client-js", version.ref = "ktorClientCore" }
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
+coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coil" }
+coil-network-ktor3 = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil" }
 material-icons-core = { module = "org.jetbrains.compose.material:material-icons-core", version.ref = "materialIconsCore" }
 material-icons-extended = { module = "org.jetbrains.compose.material:material-icons-extended", version.ref = "materialIconsCore" }
 navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }

@@ -10,6 +10,9 @@ import android.content.pm.ServiceInfo
 import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
+import ee.schimke.cadence.notifications.CadenceNotifications
+import ee.schimke.cadence.notifications.NotificationBody
+import ee.schimke.cadence.notifications.NotificationIcon
 import androidx.core.content.getSystemService
 import ee.schimke.cadence.metro.AndroidAppGraph
 import ee.schimke.cadence.metro.AppGraphProvider
@@ -82,27 +85,26 @@ class SyncForegroundService : Service() {
 
   private fun initialText() = "Preparing sync…"
 
-  private fun buildNotification(
-    text: String,
-    max: Int = 0,
-    current: Int = 0,
-    indeterminate: Boolean = true,
-  ): Notification {
-    val builder =
-      NotificationCompat.Builder(this, CHANNEL_ID)
-        .setContentTitle("Syncing files")
-        .setContentText(text)
-        .setSmallIcon(android.R.drawable.stat_sys_upload)
-        .setOngoing(true)
-        .setOnlyAlertOnce(true)
-        .setCategory(NotificationCompat.CATEGORY_PROGRESS)
-    if (max > 0) {
-      builder.setProgress(max, current, indeterminate)
-    }
-    return builder.build()
+  private fun body(text: String, max: Int = 0, current: Int = 0, error: Boolean = false) =
+    NotificationBody(
+      "Syncing files",
+      text,
+      if (error) NotificationIcon.Error else NotificationIcon.Sync,
+      progress = if (max > 0) current.toFloat() / max else null,
+      indeterminate = max == 0 && !error,
+      contentIntent = CadenceNotifications.openApp(this),
+    )
+
+  private val configure: NotificationCompat.Builder.() -> Unit = {
+    setOngoing(true)
+    setCategory(NotificationCompat.CATEGORY_PROGRESS)
   }
 
-  private fun updateNotification(progress: SyncProgress) {
+  /** The first post is synchronous (startForeground), so plain; updates get the Livery body. */
+  private fun buildNotification(text: String): Notification =
+    CadenceNotifications.buildPlain(this, CHANNEL_ID, body(text), configure)
+
+  private suspend fun updateNotification(progress: SyncProgress) {
     val mgr = getSystemService<NotificationManager>() ?: return
     val text =
       when {
@@ -114,11 +116,17 @@ class SyncForegroundService : Service() {
         else -> initialText()
       }
     val notif =
-      buildNotification(
-        text = text,
-        max = progress.filesTotal,
-        current = progress.filesCompleted,
-        indeterminate = progress.filesTotal == 0 && progress.running,
+      CadenceNotifications.build(
+        this,
+        CHANNEL_ID,
+        NOTIFICATION_ID,
+        body(
+          text,
+          max = progress.filesTotal,
+          current = progress.filesCompleted,
+          error = progress.lastError != null,
+        ),
+        configure,
       )
     mgr.notify(NOTIFICATION_ID, notif)
   }
