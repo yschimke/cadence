@@ -1,6 +1,6 @@
 # Accessibility Report
 
-_Auto-generated from `compose-preview/a11y/pr`. 13 preview(s) across 1 module(s) · 25 error(s) · 0 warning(s) · 0 info._
+_Auto-generated from `compose-preview/a11y/pr`. 17 preview(s) across 1 module(s) · 25 error(s) · 0 warning(s) · 0 info._
 
 Browse inline; image URLs are pinned to the commit SHA on the baseline branch so links keep resolving after merge.
 
@@ -60,6 +60,30 @@ Browse inline; image URLs are pinned to the commit SHA on the baseline branch so
 |--:|---|---|---|---|
 | 1 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
 | 2 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+
+### `NotificationDownloadingPreview`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/NotificationDownloadingPreview_Notification_downloading-f99a71e3.png" width="400" />
+
+_No findings._
+
+### `NotificationFailedPreview`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/NotificationFailedPreview_Notification_failed-4cd1109f.png" width="400" />
+
+_No findings._
+
+### `NotificationReadyPreview`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/NotificationReadyPreview_Notification_ready-5114e7a0.png" width="400" />
+
+_No findings._
+
+### `NotificationSyncingPreview`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/NotificationSyncingPreview_Notification_syncing_light-fb11050e.png" width="400" />
+
+_No findings._
 
 ### `PlayStoreSevenInchHomeDark` · `spec:width=600dp,height=960dp,dpi=320`
 

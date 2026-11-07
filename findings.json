@@ -164,6 +164,50 @@
       "variant": "spec:width=411dp,height=900dp,dpi=420"
     },
     {
+      "annotatedBasename": "",
+      "cleanBasename": "NotificationDownloadingPreview_Notification_downloading-f99a71e3.png",
+      "findings": [],
+      "functionName": "NotificationDownloadingPreview",
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.NotificationPreviewsKt.NotificationDownloadingPreview_Notification \u00b7 downloading",
+      "rendersDir": "composeApp",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/NotificationPreviews.kt",
+      "variant": ""
+    },
+    {
+      "annotatedBasename": "",
+      "cleanBasename": "NotificationFailedPreview_Notification_failed-4cd1109f.png",
+      "findings": [],
+      "functionName": "NotificationFailedPreview",
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.NotificationPreviewsKt.NotificationFailedPreview_Notification \u00b7 failed",
+      "rendersDir": "composeApp",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/NotificationPreviews.kt",
+      "variant": ""
+    },
+    {
+      "annotatedBasename": "",
+      "cleanBasename": "NotificationReadyPreview_Notification_ready-5114e7a0.png",
+      "findings": [],
+      "functionName": "NotificationReadyPreview",
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.NotificationPreviewsKt.NotificationReadyPreview_Notification \u00b7 ready",
+      "rendersDir": "composeApp",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/NotificationPreviews.kt",
+      "variant": ""
+    },
+    {
+      "annotatedBasename": "",
+      "cleanBasename": "NotificationSyncingPreview_Notification_syncing_light-fb11050e.png",
+      "findings": [],
+      "functionName": "NotificationSyncingPreview",
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.NotificationPreviewsKt.NotificationSyncingPreview_Notification \u00b7 syncing \u00b7 light",
+      "rendersDir": "composeApp",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/NotificationPreviews.kt",
+      "variant": ""
+    },
+    {
       "annotatedBasename": "PlayStoreSevenInchHomeDark_Play_Store_7_tablet_Home_dark-79090521.a11y.png",
       "cleanBasename": "PlayStoreSevenInchHomeDark_Play_Store_7_tablet_Home_dark-79090521.png",
       "findings": [
