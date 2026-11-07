@@ -532,9 +532,49 @@ fun PodcastScreen(
             PodcastTrimming(library, busy, ::action)
         }
       }
-      item { TextButton(onClick = onChangeSource) { Text("Use a different podcast source") } }
+      item {
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+          TextButton(onClick = onChangeSource) { Text("Use a different podcast source") }
+          if (playlist != null) RemovePodcastsButton(enabled = !busy) { action { removeSource() } }
+        }
+      }
     }
   }
+}
+
+/** Forgets the imported episodes and prepared audio, after asking: it can't be undone here. */
+@Composable
+private fun RemovePodcastsButton(enabled: Boolean, onRemove: () -> Unit) {
+  var asking by remember { mutableStateOf(false) }
+  TextButton(
+    enabled = enabled,
+    onClick = { asking = true },
+    colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.error),
+  ) {
+    Text("Remove podcasts")
+  }
+  if (asking)
+    AlertDialog(
+      onDismissRequest = { asking = false },
+      title = { Text("Remove podcasts?") },
+      text = {
+        Text(
+          "Cadence forgets these episodes and the audio it prepared. Your podcast app and sign-ins " +
+            "are unchanged; add the source again to get them back.",
+        )
+      },
+      confirmButton = {
+        TextButton(
+          onClick = {
+            asking = false
+            onRemove()
+          },
+        ) {
+          Text("Remove")
+        }
+      },
+      dismissButton = { TextButton(onClick = { asking = false }) { Text("Cancel") } },
+    )
 }
 
 @Composable

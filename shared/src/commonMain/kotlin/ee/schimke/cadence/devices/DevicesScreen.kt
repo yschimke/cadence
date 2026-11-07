@@ -16,27 +16,27 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Folder
 import androidx.compose.material.icons.filled.Headphones
-import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.LinkOff
 import androidx.compose.material.icons.filled.PhoneAndroid
 import androidx.compose.material.icons.filled.Usb
 import androidx.compose.material3.AssistChip
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -45,9 +45,12 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import ee.schimke.cadence.datastore.proto.Device
+import ee.schimke.cadence.home.SwipeAction
+import ee.schimke.cadence.home.SwipeActionRow
 import ee.schimke.cadence.metro.metroViewModel
 import ee.schimke.cadence.usb.UsbConnection
 import ee.schimke.cadence.usb.UsbDevice
+import kotlinx.coroutines.launch
 import okio.Path
 
 @Composable
@@ -93,60 +96,90 @@ fun DevicesScreen(
   usbConnection: UsbConnectionUi? = null,
 ) {
   val colors = MaterialTheme.colorScheme
-  LazyColumn(
-    modifier = modifier.fillMaxSize(),
-    contentPadding = PaddingValues(16.dp),
-    verticalArrangement = Arrangement.spacedBy(16.dp),
-  ) {
-    item(key = "intro") {
-      Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-        Text(
-          "Storage",
-          style = MaterialTheme.typography.headlineMedium,
-          modifier = Modifier.semantics { heading() },
-        )
-        Text(
-          "Folders you've let Cadence open, on this phone or on your headphones." +
-            if (onDeviceClick != null) " Tap one to see its files." else "",
-          style = MaterialTheme.typography.bodyMedium,
-          color = colors.onSurfaceVariant,
-        )
+  val snackbar = remember { SnackbarHostState() }
+  val scope = rememberCoroutineScope()
+  Box(modifier.fillMaxSize()) {
+    LazyColumn(
+      modifier = Modifier.fillMaxSize(),
+      contentPadding = PaddingValues(16.dp),
+      verticalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
+      item(key = "intro") {
+        Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+          Text(
+            "Storage",
+            style = MaterialTheme.typography.headlineMedium,
+            modifier = Modifier.semantics { heading() },
+          )
+          Text(
+            "Folders you've let Cadence open, on this phone or on your headphones." +
+              if (onDeviceClick != null) " Tap one to see its files." else "",
+            style = MaterialTheme.typography.bodyMedium,
+            color = colors.onSurfaceVariant,
+          )
+        }
       }
-    }
-    when (uiState) {
-      DevicesViewModel.UiState.Loading -> item(key = "loading") { Text("Loading…") }
-      is DevicesViewModel.UiState.Devices -> {
-        if (uiState.devices.isEmpty())
-          item(key = "empty") {
-            Text(
-              "No folders yet.",
-              style = MaterialTheme.typography.bodyMedium,
-            )
-          }
-        else
-          item(key = "folders") {
-            OutlinedCard(Modifier.fillMaxWidth()) {
-              uiState.devices.forEachIndexed { index, device ->
-                if (index > 0) HorizontalDivider()
-                FolderRow(
-                  device,
-                  usedForPodcasts = podcastTarget.isNotBlank() && device.path == podcastTarget,
-                  onClick = onDeviceClick?.let { { it(device) } },
-                  onForget = { onForget(device) },
+      when (uiState) {
+        DevicesViewModel.UiState.Loading -> item(key = "loading") { Text("Loading…") }
+        is DevicesViewModel.UiState.Devices -> {
+          if (uiState.devices.isEmpty())
+            item(key = "empty") {
+              Text(
+                "No folders yet.",
+                style = MaterialTheme.typography.bodyMedium,
+              )
+            }
+          else
+            item(key = "folders") {
+              Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Text(
+                  "Swipe right on a folder to forget it",
+                  style = MaterialTheme.typography.bodySmall,
+                  color = colors.onSurfaceVariant,
                 )
+                OutlinedCard(Modifier.fillMaxWidth()) {
+                  uiState.devices.forEachIndexed { index, device ->
+                    key(device.id) {
+                      if (index > 0) HorizontalDivider()
+                      // Like Home's archive swipe; also offered as an accessibility action.
+                      SwipeActionRow(
+                        onSwipeRight =
+                          SwipeAction("Forget", Icons.Filled.LinkOff) {
+                            onForget(device)
+                            scope.launch {
+                              snackbar.showSnackbar(
+                                "Forgot ${device.name.ifBlank { "the folder" }}. Add it again " +
+                                  "to use it.",
+                              )
+                            }
+                            true
+                          },
+                        onSwipeLeft = null,
+                      ) {
+                        FolderRow(
+                          device,
+                          usedForPodcasts =
+                            podcastTarget.isNotBlank() && device.path == podcastTarget,
+                          onClick = onDeviceClick?.let { { it(device) } },
+                        )
+                      }
+                    }
+                  }
+                }
               }
             }
+          item(key = "add") {
+            FilledTonalButton(onClick = permissionCheck) {
+              Icon(Icons.Filled.Add, contentDescription = null, Modifier.size(18.dp))
+              Spacer(Modifier.width(8.dp))
+              Text("Add a folder")
+            }
           }
-        item(key = "add") {
-          FilledTonalButton(onClick = permissionCheck) {
-            Icon(Icons.Filled.Add, contentDescription = null, Modifier.size(18.dp))
-            Spacer(Modifier.width(8.dp))
-            Text("Add a folder")
-          }
+          item(key = "plugged-in") { PluggedIn(uiState.usbDevices, usbConnection) }
         }
-        item(key = "plugged-in") { PluggedIn(uiState.usbDevices, usbConnection) }
       }
     }
+    SnackbarHost(snackbar, Modifier.align(Alignment.BottomCenter))
   }
 }
 
@@ -155,10 +188,8 @@ private fun FolderRow(
   device: Device,
   usedForPodcasts: Boolean,
   onClick: (() -> Unit)?,
-  onForget: () -> Unit,
 ) {
   val location = storageLocation(device.path)
-  var menu by remember { mutableStateOf(false) }
   ListItem(
     leadingContent = {
       Icon(
@@ -196,23 +227,8 @@ private fun FolderRow(
           )
       }
     },
-    trailingContent = {
-      Box {
-        IconButton(onClick = { menu = true }) {
-          Icon(Icons.Filled.MoreVert, contentDescription = "Options for ${device.name}")
-        }
-        DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
-          DropdownMenuItem(
-            text = { Text("Forget") },
-            onClick = {
-              menu = false
-              onForget()
-            },
-          )
-        }
-      }
-    },
-    colors = ListItemDefaults.colors(containerColor = Color.Transparent),
+    // Opaque, so the swipe background only shows where the row has moved away.
+    colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surface),
     modifier = if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier,
   )
 }

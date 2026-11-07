@@ -39,18 +39,16 @@ import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.Folder
 import androidx.compose.material.icons.filled.Headphones
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.NewReleases
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Podcasts
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.SdStorage
+import androidx.compose.material.icons.filled.Source
 import androidx.compose.material.icons.filled.Sync
 import androidx.compose.material.icons.filled.Usb
 import androidx.compose.material3.Button
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.HorizontalDivider
@@ -63,6 +61,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedCard
+import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SnackbarHost
@@ -70,6 +69,10 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TooltipAnchorPosition
+import androidx.compose.material3.TooltipBox
+import androidx.compose.material3.TooltipDefaults
+import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -130,8 +133,6 @@ data class HomeActions(
   val onAddFolder: () -> Unit = {},
   val onAddPodcasts: () -> Unit = {},
   val onOpenPodcasts: () -> Unit = {},
-  val onRefreshPodcasts: () -> Unit = {},
-  val onRemovePodcasts: () -> Unit = {},
   /** Each reports whether it worked, so a failed swipe springs back. */
   val onArchiveEpisode: suspend (episodeKey: String) -> Boolean = { true },
   val onAddFresh: suspend (episodeKey: String) -> Boolean = { true },
@@ -141,7 +142,6 @@ data class HomeActions(
     EpisodeDetails(plainShowNotes(it.summary), it.transcriptUrl.takeIf(String::isNotBlank))
   },
   val onRefreshFolder: (profileId: String) -> Unit = {},
-  val onRemoveSource: (sourceId: String) -> Unit = {},
   val onFindApp: (SourceSuggestion) -> Unit = {},
   val onCopyToHeadphones: () -> Unit = {},
   val onSyncPodcasts: () -> Unit = {},
@@ -246,14 +246,11 @@ fun HomeScreen(
         onAddFolder = addFolder,
         onAddPodcasts = onAddPodcasts,
         onOpenPodcasts = onOpenPodcasts,
-        onRefreshPodcasts = podcastWork.refresh,
-        onRemovePodcasts = { podcastAction { removeSource() } },
         onArchiveEpisode = { key -> podcastResult { archiveEpisode(key) } },
         onAddFresh = { key -> podcastResult { addFresh(key) } },
         onDismissFresh = { key -> podcastResult { dismissFresh(key) } },
         onLoadDetails = { loadEpisodeDetails(podcasts.platform, it) },
         onRefreshFolder = viewModel::refreshNow,
-        onRemoveSource = viewModel::removeSource,
         onFindApp = viewModel::openSuggestion,
         onCopyToHeadphones = onCopyToHeadphones,
         onSyncPodcasts = { podcastAction { copyToDevice() } },
@@ -392,9 +389,7 @@ fun HomeContent(
         }
       if (playlist != null)
         item(key = "podcasts") {
-          PodcastSection(podcasts, canRefreshPodcasts, canArchive, actions, podcastPlayer) {
-            opened = it
-          }
+          PodcastSection(podcasts, canArchive, actions, podcastPlayer) { opened = it }
         }
       val fresh = if (podcasts.showFresh) podcasts.freshToReview else emptyList()
       if (fresh.isNotEmpty())
@@ -424,7 +419,6 @@ fun HomeContent(
           lastRefreshed = profile?.last_refreshed_at.orEmpty(),
           refreshing = state.refresh.running && state.refresh.profileId == profile?.id,
           onRefresh = profile?.let { { actions.onRefreshFolder(it.id) } },
-          onRemove = { actions.onRemoveSource(source.id) },
         )
       }
     }
@@ -436,7 +430,6 @@ private fun LibraryTopBar(
   state: HomeViewModel.UiState,
   actions: HomeActions,
 ) {
-  var menu by remember { mutableStateOf(false) }
   Surface(
     modifier =
       Modifier.fillMaxWidth()
@@ -453,26 +446,23 @@ private fun LibraryTopBar(
         style = MaterialTheme.typography.headlineMedium,
         modifier = Modifier.weight(1f),
       )
-      IconButton(onClick = { menu = true }) {
-        Icon(Icons.Filled.MoreVert, contentDescription = "More options")
-      }
-      DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
-        fun item(label: String, action: () -> Unit) =
-          @Composable {
-            DropdownMenuItem(
-              text = { Text(label) },
-              onClick = {
-                menu = false
-                action()
-              },
-            )
-          }
-        item("Manage sources", actions.onManageSources)()
-        if (state.bluetoothSupported && state.bluetooth.connectedDevice == null)
-          item("Bluetooth controls", actions.onBluetoothControls)()
-        item("Storage", actions.onFileExplorer)()
-      }
+      // Where Home's settings live, in plain sight rather than behind an overflow menu.
+      TopBarAction(Icons.Filled.Source, "Manage sources", actions.onManageSources)
+      TopBarAction(Icons.Filled.SdStorage, "Storage", actions.onFileExplorer)
     }
+  }
+}
+
+/** An icon button whose label also shows as a tooltip on long-press or hover. */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun TopBarAction(icon: ImageVector, label: String, onClick: () -> Unit) {
+  TooltipBox(
+    positionProvider = TooltipDefaults.rememberTooltipPositionProvider(TooltipAnchorPosition.Below),
+    tooltip = { PlainTooltip { Text(label) } },
+    state = rememberTooltipState(),
+  ) {
+    IconButton(onClick = onClick) { Icon(icon, contentDescription = label) }
   }
 }
 
@@ -506,7 +496,13 @@ private fun HeadphonesSection(
   // Downloads and processing report under "On this phone"; here, busy means a copy.
   val copying = podcastBusy && !podcastWork.active
   Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-    SectionTitle("On your headphones")
+    SectionTitle(
+      "On your headphones",
+      action =
+        if (state.bluetoothSupported && device == null) {
+          { TextButton(onClick = actions.onBluetoothControls) { Text("Bluetooth controls") } }
+        } else null,
+    )
     if (podcasts.library.playlist != null) {
       val summary = podcastWidgetSummary(podcasts)
       PodcastSyncHomeCard(
@@ -1076,19 +1072,19 @@ private fun SectionHeader(
   icon: ImageVector,
   title: String,
   detail: String,
-  menu: List<Pair<String, () -> Unit>>,
   onClick: (() -> Unit)? = null,
+  /** One visible action at the end of the header, such as refreshing this folder. */
+  action: (@Composable () -> Unit)? = null,
 ) {
-  var open by remember { mutableStateOf(false) }
   Row(
     Modifier.fillMaxWidth()
       .then(if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier)
-      .padding(start = 16.dp, top = 12.dp, bottom = 4.dp),
+      .padding(start = 16.dp, end = 4.dp, top = 12.dp, bottom = 4.dp),
     verticalAlignment = Alignment.CenterVertically,
   ) {
     Icon(icon, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
     Spacer(Modifier.width(16.dp))
-    Column(Modifier.weight(1f)) {
+    Column(Modifier.weight(1f).padding(end = 12.dp)) {
       Text(
         title,
         style = MaterialTheme.typography.titleMedium,
@@ -1102,33 +1098,13 @@ private fun SectionHeader(
         color = MaterialTheme.colorScheme.onSurfaceVariant,
       )
     }
-    if (menu.isNotEmpty())
-      Box {
-        IconButton(
-          onClick = { open = true },
-          modifier = Modifier.semantics { contentDescription = "Options for $title" },
-        ) {
-          Icon(Icons.Filled.MoreVert, contentDescription = null)
-        }
-        DropdownMenu(expanded = open, onDismissRequest = { open = false }) {
-          menu.forEach { (label, action) ->
-            DropdownMenuItem(
-              text = { Text(label) },
-              onClick = {
-                open = false
-                action()
-              },
-            )
-          }
-        }
-      }
+    action?.invoke()
   }
 }
 
 @Composable
 private fun PodcastSection(
   podcasts: LocalPodcastState,
-  canRefresh: Boolean,
   canArchive: Boolean,
   actions: HomeActions,
   player: PodcastPlayerUi,
@@ -1146,10 +1122,7 @@ private fun PodcastSection(
         if (ready > 0) append(" · $ready downloaded")
         if (library.upcoming.isNotEmpty()) append(" · ${library.upcoming.size} next")
       },
-      buildList {
-        if (canRefresh) add("Refresh" to actions.onRefreshPodcasts)
-        add("Remove" to actions.onRemovePodcasts)
-      },
+      // Refresh is on the cloud sync card above; removing the source is on the Podcasts screen.
       onClick = actions.onOpenPodcasts,
     )
     if (canArchive)
@@ -1292,7 +1265,6 @@ private fun FolderSection(
   lastRefreshed: String,
   refreshing: Boolean,
   onRefresh: (() -> Unit)?,
-  onRemove: () -> Unit,
 ) {
   var expanded by rememberSaveable(source.id) { mutableStateOf(false) }
   val items = contents.items
@@ -1311,10 +1283,15 @@ private fun FolderSection(
             if (lastRefreshed.isNotBlank()) " · staged " + formatLastRefreshed(lastRefreshed)
             else ""
       },
-      buildList {
-        onRefresh?.let { add("Refresh" to it) }
-        add("Remove" to onRemove)
-      },
+      // Removing a folder is in Manage sources, away from the daily routine.
+      action =
+        onRefresh?.let { refresh ->
+          {
+            IconButton(enabled = !refreshing, onClick = refresh) {
+              Icon(Icons.Filled.Refresh, contentDescription = "Refresh ${source.name}")
+            }
+          }
+        },
     )
     if (refreshing) LinearProgressIndicator(Modifier.fillMaxWidth())
     val shown = if (expanded) items else items.take(FOLDER_PREVIEW)
