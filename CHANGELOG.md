@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.1.23](https://github.com/yschimke/cadence/compare/v0.1.22...v0.1.23) (2026-11-07)
+
+
+### Features
+
+* **desktop:** app icons, X11 window class and an AUR package ([#545](https://github.com/yschimke/cadence/issues/545)) ([70c4269](https://github.com/yschimke/cadence/commit/70c4269fb88eb0b90f711b3bdfb6dacba4df11cb))
+* **desktop:** publish cadence-desktop-bin to a pacman repository on GitHub Releases ([#548](https://github.com/yschimke/cadence/issues/548)) ([ecf3e9c](https://github.com/yschimke/cadence/commit/ecf3e9c192573f60ec5e72a7db2f47b6cbbf41a9))
+* replace overflow menus with visible actions ([#547](https://github.com/yschimke/cadence/issues/547)) ([e93a9dd](https://github.com/yschimke/cadence/commit/e93a9ddc5b127bf9f336bd2c575960a3a95b9618))
+* whole podcast list, artwork and episode details, and Remote Compose notifications ([#542](https://github.com/yschimke/cadence/issues/542)) ([92a362b](https://github.com/yschimke/cadence/commit/92a362b15552edc878bcade3b25909429610b943))
+
+
+### Bug Fixes
+
+* **deps:** update compose-ai-tools to v0.4.0 ([#544](https://github.com/yschimke/cadence/issues/544)) ([04a443f](https://github.com/yschimke/cadence/commit/04a443fec363a831aba60f5f31e9095dc59d961c))
+* **deps:** update dependency ee.schimke.composeai:preview-annotations to v3.27.3 ([#538](https://github.com/yschimke/cadence/issues/538)) ([9db703c](https://github.com/yschimke/cadence/commit/9db703c3d7c6acfb009fd0d09fdf138dceee42e8))
+* **deps:** update dependency ee.schimke.composeai:rc-widget-launcher to v2.27.0 ([#540](https://github.com/yschimke/cadence/issues/540)) ([5a7ddcc](https://github.com/yschimke/cadence/commit/5a7ddccfdb73ab5a7240a5ad03d5944394259100))
+* **release:** attach assets with gh release upload ([#543](https://github.com/yschimke/cadence/issues/543)) ([183fd59](https://github.com/yschimke/cadence/commit/183fd599f4601e96bb4d1ff46dc2d203b1a96a66))
+
 ## [0.1.22](https://github.com/yschimke/cadence/compare/v0.1.21...v0.1.22) (2026-11-07)
 
 
