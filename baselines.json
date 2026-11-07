@@ -316,7 +316,7 @@
     "functionName": "PodcastWidgetMp3LargePreview",
     "module": "composeApp",
     "renderBasename": "PodcastWidgetMp3LargePreview_Podcast_widget_MP3_large-06e82c93.png",
-    "sha256": "7914609a88e3a1ea2f84a73df2f8208ee2c5f432011a59afdf100a39c60795ab",
+    "sha256": "ac738fde5082a54efe3c02a26e57d2ea3c685cba239e1b02b29dfcadf233ba92",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetMp3LightPreview_Podcast widget \u00b7 MP3 \u00b7 light": {
@@ -324,7 +324,7 @@
     "functionName": "PodcastWidgetMp3LightPreview",
     "module": "composeApp",
     "renderBasename": "PodcastWidgetMp3LightPreview_Podcast_widget_MP3_light-cdc23576.png",
-    "sha256": "e2daee7665341403d47596ed207921a69f8a0e70e0cd67d4bc480a1c73a0f3ed",
+    "sha256": "297d5c20e34f1ff04857bf1d3f1d8d0b4fa4c50744b1e66507b0ababe8423216",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetMp3Preview_Podcast widget \u00b7 MP3": {
@@ -332,7 +332,7 @@
     "functionName": "PodcastWidgetMp3Preview",
     "module": "composeApp",
     "renderBasename": "PodcastWidgetMp3Preview_Podcast_widget_MP3-3525244f.png",
-    "sha256": "006bee0092820956e0f2e8e79c3bc04fe00f6333a1fa8caa93908e9b79c00d61",
+    "sha256": "7ae4981b66aa072fb6ef69b488d07bbcc11ac2f9c8c74a5aa73321c353f42e3b",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetMp3SmallPreview_Podcast widget \u00b7 MP3 small": {
@@ -527,6 +527,14 @@
     "sha256": "785faac3d6798e6be47d0331620f739bbf22a40e704aa58f13aa602e3c52f05b",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt"
   },
+  "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.ManageRefreshingPreview_Manage - developer, refreshing": {
+    "captureLabel": "",
+    "functionName": "ManageRefreshingPreview",
+    "module": "composeApp",
+    "renderBasename": "ManageRefreshingPreview_Manage_developer_refreshing-8faaf151.png",
+    "sha256": "098a5ad663353aa3f7b7864cc17137cd76d74724fd0b13a7aa6d92cdfc25b219",
+    "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt"
+  },
   "composeApp/ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStorePhoneBluetooth_Play Store \u00b7 phone \u00b7 Bluetooth": {
     "captureLabel": "",
     "functionName": "PlayStorePhoneBluetooth",
@@ -716,14 +724,6 @@
     "functionName": "WaterButtonsLauncherPreview",
     "module": "swimUi",
     "renderBasename": "WaterButtonsLauncherPreview_Water_buttons_launcher-5df3807f.png",
-    "sha256": "d33732fd1d88611dfce8795ef4c0bd1eaa2ba06c168149b4fcd0b0fc0cee6fca",
-    "sourceFile": "src/main/kotlin/ee/schimke/cadence/swim/SwimPreviews.kt"
-  },
-  "swimUi/ee.schimke.cadence.swim.SwimPreviewsKt.WaterButtonsWearPreview_Water buttons \u00b7 Wear": {
-    "captureLabel": "",
-    "functionName": "WaterButtonsWearPreview",
-    "module": "swimUi",
-    "renderBasename": "WaterButtonsWearPreview_Water_buttons_Wear-8eddeafe.png",
     "sha256": "d33732fd1d88611dfce8795ef4c0bd1eaa2ba06c168149b4fcd0b0fc0cee6fca",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/swim/SwimPreviews.kt"
   },

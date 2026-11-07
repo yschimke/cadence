@@ -2,18 +2,6 @@
 
 Auto-generated from `main`. Browse inline or compare against PR branches.
 
-> [!WARNING]
-> 2 preview(s) failed to render in the latest update (1 retained from the prior baseline; 1 with no prior baseline to retain). See **Render Failures** below.
-
-## Render Failures
-
-The render task completed but no PNG was produced for these previews. Entries with a prior baseline keep their previous image; the rest are absent from the gallery until a successful render lands.
-
-| Preview | Module | Function | Source | Baseline |
-|---------|--------|----------|--------|----------|
-| `composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.ManageRefreshingPreview_Manage - developer, refreshing` | composeApp | `ManageRefreshingPreview` | `src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt` | none |
-| `swimUi/ee.schimke.cadence.swim.SwimPreviewsKt.WaterButtonsWearPreview_Water buttons · Wear` | swimUi | `WaterButtonsWearPreview` | `src/main/kotlin/ee/schimke/cadence/swim/SwimPreviews.kt` | retained |
-
 ## composeApp
 
 | Preview | Image |
@@ -84,6 +72,7 @@ The render task completed but no PNG was produced for these previews. Entries wi
 | `HomeUpToDatePreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HomeUpToDatePreview_Home_up_to_date-2cbd5a11.png" width="150" /> |
 | `ManageEmptyPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/ManageEmptyPreview_Manage_empty-55c57410.png" width="150" /> |
 | `ManagePopulatedPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/ManagePopulatedPreview_Manage_populated-41ab32cd.png" width="150" /> |
+| `ManageRefreshingPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/ManageRefreshingPreview_Manage_developer_refreshing-8faaf151.png" width="150" /> |
 | `PlayStorePhoneBluetooth` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/PlayStorePhoneBluetooth_Play_Store_phone_Bluetooth-37d78602.png" width="150" /> |
 | `PlayStorePhoneHomeDark` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/PlayStorePhoneHomeDark_Play_Store_phone_Home_dark-aef8b2b7.png" width="150" /> |
 | `PlayStorePhoneHomeLight` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/PlayStorePhoneHomeLight_Play_Store_phone_Home_light-a1bae343.png" width="150" /> |
