@@ -16,25 +16,15 @@ message Settings {
   repeated StagedFile staged_files = 4;
   SyncPreferences sync_preferences = 5;
   repeated SyncProfile sync_profiles = 6;
-  AppearancePreferences appearance = 7;
+  // Was AppearancePreferences (an unused theme choice); the app always follows Material 3.
+  reserved 7;
+  reserved "appearance";
   // Random UUID set once on first run; identifies this install when attributing
   // sync writes in a cross-host manifest.
   string host_id = 8;
   // Shows the developer options (sync profiles, NFS, USB auto-sync, diagnostics). Unlocked by
   // tapping the version in Manage sources.
   bool developer_mode = 9;
-}
-
-// Unused: the app always follows dynamic Material 3. Kept so stored settings still parse.
-message AppearancePreferences {
-  ThemeMode theme_mode = 1;
-}
-
-enum ThemeMode {
-  // System dynamic colours + Roboto Flex typography (the default).
-  SYSTEM = 0;
-  // Cadence design system: Coastal Blue palette + Manrope/Inter typography.
-  CADENCE = 1;
 }
 
 message Device {
