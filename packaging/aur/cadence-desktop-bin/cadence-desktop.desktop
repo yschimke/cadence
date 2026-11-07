@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Cadence
+GenericName=Audio library manager
+Comment=Manage audio on mounted USB storage
+Exec=cadence-desktop
+Icon=cadence-desktop
+Terminal=false
+Categories=AudioVideo;Audio;
+Keywords=podcast;audiobook;music;USB;MP3 player;headphones;
+StartupWMClass=cadence-desktop
