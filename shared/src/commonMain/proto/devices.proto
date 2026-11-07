@@ -20,6 +20,9 @@ message Settings {
   // Random UUID set once on first run; identifies this install when attributing
   // sync writes in a cross-host manifest.
   string host_id = 8;
+  // Shows the developer options (sync profiles, NFS, USB auto-sync, diagnostics). Unlocked by
+  // tapping the version in Manage sources.
+  bool developer_mode = 9;
 }
 
 // Unused: the app always follows dynamic Material 3. Kept so stored settings still parse.

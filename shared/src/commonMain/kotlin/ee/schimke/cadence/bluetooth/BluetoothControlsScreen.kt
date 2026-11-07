@@ -29,6 +29,7 @@ import androidx.compose.material.icons.filled.SkipNext
 import androidx.compose.material.icons.filled.SkipPrevious
 import androidx.compose.material.icons.filled.Stop
 import androidx.compose.material.icons.filled.Tune
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -60,6 +61,7 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import ee.schimke.cadence.developer.LocalDeveloperMode
 import ee.schimke.cadence.metro.metroViewModel
 
 @Composable
@@ -102,6 +104,7 @@ fun BluetoothControlsScreen(modifier: Modifier = Modifier) {
     onSelectEqualizer = viewModel::selectEqualizer,
     onSelectPlaybackOrder = viewModel::selectPlaybackOrder,
     onAdvanced = viewModel::dispatch,
+    developerMode = LocalDeveloperMode.current.enabled,
   )
 }
 
@@ -130,6 +133,8 @@ fun BluetoothControlsContent(
   onSelectEqualizer: (EqualizerPreset) -> Unit = {},
   onSelectPlaybackOrder: (PlaybackOrder) -> Unit = {},
   onAdvanced: (AdvancedCommand) -> Unit,
+  /** Shows Bluetooth profile and codec diagnostics and the raw vendor commands. */
+  developerMode: Boolean = false,
 ) {
   Box(modifier = modifier) {
     // Cards flow into as many ~360dp columns as fit: one on a phone, two or three on a tablet,
@@ -141,7 +146,7 @@ fun BluetoothControlsContent(
       verticalItemSpacing = 12.dp,
       horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-      item { ConnectionCard(state, onOpenSettings, onRefresh) }
+      item { ConnectionCard(state, onOpenSettings, onRefresh, developerMode) }
       if (state.permissionMissing) {
         item { PermissionWarningCard(onRequestBluetoothPermission, onOpenAppPermissionSettings) }
       }
@@ -167,7 +172,7 @@ fun BluetoothControlsContent(
       item { VolumeCard(state, onSetVolume, onAdjustVolume, onToggleMute) }
       item { EqPresetsCard(state, onSelectEqualizer) }
       item { PlaybackOrderCard(state, onSelectPlaybackOrder) }
-      item { AdvancedCommandsCard(onAdvanced) }
+      if (developerMode) item { AdvancedCommandsCard(onAdvanced) }
     }
     SnackbarHost(snackbarHost, modifier = Modifier.align(Alignment.BottomCenter))
   }
@@ -178,6 +183,7 @@ private fun ConnectionCard(
   state: BluetoothState,
   onOpenSettings: () -> Unit,
   onRefresh: () -> Unit,
+  diagnostics: Boolean,
 ) {
   ElevatedCard(modifier = Modifier.fillMaxWidth()) {
     Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -206,15 +212,16 @@ private fun ConnectionCard(
         TextButton(onClick = onRefresh) { Text("Refresh") }
       }
       if (device != null) {
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-          device.profileNames.forEach { profile ->
-            AssistChip(onClick = {}, label = { Text(profile) })
+        if (diagnostics)
+          Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            device.profileNames.forEach { profile ->
+              AssistChip(onClick = {}, label = { Text(profile) })
+            }
           }
-        }
         if (device.batteryPercent != null) {
           Text(device.batterySummary().orEmpty())
         }
-        if (device.codec != null) {
+        if (diagnostics && device.codec != null) {
           Text("Codec: ${device.codec}")
         }
       }
@@ -611,6 +618,17 @@ private fun SupportingText(text: String) {
 @Composable
 private fun AdvancedCommandsCard(onAdvanced: (AdvancedCommand) -> Unit) {
   var expanded by remember { mutableStateOf(false) }
+  var confirming by remember { mutableStateOf<AdvancedCommand?>(null) }
+  confirming?.let { command ->
+    ConfirmCommandDialog(
+      command = command,
+      onConfirm = {
+        confirming = null
+        onAdvanced(command)
+      },
+      onDismiss = { confirming = null },
+    )
+  }
   ElevatedCard(modifier = Modifier.fillMaxWidth()) {
     Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
       Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
@@ -646,7 +664,10 @@ private fun AdvancedCommandsCard(onAdvanced: (AdvancedCommand) -> Unit) {
               fontWeight = FontWeight.SemiBold,
             )
             commands.forEach { cmd ->
-              OutlinedButton(onClick = { onAdvanced(cmd) }, modifier = Modifier.fillMaxWidth()) {
+              OutlinedButton(
+                onClick = { if (cmd in destructiveCommands) confirming = cmd else onAdvanced(cmd) },
+                modifier = Modifier.fillMaxWidth(),
+              ) {
                 Text(cmd.label)
               }
             }
@@ -654,6 +675,35 @@ private fun AdvancedCommandsCard(onAdvanced: (AdvancedCommand) -> Unit) {
       }
     }
   }
+}
+
+/** Commands that can't be undone from the app, so they ask first. */
+private val destructiveCommands = setOf(AdvancedCommand.FactoryReset, AdvancedCommand.ClearPairList)
+
+@Composable
+private fun ConfirmCommandDialog(
+  command: AdvancedCommand,
+  onConfirm: () -> Unit,
+  onDismiss: () -> Unit,
+) {
+  AlertDialog(
+    onDismissRequest = onDismiss,
+    title = { Text("${command.label}?") },
+    text = {
+      Text(
+        when (command) {
+          AdvancedCommand.FactoryReset ->
+            "The headphones go back to their factory settings and forget every paired device. " +
+              "You'll need to pair them again."
+          else ->
+            "The headphones forget every paired device, this phone included. You'll need to " +
+              "pair them again."
+        },
+      )
+    },
+    confirmButton = { TextButton(onClick = onConfirm) { Text(command.label) } },
+    dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } },
+  )
 }
 
 private fun formatTime(ms: Long): String {

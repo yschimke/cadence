@@ -52,12 +52,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -65,6 +65,7 @@ import ee.schimke.cadence.datastore.proto.NetworkConstraint
 import ee.schimke.cadence.datastore.proto.SourceKind
 import ee.schimke.cadence.datastore.proto.SyncProfile
 import ee.schimke.cadence.datastore.proto.SyncSource
+import ee.schimke.cadence.developer.LocalDeveloperMode
 import ee.schimke.cadence.metro.metroViewModel
 import ee.schimke.cadence.platform.LocalPlayUpdateSettings
 import ee.schimke.cadence.platform.LocalWidgetDesigns
@@ -83,9 +84,8 @@ fun ManageSyncScreen(
   val viewModel = metroViewModel<FileSyncViewModel>()
   val state by viewModel.collectState()
   val suggestions by viewModel.suggestions.collectAsState()
-  val launcher = rememberDirectorySourceLauncher { name, uri ->
-    viewModel.addLocalDirectory(name, uri)
-  }
+  // Folders join the default profile so they keep refreshing; developer mode can add others.
+  val launcher = rememberDirectorySourceLauncher(viewModel::addFolderToLibrary)
 
   var showAddNfs by remember { mutableStateOf(false) }
   var showDiscover by remember { mutableStateOf(false) }
@@ -162,8 +162,7 @@ fun ManageSyncContent(
   podcastSource: String? = null,
   onOpenPodcasts: () -> Unit = {},
 ) {
-  var advanced by rememberSaveable { mutableStateOf(false) }
-  var headphones by rememberSaveable { mutableStateOf(false) }
+  val developer = LocalDeveloperMode.current
   val playUpdates = LocalPlayUpdateSettings.current
   val widgetDesigns = LocalWidgetDesigns.current
   Surface(modifier = modifier, color = MaterialTheme.colorScheme.background) {
@@ -218,24 +217,13 @@ fun ManageSyncContent(
           OutlinedButton(onClick = onAddLocalDirectory) { Text("Add files or folders") }
         }
       }
-      item {
-        TextButton(onClick = { advanced = !advanced }) {
-          Text(if (advanced) "Hide advanced options" else "Advanced options")
-        }
-      }
-      if (advanced) {
+      item { DiscoverAppsRow(onDiscoverApps = onDiscoverApps) }
+      if (developer.enabled) {
+        item { DeveloperHeader(onTurnOff = { developer.setEnabled(false) }) }
+        playUpdates?.let { settings -> item { EarlyUpdatesRow(settings) } }
         item { TextButton(onClick = onCloudBackup) { Text("Cross-device backup") } }
-        if (podcastSource != null)
-          item { TextButton(onClick = onAddPodcasts) { Text("Change podcast source") } }
         item { OutlinedButton(onClick = onAddNfsShare) { Text("Add NFS share") } }
-        item { DiscoverAppsRow(onDiscoverApps = onDiscoverApps) }
-        item {
-          TextButton(onClick = { headphones = !headphones }) {
-            Text(if (headphones) "Hide headphone sync settings" else "Headphone sync settings")
-          }
-        }
-        if (headphones)
-          item { TargetDeviceCard(state, onSelectTargetDevice, onSetAutoSync, onSetUsbMatch) }
+        item { TargetDeviceCard(state, onSelectTargetDevice, onSetAutoSync, onSetUsbMatch) }
         item {
           SectionHeader(
             title = "Sync profiles",
@@ -265,7 +253,13 @@ fun ManageSyncContent(
           )
         }
         widgetDesigns?.let { designs -> item { WidgetDesignsRow(designs) } }
-        playUpdates?.let { settings -> item { AppVersionRow(settings) } }
+      }
+      item {
+        AppVersionRow(
+          version = playUpdates?.version,
+          developer = developer.enabled,
+          onUnlock = { developer.setEnabled(true) },
+        )
       }
     }
   }
@@ -311,45 +305,69 @@ private fun WidgetDesignsRow(designs: WidgetDesigns) {
   }
 }
 
-/** Taps on [AppVersionRow] that turn on early Play updates for internal testers. */
-private const val TESTER_TAPS = 7
+/** Taps on [AppVersionRow] that turn on developer mode. */
+private const val DEVELOPER_TAPS = 7
 
 /**
- * The installed version. Tapping it [TESTER_TAPS] times opts this device in to Play updates as soon
- * as they appear (internal testers); otherwise updates are offered once they are a week old. While
- * opted in, a switch shows the choice and turns it back off.
+ * The installed version, or the app name where it is not known (desktop, web). Tapping it
+ * [DEVELOPER_TAPS] times turns on developer mode, which shows the options most people never need.
  */
 @Composable
-private fun AppVersionRow(settings: PlayUpdateSettings) {
+private fun AppVersionRow(version: String?, developer: Boolean, onUnlock: () -> Unit) {
   var taps by remember { mutableStateOf(0) }
-  Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-    Text(
-      "Version ${settings.version}",
-      style = MaterialTheme.typography.bodySmall,
-      color = MaterialTheme.colorScheme.onSurfaceVariant,
-      modifier =
-        Modifier.clickable(enabled = !settings.tester) {
-            taps++
-            if (taps >= TESTER_TAPS) {
-              taps = 0
-              settings.onTesterChange(true)
-            }
+  Text(
+    version?.let { "Version $it" } ?: "Cadence",
+    style = MaterialTheme.typography.bodySmall,
+    color = MaterialTheme.colorScheme.onSurfaceVariant,
+    modifier =
+      Modifier.clickable(enabled = !developer) {
+          taps++
+          if (taps >= DEVELOPER_TAPS) {
+            taps = 0
+            onUnlock()
           }
-          .padding(vertical = 8.dp),
-    )
-    if (settings.tester) {
-      Row(verticalAlignment = Alignment.CenterVertically) {
-        Column(Modifier.weight(1f)) {
-          Text("Early updates", style = MaterialTheme.typography.titleSmall)
-          Text(
-            "Update as soon as a new version is on Play, for testers.",
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-          )
         }
-        Switch(checked = true, onCheckedChange = settings.onTesterChange)
-      }
+        .padding(vertical = 8.dp),
+  )
+}
+
+/** Starts the developer options, with the switch that hides them again. */
+@Composable
+private fun DeveloperHeader(onTurnOff: () -> Unit) {
+  Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+    Column(Modifier.weight(1f)) {
+      Text(
+        "Developer options",
+        style = MaterialTheme.typography.titleMedium,
+        fontWeight = FontWeight.SemiBold,
+        modifier = Modifier.semantics { heading() },
+      )
+      Text(
+        "For testing and diagnostics. Tap the version 7 times to show them again.",
+        style = MaterialTheme.typography.bodySmall,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+      )
     }
+    Switch(checked = true, onCheckedChange = { if (!it) onTurnOff() })
+  }
+}
+
+/**
+ * Opts this device in to Play updates as soon as they appear (internal testers); otherwise updates
+ * are offered once they are a week old.
+ */
+@Composable
+private fun EarlyUpdatesRow(settings: PlayUpdateSettings) {
+  Row(verticalAlignment = Alignment.CenterVertically) {
+    Column(Modifier.weight(1f)) {
+      Text("Early updates", style = MaterialTheme.typography.titleSmall)
+      Text(
+        "Update as soon as a new version is on Play, for testers.",
+        style = MaterialTheme.typography.bodySmall,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+      )
+    }
+    Switch(checked = settings.tester, onCheckedChange = settings.onTesterChange)
   }
 }
 

@@ -20,18 +20,24 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import ee.schimke.cadence.bluetooth.BluetoothControlsScreen
+import ee.schimke.cadence.developer.DeveloperMode
+import ee.schimke.cadence.developer.DeveloperModeViewModel
+import ee.schimke.cadence.developer.LocalDeveloperMode
 import ee.schimke.cadence.devices.DevicesScreen
 import ee.schimke.cadence.files.DeviceFilesScreen
 import ee.schimke.cadence.home.HomeScreen
+import ee.schimke.cadence.metro.metroViewModel
 import ee.schimke.cadence.platform.Analytics
 import ee.schimke.cadence.podcasts.*
 import ee.schimke.cadence.sync.FileSyncScreen
@@ -40,6 +46,15 @@ import kotlinx.serialization.Serializable
 
 @Composable
 fun App() {
+  val developerModel = metroViewModel<DeveloperModeViewModel>()
+  val developerEnabled by developerModel.enabled.collectAsState()
+  val developer =
+    remember(developerEnabled) { DeveloperMode(developerEnabled, developerModel::setEnabled) }
+  CompositionLocalProvider(LocalDeveloperMode provides developer) { AppContent() }
+}
+
+@Composable
+private fun AppContent() {
   val navController = rememberNavController()
   // One screen_view per destination: the route's type name, without its arguments.
   val destination by navController.currentBackStackEntryAsState()
@@ -105,7 +120,11 @@ fun App() {
         DevicesScreen(
           modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
           podcastTarget = podcastState.target,
-          onDeviceClick = { navController.navigate(DeviceFiles(id = it.id)) },
+          // The raw file view is a diagnostic: only offered in developer mode.
+          onDeviceClick =
+            if (LocalDeveloperMode.current.enabled) {
+              { navController.navigate(DeviceFiles(id = it.id)) }
+            } else null,
         )
       }
       composable<DeviceFiles> {

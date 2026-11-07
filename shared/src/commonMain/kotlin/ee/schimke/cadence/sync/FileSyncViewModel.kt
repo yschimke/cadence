@@ -97,10 +97,6 @@ class FileSyncViewModel(
   /** The screen state, from the path [UseAppStateTransform] selects. */
   @Composable fun collectState(): State<UiState> = transformState ?: legacyState.collectAsState()
 
-  fun addLocalDirectory(name: String, treeUri: String) {
-    viewModelScope.launch { syncRepo.addLocalDirectorySource(name, treeUri) }
-  }
-
   /** One-tap first-run path: adds the folder to a Library profile and stages it. */
   fun addFolderToLibrary(name: String, treeUri: String) {
     viewModelScope.launch { refreshScheduler.runNow(syncRepo.addFolderToLibrary(name, treeUri)) }

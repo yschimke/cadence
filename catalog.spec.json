@@ -99,6 +99,11 @@
           "componentId": "Bluetooth/Mp3Mode",
           "preview": "BluetoothMp3ModePreview",
           "caption": "Bluetooth controls, MP3 mode."
+        },
+        {
+          "componentId": "Bluetooth/Developer",
+          "preview": "BluetoothDeveloperPreview",
+          "caption": "Bluetooth controls with developer diagnostics and advanced commands."
         }
       ]
     },
@@ -118,7 +123,7 @@
         {
           "componentId": "Manage/Refreshing",
           "preview": "ManageRefreshingPreview",
-          "caption": "Manage sync, refreshing."
+          "caption": "Manage sync, developer options, refreshing."
         }
       ]
     },

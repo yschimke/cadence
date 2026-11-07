@@ -54,7 +54,7 @@ import okio.Path
 fun DevicesScreen(
   modifier: Modifier = Modifier,
   podcastTarget: String = "",
-  onDeviceClick: (Device) -> Unit,
+  onDeviceClick: ((Device) -> Unit)?,
 ) {
   val viewModel = metroViewModel<DevicesViewModel>()
   val uiState by viewModel.uiState.collectAsState()
@@ -87,7 +87,7 @@ fun DevicesScreen(
   modifier: Modifier = Modifier,
   uiState: DevicesViewModel.UiState,
   permissionCheck: () -> Unit,
-  onDeviceClick: (Device) -> Unit,
+  onDeviceClick: ((Device) -> Unit)?,
   podcastTarget: String = "",
   onForget: (Device) -> Unit = {},
   usbConnection: UsbConnectionUi? = null,
@@ -106,8 +106,8 @@ fun DevicesScreen(
           modifier = Modifier.semantics { heading() },
         )
         Text(
-          "Folders you've let Cadence open, on this phone or on your headphones. Tap one to see " +
-            "its files.",
+          "Folders you've let Cadence open, on this phone or on your headphones." +
+            if (onDeviceClick != null) " Tap one to see its files." else "",
           style = MaterialTheme.typography.bodyMedium,
           color = colors.onSurfaceVariant,
         )
@@ -119,7 +119,7 @@ fun DevicesScreen(
         if (uiState.devices.isEmpty())
           item(key = "empty") {
             Text(
-              "No folders yet. Add one to browse its files.",
+              "No folders yet.",
               style = MaterialTheme.typography.bodyMedium,
             )
           }
@@ -131,7 +131,7 @@ fun DevicesScreen(
                 FolderRow(
                   device,
                   usedForPodcasts = podcastTarget.isNotBlank() && device.path == podcastTarget,
-                  onClick = { onDeviceClick(device) },
+                  onClick = onDeviceClick?.let { { it(device) } },
                   onForget = { onForget(device) },
                 )
               }
@@ -154,7 +154,7 @@ fun DevicesScreen(
 private fun FolderRow(
   device: Device,
   usedForPodcasts: Boolean,
-  onClick: () -> Unit,
+  onClick: (() -> Unit)?,
   onForget: () -> Unit,
 ) {
   val location = storageLocation(device.path)
@@ -188,7 +188,7 @@ private fun FolderRow(
         )
         if (usedForPodcasts)
           AssistChip(
-            onClick = onClick,
+            onClick = onClick ?: {},
             label = { Text("Podcasts are copied here") },
             leadingIcon = {
               Icon(Icons.Filled.Headphones, contentDescription = null, Modifier.size(18.dp))
@@ -213,7 +213,7 @@ private fun FolderRow(
       }
     },
     colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-    modifier = Modifier.clickable(onClick = onClick),
+    modifier = if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier,
   )
 }
 

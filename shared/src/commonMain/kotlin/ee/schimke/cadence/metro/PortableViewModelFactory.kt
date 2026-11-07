@@ -7,6 +7,8 @@ import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.CreationExtras
 import ee.schimke.cadence.bluetooth.*
 import ee.schimke.cadence.data.*
+import ee.schimke.cadence.developer.DeveloperModeRepo
+import ee.schimke.cadence.developer.DeveloperModeViewModel
 import ee.schimke.cadence.devices.DevicesViewModel
 import ee.schimke.cadence.files.DeviceFilesViewModel
 import ee.schimke.cadence.home.HomeViewModel
@@ -34,6 +36,7 @@ class PortableViewModelFactory(
 ) : ViewModelProvider.Factory {
   private val devices = DevicesRepo(store)
   private val repo = SyncRepo(store)
+  private val developer = DeveloperModeRepo(store)
 
   @Suppress("UNCHECKED_CAST")
   override fun <T : ViewModel> create(modelClass: KClass<T>, extras: CreationExtras): T =
@@ -41,6 +44,7 @@ class PortableViewModelFactory(
       HomeViewModel::class ->
         HomeViewModel(repo, scheduler, refresh, browser, suggestions, bluetooth, usb)
       DevicesViewModel::class -> DevicesViewModel(devices, usb)
+      DeveloperModeViewModel::class -> DeveloperModeViewModel(developer)
       DeviceFilesViewModel::class ->
         DeviceFilesViewModel(extras.createSavedStateHandle(), devices, fileSystem, storage)
       BluetoothControlsViewModel::class -> BluetoothControlsViewModel(bluetooth)

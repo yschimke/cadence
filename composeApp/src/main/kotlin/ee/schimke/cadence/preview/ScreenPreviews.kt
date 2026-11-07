@@ -5,12 +5,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import ee.schimke.cadence.AndroidMaterialTheme
 import ee.schimke.cadence.DeviceFiles
 import ee.schimke.cadence.bluetooth.BluetoothControlsContent
+import ee.schimke.cadence.developer.DeveloperMode
+import ee.schimke.cadence.developer.LocalDeveloperMode
 import ee.schimke.cadence.devices.DevicesScreen
 import ee.schimke.cadence.devices.DevicesViewModel
 import ee.schimke.cadence.files.DeviceFilesContent
@@ -379,6 +382,35 @@ internal fun BluetoothMp3ModePreview() {
   }
 }
 
+@Preview(name = "BT controls - developer", showBackground = true, heightDp = 1700)
+@Composable
+internal fun BluetoothDeveloperPreview() {
+  AndroidMaterialTheme {
+    BluetoothControlsContent(
+      modifier = themedModifier,
+      state = PreviewFixtures.btConnectedPlaying,
+      snackbarHost = remember { SnackbarHostState() },
+      onRefresh = {},
+      onSetVolume = {},
+      onAdjustVolume = {},
+      onToggleMute = {},
+      onPlay = {},
+      onPause = {},
+      onPlayPause = {},
+      onPrevious = {},
+      onNext = {},
+      onStop = {},
+      onFastForward = {},
+      onRewind = {},
+      onOpenSettings = {},
+      onRequestMediaAccess = {},
+      onSelectWorkingMode = {},
+      onAdvanced = {},
+      developerMode = true,
+    )
+  }
+}
+
 // ----------------------------------------------------------------------
 // Manage sources & profiles (the deep configuration screen)
 
@@ -444,24 +476,27 @@ internal fun ManagePopulatedPreview() {
   }
 }
 
-@Preview(name = "Manage - refreshing", showBackground = true, heightDp = 1900)
+@Preview(name = "Manage - developer, refreshing", showBackground = true, heightDp = 1900)
 @Composable
 internal fun ManageRefreshingPreview() {
   AndroidMaterialTheme {
-    ManageSyncContent(
-      modifier = themedModifier,
-      state = PreviewFixtures.fileSyncRefreshing(),
-      onAddLocalDirectory = manageCallbacks.onAddLocalDirectory,
-      onAddNfsShare = manageCallbacks.onAddNfsShare,
-      onDiscoverApps = manageCallbacks.onDiscoverApps,
-      onRemoveSource = manageCallbacks.onRemoveSource,
-      onAddProfile = manageCallbacks.onAddProfile,
-      onDeleteProfile = manageCallbacks.onDeleteProfile,
-      onRefreshProfile = manageCallbacks.onRefreshProfile,
-      onToggleAutoRefresh = manageCallbacks.onToggleAutoRefresh,
-      onSelectTargetDevice = manageCallbacks.onSelectTargetDevice,
-      onSetAutoSync = manageCallbacks.onSetAutoSync,
-      onSetUsbMatch = manageCallbacks.onSetUsbMatch,
-    )
+    // Profiles and their refresh progress are developer options.
+    CompositionLocalProvider(LocalDeveloperMode provides DeveloperMode(enabled = true) {}) {
+      ManageSyncContent(
+        modifier = themedModifier,
+        state = PreviewFixtures.fileSyncRefreshing(),
+        onAddLocalDirectory = manageCallbacks.onAddLocalDirectory,
+        onAddNfsShare = manageCallbacks.onAddNfsShare,
+        onDiscoverApps = manageCallbacks.onDiscoverApps,
+        onRemoveSource = manageCallbacks.onRemoveSource,
+        onAddProfile = manageCallbacks.onAddProfile,
+        onDeleteProfile = manageCallbacks.onDeleteProfile,
+        onRefreshProfile = manageCallbacks.onRefreshProfile,
+        onToggleAutoRefresh = manageCallbacks.onToggleAutoRefresh,
+        onSelectTargetDevice = manageCallbacks.onSelectTargetDevice,
+        onSetAutoSync = manageCallbacks.onSetAutoSync,
+        onSetUsbMatch = manageCallbacks.onSetUsbMatch,
+      )
+    }
   }
 }
