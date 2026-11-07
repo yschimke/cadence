@@ -340,15 +340,15 @@ internal object PreviewFixtures {
             file("src-podbean", "Morning Briefing/2026-10-28.mp3", 38),
             file("src-podbean", "Morning Briefing/2026-10-27.mp3", 41),
             file("src-podbean", "Tides/412 Tides of the Pacific.mp3", 74),
-          )
+          ),
         ),
       "src-drive-swim" to
         HomeViewModel.SourceContents(
-          (1..8).map { file("src-drive-swim", "Intervals/Set $it.mp3", 9L + it) }
+          (1..8).map { file("src-drive-swim", "Intervals/Set $it.mp3", 9L + it) },
         ),
       "src-nas" to
         HomeViewModel.SourceContents(
-          error = "Can't read this folder. Add it again to restore access."
+          error = "Can't read this folder. Add it again to restore access.",
         ),
     )
 
@@ -388,7 +388,7 @@ internal object PreviewFixtures {
           source = PodcastSourceKind.PocketCasts,
           sourceList = POCKET_CASTS_UP_NEXT,
           lastBackendSync = "2026-10-28T08:15:00Z",
-        )
+        ),
     )
 
   /** Set up and prepared overnight: plugging in copies these. */
@@ -406,7 +406,7 @@ internal object PreviewFixtures {
               episode.positionMs,
               episode.durationMs,
               "${episode.id}.m4a",
-            )
+            ),
           ),
         )
       }
@@ -429,6 +429,6 @@ internal object PreviewFixtures {
             .copy(podcastTitle = "Coastal Notes", published = "2026-11-01T18:30:00Z"),
           episode("n3", "Swimming the Strait of Gibraltar", 61, 0)
             .copy(podcastTitle = "Open Water", published = "2026-10-31T09:00:00Z"),
-        )
+        ),
     )
 }

@@ -30,7 +30,7 @@ data class DirectoryFile(
 /** Reject traversal before joining data from settings or external directory listings. */
 fun safeRelativePath(path: String): String {
   require(
-    path.isNotBlank() && !path.startsWith('/') && !path.contains('\\') && !path.contains(':')
+    path.isNotBlank() && !path.startsWith('/') && !path.contains('\\') && !path.contains(':'),
   ) {
     "Invalid relative path: $path"
   }

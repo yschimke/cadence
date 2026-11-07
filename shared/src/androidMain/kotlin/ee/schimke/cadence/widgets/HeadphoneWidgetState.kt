@@ -27,8 +27,8 @@ enum class HeadphoneWidgetAction(val wireName: String, val label: String) {
  * - [title], the largest text, is what is happening now: the track playing, whether the headset is
  *   playing from its own storage, or that nothing is connected.
  * - [detail] is what the user checks at a glance: the artist, or battery and playtime.
- * - [extra], shown only at the largest sizes, holds the settings that rarely change
- *   (EQ, volume, playback order).
+ * - [extra], shown only at the largest sizes, holds the settings that rarely change (EQ, volume,
+ *   playback order).
  *
  * The device's name is not a heading: for the OpenSwim Pro the widget exists for, it is constant
  * and says nothing. It appears only when some other headset is connected. The mode is carried by

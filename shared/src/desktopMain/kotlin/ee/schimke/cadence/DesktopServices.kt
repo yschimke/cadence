@@ -20,7 +20,7 @@ import okio.Path
 import okio.Path.Companion.toPath
 
 class DesktopServices(
-  private val bundledOAuth: ee.schimke.cadence.sync.google.OAuthConfig? = null
+  private val bundledOAuth: ee.schimke.cadence.sync.google.OAuthConfig? = null,
 ) : AutoCloseable {
   private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
   private val root = (System.getProperty("user.home") + "/.cadence").toPath()

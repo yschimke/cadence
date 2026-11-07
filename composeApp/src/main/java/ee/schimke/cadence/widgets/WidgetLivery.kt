@@ -63,7 +63,7 @@ internal class WidgetLivery(
             profiles = setOf("widgets"),
             livePush = false,
             maxBytes = LiveryLauncherWidgetProvider.DEFAULT_TEMPLATE_MAX_BYTES,
-          )
+          ),
         ),
       bundled = AndroidBundled.fromAssets(context),
     )

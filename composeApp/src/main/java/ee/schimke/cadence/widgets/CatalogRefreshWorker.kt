@@ -81,7 +81,7 @@ class CatalogRefreshWorker(context: Context, params: WorkerParameters) :
       val request =
         PeriodicWorkRequestBuilder<CatalogRefreshWorker>(1, TimeUnit.DAYS)
           .setConstraints(
-            Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
+            Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build(),
           )
           .build()
       WorkManager.getInstance(context)

@@ -37,7 +37,7 @@ class RcspCommandGateway(private val transport: RcspTransport) {
   suspend fun execute(command: RcspCommand, encoder: RcspCommandEncoder): RcspPacket {
     if (!isSupported(command)) throw UnsupportedRcspCommandException(command, transport.profile)
     return transport.exchange(
-      encoder.encode(command) ?: throw UnencodableRcspCommandException(command)
+      encoder.encode(command) ?: throw UnencodableRcspCommandException(command),
     )
   }
 }

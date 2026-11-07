@@ -7,7 +7,7 @@ import androidx.compose.material.icons.filled.Cloud
 import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.GraphicEq
 import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.remote.creation.compose.action.Action
+import androidx.compose.remote.creation.compose.action.RemoteAction
 import androidx.compose.remote.creation.compose.layout.RemoteAlignment
 import androidx.compose.remote.creation.compose.layout.RemoteArrangement
 import androidx.compose.remote.creation.compose.layout.RemoteBox
@@ -48,10 +48,10 @@ import ee.schimke.cadence.widgets.WidgetColors
 @RemoteComposable
 fun CloudSyncWidgetContent(
   status: CloudSyncStatus,
-  onOpen: Action? = null,
-  onRefresh: Action? = null,
-  onDownload: Action? = null,
-  onProcess: Action? = null,
+  onOpen: RemoteAction? = null,
+  onRefresh: RemoteAction? = null,
+  onDownload: RemoteAction? = null,
+  onProcess: RemoteAction? = null,
   widthDp: Int = 250,
   heightDp: Int = 180,
   colors: WidgetColors = WidgetColors.Dark,
@@ -63,8 +63,7 @@ fun CloudSyncWidgetContent(
   // Source title gets the full remaining width beside refresh — not a shared line with
   // the 48dp control (that clipped "Swimming" on 250dp; Remote ellipsis does not draw).
   val titleWidth =
-    (widthDp - padding * 2 - refreshDp - if (status.hasSource) headerGap else 0f)
-      .coerceAtLeast(90f)
+    (widthDp - padding * 2 - refreshDp - if (status.hasSource) headerGap else 0f).coerceAtLeast(90f)
   // Body/eyebrow stay at least 12sp after scale (launcher.type.min-size).
   val labelSp = (12 * scale).coerceAtLeast(12f)
   val titleSp = (13 * scale).coerceAtLeast(12f)
@@ -84,16 +83,16 @@ fun CloudSyncWidgetContent(
   // target is a full 48dp and the status line is ≥12sp.
   val columnGap = (if (heightDp < 170) 6f else 10f) * scale
   val connectAction = onOpen.takeIf { !status.hasSource }
-  val downloadAction =
-    onDownload.takeIf { status.hasSource && status.downloadNeeded == null && status.canDownload }
-  val processAction =
-    onProcess.takeIf { status.hasSource && status.processingNeeded == null && status.canProcess }
+  val downloadAction = onDownload.takeIf {
+    status.hasSource && status.downloadNeeded == null && status.canDownload
+  }
+  val processAction = onProcess.takeIf {
+    status.hasSource && status.processingNeeded == null && status.canProcess
+  }
   // No outer clip: the launcher applies its own system corner radius to the widget.
   RemoteColumn(
     modifier =
-      RemoteModifier.fillMaxSize()
-        .background(colors.background.rc)
-        .padding((12 * scale).rdp),
+      RemoteModifier.fillMaxSize().background(colors.background.rc).padding((12 * scale).rdp),
     verticalArrangement = RemoteArrangement.spacedBy(columnGap.rdp),
   ) {
     RemoteRow(
@@ -265,7 +264,7 @@ private fun CloudMetric(
   width: Float,
   labelSp: Float,
   colors: WidgetColors,
-  action: Action? = null,
+  action: RemoteAction? = null,
   description: String = "",
   emphasize: Boolean = true,
   pending: Boolean = true,
@@ -327,7 +326,7 @@ internal fun SyncStatusIcon(icon: ImageVector, color: Color, size: Int) {
 
 @Composable
 @RemoteComposable
-private fun CloudAction(label: String, action: Action, scale: Float, colors: WidgetColors) {
+private fun CloudAction(label: String, action: RemoteAction, scale: Float, colors: WidgetColors) {
   RemoteBox(
     modifier = RemoteModifier.height((48 * scale.coerceAtLeast(1f)).rdp).clickable(action),
     contentAlignment = RemoteAlignment.Center,

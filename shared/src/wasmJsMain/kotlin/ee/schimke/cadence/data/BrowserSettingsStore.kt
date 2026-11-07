@@ -17,7 +17,7 @@ class BrowserSettingsStore : SettingsStore {
         readSettings()?.let { Settings.ADAPTER.decode(requireNotNull(it.decodeBase64())) }
           ?: Settings()
       }
-        .getOrElse { Settings() }
+        .getOrElse { Settings() },
     )
 
   override suspend fun updateData(transform: suspend (Settings) -> Settings): Settings =

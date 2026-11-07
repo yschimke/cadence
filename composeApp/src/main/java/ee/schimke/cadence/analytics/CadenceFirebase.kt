@@ -36,7 +36,8 @@ object CadenceFirebase {
 
   private fun sdkPresent(): Boolean = runCatching {
     Class.forName("com.google.firebase.analytics.FirebaseAnalytics")
-  }.isSuccess
+  }
+    .isSuccess
 }
 
 private class FirebaseBackend(val analytics: Analytics, val liverySinks: List<AnalyticsSink>) {
@@ -65,7 +66,7 @@ private class FirebaseCadenceAnalytics(private val firebase: FirebaseAnalytics) 
         mapOf(
           FirebaseAnalytics.Param.SCREEN_NAME to name,
           FirebaseAnalytics.Param.SCREEN_CLASS to name,
-        )
+        ),
       ),
     )
   }

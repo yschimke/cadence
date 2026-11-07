@@ -355,7 +355,7 @@ private fun GpodderForm(
     label = {
       Text(
         if (flavor == GpodderFlavor.Nextcloud) "Nextcloud address (https://…)"
-        else "Server, e.g. https://gpodder.net"
+        else "Server, e.g. https://gpodder.net",
       )
     },
     singleLine = true,
@@ -548,7 +548,7 @@ private fun PodcastTrimming(
       .distinctBy { it.podcastId }
   Expandable("Trim podcast intros and outros") {
     Text(
-      "Skip a fixed number of seconds for every episode of a podcast. Changes apply when audio is next prepared."
+      "Skip a fixed number of seconds for every episode of a podcast. Changes apply when audio is next prepared.",
     )
     if (shows.isEmpty()) Text("Refresh your podcast source to load show information.")
     shows.forEach { episode ->

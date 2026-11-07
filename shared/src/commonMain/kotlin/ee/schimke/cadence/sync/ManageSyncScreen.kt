@@ -171,7 +171,7 @@ fun ManageSyncContent(
       modifier =
         Modifier.fillMaxWidth()
           .windowInsetsPadding(
-            WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal + WindowInsetsSides.Bottom)
+            WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal + WindowInsetsSides.Bottom),
           ),
       contentPadding = PaddingValues(16.dp),
       verticalArrangement = Arrangement.spacedBy(12.dp),
@@ -303,7 +303,7 @@ private fun WidgetDesignsRow(designs: WidgetDesigns) {
                 refreshing = false
               }
           }
-        }
+        },
       ) {
         Text("Refresh")
       }

@@ -6,7 +6,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BatteryFull
 import androidx.compose.material.icons.filled.Headphones
 import androidx.compose.material.icons.filled.Sync
-import androidx.compose.remote.creation.compose.action.Action
+import androidx.compose.remote.creation.compose.action.RemoteAction
 import androidx.compose.remote.creation.compose.layout.RemoteAlignment
 import androidx.compose.remote.creation.compose.layout.RemoteArrangement
 import androidx.compose.remote.creation.compose.layout.RemoteBox
@@ -53,7 +53,7 @@ fun PodcastSyncWidgetContent(
   battery: String?,
   showSwimming: Boolean,
   heightDp: Int,
-  onTap: Action? = null,
+  onTap: RemoteAction? = null,
   widthDp: Int = 232,
   colors: WidgetColors = WidgetColors.Dark,
   /** The season's pool: its water, the swimmer's hat and what's going on around them. */
@@ -69,14 +69,13 @@ fun PodcastSyncWidgetContent(
     modifier =
       RemoteModifier.fillMaxSize()
         .let { if (onTap != null) it.clickable(onTap) else it }
-        .background(colors.background.rc)
+        .background(colors.background.rc),
   ) {
     // Metrics hug the top; the pool sits on the bottom edge. SpaceBetween avoids an empty
     // middle band when the slot is taller than the three status lines.
     RemoteColumn(
       modifier = RemoteModifier.fillMaxSize(),
-      verticalArrangement =
-        if (lane) RemoteArrangement.SpaceBetween else RemoteArrangement.Center,
+      verticalArrangement = if (lane) RemoteArrangement.SpaceBetween else RemoteArrangement.Center,
     ) {
       RemoteColumn(
         modifier = RemoteModifier.fillMaxWidth().padding((8 * scale).rdp),

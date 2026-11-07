@@ -2,7 +2,7 @@
 
 package ee.schimke.cadence.widgets
 
-import androidx.compose.remote.creation.compose.action.Action
+import androidx.compose.remote.creation.compose.action.RemoteAction
 import androidx.compose.remote.creation.compose.layout.RemoteBox
 import androidx.compose.remote.creation.compose.layout.RemoteComposable
 import androidx.compose.remote.creation.compose.layout.RemoteStateLayout
@@ -30,14 +30,15 @@ import kotlinx.serialization.json.put
  * What the widget shows changes with its state, not just its text: Play or Pause, the mode switch
  * and its water styling, and whether the detail and settings rows appear. Those are conditional
  * layouts (`RemoteStateLayout`) on [MODE], [HAS_DETAIL], [HAS_EXTRA] and [PLAYING]; instantiation
- * writes the values in and the player draws the live branch. Each branch lays out exactly as [HeadphoneWidgetLayout] does for that state and tier.
+ * writes the values in and the player draws the live branch. Each branch lays out exactly as
+ * [HeadphoneWidgetLayout] does for that state and tier.
  */
 object HeadphoneControlsTemplate {
   const val CONTRACT = "cadence/headphone-controls@1"
 
   /**
-   * The minor of [CONTRACT] this app implements (`composeApp/livery/contracts`): Livery never picks a
-   * template that needs a newer one, which a later catalog may carry for newer app versions.
+   * The minor of [CONTRACT] this app implements (`composeApp/livery/contracts`): Livery never picks
+   * a template that needs a newer one, which a later catalog may carry for newer app versions.
    */
   const val CONTRACT_MINOR = 0
 
@@ -74,11 +75,21 @@ object HeadphoneControlsTemplate {
    * A slot size range with one layout: every state lays out the same everywhere in it.
    * [maxWidthDp]/[maxHeightDp] are inclusive; null is unbounded.
    */
-  data class Tier(val minWidthDp: Int, val maxWidthDp: Int?, val minHeightDp: Int, val maxHeightDp: Int?) {
+  data class Tier(
+    val minWidthDp: Int,
+    val maxWidthDp: Int?,
+    val minHeightDp: Int,
+    val maxHeightDp: Int?,
+  ) {
     /** A size inside the tier, to lay out its branches with. */
-    val widthDp: Int get() = minWidthDp
-    val heightDp: Int get() = minHeightDp
-    val name: String get() = "launcher-w$minWidthDp-h$minHeightDp"
+    val widthDp: Int
+      get() = minWidthDp
+
+    val heightDp: Int
+      get() = minHeightDp
+
+    val name: String
+      get() = "launcher-w$minWidthDp-h$minHeightDp"
   }
 
   /** The states a branch is laid out for: every combination the conditional layouts pick from. */
@@ -88,7 +99,11 @@ object HeadphoneControlsTemplate {
       detail = if (hasDetail) "" else null,
       extra = if (hasExtra) "" else null,
       transport =
-        listOf(HeadphoneWidgetAction.Previous, HeadphoneWidgetAction.Play, HeadphoneWidgetAction.Next),
+        listOf(
+          HeadphoneWidgetAction.Previous,
+          HeadphoneWidgetAction.Play,
+          HeadphoneWidgetAction.Next,
+        ),
       modeSwitch =
         when (mode) {
           MODE_TO_MP3 -> HeadphoneWidgetAction.SwitchToMp3
@@ -104,12 +119,19 @@ object HeadphoneControlsTemplate {
     }
 
   /** Everything about a size's layout that a template fixes (not the single-row title width). */
-  private fun signature(widthDp: Int, heightDp: Int) =
-    variants.map { (m, d, e) ->
-      HeadphoneWidgetLayout.of(variantState(m, d, e), widthDp, heightDp).let {
-        listOf(it.singleRow, it.showTitle, it.shortTitle, it.showDetail, it.showExtra, it.transport, it.showModeSwitch)
-      }
+  private fun signature(widthDp: Int, heightDp: Int) = variants.map { (m, d, e) ->
+    HeadphoneWidgetLayout.of(variantState(m, d, e), widthDp, heightDp).let {
+      listOf(
+        it.singleRow,
+        it.showTitle,
+        it.shortTitle,
+        it.showDetail,
+        it.showExtra,
+        it.transport,
+        it.showModeSwitch,
+      )
     }
+  }
 
   /**
    * The tiers launcher widgets fall in, from [HeadphoneWidgetLayout]'s own breakpoints: a size
@@ -117,11 +139,23 @@ object HeadphoneControlsTemplate {
    */
   fun tiers(maxDp: Int = 1_000): List<Tier> {
     val probe = listOf(60, 100, 140, 170, 200, 260, 400)
-    val widths = (MIN_DP..maxDp).filter { w -> w == MIN_DP || probe.any { h -> signature(w, h) != signature(w - 1, h) } }
-    val heights = (MIN_DP..maxDp).filter { h -> h == MIN_DP || listOf(100, 200, 260, 320, 500).any { w -> signature(w, h) != signature(w, h - 1) } }
+    val widths =
+      (MIN_DP..maxDp).filter { w ->
+        w == MIN_DP || probe.any { h -> signature(w, h) != signature(w - 1, h) }
+      }
+    val heights =
+      (MIN_DP..maxDp).filter { h ->
+        h == MIN_DP ||
+          listOf(100, 200, 260, 320, 500).any { w -> signature(w, h) != signature(w, h - 1) }
+      }
     return widths.indices.flatMap { i ->
       heights.indices.map { j ->
-        Tier(widths[i], widths.getOrNull(i + 1)?.minus(1), heights[j], heights.getOrNull(j + 1)?.minus(1))
+        Tier(
+          widths[i],
+          widths.getOrNull(i + 1)?.minus(1),
+          heights[j],
+          heights.getOrNull(j + 1)?.minus(1),
+        )
       }
     }
   }
@@ -164,8 +198,8 @@ object HeadphoneControlsTemplate {
 @RemoteComposable
 fun HeadphoneControlsTemplateContent(
   tier: HeadphoneControlsTemplate.Tier,
-  onOpen: Action?,
-  onAction: @Composable (HeadphoneWidgetAction) -> Action?,
+  onOpen: RemoteAction?,
+  onAction: @Composable (HeadphoneWidgetAction) -> RemoteAction?,
   look: HeadphoneLook = HeadphoneLook.Default,
 ) {
   val t = HeadphoneControlsTemplate
@@ -179,7 +213,8 @@ fun HeadphoneControlsTemplateContent(
       extra = named(t.EXTRA),
     )
   val defaults = WidgetColors.Dark
-  fun color(role: String) = RemoteColor.createNamedRemoteColor(role, t.COLORS.getValue(role)(defaults), user)
+  fun color(role: String) =
+    RemoteColor.createNamedRemoteColor(role, t.COLORS.getValue(role)(defaults).toArgb(), user)
   val palette =
     look.colors?.let { RemotePalette.of(it) }
       ?: RemotePalette(

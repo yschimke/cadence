@@ -67,7 +67,7 @@ class BrowserPodcastPlatform : PodcastPlatform {
     } catch (e: Exception) {
       if (e.message?.endsWith("Podcast blocked") == true)
         throw PodcastProblem(
-          "This server doesn't let web apps read it (CORS), or the network is offline. Use the desktop or Android app for this source."
+          "This server doesn't let web apps read it (CORS), or the network is offline. Use the desktop or Android app for this source.",
         )
       if (e.message?.endsWith("Podcast HTTP 404") == true)
         throw PodcastProblem("Not found (HTTP 404). Check the server URL and server type.")
@@ -106,14 +106,14 @@ class BrowserPodcastPlatform : PodcastPlatform {
       } catch (e: Exception) {
         if (e.message?.endsWith("Podcast HTTP 409") == true)
           throw PodcastProblem(
-            "Cloud revision conflict. Restore cloud configuration, reapply local settings, and save again."
+            "Cloud revision conflict. Restore cloud configuration, reapply local settings, and save again.",
           )
         if (
           e.message?.endsWith("Podcast HTTP 401") == true ||
             e.message?.endsWith("Podcast HTTP 403") == true
         )
           throw PodcastProblem(
-            "The server refused the sign-in. Check the user name and password (or the cloud project's row policies) and sign in again."
+            "The server refused the sign-in. Check the user name and password (or the cloud project's row policies) and sign in again.",
           )
         throw e
       }
@@ -144,7 +144,7 @@ class BrowserPodcastPlatform : PodcastPlatform {
 
   override suspend fun prepare(episode: Episode, sections: List<Section>) {
     require(
-      sections.size == 1 && sections[0].startMs == 0L && sections[0].endMs == episode.durationMs
+      sections.size == 1 && sections[0].startMs == 0L && sections[0].endMs == episode.durationMs,
     )
     call(
       "podcastDownload",
@@ -154,7 +154,7 @@ class BrowserPodcastPlatform : PodcastPlatform {
 
   override suspend fun available(section: Section): Boolean =
     Json.parseToJsonElement(
-        browserCall("podcastAvailable", browserArgs("fileName" to section.fileName))
+        browserCall("podcastAvailable", browserArgs("fileName" to section.fileName)),
       )
       .jsonPrimitive
       .boolean
@@ -174,7 +174,7 @@ class BrowserPodcastPlatform : PodcastPlatform {
                 put("name", section.fileName)
                 folders[section.fileName]?.let { put("folder", it) }
               }
-            }
+            },
           ),
         )
       }

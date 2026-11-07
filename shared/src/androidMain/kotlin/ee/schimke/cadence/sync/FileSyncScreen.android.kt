@@ -9,37 +9,39 @@ import androidx.documentfile.provider.DocumentFile
 
 @Composable
 actual fun rememberDirectorySourceLauncher(
-    onPicked: (name: String, treeUri: String) -> Unit,
+  onPicked: (name: String, treeUri: String) -> Unit,
 ): () -> Unit {
-    val context = LocalContext.current
-    val contentResolver = context.contentResolver
+  val context = LocalContext.current
+  val contentResolver = context.contentResolver
 
-    val launcher = rememberLauncherForActivityResult(
-        contract = object : ActivityResultContracts.OpenDocumentTree() {
-            override fun createIntent(
-                context: android.content.Context,
-                input: android.net.Uri?,
-            ): Intent {
-                return super.createIntent(context, input).apply {
-                    addFlags(
-                        Intent.FLAG_GRANT_READ_URI_PERMISSION
-                            or Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION
-                            or Intent.FLAG_GRANT_PREFIX_URI_PERMISSION
-                    )
-                }
+  val launcher =
+    rememberLauncherForActivityResult(
+      contract =
+        object : ActivityResultContracts.OpenDocumentTree() {
+          override fun createIntent(
+            context: android.content.Context,
+            input: android.net.Uri?,
+          ): Intent {
+            return super.createIntent(context, input).apply {
+              addFlags(
+                Intent.FLAG_GRANT_READ_URI_PERMISSION or
+                  Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION or
+                  Intent.FLAG_GRANT_PREFIX_URI_PERMISSION,
+              )
             }
+          }
         },
-        onResult = { uri ->
-            if (uri != null) {
-                contentResolver.takePersistableUriPermission(
-                    uri,
-                    Intent.FLAG_GRANT_READ_URI_PERMISSION,
-                )
-                val name = DocumentFile.fromTreeUri(context, uri)?.name ?: uri.lastPathSegment ?: "Source"
-                onPicked(name, uri.toString())
-            }
-        },
+      onResult = { uri ->
+        if (uri != null) {
+          contentResolver.takePersistableUriPermission(
+            uri,
+            Intent.FLAG_GRANT_READ_URI_PERMISSION,
+          )
+          val name = DocumentFile.fromTreeUri(context, uri)?.name ?: uri.lastPathSegment ?: "Source"
+          onPicked(name, uri.toString())
+        }
+      },
     )
 
-    return { launcher.launch(input = null) }
+  return { launcher.launch(input = null) }
 }

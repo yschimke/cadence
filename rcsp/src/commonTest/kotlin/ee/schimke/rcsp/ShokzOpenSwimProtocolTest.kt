@@ -46,7 +46,7 @@ class ShokzOpenSwimProtocolTest {
       "a55a3000010000002c00b0260100000024000000020000000400000001000000030000000400000025000000040000000400000000000000"
         .hex(),
       ShokzOpenSwimCodec.encode(
-        ShokzOpenSwimCommandEncoder.encode(RcspCommand.SelectWorkingMode(WorkingMode.Bluetooth))!!
+        ShokzOpenSwimCommandEncoder.encode(RcspCommand.SelectWorkingMode(WorkingMode.Bluetooth))!!,
       ),
     )
     assertContentEquals(
@@ -58,7 +58,9 @@ class ShokzOpenSwimProtocolTest {
       "a55a3000010000002c00f12b0100000024000000020000000400000001000000030000000400000026000000040000000400000001000000"
         .hex(),
       ShokzOpenSwimCodec.encode(
-        ShokzOpenSwimCommandEncoder.encode(RcspCommand.SelectPlaybackOrder(PlaybackOrder.Shuffle))!!
+        ShokzOpenSwimCommandEncoder.encode(
+          RcspCommand.SelectPlaybackOrder(PlaybackOrder.Shuffle),
+        )!!,
       ),
     )
     assertContentEquals(
@@ -66,8 +68,8 @@ class ShokzOpenSwimProtocolTest {
         .hex(),
       ShokzOpenSwimCodec.encode(
         ShokzOpenSwimCommandEncoder.encode(
-          RcspCommand.SelectEqualizerPreset(EqualizerPreset.Vocal)
-        )!!
+          RcspCommand.SelectEqualizerPreset(EqualizerPreset.Vocal),
+        )!!,
       ),
     )
   }
@@ -125,10 +127,10 @@ class ShokzOpenSwimProtocolTest {
     assertTrue(OpenSwimProProfile.isSupported(RcspCommand.SelectWorkingMode(WorkingMode.Bluetooth)))
     assertTrue(OpenSwimProProfile.isSupported(RcspCommand.SetVolume(50u)))
     assertTrue(
-      OpenSwimProProfile.isSupported(RcspCommand.SelectEqualizerPreset(EqualizerPreset.Standard))
+      OpenSwimProProfile.isSupported(RcspCommand.SelectEqualizerPreset(EqualizerPreset.Standard)),
     )
     assertTrue(
-      OpenSwimProProfile.isSupported(RcspCommand.SelectPlaybackOrder(PlaybackOrder.Normal))
+      OpenSwimProProfile.isSupported(RcspCommand.SelectPlaybackOrder(PlaybackOrder.Normal)),
     )
   }
 

@@ -151,7 +151,7 @@ open class DesktopPodcastPlatform(root: File) : FilePodcastPlatform(root) {
                 )
               }
               require(
-                !Files.isSymbolicLink(owner) && Files.readString(owner) == "cadence-podcasts-v1"
+                !Files.isSymbolicLink(owner) && Files.readString(owner) == "cadence-podcasts-v1",
               )
               dir
             }

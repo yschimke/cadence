@@ -136,7 +136,7 @@ class HeadphoneControlsWidget : LiveryLauncherWidgetProvider() {
           override fun onConfigurationChanged(newConfig: Configuration) = updateAll(appContext)
 
           @Deprecated("Deprecated in Java") override fun onLowMemory() = Unit
-        }
+        },
       )
       scope.launch {
         controller.state.map(HeadphoneWidgetState::from).distinctUntilChanged().collect {
@@ -166,7 +166,7 @@ class HeadphoneControlsWidget : LiveryLauncherWidgetProvider() {
                 legacyViews(context, id, state, HeadphoneWidgetLayout.of(state, width, height))
             }
           }
-          .toMap()
+          .toMap(),
       )
 
     private fun legacyViews(

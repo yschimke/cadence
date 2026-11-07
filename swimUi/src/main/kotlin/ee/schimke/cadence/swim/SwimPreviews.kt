@@ -37,6 +37,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.glance.wear.GlanceWearProfiles
 
 /*
  * Previews play each document under the profile its host uses: launcher widgets (WIDGETS_V7) and
@@ -53,7 +54,7 @@ fun WaterButtonsLauncherPreview() {
 @Preview(name = "Water buttons · Wear", widthDp = 300, heightDp = 236, showBackground = true)
 @Composable
 fun WaterButtonsWearPreview() {
-  WaterButtons(RcPlatformProfiles.WEAR_WIDGETS)
+  WaterButtons(GlanceWearProfiles.wearWidgets)
 }
 
 @Composable
@@ -116,7 +117,7 @@ fun SwimLaneLapsPreview() {
 @Preview(name = "Swim lane · flip turn", widthDp = 300, heightDp = 330)
 @Composable
 fun SwimLaneFlipTurnPreview() {
-  FlipTurnStrip(RcPlatformProfiles.WEAR_WIDGETS, LaneColors.Night)
+  FlipTurnStrip(GlanceWearProfiles.wearWidgets, LaneColors.Night)
 }
 
 @Preview(name = "Swim lane · flip turn · launcher", widthDp = 300, heightDp = 330)
@@ -155,7 +156,7 @@ fun SwimLaneEndlessPreview() {
     verticalArrangement = Arrangement.spacedBy(6.dp),
   ) {
     listOf(0.3f, 3.5f, 7.4f, 11f).forEach { t ->
-      Slot(RcPlatformProfiles.WEAR_WIDGETS, 276.dp, 36.dp) {
+      Slot(GlanceWearProfiles.wearWidgets, 276.dp, 36.dp) {
         SwimLaneLaps(RemoteModifier.fillMaxSize(), clock = t.rf)
       }
     }
@@ -176,7 +177,7 @@ fun SwimmingPoolPreview() {
         RemoteBox(
           RemoteModifier.fillMaxSize()
             .clip(RemoteRoundedCornerShape(16.rdp))
-            .background(Color(0xFF1B2024).rc)
+            .background(Color(0xFF1B2024).rc),
         ) {
           SwimmingPool(RemoteModifier.fillMaxSize(), swimming = swimming, clock = t.rf)
         }

@@ -114,7 +114,7 @@ class PocketCastsTest {
     platform.validToken = "a2"
     val controller = PodcastController(platform)
     controller.usePocketCastsCookie(
-      """{"accessToken":"a1","tokenType":"Bearer","expiresIn":3600,"refreshToken":"r1"}"""
+      """{"accessToken":"a1","tokenType":"Bearer","expiresIn":3600,"refreshToken":"r1"}""",
     )
     val refresh = Json.parseToJsonElement(platform.bodies.getValue("/user/token")).jsonObject
     assertEquals("refresh_token", refresh.getValue("grant_type").jsonPrimitive.content)

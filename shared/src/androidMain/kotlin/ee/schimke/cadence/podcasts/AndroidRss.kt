@@ -28,7 +28,8 @@ internal fun parseAndroidRss(text: String): RssFeed {
               put("length", parser.getAttributeValue(null, "length").orEmpty())
               put("type", parser.getAttributeValue(null, "type").orEmpty())
             }
-        "podcast:transcript" -> item?.putIfAbsent("transcript", parser.getAttributeValue(null, "url").orEmpty())
+        "podcast:transcript" ->
+          item?.putIfAbsent("transcript", parser.getAttributeValue(null, "url").orEmpty())
         "title",
         "guid",
         "description",
@@ -38,14 +39,18 @@ internal fun parseAndroidRss(text: String): RssFeed {
           val name = parser.name
           // Only direct children of <item>, and the first channel title (not <image><title>).
           val direct = item != null && parser.depth == itemDepth + 1
-          val value = if (name == "description" || name == "itunes:summary") {
-            val depth = parser.depth
-            val content = StringBuilder()
-            while (parser.next() != XmlPullParser.END_DOCUMENT && !(parser.eventType == XmlPullParser.END_TAG && parser.depth == depth)) {
-              if (parser.eventType == XmlPullParser.TEXT) content.append(parser.text)
-            }
-            content.toString().trim()
-          } else parser.nextText().trim()
+          val value =
+            if (name == "description" || name == "itunes:summary") {
+              val depth = parser.depth
+              val content = StringBuilder()
+              while (
+                parser.next() != XmlPullParser.END_DOCUMENT &&
+                  !(parser.eventType == XmlPullParser.END_TAG && parser.depth == depth)
+              ) {
+                if (parser.eventType == XmlPullParser.TEXT) content.append(parser.text)
+              }
+              content.toString().trim()
+            } else parser.nextText().trim()
           if (direct) item!!.putIfAbsent(name, value)
           else if (item == null && name == "title" && feedName.isEmpty()) feedName = value
         }

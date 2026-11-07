@@ -12,15 +12,15 @@ class WearCompanionProtocolTest {
     assertEquals(
       CompanionCommand.SelectMode(WorkingMode.LocalAudio),
       WearCompanionProtocol.decodeCommand(
-        WearCompanionProtocol.encode(CompanionCommand.SelectMode(WorkingMode.LocalAudio))
+        WearCompanionProtocol.encode(CompanionCommand.SelectMode(WorkingMode.LocalAudio)),
       ),
     )
     assertEquals(
       CompanionCommand.SelectEqualizerPreset(EqualizerPreset.Swimming),
       WearCompanionProtocol.decodeCommand(
         WearCompanionProtocol.encode(
-          CompanionCommand.SelectEqualizerPreset(EqualizerPreset.Swimming)
-        )
+          CompanionCommand.SelectEqualizerPreset(EqualizerPreset.Swimming),
+        ),
       ),
     )
   }

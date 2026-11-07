@@ -59,8 +59,8 @@ fun App() {
       Surface(Modifier.fillMaxWidth()) {
         Row(
           Modifier.windowInsetsPadding(
-            WindowInsets.safeDrawing.only(WindowInsetsSides.Top + WindowInsetsSides.Horizontal)
-          )
+            WindowInsets.safeDrawing.only(WindowInsetsSides.Top + WindowInsetsSides.Horizontal),
+          ),
         ) {
           IconButton(onClick = { navController.popBackStack() }) {
             Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
@@ -76,7 +76,7 @@ fun App() {
           .then(
             if (nested)
               Modifier.consumeWindowInsets(WindowInsets.safeDrawing.only(WindowInsetsSides.Top))
-            else Modifier
+            else Modifier,
           ),
       popExitTransition = { scaleOut(targetScale = 0.9f) },
       popEnterTransition = { EnterTransition.None },
@@ -114,12 +114,12 @@ fun App() {
       }
       composable<DeviceFiles> {
         DeviceFilesScreen(
-          modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize()
+          modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
         )
       }
       composable<Browser> {
         BrowserScreen(
-          modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize()
+          modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
         )
       }
       composable<Bookmarks> {
@@ -130,7 +130,7 @@ fun App() {
       }
       composable<BluetoothControls> {
         BluetoothControlsScreen(
-          modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize()
+          modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
         )
       }
       composable<FileSync> {

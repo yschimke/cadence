@@ -7,9 +7,9 @@ import dev.zacsweers.metro.GraphExtension
 import dev.zacsweers.metro.Provides
 
 @GraphExtension(ViewModelScope::class)
-interface AndroidViewModelGraph: ViewModelGraph {
-    @GraphExtension.Factory
-    fun interface Factory {
-        fun create(@Provides creationExtras: CreationExtras): AndroidViewModelGraph
-    }
+interface AndroidViewModelGraph : ViewModelGraph {
+  @GraphExtension.Factory
+  fun interface Factory {
+    fun create(@Provides creationExtras: CreationExtras): AndroidViewModelGraph
+  }
 }

@@ -101,9 +101,9 @@ class PodcastController(val platform: PodcastPlatform) {
                 splitAtPosition = platform.splitFormats.isNotEmpty(),
                 skipListened = platform.splitFormats.isNotEmpty(),
                 chunkFormat = if ("mp3" in platform.splitFormats) "mp3" else "m4a",
-              )
-          )
-      )
+              ),
+          ),
+      ),
     )
   val status = MutableStateFlow("Loading library…")
   val busy = MutableStateFlow(false)
@@ -179,7 +179,7 @@ class PodcastController(val platform: PodcastPlatform) {
               state.value.copy(
                 pocketCasts =
                   if (email == null) PocketCastsSession()
-                  else PocketCastsSession(email = email, server = true)
+                  else PocketCastsSession(email = email, server = true),
               )
           }
       }
@@ -220,7 +220,7 @@ class PodcastController(val platform: PodcastPlatform) {
           ),
         readySectionIds = emptySet(),
         copiedSectionIds = emptySet(),
-      )
+      ),
     )
     platform.pruneAudio(snapshot.episodes)
     recheckDownloads()
@@ -242,7 +242,7 @@ class PodcastController(val platform: PodcastPlatform) {
       state.value.copy(
         library = library.copy(manifests = manifests),
         readySectionIds = manifests.flatMap { it.sections }.map { it.id }.toSet(),
-      )
+      ),
     )
   }
 
@@ -295,7 +295,7 @@ class PodcastController(val platform: PodcastPlatform) {
           }
         }
         save(
-          state.value.copy(downloadedEpisodeKeys = state.value.downloadedEpisodeKeys + episode.key)
+          state.value.copy(downloadedEpisodeKeys = state.value.downloadedEpisodeKeys + episode.key),
         )
       } catch (e: CancellationException) {
         throw e
@@ -319,7 +319,7 @@ class PodcastController(val platform: PodcastPlatform) {
     val others = if (failures.size > 1) " (and ${failures.size - 1} more)" else ""
     throw PodcastProblem(
       (if (done > 0) "Downloaded $done of ${missing.size}. " else "") +
-        "Couldn't download “${first.title}”$others: $reason. Try again to retry the rest."
+        "Couldn't download “${first.title}”$others: $reason. Try again to retry the rest.",
     )
   }
 
@@ -342,7 +342,7 @@ class PodcastController(val platform: PodcastPlatform) {
                 previous,
                 old,
                 old.manifests.firstOrNull { it.episode.key == previous.key }?.config,
-              )
+              ),
           )
       }
     importSnapshot(podcastJson.encodeToString(snapshot.copy(episodes = episodes)))
@@ -353,8 +353,8 @@ class PodcastController(val platform: PodcastPlatform) {
             feedUrl = url,
             feedLatest = latest,
             source = PodcastSourceKind.Rss,
-          )
-      )
+          ),
+      ),
     )
     notice =
       "Imported the latest ${count(episodes.size, "episode")} of ${snapshot.name}" +
@@ -383,7 +383,7 @@ class PodcastController(val platform: PodcastPlatform) {
       }
       else ->
         throw PodcastProblem(
-          "Paste a Cadence snapshot (JSON) or an Overcast All data export (OPML)."
+          "Paste a Cadence snapshot (JSON) or an Overcast All data export (OPML).",
         )
     }
   }
@@ -410,7 +410,7 @@ class PodcastController(val platform: PodcastPlatform) {
     val progress = gpodderProgress(gpodderPlays(body), latest)
     if (progress.isEmpty())
       throw PodcastProblem(
-        "No unfinished episodes on this account. Play something in your podcast app first."
+        "No unfinished episodes on this account. Play something in your podcast app first.",
       )
     val (snapshot, skipped) = resolveProgress(platform, "gpodder", "gpodder in progress", progress)
     importResolved(
@@ -473,7 +473,7 @@ class PodcastController(val platform: PodcastPlatform) {
         readySectionIds = emptySet(),
         copiedSectionIds = emptySet(),
         sentPositions = emptyMap(),
-      )
+      ),
     )
     notice = "Removed podcasts"
   }
@@ -498,7 +498,7 @@ class PodcastController(val platform: PodcastPlatform) {
     usePocketCasts(
       if (server != null)
         PocketCastsSession(email = server.signIn(email.trim(), password), server = true)
-      else PocketCastsApi.signIn(platform, email.trim(), password, nowMs())
+      else PocketCastsApi.signIn(platform, email.trim(), password, nowMs()),
     )
   }
 
@@ -540,8 +540,8 @@ class PodcastController(val platform: PodcastPlatform) {
             feedLatest = latest,
             source = PodcastSourceKind.PocketCasts,
             sourceList = list,
-          )
-      )
+          ),
+      ),
     )
     notice =
       "Imported ${count(snapshot.episodes.size, "episode")} from ${snapshot.name}" +
@@ -616,8 +616,8 @@ class PodcastController(val platform: PodcastPlatform) {
             playlist =
               playlist.copy(episodes = playlist.episodes.filterNot { it.key == episodeKey }),
             manifests = current.library.manifests.filterNot { it.episode.key == episodeKey },
-          )
-      )
+          ),
+      ),
     )
     notice =
       if (archived) "Archived ${episode.title}"
@@ -653,10 +653,10 @@ class PodcastController(val platform: PodcastPlatform) {
           current.library.copy(
             playlist =
               if (playlist.episodes.any { it.key == episodeKey }) playlist
-              else playlist.copy(episodes = playlist.episodes + episode)
+              else playlist.copy(episodes = playlist.episodes + episode),
           ),
         fresh = current.fresh.filterNot { it.key == episodeKey },
-      )
+      ),
     )
     notice = "Added ${episode.title} to Up Next"
   }
@@ -705,7 +705,7 @@ class PodcastController(val platform: PodcastPlatform) {
     val (podcast, audio) = episode.id.split(' ', limit = 2)
     val current =
       gpodderPlays(
-          platform.request(account.actionsUrl(), headers = account.headers(gpodderPassword))
+          platform.request(account.actionsUrl(), headers = account.headers(gpodderPassword)),
         )
         .firstOrNull { it.podcast == podcast && it.episode == audio }
     val unchanged = current?.let { "gpodder:${it.timestamp}:${it.position}" } == episode.revision
@@ -714,7 +714,7 @@ class PodcastController(val platform: PodcastPlatform) {
       state.value.sentPositions[episodeKey]?.let { current?.position == it / 1000 } == true
     if (!unchanged && !ownSend)
       throw PodcastProblem(
-        "This episode moved in another app since import. Import again before sending a position."
+        "This episode moved in another app since import. Import again before sending a position.",
       )
     platform.request(
       account.uploadUrl(),
@@ -754,11 +754,11 @@ class PodcastController(val platform: PodcastPlatform) {
     val previousSend = state.value.sentPositions[episode.key]?.let { it / 1000 * 1000 }
     if (remoteMs != episode.positionMs && remoteMs != previousSend)
       throw PodcastProblem(
-        "This episode moved in Pocket Casts since import. Refresh before sending a position."
+        "This episode moved in Pocket Casts since import. Refresh before sending a position.",
       )
     if (remote.playingStatus == 3 && position < episode.durationMs)
       throw PodcastProblem(
-        "This episode is already marked played in Pocket Casts. Refresh before sending a position."
+        "This episode is already marked played in Pocket Casts. Refresh before sending a position.",
       )
     api.sendPosition(episode.id, remote.podcastUuid, position, episode.durationMs)
     save(state.value.copy(sentPositions = state.value.sentPositions + (episode.key to position)))
@@ -786,7 +786,7 @@ class PodcastController(val platform: PodcastPlatform) {
         library = state.value.library.copy(config = supported(config), manifests = emptyList()),
         readySectionIds = emptySet(),
         copiedSectionIds = emptySet(),
-      )
+      ),
     )
   }
 
@@ -804,7 +804,7 @@ class PodcastController(val platform: PodcastPlatform) {
         library = library.copy(podcastTrims = trims, manifests = emptyList()),
         readySectionIds = emptySet(),
         copiedSectionIds = emptySet(),
-      )
+      ),
     )
   }
 
@@ -818,7 +818,7 @@ class PodcastController(val platform: PodcastPlatform) {
           val config = library.configFor(episode)
           if ((config.trimStartSeconds + config.trimEndSeconds) * 1000L >= episode.durationMs)
             throw PodcastProblem(
-              "Trim is longer than ${episode.title}. Reduce this podcast's trim before preparing."
+              "Trim is longer than ${episode.title}. Reduce this podcast's trim before preparing.",
             )
           Manifest(episode, config, segment(episode, config))
         }
@@ -831,7 +831,7 @@ class PodcastController(val platform: PodcastPlatform) {
       }
     )
       throw PodcastProblem(
-        "Choose a supported chunk format: Android uses M4A, desktop supports MP3/M4A, web requires unsplit audio."
+        "Choose a supported chunk format: Android uses M4A, desktop supports MP3/M4A, web requires unsplit audio.",
       )
     // Publish the manifest and readiness only after every audio file is committed.
     manifests.forEachIndexed { index, manifest ->
@@ -845,14 +845,14 @@ class PodcastController(val platform: PodcastPlatform) {
             current.library.copy(
               manifests =
                 current.library.manifests.filterNot { it.episode.key == manifest.episode.key } +
-                  manifest
+                  manifest,
             ),
           readySectionIds = current.readySectionIds + manifest.sections.map { it.id },
           downloadedEpisodeKeys =
             if (platform.originalAvailable(manifest.episode))
               current.downloadedEpisodeKeys + manifest.episode.key
             else current.downloadedEpisodeKeys,
-        )
+        ),
       )
     }
     val sections = manifests.flatMap { it.sections }
@@ -863,7 +863,7 @@ class PodcastController(val platform: PodcastPlatform) {
         library = library.copy(manifests = manifests),
         readySectionIds = sections.map { it.id }.toSet(),
         copiedSectionIds = emptySet(),
-      )
+      ),
     )
   }
 
@@ -885,9 +885,9 @@ class PodcastController(val platform: PodcastPlatform) {
             completions =
               (state.value.library.completions + completion).distinctBy {
                 it.sectionId to it.observedRevision
-              }
-          )
-      )
+              },
+          ),
+      ),
     )
     // Provider writes are deliberately capability gated. A local acknowledgement never claims
     // success remotely.
@@ -902,8 +902,9 @@ class PodcastController(val platform: PodcastPlatform) {
     val progress = EpisodeProgress(episode.audioVersion, episode.revision, positionMs, nowMs())
     save(
       state.value.copy(
-        library = library.copy(episodeProgress = library.episodeProgress + (episodeKey to progress))
-      )
+        library =
+          library.copy(episodeProgress = library.episodeProgress + (episodeKey to progress)),
+      ),
     )
     notice = "Position set to ${formatTime(positionMs)}"
   }
@@ -914,7 +915,7 @@ class PodcastController(val platform: PodcastPlatform) {
         target = target,
         copiedSectionIds = emptySet(),
         lastCopied = if (target == state.value.target) state.value.lastCopied else null,
-      )
+      ),
     )
   }
 
@@ -933,7 +934,7 @@ class PodcastController(val platform: PodcastPlatform) {
       state.value.copy(
         copiedSectionIds = sections.map { it.id }.toSet(),
         lastCopied = deviceManifest(state.value.library),
-      )
+      ),
     )
     notice =
       "Copied ${count(sections.size, "file")} to the headphones. Eject the volume before unplugging."
@@ -951,7 +952,7 @@ class PodcastController(val platform: PodcastPlatform) {
 
   suspend fun configureCloud(url: String, key: String) {
     require(
-      url.startsWith("https://") && !url.trimEnd('/').substringAfter("https://").contains('/')
+      url.startsWith("https://") && !url.trimEnd('/').substringAfter("https://").contains('/'),
     )
     require(key.isNotBlank())
     val jwtRole =
@@ -968,7 +969,7 @@ class PodcastController(val platform: PodcastPlatform) {
         }
     if (key.startsWith("sb_secret_") || jwtRole == "service_role")
       throw PodcastProblem(
-        "Use a publishable/anon key. Service-role and secret keys must never be installed in the app."
+        "Use a publishable/anon key. Service-role and secret keys must never be installed in the app.",
       )
     signOut()
     save(
@@ -977,7 +978,7 @@ class PodcastController(val platform: PodcastPlatform) {
         cloudKey = key,
         cloudRevision = 0,
         cloudUserId = "",
-      )
+      ),
     )
   }
 
@@ -996,7 +997,7 @@ class PodcastController(val platform: PodcastPlatform) {
             "POST",
             mapOf("apikey" to local.cloudKey, "Content-Type" to "application/json"),
             body,
-          )
+          ),
         )
         .jsonObject
     token = response.getValue("access_token").jsonPrimitive.content
@@ -1026,7 +1027,7 @@ class PodcastController(val platform: PodcastPlatform) {
       signedIn.value &&
         token.isNotBlank() &&
         authenticatedUser == local.cloudUserId &&
-        authenticatedUrl == local.cloudUrl
+        authenticatedUrl == local.cloudUrl,
     )
     return platform.request(
       local.cloudUrl + "/rest/v1/rpc/" + name,
@@ -1078,7 +1079,7 @@ class PodcastController(val platform: PodcastPlatform) {
         library = merged,
         cloudRevision = remote.revision,
         copiedSectionIds = emptySet(),
-      )
+      ),
     )
     recheckReady()
   }

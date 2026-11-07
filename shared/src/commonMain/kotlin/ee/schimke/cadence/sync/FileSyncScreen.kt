@@ -162,7 +162,7 @@ private fun SyncTopBar(done: Boolean, onClose: () -> Unit, onManage: () -> Unit)
     modifier =
       Modifier.fillMaxWidth()
         .windowInsetsPadding(
-          WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal + WindowInsetsSides.Top)
+          WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal + WindowInsetsSides.Top),
         ),
     tonalElevation = 2.dp,
   ) {
@@ -224,7 +224,7 @@ private fun SyncDeviceHero(label: String, secondary: String, running: Boolean, d
                 done -> MaterialTheme.colorScheme.tertiaryContainer
                 running -> MaterialTheme.colorScheme.primaryContainer
                 else -> MaterialTheme.colorScheme.primaryContainer
-              }
+              },
             ),
         contentAlignment = Alignment.Center,
       ) {
@@ -387,7 +387,7 @@ private fun SyncCta(
     modifier =
       Modifier.fillMaxWidth()
         .windowInsetsPadding(
-          WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal + WindowInsetsSides.Bottom)
+          WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal + WindowInsetsSides.Bottom),
         ),
   ) {
     Row(modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -412,7 +412,7 @@ private fun DoneCta(onClose: () -> Unit) {
     modifier =
       Modifier.fillMaxWidth()
         .windowInsetsPadding(
-          WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal + WindowInsetsSides.Bottom)
+          WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal + WindowInsetsSides.Bottom),
         ),
   ) {
     Row(modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -423,5 +423,5 @@ private fun DoneCta(onClose: () -> Unit) {
 
 @Composable
 expect fun rememberDirectorySourceLauncher(
-  onPicked: (name: String, treeUri: String) -> Unit
+  onPicked: (name: String, treeUri: String) -> Unit,
 ): () -> Unit

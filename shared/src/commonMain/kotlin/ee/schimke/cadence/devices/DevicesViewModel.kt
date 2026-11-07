@@ -33,7 +33,7 @@ class DevicesViewModel(private val devicesRepo: DevicesRepo, val usbManager: Usb
           id = Uuid.random().toString(),
           name = name.ifBlank { "Device" },
           path = path.toString(),
-        )
+        ),
       )
     }
   }

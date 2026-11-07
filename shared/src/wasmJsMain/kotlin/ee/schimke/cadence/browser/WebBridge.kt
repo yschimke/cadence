@@ -8,7 +8,7 @@ import kotlin.js.JsAny
 import kotlinx.coroutines.suspendCancellableCoroutine
 
 @JsFun(
-  "(op,args,ok,fail) => globalThis.cadencePlatform.call(op,JSON.parse(args)).then(r=>ok(JSON.stringify(r))).catch(e=>fail((e.name || 'Error') + ': ' + e.message))"
+  "(op,args,ok,fail) => globalThis.cadencePlatform.call(op,JSON.parse(args)).then(r=>ok(JSON.stringify(r))).catch(e=>fail((e.name || 'Error') + ': ' + e.message))",
 )
 private external fun callAsync(
   op: String,
@@ -49,12 +49,12 @@ external fun connectBrowserUsb(ok: (String) -> Unit, fail: (String) -> Unit)
 
 // cadenceStorage is set only by the .wasmo build, which shares settings through its Wasmo.
 @JsFun(
-  "(data) => { localStorage.setItem('cadence-settings-v1',data); globalThis.cadenceStorage?.changed('cadence-settings-v1',data); }"
+  "(data) => { localStorage.setItem('cadence-settings-v1',data); globalThis.cadenceStorage?.changed('cadence-settings-v1',data); }",
 )
 external fun writeSettings(data: String)
 
 @JsFun(
-  "(url) => { const u = new URL(url); if (u.protocol !== 'https:' && u.protocol !== 'http:') throw new Error('Unsupported URL'); window.open(u.href,'_blank','noopener,noreferrer'); }"
+  "(url) => { const u = new URL(url); if (u.protocol !== 'https:' && u.protocol !== 'http:') throw new Error('Unsupported URL'); window.open(u.href,'_blank','noopener,noreferrer'); }",
 )
 external fun openBrowser(url: String)
 

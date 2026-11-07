@@ -40,6 +40,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.glance.wear.GlanceWearProfiles
 import ee.schimke.composeai.preview.AnimatedPreview
 
 /**
@@ -99,7 +100,7 @@ fun WaterButtonAnimatedPreview() {
 @AnimatedPreview(durationMs = 3000, frameIntervalMs = 80, showCurves = false)
 @Composable
 fun WaterRoundButtonAnimatedPreview() {
-  AnimatedSlot(RcPlatformProfiles.WEAR_WIDGETS, 96.dp, 96.dp) {
+  AnimatedSlot(GlanceWearProfiles.wearWidgets, 96.dp, 96.dp) {
     WaterBackground(
       RemoteModifier.fillMaxSize().clip(RemoteRoundedCornerShape(48.rdp)),
       colors = WaterColors.Night,
@@ -126,7 +127,7 @@ fun SwimLaneFlipTurnAnimatedPreview() {
 @AnimatedPreview(durationMs = 10000, frameIntervalMs = 100, showCurves = false)
 @Composable
 fun SwimLaneLapsAnimatedPreview() {
-  AnimatedSlot(RcPlatformProfiles.WEAR_WIDGETS, 280.dp, 40.dp) {
+  AnimatedSlot(GlanceWearProfiles.wearWidgets, 280.dp, 40.dp) {
     SwimLaneLaps(
       RemoteModifier.fillMaxSize().clip(RemoteRoundedCornerShape(12.rdp)),
       colors = LaneColors.Night,
@@ -143,7 +144,7 @@ fun SwimmingPoolAnimatedPreview() {
     RemoteBox(
       RemoteModifier.fillMaxSize()
         .clip(RemoteRoundedCornerShape(16.rdp))
-        .background(Color(0xFF1B2024).rc)
+        .background(Color(0xFF1B2024).rc),
     ) {
       SwimmingPool(RemoteModifier.fillMaxSize(), lapSeconds = 5f)
     }

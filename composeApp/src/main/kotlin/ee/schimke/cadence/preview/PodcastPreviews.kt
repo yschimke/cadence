@@ -85,7 +85,7 @@ private fun controller(prepared: Boolean): PodcastController {
                     it.startMs,
                     it.endMs,
                   )
-                }
+                },
               ),
             lastBackendSync = "2026-10-27T08:15:00Z",
           ),
@@ -132,7 +132,7 @@ internal fun PodcastPocketCastsPreview() {
           state.value =
             LocalPodcastState(
               pocketCasts =
-                PocketCastsSession("preview", "preview", Long.MAX_VALUE, "listener@example.com")
+                PocketCastsSession("preview", "preview", Long.MAX_VALUE, "listener@example.com"),
             )
           pocketCastsLists.value =
             listOf(

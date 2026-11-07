@@ -15,25 +15,39 @@ import kotlinx.coroutines.launch
 
 /** Media3 transport for on-device MP3 playback. The headset does not expose a timeline or track. */
 @UnstableApi
-class ShokzPlayer(private val controller: BluetoothController) : SimpleBasePlayer(Looper.getMainLooper()) {
+class ShokzPlayer(private val controller: BluetoothController) :
+  SimpleBasePlayer(Looper.getMainLooper()) {
   private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
   private var snapshot = BluetoothState()
 
   init {
-    scope.launch { controller.state.collect { snapshot = it; invalidateState() } }
+    scope.launch {
+      controller.state.collect {
+        snapshot = it
+        invalidateState()
+      }
+    }
   }
 
   override fun getState(): State {
-    val commands = Player.Commands.Builder()
-      .addIf(Player.COMMAND_PLAY_PAUSE, snapshot.localAudioControls)
-      .build()
-    val state = State.Builder()
-      .setAvailableCommands(commands)
-      .setPlaybackState(if (snapshot.localAudioControls) Player.STATE_READY else Player.STATE_IDLE)
-      .setPlayWhenReady(snapshot.headsetPlaying == true, Player.PLAY_WHEN_READY_CHANGE_REASON_USER_REQUEST)
+    val commands =
+      Player.Commands.Builder()
+        .addIf(Player.COMMAND_PLAY_PAUSE, snapshot.localAudioControls)
+        .build()
+    val state =
+      State.Builder()
+        .setAvailableCommands(commands)
+        .setPlaybackState(
+          if (snapshot.localAudioControls) Player.STATE_READY else Player.STATE_IDLE,
+        )
+        .setPlayWhenReady(
+          snapshot.headsetPlaying == true,
+          Player.PLAY_WHEN_READY_CHANGE_REASON_USER_REQUEST,
+        )
     // Media3 requires a current item in STATE_READY. This placeholder deliberately carries no
     // track identity, duration or seekability: the headphones do not report those values.
-    if (snapshot.localAudioControls) state.setPlaylist(listOf(MediaItemData.Builder("unknown").setIsPlaceholder(true).build()))
+    if (snapshot.localAudioControls)
+      state.setPlaylist(listOf(MediaItemData.Builder("unknown").setIsPlaceholder(true).build()))
     return state.build()
   }
 
@@ -45,8 +59,13 @@ class ShokzPlayer(private val controller: BluetoothController) : SimpleBasePlaye
   }
 
   /** The device has next/previous commands but supplies no queue or selectable media items. */
-  fun nextTrack() { if (snapshot.localAudioControls) controller.next() }
-  fun previousTrack() { if (snapshot.localAudioControls) controller.previous() }
+  fun nextTrack() {
+    if (snapshot.localAudioControls) controller.next()
+  }
+
+  fun previousTrack() {
+    if (snapshot.localAudioControls) controller.previous()
+  }
 
   override fun handleRelease(): ListenableFuture<*> {
     scope.cancel()

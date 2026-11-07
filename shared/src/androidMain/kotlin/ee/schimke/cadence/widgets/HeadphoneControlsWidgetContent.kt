@@ -12,13 +12,15 @@ import androidx.compose.material.icons.filled.SkipPrevious
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
-import androidx.compose.remote.creation.compose.action.Action
+import androidx.compose.remote.creation.RemotePath
+import androidx.compose.remote.creation.compose.action.RemoteAction
 import androidx.compose.remote.creation.compose.layout.RemoteAlignment
 import androidx.compose.remote.creation.compose.layout.RemoteArrangement
 import androidx.compose.remote.creation.compose.layout.RemoteBox
 import androidx.compose.remote.creation.compose.layout.RemoteCanvas
 import androidx.compose.remote.creation.compose.layout.RemoteColumn
 import androidx.compose.remote.creation.compose.layout.RemoteComposable
+import androidx.compose.remote.creation.compose.layout.RemoteOffset
 import androidx.compose.remote.creation.compose.layout.RemoteRow
 import androidx.compose.remote.creation.compose.layout.RemoteText
 import androidx.compose.remote.creation.compose.modifier.RemoteModifier
@@ -37,6 +39,7 @@ import androidx.compose.remote.creation.compose.modifier.size
 import androidx.compose.remote.creation.compose.modifier.width
 import androidx.compose.remote.creation.compose.shapes.RemoteRoundedCornerShape
 import androidx.compose.remote.creation.compose.state.RemoteColor
+import androidx.compose.remote.creation.compose.state.RemotePaint
 import androidx.compose.remote.creation.compose.state.RemoteString
 import androidx.compose.remote.creation.compose.state.rc
 import androidx.compose.remote.creation.compose.state.rdp
@@ -44,19 +47,16 @@ import androidx.compose.remote.creation.compose.state.rf
 import androidx.compose.remote.creation.compose.state.rs
 import androidx.compose.remote.creation.compose.state.rsp
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.vector.VectorPath
-import androidx.compose.ui.graphics.vector.VectorGroup
-import androidx.compose.ui.graphics.vector.PathParser
-import androidx.compose.ui.graphics.vector.PathNode
-import androidx.compose.ui.graphics.PathSegment
-import androidx.compose.ui.graphics.PathIterator
 import androidx.compose.runtime.remember
-import androidx.compose.remote.creation.compose.state.RemotePaint
-import androidx.compose.remote.creation.compose.layout.RemoteOffset
-import androidx.compose.remote.creation.RemotePath
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.PathIterator
+import androidx.compose.ui.graphics.PathSegment
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.vector.PathNode
+import androidx.compose.ui.graphics.vector.PathParser
+import androidx.compose.ui.graphics.vector.VectorGroup
+import androidx.compose.ui.graphics.vector.VectorPath
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -77,8 +77,8 @@ fun HeadphoneControlsWidgetContent(
   state: HeadphoneWidgetState,
   layout: HeadphoneWidgetLayout,
   colors: WidgetColors,
-  onOpen: Action?,
-  onAction: @Composable (HeadphoneWidgetAction) -> Action?,
+  onOpen: RemoteAction?,
+  onAction: @Composable (HeadphoneWidgetAction) -> RemoteAction?,
   /** A seasonal look's palette and backdrop in place of [colors]; the template draws the same. */
   look: HeadphoneLook = HeadphoneLook.Default,
 ) {
@@ -137,8 +137,8 @@ internal fun HeadphoneControlsBody(
   layout: HeadphoneWidgetLayout,
   modeSwitch: HeadphoneWidgetAction?,
   showWater: Boolean,
-  onOpen: Action?,
-  onAction: @Composable (HeadphoneWidgetAction) -> Action?,
+  onOpen: RemoteAction?,
+  onAction: @Composable (HeadphoneWidgetAction) -> RemoteAction?,
   transportButton:
     @Composable
     (HeadphoneWidgetAction, @Composable (HeadphoneWidgetAction) -> Unit) -> Unit,
@@ -154,7 +154,15 @@ internal fun HeadphoneControlsBody(
       .let { if (drawBackground) it.background(palette.background) else it }
       .padding(HeadphoneWidgetLayout.PaddingDp.rdp)
   HeadphoneControlsContent(
-    texts, palette, layout, modeSwitch, showWater, onOpen, onAction, transportButton, root,
+    texts,
+    palette,
+    layout,
+    modeSwitch,
+    showWater,
+    onOpen,
+    onAction,
+    transportButton,
+    root,
   )
 }
 
@@ -166,8 +174,8 @@ private fun HeadphoneControlsContent(
   layout: HeadphoneWidgetLayout,
   modeSwitch: HeadphoneWidgetAction?,
   showWater: Boolean,
-  onOpen: Action?,
-  onAction: @Composable (HeadphoneWidgetAction) -> Action?,
+  onOpen: RemoteAction?,
+  onAction: @Composable (HeadphoneWidgetAction) -> RemoteAction?,
   transportButton:
     @Composable
     (HeadphoneWidgetAction, @Composable (HeadphoneWidgetAction) -> Unit) -> Unit,
@@ -203,9 +211,7 @@ private fun HeadphoneControlsContent(
         // what the buttons leave, so one template fits every width in its tier.
         RemoteColumn(
           modifier =
-            RemoteModifier.weight(1f)
-              .height(HeadphoneWidgetLayout.ButtonDp.rdp)
-              .openOnTap(onOpen),
+            RemoteModifier.weight(1f).height(HeadphoneWidgetLayout.ButtonDp.rdp).openOnTap(onOpen),
           verticalArrangement = RemoteArrangement.Center,
         ) {
           Headline(if (layout.shortTitle) texts.shortTitle else texts.title, palette)
@@ -279,7 +285,7 @@ private fun Headline(text: RemoteString, palette: RemotePalette, fontSize: Int =
   )
 }
 
-private fun RemoteModifier.openOnTap(onOpen: Action?): RemoteModifier =
+private fun RemoteModifier.openOnTap(onOpen: RemoteAction?): RemoteModifier =
   if (onOpen != null) clickable(onOpen) else this
 
 @Composable
@@ -289,7 +295,7 @@ private fun WidgetIconButton(
   primary: Boolean,
   showWater: Boolean = false,
   palette: RemotePalette,
-  onClick: Action?,
+  onClick: RemoteAction?,
 ) {
   val water = primary && showWater
   val content = if (water) OnWater.rc else if (primary) palette.onPrimary else palette.onTonal
@@ -330,9 +336,9 @@ private fun WidgetIconButton(
  *
  * Not `painterRemoteVector`: that scales by the canvas's measured width, and the template draws
  * every button inside conditional layouts. Android 16's platform widget player evaluates a hidden
- * branch's drawing too, before that branch has a size, and the widget fails with
- * "FloatExpression ... len = 3". A canvas of its own rather than a painter background: a background
- * painter is a drawWithContent, whose DrawContent Android 16's player repaints forever
+ * branch's drawing too, before that branch has a size, and the widget fails with "FloatExpression
+ * ... len = 3". A canvas of its own rather than a painter background: a background painter is a
+ * drawWithContent, whose DrawContent Android 16's player repaints forever
  * (yschimke/rc-players#776).
  */
 @Composable
@@ -350,7 +356,9 @@ private fun WidgetIcon(icon: ImageVector, color: RemoteColor) {
 /** The Material icons' viewport, and the size the buttons draw them at. */
 private const val IconDp = 24
 
-/** [this] icon's paths as one path in its viewport's units (no group transforms: Material icons). */
+/**
+ * [this] icon's paths as one path in its viewport's units (no group transforms: Material icons).
+ */
 private fun ImageVector.toRemotePath(): RemotePath {
   val out = RemotePath()
   fun append(nodes: List<PathNode>) {
@@ -418,12 +426,13 @@ internal val HeadphoneWidgetAction.icon: ImageVector
     }
 
 /**
- * The widget's colour roles. Captured on the device, so the launcher widget provider fills them from
- * the system's dynamic Material scheme for the current light or dark mode, and recaptures when that
- * changes; [Dark] and [Light] are the fallbacks without dynamic colour, and what previews show.
+ * The widget's colour roles. Captured on the device, so the launcher widget provider fills them
+ * from the system's dynamic Material scheme for the current light or dark mode, and recaptures when
+ * that changes; [Dark] and [Light] are the fallbacks without dynamic colour, and what previews
+ * show.
  *
- * Shared by every Cadence Remote Compose launcher surface (headphones, podcast sync, cloud sync)
- * so light and dark home screens never get a fixed dark chrome card.
+ * Shared by every Cadence Remote Compose launcher surface (headphones, podcast sync, cloud sync) so
+ * light and dark home screens never get a fixed dark chrome card.
  */
 data class WidgetColors(
   val background: Color,

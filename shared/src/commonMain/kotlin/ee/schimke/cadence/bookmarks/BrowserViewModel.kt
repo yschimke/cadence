@@ -28,9 +28,9 @@ class BookmarksViewModel() : ViewModel() {
                 "Podbean",
                 "https://www.podbean.com/all",
                 favicon = "https://pbcdn1.podbean.com/fs1/site/images/favicon.ico",
-              )
-            )
-          )
+              ),
+            ),
+          ),
         )
       }
       .stateIn(viewModelScope, started = SharingStarted.WhileSubscribed(), Loading)

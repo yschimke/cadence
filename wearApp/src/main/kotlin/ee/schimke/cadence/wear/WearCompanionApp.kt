@@ -408,7 +408,7 @@ private fun ConnectedWearCompanionPreview() {
                   RcspCommand.SelectEqualizerPreset(EqualizerPreset.Standard).id,
                 ),
             sync = CompanionSyncStatus.Complete("Last synced 4 tracks"),
-          )
+          ),
       )
     }
   }
