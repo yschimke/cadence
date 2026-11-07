@@ -13,10 +13,10 @@ fun reportNonFatal(error: Throwable) {
   Log.w("Cadence", "Non-fatal failure", error)
   val crashlytics =
     runCatching {
-        Class.forName("com.google.firebase.crashlytics.FirebaseCrashlytics")
-          .getMethod("getInstance")
-          .invoke(null)
-      }
+      Class.forName("com.google.firebase.crashlytics.FirebaseCrashlytics")
+        .getMethod("getInstance")
+        .invoke(null)
+    }
       .getOrNull() ?: return
   runCatching {
     crashlytics.javaClass

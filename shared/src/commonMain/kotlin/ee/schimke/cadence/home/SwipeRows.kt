@@ -96,7 +96,7 @@ fun SwipeActionRow(
             action == null -> Color.Transparent
             adding -> colors.primaryContainer
             else -> colors.tertiaryContainer
-          }
+          },
         )
       Box(
         Modifier.fillMaxSize().background(container).padding(horizontal = 24.dp),
@@ -226,7 +226,7 @@ private fun FreshRow(episode: Episode) {
             formatTime(episode.durationMs),
             episode.published.take(10).takeIf { it.isNotBlank() },
           )
-          .joinToString(" · ")
+          .joinToString(" · "),
       )
     },
     // Opaque, so the swipe background only shows where the row has moved away.

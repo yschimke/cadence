@@ -7,58 +7,63 @@ import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.binding
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import ee.schimke.cadence.datastore.proto.SourceKind
 import ee.schimke.cadence.datastore.proto.SyncSource
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 @ContributesBinding(AppScope::class, binding = binding<SourceBrowser>())
 @Inject
 class AndroidSourceBrowser(
-    private val context: Context,
-    private val syncRepo: SyncRepo,
+  private val context: Context,
+  private val syncRepo: SyncRepo,
 ) : SourceBrowser {
 
-    // DocumentFile queries block on the storage provider, which may be a slow cloud app.
-    override suspend fun browse(sourceId: String): List<BrowsedItem> = withContext(Dispatchers.IO) {
-        val source = syncRepo.getSource(sourceId) ?: return@withContext emptyList()
-        when (source.kind) {
-            SourceKind.LOCAL_DIRECTORY -> browseTreeUri(source)
-            SourceKind.NFS_SHARE -> emptyList()
-        }
+  // DocumentFile queries block on the storage provider, which may be a slow cloud app.
+  override suspend fun browse(sourceId: String): List<BrowsedItem> =
+    withContext(Dispatchers.IO) {
+      val source = syncRepo.getSource(sourceId) ?: return@withContext emptyList()
+      when (source.kind) {
+        SourceKind.LOCAL_DIRECTORY -> browseTreeUri(source)
+        SourceKind.NFS_SHARE -> emptyList()
+      }
     }
 
-    private fun browseTreeUri(source: SyncSource): List<BrowsedItem> {
-        val root = DocumentFile.fromTreeUri(context, Uri.parse(source.location)) ?: return emptyList()
-        val start = source.subpath.split('/').filter { it.isNotBlank() }
-            .fold(root) { dir, segment -> dir.findFile(segment) ?: return emptyList() }
-        if (!start.isDirectory) return emptyList()
+  private fun browseTreeUri(source: SyncSource): List<BrowsedItem> {
+    val root = DocumentFile.fromTreeUri(context, Uri.parse(source.location)) ?: return emptyList()
+    val start =
+      source.subpath
+        .split('/')
+        .filter { it.isNotBlank() }
+        .fold(root) { dir, segment -> dir.findFile(segment) ?: return emptyList() }
+    if (!start.isDirectory) return emptyList()
 
-        val out = mutableListOf<BrowsedItem>()
-        walk(start, "", source.id, out)
-        return out
-    }
+    val out = mutableListOf<BrowsedItem>()
+    walk(start, "", source.id, out)
+    return out
+  }
 
-    private fun walk(
-        dir: DocumentFile,
-        prefix: String,
-        sourceId: String,
-        out: MutableList<BrowsedItem>,
-    ) {
-        for (entry in dir.listFiles()) {
-            val name = entry.name ?: continue
-            val relative = if (prefix.isEmpty()) name else "$prefix/$name"
-            if (entry.isDirectory) {
-                walk(entry, relative, sourceId, out)
-            } else if (entry.isFile) {
-                out += BrowsedItem(
-                    sourceId = sourceId,
-                    displayName = name,
-                    sourceUri = entry.uri.toString(),
-                    sizeBytes = entry.length(),
-                    relativePath = relative,
-                )
-            }
-        }
+  private fun walk(
+    dir: DocumentFile,
+    prefix: String,
+    sourceId: String,
+    out: MutableList<BrowsedItem>,
+  ) {
+    for (entry in dir.listFiles()) {
+      val name = entry.name ?: continue
+      val relative = if (prefix.isEmpty()) name else "$prefix/$name"
+      if (entry.isDirectory) {
+        walk(entry, relative, sourceId, out)
+      } else if (entry.isFile) {
+        out +=
+          BrowsedItem(
+            sourceId = sourceId,
+            displayName = name,
+            sourceUri = entry.uri.toString(),
+            sizeBytes = entry.length(),
+            relativePath = relative,
+          )
+      }
     }
+  }
 }

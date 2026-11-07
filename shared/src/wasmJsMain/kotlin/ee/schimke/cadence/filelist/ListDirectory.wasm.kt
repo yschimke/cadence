@@ -10,6 +10,6 @@ import okio.Path.Companion.toPath
 
 actual suspend fun listDirectory(fileSystem: FileSystem?, path: Path): List<DirectoryEntry> =
   Json.decodeFromString<List<BrowserFile>>(
-      browserCall("entries", browserArgs("root" to path.toString()))
+      browserCall("entries", browserArgs("root" to path.toString())),
     )
     .map { DirectoryEntry(it.location.toPath(), it.directory) }

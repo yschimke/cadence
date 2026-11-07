@@ -92,40 +92,69 @@ class PodcastSyncWidget : AppWidgetProvider() {
           override fun onConfigurationChanged(newConfig: Configuration) = updateAll(appContext)
 
           @Deprecated("Deprecated in Java") override fun onLowMemory() = Unit
-        }
+        },
       )
       scope.launch {
-        controller.state.map { Triple(it.connectedDevice, it.localAudioControls, it.openSwimConnected) }.distinctUntilChanged().collect { (device, mp3, openSwim) ->
-          val summary = device?.batterySummary()
-          val preferences = prefs(appContext)
-          currentDevice = device
-          if (summary != null && openSwim && device.address.isNotBlank()) {
-            val key = digest(device.address)
-            preferences.edit().putString("battery-$key", summary).putLong("battery-time-$key", System.currentTimeMillis()).putString("last-battery-address", device.address).apply()
+        controller.state
+          .map { Triple(it.connectedDevice, it.localAudioControls, it.openSwimConnected) }
+          .distinctUntilChanged()
+          .collect { (device, mp3, openSwim) ->
+            val summary = device?.batterySummary()
+            val preferences = prefs(appContext)
+            currentDevice = device
+            if (summary != null && openSwim && device.address.isNotBlank()) {
+              val key = digest(device.address)
+              preferences
+                .edit()
+                .putString("battery-$key", summary)
+                .putLong("battery-time-$key", System.currentTimeMillis())
+                .putString("last-battery-address", device.address)
+                .apply()
+            }
+            swimming = mp3
+            updateAll(appContext)
           }
-          swimming = mp3
-          updateAll(appContext)
-        }
       }
     }
 
-    private fun copied(context: Context): String = prefs(context).getString("copied", null) ?: "Last copy: unknown"
-    private fun available(context: Context): String = prefs(context).getString("available", null) ?: "Sync: no podcasts"
+    private fun copied(context: Context): String =
+      prefs(context).getString("copied", null) ?: "Last copy: unknown"
 
-    internal fun battery(context: Context, connected: ConnectedDevice? = currentDevice, selectedTarget: String? = null): String? {
+    private fun available(context: Context): String =
+      prefs(context).getString("available", null) ?: "Sync: no podcasts"
+
+    internal fun battery(
+      context: Context,
+      connected: ConnectedDevice? = currentDevice,
+      selectedTarget: String? = null,
+    ): String? {
       val preferences = prefs(context)
       val target = selectedTarget ?: preferences.getString("target", "").orEmpty()
       val linked = linkedHeadphoneAddress(context, target)
       if (connected != null && (linked == null || linked == connected.address))
-        connected.batterySummary()?.let { return it }
-      val address = batteryHeadphoneAddress(linked, connected?.address, preferences.getString("last-battery-address", null))
+        connected.batterySummary()?.let {
+          return it
+        }
+      val address =
+        batteryHeadphoneAddress(
+          linked,
+          connected?.address,
+          preferences.getString("last-battery-address", null),
+        )
       if (address == null) {
-        return if (linked == null && connected == null) preferences.getString("last-battery", null)?.let { "Last headset: $it" } else null
+        return if (linked == null && connected == null)
+          preferences.getString("last-battery", null)?.let { "Last headset: $it" }
+        else null
       }
       val key = digest(address)
       val summary = preferences.getString("battery-$key", null) ?: return null
       val seen = preferences.getLong("battery-time-$key", 0)
-      val date = android.text.format.DateUtils.getRelativeTimeSpanString(seen, System.currentTimeMillis(), android.text.format.DateUtils.MINUTE_IN_MILLIS)
+      val date =
+        android.text.format.DateUtils.getRelativeTimeSpanString(
+          seen,
+          System.currentTimeMillis(),
+          android.text.format.DateUtils.MINUTE_IN_MILLIS,
+        )
       return "Last $date: $summary"
     }
 
@@ -147,15 +176,26 @@ class PodcastSyncWidget : AppWidgetProvider() {
       context.packageManager.getLaunchIntentForPackage(context.packageName)
 
     private fun legacyViews(context: Context): RemoteViews {
-      val layout = context.resources.getIdentifier("podcast_sync_widget", "layout", context.packageName)
+      val layout =
+        context.resources.getIdentifier("podcast_sync_widget", "layout", context.packageName)
       val root = context.resources.getIdentifier("podcast_widget_root", "id", context.packageName)
       val title = context.resources.getIdentifier("podcast_widget_title", "id", context.packageName)
-      val details = context.resources.getIdentifier("podcast_widget_details", "id", context.packageName)
+      val details =
+        context.resources.getIdentifier("podcast_widget_details", "id", context.packageName)
       val views = RemoteViews(context.packageName, layout)
       views.setTextViewText(title, copied(context))
-      views.setTextViewText(details, listOfNotNull(available(context), battery(context)).joinToString(" · "))
+      views.setTextViewText(
+        details,
+        listOfNotNull(available(context), battery(context)).joinToString(" · "),
+      )
       launchIntent(context)?.let { intent ->
-        val open = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+        val open =
+          PendingIntent.getActivity(
+            context,
+            0,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+          )
         views.setOnClickPendingIntent(root, open)
       }
       return views
@@ -175,33 +215,32 @@ class PodcastSyncWidget : AppWidgetProvider() {
       val season = runCatching { WidgetSeason.current().pool }.getOrDefault(PoolSeason.None)
       for (id in ids) {
         val slot = RcWidgetSizing.slotOf(manager, id)
-        val views =
-          runCatching {
-              val capture =
-                captureLauncherWidget(context, slot) {
-                  PodcastSyncWidgetContent(
-                    ready = ready,
-                    copied = copied,
-                    available = available,
-                    battery = battery(context),
-                    showSwimming = swimming,
-                    heightDp = slot.heightDp,
-                    widthDp = slot.widthDp,
-                    onTap = rcWidgetHostAction(name = OPEN_APP, payload = OPEN_APP),
-                    colors = context.systemWidgetColors(),
-                    season = season,
-                  )
-                }
-              val taps =
-                if (launch == null) emptyMap()
-                else
-                  capture.actions.mapValues { (actionId, _) ->
-                    RcLauncherWidgets.actionActivity(context, Intent(launch), id, actionId)
-                  }
-              RcLauncherWidgets.remoteViews(capture.bytes, taps)
+        val views = runCatching {
+          val capture =
+            captureLauncherWidget(context, slot) {
+              PodcastSyncWidgetContent(
+                ready = ready,
+                copied = copied,
+                available = available,
+                battery = battery(context),
+                showSwimming = swimming,
+                heightDp = slot.heightDp,
+                widthDp = slot.widthDp,
+                onTap = rcWidgetHostAction(name = OPEN_APP, payload = OPEN_APP),
+                colors = context.systemWidgetColors(),
+                season = season,
+              )
             }
-            // A capture that fails still leaves the widget showing its status.
-            .getOrElse { legacyViews(context) }
+          val taps =
+            if (launch == null) emptyMap()
+            else
+              capture.actions.mapValues { (actionId, _) ->
+                RcLauncherWidgets.actionActivity(context, Intent(launch), id, actionId)
+              }
+          RcLauncherWidgets.remoteViews(capture.bytes, taps)
+        }
+        // A capture that fails still leaves the widget showing its status.
+        .getOrElse { legacyViews(context) }
         manager.updateAppWidget(id, views)
       }
     }

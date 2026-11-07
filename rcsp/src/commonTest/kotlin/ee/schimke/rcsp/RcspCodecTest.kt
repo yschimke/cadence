@@ -54,7 +54,7 @@ class RcspCodecTest {
   fun `openswim profile stays conservative beyond captured commands`() {
     assertTrue(OpenSwimProProfile.isSupported(RcspCommand.SetVolume(50u)))
     assertFalse(
-      OpenSwimProProfile.isSupported(RcspCommand.SeekRelative(SeekDirection.Forward, 5_000u))
+      OpenSwimProProfile.isSupported(RcspCommand.SeekRelative(SeekDirection.Forward, 5_000u)),
     )
   }
 
@@ -90,7 +90,7 @@ class RcspCodecTest {
       RcspCodec.encode(PublicJieliCommandEncoder.encode(RcspCommand.SetVolume(100u))!!),
     )
     assertNull(
-      PublicJieliCommandEncoder.encode(RcspCommand.SeekRelative(SeekDirection.Forward, 1u))
+      PublicJieliCommandEncoder.encode(RcspCommand.SeekRelative(SeekDirection.Forward, 1u)),
     )
   }
 }

@@ -10,10 +10,11 @@ import androidx.compose.runtime.rememberUpdatedState
 
 @Composable
 actual fun rememberBluetoothConnectPermissionLauncher(onResult: () -> Unit): () -> Unit {
-    val callback by rememberUpdatedState(onResult)
-    val launcher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestPermission(),
-        onResult = { callback() },
+  val callback by rememberUpdatedState(onResult)
+  val launcher =
+    rememberLauncherForActivityResult(
+      contract = ActivityResultContracts.RequestPermission(),
+      onResult = { callback() },
     )
-    return remember(launcher) { { launcher.launch(Manifest.permission.BLUETOOTH_CONNECT) } }
+  return remember(launcher) { { launcher.launch(Manifest.permission.BLUETOOTH_CONNECT) } }
 }

@@ -2,11 +2,11 @@ package ee.schimke.cadence.podcasts
 
 import android.annotation.SuppressLint
 import android.content.pm.ApplicationInfo
+import android.graphics.Bitmap
 import android.view.ViewGroup
 import android.webkit.CookieManager
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.graphics.Bitmap
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -84,7 +84,7 @@ private suspend fun WebView.evaluate(script: String): String =
       // The result is JSON: a quoted string, or null.
       continuation.resume(
         runCatching { Json.parseToJsonElement(result).jsonPrimitive.contentOrNull }.getOrNull()
-          ?: ""
+          ?: "",
       )
     }
   }
@@ -101,41 +101,42 @@ actual fun PocketCastsWebSignIn(
   var view by remember { mutableStateOf<WebView?>(null) }
   var loading by remember { mutableStateOf(true) }
   Box(modifier) {
-  AndroidView(
-    factory = { context ->
-      if (context.applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0)
-        WebView.setWebContentsDebuggingEnabled(true)
-      WebView(context).apply {
-        // With the default wrap-content height the page's 100vh is 0 and its background is lost.
-        layoutParams =
-          ViewGroup.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.MATCH_PARENT,
-          )
-        settings.javaScriptEnabled = true
-        settings.domStorageEnabled = true
-        // Keeps the sign-in flow inside this view.
-        webViewClient = object : WebViewClient() {
-          override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-            loading = true
-          }
+    AndroidView(
+      factory = { context ->
+        if (context.applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0)
+          WebView.setWebContentsDebuggingEnabled(true)
+        WebView(context).apply {
+          // With the default wrap-content height the page's 100vh is 0 and its background is lost.
+          layoutParams =
+            ViewGroup.LayoutParams(
+              ViewGroup.LayoutParams.MATCH_PARENT,
+              ViewGroup.LayoutParams.MATCH_PARENT,
+            )
+          settings.javaScriptEnabled = true
+          settings.domStorageEnabled = true
+          // Keeps the sign-in flow inside this view.
+          webViewClient =
+            object : WebViewClient() {
+              override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                loading = true
+              }
 
-          override fun onPageFinished(view: WebView?, url: String?) {
-            loading = false
-          }
+              override fun onPageFinished(view: WebView?, url: String?) {
+                loading = false
+              }
+            }
+          // Cadence only opens this when it has no working session, so an old web sign-in is stale.
+          // Without this an expired cookie would be picked up again on every attempt.
+          forgetAuthCookie()
+          // Signed-out visitors are sent on to /user/login and returned here afterwards.
+          loadUrl("$SITE/podcasts")
+          view = this
         }
-        // Cadence only opens this when it has no working session, so an old web sign-in is stale.
-        // Without this an expired cookie would be picked up again on every attempt.
-        forgetAuthCookie()
-        // Signed-out visitors are sent on to /user/login and returned here afterwards.
-        loadUrl("$SITE/podcasts")
-        view = this
-      }
-    },
-    modifier = Modifier.fillMaxSize(),
-    onRelease = { it.destroy() },
-  )
-  if (loading) LinearProgressIndicator(Modifier.fillMaxWidth().align(Alignment.TopCenter))
+      },
+      modifier = Modifier.fillMaxSize(),
+      onRelease = { it.destroy() },
+    )
+    if (loading) LinearProgressIndicator(Modifier.fillMaxWidth().align(Alignment.TopCenter))
   }
   LaunchedEffect(Unit) {
     var signedInAt = 0L

@@ -84,7 +84,8 @@ abstract class FilePodcastPlatform(protected val root: File) : PodcastPlatform {
     require(section.fileName.substringBeforeLast('.').endsWith(section.id))
     require(section.id.matches(Regex("[a-f0-9]{64}")))
     require(
-      section.fileName.substringAfterLast('.') in listOf("mp3", "m4a", "ogg", "opus", "flac", "wav")
+      section.fileName.substringAfterLast('.') in
+        listOf("mp3", "m4a", "ogg", "opus", "flac", "wav"),
     )
     return File(root, "audio/${section.fileName}")
   }
@@ -135,7 +136,7 @@ abstract class FilePodcastPlatform(protected val root: File) : PodcastPlatform {
               )
             409 ->
               throw PodcastProblem(
-                "Cloud revision conflict. Restore cloud configuration, reapply local settings, and save again."
+                "Cloud revision conflict. Restore cloud configuration, reapply local settings, and save again.",
               )
           }
           check(conn.responseCode in 200..299) { "Request failed" }
@@ -380,7 +381,7 @@ private fun downloadProblem(e: Exception): PodcastProblem? =
     is IllegalArgumentException ->
       PodcastProblem(
         e.message?.takeIf { it in SAFE_VALIDATION_MESSAGES }
-          ?: "the audio address isn't a valid HTTPS URL"
+          ?: "the audio address isn't a valid HTTPS URL",
       )
     is java.net.URISyntaxException -> PodcastProblem("the audio address isn't a valid HTTPS URL")
     else -> null

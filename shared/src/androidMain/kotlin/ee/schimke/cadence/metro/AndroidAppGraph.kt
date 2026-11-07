@@ -6,43 +6,40 @@ import android.content.Context
 import dev.zacsweers.metro.Multibinds
 import dev.zacsweers.metro.Provider
 import dev.zacsweers.metro.Provides
-import ee.schimke.cadence.data.AndroidFileSystem
 import ee.schimke.cadence.bluetooth.BluetoothController
+import ee.schimke.cadence.data.AndroidFileSystem
 import ee.schimke.cadence.sync.RefreshOrchestrator
 import ee.schimke.cadence.sync.RefreshScheduler
 import ee.schimke.cadence.sync.SyncOrchestrator
 import ee.schimke.cadence.sync.SyncRepo
-import okio.FileSystem
 import kotlin.reflect.KClass
+import okio.FileSystem
 
 /**
- * Contract surface exposed by the Android app graph. The concrete
- * `@DependencyGraph` lives in `:composeApp` so Metro can aggregate
- * activity contributions (e.g. `MainActivity`) from the application module.
+ * Contract surface exposed by the Android app graph. The concrete `@DependencyGraph` lives in
+ * `:composeApp` so Metro can aggregate activity contributions (e.g. `MainActivity`) from the
+ * application module.
  */
-interface AndroidAppGraph: AppGraph {
-    @Multibinds(allowEmpty = true)
-    val activityProviders: Map<KClass<out Activity>, Provider<Activity>>
+interface AndroidAppGraph : AppGraph {
+  @Multibinds(allowEmpty = true)
+  val activityProviders: Map<KClass<out Activity>, Provider<Activity>>
 
-    val viewModelGraphFactory: AndroidViewModelGraph.Factory
+  val viewModelGraphFactory: AndroidViewModelGraph.Factory
 
-    val syncOrchestrator: SyncOrchestrator
+  val syncOrchestrator: SyncOrchestrator
 
-    /** The phone-owned controller is the only bridge allowed to reach OpenSwim transport. */
-    val bluetoothController: BluetoothController
+  /** The phone-owned controller is the only bridge allowed to reach OpenSwim transport. */
+  val bluetoothController: BluetoothController
 
-    val syncRepo: SyncRepo
+  val syncRepo: SyncRepo
 
-    val refreshOrchestrator: RefreshOrchestrator
+  val refreshOrchestrator: RefreshOrchestrator
 
-    val refreshScheduler: RefreshScheduler
+  val refreshScheduler: RefreshScheduler
 
-    @Provides
-    fun provideFileSystem(context: Context): FileSystem = AndroidFileSystem(context)
+  @Provides fun provideFileSystem(context: Context): FileSystem = AndroidFileSystem(context)
 
-    @Provides
-    fun provideOptionalFileSystem(fileSystem: FileSystem): FileSystem? = fileSystem
+  @Provides fun provideOptionalFileSystem(fileSystem: FileSystem): FileSystem? = fileSystem
 
-    @Provides
-    fun provideContext(application: Application): Context = application
+  @Provides fun provideContext(application: Application): Context = application
 }

@@ -8,7 +8,7 @@ import org.usb4java.*
 class DesktopUsbManager(scope: CoroutineScope) : UsbManager {
   override val connection =
     MutableStateFlow(
-      UsbConnection(message = "USB storage: select its mounted directory with Manage New Device.")
+      UsbConnection(message = "USB storage: select its mounted directory with Manage New Device."),
     )
   private var watching = true
 
@@ -18,7 +18,7 @@ class DesktopUsbManager(scope: CoroutineScope) : UsbManager {
     watching = true
     connection.value =
       UsbConnection(
-        message = "Scanning USB. Select the mounted volume with Manage New Device to access files."
+        message = "Scanning USB. Select the mounted volume with Manage New Device to access files.",
       )
   }
 
@@ -27,7 +27,7 @@ class DesktopUsbManager(scope: CoroutineScope) : UsbManager {
     connection.value =
       UsbConnection(
         message =
-          "USB discovery paused. Mounted directories remain managed by the operating system."
+          "USB discovery paused. Mounted directories remain managed by the operating system.",
       )
   }
 

@@ -64,7 +64,7 @@ class PodcastTest {
     assertEquals(600_000L, advancedPosition(episode, listOf(completion), config))
     assertEquals(Segmentation(), library.configFor(episode.copy(podcastId = "other")))
     assertTrue(
-      segment(episode.copy(positionMs = 590_000), config.copy(skipListened = true)).isEmpty()
+      segment(episode.copy(positionMs = 590_000), config.copy(skipListened = true)).isEmpty(),
     )
   }
 
@@ -115,7 +115,7 @@ class PodcastTest {
       segment(episode.copy(positionMs = 0), Segmentation(skipListened = true, chunkFormat = "m4a"))
         .single()
         .fileName
-        .endsWith(".mp3")
+        .endsWith(".mp3"),
     )
     // Same section identity as the second half of a split, so earlier acknowledgements still apply.
     assertEquals(segment(episode, Segmentation()).last().id, rest.single().id)
@@ -173,7 +173,7 @@ class PodcastTest {
     val platform = FakePlatform()
     val controller = PodcastController(platform)
     controller.importSnapshot(
-      podcastJson.encodeToString(PlaylistSnapshot(name = "Wanted", episodes = listOf(episode)))
+      podcastJson.encodeToString(PlaylistSnapshot(name = "Wanted", episodes = listOf(episode))),
     )
     platform.failPreparation = true
     controller.run { prepare() }
@@ -189,13 +189,13 @@ class PodcastTest {
     val controller = PodcastController(platform)
     controller.configure(Segmentation(skipListened = false)) // Two sections: before and after.
     controller.importSnapshot(
-      podcastJson.encodeToString(PlaylistSnapshot(name = "Wanted", episodes = listOf(episode)))
+      podcastJson.encodeToString(PlaylistSnapshot(name = "Wanted", episodes = listOf(episode))),
     )
     controller.prepare()
     assertTrue(controller.state.value.readyForDevice())
     val partial =
       controller.state.value.copy(
-        readySectionIds = setOf(controller.state.value.readySectionIds.first())
+        readySectionIds = setOf(controller.state.value.readySectionIds.first()),
       )
     assertFalse(partial.readyForDevice())
     val section = controller.state.value.library.manifests.single().sections.last()
@@ -218,7 +218,7 @@ class PodcastTest {
     val platform = FakePlatform()
     val controller = PodcastController(platform)
     controller.importSnapshot(
-      podcastJson.encodeToString(PlaylistSnapshot(name = "Wanted", episodes = listOf(episode)))
+      podcastJson.encodeToString(PlaylistSnapshot(name = "Wanted", episodes = listOf(episode))),
     )
     controller.prepare()
     val section = controller.state.value.library.manifests.single().sections.last()
@@ -375,7 +375,7 @@ class PodcastTest {
     val config = Segmentation(false)
     val manifest =
       deviceManifest(
-        PodcastLibrary(manifests = listOf(Manifest(source, config, segment(source, config))))
+        PodcastLibrary(manifests = listOf(Manifest(source, config, segment(source, config)))),
       )
     val encoded = podcastJson.encodeToString(manifest)
     assertFalse(encoded.contains("https://"))
@@ -416,9 +416,9 @@ class PodcastTest {
                   chunkMinutes = 15,
                   chunkFormat = "mp3",
                   skipListened = true,
-                )
-            )
-        )
+                ),
+            ),
+        ),
       )
     // Android encodes only M4A.
     val android = PodcastController(FakePlatform(setOf("m4a")).apply { saved = stored })
@@ -502,8 +502,8 @@ class PodcastTest {
       LocalPodcastState(
         library =
           PodcastLibrary(
-            playlist = PlaylistSnapshot(name = "Test", episodes = listOf(episode, second))
-          )
+            playlist = PlaylistSnapshot(name = "Test", episodes = listOf(episode, second)),
+          ),
       )
 
     assertTrue(controller.run { downloadOriginals() })
@@ -524,7 +524,7 @@ class PodcastTest {
         target = "fixture-device",
         lastCopied =
           DeviceManifest(
-            episodes = listOf(DeviceEpisode("rss", "gone", "Gone", "v1", emptyList()))
+            episodes = listOf(DeviceEpisode("rss", "gone", "Gone", "v1", emptyList())),
           ),
       )
 
@@ -544,8 +544,8 @@ class PodcastTest {
       LocalPodcastState(
         library =
           PodcastLibrary(
-            playlist = PlaylistSnapshot(name = "Test", episodes = listOf(episode, second))
-          )
+            playlist = PlaylistSnapshot(name = "Test", episodes = listOf(episode, second)),
+          ),
       )
 
     assertFalse(controller.run { downloadOriginals() })

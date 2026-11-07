@@ -6,7 +6,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 actual fun rememberDirectorySourceLauncher(
-  onPicked: (name: String, treeUri: String) -> Unit
+  onPicked: (name: String, treeUri: String) -> Unit,
 ): () -> Unit {
   val scope = rememberCoroutineScope()
   val callback by rememberUpdatedState(onPicked)

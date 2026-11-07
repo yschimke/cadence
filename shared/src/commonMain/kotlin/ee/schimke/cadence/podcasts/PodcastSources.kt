@@ -96,7 +96,7 @@ suspend fun resolveProgress(
   }
   if (episodes.isEmpty())
     throw PodcastProblem(
-      "None of the ${progress.size} in-progress episodes could be matched to downloadable audio in their feeds."
+      "None of the ${progress.size} in-progress episodes could be matched to downloadable audio in their feeds.",
     )
   return ResolvedImport(
     PlaylistSnapshot(name = name, episodes = episodes).also { it.validate() },
@@ -154,7 +154,7 @@ fun overcastProgress(text: String, limit: Int): List<RemoteProgress> {
   val episodes = opmlOutlines(text).filter { (attrs, _) -> attrs["type"] == "podcast-episode" }
   if (episodes.isEmpty())
     throw PodcastProblem(
-      "This OPML lists subscriptions only. In Overcast choose Account → Export OPML (All data) to include listening progress."
+      "This OPML lists subscriptions only. In Overcast choose Account → Export OPML (All data) to include listening progress.",
     )
   return episodes
     .mapNotNull { (attrs, feed) ->

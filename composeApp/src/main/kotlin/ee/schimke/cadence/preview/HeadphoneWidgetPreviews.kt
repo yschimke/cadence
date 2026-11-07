@@ -111,8 +111,8 @@ internal fun HeadphoneWidgetMp3Preview() {
 internal fun HeadphoneWidgetBluetoothPreview() {
   HeadphoneWidgetPreview(
     PreviewFixtures.btConnectedPlaying.copy(
-      connectedDevice = PreviewFixtures.connectedDevice.copy(name = "OpenSwim Pro")
-    )
+      connectedDevice = PreviewFixtures.connectedDevice.copy(name = "OpenSwim Pro"),
+    ),
   )
 }
 
@@ -137,7 +137,7 @@ internal fun HeadphoneWidgetLightPreview() {
 internal fun HeadphoneWidgetPlayingAnimatedPreview() {
   HeadphoneWidgetPreview(
     PreviewFixtures.btConnectedPlaying.copy(
-      connectedDevice = PreviewFixtures.connectedDevice.copy(name = "OpenSwim Pro")
+      connectedDevice = PreviewFixtures.connectedDevice.copy(name = "OpenSwim Pro"),
     ),
     animated = true,
   )
@@ -147,7 +147,7 @@ internal fun HeadphoneWidgetPlayingAnimatedPreview() {
 private val playingOnHeadphones
   get() =
     PreviewFixtures.btConnectedPlaying.copy(
-      connectedDevice = PreviewFixtures.connectedDevice.copy(name = "OpenSwim Pro")
+      connectedDevice = PreviewFixtures.connectedDevice.copy(name = "OpenSwim Pro"),
     )
 
 @Preview(name = "Headphone widget · winter", widthDp = 312, heightDp = 152)

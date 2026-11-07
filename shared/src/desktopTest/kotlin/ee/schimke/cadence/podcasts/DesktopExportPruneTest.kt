@@ -24,8 +24,8 @@ class DesktopExportPruneTest {
               listOf(section),
               folder = folder,
             )
-          }
-      )
+          },
+      ),
     )
 
   @Test

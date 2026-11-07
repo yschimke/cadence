@@ -35,7 +35,7 @@ class PkceCodeTest {
       Base64.UrlSafe.withPadding(Base64.PaddingOption.ABSENT)
         .encode(
           java.security.MessageDigest.getInstance("SHA-256")
-            .digest(code.verifier.encodeToByteArray())
+            .digest(code.verifier.encodeToByteArray()),
         )
     assertEquals(expected, code.challenge)
   }

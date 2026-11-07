@@ -29,13 +29,13 @@ class HeadphoneSyncStepTest {
   private val imported =
     LocalPodcastState(
       library =
-        PodcastLibrary(playlist = PlaylistSnapshot(name = "Up Next", episodes = listOf(episode)))
+        PodcastLibrary(playlist = PlaylistSnapshot(name = "Up Next", episodes = listOf(episode))),
     )
   private val prepared =
     imported.copy(
       library =
         imported.library.copy(
-          manifests = listOf(Manifest(episode, Segmentation(), listOf(section)))
+          manifests = listOf(Manifest(episode, Segmentation(), listOf(section))),
         ),
       readySectionIds = setOf("s1"),
     )
@@ -77,8 +77,8 @@ class HeadphoneSyncStepTest {
     assertFalse(shouldCopyOnConnect(headphoneSyncStep(ready, false, false)))
     assertFalse(
       shouldCopyOnConnect(
-        headphoneSyncStep(ready.copy(copiedSectionIds = setOf("s1")), false, true)
-      )
+        headphoneSyncStep(ready.copy(copiedSectionIds = setOf("s1")), false, true),
+      ),
     )
     assertFalse(shouldCopyOnConnect(headphoneSyncStep(prepared, false, true)))
   }
@@ -96,7 +96,7 @@ class HeadphoneSyncStepTest {
     val emptied =
       synced.copy(
         library =
-          PodcastLibrary(playlist = PlaylistSnapshot(name = "Up Next", episodes = emptyList()))
+          PodcastLibrary(playlist = PlaylistSnapshot(name = "Up Next", episodes = emptyList())),
       )
     assertEquals(
       HeadphoneSyncStep.ReadyToCopy(pluggedIn = true),

@@ -75,7 +75,7 @@ class PhoneWearDataPublisher(
             )
           } else {
             emptyList()
-          }
+          },
         ),
       )
       // In MP3 mode only a level the headset acknowledged is its volume; -1 reads as unknown.

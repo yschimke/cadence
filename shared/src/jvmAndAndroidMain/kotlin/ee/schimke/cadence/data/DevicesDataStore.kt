@@ -26,7 +26,7 @@ fun createFilesDataStore(producePath: () -> Path): SettingsStore =
         producePath = producePath,
       ),
       corruptionHandler = onCorrupt(produceNewData = { Settings() }),
-    )
+    ),
   )
 
 private class DataStoreSettingsStore(private val store: DataStore<Settings>) : SettingsStore {

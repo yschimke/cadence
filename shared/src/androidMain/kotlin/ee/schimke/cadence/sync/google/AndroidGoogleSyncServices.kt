@@ -13,9 +13,9 @@ import kotlinx.coroutines.SupervisorJob
 import okio.Path.Companion.toOkioPath
 
 /**
- * Wires the Google sync pieces for Android: builds the OAuth config loader, account store, repo
- * and controller as one aggregate so the Metro graph can bind a single [GoogleSyncController]
- * without having to resolve the intermediate factories separately.
+ * Wires the Google sync pieces for Android: builds the OAuth config loader, account store, repo and
+ * controller as one aggregate so the Metro graph can bind a single [GoogleSyncController] without
+ * having to resolve the intermediate factories separately.
  */
 @ContributesBinding(AppScope::class, binding = binding<GoogleSyncController>())
 @SingleIn(AppScope::class)

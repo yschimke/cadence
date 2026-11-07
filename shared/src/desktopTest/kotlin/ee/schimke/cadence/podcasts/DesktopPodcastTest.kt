@@ -63,7 +63,7 @@ class DesktopPodcastTest {
         assertTrue(platform.available(section))
         assertTrue(
           command("ffmpeg", "-nostdin", "-v", "error", "-i", output.path, "-f", "null", "-")
-            .isEmpty()
+            .isEmpty(),
         )
         val duration =
           command(
@@ -143,8 +143,8 @@ class DesktopPodcastTest {
       val grouped =
         deviceManifest(
           PodcastLibrary(
-            manifests = listOf(Manifest(showEpisode, Segmentation(chunkFormat = "m4a"), sections))
-          )
+            manifests = listOf(Manifest(showEpisode, Segmentation(chunkFormat = "m4a"), sections)),
+          ),
         )
       platform.export(sections, target.path, podcastJson.encodeToString(grouped))
       val showFolder = File(target, "Cadence/podcasts/${grouped.episodes.single().folder}")
@@ -155,7 +155,7 @@ class DesktopPodcastTest {
       )
       assertEquals("keep me", File(target, "personal.mp3").readText())
       assertTrue(
-        sections[0].fileName < sections[1].fileName
+        sections[0].fileName < sections[1].fileName,
       ) // Headphone filename order follows the timeline.
       File(target, "Cadence/podcasts/.cadence-owner").delete()
       assertFailsWith<IllegalArgumentException> { platform.export(sections, target.path, "{}") }
@@ -176,7 +176,7 @@ class DesktopPodcastTest {
             "null",
             "-",
           )
-          .contains("Audio: mp3")
+          .contains("Audio: mp3"),
       )
       platform.pruneAudio(listOf(episode))
       assertTrue(mp3.all { platform.available(it) })

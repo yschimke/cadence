@@ -38,18 +38,29 @@ enum class HeadphoneLook(
 ) {
   Default("headphone-default", colors = null, backdrop = null, PoolSeason.None),
   Winter("headphone-winter", WinterWidgetColors, { Snowfall(it) }, PoolSeason.Winter),
-  Christmas("headphone-christmas", ChristmasWidgetColors, { ChristmasLights(it) }, PoolSeason.Christmas),
+  Christmas(
+    "headphone-christmas",
+    ChristmasWidgetColors,
+    { ChristmasLights(it) },
+    PoolSeason.Christmas,
+  ),
   NewYear("headphone-new-year", NewYearWidgetColors, { Fireworks(it) }, PoolSeason.NewYear),
-  Halloween("headphone-halloween", HalloweenWidgetColors, { HalloweenNight(it) }, PoolSeason.Halloween);
+  Halloween(
+    "headphone-halloween",
+    HalloweenWidgetColors,
+    { HalloweenNight(it) },
+    PoolSeason.Halloween,
+  );
 
   companion object {
-    fun ofDesign(designId: String?): HeadphoneLook = entries.firstOrNull { it.designId == designId } ?: Default
+    fun ofDesign(designId: String?): HeadphoneLook =
+      entries.firstOrNull { it.designId == designId } ?: Default
   }
 }
 
 /**
- * The look the season running now gives Cadence's widgets. The app sets [current] to ask its
- * Livery catalog, which decides the seasons; until then, and in previews, it is [HeadphoneLook.Default].
+ * The look the season running now gives Cadence's widgets. The app sets [current] to ask its Livery
+ * catalog, which decides the seasons; until then, and in previews, it is [HeadphoneLook.Default].
  */
 object WidgetSeason {
   @Volatile var current: suspend () -> HeadphoneLook = { HeadphoneLook.Default }
@@ -163,7 +174,9 @@ fun Fireworks(clock: RemoteFloat, modifier: RemoteModifier = RemoteModifier.fill
       }
     }
     // Still stars between the bursts.
-    Stars.forEach { (x, y) -> drawCircle(fill(Color(0x99FFF8E7)), h * 0.008f, RemoteOffset(w * x, h * y)) }
+    Stars.forEach { (x, y) ->
+      drawCircle(fill(Color(0x99FFF8E7)), h * 0.008f, RemoteOffset(w * x, h * y))
+    }
   }
 }
 

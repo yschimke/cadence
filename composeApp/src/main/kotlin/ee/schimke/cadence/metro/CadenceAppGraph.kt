@@ -16,7 +16,7 @@ interface CadenceAppGraph : AndroidAppGraph {
   fun provideBundledOAuth(): BundledAndroidOAuth =
     BundledAndroidOAuth(
       BuildConfig.GOOGLE_ANDROID_CLIENT_ID.takeIf { it.isNotBlank() }
-        ?.let { OAuthConfig(clientId = it, clientSecret = "") }
+        ?.let { OAuthConfig(clientId = it, clientSecret = "") },
     )
 
   @DependencyGraph.Factory

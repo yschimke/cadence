@@ -113,7 +113,7 @@ class DesktopGoogleOAuthFlow(
       if (code != null) slot.complete(code)
       else
         slot.completeExceptionally(
-          IllegalStateException("Google sign-in failed: ${error ?: "no code"}")
+          IllegalStateException("Google sign-in failed: ${error ?: "no code"}"),
         )
     }
     return {
@@ -149,7 +149,7 @@ class DesktopGoogleOAuthFlow(
   private fun openBrowser(url: String) {
     if (!Desktop.isDesktopSupported() || !Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
       throw IllegalStateException(
-        "No desktop browser available. Open this URL manually to continue:\n$url"
+        "No desktop browser available. Open this URL manually to continue:\n$url",
       )
     }
     Desktop.getDesktop().browse(URI(url))

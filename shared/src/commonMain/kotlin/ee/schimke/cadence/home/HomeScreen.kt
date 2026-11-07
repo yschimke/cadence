@@ -427,8 +427,8 @@ private fun LibraryTopBar(
     modifier =
       Modifier.fillMaxWidth()
         .windowInsetsPadding(
-          WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal + WindowInsetsSides.Top)
-        )
+          WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal + WindowInsetsSides.Top),
+        ),
   ) {
     Row(
       Modifier.padding(start = 16.dp, end = 4.dp, top = 8.dp, bottom = 8.dp),
@@ -537,7 +537,7 @@ private fun AudioControlsSection(
             durationMs = podcastPlayer.durationMs,
             positionMs = podcastPlayer.positionMs,
             packageName = "ee.schimke.cadence",
-          )
+          ),
       )
     else state.bluetooth
   val bluetoothConnected = state.bluetooth.connectedDevice != null
@@ -1188,7 +1188,7 @@ private fun EpisodeRow(
           when {
             position <= 0 -> formatTime(episode.durationMs)
             else -> "${formatTime(episode.durationMs - position)} left"
-          } + if (downloaded) " · Downloaded" else ""
+          } + if (downloaded) " · Downloaded" else "",
         )
         if (position > 0)
           LinearProgressIndicator(

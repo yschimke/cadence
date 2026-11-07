@@ -10,7 +10,7 @@ import kotlinx.serialization.json.Json
 
 @Composable
 actual fun rememberDirectorySourceLauncher(
-  onPicked: (name: String, treeUri: String) -> Unit
+  onPicked: (name: String, treeUri: String) -> Unit,
 ): () -> Unit {
   var error by remember { mutableStateOf<String?>(null) }
   val callback by rememberUpdatedState(onPicked)

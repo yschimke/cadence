@@ -263,7 +263,7 @@ private fun NowPlayingCard(state: BluetoothState, onRequestMediaAccess: () -> Un
           )
         !state.mediaAccessGranted -> {
           Text(
-            "Media metadata needs notification access. Android will open its Notification access settings."
+            "Media metadata needs notification access. Android will open its Notification access settings.",
           )
           OutlinedButton(onClick = onRequestMediaAccess) { Text("Allow notification access") }
         }
@@ -333,7 +333,7 @@ private fun TransportCard(
             mode != WorkingMode.Mp3 -> onPlayPause
             playing -> onPause
             else -> onPlay
-          }
+          },
       ) {
         Icon(
           imageVector = if (playing) Icons.Filled.Pause else Icons.Filled.PlayArrow,
@@ -429,7 +429,7 @@ private fun HeadsetVolume(
     Spacer(Modifier.weight(1f))
     Text(
       if (acknowledged == null && dragging == null && pending == null) "Not set"
-      else "${shown.toInt()}%"
+      else "${shown.toInt()}%",
     )
   }
   Slider(
@@ -504,7 +504,7 @@ private fun WorkingModeCard(
                 when (mode) {
                   WorkingMode.Bluetooth -> "Bluetooth"
                   WorkingMode.Mp3 -> "MP3"
-                }
+                },
               )
             },
           )

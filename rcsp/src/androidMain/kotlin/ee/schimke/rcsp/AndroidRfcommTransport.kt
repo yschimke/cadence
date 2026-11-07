@@ -6,8 +6,8 @@ import java.io.InputStream
 /**
  * Synchronous RFCOMM transport for a connected Bluetooth socket.
  *
- * Call [exchange] from a coroutine dispatcher appropriate for blocking I/O. This transport is
- * for the public RCSP frame only; it does not negotiate an OEM authentication envelope.
+ * Call [exchange] from a coroutine dispatcher appropriate for blocking I/O. This transport is for
+ * the public RCSP frame only; it does not negotiate an OEM authentication envelope.
  */
 class AndroidRfcommTransport(
   private val socket: BluetoothSocket,
@@ -35,14 +35,15 @@ class AndroidRfcommTransport(
     return prefix + header + payloadAndEnd
   }
 
-  private fun InputStream.readExactly(size: Int): ByteArray = ByteArray(size).also { bytes ->
-    var offset = 0
-    while (offset < bytes.size) {
-      val count = read(bytes, offset, bytes.size - offset)
-      if (count < 0) throw java.io.EOFException("RFCOMM stream ended mid-frame")
-      offset += count
+  private fun InputStream.readExactly(size: Int): ByteArray =
+    ByteArray(size).also { bytes ->
+      var offset = 0
+      while (offset < bytes.size) {
+        val count = read(bytes, offset, bytes.size - offset)
+        if (count < 0) throw java.io.EOFException("RFCOMM stream ended mid-frame")
+        offset += count
+      }
     }
-  }
 
   private fun InputStream.readRequired(): Byte {
     val value = read()

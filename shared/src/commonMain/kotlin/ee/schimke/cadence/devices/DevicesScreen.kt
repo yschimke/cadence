@@ -275,5 +275,5 @@ private const val HEADPHONE_PRODUCT = 1889
 
 @Composable
 expect fun rememberFileExplorerOpenLauncher(
-  onGranted: (name: String, path: Path) -> Unit
+  onGranted: (name: String, path: Path) -> Unit,
 ): () -> Unit

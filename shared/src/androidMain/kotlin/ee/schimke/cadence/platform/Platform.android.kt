@@ -11,5 +11,5 @@ import okio.FileSystem
 @ContributesBinding(AppScope::class, binding = binding<Platform>())
 @Inject
 class AndroidPlatform(val fileSystem: FileSystem, val context: Context) : Platform {
-    override val name: String = "Android ${Build.VERSION.SDK_INT}"
+  override val name: String = "Android ${Build.VERSION.SDK_INT}"
 }
