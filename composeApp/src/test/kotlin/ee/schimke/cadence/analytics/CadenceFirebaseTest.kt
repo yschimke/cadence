@@ -12,8 +12,15 @@ import org.robolectric.annotation.Config
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [35])
 class CadenceFirebaseTest {
+  /**
+   * The SDK isn't on this classpath, as in local, PR and preview builds. Reflection over the
+   * object's methods is what Robolectric does when it loads a class; a Firebase type in a signature
+   * fails it with NoClassDefFoundError.
+   */
   @Test
-  fun installsNothingWithoutTheSdk() {
+  fun loadsAndInstallsNothingWithoutTheSdk() {
+    CadenceFirebase::class.java.declaredMethods
+    CadenceFirebase::class.java.declaredFields
     CadenceFirebase.install(RuntimeEnvironment.getApplication())
     assertEquals(Analytics.None, Analytics.current)
     assertTrue(CadenceFirebase.liverySinks().isEmpty())

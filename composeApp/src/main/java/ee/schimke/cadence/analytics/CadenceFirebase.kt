@@ -10,32 +10,47 @@ import ee.schimke.livery.firebase.FirebaseAnalyticsSink
 
 /**
  * Firebase Analytics, when this build has it. Release builds from CI carry the Firebase SDK and
- * configuration (`google-services.json`); local and PR builds have neither, so [analytics] is null
- * and [liverySink] empty, and nothing is sent.
+ * configuration (`google-services.json`); local and PR builds have neither, so nothing is installed
+ * and [liverySinks] is empty.
+ *
+ * No Firebase type appears in this object's fields or signatures: it is loaded in every build, and
+ * a missing class there fails when the object is (reflection over its methods, as Robolectric does,
+ * included). Everything that names Firebase is in [FirebaseBackend], loaded only once the SDK is
+ * known to be there.
  */
 object CadenceFirebase {
-  @Volatile private var instance: FirebaseAnalytics? = null
+  @Volatile private var sinks: List<AnalyticsSink> = emptyList()
 
   /**
    * Sets [Analytics.current] to Firebase if it's available. Call once, from Application.onCreate.
    */
   fun install(context: Context) {
-    val firebase = analytics(context) ?: return
-    instance = firebase
-    Analytics.current = FirebaseCadenceAnalytics(firebase)
+    if (!sdkPresent()) return
+    val backend = runCatching { FirebaseBackend.create(context) }.getOrNull() ?: return
+    sinks = backend.liverySinks
+    Analytics.current = backend.analytics
   }
 
   /** Livery's events (`livery_*`), for the widgets' slot planner; empty without Firebase. */
-  fun liverySinks(): List<AnalyticsSink> =
-    listOfNotNull(instance?.let { FirebaseAnalyticsSink(it) })
+  fun liverySinks(): List<AnalyticsSink> = sinks
 
-  private fun analytics(context: Context): FirebaseAnalytics? = runCatching {
-    // Throws NoClassDefFoundError in builds without the SDK.
+  private fun sdkPresent(): Boolean = runCatching {
     Class.forName("com.google.firebase.analytics.FirebaseAnalytics")
-    if (FirebaseApp.getApps(context).isEmpty()) return null
-    FirebaseAnalytics.getInstance(context)
+  }.isSuccess
+}
+
+private class FirebaseBackend(val analytics: Analytics, val liverySinks: List<AnalyticsSink>) {
+  companion object {
+    /** Null when the app has no Firebase configuration. */
+    fun create(context: Context): FirebaseBackend? {
+      if (FirebaseApp.getApps(context).isEmpty()) return null
+      val firebase = FirebaseAnalytics.getInstance(context)
+      return FirebaseBackend(
+        FirebaseCadenceAnalytics(firebase),
+        listOf(FirebaseAnalyticsSink(firebase)),
+      )
+    }
   }
-    .getOrNull()
 }
 
 private class FirebaseCadenceAnalytics(private val firebase: FirebaseAnalytics) : Analytics {
