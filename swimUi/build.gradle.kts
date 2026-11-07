@@ -24,6 +24,7 @@ dependencies {
   implementation(libs.compose.ui.tooling.preview)
   implementation(libs.compose.remote.tooling.preview)
   implementation(libs.composeai.preview.annotations)
+  implementation(libs.glance.wear)
 
   testImplementation(libs.junit)
   testImplementation(libs.kotlin.test.junit)

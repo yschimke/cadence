@@ -6,7 +6,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BatteryFull
 import androidx.compose.material.icons.filled.Headphones
 import androidx.compose.material.icons.filled.Sync
-import androidx.compose.remote.creation.compose.action.Action
+import androidx.compose.remote.creation.compose.action.RemoteAction
 import androidx.compose.remote.creation.compose.layout.RemoteAlignment
 import androidx.compose.remote.creation.compose.layout.RemoteArrangement
 import androidx.compose.remote.creation.compose.layout.RemoteBox
@@ -53,7 +53,7 @@ fun PodcastSyncWidgetContent(
   battery: String?,
   showSwimming: Boolean,
   heightDp: Int,
-  onTap: Action? = null,
+  onTap: RemoteAction? = null,
   widthDp: Int = 232,
   colors: WidgetColors = WidgetColors.Dark,
   /** The season's pool: its water, the swimmer's hat and what's going on around them. */

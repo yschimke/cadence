@@ -13,7 +13,7 @@ import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.remote.creation.RemotePath
-import androidx.compose.remote.creation.compose.action.Action
+import androidx.compose.remote.creation.compose.action.RemoteAction
 import androidx.compose.remote.creation.compose.layout.RemoteAlignment
 import androidx.compose.remote.creation.compose.layout.RemoteArrangement
 import androidx.compose.remote.creation.compose.layout.RemoteBox
@@ -77,8 +77,8 @@ fun HeadphoneControlsWidgetContent(
   state: HeadphoneWidgetState,
   layout: HeadphoneWidgetLayout,
   colors: WidgetColors,
-  onOpen: Action?,
-  onAction: @Composable (HeadphoneWidgetAction) -> Action?,
+  onOpen: RemoteAction?,
+  onAction: @Composable (HeadphoneWidgetAction) -> RemoteAction?,
   /** A seasonal look's palette and backdrop in place of [colors]; the template draws the same. */
   look: HeadphoneLook = HeadphoneLook.Default,
 ) {
@@ -137,8 +137,8 @@ internal fun HeadphoneControlsBody(
   layout: HeadphoneWidgetLayout,
   modeSwitch: HeadphoneWidgetAction?,
   showWater: Boolean,
-  onOpen: Action?,
-  onAction: @Composable (HeadphoneWidgetAction) -> Action?,
+  onOpen: RemoteAction?,
+  onAction: @Composable (HeadphoneWidgetAction) -> RemoteAction?,
   transportButton:
     @Composable
     (HeadphoneWidgetAction, @Composable (HeadphoneWidgetAction) -> Unit) -> Unit,
@@ -174,8 +174,8 @@ private fun HeadphoneControlsContent(
   layout: HeadphoneWidgetLayout,
   modeSwitch: HeadphoneWidgetAction?,
   showWater: Boolean,
-  onOpen: Action?,
-  onAction: @Composable (HeadphoneWidgetAction) -> Action?,
+  onOpen: RemoteAction?,
+  onAction: @Composable (HeadphoneWidgetAction) -> RemoteAction?,
   transportButton:
     @Composable
     (HeadphoneWidgetAction, @Composable (HeadphoneWidgetAction) -> Unit) -> Unit,
@@ -285,7 +285,7 @@ private fun Headline(text: RemoteString, palette: RemotePalette, fontSize: Int =
   )
 }
 
-private fun RemoteModifier.openOnTap(onOpen: Action?): RemoteModifier =
+private fun RemoteModifier.openOnTap(onOpen: RemoteAction?): RemoteModifier =
   if (onOpen != null) clickable(onOpen) else this
 
 @Composable
@@ -295,7 +295,7 @@ private fun WidgetIconButton(
   primary: Boolean,
   showWater: Boolean = false,
   palette: RemotePalette,
-  onClick: Action?,
+  onClick: RemoteAction?,
 ) {
   val water = primary && showWater
   val content = if (water) OnWater.rc else if (primary) palette.onPrimary else palette.onTonal
