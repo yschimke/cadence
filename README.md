@@ -3,7 +3,7 @@
 Auto-generated from `main`. Browse inline or compare against PR branches.
 
 > [!WARNING]
-> 2 preview(s) failed to render in the latest update (2 retained from the prior baseline). See **Render Failures** below.
+> 1 preview(s) failed to render in the latest update (1 retained from the prior baseline). See **Render Failures** below.
 
 ## Render Failures
 
@@ -11,7 +11,6 @@ The render task completed but no PNG was produced for these previews. Entries wi
 
 | Preview | Module | Function | Source | Baseline |
 |---------|--------|----------|--------|----------|
-| `composeApp/ee.schimke.cadence.preview.PodcastPreviewsKt.PodcastImportedPreview_Podcast sync — imported` | composeApp | `PodcastImportedPreview` | `src/main/kotlin/ee/schimke/cadence/preview/PodcastPreviews.kt` | retained |
 | `swimUi/ee.schimke.cadence.swim.SwimPreviewsKt.WaterButtonsWearPreview_Water buttons · Wear` | swimUi | `WaterButtonsWearPreview` | `src/main/kotlin/ee/schimke/cadence/swim/SwimPreviews.kt` | retained |
 
 ## composeApp
@@ -39,6 +38,7 @@ The render task completed but no PNG was produced for these previews. Entries wi
 | `HeadphoneWidgetPlayingAnimatedPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HeadphoneWidgetPlayingAnimatedPreview_Headphone_widget_playing_animated-157e750e.gif" width="150" /> |
 | `HeadphoneWidgetWinterPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HeadphoneWidgetWinterPreview_Headphone_widget_winter-fa859d91.png" width="150" /> |
 | `AddPodcastsPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/AddPodcastsPreview_Add_podcasts-e09ca4b7.png" width="150" /> |
+| `PodcastImportedPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/PodcastImportedPreview_Podcast_sync_imported-8403888a.png" width="150" /> |
 | `PodcastPocketCastsPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/PodcastPocketCastsPreview_Add_podcasts_Pocket_Casts_signed_in-cd7341fe.png" width="150" /> |
 | `PodcastPreparedPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/PodcastPreparedPreview_Podcast_sync_prepared-2db5b8ad.png" width="150" /> |
 | `CloudSyncWidgetLargePreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/CloudSyncWidgetLargePreview_Cloud_sync_widget_large-2f8e7fdc.png" width="150" /> |
