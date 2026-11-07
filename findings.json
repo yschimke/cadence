@@ -1,12 +1,111 @@
 {
   "entries": [
     {
+      "annotatedBasename": "BluetoothConnectedPlayingPreview_BT_controls_connected_playing-45366603.a11y.png",
+      "cleanBasename": "BluetoothConnectedPlayingPreview_BT_controls_connected_playing-45366603.png",
+      "findings": [],
+      "functionName": "BluetoothConnectedPlayingPreview",
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.BluetoothConnectedPlayingPreview_BT controls - connected + playing",
+      "rendersDir": "composeApp",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "variant": ""
+    },
+    {
+      "annotatedBasename": "BluetoothDeveloperPreview_BT_controls_developer-850e449d.a11y.png",
+      "cleanBasename": "BluetoothDeveloperPreview_BT_controls_developer-850e449d.png",
+      "findings": [],
+      "functionName": "BluetoothDeveloperPreview",
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.BluetoothDeveloperPreview_BT controls - developer",
+      "rendersDir": "composeApp",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "variant": ""
+    },
+    {
+      "annotatedBasename": "BluetoothDisconnectedPreview_BT_controls_disconnected-42332e99.a11y.png",
+      "cleanBasename": "BluetoothDisconnectedPreview_BT_controls_disconnected-42332e99.png",
+      "findings": [],
+      "functionName": "BluetoothDisconnectedPreview",
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.BluetoothDisconnectedPreview_BT controls - disconnected",
+      "rendersDir": "composeApp",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "variant": ""
+    },
+    {
+      "annotatedBasename": "BluetoothMp3ModePreview_BT_controls_MP3_mode-f13f654e.a11y.png",
+      "cleanBasename": "BluetoothMp3ModePreview_BT_controls_MP3_mode-f13f654e.png",
+      "findings": [],
+      "functionName": "BluetoothMp3ModePreview",
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.BluetoothMp3ModePreview_BT controls - MP3 mode",
+      "rendersDir": "composeApp",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "variant": ""
+    },
+    {
+      "annotatedBasename": "BluetoothPermissionMissingPreview_BT_controls_permission_missing-a7ac699a.a11y.png",
+      "cleanBasename": "BluetoothPermissionMissingPreview_BT_controls_permission_missing-a7ac699a.png",
+      "findings": [],
+      "functionName": "BluetoothPermissionMissingPreview",
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.BluetoothPermissionMissingPreview_BT controls - permission missing",
+      "rendersDir": "composeApp",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "variant": ""
+    },
+    {
+      "annotatedBasename": "DeviceFilesLoadingPreview_Device_files_loading-86a4c3d8.a11y.png",
+      "cleanBasename": "DeviceFilesLoadingPreview_Device_files_loading-86a4c3d8.png",
+      "findings": [],
+      "functionName": "DeviceFilesLoadingPreview",
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.DeviceFilesLoadingPreview_Device files - loading",
+      "rendersDir": "composeApp",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "variant": ""
+    },
+    {
+      "annotatedBasename": "DeviceFilesNotAvailablePreview_Device_files_not_available-713d5491.a11y.png",
+      "cleanBasename": "DeviceFilesNotAvailablePreview_Device_files_not_available-713d5491.png",
+      "findings": [],
+      "functionName": "DeviceFilesNotAvailablePreview",
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.DeviceFilesNotAvailablePreview_Device files - not available",
+      "rendersDir": "composeApp",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "variant": ""
+    },
+    {
+      "annotatedBasename": "DevicesScreenEmptyPreview_Devices_empty-af5a9e1c.a11y.png",
+      "cleanBasename": "DevicesScreenEmptyPreview_Devices_empty-af5a9e1c.png",
+      "findings": [],
+      "functionName": "DevicesScreenEmptyPreview",
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.DevicesScreenEmptyPreview_Devices - empty",
+      "rendersDir": "composeApp",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "variant": ""
+    },
+    {
       "annotatedBasename": "DevicesScreenLoadedPreview_Devices_loaded-cfb106a7.a11y.png",
       "cleanBasename": "DevicesScreenLoadedPreview_Devices_loaded-cfb106a7.png",
       "findings": [],
       "functionName": "DevicesScreenLoadedPreview",
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.DevicesScreenLoadedPreview_Devices - loaded",
+      "rendersDir": "composeApp",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "variant": ""
+    },
+    {
+      "annotatedBasename": "DevicesScreenLoadingPreview_Devices_loading-8e171a67.a11y.png",
+      "cleanBasename": "DevicesScreenLoadingPreview_Devices_loading-8e171a67.png",
+      "findings": [],
+      "functionName": "DevicesScreenLoadingPreview",
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.DevicesScreenLoadingPreview_Devices - loading",
       "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "variant": ""
@@ -250,6 +349,47 @@
       "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "variant": "spec:width=411dp,height=900dp,dpi=420"
+    },
+    {
+      "annotatedBasename": "ManageEmptyPreview_Manage_empty-55c57410.a11y.png",
+      "cleanBasename": "ManageEmptyPreview_Manage_empty-55c57410.png",
+      "findings": [],
+      "functionName": "ManageEmptyPreview",
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.ManageEmptyPreview_Manage - empty",
+      "rendersDir": "composeApp",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "variant": ""
+    },
+    {
+      "annotatedBasename": "ManagePopulatedPreview_Manage_populated-41ab32cd.a11y.png",
+      "cleanBasename": "ManagePopulatedPreview_Manage_populated-41ab32cd.png",
+      "findings": [
+        {
+          "boundsInScreen": "744,343,840,385",
+          "level": "INFO",
+          "message": "This non-clickable item's speakable text: \"Folder\" is identical to that of 1 other item(s).",
+          "type": "DuplicateSpeakableTextCheck",
+          "viewDescription": "android.widget.TextView"
+        }
+      ],
+      "functionName": "ManagePopulatedPreview",
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.ManagePopulatedPreview_Manage - populated",
+      "rendersDir": "composeApp",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "variant": ""
+    },
+    {
+      "annotatedBasename": "",
+      "cleanBasename": "",
+      "findings": [],
+      "functionName": "ManageRefreshingPreview",
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.ManageRefreshingPreview_Manage - developer, refreshing",
+      "rendersDir": "composeApp",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "variant": ""
     },
     {
       "annotatedBasename": "PlayStorePhoneHomeDark_Play_Store_phone_Home_dark-aef8b2b7.a11y.png",
@@ -650,54 +790,6 @@
     {
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetWinterPreview_Podcast widget \u00b7 winter"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.BluetoothConnectedPlayingPreview_BT controls - connected + playing"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.BluetoothDeveloperPreview_BT controls - developer"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.BluetoothDisconnectedPreview_BT controls - disconnected"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.BluetoothMp3ModePreview_BT controls - MP3 mode"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.BluetoothPermissionMissingPreview_BT controls - permission missing"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.DeviceFilesLoadingPreview_Device files - loading"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.DeviceFilesNotAvailablePreview_Device files - not available"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.DevicesScreenEmptyPreview_Devices - empty"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.DevicesScreenLoadingPreview_Devices - loading"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.ManageEmptyPreview_Manage - empty"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.ManagePopulatedPreview_Manage - populated"
-    },
-    {
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.ManageRefreshingPreview_Manage - developer, refreshing"
     },
     {
       "module": "composeApp",

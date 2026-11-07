@@ -1,14 +1,68 @@
 # Accessibility Report
 
-_Auto-generated from `compose-preview/a11y/pr`. 21 preview(s) across 1 module(s) · 37 error(s) · 0 warning(s) · 0 info._
+_Auto-generated from `compose-preview/a11y/pr`. 33 preview(s) across 1 module(s) · 37 error(s) · 0 warning(s) · 1 info._
 
 Browse inline; image URLs are pinned to the commit SHA on the baseline branch so links keep resolving after merge.
 
 ## composeApp
 
+### `BluetoothConnectedPlayingPreview`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/BluetoothConnectedPlayingPreview_BT_controls_connected_playing-45366603.a11y.png" width="400" />
+
+_No findings._
+
+### `BluetoothDeveloperPreview`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/BluetoothDeveloperPreview_BT_controls_developer-850e449d.a11y.png" width="400" />
+
+_No findings._
+
+### `BluetoothDisconnectedPreview`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/BluetoothDisconnectedPreview_BT_controls_disconnected-42332e99.a11y.png" width="400" />
+
+_No findings._
+
+### `BluetoothMp3ModePreview`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/BluetoothMp3ModePreview_BT_controls_MP3_mode-f13f654e.a11y.png" width="400" />
+
+_No findings._
+
+### `BluetoothPermissionMissingPreview`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/BluetoothPermissionMissingPreview_BT_controls_permission_missing-a7ac699a.a11y.png" width="400" />
+
+_No findings._
+
+### `DeviceFilesLoadingPreview`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/DeviceFilesLoadingPreview_Device_files_loading-86a4c3d8.a11y.png" width="400" />
+
+_No findings._
+
+### `DeviceFilesNotAvailablePreview`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/DeviceFilesNotAvailablePreview_Device_files_not_available-713d5491.a11y.png" width="400" />
+
+_No findings._
+
+### `DevicesScreenEmptyPreview`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/DevicesScreenEmptyPreview_Devices_empty-af5a9e1c.a11y.png" width="400" />
+
+_No findings._
+
 ### `DevicesScreenLoadedPreview`
 
 <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/DevicesScreenLoadedPreview_Devices_loaded-cfb106a7.a11y.png" width="400" />
+
+_No findings._
+
+### `DevicesScreenLoadingPreview`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/DevicesScreenLoadingPreview_Devices_loading-8e171a67.a11y.png" width="400" />
 
 _No findings._
 
@@ -92,6 +146,24 @@ _No findings._
 |--:|---|---|---|---|
 | 1 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
 | 2 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+
+### `ManageEmptyPreview`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/ManageEmptyPreview_Manage_empty-55c57410.a11y.png" width="400" />
+
+_No findings._
+
+### `ManagePopulatedPreview`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/ManagePopulatedPreview_Manage_populated-41ab32cd.a11y.png" width="400" />
+
+| # | Level | Rule | Element | Message |
+|--:|---|---|---|---|
+| 1 | INFO | DuplicateSpeakableTextCheck | android.widget.TextView | This non-clickable item's speakable text: "Folder" is identical to that of 1 other item(s). |
+
+### `ManageRefreshingPreview`
+
+_No findings._
 
 ### `PlayStorePhoneHomeDark` · `pixel_2`
 
