@@ -23,7 +23,7 @@ Server = https://github.com/yschimke/cadence/releases/download/pacman-repo
 Then:
 
 ```bash
-sudo pacman -Sy cadence-desktop-bin
+sudo pacman -Syu cadence-desktop-bin
 ```
 
 From then on, `sudo pacman -Syu` installs each new release.
