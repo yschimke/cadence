@@ -32,6 +32,7 @@ import androidx.compose.material.icons.automirrored.filled.InsertDriveFile
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Bedtime
+import androidx.compose.material.icons.filled.Bluetooth
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Cloud
 import androidx.compose.material.icons.filled.ErrorOutline
@@ -344,7 +345,7 @@ fun HomeContent(
     )
   Scaffold(
     modifier = modifier,
-    topBar = { LibraryTopBar(state, actions) },
+    topBar = { LibraryTopBar(state, actions, empty) },
     snackbarHost = { SnackbarHost(snackbar) },
   ) { padding ->
     if (empty && loading) return@Scaffold
@@ -429,6 +430,8 @@ fun HomeContent(
 private fun LibraryTopBar(
   state: HomeViewModel.UiState,
   actions: HomeActions,
+  /** Only the welcome shows, without the headphones section and its Bluetooth button. */
+  empty: Boolean,
 ) {
   Surface(
     modifier =
@@ -449,6 +452,8 @@ private fun LibraryTopBar(
       // Where Home's settings live, in plain sight rather than behind an overflow menu.
       TopBarAction(Icons.Filled.Source, "Manage sources", actions.onManageSources)
       TopBarAction(Icons.Filled.SdStorage, "Storage", actions.onFileExplorer)
+      if (empty && state.bluetoothSupported && state.bluetooth.connectedDevice == null)
+        TopBarAction(Icons.Filled.Bluetooth, "Bluetooth controls", actions.onBluetoothControls)
     }
   }
 }

@@ -34,7 +34,8 @@ private val themedModifier
 internal fun HomeEmptyPreview() {
   AndroidMaterialTheme {
     HomeContent(
-      state = HomeViewModel.UiState(),
+      // A phone with Bluetooth: its controls stay reachable from the welcome screen.
+      state = HomeViewModel.UiState(bluetoothSupported = true),
       podcasts = LocalPodcastState(),
       actions = HomeActions(),
       suggestions = PreviewFixtures.suggestions,
