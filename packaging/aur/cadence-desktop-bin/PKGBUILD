@@ -1,0 +1,46 @@
+# Maintainer: Yuri Schimke <yuri at schimke dot ee>
+#
+# Source of truth: packaging/aur/cadence-desktop-bin in https://github.com/yschimke/cadence.
+# The release workflow (.github/workflows/aur-publish.yml) sets pkgver and the checksum and pushes
+# this to the AUR; edit it there, not in the AUR repository.
+
+pkgname=cadence-desktop-bin
+_appname=cadence
+pkgver=0.1.21
+pkgrel=1
+pkgdesc='Manage audio on mounted USB storage (desktop client)'
+arch=('x86_64')
+url='https://github.com/yschimke/cadence'
+# The repository has no license file yet.
+license=('LicenseRef-unknown')
+# The jpackage image bundles its own Java runtime; these are what that runtime and Skia load
+# (the .deb's Depends:, mapped to Arch packages).
+depends=('alsa-lib' 'brotli' 'bzip2' 'expat' 'fontconfig' 'freetype2' 'gcc-libs' 'glibc'
+         'libglvnd' 'libpng' 'libx11' 'libxau' 'libxcb' 'libxdmcp' 'libxext' 'libxi' 'libxrender'
+         'libxtst' 'xdg-utils' 'zlib')
+# Not 'cadence', which is KXStudio's JACK toolbox. That package installs /usr/bin/cadence,
+# cadence.desktop and a hicolor 'cadence' icon, so this one installs its files as cadence-desktop
+# and the two can be installed side by side.
+_name=cadence-desktop
+provides=("$_name")
+conflicts=("$_name")
+# Stripping breaks the bundled runtime's libraries.
+options=('!strip' '!debug')
+source=("$_appname-$pkgver.deb::$url/releases/download/v$pkgver/$_appname-$pkgver-linux-x64.deb"
+        "$_name.desktop")
+sha256sums=('e8a50f8655f3839b2368a8905f13044986176e8d94af92fd44a543c42adc5e84'
+            'c1dc6f5fa0083db111e79298d29f25220254d10d57c9da7f58a37d455ecbcaa3')
+
+package() {
+  bsdtar -xf data.tar.* -C "$pkgdir"
+
+  # The .deb registers its menu entry from a post-install script, which pacman never runs:
+  # install the entry and icon where desktops look, and drop the copy jpackage left in /opt.
+  rm "$pkgdir/opt/$_appname/lib/$_appname-Cadence.desktop"
+  install -Dm644 "$_name.desktop" "$pkgdir/usr/share/applications/$_name.desktop"
+  install -Dm644 "$pkgdir/opt/$_appname/lib/Cadence.png" \
+    "$pkgdir/usr/share/icons/hicolor/512x512/apps/$_name.png"
+
+  install -dm755 "$pkgdir/usr/bin"
+  ln -s "/opt/$_appname/bin/Cadence" "$pkgdir/usr/bin/$_name"
+}

@@ -57,6 +57,11 @@ kotlin {
 compose.desktop {
   application {
     mainClass = "ee.schimke.cadence.desktop.MainKt"
+    if (System.getProperty("os.name").contains("Linux")) {
+      // Main.kt names the X11 window class (WM_CLASS) so docks match the window to
+      // cadence-desktop.desktop.
+      jvmArgs += "--add-opens=java.desktop/sun.awt.X11=ALL-UNNAMED"
+    }
     nativeDistributions {
       targetFormats(
         org.jetbrains.compose.desktop.application.dsl.TargetFormat.Dmg,
@@ -70,9 +75,14 @@ compose.desktop {
       includeAllModules = true
       description = "Manage audio on mounted USB storage"
       vendor = "Yuri Schimke"
-      linux { packageName = "cadence" }
+      // Icons come from scripts/generate-desktop-icons.py; never hand-edit them.
+      linux {
+        packageName = "cadence"
+        iconFile.set(project.file("src/jvmMain/resources/cadence.png"))
+      }
       macOS {
         bundleID = "ee.schimke.cadence"
+        iconFile.set(project.file("icons/cadence.icns"))
         // JDK 21 jpackage rejects a zero major in CFBundleVersion. Offset every
         // release major so 0.x packages build and upgrades remain monotonic.
         packageVersion =
@@ -81,6 +91,7 @@ compose.desktop {
           }
       }
       windows {
+        iconFile.set(project.file("icons/cadence.ico"))
         menu = true
         shortcut = true
         upgradeUuid = "a82a09d9-e668-46c5-9928-8c6e2bc8f91e"
