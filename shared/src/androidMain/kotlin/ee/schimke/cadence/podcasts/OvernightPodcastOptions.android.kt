@@ -12,7 +12,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.core.app.NotificationCompat
+import ee.schimke.cadence.notifications.CadenceNotifications
+import ee.schimke.cadence.notifications.NotificationBody
+import ee.schimke.cadence.notifications.NotificationIcon
 import androidx.work.*
 import java.time.Duration
 import java.time.ZonedDateTime
@@ -58,12 +60,20 @@ class OvernightPodcastWorker(context: Context, params: WorkerParameters) :
       ),
     )
     val notification =
-      NotificationCompat.Builder(applicationContext, "podcast-preparation")
-        .setSmallIcon(android.R.drawable.stat_sys_download)
-        .setContentTitle("Preparing podcasts")
-        .setContentText("Cadence is preparing your podcasts while charging")
-        .setOngoing(true)
-        .build()
+      CadenceNotifications.build(
+        applicationContext,
+        "podcast-preparation",
+        9012,
+        NotificationBody(
+          "Preparing podcasts",
+          "Cadence is preparing your podcasts while charging",
+          NotificationIcon.Process,
+          indeterminate = true,
+          contentIntent = CadenceNotifications.openApp(applicationContext),
+        ),
+      ) {
+        setOngoing(true)
+      }
     setForeground(
       if (Build.VERSION.SDK_INT >= 29)
         ForegroundInfo(9012, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
@@ -88,7 +98,7 @@ internal const val READY_NOTIFICATION = 9014
  * A silent morning note that episodes are waiting, so the routine is just "plug in". Cleared by
  * [AndroidPodcastPlatform.publishStatus] once the headphones hold them.
  */
-private fun notifyReady(context: Context, state: LocalPodcastState) {
+private suspend fun notifyReady(context: Context, state: LocalPodcastState) {
   if (!state.readyForDevice() || state.upToDateOnDevice()) return
   val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
   if (!manager.areNotificationsEnabled()) return
@@ -96,26 +106,21 @@ private fun notifyReady(context: Context, state: LocalPodcastState) {
     NotificationChannel("podcast-ready", "Podcasts ready", NotificationManager.IMPORTANCE_LOW),
   )
   val episodes = state.library.manifests.size
-  val openIntent =
-    context.packageManager.getLaunchIntentForPackage(context.packageName)?.let {
-      PendingIntent.getActivity(
-        context,
-        0,
-        it,
-        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
-      )
-    }
   val notification =
-    NotificationCompat.Builder(context, "podcast-ready")
-      .setSmallIcon(android.R.drawable.stat_sys_download_done)
-      .setContentTitle("$episodes ${if (episodes == 1) "episode" else "episodes"} ready")
-      .setContentText(
+    CadenceNotifications.build(
+      context,
+      "podcast-ready",
+      READY_NOTIFICATION,
+      NotificationBody(
+        "$episodes ${if (episodes == 1) "episode" else "episodes"} ready",
         if (state.target.isBlank()) "Plug in your headphones to finish setup"
         else "Plug in your headphones to copy them",
-      )
-      .setContentIntent(openIntent)
-      .setAutoCancel(true)
-      .build()
+        NotificationIcon.Done,
+        contentIntent = CadenceNotifications.openApp(context),
+      ),
+    ) {
+      setAutoCancel(true)
+    }
   manager.notify(READY_NOTIFICATION, notification)
 }
 

@@ -146,6 +146,8 @@ dependencies {
 
   implementation(libs.livery.client)
   implementation(libs.livery.launcher.widgets)
+  // Every notification's expanded body, from the same catalog (Android 16+).
+  implementation(libs.livery.notifications)
 
   testImplementation(libs.kotlin.test.junit)
   // HeadphoneTemplatesTest: captures the widget's Livery templates with AndroidX, as the device

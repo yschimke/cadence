@@ -1,8 +1,10 @@
 package ee.schimke.cadence.widgets
 
+import ee.schimke.cadence.notifications.NotificationTemplate
 import ee.schimke.livery.client.Clock
 import ee.schimke.livery.client.PlanResult
 import ee.schimke.livery.client.TemplateQuery
+import ee.schimke.livery.notifications.LiveryNotifications
 import ee.schimke.livery.protocol.Contract
 import ee.schimke.livery.protocol.PlayerCapabilities
 import ee.schimke.livery.protocol.Surfaces
@@ -120,6 +122,32 @@ class WidgetLiveryTest {
   }
 
   /** The widget's plan for every contract example, as the launcher widget provider asks for it. */
+  /** Notification bodies plan from the same bundled catalog, at SystemUI's capabilities. */
+  @Test
+  fun plansTheBundledNotificationTemplate() = runBlocking {
+    val livery = WidgetLivery(RuntimeEnvironment.getApplication())
+    val notifications =
+      json.decodeFromString(
+        Contract.serializer(),
+        File(catalogDir, "contracts/notification.json").readText(),
+      )
+    for ((name, example) in notifications.examples) for (heightDp in listOf(88, 150, 256)) {
+      val result =
+        livery.planner.forAppData(
+          TemplateQuery(
+            NotificationTemplate.CONTRACT,
+            LiveryNotifications.DEFAULT_CAPABILITIES,
+            widthDp = 348,
+            heightDp = heightDp,
+            minor = NotificationTemplate.CONTRACT_MINOR,
+          ),
+          example,
+        )
+      val plan = assertIs<PlanResult.Ready>(result, "example '$name' at ${heightDp}dp").plan
+      assertEquals("notification-default", plan.template.design?.id)
+    }
+  }
+
   private suspend fun plans(livery: WidgetLivery) =
     contract.examples.map { (name, example) ->
       val result =

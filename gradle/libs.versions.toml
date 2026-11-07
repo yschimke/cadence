@@ -70,6 +70,7 @@ rc-widget-launcher = { module = "ee.schimke.composeai:rc-widget-launcher", versi
 livery-client = { module = "ee.schimke.composeai:livery-client", version.ref = "livery" }
 livery-instantiate = { module = "ee.schimke.composeai:livery-instantiate", version.ref = "livery" }
 livery-launcher-widgets = { module = "ee.schimke.composeai:livery-launcher-widgets", version.ref = "livery" }
+livery-notifications = { module = "ee.schimke.composeai:livery-notifications", version.ref = "livery" }
 livery-capture = { module = "ee.schimke.composeai:livery-capture", version.ref = "livery" }
 livery-firebase = { module = "ee.schimke.composeai:livery-firebase", version.ref = "livery" }
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
