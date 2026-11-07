@@ -19,8 +19,14 @@
   <g id="material-icon-materialicons-podcasts-2">
     <path d="M14 12 c 0 0.74 -0.4 1.38 -1 1.72 V22 h-2 v-8.28 c -0.6 -0.35 -1 -0.98 -1 -1.72 c 0 -1.1 0.9 -2 2 -2 S 14 10.9 14 12 Z M12 6 c -3.31 0 -6 2.69 -6 6 c 0 1.74 0.75 3.31 1.94 4.4 l1.42 -1.42 C 8.53 14.25 8 13.19 8 12 c 0 -2.21 1.79 -4 4 -4 s 4 1.79 4 4 c 0 1.19 -0.53 2.25 -1.36 2.98 l1.42 1.42 C 17.25 15.31 18 13.74 18 12 C 18 8.69 15.31 6 12 6 Z M12 2 C 6.48 2 2 6.48 2 12 c 0 2.85 1.2 5.41 3.11 7.24 l1.42 -1.42 C 4.98 16.36 4 14.29 4 12 c 0 -4.41 3.59 -8 8 -8 s 8 3.59 8 8 c 0 2.29 -0.98 4.36 -2.53 5.82 l1.42 1.42 C 20.8 17.41 22 14.85 22 12 C 22 6.48 17.52 2 12 2 Z" fill="#4C5E8B"/>
   </g>
-  <g id="material-icon-materialicons-more_vert">
-    <path d="M12 8 c 1.1 0 2 -0.9 2 -2 s -0.9 -2 -2 -2 s -2 0.9 -2 2 s 0.9 2 2 2 Z M12 10 c -1.1 0 -2 0.9 -2 2 s 0.9 2 2 2 s 2 -0.9 2 -2 s -0.9 -2 -2 -2 Z M12 16 c -1.1 0 -2 0.9 -2 2 s 0.9 2 2 2 s 2 -0.9 2 -2 s -0.9 -2 -2 -2 Z" fill="#30323A"/>
+  <g id="material-icon-materialicons-podcasts-3">
+    <path d="M14 12 c 0 0.74 -0.4 1.38 -1 1.72 V22 h-2 v-8.28 c -0.6 -0.35 -1 -0.98 -1 -1.72 c 0 -1.1 0.9 -2 2 -2 S 14 10.9 14 12 Z M12 6 c -3.31 0 -6 2.69 -6 6 c 0 1.74 0.75 3.31 1.94 4.4 l1.42 -1.42 C 8.53 14.25 8 13.19 8 12 c 0 -2.21 1.79 -4 4 -4 s 4 1.79 4 4 c 0 1.19 -0.53 2.25 -1.36 2.98 l1.42 1.42 C 17.25 15.31 18 13.74 18 12 C 18 8.69 15.31 6 12 6 Z M12 2 C 6.48 2 2 6.48 2 12 c 0 2.85 1.2 5.41 3.11 7.24 l1.42 -1.42 C 4.98 16.36 4 14.29 4 12 c 0 -4.41 3.59 -8 8 -8 s 8 3.59 8 8 c 0 2.29 -0.98 4.36 -2.53 5.82 l1.42 1.42 C 20.8 17.41 22 14.85 22 12 C 22 6.48 17.52 2 12 2 Z" fill="#4B5164"/>
+  </g>
+  <g id="material-icon-materialicons-source">
+    <path d="M20 6 h-8 l-2 -2 H4 C 2.9 4 2.01 4.9 2.01 6 L2 18 c 0 1.1 0.9 2 2 2 h16 c 1.1 0 2 -0.9 2 -2 V8 C 22 6.9 21.1 6 20 6 Z M14 16 H6 v-2 h8 V16 Z M18 12 H6 v-2 h12 V12 Z" fill="#30323A"/>
+  </g>
+  <g id="material-icon-materialicons-sd_storage">
+    <path d="M18 2 h-8 L4.02 8 L4 20 c 0 1.1 0.9 2 2 2 h12 c 1.1 0 2 -0.9 2 -2 L20 4 c 0 -1.1 -0.9 -2 -2 -2 Z M12 8 h-2 L10 4 h2 v4 Z M15 8 h-2 L13 4 h2 v4 Z M18 8 h-2 L16 4 h2 v4 Z" fill="#30323A"/>
   </g>
 </defs>
 <g transform="translate(0, 0)">
@@ -38,7 +44,7 @@
                   <text x="42" y="266.99" font-size="42" font-family="Roboto Flex" font-weight="500" letter-spacing="0.53" fill="#30323A">On your headphones</text>
                 </g>
                 <g id="AndroidViewHolder">
-                  <image href="composeapp-homeconnectedcontrolspreview.figma-raster/314.png" x="42" y="336" width="992" height="399"/>
+                  <image href="composeapp-homeconnectedcontrolspreview.figma-raster/188.png" x="42" y="336" width="992" height="399"/>
                 </g>
                 <g id="Box">
                   <rect x="42" y="756" width="992" height="547" rx="52.5" ry="52.5" fill="#B9CBFF"/>
@@ -106,7 +112,7 @@
                   </g>
                 </g>
                 <g id="AndroidViewHolder">
-                  <image href="composeapp-homeconnectedcontrolspreview.figma-raster/310.png" x="42" y="1492" width="992" height="210"/>
+                  <image href="composeapp-homeconnectedcontrolspreview.figma-raster/190.png" x="42" y="1492" width="992" height="210"/>
                 </g>
               </g>
               <g id="Column">
@@ -114,7 +120,7 @@
                   <text x="42" y="1821.99" font-size="42" font-family="Roboto Flex" font-weight="500" letter-spacing="0.53" fill="#30323A">On this phone</text>
                 </g>
                 <g id="AndroidViewHolder">
-                  <image href="composeapp-homeconnectedcontrolspreview.figma-raster/312.png" x="42" y="1891" width="992" height="504"/>
+                  <image href="composeapp-homeconnectedcontrolspreview.figma-raster/186.png" x="42" y="1891" width="992" height="504"/>
                 </g>
                 <g id="Row">
                   <g id="Box">
@@ -149,14 +155,14 @@
                   </g>
                 </g>
               </g>
-              <clipPath id="clip-3"><rect x="42" y="2584" width="992" height="745" rx="31.5" ry="31.5"/></clipPath>
+              <clipPath id="clip-3"><rect x="42" y="2584" width="992" height="724" rx="31.5" ry="31.5"/></clipPath>
               <g id="Box">
-                  <rect x="43" y="2585" width="990" height="743" rx="30.5" ry="30.5" fill="#FAF8FE" stroke="#B0B1BC" stroke-width="2.62"/>
+                  <rect x="43" y="2585" width="990" height="722" rx="30.5" ry="30.5" fill="#FAF8FE" stroke="#B0B1BC" stroke-width="2.62"/>
                 <g clip-path="url(#clip-3)">
                   <g id="Column">
                     <g id="Row">
                       <g id="BoxKt" data-material-icon="podcasts" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/podcasts/v1/24px.svg">
-                        <g transform="translate(84 2648) scale(2.62 2.62)">
+                        <g transform="translate(84 2637) scale(2.62 2.62)">
                           <use href="#material-icon-materialicons-podcasts-2" xlink:href="#material-icon-materialicons-podcasts-2"/>
                         </g>
                       </g>
@@ -164,44 +170,45 @@
                       </g>
                       <g id="Column">
                         <g id="Empty">
-                          <text x="189" y="2672.99" font-size="42" font-family="Roboto Flex" font-weight="500" letter-spacing="0.53" fill="#30323A">Pocket Casts Up Next</text>
+                          <text x="189" y="2661.99" font-size="42" font-family="Roboto Flex" font-weight="500" letter-spacing="0.53" fill="#30323A">Pocket Casts Up Next</text>
                         </g>
                         <g id="Empty">
-                          <text x="189" y="2721.86" font-size="31.5" font-family="Roboto Flex" font-weight="400" letter-spacing="1.05" fill="#5D5F68">3 episodes · 3 downloaded</text>
-                        </g>
-                      </g>
-                      <g id="Box">
-                        <g id="BoxKt" data-material-icon="more_vert" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/more_vert/v1/24px.svg">
-                          <g transform="translate(940 2648) scale(2.62 2.62)">
-                            <use href="#material-icon-materialicons-more_vert" xlink:href="#material-icon-materialicons-more_vert"/>
-                          </g>
+                          <text x="189" y="2710.86" font-size="31.5" font-family="Roboto Flex" font-weight="400" letter-spacing="1.05" fill="#5D5F68">3 episodes · 3 downloaded</text>
                         </g>
                       </g>
                     </g>
                     <g id="Spacer">
-                      <g transform="translate(42 2753) scale(1 1)">
+                      <g transform="translate(42 2732) scale(1 1)">
                         <path d="M0,1.31 L992,1.31" fill="none" stroke="#B0B1BC" stroke-width="2.62"/>
                       </g>
                     </g>
                     <g id="Box">
                       <g id="Box">
-                        <image href="composeapp-homeconnectedcontrolspreview.figma-raster/262.png" x="105" y="2756" width="866" height="189"/>
+                        <image href="composeapp-homeconnectedcontrolspreview.figma-raster/126.png" x="105" y="2735" width="866" height="189"/>
                       </g>
                       <g id="Box">
-                        <rect x="42" y="2756" width="992" height="189" fill="#FAF8FE"/>
+                        <rect x="42" y="2735" width="992" height="189" fill="#FAF8FE"/>
                         <g id="MultiContentMeasurePolicyImpl">
+                          <g id="Box">
+                            <rect x="84" y="2777" width="105" height="105" rx="21" ry="21" fill="#DCE2F9"/>
+                            <g id="BoxKt" data-material-icon="podcasts" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/podcasts/v1/24px.svg">
+                              <g transform="translate(110 2803) scale(2.2 2.2)">
+                                <use href="#material-icon-materialicons-podcasts-3" xlink:href="#material-icon-materialicons-podcasts-3"/>
+                              </g>
+                            </g>
+                          </g>
                           <g id="Empty">
-                            <text x="84" y="2824.99" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">412 — Tides of the Pacific</text>
+                            <text x="231" y="2803.99" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">412 — Tides of the Pacific</text>
                           </g>
                           <g id="Column">
                             <g id="Empty">
-                              <text x="84" y="2880.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">31:00 left · Downloaded</text>
+                              <text x="231" y="2859.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">31:00 left · Downloaded</text>
                             </g>
                             <g id="Spacer">
-                              <g transform="translate(84 2911) scale(1 1)">
-                                <path d="M388.19,5.5 L902.5,5.5" fill="none" stroke="#DCE2F9" stroke-width="11" stroke-linecap="round"/>
-                                <path d="M5.5,5.5 L366.69,5.5" fill="none" stroke="#4C5E8B" stroke-width="11" stroke-linecap="round"/>
-                                <path d="M897.25,5.5 A5.25,5.25 0 1 0 907.75,5.5 A5.25,5.25 0 1 0 897.25,5.5 Z" fill="#4C5E8B"/>
+                              <g transform="translate(231 2890) scale(1 1)">
+                                <path d="M328.83,5.5 L755.5,5.5" fill="none" stroke="#DCE2F9" stroke-width="11" stroke-linecap="round"/>
+                                <path d="M5.5,5.5 L307.33,5.5" fill="none" stroke="#4C5E8B" stroke-width="11" stroke-linecap="round"/>
+                                <path d="M750.25,5.5 A5.25,5.25 0 1 0 760.75,5.5 A5.25,5.25 0 1 0 750.25,5.5 Z" fill="#4C5E8B"/>
                               </g>
                             </g>
                           </g>
@@ -209,29 +216,37 @@
                       </g>
                     </g>
                     <g id="Spacer">
-                      <g transform="translate(42 2945) scale(1 1)">
+                      <g transform="translate(42 2924) scale(1 1)">
                         <path d="M0,1.31 L992,1.31" fill="none" stroke="#B0B1BC" stroke-width="2.62"/>
                       </g>
                     </g>
                     <g id="Box">
                       <g id="Box">
-                        <image href="composeapp-homeconnectedcontrolspreview.figma-raster/278.png" x="105" y="2948" width="866" height="189"/>
+                        <image href="composeapp-homeconnectedcontrolspreview.figma-raster/146.png" x="105" y="2927" width="866" height="189"/>
                       </g>
                       <g id="Box">
-                        <rect x="42" y="2948" width="992" height="189" fill="#FAF8FE"/>
+                        <rect x="42" y="2927" width="992" height="189" fill="#FAF8FE"/>
                         <g id="MultiContentMeasurePolicyImpl">
+                          <g id="Box">
+                            <rect x="84" y="2969" width="105" height="105" rx="21" ry="21" fill="#DCE2F9"/>
+                            <g id="BoxKt" data-material-icon="podcasts" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/podcasts/v1/24px.svg">
+                              <g transform="translate(110 2995) scale(2.2 2.2)">
+                                <use href="#material-icon-materialicons-podcasts-3" xlink:href="#material-icon-materialicons-podcasts-3"/>
+                              </g>
+                            </g>
+                          </g>
                           <g id="Empty">
-                            <text x="84" y="3016.99" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">Lighthouses of the North Sea</text>
+                            <text x="231" y="2995.99" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">Lighthouses of the North Sea</text>
                           </g>
                           <g id="Column">
                             <g id="Empty">
-                              <text x="84" y="3072.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">40:00 left · Downloaded</text>
+                              <text x="231" y="3051.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">40:00 left · Downloaded</text>
                             </g>
                             <g id="Spacer">
-                              <g transform="translate(84 3103) scale(1 1)">
-                                <path d="M122.39,5.5 L902.5,5.5" fill="none" stroke="#DCE2F9" stroke-width="11" stroke-linecap="round"/>
-                                <path d="M5.5,5.5 L100.89,5.5" fill="none" stroke="#4C5E8B" stroke-width="11" stroke-linecap="round"/>
-                                <path d="M897.25,5.5 A5.25,5.25 0 1 0 907.75,5.5 A5.25,5.25 0 1 0 897.25,5.5 Z" fill="#4C5E8B"/>
+                              <g transform="translate(231 3082) scale(1 1)">
+                                <path d="M106.06,5.5 L755.5,5.5" fill="none" stroke="#DCE2F9" stroke-width="11" stroke-linecap="round"/>
+                                <path d="M5.5,5.5 L84.56,5.5" fill="none" stroke="#4C5E8B" stroke-width="11" stroke-linecap="round"/>
+                                <path d="M750.25,5.5 A5.25,5.25 0 1 0 760.75,5.5 A5.25,5.25 0 1 0 750.25,5.5 Z" fill="#4C5E8B"/>
                               </g>
                             </g>
                           </g>
@@ -239,22 +254,30 @@
                       </g>
                     </g>
                     <g id="Spacer">
-                      <g transform="translate(42 3137) scale(1 1)">
+                      <g transform="translate(42 3116) scale(1 1)">
                         <path d="M0,1.31 L992,1.31" fill="none" stroke="#B0B1BC" stroke-width="2.62"/>
                       </g>
                     </g>
                     <g id="Box">
                       <g id="Box">
-                        <image href="composeapp-homeconnectedcontrolspreview.figma-raster/294.png" x="105" y="3140" width="866" height="189"/>
+                        <image href="composeapp-homeconnectedcontrolspreview.figma-raster/166.png" x="105" y="3119" width="866" height="189"/>
                       </g>
                       <g id="Box">
-                        <rect x="42" y="3140" width="992" height="189" fill="#FAF8FE"/>
+                        <rect x="42" y="3119" width="992" height="189" fill="#FAF8FE"/>
                         <g id="MultiContentMeasurePolicyImpl">
-                          <g id="Empty">
-                            <text x="84" y="3222.99" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">Why the ocean is salty</text>
+                          <g id="Box">
+                            <rect x="84" y="3161" width="105" height="105" rx="21" ry="21" fill="#DCE2F9"/>
+                            <g id="BoxKt" data-material-icon="podcasts" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/podcasts/v1/24px.svg">
+                              <g transform="translate(110 3187) scale(2.2 2.2)">
+                                <use href="#material-icon-materialicons-podcasts-3" xlink:href="#material-icon-materialicons-podcasts-3"/>
+                              </g>
+                            </g>
                           </g>
                           <g id="Empty">
-                            <text x="84" y="3278.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">38:00 · Downloaded</text>
+                            <text x="231" y="3201.99" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">Why the ocean is salty</text>
+                          </g>
+                          <g id="Empty">
+                            <text x="231" y="3257.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">38:00 · Downloaded</text>
                           </g>
                         </g>
                       </g>
@@ -271,15 +294,20 @@
                 <text x="42" y="109.6" font-size="73.5" font-family="Roboto Flex" font-weight="400" fill="#30323A">Home</text>
               </g>
               <g id="Box">
-                <g id="BoxKt" data-material-icon="more_vert" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/more_vert/v1/24px.svg">
+                <g id="BoxKt" data-material-icon="source" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/source/v1/24px.svg">
+                  <g transform="translate(845 53) scale(2.62 2.62)">
+                    <use href="#material-icon-materialicons-source" xlink:href="#material-icon-materialicons-source"/>
+                  </g>
+                </g>
+              </g>
+              <g id="Box">
+                <g id="BoxKt" data-material-icon="sd_storage" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/sd_storage/v1/24px.svg">
                   <g transform="translate(971 53) scale(2.62 2.62)">
-                    <use href="#material-icon-materialicons-more_vert" xlink:href="#material-icon-materialicons-more_vert"/>
+                    <use href="#material-icon-materialicons-sd_storage" xlink:href="#material-icon-materialicons-sd_storage"/>
                   </g>
                 </g>
               </g>
             </g>
-          </g>
-          <g id="Box">
           </g>
           <g id="Box">
           </g>
