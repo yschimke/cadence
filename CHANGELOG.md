@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.1.21](https://github.com/yschimke/cadence/compare/v0.1.20...v0.1.21) (2026-11-07)
+
+
+### Features
+
+* **analytics:** firebase analytics for screens, key actions and the widgets' Livery events ([#530](https://github.com/yschimke/cadence/issues/530)) ([4cdb07f](https://github.com/yschimke/cadence/commit/4cdb07f3af5bcfe3c3cebbf6a9ff294e1e41cb6e))
+* **settings:** refresh the widget designs from Settings ([#527](https://github.com/yschimke/cadence/issues/527)) ([a489de5](https://github.com/yschimke/cadence/commit/a489de5cf731f0b53e20591bf3375a60bfd92bb2))
+
+
+### Bug Fixes
+
+* **deps:** update androidx ([#503](https://github.com/yschimke/cadence/issues/503)) ([43d1613](https://github.com/yschimke/cadence/commit/43d16130c5b4583cd1b79cb0c02afb6f79ab0929))
+* **deps:** update compose-ai-tools ([#526](https://github.com/yschimke/cadence/issues/526)) ([3d2fded](https://github.com/yschimke/cadence/commit/3d2fded177c66d62e13dbd1dfff7cb059cc59e37))
+* **deps:** update dependency ee.schimke.composeai:rc-widget-launcher to v2.26.0 ([#532](https://github.com/yschimke/cadence/issues/532)) ([925bb89](https://github.com/yschimke/cadence/commit/925bb89f43ed994efb49734ea8068204ee4cfe34))
+* **deps:** update remote-compose ([#531](https://github.com/yschimke/cadence/issues/531)) ([b56971d](https://github.com/yschimke/cadence/commit/b56971d9c6f9993dfe7c8121e1d9e5a99cfb3e25))
+* **previews:** podcast screen previews render without WorkManager ([#533](https://github.com/yschimke/cadence/issues/533)) ([8aedcd7](https://github.com/yschimke/cadence/commit/8aedcd72b989e753b54a7f58609ac355babfedd0))
+* **widgets:** headphone widget draws on Android 16's platform widget player ([#529](https://github.com/yschimke/cadence/issues/529)) ([18de8c3](https://github.com/yschimke/cadence/commit/18de8c343e80e1f7e423d0c006916a6f3a9393b9))
+
 ## [0.1.20](https://github.com/yschimke/cadence/compare/v0.1.19...v0.1.20) (2026-11-06)
 
 
