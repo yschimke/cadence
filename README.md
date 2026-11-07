@@ -1,10 +1,16 @@
 # Accessibility Report
 
-_Auto-generated from `compose-preview/a11y/pr`. 17 preview(s) across 1 module(s) · 25 error(s) · 0 warning(s) · 0 info._
+_Auto-generated from `compose-preview/a11y/pr`. 21 preview(s) across 1 module(s) · 37 error(s) · 0 warning(s) · 0 info._
 
 Browse inline; image URLs are pinned to the commit SHA on the baseline branch so links keep resolving after merge.
 
 ## composeApp
+
+### `DevicesScreenLoadedPreview`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/DevicesScreenLoadedPreview_Devices_loaded-cfb106a7.a11y.png" width="400" />
+
+_No findings._
 
 ### `HomeConnectedControlsPreview` · `spec:width=411dp,height=1200dp,dpi=420`
 
@@ -34,6 +40,12 @@ Browse inline; image URLs are pinned to the commit SHA on the baseline branch so
 | 1 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
 | 2 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
 
+### `HomeEmptyPreview`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/HomeEmptyPreview_Home_empty-571e68af.a11y.png" width="400" />
+
+_No findings._
+
 ### `HomeFreshPreview` · `spec:width=411dp,height=1600dp,dpi=420`
 
 <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/HomeFreshPreview_Home_new_releases-638a4962.a11y.png" width="400" />
@@ -42,6 +54,16 @@ Browse inline; image URLs are pinned to the commit SHA on the baseline branch so
 |--:|---|---|---|---|
 | 1 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
 | 2 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+
+### `HomeHeadphonesPreview`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/HomeHeadphonesPreview_Home_headphones_connected-71a28d46.a11y.png" width="400" />
+
+| # | Level | Rule | Element | Message |
+|--:|---|---|---|---|
+| 1 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+| 2 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+| 3 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
 
 ### `HomeLibraryPreview`
 
@@ -52,6 +74,16 @@ Browse inline; image URLs are pinned to the commit SHA on the baseline branch so
 | 1 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
 | 2 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
 
+### `HomeReadyToCopyPreview` · `spec:width=411dp,height=900dp,dpi=420`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/HomeReadyToCopyPreview_Home_ready_to_copy-3a801e9d.a11y.png" width="400" />
+
+| # | Level | Rule | Element | Message |
+|--:|---|---|---|---|
+| 1 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+| 2 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+| 3 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+
 ### `HomeUpToDatePreview` · `spec:width=411dp,height=900dp,dpi=420`
 
 <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/HomeUpToDatePreview_Home_up_to_date-2cbd5a11.a11y.png" width="400" />
@@ -61,29 +93,25 @@ Browse inline; image URLs are pinned to the commit SHA on the baseline branch so
 | 1 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
 | 2 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
 
-### `NotificationDownloadingPreview`
+### `PlayStorePhoneHomeDark` · `pixel_2`
 
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/NotificationDownloadingPreview_Notification_downloading-f99a71e3.png" width="400" />
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/PlayStorePhoneHomeDark_Play_Store_phone_Home_dark-aef8b2b7.a11y.png" width="400" />
 
-_No findings._
+| # | Level | Rule | Element | Message |
+|--:|---|---|---|---|
+| 1 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+| 2 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+| 3 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
 
-### `NotificationFailedPreview`
+### `PlayStorePhoneHomeLight` · `pixel_2`
 
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/NotificationFailedPreview_Notification_failed-4cd1109f.png" width="400" />
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/PlayStorePhoneHomeLight_Play_Store_phone_Home_light-a1bae343.a11y.png" width="400" />
 
-_No findings._
-
-### `NotificationReadyPreview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/NotificationReadyPreview_Notification_ready-5114e7a0.png" width="400" />
-
-_No findings._
-
-### `NotificationSyncingPreview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/NotificationSyncingPreview_Notification_syncing_light-fb11050e.png" width="400" />
-
-_No findings._
+| # | Level | Rule | Element | Message |
+|--:|---|---|---|---|
+| 1 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+| 2 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+| 3 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
 
 ### `PlayStoreSevenInchHomeDark` · `spec:width=600dp,height=960dp,dpi=320`
 
@@ -124,6 +152,18 @@ _No findings._
 | 1 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
 | 2 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
 | 3 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+
+### `PodcastImportedPreview`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/PodcastImportedPreview_Podcast_sync_imported-8403888a.png" width="400" />
+
+_No findings._
+
+### `PodcastPreparedPreview`
+
+<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/PodcastPreparedPreview_Podcast_sync_prepared-2db5b8ad.png" width="400" />
+
+_No findings._
 
 ### `PodcastWidgetMp3LargePreview`
 
