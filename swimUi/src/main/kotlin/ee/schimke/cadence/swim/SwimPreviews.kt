@@ -51,7 +51,11 @@ fun WaterButtonsLauncherPreview() {
   WaterButtons(RcPlatformProfiles.WIDGETS_V7)
 }
 
-@Preview(name = "Water buttons · Wear", widthDp = 300, heightDp = 236, showBackground = true)
+// Disabled for now: WaterPill's RemoteText writes CORE_TEXT (operation 239), which Wear widget
+// hosts play but the preview tooling's Wear widgets profile rejects ("Unknown operation
+// encountered 239"). The Wear widgets' own previews (wearApp) use Glance Wear's host and render.
+// Re-enable once a newer preview tooling release plays CORE_TEXT for Wear widgets.
+// @Preview(name = "Water buttons · Wear", widthDp = 300, heightDp = 236, showBackground = true)
 @Composable
 fun WaterButtonsWearPreview() {
   WaterButtons(GlanceWearProfiles.wearWidgets)
