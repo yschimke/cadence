@@ -19,14 +19,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Headset
 import androidx.compose.material3.Button
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -38,13 +36,11 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -79,13 +75,10 @@ fun FileSyncContent(
   onAddFolder: () -> Unit = {},
 ) {
   val sync = state.sync
-  val device = state.devices.firstOrNull { it.id == state.preferences.target_device_id }
-  val deviceLabel = device?.name?.takeIf { it.isNotBlank() } ?: "Headphones"
+  val deviceLabel = state.targetDevice?.name?.takeIf { it.isNotBlank() } ?: "Headphones"
   val done = !sync.running && sync.filesTotal > 0 && sync.filesCompleted >= sync.filesTotal
   val syncableProfiles =
     remember(state.profiles) { state.profiles.filter { it.last_error.isBlank() } }
-  val initialChecked = remember(syncableProfiles) { syncableProfiles.map { it.id }.toSet() }
-  var checkedIds by remember(initialChecked) { mutableStateOf(initialChecked) }
 
   Column(modifier = modifier.fillMaxSize()) {
     SyncTopBar(done = done, onClose = onClose, onManage = onManage)
@@ -108,7 +101,7 @@ fun FileSyncContent(
                 sync.running -> "Syncing — don't unplug"
                 state.refresh.running ->
                   "Updating staging${state.refresh.profileName?.let { " · $it" } ?: ""}"
-                state.profiles.isEmpty() -> "No profiles yet — add one to copy anything"
+                state.profiles.isEmpty() -> "Add a folder to copy anything"
                 freshCount > 0 ->
                   "$freshCount profile${if (freshCount == 1) "" else "s"} with new content"
                 else -> "Nothing new since last sync"
@@ -123,14 +116,9 @@ fun FileSyncContent(
           else -> {
             if (state.profiles.isNotEmpty()) {
               item { SectionLabel("Ready to sync") }
+              // A sync copies every profile, so these only report what each one holds.
               items(state.profiles, key = { it.id }, contentType = { "profile" }) { profile ->
-                SyncReadyRow(
-                  profile = profile,
-                  checked = checkedIds.contains(profile.id),
-                  onCheckedChange = { checked ->
-                    checkedIds = if (checked) checkedIds + profile.id else checkedIds - profile.id
-                  },
-                )
+                SyncReadyRow(profile = profile)
               }
             }
           }
@@ -142,7 +130,7 @@ fun FileSyncContent(
       SyncCta(
         running = sync.running,
         hasProfiles = state.profiles.isNotEmpty(),
-        readyCount = checkedIds.intersect(syncableProfiles.map { it.id }.toSet()).size,
+        readyCount = syncableProfiles.size,
         onStartSync = onStartSync,
         onCancelSync = onCancelSync,
         onAddFolder = onAddFolder,
@@ -266,28 +254,13 @@ private fun profileReadyLabel(profile: SyncProfile, hasError: Boolean): String {
 }
 
 @Composable
-private fun SyncReadyRow(
-  profile: SyncProfile,
-  checked: Boolean,
-  onCheckedChange: (Boolean) -> Unit,
-) {
+private fun SyncReadyRow(profile: SyncProfile) {
   val hasError = profile.last_error.isNotBlank()
   ElevatedCard(modifier = Modifier.fillMaxWidth()) {
-    // The whole row toggles, so the profile name is the checkbox's accessible name.
     Row(
-      modifier =
-        Modifier.fillMaxWidth()
-          .toggleable(
-            checked && !hasError,
-            enabled = !hasError,
-            role = Role.Checkbox,
-            onValueChange = onCheckedChange,
-          )
-          .padding(16.dp),
+      modifier = Modifier.fillMaxWidth().padding(16.dp),
       verticalAlignment = Alignment.CenterVertically,
     ) {
-      Checkbox(checked = checked && !hasError, onCheckedChange = null, enabled = !hasError)
-      Spacer(Modifier.width(8.dp))
       Column(Modifier.weight(1f)) {
         Text(
           profile.name,
@@ -397,7 +370,13 @@ private fun SyncCta(
         Button(onClick = onAddFolder, modifier = Modifier.weight(1f)) { Text("Add a folder") }
       } else {
         Button(onClick = onStartSync, enabled = readyCount > 0, modifier = Modifier.weight(1f)) {
-          Text(if (readyCount == 0) "Nothing selected" else "Sync now ($readyCount profiles)")
+          Text(
+            when (readyCount) {
+              0 -> "Nothing ready to sync"
+              1 -> "Sync now"
+              else -> "Sync now ($readyCount profiles)"
+            },
+          )
         }
       }
     }

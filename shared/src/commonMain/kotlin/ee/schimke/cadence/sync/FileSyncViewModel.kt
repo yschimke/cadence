@@ -16,6 +16,7 @@ import ee.schimke.cadence.datastore.proto.NetworkConstraint
 import ee.schimke.cadence.datastore.proto.SyncPreferences
 import ee.schimke.cadence.datastore.proto.SyncProfile
 import ee.schimke.cadence.datastore.proto.SyncSource
+import ee.schimke.cadence.devices.storageLocation
 import ee.schimke.cadence.metro.ViewModelKey
 import ee.schimke.cadence.metro.ViewModelScope
 import kotlinx.coroutines.Dispatchers
@@ -150,8 +151,12 @@ class FileSyncViewModel(
     viewModelScope.launch { syncRepo.updatePreferences { it.copy(usb_match = value) } }
   }
 
+  /** Copies every profile to [UiState.targetDevice]. */
   fun startSync() {
-    viewModelScope.launch { orchestrator.startSync(null) }
+    viewModelScope.launch {
+      val state = transformState?.value ?: legacyState.value
+      orchestrator.startSync(state.targetDevice?.id)
+    }
   }
 
   fun cancelSync() = orchestrator.cancel()
@@ -178,7 +183,17 @@ class FileSyncViewModel(
     val preferences: SyncPreferences = SyncPreferences(),
     val refresh: RefreshProgress = RefreshProgress(),
     val sync: SyncProgress = SyncProgress(),
-  )
+  ) {
+    /**
+     * Where a sync copies to: the device chosen in the developer options, else the first folder on
+     * removable storage (the headphones), else the only folder there is.
+     */
+    val targetDevice: Device?
+      get() =
+        devices.firstOrNull { it.id == preferences.target_device_id }
+          ?: devices.firstOrNull { storageLocation(it.path).removable }
+          ?: devices.singleOrNull()
+  }
 }
 
 /**
