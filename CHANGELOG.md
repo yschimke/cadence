@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.1.24](https://github.com/yschimke/cadence/compare/v0.1.23...v0.1.24) (2026-11-08)
+
+
+### Bug Fixes
+
+* anchor the Manage screen's dropdowns with the current menuAnchor API ([#549](https://github.com/yschimke/cadence/issues/549)) ([7866517](https://github.com/yschimke/cadence/commit/786651715f7db12a2ac9526bd02a461c6dd2cc32))
+* **deps:** update compose-ai-tools to v0.5.0 ([#554](https://github.com/yschimke/cadence/issues/554)) ([a21bb5c](https://github.com/yschimke/cadence/commit/a21bb5c8a1fb97843bd4fe887390530562bbccd9))
+* **deps:** update dependency ee.schimke.composeai:rc-widget-launcher to v2.29.0 ([#552](https://github.com/yschimke/cadence/issues/552)) ([0c9bb92](https://github.com/yschimke/cadence/commit/0c9bb92199d023b51c65c69534e27dd34682f41b))
+* **desktop:** ship kotlinx-coroutines-swing so Dispatchers.Main exists ([#553](https://github.com/yschimke/cadence/issues/553)) ([6079d43](https://github.com/yschimke/cadence/commit/6079d4301c9c88ff4288e76d4a58135f19c9dd6e))
+
 ## [0.1.23](https://github.com/yschimke/cadence/compare/v0.1.22...v0.1.23) (2026-11-07)
 
 
