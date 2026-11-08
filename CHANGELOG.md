@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.1.25](https://github.com/yschimke/cadence/compare/v0.1.24...v0.1.25) (2026-11-08)
+
+
+### Features
+
+* add a desktop workspace and native navigation commands ([#559](https://github.com/yschimke/cadence/issues/559)) ([07a657e](https://github.com/yschimke/cadence/commit/07a657e266b16b6e8f3eec992facd89eeeceb04b))
+
+
+### Bug Fixes
+
+* freeze podcast widget preview animation clocks ([#557](https://github.com/yschimke/cadence/issues/557)) ([550bca7](https://github.com/yschimke/cadence/commit/550bca7177e49a90a8ece77dd7cc7a7e6629fdb9))
+* return desktop Library to Home reliably ([#560](https://github.com/yschimke/cadence/issues/560)) ([f974084](https://github.com/yschimke/cadence/commit/f974084c3bfdfee66a920ede1338837109091801))
+
 ## [0.1.24](https://github.com/yschimke/cadence/compare/v0.1.23...v0.1.24) (2026-11-08)
 
 
