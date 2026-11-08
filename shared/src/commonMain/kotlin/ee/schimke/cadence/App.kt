@@ -45,113 +45,146 @@ import ee.schimke.cadence.sync.ManageSyncScreen
 import kotlinx.serialization.Serializable
 
 @Composable
-fun App() {
+fun App(desktopNavigation: DesktopNavigation? = null) {
   val developerModel = metroViewModel<DeveloperModeViewModel>()
   val developerEnabled by developerModel.enabled.collectAsState()
   val developer =
     remember(developerEnabled) { DeveloperMode(developerEnabled, developerModel::setEnabled) }
-  CompositionLocalProvider(LocalDeveloperMode provides developer) { AppContent() }
+  CompositionLocalProvider(LocalDeveloperMode provides developer) { AppContent(desktopNavigation) }
 }
 
 @Composable
-private fun AppContent() {
+private fun AppContent(desktopNavigation: DesktopNavigation?) {
   val navController = rememberNavController()
   // One screen_view per destination: the route's type name, without its arguments.
   val destination by navController.currentBackStackEntryAsState()
   val screen = destination?.destination?.route?.let(::screenName)
-  LaunchedEffect(screen) { screen?.let { Analytics.current.screen(it) } }
+  LaunchedEffect(screen) {
+    screen?.let { Analytics.current.screen(it) }
+    val section =
+      DesktopSection.entries.firstOrNull { it.routeName == screen }
+        ?: when (screen) {
+          "AddPodcasts" -> DesktopSection.Episodes
+          "DeviceFiles" -> DesktopSection.Devices
+          else -> null
+        }
+    if (section != null) desktopNavigation?.activeSection = section
+  }
+  LaunchedEffect(desktopNavigation?.request) {
+    val section = desktopNavigation?.request?.second ?: return@LaunchedEffect
+    val route: Any =
+      when (section) {
+        DesktopSection.Library -> Home
+        DesktopSection.Episodes -> Podcasts
+        DesktopSection.Devices -> Devices
+        DesktopSection.Sources -> ManageSync
+        DesktopSection.Transfers -> FileSync
+        DesktopSection.CloudBackup -> CloudSync
+      }
+    navController.navigate(route) {
+      launchSingleTop = true
+      restoreState = true
+      popUpTo(navController.graph.startDestinationId) { saveState = true }
+    }
+  }
   val podcasts = rememberPodcastController()
   val podcastState by podcasts.state.collectAsState()
   if (podcastState.target.isNotBlank()) AutomaticallyMatchHeadphones(podcastState.target)
 
   val entry by navController.currentBackStackEntryAsState()
-  Column(Modifier.fillMaxSize()) {
-    val nested = entry != null && navController.previousBackStackEntry != null
-    if (nested) {
-      // Takes the status bar inset here, so screens below don't add it again.
-      Surface(Modifier.fillMaxWidth()) {
-        Row(
-          Modifier.windowInsetsPadding(
-            WindowInsets.safeDrawing.only(WindowInsetsSides.Top + WindowInsetsSides.Horizontal),
-          ),
-        ) {
-          IconButton(onClick = { navController.popBackStack() }) {
-            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+  Row(Modifier.fillMaxSize()) {
+    if (desktopNavigation != null) DesktopSidebar(desktopNavigation)
+    Column(Modifier.weight(1f).fillMaxSize()) {
+      val nested =
+        entry != null &&
+          navController.previousBackStackEntry != null &&
+          (desktopNavigation == null || DesktopSection.entries.none { it.routeName == screen })
+      if (nested) {
+        // Takes the status bar inset here, so screens below don't add it again.
+        Surface(Modifier.fillMaxWidth()) {
+          Row(
+            Modifier.windowInsetsPadding(
+              WindowInsets.safeDrawing.only(WindowInsetsSides.Top + WindowInsetsSides.Horizontal),
+            ),
+          ) {
+            IconButton(onClick = { navController.popBackStack() }) {
+              Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+            }
           }
         }
       }
-    }
-    NavHost(
-      navController,
-      startDestination = Home,
-      modifier =
-        Modifier.weight(1f)
-          .then(
-            if (nested)
-              Modifier.consumeWindowInsets(WindowInsets.safeDrawing.only(WindowInsetsSides.Top))
-            else Modifier,
-          ),
-      popExitTransition = { scaleOut(targetScale = 0.9f) },
-      popEnterTransition = { EnterTransition.None },
-    ) {
-      composable<Home> {
-        HomeScreen(
-          podcasts = podcasts,
-          modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
-          onAddPodcasts = { navController.navigate(AddPodcasts) },
-          onOpenPodcasts = { navController.navigate(Podcasts) },
-          onCopyToHeadphones = { navController.navigate(FileSync) },
-          onBluetoothControls = { navController.navigate(BluetoothControls) },
-          onManageSources = { navController.navigate(ManageSync) },
-          onFileExplorer = { navController.navigate(Devices) },
-        )
-      }
-      composable<Podcasts> {
-        PodcastScreen(podcasts, onChangeSource = { navController.navigate(AddPodcasts) })
-      }
-      composable<CloudSync> { CloudSyncScreen(podcasts) }
-      composable<AddPodcasts> {
-        AddPodcastsScreen(
-          podcasts,
-          onDone = { navController.popBackStack(Home, inclusive = false) },
-        )
-      }
-      composable<Devices> {
-        DevicesScreen(
-          modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
-          podcastTarget = podcastState.target,
-          // The raw file view is a diagnostic: only offered in developer mode.
-          onDeviceClick =
-            if (LocalDeveloperMode.current.enabled) {
-              { navController.navigate(DeviceFiles(id = it.id)) }
-            } else null,
-        )
-      }
-      composable<DeviceFiles> {
-        DeviceFilesScreen(
-          modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
-        )
-      }
-      composable<BluetoothControls> {
-        BluetoothControlsScreen(
-          modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
-        )
-      }
-      composable<FileSync> {
-        FileSyncScreen(
-          modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
-          onClose = { navController.popBackStack() },
-          onManage = { navController.navigate(ManageSync) },
-        )
-      }
-      composable<ManageSync> {
-        ManageSyncScreen(
-          podcastSource = podcastState.library.playlist?.name,
-          onOpenPodcasts = { navController.navigate(Podcasts) },
-          modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
-          onAddPodcasts = { navController.navigate(AddPodcasts) },
-          onCloudBackup = { navController.navigate(CloudSync) },
-        )
+      NavHost(
+        navController,
+        startDestination = Home,
+        modifier =
+          Modifier.weight(1f)
+            .then(
+              if (nested)
+                Modifier.consumeWindowInsets(WindowInsets.safeDrawing.only(WindowInsetsSides.Top))
+              else Modifier,
+            ),
+        popExitTransition = { scaleOut(targetScale = 0.9f) },
+        popEnterTransition = { EnterTransition.None },
+      ) {
+        composable<Home> {
+          HomeScreen(
+            podcasts = podcasts,
+            modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
+            onAddPodcasts = { navController.navigate(AddPodcasts) },
+            onOpenPodcasts = { navController.navigate(Podcasts) },
+            onCopyToHeadphones = { navController.navigate(FileSync) },
+            onBluetoothControls = { navController.navigate(BluetoothControls) },
+            onManageSources = { navController.navigate(ManageSync) },
+            onFileExplorer = { navController.navigate(Devices) },
+          )
+        }
+        composable<Podcasts> {
+          PodcastScreen(podcasts, onChangeSource = { navController.navigate(AddPodcasts) })
+        }
+        composable<CloudSync> { CloudSyncScreen(podcasts) }
+        composable<AddPodcasts> {
+          AddPodcastsScreen(
+            podcasts,
+            onDone = { navController.popBackStack(Home, inclusive = false) },
+          )
+        }
+        composable<Devices> {
+          DevicesScreen(
+            modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
+            podcastTarget = podcastState.target,
+            // The raw file view is a diagnostic: only offered in developer mode.
+            onDeviceClick =
+              if (LocalDeveloperMode.current.enabled) {
+                { navController.navigate(DeviceFiles(id = it.id)) }
+              } else null,
+          )
+        }
+        composable<DeviceFiles> {
+          DeviceFilesScreen(
+            modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
+          )
+        }
+        composable<BluetoothControls> {
+          BluetoothControlsScreen(
+            modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
+          )
+        }
+        composable<FileSync> {
+          FileSyncScreen(
+            modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
+            onClose = { navController.popBackStack() },
+            onManage = { navController.navigate(ManageSync) },
+          )
+        }
+        composable<ManageSync> {
+          ManageSyncScreen(
+            podcastSource = podcastState.library.playlist?.name,
+            onOpenPodcasts = { navController.navigate(Podcasts) },
+            modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
+            onAddPodcasts = { navController.navigate(AddPodcasts) },
+            onCloudBackup = { navController.navigate(CloudSync) },
+          )
+        }
       }
     }
   }

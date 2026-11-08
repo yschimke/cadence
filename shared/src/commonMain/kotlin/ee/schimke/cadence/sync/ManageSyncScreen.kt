@@ -62,6 +62,7 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import ee.schimke.cadence.LocalPortableHost
 import ee.schimke.cadence.datastore.proto.NetworkConstraint
 import ee.schimke.cadence.datastore.proto.SourceKind
 import ee.schimke.cadence.datastore.proto.SyncProfile
@@ -163,6 +164,7 @@ fun ManageSyncContent(
   podcastSource: String? = null,
   onOpenPodcasts: () -> Unit = {},
 ) {
+  val portable = LocalPortableHost.current
   val developer = LocalDeveloperMode.current
   val playUpdates = LocalPlayUpdateSettings.current
   val widgetDesigns = LocalWidgetDesigns.current
@@ -218,7 +220,17 @@ fun ManageSyncContent(
           OutlinedButton(onClick = onAddLocalDirectory) { Text("Add files or folders") }
         }
       }
-      item { DiscoverAppsRow(onDiscoverApps = onDiscoverApps) }
+      if (!portable) {
+        item { DiscoverAppsRow(onDiscoverApps = onDiscoverApps) }
+      } else {
+        item {
+          Text(
+            "Choose a folder on this device, including folders synced from cloud storage.",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+          )
+        }
+      }
       if (developer.enabled) {
         item { DeveloperHeader(onTurnOff = { developer.setEnabled(false) }) }
         playUpdates?.let { settings -> item { EarlyUpdatesRow(settings) } }

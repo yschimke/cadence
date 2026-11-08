@@ -112,7 +112,7 @@ fun DevicesScreen(
             modifier = Modifier.semantics { heading() },
           )
           Text(
-            "Folders you've let Cadence open, on this phone or on your headphones." +
+            "Folders you've let Cadence open, on this device or on your headphones." +
               if (onDeviceClick != null) " Tap one to see its files." else "",
             style = MaterialTheme.typography.bodyMedium,
             color = colors.onSurfaceVariant,
