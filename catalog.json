@@ -6638,7 +6638,7 @@
         },
         {
           "name": "seconds",
-          "type": "Float?",
+          "type": "Float",
           "hasDefault": true
         }
       ]
@@ -6690,7 +6690,7 @@
         },
         {
           "name": "seconds",
-          "type": "Float?",
+          "type": "Float",
           "hasDefault": true
         }
       ]
@@ -6746,7 +6746,7 @@
         },
         {
           "name": "seconds",
-          "type": "Float?",
+          "type": "Float",
           "hasDefault": true
         }
       ]
@@ -6798,7 +6798,7 @@
         },
         {
           "name": "seconds",
-          "type": "Float?",
+          "type": "Float",
           "hasDefault": true
         }
       ]
@@ -6850,7 +6850,7 @@
         },
         {
           "name": "seconds",
-          "type": "Float?",
+          "type": "Float",
           "hasDefault": true
         }
       ]
@@ -6902,7 +6902,7 @@
         },
         {
           "name": "seconds",
-          "type": "Float?",
+          "type": "Float",
           "hasDefault": true
         }
       ]
@@ -7090,7 +7090,7 @@
         },
         {
           "name": "seconds",
-          "type": "Float?",
+          "type": "Float",
           "hasDefault": true
         }
       ]
@@ -7142,7 +7142,7 @@
         },
         {
           "name": "seconds",
-          "type": "Float?",
+          "type": "Float",
           "hasDefault": true
         }
       ]
@@ -7194,7 +7194,7 @@
         },
         {
           "name": "seconds",
-          "type": "Float?",
+          "type": "Float",
           "hasDefault": true
         }
       ]
@@ -7246,7 +7246,7 @@
         },
         {
           "name": "seconds",
-          "type": "Float?",
+          "type": "Float",
           "hasDefault": true
         }
       ]
@@ -7298,7 +7298,7 @@
         },
         {
           "name": "seconds",
-          "type": "Float?",
+          "type": "Float",
           "hasDefault": true
         }
       ]
@@ -7350,7 +7350,7 @@
         },
         {
           "name": "seconds",
-          "type": "Float?",
+          "type": "Float",
           "hasDefault": true
         }
       ]
@@ -14631,7 +14631,7 @@
     "ee.schimke.cadence (CadenceTheme)"
   ],
   "renderer": "compose-preview 2.79.0",
-  "generatedAt": "2026-11-08T07:42:04.486Z",
+  "generatedAt": "2026-11-08T21:45:33.280Z",
   "failures": [
     {
       "id": "render-failed--googleoauthactivity--activity-googleoauthactivity",
@@ -14703,7 +14703,7 @@
   "componentsFile": "components.json",
   "source": {
     "repo": "yschimke/cadence",
-    "ref": "7db9c514400c0589d7ad9a19de822b2027e65620",
+    "ref": "80cc14c2e4c7cd56a3b4e347a6278503258735c1",
     "module": ""
   }
 }

@@ -1,11 +1,59 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-08T07:42:07.873Z",
+  "generatedAt": "2026-11-08T21:45:36.643Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "80cc14c2e4c7cd56a3b4e347a6278503258735c1",
+        "subject": "chore(main): release 0.1.25 (#558)",
+        "at": "2026-11-08T21:31:51Z",
+        "author": "github-actions[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "f974084c3bfdfee66a920ede1338837109091801",
+        "subject": "fix: return desktop Library to Home reliably (#560)",
+        "at": "2026-11-08T12:10:00Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "07a657e266b16b6e8f3eec992facd89eeeceb04b",
+        "subject": "feat: add a desktop workspace and native navigation commands (#559)",
+        "at": "2026-11-08T11:40:16Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "550bca7177e49a90a8ece77dd7cc7a7e6629fdb9",
+        "subject": "fix: freeze podcast widget preview animation clocks (#557)",
+        "at": "2026-11-08T10:44:42Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "2e9275f0ff881321ad49f9d0c114963f0f92d491",
+        "subject": "chore(deps): update yschimke/livery action to v0.6.0 (#556)",
+        "at": "2026-11-08T10:44:39Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "0b90664cede421a9b435ccf41e3aca1e55cc8dc0",
+        "subject": "docs: link Arch Linux install guide from site home (#555)",
+        "at": "2026-11-08T08:49:24Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "7db9c514400c0589d7ad9a19de822b2027e65620",
         "subject": "chore(main): release 0.1.24 (#551)",
@@ -435,54 +483,6 @@
         "subject": "chore(main): release 0.1.15 (#496)",
         "at": "2026-11-03T08:09:01Z",
         "author": "github-actions[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "22599a1988ddc1ac01e7f41e737597423e2ac115",
-        "subject": "feat: explain the storage screen and require new episodes to be prepared (#497)",
-        "at": "2026-11-03T08:08:11Z",
-        "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "a8868124cf5184bf7fe35bd522a4d33a76411850",
-        "subject": "feat: archive played episodes and triage Pocket Casts new releases (#495)",
-        "at": "2026-11-03T07:34:12Z",
-        "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "355d0495571079ec044a48e96b96f53f4095433b",
-        "subject": "chore(deps): update anthropics/claude-code-action action to v1.0.267 (#494)",
-        "at": "2026-11-03T06:32:15Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "f650ed13bbc14ec117429cc63944b4c00cb068b4",
-        "subject": "chore(main): release 0.1.14 (#488)",
-        "at": "2026-11-03T06:25:49Z",
-        "author": "github-actions[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "398fadaebd1a2168fc8a044a871007fa26d84ee3",
-        "subject": "feat: guide first run and make plugging in the daily sync (#493)",
-        "at": "2026-11-03T00:45:05Z",
-        "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "ae5a0622a39ae0303705dddef8e018b3c1b2f56a",
-        "subject": "chore: add UI Builder design studies (#492)",
-        "at": "2026-11-03T00:20:54Z",
-        "author": "Yuri Schimke",
         "previewIds": [],
         "components": []
       }

@@ -1527,7 +1527,7 @@
                 "name": "PodcastWidgetPreview",
                 "origin": "PROJECT",
                 "jvmName": "PodcastWidgetPreview",
-                "descriptor": "(ZLjava/lang/String;Lee/schimke/cadence/widgets/WidgetColors;Lee/schimke/cadence/swim/PoolSeason;Ljava/lang/Float;Landroidx/compose/runtime/Composer;II)V",
+                "descriptor": "(ZLjava/lang/String;Lee/schimke/cadence/widgets/WidgetColors;Lee/schimke/cadence/swim/PoolSeason;FLandroidx/compose/runtime/Composer;II)V",
                 "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
                 "docs": "unavailable",
                 "receiver": null
@@ -1587,12 +1587,12 @@
                 },
                 {
                     "name": "seconds",
-                    "type": "Float?",
+                    "type": "Float",
                     "typeFqn": "kotlin.Float",
                     "hasDefault": true,
                     "composableSlot": false,
                     "composableSlotReceiver": null,
-                    "nullable": true,
+                    "nullable": false,
                     "noArgConstructible": false,
                     "noArgFactory": null,
                     "scopeDslReceiver": null,
