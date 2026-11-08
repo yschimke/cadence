@@ -1,11 +1,27 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-08T07:30:47.261Z",
+  "generatedAt": "2026-11-08T07:42:07.873Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "7db9c514400c0589d7ad9a19de822b2027e65620",
+        "subject": "chore(main): release 0.1.24 (#551)",
+        "at": "2026-11-08T07:23:53Z",
+        "author": "github-actions[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "6079d4301c9c88ff4288e76d4a58135f19c9dd6e",
+        "subject": "fix(desktop): ship kotlinx-coroutines-swing so Dispatchers.Main exists (#553)",
+        "at": "2026-11-08T07:21:57Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "a21bb5c8a1fb97843bd4fe887390530562bbccd9",
         "subject": "fix(deps): update compose-ai-tools to v0.5.0 (#554)",
@@ -466,22 +482,6 @@
         "sha": "ae5a0622a39ae0303705dddef8e018b3c1b2f56a",
         "subject": "chore: add UI Builder design studies (#492)",
         "at": "2026-11-03T00:20:54Z",
-        "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "3b5eeb57ca4b51526910a543056ceb238e4096eb",
-        "subject": "fix: stop clipping cloud-sync source on small widgets (#491)",
-        "at": "2026-11-02T22:22:47Z",
-        "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "f956bee91c439a04bdcbf0b8b44c2a0394ec901a",
-        "subject": "fix: meet 48dp cloud-sync open/connect targets (#490)",
-        "at": "2026-11-02T22:08:14Z",
         "author": "Yuri Schimke",
         "previewIds": [],
         "components": []
