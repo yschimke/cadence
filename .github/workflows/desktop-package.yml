@@ -71,7 +71,7 @@ jobs:
           if [[ -n "$CADENCE_GOOGLE_CLIENT_SECRET" ]]; then
             args+=("-PcadenceGoogleClientSecret=$CADENCE_GOOGLE_CLIENT_SECRET")
           fi
-          ./gradlew :desktopApp:packageDistributionForCurrentOS "${args[@]}" --stacktrace
+          ./gradlew :desktopApp:jvmTest :desktopApp:packageDistributionForCurrentOS "${args[@]}" --stacktrace
       - name: Show packaging diagnostics
         if: failure()
         run: |

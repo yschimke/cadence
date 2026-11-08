@@ -134,8 +134,8 @@ jobs:
       - uses: gradle/actions/setup-gradle@v6.4.1
       - name: Install audio preparation test dependency
         run: sudo apt-get update && sudo apt-get install -y ffmpeg
-      - name: Build desktop and browser; test shared storage
-        run: ./gradlew :desktopApp:jvmJar :shared:desktopTest :shared:wasmJsBrowserDistribution --stacktrace
+      - name: Build desktop and browser; test desktop runtime and shared storage
+        run: ./gradlew :desktopApp:jvmJar :desktopApp:jvmTest :shared:desktopTest :shared:wasmJsBrowserDistribution --stacktrace
       - name: Test browser USB and filesystem adapter
         run: node --test tests/browser-platform.test.cjs tests/pocketcasts-browser-export.test.cjs
       - name: Test cloud metadata isolation and revision conflicts
