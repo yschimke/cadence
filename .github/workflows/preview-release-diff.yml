@@ -47,7 +47,7 @@ jobs:
       tag: ${{ inputs.tag }}
       base: ${{ inputs.base }}
       catalog-key: composePreviewPlugin
-      java-version: '25.0.5+8.0.LTS'
+      java-version: '25.0.5+8'
     secrets:
       push_token: ${{ secrets.ARTIFACTS_TOKEN }}
     permissions:

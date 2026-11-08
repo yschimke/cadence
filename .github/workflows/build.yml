@@ -25,6 +25,7 @@ jobs:
         uses: actions/setup-java@v6.2.0
         with:
           distribution: temurin
+          # OpenJDK build notation matches the runner cache; Adoptium's .0.LTS suffix does not.
           java-version: 21.0.13+9
 
       - name: Set up Android SDK
