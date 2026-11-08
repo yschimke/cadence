@@ -72,20 +72,7 @@ private fun AppContent(desktopNavigation: DesktopNavigation?) {
   }
   LaunchedEffect(desktopNavigation?.request) {
     val section = desktopNavigation?.request?.second ?: return@LaunchedEffect
-    val route: Any =
-      when (section) {
-        DesktopSection.Library -> Home
-        DesktopSection.Episodes -> Podcasts
-        DesktopSection.Devices -> Devices
-        DesktopSection.Sources -> ManageSync
-        DesktopSection.Transfers -> FileSync
-        DesktopSection.CloudBackup -> CloudSync
-      }
-    navController.navigate(route) {
-      launchSingleTop = true
-      restoreState = true
-      popUpTo(navController.graph.startDestinationId) { saveState = true }
-    }
+    navController.navigateDesktopSection(section)
   }
   val podcasts = rememberPodcastController()
   val podcastState by podcasts.state.collectAsState()
