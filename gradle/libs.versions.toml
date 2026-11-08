@@ -50,7 +50,7 @@ playPublisher = "4.1.1"
 # rc-players: the podcast widget is a Remote Compose launcher widget captured on the device.
 rcWidget = "2.29.0"
 # Livery: the headphone widget's templates, baked into the APK and played on the launcher.
-livery = "0.4.0"
+livery = "0.5.0"
 robolectric = "4.17"
 robolectric-sdk35 = "15-robolectric-13954326-i7"
 runner = "1.7.0"
