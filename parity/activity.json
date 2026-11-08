@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-08T01:19:57.572Z",
+  "generatedAt": "2026-11-08T07:30:47.261Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "a21bb5c8a1fb97843bd4fe887390530562bbccd9",
+        "subject": "fix(deps): update compose-ai-tools to v0.5.0 (#554)",
+        "at": "2026-11-08T07:19:29Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "0c9bb92199d023b51c65c69534e27dd34682f41b",
         "subject": "fix(deps): update dependency ee.schimke.composeai:rc-widget-launcher to v2.29.0 (#552)",
@@ -474,14 +482,6 @@
         "sha": "f956bee91c439a04bdcbf0b8b44c2a0394ec901a",
         "subject": "fix: meet 48dp cloud-sync open/connect targets (#490)",
         "at": "2026-11-02T22:08:14Z",
-        "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "bf2a0879df9d218e13573c8742486ecf5bb101f5",
-        "subject": "fix: theme Remote Compose widgets for light and dark (#489)",
-        "at": "2026-11-02T21:55:07Z",
         "author": "Yuri Schimke",
         "previewIds": [],
         "components": []
