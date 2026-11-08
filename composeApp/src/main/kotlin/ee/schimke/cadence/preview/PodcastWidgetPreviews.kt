@@ -30,8 +30,8 @@ private fun PodcastWidgetPreview(
   battery: String? = "50% · ~3h MP3 · ~4h 30m BT",
   colors: WidgetColors = WidgetColors.Dark,
   season: PoolSeason = PoolSeason.None,
-  /** Pins the pool's clock to this second; null leaves it on the wall clock. */
-  seconds: Float? = null,
+  /** Freeze static previews so wall-clock swimming never creates spurious screenshot diffs. */
+  seconds: Float = 3.2f,
 ) {
   BoxWithConstraints(Modifier.fillMaxSize()) {
     val width = maxWidth.value.toInt()
@@ -51,7 +51,7 @@ private fun PodcastWidgetPreview(
             season = season,
           )
         }
-        if (seconds != null) SwimClockAt(seconds, content) else content()
+        SwimClockAt(seconds, content)
       }
     }
   }
