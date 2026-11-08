@@ -1,6 +1,6 @@
 {
     "formatVersion": "compose-preview-history/v1",
-    "generatedFrom": "61e6f9ccdc265622ad0c8bd4402ddaa0cb37dadc",
+    "generatedFrom": "ef6316a3f0185311f6e924fe695db08ce92c863b",
     "previews": {
         "composeApp/activity__MainActivity": {
             "path": "renders/composeApp/activity__MainActivity.png",
@@ -1130,6 +1130,13 @@
             "path": "renders/composeApp/PodcastWidgetMp3LargePreview_Podcast_widget_MP3_large-06e82c93.png",
             "versions": [
                 {
+                    "blob": "28265fbc0dae2ccd3df5d98ee996ed947acfc43e",
+                    "commit": "ef6316a3f0185311f6e924fe695db08ce92c863b",
+                    "date": "2026-11-08T07:31:02Z",
+                    "sourceSha": "7db9c514",
+                    "commits": 1
+                },
+                {
                     "blob": "abeb98fa9c4d1de72dae147fa9ca1b6e69cf5ef5",
                     "commit": "61e6f9ccdc265622ad0c8bd4402ddaa0cb37dadc",
                     "date": "2026-11-08T07:24:46Z",
@@ -1620,13 +1627,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 70,
+            "observations": 71,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetMp3LightPreview_Podcast widget · MP3 · light": {
             "path": "renders/composeApp/PodcastWidgetMp3LightPreview_Podcast_widget_MP3_light-cdc23576.png",
             "versions": [
+                {
+                    "blob": "f2bf83caa983bb552e7573663ad2e896e9a29274",
+                    "commit": "ef6316a3f0185311f6e924fe695db08ce92c863b",
+                    "date": "2026-11-08T07:31:02Z",
+                    "sourceSha": "7db9c514",
+                    "commits": 1
+                },
                 {
                     "blob": "848517ea6cd4b3318ae482b721c3807ebceaac98",
                     "commit": "61e6f9ccdc265622ad0c8bd4402ddaa0cb37dadc",
@@ -2041,13 +2055,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 59,
+            "observations": 60,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetMp3Preview_Podcast widget · MP3": {
             "path": "renders/composeApp/PodcastWidgetMp3Preview_Podcast_widget_MP3-3525244f.png",
             "versions": [
+                {
+                    "blob": "59adf1673da43de0263d73cc5a62e0f9d8270254",
+                    "commit": "ef6316a3f0185311f6e924fe695db08ce92c863b",
+                    "date": "2026-11-08T07:31:02Z",
+                    "sourceSha": "7db9c514",
+                    "commits": 1
+                },
                 {
                     "blob": "379ec105502dc3b2734fde1a029a60bbba01ae90",
                     "commit": "61e6f9ccdc265622ad0c8bd4402ddaa0cb37dadc",
@@ -2539,7 +2560,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 70,
+            "observations": 71,
             "unstable": false,
             "flapCount": 0
         },
