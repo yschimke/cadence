@@ -33,7 +33,7 @@ jobs:
         uses: actions/setup-java@v6.2.0
         with:
           distribution: temurin
-          java-version: 25.0.5+8.0.LTS
+          java-version: 25.0.5+8
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v4.0.4
