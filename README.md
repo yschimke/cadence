@@ -20,6 +20,12 @@ Use JDK 21 and an Android SDK with API 37 (`platforms;android-37.0`) and build t
 
 Serve the production directory over HTTPS (localhost is allowed for development). Open it in a browser with WebAssembly GC support. USB and writable directory selection require browser support independently of Wasm support; Chrome or Edge on desktop is the supported file-management route. The UI explains missing capabilities.
 
+The desktop window has a persistent sidebar for Library, Episodes, Devices, Sources, Transfers,
+and Cloud backup. The **Go** menu uses Command+1–6 on macOS and Ctrl+1–6 on Linux/Windows.
+**Window** provides full screen (Control+Command+F on macOS, F11 elsewhere) and minimize.
+On macOS, closing the window keeps the app running; click its Dock icon to reopen it, or use
+Quit to stop the app. Folder pickers belong to the active app window.
+
 ## Published builds
 
 After the publishing workflows merge into `main`, the production browser app is

@@ -1,6 +1,7 @@
 package ee.schimke.cadence.devices
 
 import androidx.compose.runtime.*
+import java.awt.KeyboardFocusManager
 import javax.swing.JFileChooser
 import javax.swing.SwingUtilities
 import kotlin.coroutines.resume
@@ -22,7 +23,12 @@ suspend fun chooseDirectory(): java.io.File? = suspendCancellableCoroutine { con
     if (continuation.isActive) {
       val picker = JFileChooser().apply { fileSelectionMode = JFileChooser.DIRECTORIES_ONLY }
       val result =
-        if (picker.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) picker.selectedFile
+        if (
+          picker.showOpenDialog(
+            KeyboardFocusManager.getCurrentKeyboardFocusManager().activeWindow,
+          ) == JFileChooser.APPROVE_OPTION
+        )
+          picker.selectedFile
         else null
       if (continuation.isActive) continuation.resume(result)
     }
