@@ -48,7 +48,16 @@ kotlin {
       dependencies {
         implementation(projects.shared)
         implementation(libs.androidx.lifecycle.viewmodel)
+        // Dispatchers.Main for viewModelScope/stateIn on the AWT event thread. Compose Desktop
+        // does not bring it in transitively; without it the app starts on an "Error" window.
+        implementation(libs.kotlinx.coroutines.swing)
         implementation(compose.desktop.currentOs)
+      }
+    }
+    jvmTest {
+      dependencies {
+        implementation(libs.kotlin.test)
+        implementation(libs.kotlin.test.junit)
       }
     }
   }
