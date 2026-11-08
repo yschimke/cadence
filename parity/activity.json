@@ -1,11 +1,27 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-07T23:22:50.420Z",
+  "generatedAt": "2026-11-08T01:19:57.572Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "0c9bb92199d023b51c65c69534e27dd34682f41b",
+        "subject": "fix(deps): update dependency ee.schimke.composeai:rc-widget-launcher to v2.29.0 (#552)",
+        "at": "2026-11-08T01:07:58Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "6478d91190ba1c9b8a5ef49baedc1f8d8afcd396",
+        "subject": "chore(deps): update yschimke/livery action to v0.5.0 (#550)",
+        "at": "2026-11-07T23:20:13Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "786651715f7db12a2ac9526bd02a461c6dd2cc32",
         "subject": "fix: anchor the Manage screen's dropdowns with the current menuAnchor API (#549)",
@@ -467,22 +483,6 @@
         "subject": "fix: theme Remote Compose widgets for light and dark (#489)",
         "at": "2026-11-02T21:55:07Z",
         "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "31f12913123ac80d149828e56457b7388ed08807",
-        "subject": "fix: polish headphone and podcast launcher widgets (#487)",
-        "at": "2026-11-02T21:39:23Z",
-        "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "e89a3e4a0e85d9524dac174edf55c8aa34beae00",
-        "subject": "chore(main): release 0.1.13 (#486)",
-        "at": "2026-11-02T08:28:54Z",
-        "author": "github-actions[bot]",
         "previewIds": [],
         "components": []
       }
