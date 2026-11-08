@@ -420,7 +420,7 @@
     "functionName": "DevicesScreenEmptyPreview",
     "module": "composeApp",
     "renderBasename": "DevicesScreenEmptyPreview_Devices_empty-af5a9e1c.png",
-    "sha256": "bcad52827d8ce92ae126df82971f8c7dbe41e6908af7031041b11a48f1e51543",
+    "sha256": "70e110eb529afe9c4cba03b43b8227be3179e6f547faec22d3c579c3fde4568c",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.DevicesScreenLoadedPreview_Devices - loaded": {
@@ -428,7 +428,7 @@
     "functionName": "DevicesScreenLoadedPreview",
     "module": "composeApp",
     "renderBasename": "DevicesScreenLoadedPreview_Devices_loaded-cfb106a7.png",
-    "sha256": "b2bcb82005a0bb5c457ea318bee52a0e69e1eb014a312a014ee9629b8970b989",
+    "sha256": "74ec71c6d3c9833ba82dd74e8b8aecbe0a238ce682e5c64173503a1f1d943517",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.DevicesScreenLoadingPreview_Devices - loading": {
@@ -436,7 +436,7 @@
     "functionName": "DevicesScreenLoadingPreview",
     "module": "composeApp",
     "renderBasename": "DevicesScreenLoadingPreview_Devices_loading-8e171a67.png",
-    "sha256": "38cf56e653afddd860bf24a2c552b2ed995f321e402558672986fa84506a02a5",
+    "sha256": "b23de3679480e4832b185dc062ce44cb5aee13cc384792f3150a0222429c6ff7",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.HomeConnectedControlsPreview_Home \u2014 headphones and controls": {
