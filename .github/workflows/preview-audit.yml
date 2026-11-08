@@ -62,7 +62,7 @@ jobs:
       claude-model: ${{ vars.PREVIEW_AUDIT_CLAUDE_MODEL }}
       codex-model: ${{ vars.PREVIEW_AUDIT_CODEX_MODEL }}
       catalog-key: composePreviewPlugin
-      java-version: '25.0.5+8.0.LTS'
+      java-version: '25.0.5+8'
     secrets: inherit
     permissions:
       contents: write
