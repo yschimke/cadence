@@ -11,6 +11,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 
 /** Desktop destinations share the same commands between the sidebar and the native menu. */
 enum class DesktopSection(
@@ -35,6 +36,24 @@ class DesktopNavigation {
 
   fun select(section: DesktopSection) {
     request = request.first + 1 to section
+  }
+}
+
+internal fun NavController.navigateDesktopSection(section: DesktopSection) {
+  val route: Any =
+    when (section) {
+      DesktopSection.Library -> Home
+      DesktopSection.Episodes -> Podcasts
+      DesktopSection.Devices -> Devices
+      DesktopSection.Sources -> ManageSync
+      DesktopSection.Transfers -> FileSync
+      DesktopSection.CloudBackup -> CloudSync
+    }
+  navigate(route) {
+    launchSingleTop = true
+    // Popped siblings can also be saved under Home; Library must not resurrect that stack.
+    restoreState = section != DesktopSection.Library
+    popUpTo(graph.startDestinationId) { saveState = true }
   }
 }
 
