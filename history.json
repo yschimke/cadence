@@ -1,6 +1,6 @@
 {
     "formatVersion": "compose-preview-history/v1",
-    "generatedFrom": "3357de8467970bd2488c214a2478ba4bea5ff7ec",
+    "generatedFrom": "aa36236c6e8b55f565e9dccf558057140eed6ba4",
     "previews": {
         "composeApp/activity__MainActivity": {
             "path": "renders/composeApp/activity__MainActivity.png",
@@ -2900,6 +2900,13 @@
             "path": "renders/composeApp/DevicesScreenEmptyPreview_Devices_empty-af5a9e1c.png",
             "versions": [
                 {
+                    "blob": "a9242e4dac2f21b41b3f61a14c0db2668f006345",
+                    "commit": "aa36236c6e8b55f565e9dccf558057140eed6ba4",
+                    "date": "2026-11-08T11:46:46Z",
+                    "sourceSha": "07a657e2",
+                    "commits": 1
+                },
+                {
                     "blob": "7ffb2958307797504036542fb1e803cbdbc53ffd",
                     "commit": "f60619ecbac01418f5ed510da8094cf358a073e5",
                     "date": "2026-11-07T14:13:59Z",
@@ -2935,13 +2942,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 5,
+            "observations": 6,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.DevicesScreenLoadedPreview_Devices - loaded": {
             "path": "renders/composeApp/DevicesScreenLoadedPreview_Devices_loaded-cfb106a7.png",
             "versions": [
+                {
+                    "blob": "b7be1cf32d9c5c911630bb2cf0c50c53edf4776c",
+                    "commit": "aa36236c6e8b55f565e9dccf558057140eed6ba4",
+                    "date": "2026-11-08T11:46:46Z",
+                    "sourceSha": "07a657e2",
+                    "commits": 1
+                },
                 {
                     "blob": "916021e5d5ef04897a031a78f8f0f1655c1f88cc",
                     "commit": "4917062213b6f14c99fe1df5ff4dba4b822b8c38",
@@ -2978,13 +2992,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 5,
+            "observations": 6,
             "unstable": false,
             "flapCount": 0
         },
         "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.DevicesScreenLoadingPreview_Devices - loading": {
             "path": "renders/composeApp/DevicesScreenLoadingPreview_Devices_loading-8e171a67.png",
             "versions": [
+                {
+                    "blob": "f218da36cb1fad3fd8734039339ca3c17d8f3b74",
+                    "commit": "aa36236c6e8b55f565e9dccf558057140eed6ba4",
+                    "date": "2026-11-08T11:46:46Z",
+                    "sourceSha": "07a657e2",
+                    "commits": 1
+                },
                 {
                     "blob": "7e572e0c8af291c6cee9ba323f0e8be1c10f702e",
                     "commit": "41d8fe01117aedb5e5509cf509094295aee18040",
@@ -3014,7 +3035,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 4,
+            "observations": 5,
             "unstable": false,
             "flapCount": 0
         },
