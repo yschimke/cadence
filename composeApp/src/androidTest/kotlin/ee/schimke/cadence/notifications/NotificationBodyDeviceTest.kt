@@ -102,11 +102,41 @@ class NotificationBodyDeviceTest {
     File(outputDir(), "$name-logcat-all.txt").writeText(shell("logcat -d"))
     File(outputDir(), "$name-dumpsys.txt").writeText(shell("dumpsys notification --noredact"))
 
+    inApp(name, notification.bigContentView)
+
     assertTrue(
       "$name: SystemUI dropped the notification\n$log",
       manager.activeNotifications.any { it.id == id },
     )
     assertTrue("$name: SystemUI couldn't inflate the body\n$log", "DrawInstructions" !in log)
+  }
+
+  /** The same views played by this process's own player, to tell the document from SystemUI. */
+  private fun inApp(name: String, views: android.widget.RemoteViews) {
+    shell("cmd statusbar collapse")
+    try {
+      androidx.test.core.app.ActivityScenario.launch(ee.schimke.cadence.MainActivity::class.java)
+        .use { scenario ->
+          scenario.onActivity { activity ->
+            val density = activity.resources.displayMetrics.density
+            val frame = android.widget.FrameLayout(activity)
+            frame.setBackgroundColor(android.graphics.Color.WHITE)
+            frame.addView(views.apply(activity, frame))
+            activity.addContentView(
+              frame,
+              android.widget.FrameLayout.LayoutParams(
+                android.view.ViewGroup.LayoutParams.MATCH_PARENT,
+                (200 * density).toInt(),
+                android.view.Gravity.CENTER,
+              ),
+            )
+          }
+          Thread.sleep(3_000)
+          screenshot("$name-inapp")
+        }
+    } catch (e: Throwable) {
+      File(outputDir(), "$name-inapp-error.txt").writeText(e.stackTraceToString())
+    }
   }
 
   private fun screenshot(name: String) {
