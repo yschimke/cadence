@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-09T11:12:55.581Z",
+  "generatedAt": "2026-11-09T20:21:34.507Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "9a159919a8d71165093650ea952abd8cc51b2476",
+        "subject": "fix(deps): update compose-ai-tools to v0.8.0 (#571)",
+        "at": "2026-11-09T20:07:03Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "eaadf925c441ce500217a11486bc176f726cc31b",
         "subject": "fix(deps): update dependency ee.schimke.composeai:rc-players-bom to v2.31.0 (#569)",
@@ -475,14 +483,6 @@
         "subject": "chore(main): release 0.1.17 (#508)",
         "at": "2026-11-05T08:36:53Z",
         "author": "github-actions[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "463d57494a7051991e1206dd46de96aabaf742b2",
-        "subject": "fix(release): unblock Play publishing for phone and Wear (#507)",
-        "at": "2026-11-05T08:11:33Z",
-        "author": "Yuri Schimke",
         "previewIds": [],
         "components": []
       }
