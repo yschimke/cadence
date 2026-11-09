@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-09T09:16:51.534Z",
+  "generatedAt": "2026-11-09T09:28:57.550Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "54bda975d822ceaa58577d84cead195767fcc6e4",
+        "subject": "chore(main): release 0.1.26 (#563)",
+        "at": "2026-11-09T09:05:07Z",
+        "author": "github-actions[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "d89260c28f7a24e4281ede2ac850a2ecc8b4b6a6",
         "subject": "fix: let a reconnect copy while the storage prompt is showing (#565)",
@@ -474,14 +482,6 @@
         "sha": "be9bd141fbf8b2bd6112a59fadc1f40bc7f645a7",
         "subject": "chore(deps): update actions/setup-java action to v6.2.0 (#505)",
         "at": "2026-11-04T22:46:21Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "9c3942a390c4b5ba1f0275df2f0815b48caac303",
-        "subject": "chore(deps): update dependency dev.zacsweers.metro to v1.5.2 (#501)",
-        "at": "2026-11-04T22:34:02Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
