@@ -120,6 +120,7 @@ dependencies {
   implementation(libs.kotlinx.coroutines.android)
   implementation(libs.play.app.update)
   implementation(libs.play.services.wearable)
+  implementation(platform(libs.rc.players.bom))
   implementation(libs.rc.widget.launcher)
   implementation(libs.compose.remote.tooling.preview)
   implementation(project(":swimUi"))
