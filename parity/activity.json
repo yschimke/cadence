@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-09T09:53:42.631Z",
+  "generatedAt": "2026-11-09T11:12:55.581Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "eaadf925c441ce500217a11486bc176f726cc31b",
+        "subject": "fix(deps): update dependency ee.schimke.composeai:rc-players-bom to v2.31.0 (#569)",
+        "at": "2026-11-09T11:01:08Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "4808e45f082f55018b096721178dd71476bb86a4",
         "subject": "fix: reject case-only duplicate staging paths; unpin stale doc versions (#567)",
@@ -475,14 +483,6 @@
         "subject": "fix(release): unblock Play publishing for phone and Wear (#507)",
         "at": "2026-11-05T08:11:33Z",
         "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "147d4a9bb845b51050111b989e73a0c7c90c8b96",
-        "subject": "chore(main): release 0.1.16 (#499)",
-        "at": "2026-11-05T06:59:34Z",
-        "author": "github-actions[bot]",
         "previewIds": [],
         "components": []
       }
