@@ -1,11 +1,27 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-09T20:21:34.507Z",
+  "generatedAt": "2026-11-09T21:27:36.271Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "ae878ca64b9fa7fba57a0d81071ce369a0bb3574",
+        "subject": "fix: wrap notification bodies so Android 17 can nest them (#572)",
+        "at": "2026-11-09T21:17:25Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "0ef61fa5585e03433eb0b90a0ff3897bd82737ad",
+        "subject": "chore(deps): update github-actions (#570)",
+        "at": "2026-11-09T20:07:15Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "9a159919a8d71165093650ea952abd8cc51b2476",
         "subject": "fix(deps): update compose-ai-tools to v0.8.0 (#571)",
@@ -467,22 +483,6 @@
         "subject": "chore(deps): update github-actions (#513)",
         "at": "2026-11-05T19:19:35Z",
         "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "ad328eb4f26f6530b59ddaf15d9cd9cddbc7c9ca",
-        "subject": "feat: prompt for Play updates, at once for testers and after a week for everyone (#509)",
-        "at": "2026-11-05T10:34:34Z",
-        "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "0102feef708294f353307f167bee8d4a689abc58",
-        "subject": "chore(main): release 0.1.17 (#508)",
-        "at": "2026-11-05T08:36:53Z",
-        "author": "github-actions[bot]",
         "previewIds": [],
         "components": []
       }
