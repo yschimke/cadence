@@ -22,7 +22,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        api-level: [34]
+        # 37.0: Android 17 refuses notification bodies it can't nest (NotificationBodyDeviceTest).
+        api-level: [34, '37.0']
         target: [google_apis]
         arch: [x86_64]
 
@@ -93,4 +94,5 @@ jobs:
           path: |
             composeApp/build/reports/androidTests/
             composeApp/build/outputs/androidTest-results/
+            composeApp/build/outputs/connected_android_test_additional_output/
           if-no-files-found: ignore
