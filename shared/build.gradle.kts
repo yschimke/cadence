@@ -69,6 +69,7 @@ kotlin {
       implementation(libs.androidx.core.splashscreen)
       implementation(libs.androidx.documentfile)
       implementation(libs.androidx.work.runtime)
+      implementation(project.dependencies.platform(libs.rc.players.bom))
       implementation(libs.rc.widget.launcher)
       // api so the AppAuth RedirectUriReceiverActivity reference in composeApp's manifest resolves
       // during Android lint — not just at runtime.
