@@ -32,7 +32,8 @@ class PortableRefresh(private val repo: SyncRepo, private val backend: Directory
             else joinDirectory(source.location, source.subpath),
           )
         }
-      require(files.map { it.relativePath }.distinct().size == files.size) {
+      // Targets are FAT32 (case-insensitive), so `Track.mp3` and `track.mp3` alias there.
+      require(files.map { it.relativePath.lowercase() }.distinct().size == files.size) {
         "Sources contain duplicate relative filenames. Use separate profiles."
       }
       val target = joinDirectory(backend.stagingRoot, profile.staging_subpath)

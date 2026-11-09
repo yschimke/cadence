@@ -91,14 +91,21 @@ class PortableSyncTest {
   }
 
   @Test
-  fun duplicateSourcesFailBeforeReplacingStaging() = runBlocking {
+  fun duplicateSourcesFailBeforeReplacingStaging() =
+    assertDuplicateRejected("track.mp3", "track.mp3")
+
+  @Test
+  fun caseOnlyDuplicatesFailBeforeReplacingStaging() =
+    assertDuplicateRejected("Track.mp3", "track.mp3")
+
+  private fun assertDuplicateRejected(firstName: String, secondName: String) = runBlocking {
     val root = Files.createTempDirectory("cadence-duplicate").toFile()
     try {
       val store = Store()
       val repo = SyncRepo(store)
-      for (name in listOf("one", "two")) {
+      for ((name, file) in listOf("one" to firstName, "two" to secondName)) {
         val source = root.resolve(name).apply { mkdirs() }
-        source.resolve("track.mp3").writeText(name)
+        source.resolve(file).writeText(name)
         repo.addLocalDirectorySource(name, source.path)
       }
       val profile = repo.addProfile("Music", repo.sources.first().map { it.id })
