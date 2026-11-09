@@ -1,11 +1,43 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-09T06:44:47.391Z",
+  "generatedAt": "2026-11-09T09:16:51.534Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "d89260c28f7a24e4281ede2ac850a2ecc8b4b6a6",
+        "subject": "fix: let a reconnect copy while the storage prompt is showing (#565)",
+        "at": "2026-11-09T09:04:20Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "9fc1b61c0b15e5426ab1672293b0bdd2f0e183c4",
+        "subject": "fix(deps): update dependency ee.schimke.composeai:rc-widget-launcher to v2.30.0 (#564)",
+        "at": "2026-11-09T07:34:37Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "7c02f03edc6f122cd3b46d47619590ee6008e882",
+        "subject": "fix: offer to choose headphone storage again when a copy can't reach it (#562)",
+        "at": "2026-11-09T07:09:46Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "c47e67608cf6f3a19bf6d8c1d43771929c0b13cb",
+        "subject": "chore(deps): update yschimke/livery action to v0.7.0 (#561)",
+        "at": "2026-11-09T06:43:13Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "80cc14c2e4c7cd56a3b4e347a6278503258735c1",
         "subject": "chore(main): release 0.1.25 (#558)",
@@ -451,38 +483,6 @@
         "subject": "chore(deps): update dependency dev.zacsweers.metro to v1.5.2 (#501)",
         "at": "2026-11-04T22:34:02Z",
         "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "0950368fa5cb45881f06c35c3fcba5ed9733f6bf",
-        "subject": "chore(deps): update anthropics/claude-code-action action to v1.0.268 (#502)",
-        "at": "2026-11-04T00:53:49Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "e82b02ac8df976b16c4e67075993cca904d4bea3",
-        "subject": "chore: record Play foreground service evidence videos (#500)",
-        "at": "2026-11-03T20:13:42Z",
-        "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "caa0271af7aada07ded7621e5c299de18540e73a",
-        "subject": "feat: report caught podcast failures to Crashlytics as non-fatals (#498)",
-        "at": "2026-11-03T09:09:11Z",
-        "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "27057efb6e22a37658da52fc4b96c472eacc13aa",
-        "subject": "chore(main): release 0.1.15 (#496)",
-        "at": "2026-11-03T08:09:01Z",
-        "author": "github-actions[bot]",
         "previewIds": [],
         "components": []
       }
