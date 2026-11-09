@@ -85,8 +85,8 @@ object CadenceNotifications {
         body.cancelIntent?.let {
           addAction(android.R.drawable.ic_menu_close_clear_cancel, "Cancel", it)
         }
-        // No style alongside the custom body: on Android 17 a style wraps it in a template that
-        // refuses draw instructions, and SystemUI drops the notification.
+        // No style alongside the custom body. SystemUI nests it in a template either way, so the
+        // renderer must hand back views that nest (see `RcLauncherWidgets.forNotification`).
         if (views != null) setCustomBigContentView(views)
         else setStyle(NotificationCompat.BigTextStyle().bigText(body.text))
       }
