@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-09T21:27:36.271Z",
+  "generatedAt": "2026-11-09T21:40:28.900Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "3ae820371570254d31e0cd0f156047462311f408",
+        "subject": "chore(main): release 0.1.27 (#568)",
+        "at": "2026-11-09T21:23:45Z",
+        "author": "github-actions[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "ae878ca64b9fa7fba57a0d81071ce369a0bb3574",
         "subject": "fix: wrap notification bodies so Android 17 can nest them (#572)",
@@ -474,14 +482,6 @@
         "sha": "58ddb19b6dbf5a8b5370c39dd67b66818d6ff2d4",
         "subject": "chore(deps): update agp to v9.5.1 (#512)",
         "at": "2026-11-05T20:07:59Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "a114f5d6f1cabc5cd9f0920845ac3d18bbd2a7ce",
-        "subject": "chore(deps): update github-actions (#513)",
-        "at": "2026-11-05T19:19:35Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
