@@ -99,6 +99,8 @@ class NotificationBodyDeviceTest {
     val log =
       shell("logcat -d -s NotifContentInflater:* NotifInflation:* RemoteViews:* AndroidRuntime:E")
     File(outputDir(), "$name-logcat.txt").writeText(log)
+    File(outputDir(), "$name-logcat-all.txt").writeText(shell("logcat -d"))
+    File(outputDir(), "$name-dumpsys.txt").writeText(shell("dumpsys notification --noredact"))
 
     assertTrue(
       "$name: SystemUI dropped the notification\n$log",
