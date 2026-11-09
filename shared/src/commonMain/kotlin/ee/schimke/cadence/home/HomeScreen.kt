@@ -313,19 +313,21 @@ private fun CopyWhenHeadphonesConnect(
     if (!copyNow || handledFor == attachedDeviceId || attempting) return@LaunchedEffect
     attempting = true
     scope.launch {
+      var ok = false
       try {
         // The volume mounts a moment after the USB device appears, so retry briefly.
-        var ok = false
         for (wait in listOf(1_000L, 2_000L, 4_000L, 8_000L)) {
           delay(wait)
           ok = podcasts.run { copyToDevice() }
           if (ok) break
         }
         handledFor = attachedDeviceId
-        onResult(ok)
       } finally {
         attempting = false
       }
+      // After clearing the guard: a result with an action waits for the user, and a reconnect
+      // meanwhile must still copy.
+      onResult(ok)
     }
   }
 }
