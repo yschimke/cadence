@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.1.26](https://github.com/yschimke/cadence/compare/v0.1.25...v0.1.26) (2026-11-09)
+
+
+### Bug Fixes
+
+* **deps:** update dependency ee.schimke.composeai:rc-widget-launcher to v2.30.0 ([#564](https://github.com/yschimke/cadence/issues/564)) ([9fc1b61](https://github.com/yschimke/cadence/commit/9fc1b61c0b15e5426ab1672293b0bdd2f0e183c4))
+* let a reconnect copy while the storage prompt is showing ([#565](https://github.com/yschimke/cadence/issues/565)) ([d89260c](https://github.com/yschimke/cadence/commit/d89260c28f7a24e4281ede2ac850a2ecc8b4b6a6))
+* offer to choose headphone storage again when a copy can't reach it ([#562](https://github.com/yschimke/cadence/issues/562)) ([7c02f03](https://github.com/yschimke/cadence/commit/7c02f03edc6f122cd3b46d47619590ee6008e882))
+
 ## [0.1.25](https://github.com/yschimke/cadence/compare/v0.1.24...v0.1.25) (2026-11-08)
 
 
