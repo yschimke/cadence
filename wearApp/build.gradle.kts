@@ -8,7 +8,7 @@ plugins {
   alias(libs.plugins.playPublisher)
 }
 
-val appVersionName = "0.1.26" // x-release-please-version
+val appVersionName = "0.1.27" // x-release-please-version
 val appVersionCode =
   appVersionName
     .split(".", "-")
