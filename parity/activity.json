@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-09T09:41:44.192Z",
+  "generatedAt": "2026-11-09T09:53:42.631Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "4808e45f082f55018b096721178dd71476bb86a4",
+        "subject": "fix: reject case-only duplicate staging paths; unpin stale doc versions (#567)",
+        "at": "2026-11-09T09:33:42Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "40df667d539e1be84edf4356f2193c098dc73141",
         "subject": "build: take rc-players versions from rc-players-bom (#566)",
@@ -475,14 +483,6 @@
         "subject": "chore(main): release 0.1.16 (#499)",
         "at": "2026-11-05T06:59:34Z",
         "author": "github-actions[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "4b913bad8985a8966f3ec902d93fe0944aa3cec5",
-        "subject": "fix(deps): update compose-ai-tools (#506)",
-        "at": "2026-11-04T22:49:17Z",
-        "author": "renovate[bot]",
         "previewIds": [],
         "components": []
       }
