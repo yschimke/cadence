@@ -27,39 +27,15 @@ The shared portable sync implementation validates relative paths, refuses duplic
 
 ## Stable dependency selection
 
-Kotlin moves from 2.4.20 to [2.4.21](https://github.com/JetBrains/kotlin/releases/tag/v2.4.21), with the matching Compose compiler. [Compose Multiplatform 1.12.1](https://github.com/JetBrains/compose-multiplatform/releases/tag/v1.12.1) is the current stable framework, but its default Material 3 coordinates are `1.12.0-alpha03`; Cadence explicitly selects stable Material 3 **1.9.0**. Navigation remains the latest stable **2.9.2**, rather than the framework's beta default. Lifecycle is **2.11.0**.
+Exact versions live in [`gradle/libs.versions.toml`](../gradle/libs.versions.toml) and [`gradle/wrapper/gradle-wrapper.properties`](../gradle/wrapper/gradle-wrapper.properties); Renovate bumps them, so this page records only the choices that are not the framework defaults:
 
-[AGP 9.4.1](https://developer.android.com/reference/tools/gradle-api) requires at least [Gradle 9.6](https://developer.android.com/build/releases/about-agp); the existing stable Gradle **9.8.0** wrapper is retained. JDK 21 satisfies Metro's compiler-plugin requirement, while Android/shared bytecode stays at Java 17 for preview rendering. Android API levels remain compile 37, target 36, minimum 34.
+- Compose Multiplatform's default Material 3 coordinates are an alpha. Cadence selects the latest stable Compose Multiplatform Material 3 explicitly (`composeMaterial3`), and only Android uses the newer `androidx.compose.material3` (`androidx-compose-material3`) for `MaterialExpressiveTheme`/`MotionScheme`.
+- Navigation is pinned to the latest stable `navigation-compose` (`navigationCompose`) rather than the framework's beta default.
+- The Gradle wrapper must satisfy AGP's [minimum Gradle version](https://developer.android.com/build/releases/about-agp).
+- JDK 21 satisfies Metro's compiler-plugin requirement, while Android/shared bytecode stays at Java 17 for preview rendering. Android API levels are set by `android-compileSdk`, `android-targetSdk` and `android-minSdk`.
+- Only stable releases are selected; snapshot repositories are not used.
 
-The unpublished-stable modernstorage dependency is removed: Cadence already owned its SAF FileSystem implementation and needed only URI/path helpers and metadata extras. Those small helpers now live in Android code, preserving persisted URI normalization. Bonsai is replaced with a common Compose expandable file tree, and the WebView library is isolated to Android. DataStore has no Wasm variant, so browser persistence implements the small settings contract using the same Wire-generated protobuf schema. Stable Metro/Wire plugins remain at 1.4.5/7.1.0. Snapshot repositories are removed.
-
-| Dependency | Selected | Latest stable in publisher metadata | Source |
-| --- | --- | --- | --- |
-| `org.jetbrains.compose.material3:material3` | 1.9.0 | 1.9.0 | [metadata](https://repo.maven.apache.org/maven2/org/jetbrains/compose/material3/material3/maven-metadata.xml) |
-| `com.squareup.okio:okio` | 3.18.2 | 3.18.2 | [metadata](https://repo.maven.apache.org/maven2/com/squareup/okio/okio/maven-metadata.xml) |
-| `org.usb4java:usb4java` | 1.3.0 | 1.3.0 | [metadata](https://repo.maven.apache.org/maven2/org/usb4java/usb4java/maven-metadata.xml) |
-| `org.jetbrains.kotlinx:kotlinx-coroutines-core` | 1.11.0 | 1.11.0 | [metadata](https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-core/maven-metadata.xml) |
-| `androidx.activity:activity-compose` | 1.13.0 | 1.13.0 | [metadata](https://dl.google.com/dl/android/maven2/androidx/activity/activity-compose/maven-metadata.xml) |
-| `androidx.core:core-splashscreen` | 1.2.0 | 1.2.0 | [metadata](https://dl.google.com/dl/android/maven2/androidx/core/core-splashscreen/maven-metadata.xml) |
-| `androidx.datastore:datastore` | 1.2.1 | 1.2.1 | [metadata](https://dl.google.com/dl/android/maven2/androidx/datastore/datastore/maven-metadata.xml) |
-| `androidx.documentfile:documentfile` | 1.1.0 | 1.1.0 | [metadata](https://dl.google.com/dl/android/maven2/androidx/documentfile/documentfile/maven-metadata.xml) |
-| `androidx.test.espresso:espresso-core` | 3.7.0 | 3.7.0 | [metadata](https://dl.google.com/dl/android/maven2/androidx/test/espresso/espresso-core/maven-metadata.xml) |
-| `org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose` | 2.11.0 | 2.11.0 | [metadata](https://repo.maven.apache.org/maven2/org/jetbrains/androidx/lifecycle/lifecycle-runtime-compose/maven-metadata.xml) |
-| `org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose` | 2.11.0 | 2.11.0 | [metadata](https://repo.maven.apache.org/maven2/org/jetbrains/androidx/lifecycle/lifecycle-viewmodel-compose/maven-metadata.xml) |
-| `org.jetbrains.androidx.lifecycle:lifecycle-viewmodel` | 2.11.0 | 2.11.0 | [metadata](https://repo.maven.apache.org/maven2/org/jetbrains/androidx/lifecycle/lifecycle-viewmodel/maven-metadata.xml) |
-| `androidx.test:runner` | 1.7.0 | 1.7.0 | [metadata](https://dl.google.com/dl/android/maven2/androidx/test/runner/maven-metadata.xml) |
-| `androidx.test.ext:junit` | 1.3.0 | 1.3.0 | [metadata](https://dl.google.com/dl/android/maven2/androidx/test/ext/junit/maven-metadata.xml) |
-| `androidx.compose.ui:ui-text-google-fonts` | 1.12.1 | 1.12.1 | [metadata](https://dl.google.com/dl/android/maven2/androidx/compose/ui/ui-text-google-fonts/maven-metadata.xml) |
-| `androidx.work:work-runtime-ktx` | 2.12.0 | 2.12.0 | [metadata](https://dl.google.com/dl/android/maven2/androidx/work/work-runtime-ktx/maven-metadata.xml) |
-| `junit:junit` | 4.13.2 | 4.13.2 | [metadata](https://repo.maven.apache.org/maven2/junit/junit/maven-metadata.xml) |
-| `org.jetbrains.kotlin:kotlin-test` | 2.4.21 | 2.4.21 | [metadata](https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-test/maven-metadata.xml) |
-| `org.jetbrains.kotlin:kotlin-test-junit` | 2.4.21 | 2.4.21 | [metadata](https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-test-junit/maven-metadata.xml) |
-| `org.jetbrains.kotlinx:kotlinx-coroutines-android` | 1.11.0 | 1.11.0 | [metadata](https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-android/maven-metadata.xml) |
-| `org.jetbrains.kotlinx:kotlinx-serialization-json` | 1.11.0 | 1.11.0 | [metadata](https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-serialization-json/maven-metadata.xml) |
-| `io.ktor:ktor-client-core` | 3.6.0 | 3.6.0 | [metadata](https://repo.maven.apache.org/maven2/io/ktor/ktor-client-core/maven-metadata.xml) |
-| `org.jetbrains.compose.material:material-icons-core` | 1.7.3 | 1.7.3 | [metadata](https://repo.maven.apache.org/maven2/org/jetbrains/compose/material/material-icons-core/maven-metadata.xml) |
-| `org.jetbrains.compose.material:material-icons-extended` | 1.7.3 | 1.7.3 | [metadata](https://repo.maven.apache.org/maven2/org/jetbrains/compose/material/material-icons-extended/maven-metadata.xml) |
-| `org.jetbrains.androidx.navigation:navigation-compose` | 2.9.2 | 2.9.2 | [metadata](https://repo.maven.apache.org/maven2/org/jetbrains/androidx/navigation/navigation-compose/maven-metadata.xml) |
+The unpublished-stable modernstorage dependency is removed: Cadence already owned its SAF FileSystem implementation and needed only URI/path helpers and metadata extras. Those small helpers now live in Android code, preserving persisted URI normalization. Bonsai is replaced with a common Compose expandable file tree, and the WebView library is isolated to Android. DataStore has no Wasm variant, so browser persistence implements the small settings contract using the same Wire-generated protobuf schema.
 
 ## Verification in this change
 
