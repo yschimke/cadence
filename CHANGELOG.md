@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.1.27](https://github.com/yschimke/cadence/compare/v0.1.26...v0.1.27) (2026-11-09)
+
+
+### Bug Fixes
+
+* **deps:** update compose-ai-tools to v0.8.0 ([#571](https://github.com/yschimke/cadence/issues/571)) ([9a15991](https://github.com/yschimke/cadence/commit/9a159919a8d71165093650ea952abd8cc51b2476))
+* **deps:** update dependency ee.schimke.composeai:rc-players-bom to v2.31.0 ([#569](https://github.com/yschimke/cadence/issues/569)) ([eaadf92](https://github.com/yschimke/cadence/commit/eaadf925c441ce500217a11486bc176f726cc31b))
+* reject case-only duplicate staging paths; unpin stale doc versions ([#567](https://github.com/yschimke/cadence/issues/567)) ([4808e45](https://github.com/yschimke/cadence/commit/4808e45f082f55018b096721178dd71476bb86a4))
+* wrap notification bodies so Android 17 can nest them ([#572](https://github.com/yschimke/cadence/issues/572)) ([ae878ca](https://github.com/yschimke/cadence/commit/ae878ca64b9fa7fba57a0d81071ce369a0bb3574))
+
 ## [0.1.26](https://github.com/yschimke/cadence/compare/v0.1.25...v0.1.26) (2026-11-09)
 
 
