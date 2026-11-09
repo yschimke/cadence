@@ -116,4 +116,21 @@ class HeadphoneSyncStepTest {
       headphoneSyncStep(LocalPodcastState(), true, false),
     )
   }
+
+  @Test
+  fun storageFailuresOfferToChooseStorageAgain() {
+    assertTrue(
+      needsStorageChoice(
+        "The headphone storage isn't available. Check it's plugged in and mounted, then try again.",
+      ),
+    )
+    assertTrue(
+      needsStorageChoice(
+        "Cadence no longer has access to the headphone storage. Choose it again under Change headphone storage.",
+      ),
+    )
+    assertFalse(
+      needsStorageChoice("The headphones are full. Remove files from them, then try again."),
+    )
+  }
 }

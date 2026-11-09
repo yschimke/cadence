@@ -67,6 +67,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -223,12 +224,23 @@ fun HomeScreen(
   val chooseHeadphoneStorage = rememberFileExplorerOpenLauncher { _, path ->
     podcastAction { setTarget(path.toString()) }
   }
+  /** A copy that failed because the saved storage is gone offers to choose it again. */
+  suspend fun showSyncResult(ok: Boolean) {
+    val message = podcasts.status.value
+    if (!ok && needsStorageChoice(message)) {
+      if (
+        snackbar.showSnackbar(message, actionLabel = "Choose storage", withDismissAction = true) ==
+          SnackbarResult.ActionPerformed
+      )
+        chooseHeadphoneStorage()
+    } else snackbar.showSnackbar(message)
+  }
   CopyWhenHeadphonesConnect(
     podcasts = podcasts,
     step =
       headphoneSyncStep(podcastState, state.sources.isNotEmpty(), state.attachedDevice != null),
     attachedDeviceId = state.attachedDevice?.id,
-    snackbar = snackbar,
+    onResult = ::showSyncResult,
   )
   HomeContent(
     state = state,
@@ -254,7 +266,13 @@ fun HomeScreen(
         onRefreshFolder = viewModel::refreshNow,
         onFindApp = viewModel::openSuggestion,
         onCopyToHeadphones = onCopyToHeadphones,
-        onSyncPodcasts = { podcastAction { copyToDevice() } },
+        onSyncPodcasts = {
+          scope.launch {
+            val ok = podcasts.run { copyToDevice() }
+            // Successes show up in the sync card itself.
+            if (!ok) showSyncResult(ok)
+          }
+        },
         onPreparePodcasts = podcastWork.process,
         onChooseHeadphoneStorage = chooseHeadphoneStorage,
         onBluetoothControls = onBluetoothControls,
@@ -278,7 +296,7 @@ private fun CopyWhenHeadphonesConnect(
   podcasts: PodcastController,
   step: HeadphoneSyncStep,
   attachedDeviceId: Int?,
-  snackbar: SnackbarHostState,
+  onResult: suspend (ok: Boolean) -> Unit,
 ) {
   // Outlives the effect: the copy itself changes the step, which would otherwise cancel it.
   val scope = rememberCoroutineScope()
@@ -297,12 +315,14 @@ private fun CopyWhenHeadphonesConnect(
     scope.launch {
       try {
         // The volume mounts a moment after the USB device appears, so retry briefly.
+        var ok = false
         for (wait in listOf(1_000L, 2_000L, 4_000L, 8_000L)) {
           delay(wait)
-          if (podcasts.run { copyToDevice() }) break
+          ok = podcasts.run { copyToDevice() }
+          if (ok) break
         }
         handledFor = attachedDeviceId
-        snackbar.showSnackbar(podcasts.status.value)
+        onResult(ok)
       } finally {
         attempting = false
       }
