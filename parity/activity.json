@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-09T09:28:57.550Z",
+  "generatedAt": "2026-11-09T09:41:44.192Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "40df667d539e1be84edf4356f2193c098dc73141",
+        "subject": "build: take rc-players versions from rc-players-bom (#566)",
+        "at": "2026-11-09T09:23:20Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "54bda975d822ceaa58577d84cead195767fcc6e4",
         "subject": "chore(main): release 0.1.26 (#563)",
@@ -474,14 +482,6 @@
         "sha": "4b913bad8985a8966f3ec902d93fe0944aa3cec5",
         "subject": "fix(deps): update compose-ai-tools (#506)",
         "at": "2026-11-04T22:49:17Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "be9bd141fbf8b2bd6112a59fadc1f40bc7f645a7",
-        "subject": "chore(deps): update actions/setup-java action to v6.2.0 (#505)",
-        "at": "2026-11-04T22:46:21Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
