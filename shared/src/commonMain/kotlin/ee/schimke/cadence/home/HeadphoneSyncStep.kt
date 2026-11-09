@@ -75,3 +75,10 @@ fun headphoneSyncStep(
 /** Plugging in should copy on its own only when that is clearly the next step. */
 fun shouldCopyOnConnect(step: HeadphoneSyncStep): Boolean =
   step is HeadphoneSyncStep.ReadyToCopy && step.pluggedIn
+
+/**
+ * Whether a failed copy came from the saved headphone storage itself (unplugged, remounted under a
+ * new id, or access revoked), so choosing the storage again is the way forward.
+ */
+fun needsStorageChoice(message: String): Boolean =
+  message.contains("headphone storage", ignoreCase = true)
