@@ -158,6 +158,8 @@ dependencies {
   // Captures the widget's templates and keeps their catalog files current.
   testImplementation(libs.livery.capture)
 
+  // The device tests instantiate templates themselves, to tell the steps apart.
+  androidTestImplementation(libs.livery.instantiate)
   androidTestImplementation(libs.junit)
   androidTestImplementation(libs.androidx.test.junit)
   androidTestImplementation(libs.androidx.runner)
