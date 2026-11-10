@@ -1,11 +1,35 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-10T01:00:34.647Z",
+  "generatedAt": "2026-11-10T07:36:07.559Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "41aa23f85649df7f9a98ef8a43f0ebb237192ed1",
+        "subject": "fix: draw notification bodies on Android 16 and 17 (#578)",
+        "at": "2026-11-10T07:24:47Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "0ac939a9fe85ee8bed790f64f734c332b3b5489a",
+        "subject": "chore(deps): update anthropics/claude-code-action action to v1.0.271 (#577)",
+        "at": "2026-11-10T05:52:45Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "2a44cd3778d297bcdbf6f25d6c9e26f48caa840d",
+        "subject": "test: reproduce the blank notification body on the platform player (#574)",
+        "at": "2026-11-10T02:11:08Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "215903e1f14209acf602e87afbd3b3b90e4e4e4e",
         "subject": "fix(deps): update dependency ee.schimke.composeai:preview-annotations to v3.27.4 (#575)",
@@ -459,30 +483,6 @@
         "subject": "build: adopt Livery 0.2.0 (#519)",
         "at": "2026-11-06T12:03:11Z",
         "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "f07efd73327167182c20cf80cb7b30fa75b0bb04",
-        "subject": "feat: delete stale episodes from the headphones on sync, throttle download progress (#518)",
-        "at": "2026-11-06T12:01:39Z",
-        "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "6d64dd39605c53882e434fa132352be45a85f4b3",
-        "subject": "feat: order Home around the sync routine and show download progress and errors (#516)",
-        "at": "2026-11-06T10:07:58Z",
-        "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "797622b81f1a75a3b0d90c3bbeef7e8553985d3c",
-        "subject": "chore(main): release 0.1.18 (#510)",
-        "at": "2026-11-05T20:55:22Z",
-        "author": "github-actions[bot]",
         "previewIds": [],
         "components": []
       }
