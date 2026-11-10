@@ -94,11 +94,12 @@ open class DesktopPodcastPlatform(root: File) : FilePodcastPlatform(root) {
       val path = volume.resolve("Cadence")
       if (!Files.exists(path, NOFOLLOW_LINKS)) Files.createDirectory(path)
       require(!Files.isSymbolicLink(path) && Files.isDirectory(path, NOFOLLOW_LINKS))
-      removeLegacyPodcastsFolder(path)
+      // An older Cadence/podcasts shows Cadence made this folder, even if files it kept remain.
+      val migrated = removeLegacyPodcastsFolder(path)
       val marker = path.resolve(".cadence-owner")
       if (!Files.exists(marker, NOFOLLOW_LINKS)) {
         Files.list(path).use {
-          require(!it.findAny().isPresent) { "Existing folder is not owned by Cadence" }
+          require(migrated || !it.findAny().isPresent) { "Existing folder is not owned by Cadence" }
         }
         Files.writeString(
           marker,
@@ -161,8 +162,11 @@ open class DesktopPodcastPlatform(root: File) : FilePodcastPlatform(root) {
       commit(path, "cadence-manifest.json") { Files.writeString(it, manifest) }
     }
 
-  /** Earlier versions copied into `Cadence/podcasts`; removes what they put there. */
-  private fun removeLegacyPodcastsFolder(cadence: java.nio.file.Path) {
+  /**
+   * Earlier versions copied into `Cadence/podcasts`; removes what they put there. True when that
+   * folder was Cadence's.
+   */
+  private fun removeLegacyPodcastsFolder(cadence: java.nio.file.Path): Boolean {
     fun owned(dir: java.nio.file.Path): Boolean {
       val owner = dir.resolve(".cadence-owner")
       return Files.isDirectory(dir, NOFOLLOW_LINKS) &&
@@ -185,7 +189,7 @@ open class DesktopPodcastPlatform(root: File) : FilePodcastPlatform(root) {
         Files.delete(dir)
       }
     }
-    val legacy = cadence.resolve("podcasts").takeIf { owned(it) } ?: return
+    val legacy = cadence.resolve("podcasts").takeIf { owned(it) } ?: return false
     entries(legacy)
       .filter { owned(it) }
       .forEach {
@@ -194,6 +198,7 @@ open class DesktopPodcastPlatform(root: File) : FilePodcastPlatform(root) {
       }
     clear(legacy)
     removeIfOnlyMarker(legacy)
+    return true
   }
 
   /**

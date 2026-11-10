@@ -224,6 +224,26 @@ class DesktopPodcastTest {
     }
   }
 
+  @Test
+  fun exportMigratesPastFilesTheOldPodcastsFolderKeeps() = runBlocking {
+    val root = Files.createTempDirectory("cadence-legacy-kept-test").toFile()
+    try {
+      val target = File(root, "usb").apply { mkdirs() }
+      val legacy = File(target, "Cadence/podcasts").apply { mkdirs() }
+      File(legacy, ".cadence-owner").writeText("cadence-podcasts-v1")
+      File(legacy, "show-000000000001-${"a".repeat(64)}.mp3").writeText("old audio")
+      File(legacy, "notes.txt").writeText("mine")
+      val platform = DesktopPodcastPlatform(File(root, "app"))
+      platform.export(emptyList(), target.path, "{}")
+      platform.export(emptyList(), target.path, "{}")
+      assertEquals("mine", File(legacy, "notes.txt").readText())
+      assertFalse(File(legacy, "show-000000000001-${"a".repeat(64)}.mp3").exists())
+      assertEquals("{}", File(target, "Cadence/cadence-manifest.json").readText())
+    } finally {
+      root.deleteRecursively()
+    }
+  }
+
   private fun command(vararg args: String): String {
     val process = ProcessBuilder(*args).redirectErrorStream(true).start()
     val text = process.inputStream.bufferedReader().readText()

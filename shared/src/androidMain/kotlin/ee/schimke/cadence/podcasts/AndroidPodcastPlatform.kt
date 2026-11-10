@@ -176,10 +176,11 @@ open class AndroidPodcastPlatform(private val context: Context) :
         .also { require(it.isDirectory) { "$name on the headphones is a file, not a folder" } }
     requireVolumeRoot(target)
     val folder = directory(volume, "Cadence")
-    removeLegacyPodcastsFolder(folder)
+    // An older Cadence/podcasts shows Cadence made this folder, even if files it kept remain.
+    val migrated = removeLegacyPodcastsFolder(folder)
     val marker = folder.findFile(".cadence-owner")
     if (marker == null) {
-      require(folder.listFiles().isEmpty()) {
+      require(migrated || folder.listFiles().isEmpty()) {
         "The Cadence folder on the headphones holds files Cadence did not put there. Move them out, then try again"
       }
       val created = requireNotNull(folder.createFile("application/octet-stream", ".cadence-owner"))
@@ -271,8 +272,11 @@ open class AndroidPodcastPlatform(private val context: Context) :
     }
   }
 
-  /** Earlier versions copied into `Cadence/podcasts`; removes what they put there. */
-  private fun removeLegacyPodcastsFolder(cadence: DocumentFile) {
+  /**
+   * Earlier versions copied into `Cadence/podcasts`; removes what they put there. True when that
+   * folder was Cadence's.
+   */
+  private fun removeLegacyPodcastsFolder(cadence: DocumentFile): Boolean {
     fun owned(dir: DocumentFile) =
       dir.isDirectory &&
         dir.findFile(".cadence-owner")?.let { owner ->
@@ -280,7 +284,7 @@ open class AndroidPodcastPlatform(private val context: Context) :
             it.readText()
           }
         } == "cadence-podcasts-v1"
-    val legacy = cadence.findFile("podcasts")?.takeIf { owned(it) } ?: return
+    val legacy = cadence.findFile("podcasts")?.takeIf { owned(it) } ?: return false
     fun clear(dir: DocumentFile) =
       dir.listFiles().forEach { entry ->
         val name = entry.name ?: return@forEach
@@ -296,6 +300,7 @@ open class AndroidPodcastPlatform(private val context: Context) :
     }
     clear(legacy)
     removeIfOnlyMarker(legacy)
+    return true
   }
 
   /**
