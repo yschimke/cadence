@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-10T08:03:07.589Z",
+  "generatedAt": "2026-11-10T08:16:10.488Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "77c1fba08ba4b002c25950f22cb10124d07f6a71",
+        "subject": "chore(main): release 0.1.28 (#576)",
+        "at": "2026-11-10T07:59:26Z",
+        "author": "github-actions[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "f0d716109a66dbf1b1caabe3d688c9c4d4403278",
         "subject": "fix: copy podcasts to Cadence/<Show> at the headphone drive root (#580)",
@@ -475,14 +483,6 @@
         "subject": "feat(widgets): publish the widget's Livery catalog, with seasonal looks for the headphone widget and the sync card (#521)",
         "at": "2026-11-06T22:34:28Z",
         "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "ad7e15c3c160172e2e7e06c1bd367f30d95e0772",
-        "subject": "chore(main): release 0.1.19 (#517)",
-        "at": "2026-11-06T15:42:07Z",
-        "author": "github-actions[bot]",
         "previewIds": [],
         "components": []
       }
