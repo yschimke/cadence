@@ -1,6 +1,6 @@
 {
     "formatVersion": "compose-preview-history/v1",
-    "generatedFrom": "cc0c2b7c5fa7b714d5c837eab7a1d61debf5866c",
+    "generatedFrom": "d9574c2e9e591fb997d42f2297ea6d5a6f5541ff",
     "previews": {
         "composeApp/activity__MainActivity": {
             "path": "renders/composeApp/activity__MainActivity.png",
@@ -628,6 +628,13 @@
             "path": "renders/composeApp/NotificationDownloadingPreview_Notification_downloading-f99a71e3.png",
             "versions": [
                 {
+                    "blob": "2aa72da2acb05f17d9e69984ebde2049407d44f7",
+                    "commit": "d9574c2e9e591fb997d42f2297ea6d5a6f5541ff",
+                    "date": "2026-11-10T23:39:27Z",
+                    "sourceSha": "f297c04f",
+                    "commits": 1
+                },
+                {
                     "blob": "8e2efb302f1b74f1faa2c82a7ede6a8619205db9",
                     "commit": "cc0c2b7c5fa7b714d5c837eab7a1d61debf5866c",
                     "date": "2026-11-10T11:23:32Z",
@@ -642,9 +649,9 @@
                     "commits": 1
                 }
             ],
-            "observations": 2,
+            "observations": 3,
             "unstable": false,
-            "flapCount": 0
+            "flapCount": 1
         },
         "composeApp/ee.schimke.cadence.preview.NotificationPreviewsKt.NotificationFailedPreview_Notification · failed": {
             "path": "renders/composeApp/NotificationFailedPreview_Notification_failed-4cd1109f.png",
@@ -680,6 +687,13 @@
             "path": "renders/composeApp/NotificationSyncingPreview_Notification_syncing_light-fb11050e.png",
             "versions": [
                 {
+                    "blob": "66896131ff823c4fb5367330c0da4771d09ecb31",
+                    "commit": "d9574c2e9e591fb997d42f2297ea6d5a6f5541ff",
+                    "date": "2026-11-10T23:39:27Z",
+                    "sourceSha": "f297c04f",
+                    "commits": 1
+                },
+                {
                     "blob": "54ffcfcc566c93880f5abb8bbbf009085df70448",
                     "commit": "cc0c2b7c5fa7b714d5c837eab7a1d61debf5866c",
                     "date": "2026-11-10T11:23:32Z",
@@ -694,9 +708,9 @@
                     "commits": 1
                 }
             ],
-            "observations": 2,
+            "observations": 3,
             "unstable": false,
-            "flapCount": 0
+            "flapCount": 1
         },
         "composeApp/ee.schimke.cadence.preview.PodcastPreviewsKt.AddPodcastsPreview_Add podcasts": {
             "path": "renders/composeApp/AddPodcastsPreview_Add_podcasts-e09ca4b7.png",
