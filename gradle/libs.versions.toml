@@ -77,7 +77,7 @@ livery-capture = { module = "ee.schimke.composeai:livery-capture", version.ref =
 livery-firebase = { module = "ee.schimke.composeai:livery-firebase", version.ref = "livery" }
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
 robolectric-sdk35 = { module = "org.robolectric:android-all-instrumented", version.ref = "robolectric-sdk35" }
-composeai-preview-annotations = { module = "ee.schimke.composeai:preview-annotations", version = "3.27.3" }
+composeai-preview-annotations = { module = "ee.schimke.composeai:preview-annotations", version = "3.27.4" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
