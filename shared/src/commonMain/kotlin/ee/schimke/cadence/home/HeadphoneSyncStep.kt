@@ -24,7 +24,8 @@ sealed interface HeadphoneSyncStep {
 
   /** Plugged in, but the storage hasn't been chosen yet. */
   data object ChooseStorage : HeadphoneSyncStep {
-    override val message = "Headphones connected. Choose their storage to finish setup."
+    override val message =
+      "Headphones connected. Allow access to the whole headphone drive (not a folder on it) to finish setup."
   }
 
   /** Episodes still need downloading or processing before a copy. */
@@ -44,7 +45,8 @@ sealed interface HeadphoneSyncStep {
   /** The headphones already hold everything prepared. */
   data class UpToDate(val pluggedIn: Boolean) : HeadphoneSyncStep {
     override val message =
-      if (pluggedIn) "In sync with this phone. Eject the volume before unplugging."
+      if (pluggedIn)
+        "In sync with this phone. Before unplugging, tap Eject on the USB drive notification."
       else "In sync with this phone."
   }
 

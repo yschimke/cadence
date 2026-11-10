@@ -136,9 +136,9 @@ class DesktopPodcastTest {
       assertEquals("keep me", File(target, "personal.mp3").readText())
       assertEquals(
         "cadence-podcasts-v1",
-        File(target, "Cadence/podcasts/.cadence-owner").readText(),
+        File(target, "Cadence/.cadence-owner").readText(),
       )
-      assertTrue(sections.all { File(target, "Cadence/podcasts/${it.fileName}").length() > 0 })
+      assertTrue(sections.all { File(target, "Cadence/${it.fileName}").length() > 0 })
       val showEpisode = episode.copy(podcastId = "show-id", podcastTitle = "Example Show")
       val grouped =
         deviceManifest(
@@ -147,17 +147,17 @@ class DesktopPodcastTest {
           ),
         )
       platform.export(sections, target.path, podcastJson.encodeToString(grouped))
-      val showFolder = File(target, "Cadence/podcasts/${grouped.episodes.single().folder}")
+      val showFolder = File(target, "Cadence/${grouped.episodes.single().folder}")
       assertTrue(sections.all { File(showFolder, it.fileName).length() > 0 })
       assertTrue(
-        sections.none { File(target, "Cadence/podcasts/${it.fileName}").exists() },
+        sections.none { File(target, "Cadence/${it.fileName}").exists() },
         "flat copies from the old layout are deleted once the episode moves into its show folder",
       )
       assertEquals("keep me", File(target, "personal.mp3").readText())
       assertTrue(
         sections[0].fileName < sections[1].fileName,
       ) // Headphone filename order follows the timeline.
-      File(target, "Cadence/podcasts/.cadence-owner").delete()
+      File(target, "Cadence/.cadence-owner").delete()
       assertFailsWith<IllegalArgumentException> { platform.export(sections, target.path, "{}") }
       assertEquals("keep me", File(target, "personal.mp3").readText())
       // MP3 is a genuine alternate encoding, never a renamed M4A.
@@ -199,6 +199,46 @@ class DesktopPodcastTest {
         DesktopPodcastPlatform(File(root, "app")).export(emptyList(), target.path, "{}")
       }
       assertTrue(outside.listFiles()!!.isEmpty())
+    } finally {
+      root.deleteRecursively()
+    }
+  }
+
+  @Test
+  fun exportReplacesTheOldPodcastsFolder() = runBlocking {
+    val root = Files.createTempDirectory("cadence-legacy-test").toFile()
+    try {
+      val target = File(root, "usb").apply { mkdirs() }
+      val legacy = File(target, "Cadence/podcasts").apply { mkdirs() }
+      File(legacy, ".cadence-owner").writeText("cadence-podcasts-v1")
+      File(legacy, "cadence-manifest.json").writeText("{}")
+      val show = File(legacy, "Show-12345678").apply { mkdirs() }
+      File(show, ".cadence-owner").writeText("cadence-podcasts-v1")
+      File(show, "show-000000000001-${"a".repeat(64)}.mp3").writeText("old audio")
+      DesktopPodcastPlatform(File(root, "app")).export(emptyList(), target.path, "{}")
+      assertFalse(legacy.exists(), "the old Cadence/podcasts level is removed")
+      assertEquals("cadence-podcasts-v1", File(target, "Cadence/.cadence-owner").readText())
+      assertEquals("{}", File(target, "Cadence/cadence-manifest.json").readText())
+    } finally {
+      root.deleteRecursively()
+    }
+  }
+
+  @Test
+  fun exportMigratesPastFilesTheOldPodcastsFolderKeeps() = runBlocking {
+    val root = Files.createTempDirectory("cadence-legacy-kept-test").toFile()
+    try {
+      val target = File(root, "usb").apply { mkdirs() }
+      val legacy = File(target, "Cadence/podcasts").apply { mkdirs() }
+      File(legacy, ".cadence-owner").writeText("cadence-podcasts-v1")
+      File(legacy, "show-000000000001-${"a".repeat(64)}.mp3").writeText("old audio")
+      File(legacy, "notes.txt").writeText("mine")
+      val platform = DesktopPodcastPlatform(File(root, "app"))
+      platform.export(emptyList(), target.path, "{}")
+      platform.export(emptyList(), target.path, "{}")
+      assertEquals("mine", File(legacy, "notes.txt").readText())
+      assertFalse(File(legacy, "show-000000000001-${"a".repeat(64)}.mp3").exists())
+      assertEquals("{}", File(target, "Cadence/cadence-manifest.json").readText())
     } finally {
       root.deleteRecursively()
     }

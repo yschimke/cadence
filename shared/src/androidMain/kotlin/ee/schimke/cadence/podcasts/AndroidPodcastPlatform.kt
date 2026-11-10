@@ -174,11 +174,14 @@ open class AndroidPodcastPlatform(private val context: Context) :
           "Couldn't create $name on the headphones"
         }
         .also { require(it.isDirectory) { "$name on the headphones is a file, not a folder" } }
-    val folder = directory(directory(volume, "Cadence"), "podcasts")
+    requireVolumeRoot(target)
+    val folder = directory(volume, "Cadence")
+    // An older Cadence/podcasts shows Cadence made this folder, even if files it kept remain.
+    val migrated = removeLegacyPodcastsFolder(folder)
     val marker = folder.findFile(".cadence-owner")
     if (marker == null) {
-      require(folder.listFiles().isEmpty()) {
-        "Cadence/podcasts on the headphones holds files Cadence did not put there. Move them out, then try again"
+      require(migrated || folder.listFiles().isEmpty()) {
+        "The Cadence folder on the headphones holds files Cadence did not put there. Move them out, then try again"
       }
       val created = requireNotNull(folder.createFile("application/octet-stream", ".cadence-owner"))
       requireNotNull(context.contentResolver.openOutputStream(created.uri, "wt")).use {
@@ -190,7 +193,7 @@ open class AndroidPodcastPlatform(private val context: Context) :
           it.readText()
         } == "cadence-podcasts-v1",
       ) {
-        "Cadence/podcasts on the headphones has an unexpected owner file"
+        "The Cadence folder on the headphones has an unexpected owner file"
       }
     }
     fun write(
@@ -201,7 +204,14 @@ open class AndroidPodcastPlatform(private val context: Context) :
     ) {
       val targetFile = parent.findFile(name) ?: requireNotNull(parent.createFile(mime, name))
       require(targetFile.isFile) { "$name on the headphones is a folder, not a file" }
-      requireNotNull(context.contentResolver.openOutputStream(targetFile.uri, "wt")).use(writer)
+      requireNotNull(context.contentResolver.openFileDescriptor(targetFile.uri, "wt")).use { fd ->
+        java.io.FileOutputStream(fd.fileDescriptor).use { output ->
+          writer(output)
+          output.flush()
+          // Push the data to the stick now, so unplugging without ejecting loses less.
+          runCatching { output.fd.sync() }
+        }
+      }
     }
     // SAF does not promise atomic replace. A failed copy is retryable and never marks readiness
     // copied.
@@ -249,6 +259,51 @@ open class AndroidPodcastPlatform(private val context: Context) :
   }
 
   /**
+   * The headphones only find shows a couple of folders down from the drive root, so a copy into a
+   * folder picked inside the drive (say PODCASTS) lands where they never look.
+   */
+  private fun requireVolumeRoot(target: String) {
+    val treeId = android.provider.DocumentsContract.getTreeDocumentId(target.toPath().toUri())
+    if (treeId.substringAfter(':', "").isNotEmpty()) {
+      val folder = treeId.substringAfterLast('/').substringAfter(':')
+      throw PodcastProblem(
+        "Cadence was given the $folder folder rather than the whole headphone drive. Choose the drive itself under Change headphone storage."
+      )
+    }
+  }
+
+  /**
+   * Earlier versions copied into `Cadence/podcasts`; removes what they put there. True when that
+   * folder was Cadence's.
+   */
+  private fun removeLegacyPodcastsFolder(cadence: DocumentFile): Boolean {
+    fun owned(dir: DocumentFile) =
+      dir.isDirectory &&
+        dir.findFile(".cadence-owner")?.let { owner ->
+          context.contentResolver.openInputStream(owner.uri)?.bufferedReader()?.use {
+            it.readText()
+          }
+        } == "cadence-podcasts-v1"
+    val legacy = cadence.findFile("podcasts")?.takeIf { owned(it) } ?: return false
+    fun clear(dir: DocumentFile) =
+      dir.listFiles().forEach { entry ->
+        val name = entry.name ?: return@forEach
+        if (entry.isFile && (isCadenceAudioFile(name) || name == "cadence-manifest.json"))
+          check(entry.delete()) { "Couldn't remove an old episode from the headphones" }
+      }
+    fun removeIfOnlyMarker(dir: DocumentFile) {
+      if (dir.listFiles().all { it.name == ".cadence-owner" }) dir.delete()
+    }
+    legacy.listFiles().filter { owned(it) }.forEach {
+      clear(it)
+      removeIfOnlyMarker(it)
+    }
+    clear(legacy)
+    removeIfOnlyMarker(legacy)
+    return true
+  }
+
+  /**
    * Removes Cadence audio files that aren't in [keep] from the owned podcasts folder and its owned
    * show folders, then any show folder left holding only its owner marker. Anything not named like
    * Cadence audio, and any folder without Cadence's marker, is left alone.
@@ -284,8 +339,10 @@ open class AndroidPodcastPlatform(private val context: Context) :
         val root =
           DocumentFile.fromTreeUri(context, target.toPath().toUri()) ?: return@runCatching null
         val file =
-          root.findFile("Cadence")?.findFile("podcasts")?.findFile("cadence-manifest.json")
-            ?: return@runCatching null
+          root.findFile("Cadence")?.let { cadence ->
+            cadence.findFile("cadence-manifest.json")
+              ?: cadence.findFile("podcasts")?.findFile("cadence-manifest.json")
+          } ?: return@runCatching null
         val json =
           context.contentResolver.openInputStream(file.uri)?.bufferedReader()?.use { it.readText() }
             ?: return@runCatching null
@@ -293,6 +350,10 @@ open class AndroidPodcastPlatform(private val context: Context) :
       }
         .getOrNull()
     }
+
+  // Apps can't unmount USB storage; the system's Eject is in its notification and in Settings.
+  override val ejectHint =
+    "Before unplugging, tap Eject on the USB drive notification, or in Settings › Storage."
 
   override fun reportFailure(error: Throwable) = reportNonFatal(error)
 

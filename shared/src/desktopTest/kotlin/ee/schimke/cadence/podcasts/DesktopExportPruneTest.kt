@@ -37,7 +37,7 @@ class DesktopExportPruneTest {
       File(root, "app/audio").mkdirs()
       listOf(a, b, c).forEach { File(root, "app/audio/${it.fileName}").writeText("audio") }
       val volume = File(root, "usb").apply { mkdirs() }
-      val podcasts = File(volume, "Cadence/podcasts")
+      val podcasts = File(volume, "Cadence")
 
       platform.export(listOf(a, b), volume.path, manifest("ShowA" to a, "ShowB" to b))
       assertTrue(File(podcasts, "ShowA/${a.fileName}").isFile)

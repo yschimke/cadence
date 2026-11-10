@@ -48,7 +48,27 @@ actual fun rememberFileExplorerOpenLauncher(
       },
     )
 
-  return {
-    launcher.launch(input = null)
-  }
+  return { launcher.launch(input = headphoneVolumeRoot(context)) }
+}
+
+/**
+ * The root of the plugged-in headphone volume (SWIM PRO, else the only removable volume), so the
+ * picker opens on it and choosing it takes one tap. Android only lets an app write to USB storage
+ * the user granted through this picker, so the tap itself can't be skipped.
+ */
+internal fun headphoneVolumeRoot(context: android.content.Context): android.net.Uri? {
+  val volumes =
+    context
+      .getSystemService(android.os.storage.StorageManager::class.java)
+      ?.storageVolumes
+      .orEmpty()
+      .filter { it.isRemovable && it.uuid != null && it.state == android.os.Environment.MEDIA_MOUNTED }
+  val volume =
+    volumes.firstOrNull { it.getDescription(context).equals("SWIM PRO", ignoreCase = true) }
+      ?: volumes.singleOrNull()
+      ?: return null
+  return android.provider.DocumentsContract.buildDocumentUri(
+    "com.android.externalstorage.documents",
+    "${volume.uuid}:",
+  )
 }

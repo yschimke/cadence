@@ -553,8 +553,8 @@ fun isCadenceAudioFile(name: String): Boolean = runCatching {
   .isSuccess
 
 /**
- * Where each of [sections] goes under `Cadence/podcasts`, as "folder/name" ("name" at the top). A
- * sync keeps exactly these and removes any other Cadence audio file in folders it owns.
+ * Where each of [sections] goes under `Cadence`, as "folder/name" ("name" at the top). A sync keeps
+ * exactly these and removes any other Cadence audio file in folders it owns.
  */
 fun podcastExportPaths(sections: List<Section>, folders: Map<String, String>): Set<String> =
   sections
