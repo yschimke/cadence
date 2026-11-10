@@ -353,8 +353,13 @@ suspend fun readPocketCasts(
       if (pocketCastsUsable(next)) usable++
     }
   }
+  var archivedMembers = 0
   suspend fun members(uuids: List<String>, showArchived: Boolean) =
-    gather(uuids.size) { index -> details(uuids[index])?.takeIf { showArchived || !it.archived } }
+    gather(uuids.size) { index ->
+      details(uuids[index])?.takeIf {
+        showArchived || !it.archived.also { if (it) archivedMembers++ }
+      }
+    }
   return when (list) {
     POCKET_CASTS_UP_NEXT -> {
       val body =
@@ -378,8 +383,11 @@ suspend fun readPocketCasts(
         reader.playlists()?.let(::pocketCastsPlaylists)?.firstOrNull { it.uuid == list }
           ?: throw PodcastProblem("That playlist is no longer in Pocket Casts")
       val episodes = members(playlist.episodeOrder, playlist.showArchived)
-      // Archived members are hidden, so a playlist of finished episodes isn't empty.
-      if (episodes.isEmpty() && playlist.episodeOrder.isNotEmpty())
+      // Archived members are hidden, so a playlist of finished episodes isn't empty. Only say so
+      // when every member was read and archived: a capture can lack some episodes' details.
+      if (
+        episodes.isEmpty() && archivedMembers > 0 && archivedMembers == playlist.episodeOrder.size
+      )
         throw PodcastProblem("Everything in ${playlist.title} is archived in Pocket Casts")
       pocketCastsSnapshot(playlist.title, episodes, limit)
     }

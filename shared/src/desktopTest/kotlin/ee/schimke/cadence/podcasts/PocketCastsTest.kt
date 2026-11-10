@@ -178,6 +178,17 @@ class PocketCastsTest {
     controller.signInPocketCasts("listener@example.com", "secret")
     val problem = assertFailsWith<PodcastProblem> { controller.importPocketCasts("manual", 5) }
     assertEquals("Everything in Swim is archived in Pocket Casts", problem.message)
+
+    // A capture without the episode's details can't tell, so it doesn't claim they're archived.
+    val capture = buildJsonArray {
+      addJsonObject {
+        put("path", "/user/playlists")
+        put("body", platform.playlistsBody)
+      }
+    }
+    controller.usePocketCastsCapture(capture.toString())
+    val unknown = assertFailsWith<PodcastProblem> { controller.importPocketCasts("manual", 5) }
+    assertEquals("Swim is empty in Pocket Casts", unknown.message)
   }
 
   @Test
