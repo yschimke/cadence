@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.1.29](https://github.com/yschimke/cadence/compare/v0.1.28...v0.1.29) (2026-11-10)
+
+
+### Bug Fixes
+
+* **deps:** update compose-ai-tools to v0.9.0 ([#583](https://github.com/yschimke/cadence/issues/583)) ([d19ea6d](https://github.com/yschimke/cadence/commit/d19ea6d4530b23e855c470893cd75d1a5bb8c2be))
+* **notifications:** show the progress bar and Cancel only when a post has them ([#582](https://github.com/yschimke/cadence/issues/582)) ([13d91c3](https://github.com/yschimke/cadence/commit/13d91c39ffd2cf52735b4c5d9c266923006b94ee))
+* **pocket-casts:** import playlist members missing from episodeOrder ([#589](https://github.com/yschimke/cadence/issues/589)) ([52beb85](https://github.com/yschimke/cadence/commit/52beb8542e3fe35404adb9e548c38b8bbfe7b062))
+* **widgets:** lay the notification's bar and Cancel out below the title, and capture icons ([#588](https://github.com/yschimke/cadence/issues/588)) ([f297c04](https://github.com/yschimke/cadence/commit/f297c04fa584f0e7099cbcc744278ee52d334d0c))
+
 ## [0.1.28](https://github.com/yschimke/cadence/compare/v0.1.27...v0.1.28) (2026-11-10)
 
 
