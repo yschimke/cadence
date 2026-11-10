@@ -78,6 +78,31 @@ fun SwimLaneProgress(
 }
 
 /**
+ * One lap as a progress bar whose [progress] (0 at the start wall, 1 at the far one) is a value of
+ * the document: a named value a host or a template's instantiation fills in, so one captured
+ * document serves any progress. Always swum left to right, with no turn.
+ */
+@Composable
+@RemoteComposable
+fun SwimLaneProgress(
+  progress: RemoteFloat,
+  modifier: RemoteModifier = RemoteModifier,
+  colors: LaneColors = LaneColors.Pool,
+  clock: RemoteFloat = LocalSwimClock.current,
+) {
+  RemoteCanvas(modifier) {
+    drawLane(
+      colors = colors,
+      direction = 1f.rf,
+      position = progress,
+      wake = colors.oddWake.copy(alpha = WakeAlpha).rc,
+      turnClock = null,
+      strokeClock = clock,
+    )
+  }
+}
+
+/**
  * The swimmer doing endless laps of [lapSeconds] each (a divisor of 3600, see [SwimClock]), with a
  * flip turn at every wall: decoration for something that is ready and waiting, not a measure of
  * progress.

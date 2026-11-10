@@ -169,7 +169,7 @@ class PlatformPlayerRule : TestWatcher() {
     /** Stray antialiased pixels at a region's edge. */
     const val NOISE = 8
 
-    /** More than inflating and laying out a document posts; a few frames of one that animates. */
-    private const val MAIN_THREAD_TASKS = 64
+    /** What inflating and laying out a document posts, and a frame or two of one that animates. */
+    private const val MAIN_THREAD_TASKS = 8
   }
 }

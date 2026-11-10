@@ -12,12 +12,9 @@ import androidx.compose.remote.creation.compose.action.RemoteAction
 import androidx.compose.remote.creation.compose.layout.RemoteAlignment
 import androidx.compose.remote.creation.compose.layout.RemoteArrangement
 import androidx.compose.remote.creation.compose.layout.RemoteBox
-import androidx.compose.remote.creation.compose.layout.RemoteCanvas
 import androidx.compose.remote.creation.compose.layout.RemoteColumn
 import androidx.compose.remote.creation.compose.layout.RemoteComposable
-import androidx.compose.remote.creation.compose.layout.RemoteOffset
 import androidx.compose.remote.creation.compose.layout.RemoteRow
-import androidx.compose.remote.creation.compose.layout.RemoteSize
 import androidx.compose.remote.creation.compose.layout.RemoteStateLayout
 import androidx.compose.remote.creation.compose.layout.RemoteText
 import androidx.compose.remote.creation.compose.modifier.RemoteModifier
@@ -38,7 +35,6 @@ import androidx.compose.remote.creation.compose.state.RemoteBoolean
 import androidx.compose.remote.creation.compose.state.RemoteColor
 import androidx.compose.remote.creation.compose.state.RemoteFloat
 import androidx.compose.remote.creation.compose.state.RemoteInt
-import androidx.compose.remote.creation.compose.state.RemotePaint
 import androidx.compose.remote.creation.compose.state.RemoteState
 import androidx.compose.remote.creation.compose.state.RemoteString
 import androidx.compose.remote.creation.compose.state.rdp
@@ -51,6 +47,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import ee.schimke.cadence.swim.SwimLaneProgress
 import ee.schimke.cadence.widgets.WidgetColors
 import ee.schimke.cadence.widgets.WidgetIcon
 import kotlinx.serialization.json.JsonObject
@@ -81,6 +78,9 @@ object NotificationTemplate {
   const val MIN_WIDTH_DP = 200
   const val MIN_HEIGHT_DP = 64
   const val MAX_HEIGHT_DP = 256
+
+  /** The progress bar: a pool lane tall enough to see its swimmer. */
+  const val LANE_HEIGHT_DP = 24
 
   /** The size the template is captured at; it fills whatever the shade gives it. */
   const val CAPTURE_WIDTH_DP = 360
@@ -208,20 +208,15 @@ fun NotificationTemplateContent(
     // own gap above: the column has no spacing, which that player needs as a literal anyway.
     RemoteStateLayout(hasProgress.toRemoteInt(), 0, 1) { shown: Int ->
       if (shown == 1) {
-        // A canvas, not fillMaxWidth(progress): players size a box by a constant fraction only.
-        RemoteCanvas(
+        // The swimmer's one lap: a canvas draws it from the value, where a box could only be
+        // sized by a constant fraction.
+        SwimLaneProgress(
+          progress,
           RemoteModifier.padding(top = 10.rdp)
             .fillMaxWidth()
-            .height(6.rdp)
-            .clip(RemoteRoundedCornerShape(3.rdp)),
-        ) {
-          drawRect(RemotePaint { color = tonal }, RemoteOffset(0f, 0f), RemoteSize(width, height))
-          drawRect(
-            RemotePaint { color = primary },
-            RemoteOffset(0f, 0f),
-            RemoteSize(width * progress, height),
-          )
-        }
+            .height(t.LANE_HEIGHT_DP.rdp)
+            .clip(RemoteRoundedCornerShape((t.LANE_HEIGHT_DP / 2).rdp)),
+        )
       } else {
         RemoteBox(RemoteModifier.fillMaxWidth())
       }
