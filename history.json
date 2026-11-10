@@ -1,6 +1,6 @@
 {
     "formatVersion": "compose-preview-history/v1",
-    "generatedFrom": "aa36236c6e8b55f565e9dccf558057140eed6ba4",
+    "generatedFrom": "e8b25efe6f1861eaa8e1036925dcc884faa343e8",
     "previews": {
         "composeApp/activity__MainActivity": {
             "path": "renders/composeApp/activity__MainActivity.png",
@@ -3265,6 +3265,13 @@
             "path": "renders/composeApp/HomeHeadphonesPreview_Home_headphones_connected-71a28d46.png",
             "versions": [
                 {
+                    "blob": "e07efcd3ac08133c96168699cbe8ae20fb03523e",
+                    "commit": "e8b25efe6f1861eaa8e1036925dcc884faa343e8",
+                    "date": "2026-11-10T07:59:15Z",
+                    "sourceSha": "f0d71610",
+                    "commits": 1
+                },
+                {
                     "blob": "1045ae6ab0caf143ee3499b4fef0d4ced4cef40b",
                     "commit": "4917062213b6f14c99fe1df5ff4dba4b822b8c38",
                     "date": "2026-11-07T22:36:43Z",
@@ -3349,7 +3356,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 12,
+            "observations": 13,
             "unstable": false,
             "flapCount": 0
         },
