@@ -19,11 +19,13 @@ import ee.schimke.cadence.notifications.NotificationBody
 import ee.schimke.cadence.notifications.NotificationIcon
 import ee.schimke.cadence.notifications.NotificationTemplate
 import ee.schimke.cadence.notifications.NotificationTemplateContent
+import ee.schimke.composeai.rcplayer.edit.RcTargetProfiles
 import ee.schimke.composeai.rcplayer.protocol.RcDocumentCodec
 import ee.schimke.composeai.rcplayer.protocol.RcWireLimits
 import ee.schimke.composeai.rcwidget.creation.RcWidgetCaptureSize
 import ee.schimke.composeai.rcwidget.launcher.RcLauncherWidgets
 import ee.schimke.composeai.rcwidget.launcher.captureLauncherWidget
+import ee.schimke.composeai.rcwidget.launcher.widgetsProfile
 import ee.schimke.livery.instantiate.InstantiateResult
 import ee.schimke.livery.instantiate.TemplateInstantiator
 import ee.schimke.livery.notifications.LiveryNotifications
@@ -97,8 +99,19 @@ class InstantiateStepsDeviceTest {
     fun recode(bytes: ByteArray): ByteArray =
       RcDocumentCodec.encode(RcDocumentCodec.decode(bytes, RcWireLimits()))
 
+    val captured16 = runBlocking {
+      captureLauncherWidget(context, RcWidgetCaptureSize(320, 110), profile = widgetsProfile) {
+          NotificationTemplateContent(null, null, body, colors = colors)
+        }
+        .bytes
+    }
+    // Suffix " @6": handed to the player as a level 6 (Android 16) document, not this device's.
     val docs: List<Pair<String, () -> ByteArray?>> =
       listOf(
+        "I bundled, instantiated @6" to { instantiate(bundled, true) },
+        "J bundled, raw @6" to { bundled },
+        "K device capture, Android 16 profile" to { captured16 },
+        "L device capture, Android 16 profile @6" to { captured16 },
         "A bundled, instantiated, numeric taps" to { instantiate(bundled, true) },
         "B bundled, instantiated, named taps" to { instantiate(bundled, false) },
         "C bundled, raw (blank values)" to { bundled },
@@ -116,7 +129,11 @@ class InstantiateStepsDeviceTest {
       notes.appendLine("$name: ${bytes?.size} bytes")
       name to
         bytes?.let {
-          runCatching { RcLauncherWidgets.remoteViews(it) }
+          runCatching {
+            if (name.endsWith("@6"))
+              RcLauncherWidgets.remoteViews(it, emptyMap(), RcTargetProfiles.WIDGETS_V6)
+            else RcLauncherWidgets.remoteViews(it)
+          }
             .onFailure { e -> notes.appendLine("$name views: ${e.stackTraceToString()}") }
             .getOrNull()
         }
