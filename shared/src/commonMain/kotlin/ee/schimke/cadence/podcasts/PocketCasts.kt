@@ -110,9 +110,22 @@ fun pocketCastsPlaylists(body: String): List<PocketCastsPlaylist> =
       node.text("title").ifBlank { "Pocket Casts playlist" },
       node.flag("manual"),
       node.flag("showArchived"),
-      (node["episodeOrder"] as? JsonArray).orEmpty().mapNotNull { it.jsonPrimitive.contentOrNull },
+      pocketCastsPlaylistMembers(node),
     )
   }
+
+/**
+ * A manual playlist's episodes in play order. The official client takes membership from `episodes`
+ * and only sorts by `episodeOrder`, which can leave members out; those follow in `episodes` order.
+ */
+private fun pocketCastsPlaylistMembers(node: JsonObject): List<String> {
+  val order =
+    (node["episodeOrder"] as? JsonArray).orEmpty().mapNotNull {
+      (it as? JsonPrimitive)?.contentOrNull
+    }
+  val members = node["episodes"].objects().map { it.text("episode").ifBlank { it.text("uuid") } }
+  return (order + members).filter { it.isNotBlank() }.distinct()
+}
 
 fun pocketCastsEpisode(node: JsonObject) =
   PocketCastsEpisode(
@@ -364,11 +377,11 @@ suspend fun readPocketCasts(
       val playlist =
         reader.playlists()?.let(::pocketCastsPlaylists)?.firstOrNull { it.uuid == list }
           ?: throw PodcastProblem("That playlist is no longer in Pocket Casts")
-      pocketCastsSnapshot(
-        playlist.title,
-        members(playlist.episodeOrder, playlist.showArchived),
-        limit,
-      )
+      val episodes = members(playlist.episodeOrder, playlist.showArchived)
+      // Archived members are hidden, so a playlist of finished episodes isn't empty.
+      if (episodes.isEmpty() && playlist.episodeOrder.isNotEmpty())
+        throw PodcastProblem("Everything in ${playlist.title} is archived in Pocket Casts")
+      pocketCastsSnapshot(playlist.title, episodes, limit)
     }
   }
 }
