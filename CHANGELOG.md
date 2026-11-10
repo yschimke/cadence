@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.1.28](https://github.com/yschimke/cadence/compare/v0.1.27...v0.1.28) (2026-11-10)
+
+
+### Bug Fixes
+
+* copy podcasts to Cadence/&lt;Show&gt; at the headphone drive root ([#580](https://github.com/yschimke/cadence/issues/580)) ([f0d7161](https://github.com/yschimke/cadence/commit/f0d716109a66dbf1b1caabe3d688c9c4d4403278))
+* **deps:** update dependency ee.schimke.composeai:preview-annotations to v3.27.4 ([#575](https://github.com/yschimke/cadence/issues/575)) ([215903e](https://github.com/yschimke/cadence/commit/215903e1f14209acf602e87afbd3b3b90e4e4e4e))
+* draw notification bodies on Android 16 and 17 ([#578](https://github.com/yschimke/cadence/issues/578)) ([41aa23f](https://github.com/yschimke/cadence/commit/41aa23f85649df7f9a98ef8a43f0ebb237192ed1))
+
 ## [0.1.27](https://github.com/yschimke/cadence/compare/v0.1.26...v0.1.27) (2026-11-09)
 
 
