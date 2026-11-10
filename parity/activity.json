@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-10T19:19:41.144Z",
+  "generatedAt": "2026-11-10T19:45:57.346Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "e3bf1e7231764002a649a272a972d3ddc0e77bdb",
+        "subject": "chore(deps): update plugin com.squareup.wire to v7.2.0 (#587)",
+        "at": "2026-11-10T19:33:46Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "fb7eadb697053738f02d1daf4bfddb7a9126ce31",
         "subject": "chore(deps): update gradle to v9.9.1 (#586)",
@@ -474,14 +482,6 @@
         "sha": "18de8c343e80e1f7e423d0c006916a6f3a9393b9",
         "subject": "fix(widgets): headphone widget draws on Android 16's platform widget player (#529)",
         "at": "2026-11-07T00:05:37Z",
-        "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "a489de5cf731f0b53e20591bf3375a60bfd92bb2",
-        "subject": "feat(settings): refresh the widget designs from Settings (#527)",
-        "at": "2026-11-06T23:41:35Z",
         "author": "Yuri Schimke",
         "previewIds": [],
         "components": []
