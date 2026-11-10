@@ -176,9 +176,21 @@ val robolectricSdk by configurations.creating {
 
 dependencies { robolectricSdk(libs.robolectric.sdk35) }
 
+// The platform's own Remote Compose player (PlatformPlayerTest): Android 16 and 17. One
+// configuration each, as Gradle would resolve several versions of the one module to the newest.
+val robolectricPlatformSdks =
+  listOf("16-robolectric-13921718-i7", "17-robolectric-15733970-i7").map { version ->
+    configurations
+      .detachedConfiguration(
+        dependencies.create("org.robolectric:android-all-instrumented:$version"),
+      )
+      .apply { isTransitive = false }
+  }
+
 val prepareRobolectricSdk by
   tasks.registering(Sync::class) {
     from(robolectricSdk)
+    robolectricPlatformSdks.forEach { from(it) }
     into(layout.buildDirectory.dir("robolectric-sdk"))
   }
 
@@ -191,6 +203,11 @@ tasks
     dependsOn(prepareRobolectricSdk)
     inputs.files(robolectricSdk)
     systemProperty("robolectric.offline", "true")
+    // Robolectric's file-descriptor shims reach into java.io (PlatformPlayerTest's RemoteViews).
+    jvmArgs(
+      "--add-opens=java.base/java.io=ALL-UNNAMED",
+      "--add-exports=java.base/jdk.internal.access=ALL-UNNAMED",
+    )
     systemProperty(
       "robolectric.dependency.dir",
       layout.buildDirectory.dir("robolectric-sdk").get().asFile.absolutePath,
