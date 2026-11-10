@@ -88,8 +88,8 @@ class PlatformPlayerTest {
 
   /**
    * Each of the notification contract's examples, instantiated from the bundled template and made
-   * into `RemoteViews` as [NotificationLivery] does. Until rc-players recovers such a document
-   * ([KNOWN_BLANK]), this reproduces the bug: every body is blank.
+   * into `RemoteViews` as [NotificationLivery] does. Blank before rc-players 2.31.1, whose
+   * `RcLauncherWidgets.remoteViews` recovers such a document for the device's display.
    */
   private fun everyNotificationExample() = runBlocking {
     val json = Json { ignoreUnknownKeys = true }
@@ -114,16 +114,7 @@ class PlatformPlayerTest {
           numericActions = true,
         ) as InstantiateResult.Ok
       val drawn = ink("notification-$name", RcLauncherWidgets.remoteViews(document.bytes))
-      if (KNOWN_BLANK) {
-        assertEquals(
-          0,
-          drawn,
-          "'$name' draws on Android ${Build.VERSION.SDK_INT}: the blank body is fixed, so set " +
-            "KNOWN_BLANK to false and keep this as the regression test",
-        )
-      } else {
-        assertTrue(drawn > MIN_INK, "'$name' is blank on Android ${Build.VERSION.SDK_INT}")
-      }
+      assertTrue(drawn > MIN_INK, "'$name' is blank on Android ${Build.VERSION.SDK_INT}")
     }
   }
 
@@ -218,13 +209,5 @@ class PlatformPlayerTest {
 
     /** An icon alone is over a thousand pixels; antialiasing noise is nowhere near. */
     const val MIN_INK = 500
-
-    /**
-     * Whether the platform player is still known to draw every notification body blank. True with
-     * rc-players 2.31.0; the release after it recovers the document in
-     * `RcLauncherWidgets.remoteViews` (rc-players#840). The bump that brings it in fails
-     * [everyNotificationExample] until this is false.
-     */
-    const val KNOWN_BLANK = true
   }
 }
