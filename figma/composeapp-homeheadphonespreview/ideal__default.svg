@@ -32,16 +32,16 @@
                   <text x="42" y="266.99" font-size="42" font-family="Roboto Flex" font-weight="500" letter-spacing="0.53" fill="#30323A">On your headphones</text>
                 </g>
                 <g id="AndroidViewHolder">
-                  <image href="ideal__default.figma-raster/589.png" x="42" y="336" width="966" height="399"/>
+                  <image href="ideal__default.figma-raster/582.png" x="42" y="336" width="966" height="399"/>
                 </g>
                 <g id="Box">
-                  <rect x="42" y="756" width="966" height="389" rx="52.5" ry="52.5" fill="#B9CBFF"/>
+                  <rect x="42" y="756" width="966" height="452" rx="52.5" ry="52.5" fill="#B9CBFF"/>
                   <g id="Column">
                     <g id="Row">
                       <g id="Box">
-                        <rect x="84" y="809" width="105" height="105" rx="52.5" ry="52.5" fill="#30436E" fill-opacity="0.12"/>
+                        <rect x="84" y="840" width="105" height="105" rx="52.5" ry="52.5" fill="#30436E" fill-opacity="0.12"/>
                         <g id="BoxKt" data-material-icon="sd_storage" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/sd_storage/v1/24px.svg">
-                          <g transform="translate(108 833) scale(2.41 2.41)">
+                          <g transform="translate(108 864) scale(2.41 2.41)">
                             <use href="#material-icon-materialicons-sd_storage" xlink:href="#material-icon-materialicons-sd_storage"/>
                           </g>
                         </g>
@@ -49,13 +49,13 @@
                       <g id="Spacer">
                       </g>
                       <g id="Empty">
-                        <text font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30436E"><tspan x="221" y="844" textLength="740" lengthAdjust="spacing">Headphones connected. Choose their</tspan><tspan x="221" y="907" textLength="452" lengthAdjust="spacing">storage to finish setup.</tspan></text>
+                        <text font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30436E"><tspan x="221" y="844" textLength="599" lengthAdjust="spacing">Headphones connected. Allow</tspan><tspan x="221" y="907" textLength="728" lengthAdjust="spacing">access to the whole headphone drive</tspan><tspan x="221" y="970" textLength="656" lengthAdjust="spacing">(not a folder on it) to finish setup.</tspan></text>
                       </g>
                     </g>
                     <g id="Box">
-                      <rect x="84" y="956" width="882" height="147" rx="73.5" ry="73.5" fill="#4C5E8B"/>
+                      <rect x="84" y="1019" width="882" height="147" rx="73.5" ry="73.5" fill="#4C5E8B"/>
                       <g id="Empty">
-                        <text x="303" y="1041.92" font-size="36.75" font-family="Roboto Flex" font-weight="500" letter-spacing="0.26" fill="#F9F8FF">Choose headphone storage</text>
+                        <text x="303" y="1104.92" font-size="36.75" font-family="Roboto Flex" font-weight="500" letter-spacing="0.26" fill="#F9F8FF">Choose headphone storage</text>
                       </g>
                     </g>
                   </g>
@@ -63,47 +63,47 @@
               </g>
               <g id="Column">
                 <g id="Empty">
-                  <text x="42" y="1264.99" font-size="42" font-family="Roboto Flex" font-weight="500" letter-spacing="0.53" fill="#30323A">Audio controls</text>
+                  <text x="42" y="1327.99" font-size="42" font-family="Roboto Flex" font-weight="500" letter-spacing="0.53" fill="#30323A">Audio controls</text>
                 </g>
                 <g id="AndroidViewHolder">
-                  <image href="ideal__default.figma-raster/587.png" x="42" y="1334" width="966" height="210"/>
+                  <image href="ideal__default.figma-raster/584.png" x="42" y="1397" width="966" height="210"/>
                 </g>
               </g>
               <g id="Column">
                 <g id="Empty">
-                  <text x="42" y="1663.99" font-size="42" font-family="Roboto Flex" font-weight="500" letter-spacing="0.53" fill="#30323A">On this phone</text>
+                  <text x="42" y="1726.99" font-size="42" font-family="Roboto Flex" font-weight="500" letter-spacing="0.53" fill="#30323A">On this phone</text>
                 </g>
                 <g id="AndroidViewHolder">
-                  <image href="ideal__default.figma-raster/585.png" x="42" y="1733" width="966" height="504"/>
+                  <image href="ideal__default.figma-raster/586.png" x="42" y="1796" width="966" height="504"/>
                 </g>
                 <g id="Row">
                   <g id="Box">
-                    <rect x="43" y="2270" width="391" height="103" rx="51.5" ry="51.5" fill="none" stroke="#B0B1BC" stroke-width="2.62"/>
+                    <rect x="43" y="2333" width="391" height="103" rx="51.5" ry="51.5" fill="none" stroke="#B0B1BC" stroke-width="2.62"/>
                     <g id="Row">
                       <g id="BoxKt" data-material-icon="podcasts" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/podcasts/v1/24px.svg">
-                        <g transform="translate(105 2298) scale(1.95 1.95)">
+                        <g transform="translate(105 2361) scale(1.95 1.95)">
                           <use href="#material-icon-materialicons-podcasts" xlink:href="#material-icon-materialicons-podcasts"/>
                         </g>
                       </g>
                       <g id="Spacer">
                       </g>
                       <g id="Empty">
-                        <text x="173" y="2333.92" font-size="36.75" font-family="Roboto Flex" font-weight="500" letter-spacing="0.26" fill="#5D5F68">All episodes</text>
+                        <text x="173" y="2396.92" font-size="36.75" font-family="Roboto Flex" font-weight="500" letter-spacing="0.26" fill="#5D5F68">All episodes</text>
                       </g>
                     </g>
                   </g>
                   <g id="Box">
-                    <rect x="457" y="2270" width="437" height="103" rx="51.5" ry="51.5" fill="none" stroke="#B0B1BC" stroke-width="2.62"/>
+                    <rect x="457" y="2333" width="437" height="103" rx="51.5" ry="51.5" fill="none" stroke="#B0B1BC" stroke-width="2.62"/>
                     <g id="Row">
                       <g id="BoxKt" data-material-icon="refresh" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/refresh/v1/24px.svg">
-                        <g transform="translate(519 2298) scale(1.95 1.95)">
+                        <g transform="translate(519 2361) scale(1.95 1.95)">
                           <use href="#material-icon-materialicons-refresh" xlink:href="#material-icon-materialicons-refresh"/>
                         </g>
                       </g>
                       <g id="Spacer">
                       </g>
                       <g id="Empty">
-                        <text x="587" y="2333.92" font-size="36.75" font-family="Roboto Flex" font-weight="500" letter-spacing="0.26" fill="#5D5F68">Refresh folders</text>
+                        <text x="587" y="2396.92" font-size="36.75" font-family="Roboto Flex" font-weight="500" letter-spacing="0.26" fill="#5D5F68">Refresh folders</text>
                       </g>
                     </g>
                   </g>

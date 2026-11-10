@@ -7748,14 +7748,14 @@
             "role": "button",
             "bounds": {
               "x": 84,
-              "y": 956,
+              "y": 1019,
               "width": 882,
               "height": 147
             }
           },
           "bounds": {
             "x": 84,
-            "y": 956,
+            "y": 1019,
             "width": 882,
             "height": 147
           }
@@ -7768,16 +7768,16 @@
             "role": "button",
             "bounds": {
               "x": 42,
-              "y": 2269,
+              "y": 2332,
               "width": 393,
-              "height": 93
+              "height": 30
             }
           },
           "bounds": {
             "x": 42,
-            "y": 2269,
+            "y": 2332,
             "width": 393,
-            "height": 93
+            "height": 30
           }
         },
         {
@@ -7788,16 +7788,16 @@
             "role": "button",
             "bounds": {
               "x": 456,
-              "y": 2269,
+              "y": 2332,
               "width": 439,
-              "height": 93
+              "height": 30
             }
           },
           "bounds": {
             "x": 456,
-            "y": 2269,
+            "y": 2332,
             "width": 439,
-            "height": 93
+            "height": 30
           }
         },
         {
@@ -7847,14 +7847,14 @@
             "x": 42,
             "y": 756,
             "width": 966,
-            "height": 389
+            "height": 452
           },
           "cornerRadius": 20
         },
         {
           "bounds": {
             "x": 84,
-            "y": 809,
+            "y": 840,
             "width": 105,
             "height": 105
           },
@@ -7863,7 +7863,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 956,
+            "y": 1019,
             "width": 882,
             "height": 147
           },
@@ -7873,9 +7873,9 @@
         {
           "bounds": {
             "x": 42,
-            "y": 2269,
+            "y": 2332,
             "width": 393,
-            "height": 93
+            "height": 30
           },
           "role": "Button",
           "cornerRadius": 20
@@ -7883,9 +7883,9 @@
         {
           "bounds": {
             "x": 456,
-            "y": 2269,
+            "y": 2332,
             "width": 439,
-            "height": 93
+            "height": 30
           },
           "role": "Button",
           "cornerRadius": 20
@@ -14631,7 +14631,7 @@
     "ee.schimke.cadence (CadenceTheme)"
   ],
   "renderer": "compose-preview 2.79.0",
-  "generatedAt": "2026-11-10T07:36:04.186Z",
+  "generatedAt": "2026-11-10T08:03:02.905Z",
   "failures": [
     {
       "id": "render-failed--googleoauthactivity--activity-googleoauthactivity",
@@ -14703,7 +14703,7 @@
   "componentsFile": "components.json",
   "source": {
     "repo": "yschimke/cadence",
-    "ref": "41aa23f85649df7f9a98ef8a43f0ebb237192ed1",
+    "ref": "f0d716109a66dbf1b1caabe3d688c9c4d4403278",
     "module": ""
   }
 }
