@@ -1,11 +1,27 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-10T10:21:15.004Z",
+  "generatedAt": "2026-11-10T19:19:41.144Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "fb7eadb697053738f02d1daf4bfddb7a9126ce31",
+        "subject": "chore(deps): update gradle to v9.9.1 (#586)",
+        "at": "2026-11-10T19:06:48Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "13d91c39ffd2cf52735b4c5d9c266923006b94ee",
+        "subject": "fix(notifications): show the progress bar and Cancel only when a post has them (#582)",
+        "at": "2026-11-10T11:07:14Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "d19ea6d4530b23e855c470893cd75d1a5bb8c2be",
         "subject": "fix(deps): update compose-ai-tools to v0.9.0 (#583)",
@@ -467,22 +483,6 @@
         "subject": "feat(settings): refresh the widget designs from Settings (#527)",
         "at": "2026-11-06T23:41:35Z",
         "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "1d0353a805d32062fc5471e40439aec7d798e27d",
-        "subject": "chore(deps): update gradle to v9.9.0 (#524)",
-        "at": "2026-11-06T23:19:28Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "52160aa5171f22c07f77dfd601aad64904a84ceb",
-        "subject": "chore(main): release 0.1.20 (#525)",
-        "at": "2026-11-06T23:03:08Z",
-        "author": "github-actions[bot]",
         "previewIds": [],
         "components": []
       }
