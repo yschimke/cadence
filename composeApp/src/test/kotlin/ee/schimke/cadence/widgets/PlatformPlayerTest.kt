@@ -10,44 +10,36 @@ import android.os.Build
 import android.os.Looper
 import android.view.View
 import android.widget.FrameLayout
+import android.widget.RemoteViews
 import androidx.compose.remote.creation.compose.capture.RemoteCreationDisplayInfo
 import androidx.compose.remote.creation.compose.capture.RemoteDensity
 import androidx.compose.remote.creation.compose.capture.captureSingleRemoteDocument
 import ee.schimke.cadence.notifications.NotificationBody
 import ee.schimke.cadence.notifications.NotificationIcon
 import ee.schimke.cadence.notifications.NotificationTemplateContent
-import ee.schimke.composeai.rcplayer.edit.RcDisplay
-import ee.schimke.composeai.rcplayer.edit.RcTargetProfiles
-import ee.schimke.composeai.rcplayer.edit.adaptTo
-import ee.schimke.composeai.rcplayer.edit.collapseConstantStateLayouts
+import ee.schimke.composeai.rcplayer.edit.foldConstantExpressions
 import ee.schimke.composeai.rcplayer.edit.hardcodeDensity
-import ee.schimke.composeai.rcplayer.edit.hardcodeUnboundNamedValues
-import ee.schimke.composeai.rcplayer.edit.optimize
 import ee.schimke.composeai.rcplayer.protocol.RcColumnLayout
-import ee.schimke.composeai.rcplayer.protocol.RcDocument
 import ee.schimke.composeai.rcplayer.protocol.RcDocumentCodec
-import ee.schimke.composeai.rcplayer.protocol.RcDraw4
 import ee.schimke.composeai.rcplayer.protocol.RcFloatConstant
 import ee.schimke.composeai.rcplayer.protocol.RcFloatWord
-import ee.schimke.composeai.rcplayer.protocol.RcRoundedClipRectModifier
 import ee.schimke.composeai.rcplayer.protocol.RcRowLayout
-import ee.schimke.composeai.rcplayer.protocol.RcSystemVariables
 import ee.schimke.composeai.rcplayer.protocol.RcWireLimits
-import ee.schimke.composeai.rcwidget.RcWidgetDocuments
-import ee.schimke.composeai.rcwidget.RcWidgetTarget
-import ee.schimke.composeai.rcwidget.RcWidgetTargets
-import ee.schimke.composeai.rcwidget.creation.RcWidgetCaptureSize
-import ee.schimke.composeai.rcwidget.creation.rcWidgetHostAction
 import ee.schimke.composeai.rcwidget.launcher.RcLauncherWidgets
-import ee.schimke.composeai.rcwidget.launcher.captureLauncherWidget
+import ee.schimke.composeai.rcwidget.launcher.platformWidgetDocument
 import ee.schimke.composeai.rcwidget.launcher.widgetsProfile
-import ee.schimke.livery.capture.LiveryCapture
-import ee.schimke.livery.protocol.SizeRange
-import ee.schimke.livery.protocol.Surfaces
-import ee.schimke.livery.protocol.Target
+import ee.schimke.livery.client.BindResult
+import ee.schimke.livery.client.ContractBinder
+import ee.schimke.livery.instantiate.InstantiateResult
+import ee.schimke.livery.instantiate.TemplateInstantiator
+import ee.schimke.livery.notifications.LiveryNotifications
+import ee.schimke.livery.protocol.Contract
 import java.io.File
 import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 import kotlinx.coroutines.runBlocking
+import kotlinx.serialization.json.Json
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
@@ -56,362 +48,183 @@ import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
 
 /**
- * Diagnostic: documents played by the platform's own Remote Compose player (`RemoteViews` draw
- * instructions) under Robolectric, to see whether a blank notification body shows without an
- * emulator. Prints how much each drew and saves PNGs under `build/platform-player`.
+ * Cadence's Remote Compose documents as the platform's own player draws them: the player behind
+ * `RemoteViews` draw instructions, which a launcher and SystemUI's notifications use. Robolectric
+ * runs the real one, for Android 16 and 17, so a document that draws nothing shows here rather than
+ * on a device.
+ *
+ * The player has no error for a document it can't lay out: it draws nothing. So these count what
+ * was drawn. PNGs of each play land in `build/platform-player`.
  */
 @RunWith(RobolectricTestRunner::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 class PlatformPlayerTest {
   private val catalog = File(requireNotNull(System.getProperty("cadence.livery.dir")))
-  private val bundled =
-    File(catalog, "designs/notification-default/notification-w200-h64.rc").readBytes()
   private val sample =
     NotificationBody("Processing", "Trimming silence…", NotificationIcon.Process, progress = 0.7f)
 
-  @Test @Config(sdk = [36], qualifiers = "mdpi") fun android16() = play()
-
-  @Test @Config(sdk = [37], qualifiers = "mdpi") fun android17() = play()
-
-  private fun static(document: RcDocument, density: Float, target: RcWidgetTarget): RcDocument {
-    val adapted =
-      document
-        .hardcodeUnboundNamedValues()
-        .collapseConstantStateLayouts()
-        .hardcodeDensity(density)
-        .adaptTo(target.profile, target.approximations, RcDisplay(density))
-    println(
-      "PLATFORM-PLAYER static ${target.profile.apiLevel} violations=${adapted.violations.map { it.message }}",
-    )
-    return adapted.document
+  /**
+   * The cause of the blank notification bodies: a row or column whose spacing is a variable is laid
+   * out as nothing, and the whole document with it. A capture at host density, as Livery's
+   * templates are, writes every `spacedBy(n.dp)` as an expression over the display's density.
+   */
+  @Test
+  @Config(sdk = [37], qualifiers = "mdpi")
+  fun aLayoutSpacedByAVariableDrawsNothing() {
+    val hostDensity = capture(RemoteDensity.Host)
+    assertEquals(0, ink("host-density", bare(hostDensity)), "a host-density capture draws")
+    assertTrue(ink("host-density-literal-spacing", bare(literalSpacing(hostDensity))) > MIN_INK)
+    // The same drawing with its sizes written as numbers, as the podcast widget's capture is.
+    assertTrue(ink("default-density", bare(capture(null))) > MIN_INK)
   }
+
+  @Test
+  @Config(sdk = [36], qualifiers = "mdpi")
+  fun theNotificationBodyOnAndroid16() = everyNotificationExample()
+
+  @Test
+  @Config(sdk = [37], qualifiers = "mdpi")
+  fun theNotificationBodyOnAndroid17() = everyNotificationExample()
 
   /**
-   * Prototype edit: references to constants in spacing (1), clip radii (2), draws (4) as literals.
+   * Each of the notification contract's examples, instantiated from the bundled template and made
+   * into `RemoteViews` as [NotificationLivery] does. Until rc-players recovers such a document
+   * ([KNOWN_BLANK]), this reproduces the bug: every body is blank.
    */
-  private fun literal(source: RcDocument, density: Float, what: Int): RcDocument {
-    val document = source.optimize()
-    val constants =
-      document.operations.filterIsInstance<RcFloatConstant>().associate { it.id to it.value }
-    @Suppress("UNUSED_PARAMETER")
-    fun RcFloatWord.at(index: Int): RcFloatWord {
-      val id = referencedId ?: return this
-      if (id == RcSystemVariables.DENSITY) return RcFloatWord.literal(density)
-      return constants[id] ?: this
+  private fun everyNotificationExample() = runBlocking {
+    val json = Json { ignoreUnknownKeys = true }
+    val contract =
+      json.decodeFromString(
+        Contract.serializer(),
+        File(catalog, "contracts/notification.json").readText(),
+      )
+    val template =
+      File(catalog, "designs/notification-default/notification-w200-h64.rc").readBytes()
+    val instantiator = TemplateInstantiator { _, _, _ -> null }
+    assertTrue(contract.examples.isNotEmpty(), "the contract has no examples")
+    for ((name, example) in contract.examples) {
+      val bindings = (ContractBinder.bind(contract, example) as BindResult.Ok).bindings
+      val document =
+        instantiator.instantiate(
+          template,
+          bindings,
+          WIDTH,
+          HEIGHT,
+          maxBytes = LiveryNotifications.DEFAULT_MAX_BYTES,
+          numericActions = true,
+        ) as InstantiateResult.Ok
+      val drawn = ink("notification-$name", RcLauncherWidgets.remoteViews(document.bytes))
+      if (KNOWN_BLANK) {
+        assertEquals(
+          0,
+          drawn,
+          "'$name' draws on Android ${Build.VERSION.SDK_INT}: the blank body is fixed, so set " +
+            "KNOWN_BLANK to false and keep this as the regression test",
+        )
+      } else {
+        assertTrue(drawn > MIN_INK, "'$name' is blank on Android ${Build.VERSION.SDK_INT}")
+      }
     }
-    return document.copy(
-      operations =
-        document.operations.mapIndexed { i, op ->
-          when {
-            op is RcColumnLayout && what and 1 != 0 -> op.copy(spacedBy = op.spacedBy.at(i))
-            op is RcRowLayout && what and 1 != 0 -> op.copy(spacedBy = op.spacedBy.at(i))
-            op is RcRoundedClipRectModifier && what and 2 != 0 ->
-              op.copy(
-                topStart = op.topStart.at(i),
-                topEnd = op.topEnd.at(i),
-                bottomStart = op.bottomStart.at(i),
-                bottomEnd = op.bottomEnd.at(i),
-              )
-            op is RcDraw4 && what and 4 != 0 ->
-              op.copy(
-                first = op.first.at(i),
-                second = op.second.at(i),
-                third = op.third.at(i),
-                fourth = op.fourth.at(i),
-              )
-            else -> op
-          }
-        },
+  }
+
+  /** The notification drawing with sample values, captured as Livery does or at 160dpi. */
+  private fun capture(density: RemoteDensity?): ByteArray = runBlocking {
+    val context = Robolectric.buildActivity(Activity::class.java).setup().get()
+    val display = RemoteCreationDisplayInfo(WIDTH, HEIGHT, 160)
+    val content =
+      @androidx.compose.runtime.Composable {
+        NotificationTemplateContent(null, null, sample, colors = WidgetColors.Light)
+      }
+    (if (density == null)
+        captureSingleRemoteDocument(
+          context = context,
+          creationDisplayInfo = display,
+          profile = widgetsProfile,
+          content = content,
+        )
+      else
+        captureSingleRemoteDocument(
+          context = context,
+          creationDisplayInfo = display,
+          remoteDensity = density,
+          profile = widgetsProfile,
+          content = content,
+        ))
+      .bytes
+  }
+
+  /** [bytes] with only its rows' and columns' spacing written as the numbers they are here. */
+  private fun literalSpacing(bytes: ByteArray): ByteArray {
+    val document = RcDocumentCodec.decode(bytes, RcWireLimits())
+    val constants =
+      document
+        .hardcodeDensity(1f)
+        .foldConstantExpressions()
+        .operations
+        .filterIsInstance<RcFloatConstant>()
+        .associate { it.id to it.value }
+    fun RcFloatWord.literal() = referencedId?.let(constants::get) ?: this
+    return RcDocumentCodec.encode(
+      document.copy(
+        operations =
+          document.operations.map { operation ->
+            when (operation) {
+              is RcColumnLayout -> operation.copy(spacedBy = operation.spacedBy.literal())
+              is RcRowLayout -> operation.copy(spacedBy = operation.spacedBy.literal())
+              else -> operation
+            }
+          },
+      ),
     )
   }
 
-  private fun play() {
+  /** [bytes] handed to the player as they are: none of `RcLauncherWidgets.remoteViews`' care. */
+  private fun bare(bytes: ByteArray): RemoteViews =
+    RemoteViews(
+      RemoteViews.DrawInstructions.Builder(
+          listOf(platformWidgetDocument(bytes, RcLauncherWidgets.targetFor())),
+        )
+        .build(),
+    )
+
+  /** How many pixels [views] drew over a white [WIDTH] × [HEIGHT] background. */
+  private fun ink(name: String, views: RemoteViews): Int {
     val activity = Robolectric.buildActivity(Activity::class.java).setup().get()
-    fun capture(android16: Boolean) = runBlocking {
-      (if (android16)
-          captureLauncherWidget(activity, RcWidgetCaptureSize(320, 110), profile = widgetsProfile) {
-            NotificationTemplateContent(null, null, sample, colors = WidgetColors.Light)
-          }
-        else
-          captureLauncherWidget(activity, RcWidgetCaptureSize(320, 110)) {
-            NotificationTemplateContent(null, null, sample, colors = WidgetColors.Light)
-          })
-        .bytes
-    }
-    val target =
-      Target(
-        Surfaces.NOTIFICATION,
-        rcApiLevel = 7,
-        profiles = listOf("widgets"),
-        size = SizeRange(200, null, 64, 256),
-      )
-    fun livery(values: Boolean, actions: Boolean) = runBlocking {
-      LiveryCapture.capture(activity, target, 360, 128) {
-          NotificationTemplateContent(
-            if (actions) rcWidgetHostAction(name = "open", payload = "open") else null,
-            if (actions) rcWidgetHostAction(name = "cancel", payload = "cancel") else null,
-            if (values) sample else null,
-            colors = WidgetColors.Light,
-          )
-        }
-        .bytes
-    }
-    fun raw(host: Boolean, values: Boolean) = runBlocking {
-      val display = RemoteCreationDisplayInfo(360, 128, 160)
-      (if (host)
-          captureSingleRemoteDocument(
-            context = activity,
-            creationDisplayInfo = display,
-            remoteDensity = RemoteDensity.Host,
-            profile = widgetsProfile,
-          ) {
-            NotificationTemplateContent(
-              null,
-              null,
-              if (values) sample else null,
-              colors = WidgetColors.Light,
-            )
-          }
-        else
-          captureSingleRemoteDocument(
-            context = activity,
-            creationDisplayInfo = display,
-            profile = widgetsProfile,
-          ) {
-            NotificationTemplateContent(
-              null,
-              null,
-              if (values) sample else null,
-              colors = WidgetColors.Light,
-            )
-          })
-        .bytes
-    }
-    val density = activity.resources.displayMetrics.density
-    fun edit(bytes: ByteArray, change: (RcDocument) -> RcDocument): ByteArray =
-      RcDocumentCodec.encode(change(RcDocumentCodec.decode(bytes, RcWireLimits())))
-    val docs: List<Triple<String, () -> ByteArray, Boolean>> =
-      listOf(
-        Triple("livery-blank-actions", { livery(false, true) }, false),
-        Triple("livery-values-actions", { livery(true, true) }, false),
-        Triple("livery-values-noactions", { livery(true, false) }, false),
-        Triple("livery-blank-noactions", { livery(false, false) }, false),
-        Triple("raw-hostdensity-values", { raw(true, true) }, false),
-        Triple("raw-defaultdensity-values", { raw(false, true) }, false),
-        Triple("raw-hostdensity-blank", { raw(true, false) }, false),
-        Triple(
-          "launcher-blank",
-          {
-            runBlocking {
-              captureLauncherWidget(activity, RcWidgetCaptureSize(320, 110)) {
-                  NotificationTemplateContent(null, null, null, colors = WidgetColors.Light)
-                }
-                .bytes
-            }
-          },
-          false,
-        ),
-        Triple(
-          "bundled-hardcode-density",
-          {
-            RcDocumentCodec.encode(
-              RcDocumentCodec.decode(bundled, RcWireLimits())
-                .hardcodeDensity(activity.resources.displayMetrics.density),
-            )
-          },
-          false,
-        ),
-        Triple(
-          "bundled-forDisplay",
-          {
-            RcDocumentCodec.encode(
-              RcWidgetDocuments.forDisplay(
-                RcDocumentCodec.decode(bundled, RcWireLimits()),
-                RcDisplay(activity.resources.displayMetrics.density),
-              ),
-            )
-          },
-          false,
-        ),
-        Triple(
-          "host-values-hardcode",
-          { edit(raw(true, true)) { it.hardcodeDensity(density) } },
-          false,
-        ),
-        Triple(
-          "host-values-forDisplay",
-          { edit(raw(true, true)) { RcWidgetDocuments.forDisplay(it, RcDisplay(density)) } },
-          false,
-        ),
-        Triple(
-          "host-values-serve",
-          {
-            edit(raw(true, true)) {
-              RcWidgetDocuments.serve(it, RcLauncherWidgets.widgetTargetFor(), RcDisplay(density))
-                .also { a -> println("PLATFORM-PLAYER serve violations=${a.violations}") }
-                .document
-            }
-          },
-          false,
-        ),
-        Triple(
-          "host-values-serve16",
-          {
-            edit(raw(true, true)) {
-              RcWidgetDocuments.serve(it, RcWidgetTargets.LauncherAndroid16, RcDisplay(density))
-                .also { a -> println("PLATFORM-PLAYER serve16 violations=${a.violations}") }
-                .document
-            }
-          },
-          true,
-        ),
-        Triple(
-          "bundled-serve16",
-          {
-            edit(bundled) {
-              RcWidgetDocuments.serve(it, RcWidgetTargets.LauncherAndroid16, RcDisplay(density))
-                .document
-            }
-          },
-          true,
-        ),
-        Triple(
-          "bundled-serve",
-          {
-            edit(bundled) {
-              RcWidgetDocuments.serve(it, RcLauncherWidgets.widgetTargetFor(), RcDisplay(density))
-                .document
-            }
-          },
-          false,
-        ),
-        Triple(
-          "static6-as6",
-          { edit(raw(true, true)) { static(it, density, RcWidgetTargets.LauncherAndroid16) } },
-          true,
-        ),
-        Triple(
-          "static6",
-          { edit(raw(true, true)) { static(it, density, RcWidgetTargets.LauncherAndroid16) } },
-          false,
-        ),
-        Triple(
-          "static7",
-          { edit(raw(true, true)) { static(it, density, RcWidgetTargets.Launcher) } },
-          false,
-        ),
-        Triple(
-          "static-noadapt",
-          {
-            edit(raw(true, true)) {
-              it
-                .hardcodeUnboundNamedValues()
-                .collapseConstantStateLayouts()
-                .hardcodeDensity(density)
-                .optimize()
-            }
-          },
-          false,
-        ),
-        Triple(
-          "static6-default-as6",
-          { edit(raw(false, true)) { static(it, density, RcWidgetTargets.LauncherAndroid16) } },
-          true,
-        ),
-        Triple(
-          "literal-all",
-          {
-            edit(raw(true, true)) {
-              literal(static(it, density, RcWidgetTargets.LauncherAndroid16), density, 7)
-            }
-          },
-          true,
-        ),
-        Triple(
-          "literal-all-as7",
-          {
-            edit(raw(true, true)) {
-              literal(static(it, density, RcWidgetTargets.Launcher), density, 7)
-            }
-          },
-          false,
-        ),
-        Triple(
-          "literal-spacing",
-          {
-            edit(raw(true, true)) {
-              literal(static(it, density, RcWidgetTargets.LauncherAndroid16), density, 1)
-            }
-          },
-          true,
-        ),
-        Triple(
-          "literal-clip",
-          {
-            edit(raw(true, true)) {
-              literal(static(it, density, RcWidgetTargets.LauncherAndroid16), density, 2)
-            }
-          },
-          true,
-        ),
-        Triple(
-          "literal-draw",
-          {
-            edit(raw(true, true)) {
-              literal(static(it, density, RcWidgetTargets.LauncherAndroid16), density, 4)
-            }
-          },
-          true,
-        ),
-        Triple(
-          "literal-nostatic",
-          { edit(raw(true, true)) { literal(it.hardcodeDensity(density), density, 7) } },
-          false,
-        ),
-        Triple("bundled", { bundled }, false),
-        Triple("bundled-as6", { bundled }, true),
-        Triple("capture-device-profile", { capture(false) }, false),
-        Triple("capture-android16-profile", { capture(true) }, false),
-        Triple("capture-android16-profile-as6", { capture(true) }, true),
-      )
+    val frame = FrameLayout(activity)
+    frame.setBackgroundColor(Color.WHITE)
+    frame.addView(views.apply(activity, frame))
+    activity.setContentView(frame, FrameLayout.LayoutParams(WIDTH, HEIGHT))
+    shadowOf(Looper.getMainLooper()).idle()
+    frame.measure(
+      View.MeasureSpec.makeMeasureSpec(WIDTH, View.MeasureSpec.EXACTLY),
+      View.MeasureSpec.makeMeasureSpec(HEIGHT, View.MeasureSpec.EXACTLY),
+    )
+    frame.layout(0, 0, WIDTH, HEIGHT)
+    shadowOf(Looper.getMainLooper()).idle()
+    val bitmap = Bitmap.createBitmap(WIDTH, HEIGHT, Bitmap.Config.ARGB_8888)
+    frame.draw(Canvas(bitmap))
     val out = File("build/platform-player/sdk${Build.VERSION.SDK_INT}").apply { mkdirs() }
-    for ((name, bytes) in listOf("host" to raw(true, true), "default" to raw(false, true))) {
-      val document =
-        static(RcDocumentCodec.decode(bytes, RcWireLimits()), 1f, RcWidgetTargets.LauncherAndroid16)
-      File(out, "ops-$name.txt")
-        .writeText(
-          "${document.header}\n" +
-            document.operations.joinToString("\n") { it.toString().take(300) },
-        )
+    File(out, "$name.png").outputStream().use {
+      bitmap.compress(Bitmap.CompressFormat.PNG, 100, it)
     }
-    for ((name, make, as6) in docs) {
-      val result = runCatching {
-        val bytes = make()
-        val views =
-          if (as6) RcLauncherWidgets.remoteViews(bytes, emptyMap(), RcTargetProfiles.WIDGETS_V6)
-          else RcLauncherWidgets.remoteViews(bytes)
-        val frame = FrameLayout(activity)
-        frame.setBackgroundColor(Color.WHITE)
-        frame.addView(views.apply(activity, frame))
-        activity.setContentView(frame, FrameLayout.LayoutParams(320, 110))
-        shadowOf(Looper.getMainLooper()).idle()
-        frame.measure(
-          View.MeasureSpec.makeMeasureSpec(320, View.MeasureSpec.EXACTLY),
-          View.MeasureSpec.makeMeasureSpec(110, View.MeasureSpec.EXACTLY),
-        )
-        frame.layout(0, 0, 320, 110)
-        shadowOf(Looper.getMainLooper()).idle()
-        val bitmap = Bitmap.createBitmap(320, 110, Bitmap.Config.ARGB_8888)
-        frame.draw(Canvas(bitmap))
-        File(out, "$name.png").outputStream().use {
-          bitmap.compress(Bitmap.CompressFormat.PNG, 100, it)
-        }
-        val pixels = IntArray(320 * 110)
-        bitmap.getPixels(pixels, 0, 320, 0, 0, 320, 110)
-        "ink=${pixels.count { it != Color.WHITE }} bytes=${bytes.size}"
-      }
-        .getOrElse { "FAILED ${it::class.simpleName}: ${it.message}" }
-      println("PLATFORM-PLAYER sdk=${Build.VERSION.SDK_INT} $name: $result")
-    }
+    val pixels = IntArray(WIDTH * HEIGHT)
+    bitmap.getPixels(pixels, 0, WIDTH, 0, 0, WIDTH, HEIGHT)
+    return pixels.count { it != Color.WHITE }
+  }
+
+  private companion object {
+    const val WIDTH = 320
+    const val HEIGHT = 110
+
+    /** An icon alone is over a thousand pixels; antialiasing noise is nowhere near. */
+    const val MIN_INK = 500
+
+    /**
+     * Whether the platform player is still known to draw every notification body blank. True with
+     * rc-players 2.31.0; the release after it recovers the document in
+     * `RcLauncherWidgets.remoteViews` (rc-players#840). The bump that brings it in fails
+     * [everyNotificationExample] until this is false.
+     */
+    const val KNOWN_BLANK = true
   }
 }
