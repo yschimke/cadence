@@ -119,9 +119,9 @@ enum class NotificationIcon(val vector: ImageVector, val label: String) {
 }
 
 /**
- * The template: [onOpen] on the body, [onCancel] on its Cancel button. The icon, the progress bar
- * and Cancel are conditional layouts over the named values, so one document serves every
- * notification, and each instantiated one holds only what it shows.
+ * The template: [onOpen] on the body, [onCancel] on its Cancel button. The icon is a conditional
+ * layout over a named value, and the progress bar and Cancel are sized by named flags, so one
+ * document serves every notification.
  *
  * [sample] and [colors] are only the named values' defaults, for previews: SystemUI is handed the
  * values written in by instantiation. The captured template leaves them blank.
@@ -202,59 +202,45 @@ fun NotificationTemplateContent(
         )
       }
     }
-    // Present or absent by the named flags, as conditional layouts with an empty branch for
-    // "absent": instantiation writes each flag in as a constant. (A visibility modifier isn't
-    // honoured by the platform's player, which drew both on every notification.) Each brings its
-    // own gap above: the column has no spacing, which that player needs as a literal anyway.
-    RemoteStateLayout(hasProgress.toRemoteInt(), 0, 1) { shown: Int ->
-      if (shown == 1) {
-        // A canvas, not fillMaxWidth(progress): players size a box by a constant fraction only.
-        RemoteCanvas(
-          RemoteModifier.padding(top = 10.rdp)
-            .fillMaxWidth()
-            .height(6.rdp)
-            .clip(RemoteRoundedCornerShape(3.rdp)),
-        ) {
-          drawRect(RemotePaint { color = tonal }, RemoteOffset(0f, 0f), RemoteSize(width, height))
-          drawRect(
-            RemotePaint { color = primary },
-            RemoteOffset(0f, 0f),
-            RemoteSize(width * progress, height),
-          )
-        }
-      } else {
-        RemoteBox(RemoteModifier.fillMaxWidth())
-      }
+    // Present or absent by the named flags, as a height that is 0 when absent: instantiation writes
+    // each flag in as a constant, which makes the height a literal. Not a conditional layout, which
+    // AndroidX's player and the platform's lay out over the content above it in a column, nor a
+    // visibility modifier, which the platform's player ignores. Each brings its own gap above.
+    val barGap = hasProgress.select(10.rdp, 0.rdp)
+    val barHeight = hasProgress.select(6.rdp, 0.rdp)
+    // A canvas, not fillMaxWidth(progress): players size a box by a constant fraction only.
+    RemoteCanvas(
+      RemoteModifier.padding(top = barGap)
+        .fillMaxWidth()
+        .height(barHeight)
+        .clip(RemoteRoundedCornerShape(3.rdp)),
+    ) {
+      drawRect(RemotePaint { color = tonal }, RemoteOffset(0f, 0f), RemoteSize(width, height))
+      drawRect(
+        RemotePaint { color = primary },
+        RemoteOffset(0f, 0f),
+        RemoteSize(width * progress, height),
+      )
     }
-    RemoteStateLayout(hasCancel.toRemoteInt(), 0, 1) { shown: Int ->
-      if (shown == 1) {
-        RemoteRow(
-          modifier = RemoteModifier.padding(top = 10.rdp).fillMaxWidth(),
-          horizontalArrangement = RemoteArrangement.End,
-        ) {
-          RemoteBox(
-            modifier =
-              RemoteModifier.height(36.rdp)
-                .clip(RemoteRoundedCornerShape(18.rdp))
-                .background(tonal)
-                .semantics {
-                  contentDescription = "Cancel".rs
-                  role = Role.Button
-                }
-                .let { if (onCancel != null) it.clickable(onCancel) else it }
-                .padding(horizontal = 16.rdp),
-            contentAlignment = RemoteAlignment.Center,
-          ) {
-            RemoteText(
-              "Cancel".rs,
-              color = onTonal,
-              fontSize = 14.rsp,
-              fontWeight = FontWeight.Medium,
-            )
-          }
-        }
-      } else {
-        RemoteBox(RemoteModifier.fillMaxWidth())
+    RemoteRow(
+      modifier = RemoteModifier.padding(top = hasCancel.select(10.rdp, 0.rdp)).fillMaxWidth(),
+      horizontalArrangement = RemoteArrangement.End,
+    ) {
+      // Clipped to its height, so at 0 its label isn't drawn either.
+      RemoteBox(
+        modifier =
+          RemoteModifier.height(hasCancel.select(36.rdp, 0.rdp))
+            .clip(RemoteRoundedCornerShape(18.rdp))
+            .background(tonal)
+            .semantics {
+              contentDescription = "Cancel".rs
+              role = Role.Button
+            }
+            .let { if (onCancel != null) it.clickable(onCancel) else it }
+            .padding(horizontal = 16.rdp),
+        contentAlignment = RemoteAlignment.Center,
+      ) {
+        RemoteText("Cancel".rs, color = onTonal, fontSize = 14.rsp, fontWeight = FontWeight.Medium)
       }
     }
   }
