@@ -91,12 +91,10 @@ open class DesktopPodcastPlatform(root: File) : FilePodcastPlatform(root) {
     withContext(Dispatchers.IO) {
       val volume = File(target).toPath().toRealPath()
       require(Files.isDirectory(volume))
-      var path = volume
-      for (name in listOf("Cadence", "podcasts")) {
-        path = path.resolve(name)
-        if (!Files.exists(path, NOFOLLOW_LINKS)) Files.createDirectory(path)
-        require(!Files.isSymbolicLink(path) && Files.isDirectory(path, NOFOLLOW_LINKS))
-      }
+      val path = volume.resolve("Cadence")
+      if (!Files.exists(path, NOFOLLOW_LINKS)) Files.createDirectory(path)
+      require(!Files.isSymbolicLink(path) && Files.isDirectory(path, NOFOLLOW_LINKS))
+      removeLegacyPodcastsFolder(path)
       val marker = path.resolve(".cadence-owner")
       if (!Files.exists(marker, NOFOLLOW_LINKS)) {
         Files.list(path).use {
@@ -162,6 +160,41 @@ open class DesktopPodcastPlatform(root: File) : FilePodcastPlatform(root) {
       // Commit manifest last; a failed transfer never advertises a completed new manifest.
       commit(path, "cadence-manifest.json") { Files.writeString(it, manifest) }
     }
+
+  /** Earlier versions copied into `Cadence/podcasts`; removes what they put there. */
+  private fun removeLegacyPodcastsFolder(cadence: java.nio.file.Path) {
+    fun owned(dir: java.nio.file.Path): Boolean {
+      val owner = dir.resolve(".cadence-owner")
+      return Files.isDirectory(dir, NOFOLLOW_LINKS) &&
+        Files.isRegularFile(owner, NOFOLLOW_LINKS) &&
+        Files.readString(owner) == "cadence-podcasts-v1"
+    }
+    fun entries(dir: java.nio.file.Path) = Files.list(dir).use { it.toList() }
+    fun clear(dir: java.nio.file.Path) =
+      entries(dir).forEach {
+        val name = it.fileName.toString()
+        if (
+          Files.isRegularFile(it, NOFOLLOW_LINKS) &&
+            (isCadenceAudioFile(name) || name == "cadence-manifest.json")
+        )
+          Files.delete(it)
+      }
+    fun removeIfOnlyMarker(dir: java.nio.file.Path) {
+      if (entries(dir).all { it.fileName.toString() == ".cadence-owner" }) {
+        Files.deleteIfExists(dir.resolve(".cadence-owner"))
+        Files.delete(dir)
+      }
+    }
+    val legacy = cadence.resolve("podcasts").takeIf { owned(it) } ?: return
+    entries(legacy)
+      .filter { owned(it) }
+      .forEach {
+        clear(it)
+        removeIfOnlyMarker(it)
+      }
+    clear(legacy)
+    removeIfOnlyMarker(legacy)
+  }
 
   /**
    * Removes Cadence audio files that aren't in [keep] from the owned podcasts folder and its owned

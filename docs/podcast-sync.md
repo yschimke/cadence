@@ -256,7 +256,9 @@ and the UI says the source does not accept updates.
 
 ## Safe device folder ownership
 
-Only `Cadence/podcasts` beneath the selected volume is used by this workflow.
+Only `Cadence` beneath the selected volume root is used by this workflow: one folder per show
+(`Cadence/<Show>/`), with the manifest beside them. Older copies in `Cadence/podcasts` are removed
+on the next sync.
 An empty folder receives `.cadence-owner` containing `cadence-podcasts-v1`. An
 existing nonempty folder without that marker is refused. Nothing outside that
 folder is deleted or replaced. Existing Cadence sections are retained, including
@@ -407,7 +409,7 @@ suite; `:composeApp:assembleDebugAndroidTest` compiles it without that broken ta
   libsyn), Lex Fridman. All imported the newest episodes. Previously the 8 MB
   limit and the refusal of feed redirects failed every one of these. One
   33 MB NPR episode downloaded through four tracking redirects and copied to a
-  temporary volume's `Cadence/podcasts`, leaving an existing `Music/` file intact.
+  temporary volume's `Cadence`, leaving an existing `Music/` file intact.
 - Production web build in a browser: imported The Daily and Tech Won't Save Us,
   and downloaded the latter's 44,626,678-byte episode (its declared length)
   through tracking redirects to browser storage. Web can read only servers that

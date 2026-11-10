@@ -74,6 +74,10 @@ interface PodcastPlatform {
 
   suspend fun readDeviceManifest(target: String): DeviceManifest? = null
 
+  /** How to safely disconnect the headphone storage once a copy finishes. */
+  val ejectHint: String
+    get() = "Eject the volume before unplugging."
+
   /**
    * False in the browser, where Pocket Casts only accepts API calls from its own site, unless a
    * [pocketCastsServer] makes them.
@@ -990,8 +994,7 @@ class PodcastController(val platform: PodcastPlatform) {
         lastCopied = deviceManifest(state.value.library),
       ),
     )
-    notice =
-      "Copied ${count(sections.size, "file")} to the headphones. Eject the volume before unplugging."
+    notice = "Copied ${count(sections.size, "file")} to the headphones. ${platform.ejectHint}"
   }
 
   private suspend fun recheckReady() {
