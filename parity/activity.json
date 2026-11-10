@@ -1,11 +1,27 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-09T21:40:28.900Z",
+  "generatedAt": "2026-11-10T01:00:34.647Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "215903e1f14209acf602e87afbd3b3b90e4e4e4e",
+        "subject": "fix(deps): update dependency ee.schimke.composeai:preview-annotations to v3.27.4 (#575)",
+        "at": "2026-11-10T00:45:51Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "20377b3aa94582413ea7fedee259b0a66498c282",
+        "subject": "test: check notification bodies survive SystemUI on Android 17 (#573)",
+        "at": "2026-11-09T23:34:23Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "3ae820371570254d31e0cd0f156047462311f408",
         "subject": "chore(main): release 0.1.27 (#568)",
@@ -467,22 +483,6 @@
         "subject": "chore(main): release 0.1.18 (#510)",
         "at": "2026-11-05T20:55:22Z",
         "author": "github-actions[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "8692d06c15200b9d8ba4bd04af4c8b3d0c5a178b",
-        "subject": "feat: draw the headphone widget from a Livery template baked into the APK (#511)",
-        "at": "2026-11-05T20:34:14Z",
-        "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "58ddb19b6dbf5a8b5370c39dd67b66818d6ff2d4",
-        "subject": "chore(deps): update agp to v9.5.1 (#512)",
-        "at": "2026-11-05T20:07:59Z",
-        "author": "renovate[bot]",
         "previewIds": [],
         "components": []
       }
