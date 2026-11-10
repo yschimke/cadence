@@ -1,11 +1,27 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-10T08:16:10.488Z",
+  "generatedAt": "2026-11-10T10:21:15.004Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "d19ea6d4530b23e855c470893cd75d1a5bb8c2be",
+        "subject": "fix(deps): update compose-ai-tools to v0.9.0 (#583)",
+        "at": "2026-11-10T10:11:35Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "825168542889ceb2e648d95f66fe46c6f31c825a",
+        "subject": "chore(deps): update yschimke/livery action to v0.9.0 (#581)",
+        "at": "2026-11-10T09:57:20Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "77c1fba08ba4b002c25950f22cb10124d07f6a71",
         "subject": "chore(main): release 0.1.28 (#576)",
@@ -467,22 +483,6 @@
         "subject": "chore(main): release 0.1.20 (#525)",
         "at": "2026-11-06T23:03:08Z",
         "author": "github-actions[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "ea15ba52a8ebf69a3a4a6db5b16fb93d90fa6b72",
-        "subject": "chore(deps): update anthropics/claude-code-action action to v1.0.269 (#522)",
-        "at": "2026-11-06T22:57:04Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "729f07434234aebd454eb3276574015ea7897193",
-        "subject": "feat(widgets): publish the widget's Livery catalog, with seasonal looks for the headphone widget and the sync card (#521)",
-        "at": "2026-11-06T22:34:28Z",
-        "author": "Yuri Schimke",
         "previewIds": [],
         "components": []
       }
