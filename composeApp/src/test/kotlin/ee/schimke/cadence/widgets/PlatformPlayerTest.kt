@@ -3,30 +3,21 @@
 package ee.schimke.cadence.widgets
 
 import android.app.Activity
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Color
-import android.os.Build
-import android.os.Looper
-import android.view.View
-import android.widget.FrameLayout
-import android.widget.RemoteViews
+import android.graphics.Rect
 import androidx.compose.remote.creation.compose.capture.RemoteCreationDisplayInfo
 import androidx.compose.remote.creation.compose.capture.RemoteDensity
 import androidx.compose.remote.creation.compose.capture.captureSingleRemoteDocument
+import androidx.compose.remote.creation.compose.layout.RemoteArrangement
+import androidx.compose.remote.creation.compose.layout.RemoteColumn
+import androidx.compose.remote.creation.compose.state.rdp
+import androidx.compose.ui.graphics.toArgb
 import ee.schimke.cadence.notifications.NotificationBody
 import ee.schimke.cadence.notifications.NotificationIcon
+import ee.schimke.cadence.notifications.NotificationTemplate
 import ee.schimke.cadence.notifications.NotificationTemplateContent
-import ee.schimke.composeai.rcplayer.edit.foldConstantExpressions
-import ee.schimke.composeai.rcplayer.edit.hardcodeDensity
-import ee.schimke.composeai.rcplayer.protocol.RcColumnLayout
-import ee.schimke.composeai.rcplayer.protocol.RcDocumentCodec
-import ee.schimke.composeai.rcplayer.protocol.RcFloatConstant
-import ee.schimke.composeai.rcplayer.protocol.RcFloatWord
-import ee.schimke.composeai.rcplayer.protocol.RcRowLayout
-import ee.schimke.composeai.rcplayer.protocol.RcWireLimits
-import ee.schimke.composeai.rcwidget.launcher.RcLauncherWidgets
-import ee.schimke.composeai.rcwidget.launcher.platformWidgetDocument
+import ee.schimke.cadence.testing.PlatformPlayerRule
+import ee.schimke.cadence.testing.PlatformPlayerRule.Companion.ANDROID_16
+import ee.schimke.cadence.testing.PlatformPlayerRule.Companion.ANDROID_17
 import ee.schimke.composeai.rcwidget.launcher.widgetsProfile
 import ee.schimke.livery.client.BindResult
 import ee.schimke.livery.client.ContractBinder
@@ -40,174 +31,156 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.put
+import org.junit.Rule
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
 
 /**
- * Cadence's Remote Compose documents as the platform's own player draws them: the player behind
- * `RemoteViews` draw instructions, which a launcher and SystemUI's notifications use. Robolectric
- * runs the real one, for Android 16 and 17, so a document that draws nothing shows here rather than
- * on a device.
- *
- * The player has no error for a document it can't lay out: it draws nothing. So these count what
- * was drawn. PNGs of each play land in `build/platform-player`.
+ * Cadence's notification body as the platform's own player draws it on Android 16 and 17
+ * ([PlatformPlayerRule]): each of the contract's examples, instantiated from the bundled template
+ * as [NotificationLivery] instantiates it.
  */
 @RunWith(RobolectricTestRunner::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
+@Config(sdk = [ANDROID_16, ANDROID_17], qualifiers = "mdpi")
 class PlatformPlayerTest {
-  private val catalog = File(requireNotNull(System.getProperty("cadence.livery.dir")))
-  private val sample =
-    NotificationBody("Processing", "Trimming silence…", NotificationIcon.Process, progress = 0.7f)
+  @get:Rule val player = PlatformPlayerRule()
 
-  /**
-   * The cause of the blank notification bodies: a row or column whose spacing is a variable is laid
-   * out as nothing, and the whole document with it. A capture at host density, as Livery's
-   * templates are, writes every `spacedBy(n.dp)` as an expression over the display's density.
-   */
+  private val catalog = File(requireNotNull(System.getProperty("cadence.livery.dir")))
+  private val contract: Contract = Json {
+    ignoreUnknownKeys = true
+  }
+    .decodeFromString(
+      Contract.serializer(),
+      File(catalog, "contracts/notification.json").readText(),
+    )
+
+  /** A notification body is blank when the player can't lay it out: every example must draw. */
   @Test
-  @Config(sdk = [37], qualifiers = "mdpi")
-  fun aLayoutSpacedByAVariableDrawsNothing() {
-    val hostDensity = capture(RemoteDensity.Host)
-    assertEquals(0, ink("host-density", bare(hostDensity)), "a host-density capture draws")
-    assertTrue(ink("host-density-literal-spacing", bare(literalSpacing(hostDensity))) > MIN_INK)
-    // The same drawing with its sizes written as numbers, as the podcast widget's capture is.
-    assertTrue(ink("default-density", bare(capture(null))) > MIN_INK)
+  fun everyExampleDrawsAsANotification() {
+    assertTrue(contract.examples.isNotEmpty(), "the contract has no examples")
+    for (example in contract.examples.keys) {
+      player.notification(body(example), WIDTH, HEIGHT, example).assertDraws("'$example'")
+    }
   }
 
+  /** The same document published as a launcher widget is, without the notification's wrapper. */
   @Test
-  @Config(sdk = [36], qualifiers = "mdpi")
-  fun theNotificationBodyOnAndroid16() = everyNotificationExample()
+  fun everyExampleDrawsAsAWidget() {
+    for (example in contract.examples.keys) {
+      player.widget(body(example), WIDTH, HEIGHT, example).assertDraws("'$example'")
+    }
+  }
 
+  /** `downloading` has a progress bar and Cancel: both are drawn, below the title and text. */
   @Test
-  @Config(sdk = [37], qualifiers = "mdpi")
-  fun theNotificationBodyOnAndroid17() = everyNotificationExample()
+  fun aBodyWithProgressAndCancelShowsBoth() {
+    val played = player.notification(body("downloading"), WIDTH, HEIGHT)
+    played.assertDraws(HEADER, "the icon, title and text")
+    played.assertDraws(BELOW_HEADER, "the progress bar and Cancel")
+    played.assertDraws(CANCEL, "Cancel")
+  }
+
+  /** `syncing` has a progress bar and no Cancel. */
+  @Test
+  fun aBodyWithProgressOnlyHasNoCancel() {
+    val played = player.notification(body("syncing"), WIDTH, HEIGHT)
+    played.assertDraws(BELOW_HEADER, "the progress bar")
+    played.assertBlank(CANCEL, "Cancel")
+  }
+
+  /** `ready` has neither: nothing is drawn below the title and text. */
+  @Test
+  fun aBodyWithNeitherShowsNeither() {
+    val played = player.notification(body("ready"), WIDTH, HEIGHT)
+    played.assertDraws(HEADER, "the icon, title and text")
+    played.assertBlank(BELOW_HEADER, "a progress bar or Cancel")
+  }
 
   /**
-   * Each of the notification contract's examples, instantiated from the bundled template and made
-   * into `RemoteViews` as [NotificationLivery] does. Blank before rc-players 2.31.1, whose
-   * `RcLauncherWidgets.remoteViews` recovers such a document for the device's display.
+   * Why bodies were blank before rc-players 2.31.1: a row or column whose spacing is a variable is
+   * laid out as nothing, and the whole document with it. A capture at host density, as Livery's
+   * templates are, writes every `spacedBy(n.dp)` as an expression over the display's density.
+   * `RcLauncherWidgets.remoteViews` now recovers it.
    */
-  private fun everyNotificationExample() = runBlocking {
-    val json = Json { ignoreUnknownKeys = true }
-    val contract =
-      json.decodeFromString(
-        Contract.serializer(),
-        File(catalog, "contracts/notification.json").readText(),
-      )
+  @Test
+  @Config(sdk = [ANDROID_17], qualifiers = "mdpi")
+  fun aLayoutSpacedByAVariableDrawsNothingAsItIs() {
+    assertEquals(0, player.asIs(spacedColumn(), WIDTH, HEIGHT).ink)
+  }
+
+  /** The same document through the publishing path, which makes the spacing a literal. */
+  @Test
+  @Config(sdk = [ANDROID_17], qualifiers = "mdpi")
+  fun aLayoutSpacedByAVariableIsRecovered() {
+    player.widget(spacedColumn(), WIDTH, HEIGHT).assertDraws()
+  }
+
+  /** [example] of the contract, written into the bundled template as the app writes a post. */
+  private fun body(example: String): ByteArray = runBlocking {
     val template =
       File(catalog, "designs/notification-default/notification-w200-h64.rc").readBytes()
-    val instantiator = TemplateInstantiator { _, _, _ -> null }
-    assertTrue(contract.examples.isNotEmpty(), "the contract has no examples")
-    for ((name, example) in contract.examples) {
-      val bindings = (ContractBinder.bind(contract, example) as BindResult.Ok).bindings
-      val document =
-        instantiator.instantiate(
-          template,
-          bindings,
-          WIDTH,
-          HEIGHT,
-          maxBytes = LiveryNotifications.DEFAULT_MAX_BYTES,
-          numericActions = true,
-        ) as InstantiateResult.Ok
-      val drawn = ink("notification-$name", RcLauncherWidgets.remoteViews(document.bytes))
-      assertTrue(drawn > MIN_INK, "'$name' is blank on Android ${Build.VERSION.SDK_INT}")
-    }
-  }
-
-  /** The notification drawing with sample values, captured as Livery does or at 160dpi. */
-  private fun capture(density: RemoteDensity?): ByteArray = runBlocking {
-    val context = Robolectric.buildActivity(Activity::class.java).setup().get()
-    val display = RemoteCreationDisplayInfo(WIDTH, HEIGHT, 160)
-    val content =
-      @androidx.compose.runtime.Composable {
-        NotificationTemplateContent(null, null, sample, colors = WidgetColors.Light)
+    // The app sends its colours with every post (NotificationTemplate.data); the examples don't.
+    val colours = buildJsonObject {
+      NotificationTemplate.COLORS.forEach { (role, of) ->
+        put(role, "#%08X".format(of(WidgetColors.Light).toArgb()))
       }
-    (if (density == null)
-        captureSingleRemoteDocument(
-          context = context,
-          creationDisplayInfo = display,
-          profile = widgetsProfile,
-          content = content,
-        )
-      else
-        captureSingleRemoteDocument(
-          context = context,
-          creationDisplayInfo = display,
-          remoteDensity = density,
-          profile = widgetsProfile,
-          content = content,
-        ))
-      .bytes
-  }
-
-  /** [bytes] with only its rows' and columns' spacing written as the numbers they are here. */
-  private fun literalSpacing(bytes: ByteArray): ByteArray {
-    val document = RcDocumentCodec.decode(bytes, RcWireLimits())
-    val constants =
-      document
-        .hardcodeDensity(1f)
-        .foldConstantExpressions()
-        .operations
-        .filterIsInstance<RcFloatConstant>()
-        .associate { it.id to it.value }
-    fun RcFloatWord.literal() = referencedId?.let(constants::get) ?: this
-    return RcDocumentCodec.encode(
-      document.copy(
-        operations =
-          document.operations.map { operation ->
-            when (operation) {
-              is RcColumnLayout -> operation.copy(spacedBy = operation.spacedBy.literal())
-              is RcRowLayout -> operation.copy(spacedBy = operation.spacedBy.literal())
-              else -> operation
-            }
-          },
-      ),
-    )
-  }
-
-  /** [bytes] handed to the player as they are: none of `RcLauncherWidgets.remoteViews`' care. */
-  private fun bare(bytes: ByteArray): RemoteViews =
-    RemoteViews(
-      RemoteViews.DrawInstructions.Builder(
-          listOf(platformWidgetDocument(bytes, RcLauncherWidgets.targetFor())),
-        )
-        .build(),
-    )
-
-  /** How many pixels [views] drew over a white [WIDTH] × [HEIGHT] background. */
-  private fun ink(name: String, views: RemoteViews): Int {
-    val activity = Robolectric.buildActivity(Activity::class.java).setup().get()
-    val frame = FrameLayout(activity)
-    frame.setBackgroundColor(Color.WHITE)
-    frame.addView(views.apply(activity, frame))
-    activity.setContentView(frame, FrameLayout.LayoutParams(WIDTH, HEIGHT))
-    shadowOf(Looper.getMainLooper()).idle()
-    frame.measure(
-      View.MeasureSpec.makeMeasureSpec(WIDTH, View.MeasureSpec.EXACTLY),
-      View.MeasureSpec.makeMeasureSpec(HEIGHT, View.MeasureSpec.EXACTLY),
-    )
-    frame.layout(0, 0, WIDTH, HEIGHT)
-    shadowOf(Looper.getMainLooper()).idle()
-    val bitmap = Bitmap.createBitmap(WIDTH, HEIGHT, Bitmap.Config.ARGB_8888)
-    frame.draw(Canvas(bitmap))
-    val out = File("build/platform-player/sdk${Build.VERSION.SDK_INT}").apply { mkdirs() }
-    File(out, "$name.png").outputStream().use {
-      bitmap.compress(Bitmap.CompressFormat.PNG, 100, it)
     }
-    val pixels = IntArray(WIDTH * HEIGHT)
-    bitmap.getPixels(pixels, 0, WIDTH, 0, 0, WIDTH, HEIGHT)
-    return pixels.count { it != Color.WHITE }
+    val data =
+      JsonObject(requireNotNull(contract.examples[example]) { "no example '$example'" } + colours)
+    val bindings = (ContractBinder.bind(contract, data) as BindResult.Ok).bindings
+    val result = TemplateInstantiator { _, _, _ ->
+      null
+    }
+      .instantiate(
+        template,
+        bindings,
+        WIDTH,
+        HEIGHT,
+        maxBytes = LiveryNotifications.DEFAULT_MAX_BYTES,
+        numericActions = true,
+      )
+    (result as InstantiateResult.Ok).bytes
+  }
+
+  /** The notification drawing in a column spaced by 10dp, captured at host density. */
+  private fun spacedColumn(): ByteArray = runBlocking {
+    val context = Robolectric.buildActivity(Activity::class.java).setup().get()
+    captureSingleRemoteDocument(
+        context = context,
+        creationDisplayInfo = RemoteCreationDisplayInfo(WIDTH, HEIGHT, 160),
+        remoteDensity = RemoteDensity.Host,
+        profile = widgetsProfile,
+      ) {
+        RemoteColumn(verticalArrangement = RemoteArrangement.spacedBy(10.rdp)) {
+          NotificationTemplateContent(
+            null,
+            null,
+            NotificationBody("Processing", "Trimming silence…", NotificationIcon.Process),
+            colors = WidgetColors.Light,
+          )
+        }
+      }
+      .bytes
   }
 
   private companion object {
     const val WIDTH = 320
-    const val HEIGHT = 110
+    const val HEIGHT = 150
 
-    /** An icon alone is over a thousand pixels; antialiasing noise is nowhere near. */
-    const val MIN_INK = 500
+    /** The icon, title and text: the first row, inside the body's padding. */
+    val HEADER = Rect(0, 0, WIDTH, 60)
+
+    /** Where the progress bar and Cancel go, when a body has them. */
+    val BELOW_HEADER = Rect(0, 64, WIDTH, HEIGHT)
+
+    /** The Cancel button: right-aligned under the bar. */
+    val CANCEL = Rect(WIDTH / 2, 84, WIDTH, HEIGHT)
   }
 }
