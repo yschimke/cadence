@@ -34,3 +34,10 @@ suspend fun chooseDirectory(): java.io.File? = suspendCancellableCoroutine { con
     }
   }
 }
+
+/** Opens the folder in the system file manager (Finder, Explorer, the desktop's own). */
+@Composable
+actual fun rememberOpenInFilesApp(): ((Path) -> Boolean)? =
+  if (java.awt.Desktop.isDesktopSupported())
+    { path -> runCatching { java.awt.Desktop.getDesktop().open(path.toFile()) }.isSuccess }
+  else null

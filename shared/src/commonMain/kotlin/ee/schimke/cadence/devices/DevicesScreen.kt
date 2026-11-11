@@ -15,6 +15,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Folder
+import androidx.compose.material.icons.filled.FolderOpen
 import androidx.compose.material.icons.filled.Headphones
 import androidx.compose.material.icons.filled.LinkOff
 import androidx.compose.material.icons.filled.PhoneAndroid
@@ -23,6 +24,7 @@ import androidx.compose.material3.AssistChip
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
@@ -52,6 +54,7 @@ import ee.schimke.cadence.usb.UsbConnection
 import ee.schimke.cadence.usb.UsbDevice
 import kotlinx.coroutines.launch
 import okio.Path
+import okio.Path.Companion.toPath
 
 @Composable
 fun DevicesScreen(
@@ -64,6 +67,7 @@ fun DevicesScreen(
   val connection by viewModel.usbManager.connection.collectAsState(UsbConnection())
   val permissionCheck =
     rememberFileExplorerOpenLauncher(onGranted = { name, path -> viewModel.addDevice(path, name) })
+  val openInFiles = rememberOpenInFilesApp()
   DevicesScreen(
     modifier = modifier,
     uiState = uiState,
@@ -71,6 +75,7 @@ fun DevicesScreen(
     onDeviceClick = onDeviceClick,
     podcastTarget = podcastTarget,
     onForget = { viewModel.forgetDevice(it.id) },
+    onOpenInFiles = openInFiles?.let { open -> { device: Device -> open(device.path.toPath()) } },
     usbConnection =
       if (viewModel.usbManager.explicitConnection)
         UsbConnectionUi(connection, viewModel.usbManager::requestConnection)
@@ -93,6 +98,10 @@ fun DevicesScreen(
   onDeviceClick: ((Device) -> Unit)?,
   podcastTarget: String = "",
   onForget: (Device) -> Unit = {},
+  /**
+   * Opens a folder in another app (Files); reports whether one took it. Null where there's none.
+   */
+  onOpenInFiles: ((Device) -> Boolean)? = null,
   usbConnection: UsbConnectionUi? = null,
 ) {
   val colors = MaterialTheme.colorScheme
@@ -161,6 +170,15 @@ fun DevicesScreen(
                           usedForPodcasts =
                             podcastTarget.isNotBlank() && device.path == podcastTarget,
                           onClick = onDeviceClick?.let { { it(device) } },
+                          onOpenInFiles =
+                            onOpenInFiles?.let { open ->
+                              {
+                                if (!open(device))
+                                  scope.launch {
+                                    snackbar.showSnackbar("No app here can open this folder")
+                                  }
+                              }
+                            },
                         )
                       }
                     }
@@ -188,6 +206,7 @@ private fun FolderRow(
   device: Device,
   usedForPodcasts: Boolean,
   onClick: (() -> Unit)?,
+  onOpenInFiles: (() -> Unit)? = null,
 ) {
   val location = storageLocation(device.path)
   ListItem(
@@ -227,6 +246,14 @@ private fun FolderRow(
           )
       }
     },
+    trailingContent =
+      onOpenInFiles?.let { open ->
+        {
+          IconButton(onClick = open) {
+            Icon(Icons.Filled.FolderOpen, contentDescription = "Open in Files")
+          }
+        }
+      },
     // Opaque, so the swipe background only shows where the row has moved away.
     colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surface),
     modifier = if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier,
@@ -288,6 +315,12 @@ private fun PluggedInRow(icon: ImageVector, title: String, detail: String) {
 // The USB-to-storage bridge in the supported headphones (xml/usb_device_filter).
 private const val HEADPHONE_VENDOR = 1507
 private const val HEADPHONE_PRODUCT = 1889
+
+/**
+ * Opens a folder Cadence was granted in the platform's file manager, such as Files by Google; the
+ * result says whether an app took it. Null where folders can't be handed to another app.
+ */
+@Composable expect fun rememberOpenInFilesApp(): ((Path) -> Boolean)?
 
 @Composable
 expect fun rememberFileExplorerOpenLauncher(

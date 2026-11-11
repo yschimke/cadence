@@ -37,3 +37,6 @@ actual fun rememberFileExplorerOpenLauncher(
     )
   }
 }
+
+/** A browser can't hand a picked folder to another app. */
+@Composable actual fun rememberOpenInFilesApp(): ((Path) -> Boolean)? = null
