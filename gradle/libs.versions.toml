@@ -3,7 +3,7 @@
 # Not referenced by a build: the CLI injects the plugin. Keep it on a version
 # whose plugin is on Maven Central.
 composePreviewPlugin = "2.79.0"
-firebase-bom = "35.1.0"
+firebase-bom = "35.2.0"
 benchmark = "1.5.0"
 profileinstaller = "1.4.1"
 agp = "9.5.1"
