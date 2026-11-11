@@ -10,7 +10,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.ViewModelProvider
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesIntoMap
@@ -30,8 +29,9 @@ class MainActivity(
   private val viewModelFactory: ViewModelProvider.Factory,
 ) : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
-    val splashScreen = installSplashScreen()
-
+    // minSdk 34 always gets the system splash screen. core-splashscreen added nothing, and on exit
+    // it reapplied the theme's bar colours (deprecated Window.setStatusBarColor and friends),
+    // which Play flags and which can undo edge-to-edge.
     enableEdgeToEdge()
 
     super.onCreate(savedInstanceState)

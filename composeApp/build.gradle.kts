@@ -126,7 +126,6 @@ dependencies {
   implementation(project(":swimUi"))
   implementation(libs.composeai.preview.annotations)
   implementation(libs.androidx.activity.compose)
-  implementation(libs.androidx.core.splashscreen)
   implementation(libs.androidx.lifecycle.viewmodel)
   // Required on the application module's classpath because the Metro
   // dependency graph (CadenceAppGraph) is generated here and aggregates
