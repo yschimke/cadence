@@ -18,7 +18,7 @@ import ee.schimke.cadence.bluetooth.batterySummary
 import ee.schimke.cadence.swim.PoolSeason
 import ee.schimke.cadence.widgets.WidgetSeason
 import ee.schimke.cadence.widgets.systemWidgetColors
-import ee.schimke.composeai.rcwidget.creation.rcWidgetHostAction
+import ee.schimke.composeai.rcwidget.creation.androidx.rcWidgetHostAction
 import ee.schimke.composeai.rcwidget.launcher.RcLauncherWidgets
 import ee.schimke.composeai.rcwidget.launcher.RcWidgetSizing
 import ee.schimke.composeai.rcwidget.launcher.captureLauncherWidget

@@ -4,7 +4,7 @@ package ee.schimke.cadence.widgets
 
 import ee.schimke.cadence.notifications.NotificationTemplate
 import ee.schimke.cadence.notifications.NotificationTemplateContent
-import ee.schimke.composeai.rcwidget.creation.rcWidgetHostAction
+import ee.schimke.composeai.rcwidget.creation.androidx.rcWidgetHostAction
 import ee.schimke.livery.capture.DesignFolder
 import ee.schimke.livery.capture.LiveryCapture
 import ee.schimke.livery.client.BindResult

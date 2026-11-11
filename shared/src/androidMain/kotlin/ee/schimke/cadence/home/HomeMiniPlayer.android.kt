@@ -21,8 +21,8 @@ import ee.schimke.cadence.widgets.HeadphoneWidgetAction
 import ee.schimke.cadence.widgets.HeadphoneWidgetLayout
 import ee.schimke.cadence.widgets.HeadphoneWidgetState
 import ee.schimke.cadence.widgets.WidgetColors
-import ee.schimke.composeai.rcwidget.creation.RcWidgetCaptureSize
-import ee.schimke.composeai.rcwidget.creation.rcWidgetHostAction
+import ee.schimke.composeai.rcwidget.creation.androidx.RcWidgetCaptureSize
+import ee.schimke.composeai.rcwidget.creation.androidx.rcWidgetHostAction
 import ee.schimke.composeai.rcwidget.launcher.RcAdaptiveRemoteDocumentPlayer
 import ee.schimke.composeai.rcwidget.launcher.RcLauncherWidgetCapture
 import ee.schimke.composeai.rcwidget.launcher.captureLauncherWidget

@@ -11,8 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import ee.schimke.cadence.widgets.WidgetColors
-import ee.schimke.composeai.rcwidget.creation.RcWidgetCaptureSize
-import ee.schimke.composeai.rcwidget.creation.rcWidgetHostAction
+import ee.schimke.composeai.rcwidget.creation.androidx.RcWidgetCaptureSize
+import ee.schimke.composeai.rcwidget.creation.androidx.rcWidgetHostAction
 import ee.schimke.composeai.rcwidget.launcher.RcAdaptiveRemoteDocumentPlayer
 import ee.schimke.composeai.rcwidget.launcher.RcLauncherWidgetCapture
 import ee.schimke.composeai.rcwidget.launcher.captureLauncherWidget

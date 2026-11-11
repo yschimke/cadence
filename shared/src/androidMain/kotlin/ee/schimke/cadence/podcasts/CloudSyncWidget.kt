@@ -15,7 +15,7 @@ import androidx.annotation.RequiresApi
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import ee.schimke.cadence.widgets.systemWidgetColors
-import ee.schimke.composeai.rcwidget.creation.rcWidgetHostAction
+import ee.schimke.composeai.rcwidget.creation.androidx.rcWidgetHostAction
 import ee.schimke.composeai.rcwidget.launcher.RcLauncherWidgets
 import ee.schimke.composeai.rcwidget.launcher.RcWidgetSizing
 import ee.schimke.composeai.rcwidget.launcher.captureLauncherWidget

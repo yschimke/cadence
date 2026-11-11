@@ -21,7 +21,7 @@ import ee.schimke.cadence.swim.rememberPreviewSeconds
 import ee.schimke.cadence.widgets.WidgetColors
 import ee.schimke.composeai.preview.AnimatedPreview
 import ee.schimke.composeai.preview.LauncherWidgetPreview
-import ee.schimke.composeai.rcwidget.creation.rcWidgetHostAction
+import ee.schimke.composeai.rcwidget.creation.androidx.rcWidgetHostAction
 import ee.schimke.composeai.rcwidget.launcher.RcLauncherWidgets
 
 @Composable
