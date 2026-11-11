@@ -209,6 +209,14 @@ class PocketCastsTest {
     val problem = assertFailsWith<PodcastProblem> { captured.importPocketCasts("manual", 5) }
     assertEquals("Couldn't read the episodes in Swim. Open it in Pocket Casts.", problem.message)
 
+    // Members past the read limit aren't known to be archived, so that isn't empty either.
+    val many = (1..1001).map { "a$it" }
+    platform.extraEpisodes = many.associateWith { episode(it, 600, 0, isDeleted = true) }
+    platform.playlistsBody =
+      """{"playlists":[{"uuid":"manual","title":"Swim","manual":true,"episodeOrder":${many.map { "\"$it\"" }}}]}"""
+    assertFailsWith<PodcastProblem> { controller.importPocketCasts("manual", 5) }
+    platform.extraEpisodes = mapOf("a1" to episode("a1", 600, 0, isDeleted = true))
+
     // Once episodes are added in Pocket Casts, a refresh picks them up.
     platform.playlistsBody =
       """{"playlists":[{"uuid":"manual","title":"Swim","manual":true,"showArchived":false,"episodeOrder":["a1","e2"]}]}"""

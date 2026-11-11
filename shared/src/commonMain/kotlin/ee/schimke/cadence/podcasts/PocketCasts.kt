@@ -250,6 +250,9 @@ fun pocketCastsFresh(body: String, exclude: Set<String>, limit: Int = 20): List<
     .take(limit)
     .toList()
 
+/** How far down a list Cadence reads looking for playable episodes. */
+private const val MAX_MEMBERS_READ = 1000
+
 /** `playingStatus` and `/sync/update_episode` status for a finished episode. */
 private const val PLAYED = 3
 
@@ -344,7 +347,7 @@ suspend fun readPocketCasts(
     episode: suspend (Int) -> PocketCastsEpisode?,
   ): List<PocketCastsEpisode> = buildList {
     var usable = 0
-    for (index in 0 until minOf(count, 1000)) {
+    for (index in 0 until minOf(count, MAX_MEMBERS_READ)) {
       if (usable >= limit) break
       val next = episode(index) ?: continue
       add(next)
@@ -386,7 +389,8 @@ suspend fun readPocketCasts(
       val episodes = members(playlist.episodeOrder)
       // Only a playlist known to be empty imports as empty; replacing the library with one whose
       // members just weren't read would drop its downloads.
-      if (episodes.isEmpty() && unread > 0)
+      val unvisited = (playlist.episodeOrder.size - MAX_MEMBERS_READ).coerceAtLeast(0)
+      if (episodes.isEmpty() && unread + unvisited > 0)
         throw PodcastProblem(
           "Couldn't read the episodes in ${playlist.title}. Open it in Pocket Casts.",
         )
