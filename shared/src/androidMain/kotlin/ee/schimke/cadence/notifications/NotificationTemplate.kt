@@ -82,7 +82,10 @@ object NotificationTemplate {
   /** The progress bar: a pool lane tall enough to see its swimmer. */
   const val LANE_HEIGHT_DP = 24
 
-  /** The size the template is captured at; it fills whatever the shade gives it. */
+  /**
+   * The size the template is captured at. It fills the shade's width but only the height it
+   * draws: Android 17's player gives a body all the height it is offered unless it asks for less.
+   */
   const val CAPTURE_WIDTH_DP = 360
   const val CAPTURE_HEIGHT_DP = 128
 
@@ -156,7 +159,7 @@ fun NotificationTemplateContent(
   val tertiary = color("theme.tertiary")
   RemoteColumn(
     modifier =
-      RemoteModifier.fillMaxSize().padding(horizontal = 16.rdp, vertical = 12.rdp).let {
+      RemoteModifier.fillMaxWidth().padding(horizontal = 16.rdp, vertical = 12.rdp).let {
         if (onOpen != null) it.clickable(onOpen) else it
       },
   ) {

@@ -80,6 +80,23 @@ class PlatformPlayerTest {
     }
   }
 
+  /**
+   * Android 17's player gives a body every pixel SystemUI offers (up to 256dp) unless the document
+   * asks for less: a root that filled its height made every notification as tall as the shade
+   * allows, mostly empty. The body asks for its content, so a text-only post is the shortest.
+   */
+  @Test
+  @Config(sdk = [ANDROID_17], qualifiers = "mdpi")
+  fun aBodyIsOnlyAsTallAsWhatItShows() {
+    val heights =
+      contract.examples.keys.associateWith { player.notificationHeight(body(it), WIDTH, 256) }
+    heights.forEach { (example, height) ->
+      assertTrue(height in 48..160, "'$example' asks for ${height}dp of a 256dp shade")
+    }
+    assertTrue(heights.getValue("ready") < heights.getValue("syncing"), "$heights")
+    assertTrue(heights.getValue("syncing") < heights.getValue("downloading"), "$heights")
+  }
+
   /** `downloading` has a progress bar and Cancel: both are drawn, below the title and text. */
   @Test
   fun aBodyWithProgressAndCancelShowsBoth() {
