@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-11T00:05:30.093Z",
+  "generatedAt": "2026-11-11T00:19:30.754Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "c320f293a44aab0b5a88cc66e5d3eef9ff063e9b",
+        "subject": "chore(main): release 0.1.29 (#584)",
+        "at": "2026-11-10T23:57:43Z",
+        "author": "github-actions[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "52beb8542e3fe35404adb9e548c38b8bbfe7b062",
         "subject": "fix(pocket-casts): import playlist members missing from episodeOrder (#589)",
@@ -474,14 +482,6 @@
         "sha": "e82f199e3bf05681fc9f6fb13feb428066cbeb99",
         "subject": "chore(deps): update dependency com.ncorti.ktfmt.gradle to v0.28.0 (#523)",
         "at": "2026-11-07T00:56:12Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "43d16130c5b4583cd1b79cb0c02afb6f79ab0929",
-        "subject": "fix(deps): update androidx (#503)",
-        "at": "2026-11-07T00:34:00Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
