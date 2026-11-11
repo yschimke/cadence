@@ -353,8 +353,14 @@ suspend fun readPocketCasts(
   }
   // Archived means finished here, so archived members are left out even when the playlist shows
   // them in Pocket Casts.
+  // Members whose details couldn't be read, as when a web-player capture lacks them.
+  var unread = 0
   suspend fun members(uuids: List<String>) =
-    gather(uuids.size) { index -> details(uuids[index])?.takeIf { !it.archived } }
+    gather(uuids.size) { index ->
+      val episode = details(uuids[index])
+      if (episode == null) unread++
+      episode?.takeIf { !it.archived }
+    }
   return when (list) {
     POCKET_CASTS_UP_NEXT -> {
       val body =
@@ -377,11 +383,14 @@ suspend fun readPocketCasts(
       val playlist =
         reader.playlists()?.let(::pocketCastsPlaylists)?.firstOrNull { it.uuid == list }
           ?: throw PodcastProblem("That playlist is no longer in Pocket Casts")
-      pocketCastsSnapshot(
-        playlist.title,
-        members(playlist.episodeOrder),
-        limit,
-      )
+      val episodes = members(playlist.episodeOrder)
+      // Only a playlist known to be empty imports as empty; replacing the library with one whose
+      // members just weren't read would drop its downloads.
+      if (episodes.isEmpty() && unread > 0)
+        throw PodcastProblem(
+          "Couldn't read the episodes in ${playlist.title}. Open it in Pocket Casts.",
+        )
+      pocketCastsSnapshot(playlist.title, episodes, limit)
     }
   }
 }

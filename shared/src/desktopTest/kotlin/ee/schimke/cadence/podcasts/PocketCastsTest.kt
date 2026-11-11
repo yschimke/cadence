@@ -194,6 +194,21 @@ class PocketCastsTest {
     controller.importPocketCasts("manual", 5)
     assertTrue(controller.state.value.library.playlist!!.episodes.isEmpty())
 
+    // A capture that lists members without their details isn't taken as empty.
+    val capture = buildJsonArray {
+      addJsonObject {
+        put("path", "/user/playlists")
+        put(
+          "body",
+          """{"playlists":[{"uuid":"manual","title":"Swim","manual":true,"episodeOrder":["e1"]}]}""",
+        )
+      }
+    }
+    val captured = PodcastController(ApiPlatform())
+    captured.usePocketCastsCapture(capture.toString())
+    val problem = assertFailsWith<PodcastProblem> { captured.importPocketCasts("manual", 5) }
+    assertEquals("Couldn't read the episodes in Swim. Open it in Pocket Casts.", problem.message)
+
     // Once episodes are added in Pocket Casts, a refresh picks them up.
     platform.playlistsBody =
       """{"playlists":[{"uuid":"manual","title":"Swim","manual":true,"showArchived":false,"episodeOrder":["a1","e2"]}]}"""
