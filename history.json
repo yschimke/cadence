@@ -1,6 +1,6 @@
 {
     "formatVersion": "compose-preview-history/v1",
-    "generatedFrom": "778d843b41d124e803fa44e9bcaadf44aa2645b6",
+    "generatedFrom": "cb85ab6dbc4d132e904ef8a7eaa669b40f77a33b",
     "previews": {
         "composeApp/activity__MainActivity": {
             "path": "renders/composeApp/activity__MainActivity.png",
@@ -628,6 +628,13 @@
             "path": "renders/composeApp/NotificationDownloadingPreview_Notification_downloading-f99a71e3.png",
             "versions": [
                 {
+                    "blob": "8e2f9accee884d094de17d26ebad53ac57049119",
+                    "commit": "cb85ab6dbc4d132e904ef8a7eaa669b40f77a33b",
+                    "date": "2026-11-11T08:21:57Z",
+                    "sourceSha": "a766c071",
+                    "commits": 1
+                },
+                {
                     "blob": "a6ab6f15ba4023fbb7a1b5e749b3239b8abe0feb",
                     "commit": "778d843b41d124e803fa44e9bcaadf44aa2645b6",
                     "date": "2026-11-11T01:43:20Z",
@@ -656,7 +663,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 4,
+            "observations": 5,
             "unstable": false,
             "flapCount": 1
         },
@@ -694,6 +701,13 @@
             "path": "renders/composeApp/NotificationSyncingPreview_Notification_syncing_light-fb11050e.png",
             "versions": [
                 {
+                    "blob": "fd77c4a3b2d2e83d8c2c808894ac9af45428afba",
+                    "commit": "cb85ab6dbc4d132e904ef8a7eaa669b40f77a33b",
+                    "date": "2026-11-11T08:21:57Z",
+                    "sourceSha": "a766c071",
+                    "commits": 1
+                },
+                {
                     "blob": "81eed8a8a840512eed886d216a863d473dfbfb40",
                     "commit": "778d843b41d124e803fa44e9bcaadf44aa2645b6",
                     "date": "2026-11-11T01:43:20Z",
@@ -722,7 +736,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 4,
+            "observations": 5,
             "unstable": false,
             "flapCount": 1
         },
@@ -2992,6 +3006,13 @@
             "path": "renders/composeApp/DevicesScreenLoadedPreview_Devices_loaded-cfb106a7.png",
             "versions": [
                 {
+                    "blob": "75d296ccf24c844f254f85712cefc383eec845bd",
+                    "commit": "cb85ab6dbc4d132e904ef8a7eaa669b40f77a33b",
+                    "date": "2026-11-11T08:21:57Z",
+                    "sourceSha": "a766c071",
+                    "commits": 1
+                },
+                {
                     "blob": "b7be1cf32d9c5c911630bb2cf0c50c53edf4776c",
                     "commit": "aa36236c6e8b55f565e9dccf558057140eed6ba4",
                     "date": "2026-11-08T11:46:46Z",
@@ -3034,7 +3055,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 6,
+            "observations": 7,
             "unstable": false,
             "flapCount": 0
         },
@@ -3257,6 +3278,13 @@
             "path": "renders/composeApp/HomeFreshPreview_Home_new_releases-638a4962.png",
             "versions": [
                 {
+                    "blob": "9e3d67994a398348b4f5c1f77a74911ff4e8ce45",
+                    "commit": "cb85ab6dbc4d132e904ef8a7eaa669b40f77a33b",
+                    "date": "2026-11-11T08:21:57Z",
+                    "sourceSha": "a766c071",
+                    "commits": 1
+                },
+                {
                     "blob": "6d9e88f830348b3d04f29eeac453a53185112814",
                     "commit": "4917062213b6f14c99fe1df5ff4dba4b822b8c38",
                     "date": "2026-11-07T22:36:43Z",
@@ -3299,7 +3327,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 6,
+            "observations": 7,
             "unstable": false,
             "flapCount": 0
         },
