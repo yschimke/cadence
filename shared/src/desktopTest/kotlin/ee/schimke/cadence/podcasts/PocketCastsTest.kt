@@ -155,6 +155,43 @@ class PocketCastsTest {
   }
 
   @Test
+  fun playlistMembersMissingFromTheOrderAreStillImported() = runBlocking {
+    val platform = ApiPlatform()
+    platform.playlistsBody =
+      """{"playlists":[{"uuid":"manual","title":"Swim","manual":true,"showArchived":false,"episodeOrder":[],"episodes":[{"episode":"e2","podcast":"p1"},{"episode":"e1","podcast":"p1"}]}]}"""
+    val controller = PodcastController(platform)
+    controller.signInPocketCasts("listener@example.com", "secret")
+    controller.importPocketCasts("manual", 5)
+    assertEquals(
+      listOf("e2", "e1"),
+      controller.state.value.library.playlist!!.episodes.map { it.id },
+    )
+  }
+
+  @Test
+  fun aPlaylistOfArchivedEpisodesSaysSoRatherThanEmpty() = runBlocking {
+    val platform = ApiPlatform()
+    platform.extraEpisodes = mapOf("a1" to episode("a1", 600, 0, isDeleted = true))
+    platform.playlistsBody =
+      """{"playlists":[{"uuid":"manual","title":"Swim","manual":true,"showArchived":false,"episodeOrder":["a1"]}]}"""
+    val controller = PodcastController(platform)
+    controller.signInPocketCasts("listener@example.com", "secret")
+    val problem = assertFailsWith<PodcastProblem> { controller.importPocketCasts("manual", 5) }
+    assertEquals("Everything in Swim is archived in Pocket Casts", problem.message)
+
+    // A capture without the episode's details can't tell, so it doesn't claim they're archived.
+    val capture = buildJsonArray {
+      addJsonObject {
+        put("path", "/user/playlists")
+        put("body", platform.playlistsBody)
+      }
+    }
+    controller.usePocketCastsCapture(capture.toString())
+    val unknown = assertFailsWith<PodcastProblem> { controller.importPocketCasts("manual", 5) }
+    assertEquals("Swim is empty in Pocket Casts", unknown.message)
+  }
+
+  @Test
   fun capturedPlayerResponsesImportWithoutAToken() = runBlocking {
     val capture = buildJsonArray {
       addJsonObject {

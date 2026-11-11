@@ -89,6 +89,13 @@ fun SwimLaneProgress(
   modifier: RemoteModifier = RemoteModifier,
   colors: LaneColors = LaneColors.Pool,
   clock: RemoteFloat = LocalSwimClock.current,
+  /**
+   * The lane's height in pixels when the caller knows it, so the drawing doesn't read the canvas's
+   * measured height. Pass it for a lane a template hides by sizing it to 0: drawn at no height, the
+   * lane's ropes and swimmer degenerate, which Android 16's player fails on and Android 17's
+   * renders very slowly. The canvas's clip still hides it.
+   */
+  heightPx: RemoteFloat? = null,
 ) {
   RemoteCanvas(modifier) {
     drawLane(
@@ -98,6 +105,7 @@ fun SwimLaneProgress(
       wake = colors.oddWake.copy(alpha = WakeAlpha).rc,
       turnClock = null,
       strokeClock = clock,
+      h = heightPx ?: height,
     )
   }
 }
@@ -312,9 +320,9 @@ private fun RemoteDrawScope.drawLane(
   wake: RemoteColor,
   turnClock: RemoteFloat?,
   strokeClock: RemoteFloat,
+  h: RemoteFloat = height,
 ) {
   val w = width
-  val h = height
   val wall = h * 0.12f
   val lane = LaneGeometry(w, h, wall)
   val mid = lane.mid

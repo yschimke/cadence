@@ -9,7 +9,9 @@ import androidx.compose.remote.creation.compose.capture.RemoteDensity
 import androidx.compose.remote.creation.compose.capture.captureSingleRemoteDocument
 import androidx.compose.remote.creation.compose.layout.RemoteArrangement
 import androidx.compose.remote.creation.compose.layout.RemoteColumn
+import androidx.compose.remote.creation.compose.layout.RemoteComposable
 import androidx.compose.remote.creation.compose.state.rdp
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.toArgb
 import ee.schimke.cadence.notifications.NotificationBody
 import ee.schimke.cadence.notifications.NotificationIcon
@@ -122,6 +124,46 @@ class PlatformPlayerTest {
     player.widget(spacedColumn(), WIDTH, HEIGHT).assertDraws()
   }
 
+  /**
+   * The template captured with a body's values, as a preview captures it, played without being
+   * instantiated: nothing collapses its layouts. A conditional layout for the bar and Cancel was
+   * laid out over the title here, which is what `RemoteContentPreview` showed.
+   *
+   * Android 17 only: its player, like AndroidX's that previews use, sizes by a value the host could
+   * change. Android 16's needs literals, which only instantiation writes in.
+   */
+  @Test
+  @Config(sdk = [ANDROID_17], qualifiers = "mdpi")
+  fun anUninstantiatedBodyLaysTheBarAndCancelOutBelowTheTitle() {
+    val captured =
+      capture(
+        NotificationBody(
+          "Downloading podcasts",
+          "Lighthouses of the North Sea · 42%",
+          NotificationIcon.Download,
+          progress = 0.42f,
+        ),
+        cancel = true,
+      )
+    val played = player.widget(captured, WIDTH, HEIGHT)
+    played.assertDraws(HEADER, "the icon, title and text")
+    played.assertDraws(BELOW_HEADER, "the progress bar and Cancel")
+    played.assertDraws(CANCEL, "Cancel")
+  }
+
+  /** Without a bar or Cancel, nothing is drawn below the title, uninstantiated too. */
+  @Test
+  @Config(sdk = [ANDROID_17], qualifiers = "mdpi")
+  fun anUninstantiatedBodyWithNeitherShowsNeither() {
+    val captured =
+      capture(
+        NotificationBody("3 episodes ready", "Plug in your headphones", NotificationIcon.Done),
+      )
+    val played = player.widget(captured, WIDTH, HEIGHT)
+    played.assertDraws(HEADER, "the icon, title and text")
+    played.assertBlank(BELOW_HEADER, "a progress bar or Cancel")
+  }
+
   /** [example] of the contract, written into the bundled template as the app writes a post. */
   private fun body(example: String): ByteArray = runBlocking {
     val template =
@@ -150,25 +192,35 @@ class PlatformPlayerTest {
   }
 
   /** The notification drawing in a column spaced by 10dp, captured at host density. */
-  private fun spacedColumn(): ByteArray = runBlocking {
-    val context = Robolectric.buildActivity(Activity::class.java).setup().get()
-    captureSingleRemoteDocument(
-        context = context,
-        creationDisplayInfo = RemoteCreationDisplayInfo(WIDTH, HEIGHT, 160),
-        remoteDensity = RemoteDensity.Host,
-        profile = widgetsProfile,
-      ) {
-        RemoteColumn(verticalArrangement = RemoteArrangement.spacedBy(10.rdp)) {
-          NotificationTemplateContent(
-            null,
-            null,
-            NotificationBody("Processing", "Trimming silence…", NotificationIcon.Process),
-            colors = WidgetColors.Light,
-          )
-        }
-      }
-      .bytes
+  private fun spacedColumn(): ByteArray = captureDocument {
+    RemoteColumn(verticalArrangement = RemoteArrangement.spacedBy(10.rdp)) {
+      NotificationTemplateContent(
+        null,
+        null,
+        NotificationBody("Processing", "Trimming silence…", NotificationIcon.Process),
+        colors = WidgetColors.Light,
+      )
+    }
   }
+
+  /** The template with [body]'s values as its defaults, captured as a preview captures it. */
+  private fun capture(body: NotificationBody, cancel: Boolean = false): ByteArray =
+    captureDocument {
+      NotificationTemplateContent(null, null, body, cancel, colors = WidgetColors.Light)
+    }
+
+  private fun captureDocument(content: @Composable @RemoteComposable () -> Unit): ByteArray =
+    runBlocking {
+      val context = Robolectric.buildActivity(Activity::class.java).setup().get()
+      captureSingleRemoteDocument(
+          context = context,
+          creationDisplayInfo = RemoteCreationDisplayInfo(WIDTH, HEIGHT, 160),
+          remoteDensity = RemoteDensity.Host,
+          profile = widgetsProfile,
+          content = content,
+        )
+        .bytes
+    }
 
   private companion object {
     const val WIDTH = 320

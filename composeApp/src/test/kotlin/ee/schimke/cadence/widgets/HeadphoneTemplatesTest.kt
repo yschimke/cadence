@@ -23,6 +23,7 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
+import org.robolectric.annotation.GraphicsMode
 
 /**
  * Captures the headphone widget's Livery templates (one per [HeadphoneControlsTemplate.Tier] and
@@ -35,6 +36,9 @@ import org.robolectric.annotation.Config
  * the template really does.
  */
 @RunWith(RobolectricTestRunner::class)
+// Native graphics: icons are drawn as paths read from an android.graphics.Path, which the legacy
+// mode stubs out, so every icon was captured empty.
+@GraphicsMode(GraphicsMode.Mode.NATIVE)
 @Config(sdk = [35], qualifiers = "mdpi")
 class HeadphoneTemplatesTest {
   private val catalog =

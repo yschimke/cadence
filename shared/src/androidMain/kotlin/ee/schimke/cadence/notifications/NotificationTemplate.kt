@@ -119,9 +119,9 @@ enum class NotificationIcon(val vector: ImageVector, val label: String) {
 }
 
 /**
- * The template: [onOpen] on the body, [onCancel] on its Cancel button. The icon, the progress bar
- * and Cancel are conditional layouts over the named values, so one document serves every
- * notification, and each instantiated one holds only what it shows.
+ * The template: [onOpen] on the body, [onCancel] on its Cancel button. The icon is a conditional
+ * layout over a named value, and the progress bar and Cancel are sized by named flags, so one
+ * document serves every notification.
  *
  * [sample] and [colors] are only the named values' defaults, for previews: SystemUI is handed the
  * values written in by instantiation. The captured template leaves them blank.
@@ -202,54 +202,53 @@ fun NotificationTemplateContent(
         )
       }
     }
-    // Present or absent by the named flags, as conditional layouts with an empty branch for
-    // "absent": instantiation writes each flag in as a constant. (A visibility modifier isn't
-    // honoured by the platform's player, which drew both on every notification.) Each brings its
-    // own gap above: the column has no spacing, which that player needs as a literal anyway.
-    RemoteStateLayout(hasProgress.toRemoteInt(), 0, 1) { shown: Int ->
-      if (shown == 1) {
-        // The swimmer's one lap: a canvas draws it from the value, where a box could only be
-        // sized by a constant fraction.
-        SwimLaneProgress(
-          progress,
-          RemoteModifier.padding(top = 10.rdp)
-            .fillMaxWidth()
-            .height(t.LANE_HEIGHT_DP.rdp)
-            .clip(RemoteRoundedCornerShape((t.LANE_HEIGHT_DP / 2).rdp)),
-        )
-      } else {
-        RemoteBox(RemoteModifier.fillMaxWidth())
+    // Present or absent by the named flags, as a height that is 0 when absent: instantiation writes
+    // each flag in as a constant, which makes the height a literal. Not a conditional layout, which
+    // AndroidX's player and the platform's lay out over the content above it in a column, nor a
+    // visibility modifier, which the platform's player ignores. Each brings its own gap above.
+    // The swimmer's one lap: a canvas draws it from the value, where a box could only be sized by
+    // a constant fraction. The box is sized by the flag, like Cancel; inside it a conditional layout
+    // picks the lane or nothing, so a body without a bar holds no lane at all once instantiated
+    // (the layout collapses), and nothing animates. Placed in a box, the conditional layout can't be
+    // laid out over the title.
+    RemoteBox(
+      RemoteModifier.padding(top = hasProgress.select(10.rdp, 0.rdp))
+        .fillMaxWidth()
+        .height(hasProgress.select(t.LANE_HEIGHT_DP.rdp, 0.rdp))
+        .clip(RemoteRoundedCornerShape((t.LANE_HEIGHT_DP / 2).rdp)),
+    ) {
+      RemoteStateLayout(hasProgress.toRemoteInt(), 0, 1, modifier = RemoteModifier.fillMaxSize()) {
+        shown: Int ->
+        if (shown == 1) {
+          SwimLaneProgress(
+            progress,
+            RemoteModifier.fillMaxSize(),
+            heightPx = t.LANE_HEIGHT_DP.rdp.toPx(),
+          )
+        } else {
+          RemoteBox(RemoteModifier.fillMaxSize())
+        }
       }
     }
-    RemoteStateLayout(hasCancel.toRemoteInt(), 0, 1) { shown: Int ->
-      if (shown == 1) {
-        RemoteRow(
-          modifier = RemoteModifier.padding(top = 10.rdp).fillMaxWidth(),
-          horizontalArrangement = RemoteArrangement.End,
-        ) {
-          RemoteBox(
-            modifier =
-              RemoteModifier.height(36.rdp)
-                .clip(RemoteRoundedCornerShape(18.rdp))
-                .background(tonal)
-                .semantics {
-                  contentDescription = "Cancel".rs
-                  role = Role.Button
-                }
-                .let { if (onCancel != null) it.clickable(onCancel) else it }
-                .padding(horizontal = 16.rdp),
-            contentAlignment = RemoteAlignment.Center,
-          ) {
-            RemoteText(
-              "Cancel".rs,
-              color = onTonal,
-              fontSize = 14.rsp,
-              fontWeight = FontWeight.Medium,
-            )
-          }
-        }
-      } else {
-        RemoteBox(RemoteModifier.fillMaxWidth())
+    RemoteRow(
+      modifier = RemoteModifier.padding(top = hasCancel.select(10.rdp, 0.rdp)).fillMaxWidth(),
+      horizontalArrangement = RemoteArrangement.End,
+    ) {
+      // Clipped to its height, so at 0 its label isn't drawn either.
+      RemoteBox(
+        modifier =
+          RemoteModifier.height(hasCancel.select(36.rdp, 0.rdp))
+            .clip(RemoteRoundedCornerShape(18.rdp))
+            .background(tonal)
+            .semantics {
+              contentDescription = "Cancel".rs
+              role = Role.Button
+            }
+            .let { if (onCancel != null) it.clickable(onCancel) else it }
+            .padding(horizontal = 16.rdp),
+        contentAlignment = RemoteAlignment.Center,
+      ) {
+        RemoteText("Cancel".rs, color = onTonal, fontSize = 14.rsp, fontWeight = FontWeight.Medium)
       }
     }
   }

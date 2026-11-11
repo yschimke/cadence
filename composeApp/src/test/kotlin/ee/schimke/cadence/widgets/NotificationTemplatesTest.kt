@@ -26,6 +26,7 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
+import org.robolectric.annotation.GraphicsMode
 
 /**
  * Captures the notification body's Livery template ([NotificationTemplateContent]) and checks it is
@@ -33,6 +34,9 @@ import org.robolectric.annotation.Config
  * `-Pcadence.livery.regenerate=true` to write it instead, after changing the drawing.
  */
 @RunWith(RobolectricTestRunner::class)
+// Native graphics: icons are drawn as paths read from an android.graphics.Path, which the legacy
+// mode stubs out, so every icon was captured empty.
+@GraphicsMode(GraphicsMode.Mode.NATIVE)
 @Config(sdk = [35], qualifiers = "mdpi")
 class NotificationTemplatesTest {
   private val catalog =
