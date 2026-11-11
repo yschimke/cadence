@@ -12,12 +12,9 @@ import androidx.compose.remote.creation.compose.action.RemoteAction
 import androidx.compose.remote.creation.compose.layout.RemoteAlignment
 import androidx.compose.remote.creation.compose.layout.RemoteArrangement
 import androidx.compose.remote.creation.compose.layout.RemoteBox
-import androidx.compose.remote.creation.compose.layout.RemoteCanvas
 import androidx.compose.remote.creation.compose.layout.RemoteColumn
 import androidx.compose.remote.creation.compose.layout.RemoteComposable
-import androidx.compose.remote.creation.compose.layout.RemoteOffset
 import androidx.compose.remote.creation.compose.layout.RemoteRow
-import androidx.compose.remote.creation.compose.layout.RemoteSize
 import androidx.compose.remote.creation.compose.layout.RemoteStateLayout
 import androidx.compose.remote.creation.compose.layout.RemoteText
 import androidx.compose.remote.creation.compose.modifier.RemoteModifier
@@ -38,7 +35,6 @@ import androidx.compose.remote.creation.compose.state.RemoteBoolean
 import androidx.compose.remote.creation.compose.state.RemoteColor
 import androidx.compose.remote.creation.compose.state.RemoteFloat
 import androidx.compose.remote.creation.compose.state.RemoteInt
-import androidx.compose.remote.creation.compose.state.RemotePaint
 import androidx.compose.remote.creation.compose.state.RemoteState
 import androidx.compose.remote.creation.compose.state.RemoteString
 import androidx.compose.remote.creation.compose.state.rdp
@@ -51,6 +47,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import ee.schimke.cadence.swim.SwimLaneProgress
 import ee.schimke.cadence.widgets.WidgetColors
 import ee.schimke.cadence.widgets.WidgetIcon
 import kotlinx.serialization.json.JsonObject
@@ -81,6 +78,9 @@ object NotificationTemplate {
   const val MIN_WIDTH_DP = 200
   const val MIN_HEIGHT_DP = 64
   const val MAX_HEIGHT_DP = 256
+
+  /** The progress bar: a pool lane tall enough to see its swimmer. */
+  const val LANE_HEIGHT_DP = 24
 
   /** The size the template is captured at; it fills whatever the shade gives it. */
   const val CAPTURE_WIDTH_DP = 360
@@ -206,21 +206,29 @@ fun NotificationTemplateContent(
     // each flag in as a constant, which makes the height a literal. Not a conditional layout, which
     // AndroidX's player and the platform's lay out over the content above it in a column, nor a
     // visibility modifier, which the platform's player ignores. Each brings its own gap above.
-    val barGap = hasProgress.select(10.rdp, 0.rdp)
-    val barHeight = hasProgress.select(6.rdp, 0.rdp)
-    // A canvas, not fillMaxWidth(progress): players size a box by a constant fraction only.
-    RemoteCanvas(
-      RemoteModifier.padding(top = barGap)
+    // The swimmer's one lap: a canvas draws it from the value, where a box could only be sized by
+    // a constant fraction. The box is sized by the flag, like Cancel; inside it a conditional layout
+    // picks the lane or nothing, so a body without a bar holds no lane at all once instantiated
+    // (the layout collapses), and nothing animates. Placed in a box, the conditional layout can't be
+    // laid out over the title.
+    RemoteBox(
+      RemoteModifier.padding(top = hasProgress.select(10.rdp, 0.rdp))
         .fillMaxWidth()
-        .height(barHeight)
-        .clip(RemoteRoundedCornerShape(3.rdp)),
+        .height(hasProgress.select(t.LANE_HEIGHT_DP.rdp, 0.rdp))
+        .clip(RemoteRoundedCornerShape((t.LANE_HEIGHT_DP / 2).rdp)),
     ) {
-      drawRect(RemotePaint { color = tonal }, RemoteOffset(0f, 0f), RemoteSize(width, height))
-      drawRect(
-        RemotePaint { color = primary },
-        RemoteOffset(0f, 0f),
-        RemoteSize(width * progress, height),
-      )
+      RemoteStateLayout(hasProgress.toRemoteInt(), 0, 1, modifier = RemoteModifier.fillMaxSize()) {
+        shown: Int ->
+        if (shown == 1) {
+          SwimLaneProgress(
+            progress,
+            RemoteModifier.fillMaxSize(),
+            heightPx = t.LANE_HEIGHT_DP.rdp.toPx(),
+          )
+        } else {
+          RemoteBox(RemoteModifier.fillMaxSize())
+        }
+      }
     }
     RemoteRow(
       modifier = RemoteModifier.padding(top = hasCancel.select(10.rdp, 0.rdp)).fillMaxWidth(),

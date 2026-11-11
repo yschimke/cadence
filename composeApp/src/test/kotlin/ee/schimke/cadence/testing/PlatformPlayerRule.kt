@@ -42,7 +42,8 @@ import org.robolectric.Shadows.shadowOf
  * bytes untouched, for showing what the publishing path recovers. Each play is saved as a PNG under
  * `build/platform-player/sdk<N>/`, named for the test.
  *
- * Play one animated document per test: a second in the same JVM can run it out of memory.
+ * Each play tears its activity down once drawn: an animated document left playing keeps asking for
+ * frames, and every later play in the test would spend its main-thread budget painting it.
  */
 class PlatformPlayerRule : TestWatcher() {
   private var test = "test"
@@ -77,7 +78,8 @@ class PlatformPlayerRule : TestWatcher() {
 
   /** [views] inflated and drawn at [widthPx] × [heightPx] over white. */
   fun play(views: RemoteViews, widthPx: Int, heightPx: Int, label: String = ""): Played {
-    val activity = Robolectric.buildActivity(Activity::class.java).setup().get()
+    val controller = Robolectric.buildActivity(Activity::class.java).setup()
+    val activity = controller.get()
     val frame = FrameLayout(activity)
     frame.setBackgroundColor(Color.WHITE)
     frame.addView(views.apply(activity, frame))
@@ -92,6 +94,8 @@ class PlatformPlayerRule : TestWatcher() {
     val image = Bitmap.createBitmap(widthPx, heightPx, Bitmap.Config.ARGB_8888)
     // The first frame lays out and paints; the second draws what the first asked to repaint.
     repeat(2) { frame.draw(Canvas(image)) }
+    frame.removeAllViews()
+    controller.pause().stop().destroy()
     val name =
       listOf(test, label.ifEmpty { if (plays == 0) "" else "$plays" }).filter { it.isNotEmpty() }
     plays++

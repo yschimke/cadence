@@ -232,7 +232,7 @@ class PlatformPlayerTest {
     /** Where the progress bar and Cancel go, when a body has them. */
     val BELOW_HEADER = Rect(0, 64, WIDTH, HEIGHT)
 
-    /** The Cancel button: right-aligned under the bar. */
-    val CANCEL = Rect(WIDTH / 2, 84, WIDTH, HEIGHT)
+    /** The Cancel button: right-aligned under the lane. */
+    val CANCEL = Rect(WIDTH / 2, 100, WIDTH, HEIGHT)
   }
 }
