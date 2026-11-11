@@ -13,9 +13,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.OpenInNew
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Folder
-import androidx.compose.material.icons.filled.FolderOpen
 import androidx.compose.material.icons.filled.Headphones
 import androidx.compose.material.icons.filled.LinkOff
 import androidx.compose.material.icons.filled.PhoneAndroid
@@ -209,6 +209,7 @@ private fun FolderRow(
   onOpenInFiles: (() -> Unit)? = null,
 ) {
   val location = storageLocation(device.path)
+  val title = location.folder?.substringAfterLast('/') ?: device.name.ifBlank { location.drive }
   ListItem(
     leadingContent = {
       Icon(
@@ -223,7 +224,7 @@ private fun FolderRow(
     },
     headlineContent = {
       Text(
-        location.folder?.substringAfterLast('/') ?: device.name.ifBlank { location.drive },
+        title,
         maxLines = 1,
         overflow = TextOverflow.Ellipsis,
       )
@@ -250,7 +251,8 @@ private fun FolderRow(
       onOpenInFiles?.let { open ->
         {
           IconButton(onClick = open) {
-            Icon(Icons.Filled.FolderOpen, contentDescription = "Open in Files")
+            // Named per folder, so a screen reader can tell the buttons apart.
+            Icon(Icons.AutoMirrored.Filled.OpenInNew, contentDescription = "Open $title in Files")
           }
         }
       },
