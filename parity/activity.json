@@ -1,11 +1,27 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-10T19:45:57.346Z",
+  "generatedAt": "2026-11-11T00:05:30.093Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "52beb8542e3fe35404adb9e548c38b8bbfe7b062",
+        "subject": "fix(pocket-casts): import playlist members missing from episodeOrder (#589)",
+        "at": "2026-11-10T23:53:21Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "f297c04fa584f0e7099cbcc744278ee52d334d0c",
+        "subject": "fix(widgets): lay the notification's bar and Cancel out below the title, and capture icons (#588)",
+        "at": "2026-11-10T23:33:26Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "e3bf1e7231764002a649a272a972d3ddc0e77bdb",
         "subject": "chore(deps): update plugin com.squareup.wire to v7.2.0 (#587)",
@@ -467,22 +483,6 @@
         "subject": "fix(deps): update androidx (#503)",
         "at": "2026-11-07T00:34:00Z",
         "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "3d2fded177c66d62e13dbd1dfff7cb059cc59e37",
-        "subject": "fix(deps): update compose-ai-tools (#526)",
-        "at": "2026-11-07T00:16:53Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "18de8c343e80e1f7e423d0c006916a6f3a9393b9",
-        "subject": "fix(widgets): headphone widget draws on Android 16's platform widget player (#529)",
-        "at": "2026-11-07T00:05:37Z",
-        "author": "Yuri Schimke",
         "previewIds": [],
         "components": []
       }
