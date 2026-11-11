@@ -188,6 +188,10 @@ class PocketCastsTest {
     controller.importPocketCasts("manual", 5)
     assertTrue(controller.state.value.library.playlist!!.episodes.isEmpty())
 
+    // Preparing it has nothing to do, rather than failing (and the overnight refresh retrying).
+    controller.prepare()
+    assertTrue(controller.state.value.library.manifests.isEmpty())
+
     // A playlist with no members at all imports too.
     platform.playlistsBody =
       """{"playlists":[{"uuid":"manual","title":"Swim","manual":true,"showArchived":false,"episodeOrder":[]}]}"""

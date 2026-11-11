@@ -41,6 +41,17 @@ class HeadphoneSyncStepTest {
     )
 
   @Test
+  fun anEmptySourceNeverCopiedIsUpToDateRatherThanToPrepare() {
+    val empty =
+      LocalPodcastState(
+        library =
+          PodcastLibrary(playlist = PlaylistSnapshot(name = "Swim", episodes = emptyList())),
+        target = "content://drive",
+      )
+    assertEquals(HeadphoneSyncStep.UpToDate(true), headphoneSyncStep(empty, false, true))
+  }
+
+  @Test
   fun firstRunAsksForASource() {
     assertEquals(HeadphoneSyncStep.NoSource, headphoneSyncStep(LocalPodcastState(), false, false))
   }

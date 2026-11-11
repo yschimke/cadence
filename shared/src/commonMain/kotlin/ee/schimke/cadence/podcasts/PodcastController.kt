@@ -872,7 +872,18 @@ class PodcastController(val platform: PodcastPlatform) {
   suspend fun prepare() {
     val library = state.value.library
     val playlist = requireNotNull(library.playlist) { "Import a playlist first" }
-    require(playlist.episodes.isNotEmpty())
+    // An empty source (a Pocket Casts playlist with nothing in it yet) has nothing to prepare;
+    // it isn't a failure, so the overnight refresh doesn't keep retrying it.
+    if (playlist.episodes.isEmpty()) {
+      save(
+        state.value.copy(
+          library = state.value.library.copy(manifests = emptyList()),
+          readySectionIds = emptySet(),
+        ),
+      )
+      notice = "${playlist.name} has no episodes yet"
+      return
+    }
     val manifests =
       playlist.episodes
         .map { episode ->
