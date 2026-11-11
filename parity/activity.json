@@ -1,11 +1,35 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-11T15:53:56.831Z",
+  "generatedAt": "2026-11-11T23:59:08.622Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "d2050a1315eb0ec04f9d93d7d288bc279aa92e87",
+        "subject": "build(deps): rc-players 3.0.0 and Livery 0.10.0 (#596)",
+        "at": "2026-11-11T23:45:37Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "8f25236e5bc1e4b2f5b31e2b38493bfb28b02ba9",
+        "subject": "fix(deps): update dependency com.google.firebase:firebase-bom to v35.2.0 (#594)",
+        "at": "2026-11-11T20:29:48Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "4110991873ecb436fc21ed0d4552053a6b119077",
+        "subject": "fix(deps): update dependency ee.schimke.composeai:rc-players-bom to v2.33.0 (#579)",
+        "at": "2026-11-11T20:29:20Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "764d3aef38455a30b8e636e5092f4225095de61e",
         "subject": "chore(main): release 0.1.30 (#590)",
@@ -459,30 +483,6 @@
         "subject": "chore(deps): update yschimke/livery action to v0.4.0 (#534)",
         "at": "2026-11-07T13:47:33Z",
         "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "27162fc312d64844e9d0c01b56d5c7deaf9abc63",
-        "subject": "chore(main): release 0.1.21 (#528)",
-        "at": "2026-11-07T11:41:55Z",
-        "author": "github-actions[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "8aedcd72b989e753b54a7f58609ac355babfedd0",
-        "subject": "fix(previews): podcast screen previews render without WorkManager (#533)",
-        "at": "2026-11-07T10:35:07Z",
-        "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "4cdb07f3af5bcfe3c3cebbf6a9ff294e1e41cb6e",
-        "subject": "feat(analytics): firebase analytics for screens, key actions and the widgets' Livery events (#530)",
-        "at": "2026-11-07T02:10:07Z",
-        "author": "Yuri Schimke",
         "previewIds": [],
         "components": []
       }
