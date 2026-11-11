@@ -3,6 +3,9 @@
 # Not referenced by a build: the CLI injects the plugin. Keep it on a version
 # whose plugin is on Maven Central.
 composePreviewPlugin = "2.79.0"
+# `preview-annotations` ships from yschimke/compose-preview-daemon on its own 3.x release line;
+# partial releases publish only changed modules and update `compose-preview-daemon-bom`.
+composePreviewDaemon = "3.27.4"
 firebase-bom = "35.2.0"
 benchmark = "1.5.0"
 profileinstaller = "1.4.1"
@@ -70,15 +73,17 @@ androidx-benchmark-macro-junit4 = { module = "androidx.benchmark:benchmark-macro
 androidx-profileinstaller = { module = "androidx.profileinstaller:profileinstaller", version.ref = "profileinstaller" }
 rc-players-bom = { module = "ee.schimke.composeai:rc-players-bom", version.ref = "rcPlayers" }
 rc-widget-launcher = { module = "ee.schimke.composeai:rc-widget-launcher" }
-livery-client = { module = "ee.schimke.composeai:livery-client", version.ref = "livery" }
-livery-instantiate = { module = "ee.schimke.composeai:livery-instantiate", version.ref = "livery" }
-livery-launcher-widgets = { module = "ee.schimke.composeai:livery-launcher-widgets", version.ref = "livery" }
-livery-notifications = { module = "ee.schimke.composeai:livery-notifications", version.ref = "livery" }
-livery-capture = { module = "ee.schimke.composeai:livery-capture", version.ref = "livery" }
-livery-firebase = { module = "ee.schimke.composeai:livery-firebase", version.ref = "livery" }
+livery-bom = { module = "ee.schimke.composeai:livery-bom", version.ref = "livery" }
+livery-client = { module = "ee.schimke.composeai:livery-client" }
+livery-instantiate = { module = "ee.schimke.composeai:livery-instantiate" }
+livery-launcher-widgets = { module = "ee.schimke.composeai:livery-launcher-widgets" }
+livery-notifications = { module = "ee.schimke.composeai:livery-notifications" }
+livery-capture = { module = "ee.schimke.composeai:livery-capture" }
+livery-firebase = { module = "ee.schimke.composeai:livery-firebase" }
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
 robolectric-sdk35 = { module = "org.robolectric:android-all-instrumented", version.ref = "robolectric-sdk35" }
-composeai-preview-annotations = { module = "ee.schimke.composeai:preview-annotations", version = "3.27.4" }
+composeai-daemon-bom = { module = "ee.schimke.composeai:compose-preview-daemon-bom", version.ref = "composePreviewDaemon" }
+composeai-preview-annotations = { module = "ee.schimke.composeai:preview-annotations" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
