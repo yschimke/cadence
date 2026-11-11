@@ -164,7 +164,7 @@
     "functionName": "NotificationDownloadingPreview",
     "module": "composeApp",
     "renderBasename": "NotificationDownloadingPreview_Notification_downloading-f99a71e3.png",
-    "sha256": "63a32125b39c885a03f88bfcef8ca2ac989b78dfd66576e7081c41150b9b89ef",
+    "sha256": "641399eb9672ace91f40a680f06b05c3d505dbe5a1a5014e6d808daff3934ea1",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/NotificationPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.NotificationPreviewsKt.NotificationFailedPreview_Notification \u00b7 failed": {
@@ -188,7 +188,7 @@
     "functionName": "NotificationSyncingPreview",
     "module": "composeApp",
     "renderBasename": "NotificationSyncingPreview_Notification_syncing_light-fb11050e.png",
-    "sha256": "7739dfe0df93f2e777f4c26417bc4eb08b5a75f6333592ddd8730cfaf3a520b4",
+    "sha256": "5d7c4c09afb69860495f237efd0367fd61ed415198109292c4679b12a07dc8a3",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/NotificationPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.PodcastPreviewsKt.AddPodcastsPreview_Add podcasts": {
@@ -428,7 +428,7 @@
     "functionName": "DevicesScreenLoadedPreview",
     "module": "composeApp",
     "renderBasename": "DevicesScreenLoadedPreview_Devices_loaded-cfb106a7.png",
-    "sha256": "74ec71c6d3c9833ba82dd74e8b8aecbe0a238ce682e5c64173503a1f1d943517",
+    "sha256": "551d4e8fe211400571002fd2dbfe1c2ead9f4938eb86485b285f375e6989c485",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.DevicesScreenLoadingPreview_Devices - loading": {
@@ -476,7 +476,7 @@
     "functionName": "HomeFreshPreview",
     "module": "composeApp",
     "renderBasename": "HomeFreshPreview_Home_new_releases-638a4962.png",
-    "sha256": "1921bd43a301b735c79504ae7f7a98c3676a38353d91e0639f39338b57695aa6",
+    "sha256": "f2867c7f4f20a48b9a4a1a44a9641a71d0afe783d3dfa3fe2af29896d06fe26b",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.HomeHeadphonesPreview_Home \u2014 headphones connected": {
