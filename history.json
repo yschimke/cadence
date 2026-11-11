@@ -1,6 +1,6 @@
 {
     "formatVersion": "compose-preview-history/v1",
-    "generatedFrom": "cb85ab6dbc4d132e904ef8a7eaa669b40f77a33b",
+    "generatedFrom": "3f91ed97a7bc1076b85e83d2f3519ef062e08c29",
     "previews": {
         "composeApp/activity__MainActivity": {
             "path": "renders/composeApp/activity__MainActivity.png",
@@ -628,6 +628,13 @@
             "path": "renders/composeApp/NotificationDownloadingPreview_Notification_downloading-f99a71e3.png",
             "versions": [
                 {
+                    "blob": "1e5effbe470f19f876cf5a75483bf3444bf73ba2",
+                    "commit": "3f91ed97a7bc1076b85e83d2f3519ef062e08c29",
+                    "date": "2026-11-11T23:52:35Z",
+                    "sourceSha": "d2050a13",
+                    "commits": 1
+                },
+                {
                     "blob": "8e2f9accee884d094de17d26ebad53ac57049119",
                     "commit": "cb85ab6dbc4d132e904ef8a7eaa669b40f77a33b",
                     "date": "2026-11-11T08:21:57Z",
@@ -663,7 +670,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 5,
+            "observations": 6,
             "unstable": false,
             "flapCount": 1
         },
@@ -701,6 +708,13 @@
             "path": "renders/composeApp/NotificationSyncingPreview_Notification_syncing_light-fb11050e.png",
             "versions": [
                 {
+                    "blob": "72c76caf356a312cd79a866ff792ce238ba35098",
+                    "commit": "3f91ed97a7bc1076b85e83d2f3519ef062e08c29",
+                    "date": "2026-11-11T23:52:35Z",
+                    "sourceSha": "d2050a13",
+                    "commits": 1
+                },
+                {
                     "blob": "fd77c4a3b2d2e83d8c2c808894ac9af45428afba",
                     "commit": "cb85ab6dbc4d132e904ef8a7eaa669b40f77a33b",
                     "date": "2026-11-11T08:21:57Z",
@@ -736,7 +750,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 5,
+            "observations": 6,
             "unstable": false,
             "flapCount": 1
         },
