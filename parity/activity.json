@@ -1,11 +1,27 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-11T00:19:30.754Z",
+  "generatedAt": "2026-11-11T08:25:08.037Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "a766c071c19eeccd757329383411f24dd670a02a",
+        "subject": "feat: swap swipe directions, open folders in Files, compact notifications, empty playlists (#591)",
+        "at": "2026-11-11T08:14:57Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "21d7d1949ba591890c51c9053b65428af3c2e67e",
+        "subject": "feat(notifications): the progress bar is the swimmer doing one lap (#585)",
+        "at": "2026-11-11T01:36:07Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "c320f293a44aab0b5a88cc66e5d3eef9ff063e9b",
         "subject": "chore(main): release 0.1.29 (#584)",
@@ -466,22 +482,6 @@
         "sha": "925bb89f43ed994efb49734ea8068204ee4cfe34",
         "subject": "fix(deps): update dependency ee.schimke.composeai:rc-widget-launcher to v2.26.0 (#532)",
         "at": "2026-11-07T01:31:23Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "b56971d9c6f9993dfe7c8121e1d9e5a99cfb3e25",
-        "subject": "fix(deps): update remote-compose (#531)",
-        "at": "2026-11-07T01:18:44Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "e82f199e3bf05681fc9f6fb13feb428066cbeb99",
-        "subject": "chore(deps): update dependency com.ncorti.ktfmt.gradle to v0.28.0 (#523)",
-        "at": "2026-11-07T00:56:12Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
