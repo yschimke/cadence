@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-11T08:25:08.037Z",
+  "generatedAt": "2026-11-11T15:53:56.831Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "764d3aef38455a30b8e636e5092f4225095de61e",
+        "subject": "chore(main): release 0.1.30 (#590)",
+        "at": "2026-11-11T15:40:44Z",
+        "author": "github-actions[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "a766c071c19eeccd757329383411f24dd670a02a",
         "subject": "feat: swap swipe directions, open folders in Files, compact notifications, empty playlists (#591)",
@@ -475,14 +483,6 @@
         "subject": "feat(analytics): firebase analytics for screens, key actions and the widgets' Livery events (#530)",
         "at": "2026-11-07T02:10:07Z",
         "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "925bb89f43ed994efb49734ea8068204ee4cfe34",
-        "subject": "fix(deps): update dependency ee.schimke.composeai:rc-widget-launcher to v2.26.0 (#532)",
-        "at": "2026-11-07T01:31:23Z",
-        "author": "renovate[bot]",
         "previewIds": [],
         "components": []
       }
