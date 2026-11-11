@@ -133,7 +133,7 @@ fun DevicesScreen(
             item(key = "folders") {
               Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(
-                  "Swipe right on a folder to forget it",
+                  "Swipe left on a folder to forget it",
                   style = MaterialTheme.typography.bodySmall,
                   color = colors.onSurfaceVariant,
                 )
@@ -143,7 +143,8 @@ fun DevicesScreen(
                       if (index > 0) HorizontalDivider()
                       // Like Home's archive swipe; also offered as an accessibility action.
                       SwipeActionRow(
-                        onSwipeRight =
+                        onSwipeRight = null,
+                        onSwipeLeft =
                           SwipeAction("Forget", Icons.Filled.LinkOff) {
                             onForget(device)
                             scope.launch {
@@ -154,7 +155,6 @@ fun DevicesScreen(
                             }
                             true
                           },
-                        onSwipeLeft = null,
                       ) {
                         FolderRow(
                           device,

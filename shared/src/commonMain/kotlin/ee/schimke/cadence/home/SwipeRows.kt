@@ -89,7 +89,8 @@ fun SwipeActionRow(
           SwipeToDismissBoxValue.Settled -> null
         }
       val colors = MaterialTheme.colorScheme
-      val adding = action != null && action === onSwipeLeft
+      // Right adds; left takes away (archive, dismiss, forget).
+      val adding = action != null && action === onSwipeRight
       val container by
         animateColorAsState(
           when {
@@ -141,13 +142,13 @@ fun archiveAction(run: suspend () -> Boolean) = SwipeAction("Archive", Icons.Fil
 private const val FRESH_SHOWN = 8
 
 /**
- * New episodes to triage: swipe right to dismiss, left to add to the source. Only shown while there
+ * New episodes to triage: swipe left to dismiss, right to add to the source. Only shown while there
  * is something to decide on, and on Home only once asked for ([onCollapse] folds it away again).
  */
 @Composable
 fun FreshSection(
   fresh: List<Episode>,
-  /** The list a left swipe adds to ("Up Next", a playlist's name), or null when it can't. */
+  /** The list a right swipe adds to ("Up Next", a playlist's name), or null when it can't. */
   addTo: String?,
   onAdd: suspend (String) -> Boolean,
   onDismiss: suspend (String) -> Boolean,
@@ -169,8 +170,8 @@ fun FreshSection(
           modifier = Modifier.semantics { heading() },
         )
         Text(
-          if (addTo != null) "Swipe left to add to $addTo, right to dismiss"
-          else "Swipe right to dismiss",
+          if (addTo != null) "Swipe right to add to $addTo, left to dismiss"
+          else "Swipe left to dismiss",
           style = MaterialTheme.typography.bodySmall,
           color = colors.onSurfaceVariant,
         )
@@ -185,11 +186,11 @@ fun FreshSection(
         HorizontalDivider()
         SwipeActionRow(
           onSwipeRight =
-            SwipeAction("Dismiss", Icons.Filled.VisibilityOff) { onDismiss(episode.key) },
-          onSwipeLeft =
             if (addTo != null)
               SwipeAction("Add to $addTo", Icons.Filled.PlaylistAdd) { onAdd(episode.key) }
             else null,
+          onSwipeLeft =
+            SwipeAction("Dismiss", Icons.Filled.VisibilityOff) { onDismiss(episode.key) },
         ) {
           FreshRow(episode) { onOpen(episode) }
         }
