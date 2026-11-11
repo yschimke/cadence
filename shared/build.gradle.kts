@@ -66,7 +66,6 @@ kotlin {
       implementation(libs.media3.session)
       implementation(libs.compose.ui.tooling.preview)
       implementation(libs.androidx.activity.compose)
-      implementation(libs.androidx.core.splashscreen)
       implementation(libs.androidx.documentfile)
       implementation(libs.androidx.work.runtime)
       implementation(project.dependencies.platform(libs.rc.players.bom))

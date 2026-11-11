@@ -68,6 +68,9 @@ fun headphoneSyncStep(
     !hasPodcasts -> HeadphoneSyncStep.Folders(pluggedIn)
     podcasts.target.isBlank() ->
       if (pluggedIn) HeadphoneSyncStep.ChooseStorage else HeadphoneSyncStep.PlugInToSetUp
+    // An empty source with nothing copied yet has nothing to prepare, copy or delete.
+    podcasts.library.playlist?.episodes.orEmpty().isEmpty() && podcasts.lastCopied == null ->
+      HeadphoneSyncStep.UpToDate(pluggedIn)
     !podcasts.readyForDevice() -> HeadphoneSyncStep.Prepare(pluggedIn)
     podcasts.upToDateOnDevice() -> HeadphoneSyncStep.UpToDate(pluggedIn)
     else -> HeadphoneSyncStep.ReadyToCopy(pluggedIn)

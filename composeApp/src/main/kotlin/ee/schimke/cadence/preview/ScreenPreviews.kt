@@ -216,6 +216,7 @@ internal fun DevicesScreenLoadedPreview() {
       permissionCheck = {},
       onDeviceClick = {},
       podcastTarget = PreviewFixtures.devices.first().path,
+      onOpenInFiles = { true },
     )
   }
 }

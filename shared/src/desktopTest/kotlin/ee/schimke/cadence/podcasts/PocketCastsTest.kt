@@ -169,26 +169,75 @@ class PocketCastsTest {
   }
 
   @Test
-  fun aPlaylistOfArchivedEpisodesSaysSoRatherThanEmpty() = runBlocking {
+  fun anEmptyOrAllArchivedPlaylistImportsAndFillsOnRefresh() = runBlocking {
     val platform = ApiPlatform()
     platform.extraEpisodes = mapOf("a1" to episode("a1", 600, 0, isDeleted = true))
     platform.playlistsBody =
       """{"playlists":[{"uuid":"manual","title":"Swim","manual":true,"showArchived":false,"episodeOrder":["a1"]}]}"""
     val controller = PodcastController(platform)
     controller.signInPocketCasts("listener@example.com", "secret")
-    val problem = assertFailsWith<PodcastProblem> { controller.importPocketCasts("manual", 5) }
-    assertEquals("Everything in Swim is archived in Pocket Casts", problem.message)
+    // Archived members are hidden, so the playlist imports as empty rather than failing.
+    controller.importPocketCasts("manual", 5)
+    assertEquals("Swim", controller.state.value.library.playlist!!.name)
+    assertTrue(controller.state.value.library.playlist!!.episodes.isEmpty())
+    assertEquals("manual", controller.state.value.library.sourceList)
 
-    // A capture without the episode's details can't tell, so it doesn't claim they're archived.
+    // Archived members stay out even when the playlist shows them in Pocket Casts.
+    platform.playlistsBody =
+      """{"playlists":[{"uuid":"manual","title":"Swim","manual":true,"showArchived":true,"episodeOrder":["a1"]}]}"""
+    controller.importPocketCasts("manual", 5)
+    assertTrue(controller.state.value.library.playlist!!.episodes.isEmpty())
+
+    // Preparing it has nothing to do, rather than failing (and the overnight refresh retrying).
+    controller.prepare()
+    assertTrue(controller.state.value.library.manifests.isEmpty())
+
+    // A playlist with no members at all imports too.
+    platform.playlistsBody =
+      """{"playlists":[{"uuid":"manual","title":"Swim","manual":true,"showArchived":false,"episodeOrder":[]}]}"""
+    controller.importPocketCasts("manual", 5)
+    assertTrue(controller.state.value.library.playlist!!.episodes.isEmpty())
+
+    // A capture that lists members without their details isn't taken as empty.
     val capture = buildJsonArray {
       addJsonObject {
         put("path", "/user/playlists")
-        put("body", platform.playlistsBody)
+        put(
+          "body",
+          """{"playlists":[{"uuid":"manual","title":"Swim","manual":true,"episodeOrder":["e1"]}]}""",
+        )
       }
     }
-    controller.usePocketCastsCapture(capture.toString())
-    val unknown = assertFailsWith<PodcastProblem> { controller.importPocketCasts("manual", 5) }
-    assertEquals("Swim is empty in Pocket Casts", unknown.message)
+    val captured = PodcastController(ApiPlatform())
+    captured.usePocketCastsCapture(capture.toString())
+    val problem = assertFailsWith<PodcastProblem> { captured.importPocketCasts("manual", 5) }
+    assertEquals("Couldn't read the episodes in Swim. Open it in Pocket Casts.", problem.message)
+
+    // Members past the read limit aren't known to be archived, so that isn't empty either.
+    val many = (1..1001).map { "a$it" }
+    platform.extraEpisodes = many.associateWith { episode(it, 600, 0, isDeleted = true) }
+    platform.playlistsBody =
+      """{"playlists":[{"uuid":"manual","title":"Swim","manual":true,"episodeOrder":${many.map { "\"$it\"" }}}]}"""
+    assertFailsWith<PodcastProblem> { controller.importPocketCasts("manual", 5) }
+    platform.extraEpisodes = mapOf("a1" to episode("a1", 600, 0, isDeleted = true))
+
+    // Once episodes are added in Pocket Casts, a refresh picks them up.
+    platform.playlistsBody =
+      """{"playlists":[{"uuid":"manual","title":"Swim","manual":true,"showArchived":false,"episodeOrder":["a1","e2"]}]}"""
+    controller.importPocketCasts("manual", 5)
+    assertEquals(listOf("e2"), controller.state.value.library.playlist!!.episodes.map { it.id })
+  }
+
+  @Test
+  fun aListWithNothingPlayableStillFails() = runBlocking {
+    val platform = ApiPlatform()
+    platform.extraEpisodes = mapOf("x1" to episode("x1", 0, 0))
+    platform.playlistsBody =
+      """{"playlists":[{"uuid":"manual","title":"Swim","manual":true,"showArchived":false,"episodeOrder":["x1"]}]}"""
+    val controller = PodcastController(platform)
+    controller.signInPocketCasts("listener@example.com", "secret")
+    val problem = assertFailsWith<PodcastProblem> { controller.importPocketCasts("manual", 5) }
+    assertEquals("None of Swim has HTTPS audio with a known length", problem.message)
   }
 
   @Test
@@ -367,9 +416,10 @@ class PocketCastsTest {
     assertEquals("n3", controller.state.value.freshToReview.first().id)
     assertEquals(setOf(n2.key), controller.state.value.dismissedFresh)
 
-    // An emptied Up Next fails the import, but new releases still refresh first.
+    // An Up Next with nothing playable fails the import, but new releases still refresh first.
     platform.newReleases = """{"episodes":[${episode("n40", 600, 0)}]}"""
-    platform.upNextBody = """{"serverModified":1,"episodes":[],"episodeSync":[]}"""
+    platform.upNextBody =
+      """{"serverModified":1,"episodes":[{"uuid":"e4","title":"Episode e4","url":"https://cdn.example/e4.mp3","podcast":"p1"}],"episodeSync":[]}"""
     assertFalse(controller.run { refreshSource() })
     assertEquals(listOf("n40"), controller.state.value.fresh.map { it.id })
     platform.upNextBody = upNext

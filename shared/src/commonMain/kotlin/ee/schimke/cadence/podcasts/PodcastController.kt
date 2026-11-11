@@ -575,9 +575,12 @@ class PodcastController(val platform: PodcastPlatform) {
     )
     val later = all.size - minOf(all.size, latest)
     notice =
-      "Imported ${count(minOf(all.size, latest), "episode")} from ${snapshot.name}" +
-        (if (later > 0) " · $later more listed" else "") +
-        if (skipped > 0) " · skipped $skipped without HTTPS audio or a known length" else ""
+      if (all.isEmpty())
+        "Added ${snapshot.name}, empty in Pocket Casts for now. Refresh once it has episodes."
+      else
+        "Imported ${count(minOf(all.size, latest), "episode")} from ${snapshot.name}" +
+          (if (later > 0) " · $later more listed" else "") +
+          if (skipped > 0) " · skipped $skipped without HTTPS audio or a known length" else ""
   }
 
   /** Writes need the token on this device; the web-player capture and servers only read. */
@@ -869,7 +872,18 @@ class PodcastController(val platform: PodcastPlatform) {
   suspend fun prepare() {
     val library = state.value.library
     val playlist = requireNotNull(library.playlist) { "Import a playlist first" }
-    require(playlist.episodes.isNotEmpty())
+    // An empty source (a Pocket Casts playlist with nothing in it yet) has nothing to prepare;
+    // it isn't a failure, so the overnight refresh doesn't keep retrying it.
+    if (playlist.episodes.isEmpty()) {
+      save(
+        state.value.copy(
+          library = state.value.library.copy(manifests = emptyList()),
+          readySectionIds = emptySet(),
+        ),
+      )
+      notice = "${playlist.name} has no episodes yet"
+      return
+    }
     val manifests =
       playlist.episodes
         .map { episode ->

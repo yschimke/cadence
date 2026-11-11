@@ -6,6 +6,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import ee.schimke.cadence.data.toOkioPath
+import ee.schimke.cadence.data.toUri
 import okio.Path
 
 @Composable
@@ -71,4 +72,50 @@ internal fun headphoneVolumeRoot(context: android.content.Context): android.net.
     "com.android.externalstorage.documents",
     "${volume.uuid}:",
   )
+}
+
+/**
+ * Hands a granted folder to the file manager as a directory document. Files by Google and the
+ * system Files app open `vnd.android.document/directory`; a whole drive is also offered as its
+ * root, which some file managers only take that way.
+ */
+@Composable
+actual fun rememberOpenInFilesApp(): ((Path) -> Boolean)? {
+  val context = LocalContext.current
+  return { path ->
+    val uri = path.toUri()
+    val document =
+      if (android.provider.DocumentsContract.isTreeUri(uri))
+        android.provider.DocumentsContract.buildDocumentUriUsingTree(
+          uri,
+          android.provider.DocumentsContract.getTreeDocumentId(uri),
+        )
+      else uri
+    val documentId =
+      runCatching { android.provider.DocumentsContract.getDocumentId(document) }.getOrNull()
+    val root =
+      documentId
+        ?.takeIf { it.endsWith(":") }
+        ?.let { android.provider.DocumentsContract.buildRootUri(document.authority, it.dropLast(1)) }
+    listOfNotNull(
+        document to android.provider.DocumentsContract.Document.MIME_TYPE_DIR,
+        root?.let { it to "vnd.android.document/root" },
+      )
+      .any { (data, type) ->
+        val intent =
+          Intent(Intent.ACTION_VIEW)
+            .setDataAndType(data, type)
+            .addFlags(
+              Intent.FLAG_GRANT_READ_URI_PERMISSION or
+                Intent.FLAG_GRANT_WRITE_URI_PERMISSION or
+                Intent.FLAG_ACTIVITY_NEW_TASK,
+            )
+        try {
+          context.startActivity(intent)
+          true
+        } catch (_: android.content.ActivityNotFoundException) {
+          false
+        }
+      }
+  }
 }

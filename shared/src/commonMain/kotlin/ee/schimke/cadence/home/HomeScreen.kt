@@ -1154,7 +1154,7 @@ private fun PodcastSection(
     )
     if (canArchive)
       Text(
-        "Swipe right on an episode you've finished to archive it",
+        "Swipe left on an episode you've finished to archive it",
         style = MaterialTheme.typography.bodySmall,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
         modifier = Modifier.padding(start = 56.dp, end = 16.dp, bottom = 8.dp),
@@ -1173,9 +1173,9 @@ private fun PodcastSection(
             { player.playEpisode(episode) }
           } else null
         SwipeActionRow(
-          onSwipeRight =
+          onSwipeRight = null,
+          onSwipeLeft =
             if (canArchive) archiveAction { actions.onArchiveEpisode(episode.key) } else null,
-          onSwipeLeft = null,
         ) {
           EpisodeRow(
             episode,

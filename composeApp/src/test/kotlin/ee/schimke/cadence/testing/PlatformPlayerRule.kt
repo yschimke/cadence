@@ -76,6 +76,28 @@ class PlatformPlayerRule : TestWatcher() {
       label,
     )
 
+  /**
+   * The height [document]'s notification body asks for at [widthPx] when SystemUI offers it up to
+   * [maxHeightPx]: what decides how tall the expanded notification is.
+   */
+  fun notificationHeight(document: ByteArray, widthPx: Int, maxHeightPx: Int): Int {
+    val controller = Robolectric.buildActivity(Activity::class.java).setup()
+    val activity = controller.get()
+    val frame = FrameLayout(activity)
+    val body = RcLauncherWidgets.notificationRemoteViews(document).apply(activity, frame)
+    frame.addView(body)
+    activity.setContentView(frame)
+    runMainThread()
+    body.measure(
+      View.MeasureSpec.makeMeasureSpec(widthPx, View.MeasureSpec.EXACTLY),
+      View.MeasureSpec.makeMeasureSpec(maxHeightPx, View.MeasureSpec.AT_MOST),
+    )
+    val height = body.measuredHeight
+    frame.removeAllViews()
+    controller.pause().stop().destroy()
+    return height
+  }
+
   /** [views] inflated and drawn at [widthPx] × [heightPx] over white. */
   fun play(views: RemoteViews, widthPx: Int, heightPx: Int, label: String = ""): Played {
     val controller = Robolectric.buildActivity(Activity::class.java).setup()
