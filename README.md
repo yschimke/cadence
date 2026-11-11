@@ -1,6 +1,6 @@
 # Accessibility Report
 
-_Auto-generated from `compose-preview/a11y/pr`. 24 preview(s) across 1 module(s) · 20 error(s) · 2 warning(s) · 5 info._
+_Auto-generated from `compose-preview/a11y/pr`. 24 preview(s) across 1 module(s) · 20 error(s) · 1 warning(s) · 5 info._
 
 Browse inline; image URLs are pinned to the commit SHA on the baseline branch so links keep resolving after merge.
 
@@ -58,9 +58,7 @@ _No findings._
 
 <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/DevicesScreenLoadedPreview_Devices_loaded-cfb106a7.a11y.png" width="400" />
 
-| # | Level | Rule | Element | Message |
-|--:|---|---|---|---|
-| 1 | WARNING | DuplicateSpeakableTextCheck | android.view.View | This clickable item's speakable text: "Open in Files" is identical to that of 2 other item(s). |
+_No findings._
 
 ### `DevicesScreenLoadingPreview`
 

@@ -91,15 +91,7 @@
     {
       "annotatedBasename": "DevicesScreenLoadedPreview_Devices_loaded-cfb106a7.a11y.png",
       "cleanBasename": "DevicesScreenLoadedPreview_Devices_loaded-cfb106a7.png",
-      "findings": [
-        {
-          "boundsInScreen": "841,392,967,518",
-          "level": "WARNING",
-          "message": "This clickable item's speakable text: \"Open in Files\" is identical to that of 2 other item(s).",
-          "type": "DuplicateSpeakableTextCheck",
-          "viewDescription": "android.view.View"
-        }
-      ],
+      "findings": [],
       "functionName": "DevicesScreenLoadedPreview",
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.DevicesScreenLoadedPreview_Devices - loaded",
