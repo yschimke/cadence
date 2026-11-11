@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.30](https://github.com/yschimke/cadence/compare/v0.1.29...v0.1.30) (2026-11-11)
+
+
+### Features
+
+* **notifications:** the progress bar is the swimmer doing one lap ([#585](https://github.com/yschimke/cadence/issues/585)) ([21d7d19](https://github.com/yschimke/cadence/commit/21d7d1949ba591890c51c9053b65428af3c2e67e))
+* swap swipe directions, open folders in Files, compact notifications, empty playlists ([#591](https://github.com/yschimke/cadence/issues/591)) ([a766c07](https://github.com/yschimke/cadence/commit/a766c071c19eeccd757329383411f24dd670a02a))
+
 ## [0.1.29](https://github.com/yschimke/cadence/compare/v0.1.28...v0.1.29) (2026-11-10)
 
 
