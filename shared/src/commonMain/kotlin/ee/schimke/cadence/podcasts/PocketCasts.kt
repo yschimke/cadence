@@ -72,7 +72,6 @@ data class PocketCastsPlaylist(
   val uuid: String,
   val title: String,
   val manual: Boolean,
-  val showArchived: Boolean,
   val episodeOrder: List<String>,
 )
 
@@ -109,7 +108,6 @@ fun pocketCastsPlaylists(body: String): List<PocketCastsPlaylist> =
       node.text("uuid"),
       node.text("title").ifBlank { "Pocket Casts playlist" },
       node.flag("manual"),
-      node.flag("showArchived"),
       pocketCastsPlaylistMembers(node),
     )
   }
@@ -218,7 +216,10 @@ fun pocketCastsToEpisode(episode: PocketCastsEpisode): Episode? {
   )
 }
 
-/** Keeps playable episodes in order, up to [limit]; the second value counts skipped ones. */
+/**
+ * Keeps playable episodes in order, up to [limit]; the second value counts skipped ones. An empty
+ * list imports as empty, to fill on a later refresh; only a list with nothing playable fails.
+ */
 fun pocketCastsSnapshot(
   name: String,
   episodes: List<PocketCastsEpisode>,
@@ -230,11 +231,8 @@ fun pocketCastsSnapshot(
       .distinctBy { it.uuid }
       .mapNotNull { episode -> pocketCastsToEpisode(episode).also { if (it == null) skipped++ } }
       .take(limit)
-  if (usable.isEmpty())
-    throw PodcastProblem(
-      if (episodes.isEmpty()) "$name is empty in Pocket Casts"
-      else "None of $name has HTTPS audio with a known length",
-    )
+  if (usable.isEmpty() && episodes.isNotEmpty())
+    throw PodcastProblem("None of $name has HTTPS audio with a known length")
   return PlaylistSnapshot(name = name, episodes = usable) to skipped
 }
 
@@ -353,13 +351,10 @@ suspend fun readPocketCasts(
       if (pocketCastsUsable(next)) usable++
     }
   }
-  var archivedMembers = 0
-  suspend fun members(uuids: List<String>, showArchived: Boolean) =
-    gather(uuids.size) { index ->
-      details(uuids[index])?.takeIf {
-        showArchived || !it.archived.also { if (it) archivedMembers++ }
-      }
-    }
+  // Archived means finished here, so archived members are left out even when the playlist shows
+  // them in Pocket Casts.
+  suspend fun members(uuids: List<String>) =
+    gather(uuids.size) { index -> details(uuids[index])?.takeIf { !it.archived } }
   return when (list) {
     POCKET_CASTS_UP_NEXT -> {
       val body =
@@ -382,14 +377,11 @@ suspend fun readPocketCasts(
       val playlist =
         reader.playlists()?.let(::pocketCastsPlaylists)?.firstOrNull { it.uuid == list }
           ?: throw PodcastProblem("That playlist is no longer in Pocket Casts")
-      val episodes = members(playlist.episodeOrder, playlist.showArchived)
-      // Archived members are hidden, so a playlist of finished episodes isn't empty. Only say so
-      // when every member was read and archived: a capture can lack some episodes' details.
-      if (
-        episodes.isEmpty() && archivedMembers > 0 && archivedMembers == playlist.episodeOrder.size
+      pocketCastsSnapshot(
+        playlist.title,
+        members(playlist.episodeOrder),
+        limit,
       )
-        throw PodcastProblem("Everything in ${playlist.title} is archived in Pocket Casts")
-      pocketCastsSnapshot(playlist.title, episodes, limit)
     }
   }
 }

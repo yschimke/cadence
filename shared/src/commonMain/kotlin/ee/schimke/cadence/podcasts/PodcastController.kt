@@ -575,9 +575,12 @@ class PodcastController(val platform: PodcastPlatform) {
     )
     val later = all.size - minOf(all.size, latest)
     notice =
-      "Imported ${count(minOf(all.size, latest), "episode")} from ${snapshot.name}" +
-        (if (later > 0) " · $later more listed" else "") +
-        if (skipped > 0) " · skipped $skipped without HTTPS audio or a known length" else ""
+      if (all.isEmpty())
+        "Added ${snapshot.name}, empty in Pocket Casts for now. Refresh once it has episodes."
+      else
+        "Imported ${count(minOf(all.size, latest), "episode")} from ${snapshot.name}" +
+          (if (later > 0) " · $later more listed" else "") +
+          if (skipped > 0) " · skipped $skipped without HTTPS audio or a known length" else ""
   }
 
   /** Writes need the token on this device; the web-player capture and servers only read. */
