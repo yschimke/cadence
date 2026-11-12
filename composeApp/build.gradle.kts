@@ -111,6 +111,7 @@ dependencies {
   compileOnly(libs.firebase.analytics)
   // Livery's template events in Firebase's shape (livery_*, exp_* parameters). Its own Firebase
   // dependencies are compile-only too.
+  implementation(platform(libs.livery.bom))
   implementation(libs.livery.firebase)
 
   implementation(project(":shared"))
@@ -124,6 +125,7 @@ dependencies {
   implementation(libs.rc.widget.launcher)
   implementation(libs.compose.remote.tooling.preview)
   implementation(project(":swimUi"))
+  implementation(platform(libs.composeai.daemon.bom))
   implementation(libs.composeai.preview.annotations)
   implementation(libs.androidx.activity.compose)
   implementation(libs.androidx.lifecycle.viewmodel)

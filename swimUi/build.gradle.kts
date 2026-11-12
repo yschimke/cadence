@@ -23,6 +23,7 @@ dependencies {
   implementation(libs.compose.foundation)
   implementation(libs.compose.ui.tooling.preview)
   implementation(libs.compose.remote.tooling.preview)
+  implementation(platform(libs.composeai.daemon.bom))
   implementation(libs.composeai.preview.annotations)
   implementation(libs.glance.wear)
 

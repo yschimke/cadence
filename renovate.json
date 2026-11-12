@@ -11,12 +11,51 @@
       "automerge": false
     },
     {
-      "description": "compose-ai-tools ships the preview CLI, the ee.schimke.composeai Gradle plugin, and the reusable CI composite actions as a single release (the preset groups them). Track it aggressively so CI always runs the latest renderer: no weekly-window wait, and automerge as soon as CI is green. design-artifacts.yml has a push trigger on main covering the pins this PR touches, so a Renovate merge republishes the catalog on its own, and scheduled-merge.yml still dispatches design-artifacts.yml explicitly for the merges it makes itself (GITHUB_TOKEN merges raise no `push` event).",
+      "description": "Published ee.schimke.composeai modules are versionless and resolve through their release-train BOMs. Keep module-level coordinates disabled; the BOM rules below re-enable each train's BOM on its own release line.",
+      "matchPackageNames": ["/^ee\\.schimke\\.composeai:/"],
+      "enabled": false
+    },
+    {
+      "description": "compose-ai-tools ships the preview CLI, the ee.schimke.composeai.preview Gradle plugin and the reusable CI composite actions as a single release. Track it aggressively so CI always runs the latest renderer: no weekly-window wait, and automerge minor/patch updates as soon as CI is green.",
       "matchPackageNames": [
         "yschimke/compose-ai-tools",
-        "/^ee\\.schimke\\.composeai($|[.:])/"
+        "/^ee\\.schimke\\.composeai\\.preview($|[.:])/",
+        "ee.schimke.composeai:compose-ai-tools-bom"
       ],
-      "schedule": ["at any time"],
+      "groupName": "compose-ai-tools",
+      "enabled": true,
+      "schedule": ["at any time"]
+    },
+    {
+      "description": "Update compose-preview-daemon-bom on its own 3.x release line; preview-annotations takes its version from its constraints.",
+      "matchPackageNames": ["ee.schimke.composeai:compose-preview-daemon-bom"],
+      "groupName": "compose-preview-daemon",
+      "enabled": true,
+      "schedule": ["at any time"]
+    },
+    {
+      "description": "Update Livery (livery-bom, the liveryCatalog Gradle plugin and reusable catalog workflows) together on its 0.x release line.",
+      "matchPackageNames": [
+        "yschimke/livery",
+        "ee.schimke.composeai:livery-bom",
+        "/^ee\\.schimke\\.composeai\\.livery($|[.:])/"
+      ],
+      "groupName": "livery",
+      "enabled": true,
+      "schedule": ["at any time"]
+    },
+    {
+      "description": "Re-enable patch/minor automerge for the compose-ai-tools, compose-preview-daemon and livery trains after the repository-wide manual Gradle rule above; majors remain manual.",
+      "matchPackageNames": [
+        "yschimke/compose-ai-tools",
+        "/^ee\\.schimke\\.composeai\\.preview($|[.:])/",
+        "ee.schimke.composeai:compose-ai-tools-bom",
+        "ee.schimke.composeai:compose-preview-daemon-bom",
+        "yschimke/livery",
+        "ee.schimke.composeai:livery-bom",
+        "/^ee\\.schimke\\.composeai\\.livery($|[.:])/"
+      ],
+      "matchUpdateTypes": ["minor", "patch", "digest", "pin"],
       "automerge": true
     },
     {
@@ -25,14 +64,15 @@
       "enabled": false
     },
     {
-      "description": "Remote Compose, its Wear widget layer and Glance Wear must move together — `remote-material3` and `glance-wear` both declare `androidx.compose.remote:remote-creation*` in their POMs, and a skewed set fails compilation or preview render — so group them into ONE PR.",
+      "description": "Remote Compose, its Wear widget layer, Glance Wear and rc-players-bom must move together — `remote-material3` and `glance-wear` both declare `androidx.compose.remote:remote-creation*` in their POMs, and a skewed set fails compilation or preview render — so group them into ONE PR.",
       "groupName": "remote-compose",
       "matchPackageNames": [
         "/^androidx\\.compose\\.remote($|[.:])/",
         "/^androidx\\.wear\\.compose\\.remote($|[.:])/",
         "/^androidx\\.glance\\.wear($|[.:])/",
-        "/^ee\\.schimke\\.composeai:rc-widget/"
+        "ee.schimke.composeai:rc-players-bom"
       ],
+      "enabled": true,
       "automerge": false
     }
   ]
