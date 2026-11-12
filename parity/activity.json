@@ -1,11 +1,27 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-12T03:16:08.367Z",
+  "generatedAt": "2026-11-12T03:56:39.632Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "05e14fa35b3d49e7845e45b993e99224a578b32a",
+        "subject": "fix(deps): update dependency com.google.gms:google-services to v4.6.0 (#593)",
+        "at": "2026-11-12T03:33:54Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "9bf90d2cc910939af9c0dc780bbedd9c00c2e7a5",
+        "subject": "fix(deps): update dependency org.jetbrains.kotlinx:kotlinx-serialization-json to v1.13.0 (#595)",
+        "at": "2026-11-12T03:27:58Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "db50e7dc011fa3825d9173bccdc5ff78be6020b4",
         "subject": "chore(deps): update dependency com.github.triplet.play to v4.1.2 (#600)",
@@ -466,22 +482,6 @@
         "sha": "9db703c3d7c6acfb009fd0d09fdf138dceee42e8",
         "subject": "fix(deps): update dependency ee.schimke.composeai:preview-annotations to v3.27.3 (#538)",
         "at": "2026-11-07T17:33:20Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "59fa717548b9f97bf2dd0d32b3e55fd64b9e941c",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.89.0 (#539)",
-        "at": "2026-11-07T17:32:37Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "f09ec9a47f0c1449b1b483ef37c0efbd54328835",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.88.0 (#537)",
-        "at": "2026-11-07T14:27:54Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
