@@ -30,6 +30,8 @@ class BluetoothControlsViewModel(private val controller: BluetoothController) : 
 
   fun refresh() = controller.refresh()
 
+  fun selectDeviceFilter(filter: BluetoothDeviceFilter) = controller.setDeviceFilter(filter)
+
   fun setVolume(percent: Int) = controller.setVolume(percent)
 
   fun adjustVolume(delta: Int) = controller.adjustVolume(delta)
@@ -41,6 +43,8 @@ class BluetoothControlsViewModel(private val controller: BluetoothController) : 
   fun pause() = controller.pause()
 
   fun playPause() = controller.playPause()
+
+  fun playEpisode(episodeKey: String) = controller.playEpisode(episodeKey)
 
   fun next() = controller.next()
 

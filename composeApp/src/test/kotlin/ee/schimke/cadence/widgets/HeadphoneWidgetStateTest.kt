@@ -4,6 +4,7 @@ import ee.schimke.cadence.bluetooth.BluetoothState
 import ee.schimke.cadence.bluetooth.ConnectedDevice
 import ee.schimke.cadence.bluetooth.EqualizerPreset
 import ee.schimke.cadence.bluetooth.MediaInfo
+import ee.schimke.cadence.bluetooth.PlayableEpisode
 import ee.schimke.cadence.bluetooth.PlaybackOrder
 import ee.schimke.cadence.bluetooth.WorkingMode
 import ee.schimke.cadence.bluetooth.batterySummary
@@ -125,6 +126,14 @@ class HeadphoneWidgetStateTest {
     assertNull(idle.detail)
     val phonePlaying = HeadphoneWidgetState.from(BluetoothState(mediaInfo = phoneMedia))
     assertEquals("On phone: Phone episode", phonePlaying.detail)
+    val queued =
+      HeadphoneWidgetState.from(
+        BluetoothState(
+          playableEpisodes =
+            listOf(PlayableEpisode("ep-1", "Queued episode", "Daily Show", "Pocket Casts")),
+        ),
+      )
+    assertEquals("Pocket Casts: Queued episode", queued.detail)
   }
 
   @Test

@@ -60,6 +60,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import ee.schimke.cadence.developer.LocalDeveloperMode
 import ee.schimke.cadence.metro.metroViewModel
@@ -85,12 +86,14 @@ fun BluetoothControlsScreen(modifier: Modifier = Modifier) {
     state = state,
     snackbarHost = snackbarHost,
     onRefresh = viewModel::refresh,
+    onSelectDeviceFilter = viewModel::selectDeviceFilter,
     onSetVolume = viewModel::setVolume,
     onAdjustVolume = viewModel::adjustVolume,
     onToggleMute = viewModel::toggleMute,
     onPlay = viewModel::play,
     onPause = viewModel::pause,
     onPlayPause = viewModel::playPause,
+    onPlayEpisode = viewModel::playEpisode,
     onPrevious = viewModel::previous,
     onNext = viewModel::next,
     onStop = viewModel::stop,
@@ -114,12 +117,14 @@ fun BluetoothControlsContent(
   state: BluetoothState,
   snackbarHost: SnackbarHostState,
   onRefresh: () -> Unit,
+  onSelectDeviceFilter: (BluetoothDeviceFilter) -> Unit = {},
   onSetVolume: (Int) -> Unit,
   onAdjustVolume: (Int) -> Unit,
   onToggleMute: () -> Unit,
   onPlay: () -> Unit,
   onPause: () -> Unit,
   onPlayPause: () -> Unit,
+  onPlayEpisode: (String) -> Unit = {},
   onPrevious: () -> Unit,
   onNext: () -> Unit,
   onStop: () -> Unit,
@@ -146,16 +151,18 @@ fun BluetoothControlsContent(
       verticalItemSpacing = 12.dp,
       horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-      item { ConnectionCard(state, onOpenSettings, onRefresh, developerMode) }
+      item { ConnectionCard(state, onOpenSettings, onRefresh, onSelectDeviceFilter, developerMode) }
       if (state.permissionMissing) {
         item { PermissionWarningCard(onRequestBluetoothPermission, onOpenAppPermissionSettings) }
       }
       item { WorkingModeCard(state.workingMode, state.openSwimConnected, onSelectWorkingMode) }
-      item { NowPlayingCard(state, onRequestMediaAccess) }
+      item { NowPlayingCard(state, onRequestMediaAccess, onPlayEpisode, developerMode) }
       item {
         TransportCard(
           // Headset transport only applies once Cadence has switched an OpenSwim Pro to MP3.
           mode = if (state.localAudioControls) WorkingMode.Mp3 else WorkingMode.Bluetooth,
+          canPlayPause = state.canControlMedia,
+          canNavigate = state.hasActiveMediaTarget,
           onPlay = onPlay,
           onPause = onPause,
           onPlayPause = onPlayPause,
@@ -183,11 +190,17 @@ private fun ConnectionCard(
   state: BluetoothState,
   onOpenSettings: () -> Unit,
   onRefresh: () -> Unit,
+  onSelectDeviceFilter: (BluetoothDeviceFilter) -> Unit,
   diagnostics: Boolean,
 ) {
   ElevatedCard(modifier = Modifier.fillMaxWidth()) {
     Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
       val device = state.connectedDevice
+      val disconnectedLabel =
+        when (state.deviceFilter) {
+          BluetoothDeviceFilter.ShokzOnly -> "No Shokz headphones connected"
+          BluetoothDeviceFilter.AllHeadphones -> "No headphones connected"
+        }
       Row(verticalAlignment = Alignment.CenterVertically) {
         Icon(
           imageVector =
@@ -197,13 +210,19 @@ private fun ConnectionCard(
         Spacer(Modifier.width(12.dp))
         Column(Modifier.weight(1f)) {
           Text(
-            text = device?.name ?: "No device connected",
+            text = device?.name ?: disconnectedLabel,
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.SemiBold,
           )
           if (device != null) {
             Text(
               text = device.address,
+              style = MaterialTheme.typography.bodySmall,
+              color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+          } else if (state.hiddenHeadphoneName != null) {
+            Text(
+              text = "${state.hiddenHeadphoneName} is connected. Choose All headphones to show it.",
               style = MaterialTheme.typography.bodySmall,
               color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -225,6 +244,13 @@ private fun ConnectionCard(
           Text("Codec: ${device.codec}")
         }
       }
+      ChoiceRow(
+        options = BluetoothDeviceFilter.entries,
+        selected = state.deviceFilter,
+        enabled = true,
+        label = { it.label },
+        onSelect = onSelectDeviceFilter,
+      )
       OutlinedButton(onClick = onOpenSettings, modifier = Modifier.fillMaxWidth()) {
         Text("Open system Bluetooth settings")
       }
@@ -251,7 +277,12 @@ private fun PermissionWarningCard(
 }
 
 @Composable
-private fun NowPlayingCard(state: BluetoothState, onRequestMediaAccess: () -> Unit) {
+private fun NowPlayingCard(
+  state: BluetoothState,
+  onRequestMediaAccess: () -> Unit,
+  onPlayEpisode: (String) -> Unit,
+  diagnostics: Boolean,
+) {
   ElevatedCard(modifier = Modifier.fillMaxWidth()) {
     Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
       Text(
@@ -268,14 +299,7 @@ private fun NowPlayingCard(state: BluetoothState, onRequestMediaAccess: () -> Un
             "Playing from headphone storage. The headset does not report track details.",
             style = MaterialTheme.typography.bodyMedium,
           )
-        !state.mediaAccessGranted -> {
-          Text(
-            "Media metadata needs notification access. Android will open its Notification access settings.",
-          )
-          OutlinedButton(onClick = onRequestMediaAccess) { Text("Allow notification access") }
-        }
-        info == null -> Text("No active media session.")
-        else -> {
+        info != null -> {
           Text(info.title ?: "Unknown title", fontWeight = FontWeight.SemiBold)
           info.artist?.let { Text(it, style = MaterialTheme.typography.bodyMedium) }
           info.album?.let {
@@ -285,7 +309,9 @@ private fun NowPlayingCard(state: BluetoothState, onRequestMediaAccess: () -> Un
               color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
           }
-          info.packageName?.let {
+          val sourceLabel =
+            if (diagnostics) info.packageName else friendlyMediaSourceLabel(info.packageName)
+          sourceLabel?.let {
             Text(
               "Source: $it",
               style = MaterialTheme.typography.labelSmall,
@@ -300,8 +326,106 @@ private fun NowPlayingCard(state: BluetoothState, onRequestMediaAccess: () -> Un
               style = MaterialTheme.typography.labelSmall,
             )
           }
+          if (state.playableEpisodes.isNotEmpty()) {
+            PlayableEpisodeSection(
+              episodes = state.playableEpisodes,
+              initiallyCollapsed = true,
+              onPlayEpisode = onPlayEpisode,
+            )
+          }
+        }
+        state.playableEpisodes.isNotEmpty() -> {
+          Text(
+            "Choose an episode from your playlist to start playback.",
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+          )
+          PlayableEpisodeSection(
+            episodes = state.playableEpisodes,
+            initiallyCollapsed = false,
+            onPlayEpisode = onPlayEpisode,
+          )
+          if (
+            !state.mediaAccessGranted && state.playableEpisodes.any { it.sourceLabel != "On phone" }
+          ) {
+            HorizontalDivider()
+            SupportingText(
+              "Allow notification access to follow and control playback in your podcast app.",
+            )
+            OutlinedButton(onClick = onRequestMediaAccess) { Text("Allow notification access") }
+          }
+        }
+        !state.hasConnectedSource ->
+          Text(
+            "Connect a podcast source on Home to control playback here, or switch OpenSwim Pro to MP3 mode.",
+          )
+        !state.mediaAccessGranted -> {
+          Text(
+            "Media metadata needs notification access. Android will open its Notification access settings.",
+          )
+          OutlinedButton(onClick = onRequestMediaAccess) { Text("Allow notification access") }
+        }
+        else -> Text("Nothing playing from your connected source.")
+      }
+    }
+  }
+}
+
+@Composable
+private fun PlayableEpisodeSection(
+  episodes: List<PlayableEpisode>,
+  initiallyCollapsed: Boolean,
+  onPlayEpisode: (String) -> Unit,
+) {
+  var expanded by remember(initiallyCollapsed) { mutableStateOf(!initiallyCollapsed) }
+  if (initiallyCollapsed) {
+    HorizontalDivider()
+    Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+      Text(
+        "From your playlist (${episodes.size})",
+        style = MaterialTheme.typography.labelLarge,
+        modifier = Modifier.weight(1f),
+      )
+      TextButton(onClick = { expanded = !expanded }) { Text(if (expanded) "Hide" else "Choose") }
+    }
+    if (!expanded) return
+  }
+  val shown = if (expanded || episodes.size <= 3) episodes else episodes.take(3)
+  shown.forEachIndexed { index, episode ->
+    if (index > 0 || !initiallyCollapsed) HorizontalDivider()
+    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+      Column(Modifier.weight(1f)) {
+        Text(
+          episode.title,
+          style = MaterialTheme.typography.bodyMedium,
+          maxLines = 2,
+          overflow = TextOverflow.Ellipsis,
+        )
+        val detail =
+          listOf(episode.podcastTitle, episode.sourceLabel)
+            .filter { it.isNotBlank() }
+            .joinToString(" · ")
+        if (detail.isNotEmpty()) {
+          Text(
+            detail,
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+          )
         }
       }
+      IconButton(onClick = { onPlayEpisode(episode.key) }) {
+        Icon(
+          Icons.Filled.PlayArrow,
+          contentDescription = "Play ${episode.title} in ${episode.sourceLabel}",
+        )
+      }
+    }
+  }
+  if (!initiallyCollapsed && episodes.size > 3) {
+    TextButton(onClick = { expanded = !expanded }) {
+      Text(if (expanded) "Show fewer" else "Show all ${episodes.size}")
     }
   }
 }
@@ -309,6 +433,8 @@ private fun NowPlayingCard(state: BluetoothState, onRequestMediaAccess: () -> Un
 @Composable
 private fun TransportCard(
   mode: WorkingMode,
+  canPlayPause: Boolean,
+  canNavigate: Boolean,
   onPlay: () -> Unit,
   onPause: () -> Unit,
   onPlayPause: () -> Unit,
@@ -325,16 +451,17 @@ private fun TransportCard(
       horizontalArrangement = Arrangement.SpaceEvenly,
       verticalAlignment = Alignment.CenterVertically,
     ) {
-      IconButton(onClick = onPrevious) {
+      IconButton(onClick = onPrevious, enabled = canNavigate) {
         Icon(Icons.Filled.SkipPrevious, contentDescription = "Previous")
       }
       if (mode != WorkingMode.Mp3) {
-        IconButton(onClick = onRewind) {
+        IconButton(onClick = onRewind, enabled = canNavigate) {
           Icon(Icons.Filled.FastRewind, contentDescription = "Rewind")
         }
       }
       // MP3 mode sends explicit Play/Pause: the headset has no captured toggle command.
       FilledIconButton(
+        enabled = canPlayPause,
         onClick =
           when {
             mode != WorkingMode.Mp3 -> onPlayPause
@@ -347,12 +474,16 @@ private fun TransportCard(
           contentDescription = if (playing) "Pause" else "Play",
         )
       }
-      IconButton(onClick = onNext) { Icon(Icons.Filled.SkipNext, contentDescription = "Next") }
+      IconButton(onClick = onNext, enabled = canNavigate) {
+        Icon(Icons.Filled.SkipNext, contentDescription = "Next")
+      }
       if (mode != WorkingMode.Mp3) {
-        IconButton(onClick = onFastForward) {
+        IconButton(onClick = onFastForward, enabled = canNavigate) {
           Icon(Icons.Filled.FastForward, contentDescription = "Fast forward")
         }
-        IconButton(onClick = onStop) { Icon(Icons.Filled.Stop, contentDescription = "Stop") }
+        IconButton(onClick = onStop, enabled = canNavigate) {
+          Icon(Icons.Filled.Stop, contentDescription = "Stop")
+        }
       }
     }
   }

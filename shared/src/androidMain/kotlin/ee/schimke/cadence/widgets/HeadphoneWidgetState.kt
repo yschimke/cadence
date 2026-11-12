@@ -52,13 +52,16 @@ data class HeadphoneWidgetState(
     fun from(bluetooth: BluetoothState): HeadphoneWidgetState {
       val device = bluetooth.connectedDevice
       val media = bluetooth.mediaInfo
+      val launchable = bluetooth.playableEpisodes.firstOrNull()
       val phoneTransport = transport(playing = media?.playing == true)
       if (device == null) {
         return HeadphoneWidgetState(
           title = "Headphones not connected",
           shortTitle = "Not connected",
-          // The buttons still drive the phone's player, so say what they would control.
-          detail = media?.title?.let { "On phone: $it" },
+          // The buttons drive only a matched source session or launchable playlist item.
+          detail =
+            media?.title?.let { "On phone: $it" }
+              ?: launchable?.let { "${it.sourceLabel}: ${it.title}" },
           extra = null,
           transport = phoneTransport,
           modeSwitch = null,
@@ -90,7 +93,7 @@ data class HeadphoneWidgetState(
         )
       }
       return HeadphoneWidgetState(
-        title = media?.title ?: "Nothing playing",
+        title = media?.title ?: launchable?.let { "Ready: ${it.title}" } ?: "Nothing playing",
         detail = media?.artist ?: battery,
         extra =
           joined(

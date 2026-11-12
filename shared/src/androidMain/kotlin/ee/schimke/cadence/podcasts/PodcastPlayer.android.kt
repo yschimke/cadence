@@ -27,6 +27,100 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 private const val POCKET_CASTS = "au.com.shiftyjelly.pocketcasts"
 
+internal fun isPocketCastsInstalled(context: android.content.Context): Boolean =
+  runCatching { context.packageManager.getPackageInfo(POCKET_CASTS, 0) }.isSuccess
+
+@androidx.annotation.OptIn(UnstableApi::class)
+internal fun withLocalPodcastPlayer(
+  context: android.content.Context,
+  action: (MediaController) -> Unit,
+) {
+  val appContext = context.applicationContext
+  val future =
+    MediaController.Builder(
+        appContext,
+        SessionToken(appContext, ComponentName(appContext, PodcastPlaybackService::class.java)),
+      )
+      .buildAsync()
+  Futures.addCallback(
+    future,
+    object : FutureCallback<MediaController> {
+      override fun onFailure(t: Throwable) {
+        MediaController.releaseFuture(future)
+      }
+
+      override fun onSuccess(player: MediaController?) {
+        try {
+          if (player != null) action(player)
+        } finally {
+          MediaController.releaseFuture(future)
+        }
+      }
+    },
+    ContextCompat.getMainExecutor(appContext),
+  )
+}
+
+@androidx.annotation.OptIn(UnstableApi::class)
+internal fun launchPodcastEpisode(
+  context: android.content.Context,
+  episode: Episode,
+  controller: PodcastController = AndroidPodcastPlatform.instance(context).controller(),
+  localPlayer: MediaController? = null,
+) {
+  val appContext = context.applicationContext
+  if (episode.backend == "pocket-casts" && isPocketCastsInstalled(appContext)) {
+    // Pocket Casts can open and play a specific episode even when its media session is absent.
+    val uri =
+      Uri.Builder()
+        .scheme("https")
+        .authority("pca.st")
+        .appendPath("episode")
+        .appendPath(episode.id)
+        .appendQueryParameter("auto_play", "true")
+        .build()
+    val intent =
+      Intent(Intent.ACTION_VIEW, uri)
+        .setPackage(POCKET_CASTS)
+        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    try {
+      if (localPlayer?.isPlaying == true) localPlayer.pause()
+      else if (PodcastPlaybackService.playerState.value.playing) {
+        withLocalPodcastPlayer(appContext) { it.pause() }
+      }
+      appContext.startActivity(intent)
+    } catch (_: android.content.ActivityNotFoundException) {
+      Toast.makeText(appContext, "Couldn't open this episode in Pocket Casts", Toast.LENGTH_LONG)
+        .show()
+    } catch (_: SecurityException) {
+      Toast.makeText(appContext, "Couldn't open this episode in Pocket Casts", Toast.LENGTH_LONG)
+        .show()
+    }
+  } else {
+    val file = AndroidPodcastPlatform.instance(appContext).originalForPlayback(episode) ?: return
+    fun startOn(player: MediaController) {
+      val metadata =
+        MediaMetadata.Builder()
+          .setTitle(episode.title)
+          .setArtist(episode.podcastTitle)
+          .build()
+      val savedPosition = episodePosition(episode, controller.state.value.library)
+      player.setMediaItem(
+        MediaItem.Builder()
+          .setUri(android.net.Uri.fromFile(file))
+          .setMediaId(episode.key)
+          .setMediaMetadata(metadata)
+          .build(),
+        savedPosition,
+      )
+      player.prepare()
+      player.play()
+    }
+    if (localPlayer != null) startOn(localPlayer)
+    else withLocalPodcastPlayer(appContext, ::startOn)
+  }
+}
+
 @androidx.annotation.OptIn(UnstableApi::class)
 @Composable
 actual fun rememberPodcastPlayer(
@@ -41,10 +135,7 @@ actual fun rememberPodcastPlayer(
         runCatching { context.packageManager.getPackageInfo(packageName, 0) }.isSuccess
       }
     }
-  val pocketCastsInstalled =
-    remember(context) {
-      runCatching { context.packageManager.getPackageInfo(POCKET_CASTS, 0) }.isSuccess
-    }
+  val pocketCastsInstalled = remember(context) { isPocketCastsInstalled(context) }
   var localPlayer by remember { mutableStateOf<MediaController?>(null) }
   // Robolectric's service binding returns a null ComponentName to Media3. App-tour previews
   // render without a real playback service; devices use the normal MediaController connection.
@@ -84,54 +175,7 @@ actual fun rememberPodcastPlayer(
           .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
       )
     },
-    playEpisode = { episode ->
-      if (episode.backend == "pocket-casts" && pocketCastsInstalled) {
-        // Pocket Casts can open and play a specific episode even when its media session is absent.
-        val uri =
-          Uri.Builder()
-            .scheme("https")
-            .authority("pca.st")
-            .appendPath("episode")
-            .appendPath(episode.id)
-            .appendQueryParameter("auto_play", "true")
-            .build()
-        val intent =
-          Intent(Intent.ACTION_VIEW, uri)
-            .setPackage(POCKET_CASTS)
-            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        try {
-          if (localPlayer?.isPlaying == true) localPlayer?.pause()
-          context.startActivity(intent)
-        } catch (_: android.content.ActivityNotFoundException) {
-          Toast.makeText(context, "Couldn't open this episode in Pocket Casts", Toast.LENGTH_LONG)
-            .show()
-        } catch (_: SecurityException) {
-          Toast.makeText(context, "Couldn't open this episode in Pocket Casts", Toast.LENGTH_LONG)
-            .show()
-        }
-      } else {
-        val file = AndroidPodcastPlatform.instance(context).originalForPlayback(episode)
-        if (file != null)
-          localPlayer?.let { player ->
-            val metadata =
-              MediaMetadata.Builder()
-                .setTitle(episode.title)
-                .setArtist(episode.podcastTitle)
-                .build()
-            val savedPosition = episodePosition(episode, controller.state.value.library)
-            player.setMediaItem(
-              MediaItem.Builder()
-                .setUri(android.net.Uri.fromFile(file))
-                .setMediaId(episode.key)
-                .setMediaMetadata(metadata)
-                .build(),
-              savedPosition,
-            )
-            player.prepare()
-            player.play()
-          }
-      }
-    },
+    playEpisode = { episode -> launchPodcastEpisode(context, episode, controller, localPlayer) },
     playPause = { localPlayer?.let { if (it.isPlaying) it.pause() else it.play() } },
     seek = { localPlayer?.seekTo(it) },
   )

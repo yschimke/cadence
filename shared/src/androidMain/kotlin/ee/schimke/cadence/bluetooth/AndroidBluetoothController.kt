@@ -1,11 +1,13 @@
 package ee.schimke.cadence.bluetooth
 
-import ee.schimke.cadence.platform.Analytics
 import android.Manifest
 import android.app.Activity
 import android.app.Application
+import android.bluetooth.BluetoothA2dp
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
+import android.bluetooth.BluetoothHeadset
+import android.bluetooth.BluetoothLeAudio
 import android.bluetooth.BluetoothManager
 import android.bluetooth.BluetoothProfile
 import android.content.BroadcastReceiver
@@ -16,27 +18,39 @@ import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.media.AudioManager
 import android.media.MediaMetadata
+import android.media.session.MediaController as PlatformMediaController
 import android.media.session.MediaSessionManager
 import android.media.session.PlaybackState
 import android.net.Uri
 import android.os.Build
-import android.os.SystemClock
 import android.provider.Settings
 import android.util.Log
-import android.view.KeyEvent
 import androidx.core.content.ContextCompat
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.SingleIn
 import dev.zacsweers.metro.binding
+import ee.schimke.cadence.platform.Analytics
+import ee.schimke.cadence.podcasts.AndroidPodcastPlatform
+import ee.schimke.cadence.podcasts.LocalPodcastState
+import ee.schimke.cadence.podcasts.PodcastPlaybackService
+import ee.schimke.cadence.podcasts.PodcastPlayerUi
+import ee.schimke.cadence.podcasts.PodcastSourceKind
+import ee.schimke.cadence.podcasts.allEpisodes
+import ee.schimke.cadence.podcasts.isPocketCastsInstalled
+import ee.schimke.cadence.podcasts.launchPodcastEpisode
+import ee.schimke.cadence.podcasts.withLocalPodcastPlayer
+import ee.schimke.cadence.sync.SyncRepo
 import ee.schimke.rcsp.AndroidShokzOpenSwimTransport
 import ee.schimke.rcsp.EqualizerPreset as RcspEqualizerPreset
 import ee.schimke.rcsp.OpenSwimProProfile
 import ee.schimke.rcsp.PlaybackOrder as RcspPlaybackOrder
 import ee.schimke.rcsp.RcspCommand
+import ee.schimke.rcsp.ShokzOpenSwimCodec
 import ee.schimke.rcsp.ShokzOpenSwimController
 import java.util.UUID
+import java.util.concurrent.ConcurrentHashMap
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -49,6 +63,7 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -59,6 +74,7 @@ import kotlinx.coroutines.withContext
 @OptIn(ExperimentalCoroutinesApi::class)
 class AndroidBluetoothController(
   private val applicationContext: Context,
+  private val syncRepo: SyncRepo,
 ) : BluetoothController {
 
   private val audioManager =
@@ -70,7 +86,17 @@ class AndroidBluetoothController(
   private val mediaSessionManager: MediaSessionManager? =
     applicationContext.getSystemService(Context.MEDIA_SESSION_SERVICE) as? MediaSessionManager
 
+  private val podcastController by lazy {
+    AndroidPodcastPlatform.instance(applicationContext).controller()
+  }
+
+  private val prefs =
+    applicationContext.getSharedPreferences(HeadsetModePrefsName, Context.MODE_PRIVATE)
+
   private val refreshTrigger = MutableStateFlow(0)
+  private val deviceFilterFlow = MutableStateFlow(loadDeviceFilter())
+  private val verifiedOpenSwimFlow = MutableStateFlow(verifiedOpenSwimAddresses(applicationContext))
+  private val probedAddresses = ConcurrentHashMap.newKeySet<String>()
 
   /** Mode and settings the connected OpenSwim Pro acknowledged; none are read back. */
   private data class HeadsetSettings(
@@ -82,10 +108,41 @@ class AndroidBluetoothController(
     val playing: Boolean? = null,
   )
 
+  private data class ConnectionSnapshot(
+    val device: ConnectedDevice? = null,
+    val hiddenHeadphoneName: String? = null,
+  )
+
+  private data class RawMediaSession(
+    val candidate: MediaSessionCandidate,
+    val controller: PlatformMediaController?,
+    val localServiceFallback: Boolean = false,
+  )
+
+  private data class SourceContext(
+    val podcastState: LocalPodcastState,
+    val hasFolderSources: Boolean,
+    val localPlayer: PodcastPlayerUi,
+  )
+
   private val headsetFlow = MutableStateFlow(HeadsetSettings())
   private val commandScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
+  @Volatile private var lastConnectedDevice: BluetoothDevice? = null
+  @Volatile private var matchedMediaController: PlatformMediaController? = null
+  @Volatile private var matchedLocalPodcastPlayer: Boolean = false
+
   override val supported = true
+
+  private val sourceContextFlow: Flow<SourceContext> by lazy {
+    combine(
+      podcastController.state,
+      syncRepo.sources.map { it.isNotEmpty() }.distinctUntilChanged(),
+      PodcastPlaybackService.playerState,
+    ) { podcasts, hasFolders, localPlayer ->
+      SourceContext(podcasts, hasFolders, localPlayer)
+    }
+  }
 
   override val state: Flow<BluetoothState> =
     refreshTrigger
@@ -93,11 +150,109 @@ class AndroidBluetoothController(
         combine(
           connectionFlow(),
           volumeFlow(),
-          mediaInfoFlow(),
+          rawMediaSessionsFlow(),
           headsetFlow,
-        ) { connection, volume, media, headset ->
+          sourceContextFlow,
+        ) { connection, volume, rawSessions, headset, sourceContext ->
+          val filter = deviceFilterFlow.value
+          val device = connection.device
+          val localAudio = device?.isOpenSwimPro == true && headset.mode == WorkingMode.Mp3
+          val btHeadphonesConnected = device != null && !localAudio
+
+          val podcastState = sourceContext.podcastState
+          val hasConnectedSource =
+            podcastState.library.source != null || sourceContext.hasFolderSources
+          val pocketCastsConnected =
+            podcastState.library.source == PodcastSourceKind.PocketCasts ||
+              podcastState.pocketCasts.let {
+                it.server ||
+                  it.accessToken.isNotBlank() ||
+                  it.refreshToken.isNotBlank() ||
+                  it.email.isNotBlank()
+              }
+          val allowedPackages =
+            allowedMediaPackages(
+              cadencePackage = applicationContext.packageName,
+              podcastSource = podcastState.library.source,
+              pocketCastsConnected = pocketCastsConnected,
+            )
+
+          val combinedSessions = buildList {
+            addAll(rawSessions)
+            val local = sourceContext.localPlayer
+            if (
+              local.title != null &&
+                rawSessions.none { it.candidate.packageName == applicationContext.packageName }
+            ) {
+              add(
+                RawMediaSession(
+                  candidate =
+                    MediaSessionCandidate(
+                      packageName = applicationContext.packageName,
+                      title = local.title,
+                      artist = null,
+                      album = null,
+                      playing = local.playing,
+                      durationMs = local.durationMs.takeIf { it > 0 },
+                      positionMs = local.positionMs,
+                    ),
+                  controller = null,
+                  localServiceFallback = true,
+                ),
+              )
+            }
+          }
+
+          val pushedEpisodes = podcastState.library.allEpisodes
+          val winningIndex =
+            if (localAudio) null
+            else
+              selectControllableMediaSession(
+                sessions = combinedSessions.map { it.candidate },
+                cadencePackage = applicationContext.packageName,
+                allowedPackages = allowedPackages,
+                hasConnectedSource = hasConnectedSource,
+                headphonesConnectedInBtMode = btHeadphonesConnected,
+                pushedEpisodes = pushedEpisodes,
+              )
+          val winningSession = winningIndex?.let { combinedSessions[it] }
+          matchedMediaController = winningSession?.controller
+          matchedLocalPodcastPlayer = winningSession?.localServiceFallback == true
+
+          val media =
+            winningSession?.candidate?.let {
+              MediaInfo(
+                title = it.title,
+                artist = it.artist,
+                album = it.album,
+                playing = it.playing,
+                durationMs = it.durationMs,
+                positionMs = it.positionMs,
+                packageName = it.packageName,
+              )
+            }
+
+          val pocketCastsInstalled = isPocketCastsInstalled(applicationContext)
+          val playableEpisodes =
+            podcastState.library.playlist
+              ?.episodes
+              .orEmpty()
+              .mapNotNull { episode ->
+                val pocketCastsPlayable = episode.backend == "pocket-casts" && pocketCastsInstalled
+                val downloaded = episode.key in podcastState.downloadedEpisodeKeys
+                when {
+                  pocketCastsPlayable ->
+                    PlayableEpisode(episode.key, episode.title, episode.podcastTitle, "Pocket Casts")
+                  downloaded ->
+                    PlayableEpisode(episode.key, episode.title, episode.podcastTitle, "On phone")
+                  else -> null
+                }
+              }
+
           BluetoothState(
-            connectedDevice = connection,
+            connectedDevice = device,
+            deviceFilter = filter,
+            hiddenHeadphoneName = connection.hiddenHeadphoneName,
             volumePercent = volume.percent,
             maxVolume = volume.max,
             muted = volume.muted,
@@ -110,6 +265,8 @@ class AndroidBluetoothController(
             headsetVolumePercent = headset.volumePercent,
             headsetVolumeError = headset.volumeError,
             headsetPlaying = headset.playing,
+            hasConnectedSource = hasConnectedSource,
+            playableEpisodes = playableEpisodes,
           )
         }
       }
@@ -137,9 +294,16 @@ class AndroidBluetoothController(
   }
 
   override fun refresh() {
-    // Recreate the platform callback flows: both notification-listener access and runtime
-    // Bluetooth permissions can be changed while Cadence is in Android Settings.
+    // Recreate the platform callback flows: notification-listener access, runtime Bluetooth
+    // permissions, and RFCOMM availability for renamed headsets can change between resumes.
+    probedAddresses.clear()
     refreshTrigger.update { it + 1 }
+  }
+
+  override fun setDeviceFilter(filter: BluetoothDeviceFilter) {
+    if (deviceFilterFlow.value == filter) return
+    prefs.edit().putString(DeviceFilterPrefKey, filter.name).apply()
+    deviceFilterFlow.value = filter
   }
 
   override fun setVolume(percent: Int) {
@@ -191,31 +355,114 @@ class AndroidBluetoothController(
     refresh()
   }
 
-  override fun play() = dispatchMediaOrOpenSwim(RcspCommand.Play, KeyEvent.KEYCODE_MEDIA_PLAY)
+  override fun play() {
+    localAudioDevice()?.let { device ->
+      dispatchOpenSwim(device, RcspCommand.Play) {
+        headsetFlow.update { it.copy(playing = true) }
+      }
+      return
+    }
+    matchedMediaController?.let { controller ->
+      controller.transportControls.play()
+      return
+    }
+    if (matchedLocalPodcastPlayer) {
+      withLocalPodcastPlayer(applicationContext) { it.play() }
+      return
+    }
+    launchFirstPlayableEpisode()
+  }
 
-  override fun pause() = dispatchMediaOrOpenSwim(RcspCommand.Pause, KeyEvent.KEYCODE_MEDIA_PAUSE)
-
-  /** MP3 mode has no captured toggle, so it follows the last acknowledged Play/Pause. */
-  override fun playPause() {
-    if (localAudioDevice() == null) {
-      dispatchKey(KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE)
-    } else if (headsetFlow.value.playing == true) {
-      pause()
-    } else {
-      play()
+  override fun pause() {
+    localAudioDevice()?.let { device ->
+      dispatchOpenSwim(device, RcspCommand.Pause) {
+        headsetFlow.update { it.copy(playing = false) }
+      }
+      return
+    }
+    matchedMediaController?.let { controller ->
+      controller.transportControls.pause()
+      return
+    }
+    if (matchedLocalPodcastPlayer) {
+      withLocalPodcastPlayer(applicationContext) { it.pause() }
     }
   }
 
-  override fun next() = dispatchMediaOrOpenSwim(RcspCommand.NextTrack, KeyEvent.KEYCODE_MEDIA_NEXT)
+  /** MP3 mode has no captured toggle, so it follows the last acknowledged Play/Pause. */
+  override fun playPause() {
+    if (localAudioDevice() != null) {
+      if (headsetFlow.value.playing == true) pause() else play()
+      return
+    }
+    matchedMediaController?.let { controller ->
+      if (controller.playbackState?.state == PlaybackState.STATE_PLAYING) {
+        controller.transportControls.pause()
+      } else {
+        controller.transportControls.play()
+      }
+      return
+    }
+    if (matchedLocalPodcastPlayer) {
+      withLocalPodcastPlayer(applicationContext) {
+        if (it.isPlaying) it.pause() else it.play()
+      }
+      return
+    }
+    launchFirstPlayableEpisode()
+  }
 
-  override fun previous() =
-    dispatchMediaOrOpenSwim(RcspCommand.PreviousTrack, KeyEvent.KEYCODE_MEDIA_PREVIOUS)
+  override fun playEpisode(episodeKey: String) {
+    val podcastState = podcastController.state.value
+    val episode =
+      podcastState.library.allEpisodes.firstOrNull { it.key == episodeKey } ?: return
+    launchPodcastEpisode(applicationContext, episode, podcastController)
+  }
 
-  override fun stop() = dispatchKey(KeyEvent.KEYCODE_MEDIA_STOP)
+  override fun next() {
+    localAudioDevice()?.let { device ->
+      dispatchOpenSwim(device, RcspCommand.NextTrack)
+      return
+    }
+    matchedMediaController?.transportControls?.skipToNext()
+  }
 
-  override fun fastForward() = dispatchKey(KeyEvent.KEYCODE_MEDIA_FAST_FORWARD)
+  override fun previous() {
+    localAudioDevice()?.let { device ->
+      dispatchOpenSwim(device, RcspCommand.PreviousTrack)
+      return
+    }
+    matchedMediaController?.transportControls?.skipToPrevious()
+  }
 
-  override fun rewind() = dispatchKey(KeyEvent.KEYCODE_MEDIA_REWIND)
+  override fun stop() {
+    if (localAudioDevice() != null) return
+    matchedMediaController?.transportControls?.stop()
+    if (matchedLocalPodcastPlayer) {
+      withLocalPodcastPlayer(applicationContext) { it.stop() }
+    }
+  }
+
+  override fun fastForward() {
+    if (localAudioDevice() != null) return
+    matchedMediaController?.transportControls?.fastForward()
+  }
+
+  override fun rewind() {
+    if (localAudioDevice() != null) return
+    matchedMediaController?.transportControls?.rewind()
+  }
+
+  private fun launchFirstPlayableEpisode() {
+    val podcastState = podcastController.state.value
+    val pocketCastsInstalled = isPocketCastsInstalled(applicationContext)
+    val episode =
+      podcastState.library.playlist?.episodes.orEmpty().firstOrNull { ep ->
+        (ep.backend == "pocket-casts" && pocketCastsInstalled) ||
+          ep.key in podcastState.downloadedEpisodeKeys
+      } ?: return
+    launchPodcastEpisode(applicationContext, episode, podcastController)
+  }
 
   override fun openSystemBluetoothSettings() {
     val intent =
@@ -258,8 +505,7 @@ class AndroidBluetoothController(
       runCatching { exchangeOpenSwim(device, command) }
         .fold(
           onSuccess = {
-            applicationContext
-              .getSharedPreferences("headset-mode", Context.MODE_PRIVATE)
+            prefs
               .edit()
               .putString("device", device.address)
               .putString("mode", mode.name)
@@ -373,12 +619,14 @@ class AndroidBluetoothController(
 
   private fun batteryFromConnected(): String? {
     val device = connectedAudioDevice() ?: return null
+    val verified = device.address in verifiedOpenSwimFlow.value
     return batteryPercent(device)?.let {
       ConnectedDevice(
-          runCatching { device.name }.getOrNull().orEmpty(),
-          "",
-          emptyList(),
+          name = runCatching { device.name }.getOrNull().orEmpty(),
+          address = device.address.orEmpty(),
+          profileNames = emptyList(),
           batteryPercent = it,
+          verifiedOpenSwim = verified,
         )
         .batterySummary()
     }
@@ -394,46 +642,21 @@ class AndroidBluetoothController(
       .getOrNull()
   }
 
-  @Volatile private var lastConnectedDevice: BluetoothDevice? = null
-
   private fun connectedAudioDevice(): BluetoothDevice? {
     if (!hasBluetoothConnectPermission()) return null
     return lastConnectedDevice
   }
 
   private fun openSwimDevice(): BluetoothDevice? =
-    connectedAudioDevice()?.takeIf {
-      runCatching { it.name }.getOrNull()?.contains(OpenSwimProName, ignoreCase = true) == true
+    connectedAudioDevice()?.takeIf { device ->
+      device.address in verifiedOpenSwimFlow.value ||
+        runCatching { device.name }.getOrNull()?.contains(OpenSwimProName, ignoreCase = true) ==
+          true
     }
 
   /** The OpenSwim Pro, when Cadence has switched it to on-device (MP3) playback. */
   private fun localAudioDevice(): BluetoothDevice? =
     openSwimDevice()?.takeIf { headsetFlow.value.mode == WorkingMode.Mp3 }
-
-  private fun dispatchKey(keyCode: Int) {
-    val now = SystemClock.uptimeMillis()
-    audioManager.dispatchMediaKeyEvent(KeyEvent(now, now, KeyEvent.ACTION_DOWN, keyCode, 0))
-    audioManager.dispatchMediaKeyEvent(KeyEvent(now, now, KeyEvent.ACTION_UP, keyCode, 0))
-  }
-
-  /**
-   * Captured OpenSwim Local Audio media actions use a vendor RFCOMM envelope, not AVRCP. The UI's
-   * MP3 selection is an explicit guard: it does not switch headset mode itself.
-   */
-  private fun dispatchMediaOrOpenSwim(command: RcspCommand, mediaKeyCode: Int) {
-    val device = localAudioDevice()
-    if (device == null) {
-      dispatchKey(mediaKeyCode)
-      return
-    }
-    dispatchOpenSwim(device, command) {
-      when (command) {
-        RcspCommand.Play -> headsetFlow.update { it.copy(playing = true) }
-        RcspCommand.Pause -> headsetFlow.update { it.copy(playing = false) }
-        else -> Unit
-      }
-    }
-  }
 
   private fun dispatchOpenSwim(
     device: BluetoothDevice,
@@ -469,6 +692,58 @@ class AndroidBluetoothController(
       ShokzOpenSwimController(AndroidShokzOpenSwimTransport(socket)).execute(command)
     }
 
+  /**
+   * Read-only `QueryMediaState` check for a renamed `0xFEF0` audio sink, confirming it speaks the
+   * OpenSwim Pro `A5 5A` envelope before any vendor write command is enabled.
+   */
+  private fun probeOpenSwimIfNeeded(device: BluetoothDevice) {
+    val address = device.address?.takeIf { it.isNotBlank() } ?: return
+    if (address in verifiedOpenSwimFlow.value) return
+    if (!probedAddresses.add(address)) return
+    commandScope.launch {
+      runCatching {
+          val socket =
+            device.createRfcommSocketToServiceRecord(
+              UUID.fromString(OpenSwimProProfile.serviceUuid),
+            )
+          val timeout = launch {
+            delay(OpenSwimProbeTimeoutMs)
+            runCatching { socket.close() }
+          }
+          try {
+            socket.use {
+              it.connect()
+              ShokzOpenSwimController(AndroidShokzOpenSwimTransport(it))
+                .execute(RcspCommand.QueryMediaState)
+            }
+          } finally {
+            timeout.cancel()
+          }
+        }
+        .onSuccess { response ->
+          if (ShokzOpenSwimCodec.isResponse(response)) {
+            recordVerifiedOpenSwim(address)
+            Log.i("CadenceBluetooth", "Verified OpenSwim protocol for renamed device $address")
+          }
+        }
+        .onFailure { error ->
+          Log.d("CadenceBluetooth", "RCSP probe did not verify $address: ${error.message}")
+        }
+    }
+  }
+
+  private fun recordVerifiedOpenSwim(address: String) {
+    val updated = verifiedOpenSwimFlow.value + address
+    prefs.edit().putStringSet(VerifiedOpenSwimPrefKey, updated).apply()
+    verifiedOpenSwimFlow.value = updated
+  }
+
+  private fun loadDeviceFilter(): BluetoothDeviceFilter {
+    val stored = prefs.getString(DeviceFilterPrefKey, null)
+    return BluetoothDeviceFilter.entries.firstOrNull { it.name == stored }
+      ?: BluetoothDeviceFilter.ShokzOnly
+  }
+
   private fun hasBluetoothConnectPermission(): Boolean {
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return true
     return ContextCompat.checkSelfPermission(
@@ -487,34 +762,103 @@ class AndroidBluetoothController(
     return flat.split(":").any { it.equals(cn.flattenToString(), ignoreCase = true) }
   }
 
-  private fun connectionFlow(): Flow<ConnectedDevice?> = callbackFlow {
-    val activeProfiles = mutableSetOf<String>()
-    var current: BluetoothDevice? = null
+  private fun connectionFlow(): Flow<ConnectionSnapshot> = callbackFlow {
+    val adapter = bluetoothManager?.adapter
+    val aclDevices = mutableMapOf<String, BluetoothDevice>()
+    val profileBroadcastDevices = mutableMapOf<Pair<String, String>, BluetoothDevice>()
+    var a2dpProxy: BluetoothProfile? = null
+    var headsetProxy: BluetoothProfile? = null
+    var leAudioProxy: BluetoothProfile? = null
 
-    fun emitCurrent() {
-      val device = current
-      if (device == null) {
+    fun evaluate() {
+      if (!hasBluetoothConnectPermission() || adapter?.state == BluetoothAdapter.STATE_OFF) {
+        aclDevices.clear()
+        profileBroadcastDevices.clear()
+        lastConnectedDevice = null
+        headsetFlow.update { HeadsetSettings(mode = it.mode) }
+        trySend(ConnectionSnapshot())
+        return
+      }
+
+      val devicesByAddress = linkedMapOf<String, BluetoothDevice>()
+      val profilesByAddress = mutableMapOf<String, MutableSet<String>>()
+
+      fun record(device: BluetoothDevice, profile: String?) {
+        val address = device.address?.takeIf { it.isNotBlank() } ?: return
+        devicesByAddress[address] = device
+        val set = profilesByAddress.getOrPut(address) { mutableSetOf() }
+        if (profile != null) set += profile
+      }
+
+      runCatching { a2dpProxy?.connectedDevices.orEmpty() }
+        .getOrDefault(emptyList())
+        .forEach { record(it, "A2DP") }
+      runCatching { headsetProxy?.connectedDevices.orEmpty() }
+        .getOrDefault(emptyList())
+        .forEach { record(it, "HFP") }
+      runCatching { leAudioProxy?.connectedDevices.orEmpty() }
+        .getOrDefault(emptyList())
+        .forEach { record(it, "LE Audio") }
+
+      profileBroadcastDevices.forEach { (key, device) -> record(device, key.second) }
+
+      val verifiedSet = verifiedOpenSwimFlow.value
+      aclDevices.values.forEach { device ->
+        val candidate = device.toBluetoothCandidate(verifiedOpenSwim = device.address in verifiedSet)
+        if (candidate.isOpenSwimPro || candidate.hasRcspProtocol) {
+          record(device, null)
+        }
+      }
+
+      val candidatesByAddress =
+        devicesByAddress.mapValues { (address, device) ->
+          device.toBluetoothCandidate(
+            connectedProfiles = profilesByAddress[address].orEmpty(),
+            verifiedOpenSwim = address in verifiedSet,
+          )
+        }
+
+      val selection =
+        selectConnectedBluetoothDevice(candidatesByAddress.values, deviceFilterFlow.value)
+      val winningCandidate = selection.selected
+      val winningDevice = winningCandidate?.let { devicesByAddress[it.address] }
+
+      if (winningDevice == null) {
         lastConnectedDevice = null
         // Acknowledged settings belong to that connection; the mode selection is kept.
         headsetFlow.update { HeadsetSettings(mode = it.mode) }
-        trySend(null)
+        trySend(
+          ConnectionSnapshot(
+            device = null,
+            hiddenHeadphoneName = selection.hiddenHeadphone?.name?.ifBlank { null },
+          ),
+        )
         return
       }
-      if (lastConnectedDevice?.address != device.address) {
-        val prefs = applicationContext.getSharedPreferences("headset-mode", Context.MODE_PRIVATE)
+
+      if (winningCandidate.needsOpenSwimProbe()) {
+        probeOpenSwimIfNeeded(winningDevice)
+      }
+
+      if (lastConnectedDevice?.address != winningDevice.address) {
         val remembered =
-          if (prefs.getString("device", null) == device.address)
+          if (prefs.getString("device", null) == winningDevice.address)
             WorkingMode.entries.firstOrNull { it.name == prefs.getString("mode", null) }
           else null
         if (remembered != null) headsetFlow.update { it.copy(mode = remembered) }
       }
-      lastConnectedDevice = device
+      lastConnectedDevice = winningDevice
       trySend(
-        ConnectedDevice(
-          name = runCatching { device.name }.getOrNull() ?: "Unknown device",
-          address = device.address ?: "—",
-          profileNames = activeProfiles.toList().sorted(),
-          batteryPercent = batteryPercent(device),
+        ConnectionSnapshot(
+          device =
+            ConnectedDevice(
+              name = winningCandidate.name.ifBlank { "Unknown device" },
+              address = winningCandidate.address.ifBlank { "—" },
+              profileNames = winningCandidate.connectedProfiles.sorted(),
+              batteryPercent = batteryPercent(winningDevice),
+              verifiedOpenSwim = winningCandidate.verifiedOpenSwim,
+            ),
+          hiddenHeadphoneName = null,
         ),
       )
     }
@@ -522,15 +866,13 @@ class AndroidBluetoothController(
     // Starting a fresh observer does not mean the device disconnected. Profile proxies seed
     // the connection asynchronously, and clearing settings here loses acknowledged playback
     // state every time refresh() recreates this flow.
-    trySend(null)
+    trySend(ConnectionSnapshot())
 
     val receiver =
       object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
           if (!hasBluetoothConnectPermission()) {
-            current = null
-            activeProfiles.clear()
-            emitCurrent()
+            evaluate()
             return
           }
           val device: BluetoothDevice? =
@@ -538,32 +880,51 @@ class AndroidBluetoothController(
               BluetoothDevice.EXTRA_DEVICE,
               BluetoothDevice::class.java,
             )
+          val address = device?.address?.takeIf { it.isNotBlank() }
           when (intent.action) {
             BluetoothDevice.ACTION_ACL_CONNECTED -> {
-              current = device
+              if (address != null) aclDevices[address] = device
             }
             BluetoothDevice.ACTION_ACL_DISCONNECTED -> {
-              if (device == current) current = null
-              activeProfiles.clear()
-            }
-            BluetoothAdapter.ACTION_CONNECTION_STATE_CHANGED -> {
-              val state = intent.getIntExtra(BluetoothAdapter.EXTRA_CONNECTION_STATE, -1)
-              if (state == BluetoothAdapter.STATE_CONNECTED && device != null) {
-                current = device
-              } else if (state == BluetoothAdapter.STATE_DISCONNECTED && device == current) {
-                current = null
-                activeProfiles.clear()
+              if (address != null) {
+                aclDevices.remove(address)
+                profileBroadcastDevices.keys.removeAll { it.first == address }
+                probedAddresses.remove(address)
               }
             }
+            BluetoothAdapter.ACTION_CONNECTION_STATE_CHANGED -> {
+              val connState = intent.getIntExtra(BluetoothAdapter.EXTRA_CONNECTION_STATE, -1)
+              if (address != null) {
+                if (connState == BluetoothAdapter.STATE_CONNECTED) {
+                  aclDevices[address] = device
+                } else if (connState == BluetoothAdapter.STATE_DISCONNECTED) {
+                  aclDevices.remove(address)
+                  profileBroadcastDevices.keys.removeAll { it.first == address }
+                  probedAddresses.remove(address)
+                }
+              }
+            }
+            BluetoothA2dp.ACTION_CONNECTION_STATE_CHANGED ->
+              updateProfileBroadcast(profileBroadcastDevices, device, "A2DP", intent)
+            BluetoothHeadset.ACTION_CONNECTION_STATE_CHANGED ->
+              updateProfileBroadcast(profileBroadcastDevices, device, "HFP", intent)
+            BluetoothLeAudio.ACTION_LE_AUDIO_CONNECTION_STATE_CHANGED ->
+              updateProfileBroadcast(profileBroadcastDevices, device, "LE Audio", intent)
           }
-          emitCurrent()
+          evaluate()
         }
       }
+
     val filter =
       IntentFilter().apply {
         addAction(BluetoothDevice.ACTION_ACL_CONNECTED)
         addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED)
+        addAction(BluetoothDevice.ACTION_UUID)
         addAction(BluetoothAdapter.ACTION_CONNECTION_STATE_CHANGED)
+        addAction(BluetoothAdapter.ACTION_STATE_CHANGED)
+        addAction(BluetoothA2dp.ACTION_CONNECTION_STATE_CHANGED)
+        addAction(BluetoothHeadset.ACTION_CONNECTION_STATE_CHANGED)
+        addAction(BluetoothLeAudio.ACTION_LE_AUDIO_CONNECTION_STATE_CHANGED)
       }
     ContextCompat.registerReceiver(
       applicationContext,
@@ -572,28 +933,27 @@ class AndroidBluetoothController(
       ContextCompat.RECEIVER_EXPORTED,
     )
 
-    // Best-effort initial seed via profile proxies (non-blocking).
-    val adapter = bluetoothManager?.adapter ?: BluetoothAdapter.getDefaultAdapter()
     val proxyListener =
       object : BluetoothProfile.ServiceListener {
         override fun onServiceConnected(profile: Int, proxy: BluetoothProfile) {
-          if (!hasBluetoothConnectPermission()) return
-          runCatching {
-            val device = proxy.connectedDevices.firstOrNull()
-            if (device != null) {
-              if (current == null) current = device
-              when (profile) {
-                BluetoothProfile.A2DP -> activeProfiles += "A2DP"
-                BluetoothProfile.HEADSET -> activeProfiles += "HFP"
-              }
-              emitCurrent()
-            }
+          when (profile) {
+            BluetoothProfile.A2DP -> a2dpProxy = proxy
+            BluetoothProfile.HEADSET -> headsetProxy = proxy
+            BluetoothProfile.LE_AUDIO -> leAudioProxy = proxy
           }
-          runCatching { adapter?.closeProfileProxy(profile, proxy) }
+          evaluate()
         }
 
-        override fun onServiceDisconnected(profile: Int) {}
+        override fun onServiceDisconnected(profile: Int) {
+          when (profile) {
+            BluetoothProfile.A2DP -> a2dpProxy = null
+            BluetoothProfile.HEADSET -> headsetProxy = null
+            BluetoothProfile.LE_AUDIO -> leAudioProxy = null
+          }
+          evaluate()
+        }
       }
+
     if (hasBluetoothConnectPermission() && adapter != null) {
       runCatching {
         adapter.getProfileProxy(applicationContext, proxyListener, BluetoothProfile.A2DP)
@@ -601,18 +961,45 @@ class AndroidBluetoothController(
       runCatching {
         adapter.getProfileProxy(applicationContext, proxyListener, BluetoothProfile.HEADSET)
       }
+      runCatching {
+        adapter.getProfileProxy(applicationContext, proxyListener, BluetoothProfile.LE_AUDIO)
+      }
+    }
+
+    val filterObserver = launch {
+      combine(deviceFilterFlow, verifiedOpenSwimFlow) { filter, verified -> filter to verified }
+        .collect { evaluate() }
     }
 
     val batteryPoll = launch {
       while (true) {
         delay(10 * 60 * 1000L)
-        if (current != null) emitCurrent()
+        if (lastConnectedDevice != null) evaluate()
       }
     }
 
     awaitClose {
+      filterObserver.cancel()
       batteryPoll.cancel()
       runCatching { applicationContext.unregisterReceiver(receiver) }
+      a2dpProxy?.let { runCatching { adapter?.closeProfileProxy(BluetoothProfile.A2DP, it) } }
+      headsetProxy?.let { runCatching { adapter?.closeProfileProxy(BluetoothProfile.HEADSET, it) } }
+      leAudioProxy?.let {
+        runCatching { adapter?.closeProfileProxy(BluetoothProfile.LE_AUDIO, it) }
+      }
+    }
+  }
+
+  private fun updateProfileBroadcast(
+    map: MutableMap<Pair<String, String>, BluetoothDevice>,
+    device: BluetoothDevice?,
+    profileLabel: String,
+    intent: Intent,
+  ) {
+    val address = device?.address?.takeIf { it.isNotBlank() } ?: return
+    when (intent.getIntExtra(BluetoothProfile.EXTRA_STATE, -1)) {
+      BluetoothProfile.STATE_CONNECTED -> map[address to profileLabel] = device
+      BluetoothProfile.STATE_DISCONNECTED -> map.remove(address to profileLabel)
     }
   }
 
@@ -640,9 +1027,9 @@ class AndroidBluetoothController(
     awaitClose { runCatching { applicationContext.unregisterReceiver(receiver) } }
   }
 
-  private fun mediaInfoFlow(): Flow<MediaInfo?> = callbackFlow {
+  private fun rawMediaSessionsFlow(): Flow<List<RawMediaSession>> = callbackFlow {
     if (!isNotificationAccessGranted() || mediaSessionManager == null) {
-      trySend(null)
+      trySend(emptyList())
       awaitClose {}
       return@callbackFlow
     }
@@ -655,26 +1042,35 @@ class AndroidBluetoothController(
       }
         .getOrNull()
         .orEmpty()
-      val active =
-        controllers.firstOrNull { it.playbackState?.state == PlaybackState.STATE_PLAYING }
-          ?: controllers.firstOrNull()
-      if (active == null) {
-        trySend(null)
-        return
-      }
-      val md = active.metadata
-      val pb = active.playbackState
-      trySend(
-        MediaInfo(
-          title = md?.getString(MediaMetadata.METADATA_KEY_TITLE),
-          artist = md?.getString(MediaMetadata.METADATA_KEY_ARTIST),
-          album = md?.getString(MediaMetadata.METADATA_KEY_ALBUM),
-          playing = pb?.state == PlaybackState.STATE_PLAYING,
-          durationMs = md?.getLong(MediaMetadata.METADATA_KEY_DURATION),
-          positionMs = pb?.position,
-          packageName = active.packageName,
-        ),
-      )
+      val sessions =
+        controllers.map { controller ->
+          val md = controller.metadata
+          val pb = controller.playbackState
+          val stateCode = pb?.state ?: PlaybackState.STATE_NONE
+          val playing = stateCode == PlaybackState.STATE_PLAYING
+          val title = md?.getString(MediaMetadata.METADATA_KEY_TITLE)
+          val active =
+            playing ||
+              (!title.isNullOrBlank() &&
+                stateCode != PlaybackState.STATE_NONE &&
+                stateCode != PlaybackState.STATE_ERROR)
+          RawMediaSession(
+            candidate =
+              MediaSessionCandidate(
+                packageName = controller.packageName,
+                title = title,
+                artist = md?.getString(MediaMetadata.METADATA_KEY_ARTIST),
+                album = md?.getString(MediaMetadata.METADATA_KEY_ALBUM),
+                mediaId = md?.getString(MediaMetadata.METADATA_KEY_MEDIA_ID),
+                playing = playing,
+                active = active,
+                durationMs = md?.getLong(MediaMetadata.METADATA_KEY_DURATION),
+                positionMs = pb?.position,
+              ),
+            controller = controller,
+          )
+        }
+      trySend(sessions)
     }
 
     snapshot()
@@ -698,6 +1094,37 @@ class AndroidBluetoothController(
     }
   }
 }
+
+internal fun verifiedOpenSwimAddresses(context: Context): Set<String> =
+  context
+    .getSharedPreferences(HeadsetModePrefsName, Context.MODE_PRIVATE)
+    .getStringSet(VerifiedOpenSwimPrefKey, emptySet())
+    .orEmpty()
+    .toSet()
+
+internal fun BluetoothDevice.toBluetoothCandidate(
+  connectedProfiles: Set<String> = emptySet(),
+  verifiedOpenSwim: Boolean = false,
+): BluetoothDeviceCandidate {
+  val btClass = runCatching { bluetoothClass }.getOrNull()
+  val uuids =
+    runCatching { uuids?.mapNotNull { it?.uuid?.toString() }.orEmpty().toSet() }
+      .getOrDefault(emptySet())
+  return BluetoothDeviceCandidate(
+    address = address.orEmpty(),
+    name = runCatching { name }.getOrNull().orEmpty(),
+    serviceUuids = uuids,
+    majorDeviceClass = btClass?.majorDeviceClass,
+    deviceClass = btClass?.deviceClass,
+    connectedProfiles = connectedProfiles,
+    verifiedOpenSwim = verifiedOpenSwim,
+  )
+}
+
+private const val HeadsetModePrefsName = "headset-mode"
+private const val DeviceFilterPrefKey = "device_filter"
+private const val VerifiedOpenSwimPrefKey = "verified_openswim"
+private const val OpenSwimProbeTimeoutMs = 2_500L
 
 /** Percent per volume button press on the headset; it has 16 raw steps. */
 private const val HeadsetVolumeStep = 6

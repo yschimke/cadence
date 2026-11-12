@@ -17,7 +17,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
-import ee.schimke.cadence.bluetooth.OpenSwimProName
+import ee.schimke.cadence.bluetooth.BluetoothDeviceKind
+import ee.schimke.cadence.bluetooth.toBluetoothCandidate
+import ee.schimke.cadence.bluetooth.verifiedOpenSwimAddresses
 
 private fun Context.associationPrefs() =
   getSharedPreferences("headphone-associations", Context.MODE_PRIVATE)
@@ -36,17 +38,25 @@ internal fun linkedHeadphoneAddress(context: Context, target: String): String? =
 data class HeadphoneCandidate(val address: String, val name: String)
 
 private fun pairedHeadphones(context: Context): List<HeadphoneCandidate> = runCatching {
+  val verified = verifiedOpenSwimAddresses(context)
   (context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager)
     .adapter
     ?.bondedDevices
     .orEmpty()
     .mapNotNull { device ->
-      val name = device.name.orEmpty()
-      if (name.contains(OpenSwimProName, ignoreCase = true))
-        HeadphoneCandidate(device.address, name)
-      else null
+      val candidate = device.toBluetoothCandidate(verifiedOpenSwim = device.address in verified)
+      if (
+        candidate.isOpenSwimPro ||
+          (candidate.kind() == BluetoothDeviceKind.Shokz && candidate.hasRcspProtocol)
+      ) {
+        HeadphoneCandidate(candidate.address, candidate.name.ifBlank { "Shokz headphones" }) to
+          candidate.priorityRank()
+      } else {
+        null
+      }
     }
-    .sortedBy { it.address }
+    .sortedWith(compareBy({ it.second }, { it.first.address }))
+    .map { it.first }
 }
   .getOrDefault(emptyList())
 
