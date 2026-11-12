@@ -1,11 +1,27 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-11T23:59:08.622Z",
+  "generatedAt": "2026-11-12T00:12:38.599Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "71eedd817f6507cbf8821144cfe4b7a4e478698d",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.90.0 (#598)",
+        "at": "2026-11-11T23:57:30Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "3d7a8215a135dd195944721b657beb5c4f4f8ff0",
+        "subject": "chore(deps): update yschimke/livery action to v0.10.0 (#599)",
+        "at": "2026-11-11T23:55:07Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "d2050a1315eb0ec04f9d93d7d288bc279aa92e87",
         "subject": "build(deps): rc-players 3.0.0 and Livery 0.10.0 (#596)",
@@ -467,22 +483,6 @@
         "subject": "chore(main): release 0.1.22 (#536)",
         "at": "2026-11-07T14:14:41Z",
         "author": "github-actions[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "8714206fe55be726cf45db1ce63fb7b7bf07cc61",
-        "subject": "feat: developer mode, Material 3 Expressive and fewer options for everyone else (#535)",
-        "at": "2026-11-07T14:00:45Z",
-        "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "9256f1f76c2f7559bf992ffd8067057d0e257042",
-        "subject": "chore(deps): update yschimke/livery action to v0.4.0 (#534)",
-        "at": "2026-11-07T13:47:33Z",
-        "author": "renovate[bot]",
         "previewIds": [],
         "components": []
       }
