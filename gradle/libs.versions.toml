@@ -82,7 +82,6 @@ livery-client = { module = "ee.schimke.composeai:livery-client" }
 livery-instantiate = { module = "ee.schimke.composeai:livery-instantiate" }
 livery-launcher-widgets = { module = "ee.schimke.composeai:livery-launcher-widgets" }
 livery-notifications = { module = "ee.schimke.composeai:livery-notifications" }
-livery-capture = { module = "ee.schimke.composeai:livery-capture" }
 livery-capture-cmp = { module = "ee.schimke.composeai:livery-capture-cmp" }
 livery-firebase = { module = "ee.schimke.composeai:livery-firebase" }
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }

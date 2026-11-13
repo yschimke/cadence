@@ -124,6 +124,10 @@ dependencies {
   implementation(platform(libs.rc.players.bom))
   implementation(libs.rc.widget.launcher)
   implementation(libs.compose.remote.tooling.preview)
+  // The headphone widget's and the notification's previews: their drawing is written against
+  // rc-players' Compose Multiplatform creation API and played by its Compose player.
+  implementation(libs.rc.creation.compose)
+  implementation(libs.rc.player.compose)
   implementation(project(":swimUi"))
   implementation(platform(libs.composeai.daemon.bom))
   implementation(libs.composeai.preview.annotations)
@@ -152,12 +156,13 @@ dependencies {
   implementation(libs.livery.notifications)
 
   testImplementation(libs.kotlin.test.junit)
-  // HeadphoneTemplatesTest: captures the widget's Livery templates with AndroidX, as the device
-  // does, and checks the committed ones.
+  // HeadphoneTemplatesTest: captures the widget's Livery templates with rc-players' Compose
+  // Multiplatform creation API (livery-capture-cmp), as documents the launcher's player reads,
+  // and checks the committed ones. Robolectric is for the icons' paths and the platform's player.
   testImplementation(libs.robolectric)
   testImplementation(libs.livery.instantiate)
   // Captures the widget's templates and keeps their catalog files current.
-  testImplementation(libs.livery.capture)
+  testImplementation(libs.livery.capture.cmp)
 
   androidTestImplementation(libs.junit)
   androidTestImplementation(libs.androidx.test.junit)

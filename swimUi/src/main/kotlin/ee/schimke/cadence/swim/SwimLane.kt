@@ -2,28 +2,26 @@
 
 package ee.schimke.cadence.swim
 
-import androidx.compose.remote.creation.compose.layout.RemoteCanvas
-import androidx.compose.remote.creation.compose.layout.RemoteComposable
-import androidx.compose.remote.creation.compose.layout.RemoteDrawScope
-import androidx.compose.remote.creation.compose.layout.RemoteOffset
-import androidx.compose.remote.creation.compose.layout.RemoteSize
-import androidx.compose.remote.creation.compose.modifier.RemoteModifier
-import androidx.compose.remote.creation.compose.state.RemoteColor
-import androidx.compose.remote.creation.compose.state.RemoteFloat
-import androidx.compose.remote.creation.compose.state.RemotePaint
-import androidx.compose.remote.creation.compose.state.clamp
-import androidx.compose.remote.creation.compose.state.copySign
-import androidx.compose.remote.creation.compose.state.floor
-import androidx.compose.remote.creation.compose.state.min
-import androidx.compose.remote.creation.compose.state.rc
-import androidx.compose.remote.creation.compose.state.rf
-import androidx.compose.remote.creation.compose.state.selectIfLt
-import androidx.compose.remote.creation.compose.state.sin
-import androidx.compose.remote.creation.compose.state.toRad
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.PaintingStyle
-import androidx.compose.ui.graphics.StrokeCap
+import ee.schimke.composeai.rccreation.compose.layout.RemoteCanvas
+import ee.schimke.composeai.rccreation.compose.layout.RemoteComposable
+import ee.schimke.composeai.rccreation.compose.layout.RemoteDrawScope
+import ee.schimke.composeai.rccreation.compose.layout.RemoteOffset
+import ee.schimke.composeai.rccreation.compose.layout.RemoteSize
+import ee.schimke.composeai.rccreation.compose.modifier.RemoteModifier
+import ee.schimke.composeai.rccreation.compose.state.RemoteColor
+import ee.schimke.composeai.rccreation.compose.state.RemoteFloat
+import ee.schimke.composeai.rccreation.compose.state.RemotePaint
+import ee.schimke.composeai.rccreation.compose.state.clamp
+import ee.schimke.composeai.rccreation.compose.state.copySign
+import ee.schimke.composeai.rccreation.compose.state.floor
+import ee.schimke.composeai.rccreation.compose.state.min
+import ee.schimke.composeai.rccreation.compose.state.rc
+import ee.schimke.composeai.rccreation.compose.state.rf
+import ee.schimke.composeai.rccreation.compose.state.selectIfLt
+import ee.schimke.composeai.rccreation.compose.state.sin
+import ee.schimke.composeai.rccreation.compose.state.toRad
 
 /**
  * A linear progress indicator as a pool lane: a small swimmer swims [SwimLap.progress] of the way
@@ -186,7 +184,7 @@ fun SwimmingPool(
     clipRect(0f.rf, 0f.rf, w, h) {
       if (standing) {
         translate(w * 0.12f, h * level) {
-          scale(band, band, RemoteOffset(0f, 0f)) { drawStandingSwimmer(swimmer) }
+          scale(band, band, offset(0f, 0f)) { drawStandingSwimmer(swimmer) }
         }
       } else {
         translate(0f.rf, h * level - band * 0.45f) {
@@ -233,30 +231,30 @@ fun SwimmingPool(
 private fun RemoteDrawScope.drawStandingSwimmer(colors: SwimmerColors) {
   val limb = RemotePaint {
     color = colors.skin.rc
-    style = PaintingStyle.Stroke
+    style = StrokeStyle
     strokeWidth = 0.10f.rf
-    strokeCap = StrokeCap.Round
+    strokeCap = RoundCap
   }
-  drawLine(limb, RemoteOffset(-0.15f, 0.08f), RemoteOffset(-0.22f, 0.43f))
-  drawLine(limb, RemoteOffset(0.15f, 0.08f), RemoteOffset(0.22f, 0.43f))
+  drawLine(limb, offset(-0.15f, 0.08f), offset(-0.22f, 0.43f))
+  drawLine(limb, offset(0.15f, 0.08f), offset(0.22f, 0.43f))
   drawRoundRect(
     fill(colors.suit),
-    RemoteOffset(-0.16f, -0.02f),
+    offset(-0.16f, -0.02f),
     RemoteSize(0.32f.rf, 0.48f.rf),
-    RemoteOffset(0.12f, 0.12f),
+    offset(0.12f, 0.12f),
   )
-  drawCircle(fill(colors.skin), 0.17f.rf, RemoteOffset(0f, -0.20f))
+  drawCircle(fill(colors.skin), 0.17f.rf, offset(0f, -0.20f))
   drawArc(
     fill(colors.cap),
     180f.rf,
     180f.rf,
     true,
-    RemoteOffset(-0.17f, -0.38f),
+    offset(-0.17f, -0.38f),
     RemoteSize(0.34f.rf, 0.34f.rf),
   )
   drawCapTrim(colors, hx = 0f, hy = -0.20f, trailing = 0f)
-  drawCircle(fill(colors.goggles), 0.045f.rf, RemoteOffset(-0.07f, -0.20f))
-  drawCircle(fill(colors.goggles), 0.045f.rf, RemoteOffset(0.07f, -0.20f))
+  drawCircle(fill(colors.goggles), 0.045f.rf, offset(-0.07f, -0.20f))
+  drawCircle(fill(colors.goggles), 0.045f.rf, offset(0.07f, -0.20f))
 }
 
 /** Endless laps of [lapSeconds]: which way, how far, and seconds since the last wall. */
@@ -331,7 +329,7 @@ private fun RemoteDrawScope.drawLane(
 
   clipRect(0f.rf, 0f.rf, w, h) {
     // Square: the host (or the caller's clip) gives the lane its outer shape.
-    drawRect(fill(colors.water), RemoteOffset(0f, 0f), RemoteSize(w, h))
+    drawRect(fill(colors.water), offset(0f, 0f), RemoteSize(w, h))
     // Wake: from the start wall to the swimmer's toes.
     val wakeEnd = swimmerX - direction * lane.reach
     val wakeLeft = selectIfLt(startX, wakeEnd, startX, wakeEnd)
@@ -339,7 +337,7 @@ private fun RemoteDrawScope.drawLane(
     drawRoundRect(
       RemotePaint {
         color = wake
-        style = PaintingStyle.Fill
+        style = FillStyle
       },
       RemoteOffset(wakeLeft, mid - h * 0.15f),
       RemoteSize(clampZero(wakeWidth), h * 0.3f),
@@ -387,7 +385,7 @@ private fun RemoteDrawScope.drawRopes(colors: LaneColors, w: RemoteFloat, h: Rem
 
 private fun RemoteDrawScope.drawWalls(w: RemoteFloat, h: RemoteFloat, wall: RemoteFloat) {
   val tile = fill(Color(0xFFE9F4F7))
-  drawRect(tile, RemoteOffset(0f, 0f), RemoteSize(wall, h))
+  drawRect(tile, offset(0f, 0f), RemoteSize(wall, h))
   drawRect(tile, RemoteOffset(w - wall, 0f.rf), RemoteSize(wall, h))
 }
 
@@ -405,7 +403,7 @@ private fun RemoteDrawScope.drawPushOffBubbles(
   val alive = clamp((turnClock - TurnSeconds * 0.6f) * 20f, 0f, 1f) * (life * -1f + 1f)
   val stroke = RemotePaint {
     color = splash.copy(alpha = 0.85f).rc
-    style = PaintingStyle.Stroke
+    style = StrokeStyle
     strokeWidth = h * 0.035f
   }
   for (i in 0 until 4) {
@@ -438,9 +436,7 @@ private fun RemoteDrawScope.drawSwimmer(
   val kickBase = sin(strokeClock * (TwoPi / 0.4f)) * 0.07f
   if (turnClock == null) {
     translate(x, y) {
-      scale(unit * direction, unit, RemoteOffset(0f, 0f)) {
-        drawSwimmerFigure(colors, armBase, kickBase)
-      }
+      scale(unit * direction, unit, offset(0f, 0f)) { drawSwimmerFigure(colors, armBase, kickBase) }
     }
     return
   }
@@ -456,9 +452,9 @@ private fun RemoteDrawScope.drawSwimmer(
   val dip = tumbleSin * unit * 0.12f
   val tuck = tumbleSin * -0.35f + 1f
   translate(x, y + dip) {
-    scale(unit * direction * -1f, unit, RemoteOffset(0f, 0f)) {
-      rotate(tumble, RemoteOffset(0f, 0f)) {
-        scale(tuck, roll, RemoteOffset(0f, 0f)) {
+    scale(unit * direction * -1f, unit, offset(0f, 0f)) {
+      rotate(tumble, offset(0f, 0f)) {
+        scale(tuck, roll, offset(0f, 0f)) {
           drawSwimmerFigure(colors, armBase * strokes, kickBase * strokes)
         }
       }
@@ -478,45 +474,43 @@ private fun RemoteDrawScope.drawSwimmerFigure(
   val limb = { color: Color, width: Float ->
     RemotePaint {
       this.color = color.rc
-      style = PaintingStyle.Stroke
+      style = StrokeStyle
       strokeWidth = width.rf
-      strokeCap = StrokeCap.Round
+      strokeCap = RoundCap
     }
   }
-  val shoulder = RemoteOffset(0.16f, -0.02f)
+  val shoulder = offset(0.16f, -0.02f)
   val farSkin = colors.skin.copy(red = colors.skin.red * 0.85f, green = colors.skin.green * 0.8f)
   // Far arm and leg first, so the near ones overlap them.
   rotate(armAngle + 180f, shoulder) {
-    drawLine(limb(farSkin, 0.11f), shoulder, RemoteOffset(0.5f, -0.02f))
+    drawLine(limb(farSkin, 0.11f), shoulder, offset(0.5f, -0.02f))
   }
-  drawLine(limb(farSkin, 0.12f), RemoteOffset(-0.28f, 0f), RemoteOffset(-0.6f.rf, kick * -1f))
-  drawLine(limb(colors.skin, 0.12f), RemoteOffset(-0.28f, 0f), RemoteOffset(-0.6f.rf, kick))
+  drawLine(limb(farSkin, 0.12f), offset(-0.28f, 0f), RemoteOffset(-0.6f.rf, kick * -1f))
+  drawLine(limb(colors.skin, 0.12f), offset(-0.28f, 0f), RemoteOffset(-0.6f.rf, kick))
   drawRoundRect(
     fill(colors.suit),
-    RemoteOffset(-0.36f, -0.14f),
+    offset(-0.36f, -0.14f),
     RemoteSize(0.58f.rf, 0.28f.rf),
-    RemoteOffset(0.14f, 0.14f),
+    offset(0.14f, 0.14f),
   )
   // Head, cap (top half) and goggles.
-  drawCircle(fill(colors.skin), 0.16f.rf, RemoteOffset(0.34f, -0.04f))
+  drawCircle(fill(colors.skin), 0.16f.rf, offset(0.34f, -0.04f))
   drawArc(
     fill(colors.cap),
     180f.rf,
     180f.rf,
     true,
-    RemoteOffset(0.17f, -0.215f),
+    offset(0.17f, -0.215f),
     RemoteSize(0.34f.rf, 0.34f.rf),
   )
   drawCapTrim(colors, hx = 0.34f, hy = -0.04f, trailing = -1f)
-  drawCircle(fill(colors.goggles), 0.055f.rf, RemoteOffset(0.45f, -0.05f))
-  drawCircle(fill(Color.White.copy(alpha = 0.8f)), 0.018f.rf, RemoteOffset(0.465f, -0.068f))
-  rotate(armAngle, shoulder) {
-    drawLine(limb(colors.skin, 0.11f), shoulder, RemoteOffset(0.5f, -0.02f))
-  }
+  drawCircle(fill(colors.goggles), 0.055f.rf, offset(0.45f, -0.05f))
+  drawCircle(fill(Color.White.copy(alpha = 0.8f)), 0.018f.rf, offset(0.465f, -0.068f))
+  rotate(armAngle, shoulder) { drawLine(limb(colors.skin, 0.11f), shoulder, offset(0.5f, -0.02f)) }
   // Flutter-kick splashes off the feet.
   val splash = clampZero(kick) * 0.6f + 0.02f
   drawCircle(fill(colors.splash.copy(alpha = 0.8f)), splash, RemoteOffset(-0.66f.rf, kick * -1f))
-  drawCircle(fill(colors.splash.copy(alpha = 0.6f)), splash * 0.7f, RemoteOffset(-0.74f, -0.1f))
+  drawCircle(fill(colors.splash.copy(alpha = 0.6f)), splash * 0.7f, offset(-0.74f, -0.1f))
 }
 
 /**
@@ -533,12 +527,10 @@ private fun RemoteDrawScope.drawCapTrim(
   colors.brim?.let {
     drawRoundRect(
       fill(it),
-      RemoteOffset(hx - 0.18f, hy - 0.05f),
+      offset(hx - 0.18f, hy - 0.05f),
       RemoteSize(0.36f.rf, 0.07f.rf),
-      RemoteOffset(0.035f, 0.035f),
+      offset(0.035f, 0.035f),
     )
   }
-  colors.pompom?.let {
-    drawCircle(fill(it), 0.07f.rf, RemoteOffset(hx + 0.16f * trailing, hy - 0.19f))
-  }
+  colors.pompom?.let { drawCircle(fill(it), 0.07f.rf, offset(hx + 0.16f * trailing, hy - 0.19f)) }
 }

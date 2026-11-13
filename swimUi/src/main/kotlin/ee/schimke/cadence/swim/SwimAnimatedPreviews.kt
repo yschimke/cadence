@@ -19,14 +19,12 @@ import androidx.compose.remote.creation.compose.modifier.fillMaxSize
 import androidx.compose.remote.creation.compose.shapes.RemoteRoundedCornerShape
 import androidx.compose.remote.creation.compose.state.rc
 import androidx.compose.remote.creation.compose.state.rdp
-import androidx.compose.remote.creation.compose.state.rf
 import androidx.compose.remote.creation.compose.state.rs
 import androidx.compose.remote.creation.compose.state.rsp
 import androidx.compose.remote.creation.profile.Profile
 import androidx.compose.remote.creation.profile.RcPlatformProfiles
 import androidx.compose.remote.tooling.preview.RemoteContentPreview
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
@@ -41,6 +39,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.glance.wear.GlanceWearProfiles
+import ee.schimke.cadence.swim.androidx.LocalSwimClock
+import ee.schimke.cadence.swim.androidx.SwimClockAt
+import ee.schimke.cadence.swim.androidx.SwimLaneLaps
+import ee.schimke.cadence.swim.androidx.SwimLaneProgress
+import ee.schimke.cadence.swim.androidx.SwimmingPool
+import ee.schimke.cadence.swim.androidx.WaterBackground
 import ee.schimke.composeai.preview.AnimatedPreview
 
 /**
@@ -58,17 +62,6 @@ fun rememberPreviewSeconds(): Float {
     while (true) withFrameNanos { seconds = (it - start) / 1_000_000_000f }
   }
   return seconds
-}
-
-/** Runs [content] with the swim animations frozen at [seconds]. */
-@Composable
-@RemoteComposable
-fun SwimClockAt(seconds: Float, content: @Composable @RemoteComposable () -> Unit) {
-  CompositionLocalProvider(
-    LocalSwimClock provides seconds.rf,
-    LocalSwimClockStart provides 0f,
-    content = content,
-  )
 }
 
 @Preview(name = "Water button · animated", widthDp = 200, heightDp = 64)

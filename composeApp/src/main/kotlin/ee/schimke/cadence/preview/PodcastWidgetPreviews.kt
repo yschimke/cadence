@@ -16,7 +16,7 @@ import ee.schimke.cadence.podcasts.CloudSyncStatus
 import ee.schimke.cadence.podcasts.CloudSyncWidgetContent
 import ee.schimke.cadence.podcasts.PodcastSyncWidgetContent
 import ee.schimke.cadence.swim.PoolSeason
-import ee.schimke.cadence.swim.SwimClockAt
+import ee.schimke.cadence.swim.androidx.SwimClockAt
 import ee.schimke.cadence.swim.rememberPreviewSeconds
 import ee.schimke.cadence.widgets.WidgetColors
 import ee.schimke.composeai.preview.AnimatedPreview

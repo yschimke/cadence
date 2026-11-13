@@ -2,9 +2,9 @@
 
 package ee.schimke.cadence.widgets
 
-import ee.schimke.composeai.rcwidget.creation.androidx.rcWidgetHostAction
+import ee.schimke.composeai.rcwidget.creation.rcWidgetHostAction
 import ee.schimke.livery.capture.DesignFolder
-import ee.schimke.livery.capture.LiveryCapture
+import ee.schimke.livery.capture.cmp.LiveryCapture
 import ee.schimke.livery.client.BindResult
 import ee.schimke.livery.client.ContractBinder
 import ee.schimke.livery.instantiate.InstantiateResult
@@ -21,7 +21,6 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
 
@@ -31,13 +30,15 @@ import org.robolectric.annotation.GraphicsMode
  * Run with `-Pcadence.livery.regenerate=true` to write them instead, after changing the widget's
  * drawing.
  *
- * Livery's `livery-capture` captures each tier and writes or checks the design folder: each
+ * Livery's `livery-capture-cmp` captures each tier with rc-players' Compose Multiplatform creation
+ * API, as a document a launcher's player reads, and writes or checks the design folder: each
  * sidecar's reads and emits come from the captured document itself, so they can't drift from what
  * the template really does.
  */
+// The capture itself needs no Android. Robolectric is here for the icons, drawn as paths read from
+// an android.graphics.Path (Compose's Path on Android): native graphics, as the legacy mode stubs
+// it out and every icon was captured empty.
 @RunWith(RobolectricTestRunner::class)
-// Native graphics: icons are drawn as paths read from an android.graphics.Path, which the legacy
-// mode stubs out, so every icon was captured empty.
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 @Config(sdk = [35], qualifiers = "mdpi")
 class HeadphoneTemplatesTest {
@@ -47,14 +48,12 @@ class HeadphoneTemplatesTest {
 
   @Test
   fun templatesAreCurrent() = runBlocking {
-    val context = RuntimeEnvironment.getApplication()
     for (look in HeadphoneLook.entries) {
       val design = File(catalog, "designs/${look.designId}")
       val templates =
         HeadphoneControlsTemplate.tiers().associate { tier ->
           tier.name to
             LiveryCapture.capture(
-              context,
               target(tier),
               tier.widthDp,
               tier.heightDp,

@@ -1,13 +1,8 @@
-@file:Suppress("RestrictedApi", "RestrictedApiAndroidX")
-
 package ee.schimke.cadence.preview
 
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.remote.creation.compose.layout.RemoteComposable
-import androidx.compose.remote.tooling.preview.RemoteContentPreview
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.key
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import ee.schimke.cadence.bluetooth.BluetoothState
@@ -20,7 +15,7 @@ import ee.schimke.cadence.widgets.HeadphoneWidgetState
 import ee.schimke.cadence.widgets.WidgetColors
 import ee.schimke.composeai.preview.AnimatedPreview
 import ee.schimke.composeai.preview.LauncherWidgetPreview
-import ee.schimke.composeai.rcwidget.launcher.RcLauncherWidgets
+import ee.schimke.composeai.rccreation.compose.layout.RemoteComposable
 
 /**
  * The widget at whatever cell footprint the launcher annotation gives it: the layout tier is chosen
@@ -41,22 +36,20 @@ private fun HeadphoneWidgetPreview(
   BoxWithConstraints(Modifier.fillMaxSize()) {
     val state = HeadphoneWidgetState.from(bluetooth)
     val layout = HeadphoneWidgetLayout.of(state, maxWidth.value.toInt(), maxHeight.value.toInt())
-    // RemoteContentPreview captures its document once; a new size needs a new capture.
-    key(maxWidth, maxHeight, seconds) {
-      RemoteContentPreview(Modifier.fillMaxSize(), RcLauncherWidgets.profileFor()) {
-        val content: @Composable @RemoteComposable () -> Unit = {
-          HeadphoneControlsWidgetContent(
-            state = state,
-            layout = layout,
-            colors = colors,
-            onOpen = null,
-            onAction = { null },
-            look = look,
-          )
-        }
-        // Still previews pin second 0, so they render the same water every time.
-        SwimClockAt(seconds, content)
+    // Captured again for each moment of an animated preview (and for a new size).
+    RcContentPreview(Modifier.fillMaxSize(), key = listOf(state, layout, colors, look, seconds)) {
+      val content: @Composable @RemoteComposable () -> Unit = {
+        HeadphoneControlsWidgetContent(
+          state = state,
+          layout = layout,
+          colors = colors,
+          onOpen = null,
+          onAction = { null },
+          look = look,
+        )
       }
+      // Still previews pin second 0, so they render the same water every time.
+      SwimClockAt(seconds, content)
     }
   }
 }

@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import ee.schimke.cadence.swim.PoolSeason
-import ee.schimke.cadence.swim.SwimmingPool
+import ee.schimke.cadence.swim.androidx.SwimmingPool
 import ee.schimke.cadence.widgets.WidgetColors
 import ee.schimke.cadence.widgets.waterColors
 
