@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.1.31](https://github.com/yschimke/cadence/compare/v0.1.30...v0.1.31) (2026-11-13)
+
+
+### Bug Fixes
+
+* **deps:** update dependency com.google.firebase:firebase-bom to v35.2.0 ([#594](https://github.com/yschimke/cadence/issues/594)) ([8f25236](https://github.com/yschimke/cadence/commit/8f25236e5bc1e4b2f5b31e2b38493bfb28b02ba9))
+* **deps:** update dependency com.google.gms:google-services to v4.6.0 ([#593](https://github.com/yschimke/cadence/issues/593)) ([05e14fa](https://github.com/yschimke/cadence/commit/05e14fa35b3d49e7845e45b993e99224a578b32a))
+* **deps:** update dependency ee.schimke.composeai:compose-preview-daemon-bom to v3.27.5 ([#601](https://github.com/yschimke/cadence/issues/601)) ([5dce7e4](https://github.com/yschimke/cadence/commit/5dce7e429dabb4ea2e2e952eaca0cbe5af1ec909))
+* **deps:** update dependency ee.schimke.composeai:compose-preview-daemon-bom to v3.27.6 ([#602](https://github.com/yschimke/cadence/issues/602)) ([3342e4f](https://github.com/yschimke/cadence/commit/3342e4f1c0b3f1e4ea8822ba5219ef76d2fbb4f3))
+* **deps:** update dependency ee.schimke.composeai:compose-preview-daemon-bom to v3.27.7 ([#605](https://github.com/yschimke/cadence/issues/605)) ([e490430](https://github.com/yschimke/cadence/commit/e490430ed566cd3254d3a28c11204d8a10a1fd5f))
+* **deps:** update dependency ee.schimke.composeai:rc-players-bom to v2.33.0 ([#579](https://github.com/yschimke/cadence/issues/579)) ([4110991](https://github.com/yschimke/cadence/commit/4110991873ecb436fc21ed0d4552053a6b119077))
+* **deps:** update dependency ee.schimke.composeai:rc-players-bom to v3.1.0 ([#606](https://github.com/yschimke/cadence/issues/606)) ([451e533](https://github.com/yschimke/cadence/commit/451e53372ba6711ccea46d8e60eda5c7b8c17768))
+* **deps:** update dependency ee.schimke.composeai:rc-players-bom to v3.1.2 ([#609](https://github.com/yschimke/cadence/issues/609)) ([308a68a](https://github.com/yschimke/cadence/commit/308a68a15136406248f4f4852dcd1211b50605eb))
+* **deps:** update dependency org.jetbrains.kotlinx:kotlinx-serialization-json to v1.13.0 ([#595](https://github.com/yschimke/cadence/issues/595)) ([9bf90d2](https://github.com/yschimke/cadence/commit/9bf90d2cc910939af9c0dc780bbedd9c00c2e7a5))
+
 ## [0.1.30](https://github.com/yschimke/cadence/compare/v0.1.29...v0.1.30) (2026-11-11)
 
 
