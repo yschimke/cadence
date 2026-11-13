@@ -12,6 +12,8 @@ interface BluetoothController {
 
   fun refresh()
 
+  fun setDeviceFilter(filter: BluetoothDeviceFilter) {}
+
   fun setVolume(percent: Int)
 
   fun adjustVolume(delta: Int)
@@ -23,6 +25,8 @@ interface BluetoothController {
   fun pause()
 
   fun playPause()
+
+  fun playEpisode(episodeKey: String) {}
 
   fun next()
 
@@ -81,6 +85,12 @@ enum class PlaybackOrder(val label: String) {
 
 data class BluetoothState(
   val connectedDevice: ConnectedDevice? = null,
+  val deviceFilter: BluetoothDeviceFilter = BluetoothDeviceFilter.ShokzOnly,
+  /**
+   * Name of a connected non-Shokz headphone hidden while [deviceFilter] is
+   * [BluetoothDeviceFilter.ShokzOnly]. Watches and non-audio devices never appear here.
+   */
+  val hiddenHeadphoneName: String? = null,
   val volumePercent: Int = 0,
   val maxVolume: Int = 15,
   val muted: Boolean = false,
@@ -101,17 +111,39 @@ data class BluetoothState(
    * report playback state, so its own buttons can make this stale; null until Cadence sends one.
    */
   val headsetPlaying: Boolean? = null,
+  /** Whether a podcast or folder sync source is configured in Cadence. */
+  val hasConnectedSource: Boolean = false,
+  /** Episodes from Cadence's playlist that can be launched on this phone (e.g. in Pocket Casts). */
+  val playableEpisodes: List<PlayableEpisode> = emptyList(),
 ) {
   /** Vendor (RCSP) controls are only wired for OpenSwim Pro. */
   val openSwimConnected: Boolean
-    get() = connectedDevice?.name?.contains(OpenSwimProName, ignoreCase = true) == true
+    get() = connectedDevice?.isOpenSwimPro == true
 
   /** Local Audio transport, volume and playback order go to the headset itself. */
   val localAudioControls: Boolean
     get() = openSwimConnected && workingMode == WorkingMode.Mp3
+
+  /**
+   * True when transport can act on (a) Shokz MP3 mode, (b) connected headphones with a matched
+   * source session or launchable item, or (c) the connected app playing/ready with pushed media.
+   */
+  val canControlMedia: Boolean
+    get() = localAudioControls || mediaInfo != null || playableEpisodes.isNotEmpty()
+
+  /** Full transport (next/prev/seek/stop) requires MP3 mode or an active matched media session. */
+  val hasActiveMediaTarget: Boolean
+    get() = localAudioControls || mediaInfo != null
 }
 
 const val OpenSwimProName = "OpenSwim Pro"
+
+data class PlayableEpisode(
+  val key: String,
+  val title: String,
+  val podcastTitle: String,
+  val sourceLabel: String,
+)
 
 data class ConnectedDevice(
   val name: String,
@@ -119,12 +151,17 @@ data class ConnectedDevice(
   val profileNames: List<String>,
   val batteryPercent: Int? = null,
   val codec: String? = null,
-)
+  /** True when Cadence verified the OpenSwim Pro vendor protocol on a renamed headset. */
+  val verifiedOpenSwim: Boolean = false,
+) {
+  val isOpenSwimPro: Boolean
+    get() = verifiedOpenSwim || name.contains(OpenSwimProName, ignoreCase = true)
+}
 
 /** Rough linear estimates from Shokz's stated full-charge runtimes, not measured remaining time. */
 fun ConnectedDevice.batterySummary(): String? {
   val percent = batteryPercent?.takeIf { it in 0..100 } ?: return null
-  if (!name.contains(OpenSwimProName, ignoreCase = true)) return "$percent% battery"
+  if (!isOpenSwimPro) return "$percent% battery"
   fun estimate(fullMinutes: Int): String {
     val minutes = ((fullMinutes * percent / 100 + 7) / 15) * 15
     val hours = minutes / 60

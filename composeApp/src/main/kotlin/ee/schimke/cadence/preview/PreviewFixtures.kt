@@ -94,7 +94,7 @@ internal object PreviewFixtures {
 
   val connectedDevice =
     ConnectedDevice(
-      name = "Headphones (sample)",
+      name = "OpenSwim Pro",
       address = "00:11:22:33:44:55",
       profileNames = listOf("A2DP", "HFP"),
       batteryPercent = 78,
@@ -109,7 +109,7 @@ internal object PreviewFixtures {
       playing = true,
       durationMs = 47L * 60 * 1000,
       positionMs = 14L * 60 * 1000,
-      packageName = "com.podbean.app.podcast",
+      packageName = "au.com.shiftyjelly.pocketcasts",
     )
 
   val btDisconnected =
@@ -119,8 +119,24 @@ internal object PreviewFixtures {
       maxVolume = 15,
       muted = false,
       mediaInfo = null,
-      mediaAccessGranted = false,
+      mediaAccessGranted = true,
       permissionMissing = false,
+      hasConnectedSource = true,
+      playableEpisodes =
+        listOf(
+          ee.schimke.cadence.bluetooth.PlayableEpisode(
+            key = "ep-412",
+            title = "Episode 412 — Tides of the Pacific",
+            podcastTitle = "Saltwater Daily",
+            sourceLabel = "Pocket Casts",
+          ),
+          ee.schimke.cadence.bluetooth.PlayableEpisode(
+            key = "ep-411",
+            title = "Episode 411 — Reef Currents",
+            podcastTitle = "Saltwater Daily",
+            sourceLabel = "Pocket Casts",
+          ),
+        ),
     )
 
   val btConnectedPlaying =
@@ -132,6 +148,7 @@ internal object PreviewFixtures {
       mediaInfo = nowPlaying,
       mediaAccessGranted = true,
       permissionMissing = false,
+      hasConnectedSource = true,
     )
 
   val btPermissionMissing = btDisconnected.copy(permissionMissing = true)
