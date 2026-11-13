@@ -164,7 +164,7 @@
     "functionName": "NotificationDownloadingPreview",
     "module": "composeApp",
     "renderBasename": "NotificationDownloadingPreview_Notification_downloading-f99a71e3.png",
-    "sha256": "f354ee8ff5760e23e5ee2909d78cdd392f7ff33bb4a803d6b7406f22b5ed62dc",
+    "sha256": "b8134d94b27babef356d83df98ee83774b8d1bd1b6b5ac95a1ce0b8a25b6c755",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/NotificationPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.NotificationPreviewsKt.NotificationFailedPreview_Notification \u00b7 failed": {
@@ -188,7 +188,7 @@
     "functionName": "NotificationSyncingPreview",
     "module": "composeApp",
     "renderBasename": "NotificationSyncingPreview_Notification_syncing_light-fb11050e.png",
-    "sha256": "c88e0767e771933290731b6693bef7362e11057ac652780a29e02231b5876eaa",
+    "sha256": "6916decf04b25b27d75f895ecae1dbb842b5302035a6116567274a30da8e222d",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/NotificationPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.PodcastPreviewsKt.AddPodcastsPreview_Add podcasts": {
