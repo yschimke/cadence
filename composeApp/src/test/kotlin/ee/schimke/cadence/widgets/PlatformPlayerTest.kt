@@ -223,7 +223,9 @@ class PlatformPlayerTest {
       NotificationTemplateContent(null, null, body, cancel, colors = WidgetColors.Light)
     }
 
-  /** Captured as the template is (NotificationTemplatesTest): a document for a launcher's player. */
+  /**
+   * Captured as the template is (NotificationTemplatesTest): a document for a launcher's player.
+   */
   private fun captureDocument(content: @Composable @RemoteComposable () -> Unit): ByteArray =
     runBlocking {
       LiveryCapture.capture(
