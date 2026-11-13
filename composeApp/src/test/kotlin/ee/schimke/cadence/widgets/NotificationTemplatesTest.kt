@@ -4,9 +4,9 @@ package ee.schimke.cadence.widgets
 
 import ee.schimke.cadence.notifications.NotificationTemplate
 import ee.schimke.cadence.notifications.NotificationTemplateContent
-import ee.schimke.composeai.rcwidget.creation.androidx.rcWidgetHostAction
+import ee.schimke.composeai.rcwidget.creation.rcWidgetHostAction
 import ee.schimke.livery.capture.DesignFolder
-import ee.schimke.livery.capture.LiveryCapture
+import ee.schimke.livery.capture.cmp.LiveryCapture
 import ee.schimke.livery.client.BindResult
 import ee.schimke.livery.client.ContractBinder
 import ee.schimke.livery.instantiate.InstantiateResult
@@ -24,7 +24,6 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
 
@@ -33,9 +32,10 @@ import org.robolectric.annotation.GraphicsMode
  * the one committed in `composeApp/livery/designs/notification-default/`. Run with
  * `-Pcadence.livery.regenerate=true` to write it instead, after changing the drawing.
  */
+// Captured with `livery-capture-cmp`, which needs no Android. Robolectric is here for the icons,
+// drawn as paths read from an android.graphics.Path (Compose's Path on Android): native graphics,
+// as the legacy mode stubs it out and every icon was captured empty.
 @RunWith(RobolectricTestRunner::class)
-// Native graphics: icons are drawn as paths read from an android.graphics.Path, which the legacy
-// mode stubs out, so every icon was captured empty.
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 @Config(sdk = [35], qualifiers = "mdpi")
 class NotificationTemplatesTest {
@@ -50,7 +50,6 @@ class NotificationTemplatesTest {
     val name = "notification-w${t.MIN_WIDTH_DP}-h${t.MIN_HEIGHT_DP}"
     val captured =
       LiveryCapture.capture(
-        RuntimeEnvironment.getApplication(),
         Target(
           Surfaces.NOTIFICATION,
           rcApiLevel = 7,

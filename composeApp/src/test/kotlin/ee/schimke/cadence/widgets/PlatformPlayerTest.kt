@@ -2,15 +2,7 @@
 
 package ee.schimke.cadence.widgets
 
-import android.app.Activity
 import android.graphics.Rect
-import androidx.compose.remote.creation.compose.capture.RemoteCreationDisplayInfo
-import androidx.compose.remote.creation.compose.capture.RemoteDensity
-import androidx.compose.remote.creation.compose.capture.captureSingleRemoteDocument
-import androidx.compose.remote.creation.compose.layout.RemoteArrangement
-import androidx.compose.remote.creation.compose.layout.RemoteColumn
-import androidx.compose.remote.creation.compose.layout.RemoteComposable
-import androidx.compose.remote.creation.compose.state.rdp
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.toArgb
 import ee.schimke.cadence.notifications.NotificationBody
@@ -20,13 +12,19 @@ import ee.schimke.cadence.notifications.NotificationTemplateContent
 import ee.schimke.cadence.testing.PlatformPlayerRule
 import ee.schimke.cadence.testing.PlatformPlayerRule.Companion.ANDROID_16
 import ee.schimke.cadence.testing.PlatformPlayerRule.Companion.ANDROID_17
-import ee.schimke.composeai.rcwidget.launcher.widgetsProfile
+import ee.schimke.composeai.rccreation.compose.layout.RemoteArrangement
+import ee.schimke.composeai.rccreation.compose.layout.RemoteColumn
+import ee.schimke.composeai.rccreation.compose.layout.RemoteComposable
+import ee.schimke.composeai.rccreation.compose.state.rdp
+import ee.schimke.livery.capture.cmp.LiveryCapture
 import ee.schimke.livery.client.BindResult
 import ee.schimke.livery.client.ContractBinder
 import ee.schimke.livery.instantiate.InstantiateResult
 import ee.schimke.livery.instantiate.TemplateInstantiator
 import ee.schimke.livery.notifications.LiveryNotifications
 import ee.schimke.livery.protocol.Contract
+import ee.schimke.livery.protocol.Surfaces
+import ee.schimke.livery.protocol.Target
 import java.io.File
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -38,7 +36,6 @@ import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 import org.junit.Rule
 import org.junit.runner.RunWith
-import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
@@ -226,14 +223,15 @@ class PlatformPlayerTest {
       NotificationTemplateContent(null, null, body, cancel, colors = WidgetColors.Light)
     }
 
+  /**
+   * Captured as the template is (NotificationTemplatesTest): a document for a launcher's player.
+   */
   private fun captureDocument(content: @Composable @RemoteComposable () -> Unit): ByteArray =
     runBlocking {
-      val context = Robolectric.buildActivity(Activity::class.java).setup().get()
-      captureSingleRemoteDocument(
-          context = context,
-          creationDisplayInfo = RemoteCreationDisplayInfo(WIDTH, HEIGHT, 160),
-          remoteDensity = RemoteDensity.Host,
-          profile = widgetsProfile,
+      LiveryCapture.capture(
+          Target(Surfaces.NOTIFICATION, rcApiLevel = 7, profiles = listOf("widgets")),
+          WIDTH,
+          HEIGHT,
           content = content,
         )
         .bytes

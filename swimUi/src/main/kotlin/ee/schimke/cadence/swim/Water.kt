@@ -2,23 +2,23 @@
 
 package ee.schimke.cadence.swim
 
-import androidx.compose.remote.creation.RemotePath
-import androidx.compose.remote.creation.compose.layout.RemoteCanvas
-import androidx.compose.remote.creation.compose.layout.RemoteComposable
-import androidx.compose.remote.creation.compose.layout.RemoteDrawScope
-import androidx.compose.remote.creation.compose.layout.RemoteOffset
-import androidx.compose.remote.creation.compose.layout.RemoteSize
-import androidx.compose.remote.creation.compose.modifier.RemoteModifier
-import androidx.compose.remote.creation.compose.state.RemoteFloat
-import androidx.compose.remote.creation.compose.state.RemotePaint
-import androidx.compose.remote.creation.compose.state.RemoteTimeVariables
-import androidx.compose.remote.creation.compose.state.rc
-import androidx.compose.remote.creation.compose.state.rf
-import androidx.compose.remote.creation.compose.state.sin
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.PaintingStyle
+import ee.schimke.composeai.rccreation.compose.layout.RemoteCanvas
+import ee.schimke.composeai.rccreation.compose.layout.RemoteComposable
+import ee.schimke.composeai.rccreation.compose.layout.RemoteDrawScope
+import ee.schimke.composeai.rccreation.compose.layout.RemoteOffset
+import ee.schimke.composeai.rccreation.compose.layout.RemoteSize
+import ee.schimke.composeai.rccreation.compose.modifier.RemoteModifier
+import ee.schimke.composeai.rccreation.compose.path.RemotePath
+import ee.schimke.composeai.rccreation.compose.state.RemoteFloat
+import ee.schimke.composeai.rccreation.compose.state.RemotePaint
+import ee.schimke.composeai.rccreation.compose.state.RemoteTimeVariables
+import ee.schimke.composeai.rccreation.compose.state.rc
+import ee.schimke.composeai.rccreation.compose.state.rf
+import ee.schimke.composeai.rccreation.compose.state.sin
 import java.time.LocalTime
 
 /**
@@ -50,6 +50,17 @@ fun RemoteFloat.secondsSince(start: Float): RemoteFloat = (this - start + 3600f)
 private fun secondOfHourNow(): Float {
   val now = LocalTime.now()
   return now.minute * 60f + now.second + now.nano / 1_000_000_000f
+}
+
+/** Runs [content] with the swim animations frozen at [seconds]. */
+@Composable
+@RemoteComposable
+fun SwimClockAt(seconds: Float, content: @Composable @RemoteComposable () -> Unit) {
+  CompositionLocalProvider(
+    LocalSwimClock provides seconds.rf,
+    LocalSwimClockStart provides 0f,
+    content = content,
+  )
 }
 
 /**
@@ -96,7 +107,7 @@ fun RemoteDrawScope.drawWater(
 ) {
   val wavelength = w / crests.coerceAtLeast(1).toFloat()
   clipRect(0f.rf, 0f.rf, w, h) {
-    drawRect(fill(colors.air), RemoteOffset(0f, 0f), RemoteSize(w, h))
+    drawRect(fill(colors.air), offset(0f, 0f), RemoteSize(w, h))
     // Sun glints dancing just above the surface.
     Glints.forEach { glint ->
       val twinkle = sin(clock * glint.speed + glint.phase)
@@ -147,7 +158,7 @@ private fun RemoteDrawScope.drawBubble(
   drawCircle(
     RemotePaint {
       color = foam.copy(alpha = 0.75f).rc
-      style = PaintingStyle.Stroke
+      style = StrokeStyle
       strokeWidth = h * (0.014f * scale)
     },
     radius,
@@ -193,7 +204,7 @@ private fun RemoteDrawScope.drawWaveLine(
       path,
       RemotePaint {
         this.color = color.rc
-        style = PaintingStyle.Stroke
+        style = StrokeStyle
         // In height units: the path is scaled by the canvas height vertically.
         strokeWidth = 0.03f.rf
       },
@@ -212,7 +223,7 @@ private fun RemoteDrawScope.slideWave(
   val shift = (cycles % 1f) * wavelength
   // Both directions keep the path's left edge in [-wavelength, 0], so it always covers the width.
   val dx = if (reverse) shift - wavelength else -shift
-  translate(dx, h * level) { scale(wavelength, h, RemoteOffset(0f, 0f)) { draw() } }
+  translate(dx, h * level) { scale(wavelength, h, offset(0f, 0f)) { draw() } }
 }
 
 /**
@@ -235,12 +246,12 @@ private fun wavePath(waves: Int, amplitude: Float, filled: Boolean): RemotePath 
 
 internal fun fill(color: Color) = RemotePaint {
   this.color = color.rc
-  style = PaintingStyle.Fill
+  style = FillStyle
 }
 
 /** max(0, v) without leaving the expression: (v + |v|) / 2. */
 internal fun clampZero(v: RemoteFloat): RemoteFloat =
-  (v + androidx.compose.remote.creation.compose.state.abs(v)) * 0.5f
+  (v + ee.schimke.composeai.rccreation.compose.state.abs(v)) * 0.5f
 
 private class Bubble(val x: Float, val period: Float, val phase: Float, val radius: Float)
 

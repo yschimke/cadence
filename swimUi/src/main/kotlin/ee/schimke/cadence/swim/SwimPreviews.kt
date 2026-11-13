@@ -38,6 +38,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.glance.wear.GlanceWearProfiles
+import ee.schimke.cadence.swim.androidx.SwimClockAt
+import ee.schimke.cadence.swim.androidx.SwimLaneLaps
+import ee.schimke.cadence.swim.androidx.SwimLaneProgress
+import ee.schimke.cadence.swim.androidx.SwimmingPool
+import ee.schimke.cadence.swim.androidx.WaterBackground
 
 /*
  * Previews play each document under the profile its host uses: launcher widgets (WIDGETS_V7) and

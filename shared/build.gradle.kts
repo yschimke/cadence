@@ -70,6 +70,10 @@ kotlin {
       implementation(libs.androidx.work.runtime)
       implementation(project.dependencies.platform(libs.rc.players.bom))
       implementation(libs.rc.widget.launcher)
+      // The Livery templates and the home screen's player card are written against rc-players'
+      // Compose Multiplatform creation API; the launcher widgets above stay on AndroidX's.
+      implementation(libs.rc.widget.creation)
+      implementation(libs.rc.player.embedded)
       // api so the AppAuth RedirectUriReceiverActivity reference in composeApp's manifest resolves
       // during Android lint — not just at runtime.
       api(libs.appauth)

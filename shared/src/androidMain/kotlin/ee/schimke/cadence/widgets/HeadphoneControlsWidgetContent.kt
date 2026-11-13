@@ -1,5 +1,3 @@
-@file:Suppress("RestrictedApi", "RestrictedApiAndroidX")
-
 package ee.schimke.cadence.widgets
 
 import androidx.compose.material.icons.Icons
@@ -12,40 +10,40 @@ import androidx.compose.material.icons.filled.SkipPrevious
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
-import androidx.compose.remote.creation.RemotePath
-import androidx.compose.remote.creation.compose.action.RemoteAction
-import androidx.compose.remote.creation.compose.layout.RemoteAlignment
-import androidx.compose.remote.creation.compose.layout.RemoteArrangement
-import androidx.compose.remote.creation.compose.layout.RemoteBox
-import androidx.compose.remote.creation.compose.layout.RemoteCanvas
-import androidx.compose.remote.creation.compose.layout.RemoteColumn
-import androidx.compose.remote.creation.compose.layout.RemoteComposable
-import androidx.compose.remote.creation.compose.layout.RemoteOffset
-import androidx.compose.remote.creation.compose.layout.RemoteRow
-import androidx.compose.remote.creation.compose.layout.RemoteText
-import androidx.compose.remote.creation.compose.modifier.RemoteModifier
-import androidx.compose.remote.creation.compose.modifier.background
-import androidx.compose.remote.creation.compose.modifier.clickable
-import androidx.compose.remote.creation.compose.modifier.clip
-import androidx.compose.remote.creation.compose.modifier.contentDescription
-import androidx.compose.remote.creation.compose.modifier.fillMaxSize
-import androidx.compose.remote.creation.compose.modifier.fillMaxWidth
-import androidx.compose.remote.creation.compose.modifier.height
-import androidx.compose.remote.creation.compose.modifier.heightIn
-import androidx.compose.remote.creation.compose.modifier.padding
-import androidx.compose.remote.creation.compose.modifier.role
-import androidx.compose.remote.creation.compose.modifier.semantics
-import androidx.compose.remote.creation.compose.modifier.size
-import androidx.compose.remote.creation.compose.modifier.width
-import androidx.compose.remote.creation.compose.shapes.RemoteRoundedCornerShape
-import androidx.compose.remote.creation.compose.state.RemoteColor
-import androidx.compose.remote.creation.compose.state.RemotePaint
-import androidx.compose.remote.creation.compose.state.RemoteString
-import androidx.compose.remote.creation.compose.state.rc
-import androidx.compose.remote.creation.compose.state.rdp
-import androidx.compose.remote.creation.compose.state.rf
-import androidx.compose.remote.creation.compose.state.rs
-import androidx.compose.remote.creation.compose.state.rsp
+import ee.schimke.composeai.rccreation.compose.path.RemotePath
+import ee.schimke.composeai.rccreation.compose.action.RemoteAction
+import ee.schimke.composeai.rccreation.compose.layout.RemoteAlignment
+import ee.schimke.composeai.rccreation.compose.layout.RemoteArrangement
+import ee.schimke.composeai.rccreation.compose.layout.RemoteBox
+import ee.schimke.composeai.rccreation.compose.layout.RemoteCanvas
+import ee.schimke.composeai.rccreation.compose.layout.RemoteColumn
+import ee.schimke.composeai.rccreation.compose.layout.RemoteComposable
+import ee.schimke.composeai.rccreation.compose.layout.RemoteOffset
+import ee.schimke.composeai.rccreation.compose.layout.RemoteRow
+import ee.schimke.composeai.rccreation.compose.layout.RemoteText
+import ee.schimke.composeai.rccreation.compose.modifier.RemoteModifier
+import ee.schimke.composeai.rccreation.compose.modifier.background
+import ee.schimke.composeai.rccreation.compose.modifier.clickable
+import ee.schimke.composeai.rccreation.compose.modifier.clip
+import ee.schimke.composeai.rccreation.compose.modifier.contentDescription
+import ee.schimke.composeai.rccreation.compose.modifier.fillMaxSize
+import ee.schimke.composeai.rccreation.compose.modifier.fillMaxWidth
+import ee.schimke.composeai.rccreation.compose.modifier.height
+import ee.schimke.composeai.rccreation.compose.modifier.heightIn
+import ee.schimke.composeai.rccreation.compose.modifier.padding
+import ee.schimke.composeai.rccreation.compose.modifier.role
+import ee.schimke.composeai.rccreation.compose.modifier.semantics
+import ee.schimke.composeai.rccreation.compose.modifier.size
+import ee.schimke.composeai.rccreation.compose.modifier.width
+import ee.schimke.composeai.rccreation.compose.shapes.RemoteRoundedCornerShape
+import ee.schimke.composeai.rccreation.compose.state.RemoteColor
+import ee.schimke.composeai.rccreation.compose.state.RemotePaint
+import ee.schimke.composeai.rccreation.compose.state.RemoteString
+import ee.schimke.composeai.rccreation.compose.state.rc
+import ee.schimke.composeai.rccreation.compose.state.rdp
+import ee.schimke.composeai.rccreation.compose.state.rf
+import ee.schimke.composeai.rccreation.compose.state.rs
+import ee.schimke.composeai.rccreation.compose.state.rsp
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
@@ -57,9 +55,9 @@ import androidx.compose.ui.graphics.vector.PathNode
 import androidx.compose.ui.graphics.vector.PathParser
 import androidx.compose.ui.graphics.vector.VectorGroup
 import androidx.compose.ui.graphics.vector.VectorPath
-import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
+import ee.schimke.composeai.rccreation.compose.modifier.RemoteRole
+import ee.schimke.composeai.rccreation.compose.text.RemoteFontWeight
+import ee.schimke.composeai.rccreation.compose.text.RemoteTextOverflow
 import ee.schimke.cadence.swim.LocalSwimClock
 import ee.schimke.cadence.swim.WaterBackground
 
@@ -211,7 +209,7 @@ private fun HeadphoneControlsContent(
         // what the buttons leave, so one template fits every width in its tier.
         RemoteColumn(
           modifier =
-            RemoteModifier.weight(1f).height(HeadphoneWidgetLayout.ButtonDp.rdp).openOnTap(onOpen),
+            RemoteModifier.weight(1f.rf).height(HeadphoneWidgetLayout.ButtonDp.rdp).openOnTap(onOpen),
           verticalArrangement = RemoteArrangement.Center,
         ) {
           Headline(if (layout.shortTitle) texts.shortTitle else texts.title, palette)
@@ -240,7 +238,7 @@ private fun HeadphoneControlsContent(
             color = palette.onBackground,
             fontSize = 13.rsp,
             maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
+            overflow = RemoteTextOverflow.Ellipsis,
           )
         }
       }
@@ -251,7 +249,7 @@ private fun HeadphoneControlsContent(
             color = palette.supporting,
             fontSize = 12.rsp,
             maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
+            overflow = RemoteTextOverflow.Ellipsis,
           )
         }
       }
@@ -279,14 +277,14 @@ private fun Headline(text: RemoteString, palette: RemotePalette, fontSize: Int =
     text,
     color = palette.onBackground,
     fontSize = fontSize.rsp,
-    fontWeight = FontWeight.Medium,
+    fontWeight = RemoteFontWeight.Medium,
     maxLines = 1,
-    overflow = TextOverflow.Ellipsis,
+    overflow = RemoteTextOverflow.Ellipsis,
   )
 }
 
 private fun RemoteModifier.openOnTap(onOpen: RemoteAction?): RemoteModifier =
-  if (onOpen != null) clickable(onOpen) else this
+  cadenceClickable(onOpen)
 
 @Composable
 @RemoteComposable
@@ -307,11 +305,7 @@ private fun WidgetIconButton(
       RemoteModifier.size(size.rdp)
         .clip(RemoteRoundedCornerShape((size / 2).rdp))
         .let { if (water) it else it.background(if (primary) palette.primary else palette.tonal) }
-        .semantics {
-          contentDescription = action.label.rs
-          role = Role.Button
-        }
-        .let { if (onClick != null) it.clickable(onClick) else it },
+        .cadenceClickable(onClick, action.label.rs),
     contentAlignment = RemoteAlignment.Center,
   ) {
     if (water) {
@@ -347,7 +341,7 @@ internal fun WidgetIcon(icon: ImageVector, color: RemoteColor) {
   val path = remember(icon) { icon.toRemotePath() }
   val density = 1.rdp.toPx()
   RemoteCanvas(RemoteModifier.size(IconDp.rdp)) {
-    scale(density, density, RemoteOffset(0f, 0f)) {
+    scale(density, density, RemoteOffset(0f.rf, 0f.rf)) {
       drawPath(path, RemotePaint { this.color = color })
     }
   }

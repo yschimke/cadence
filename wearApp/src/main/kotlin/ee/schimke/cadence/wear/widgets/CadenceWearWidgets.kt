@@ -77,12 +77,12 @@ import androidx.wear.compose.remote.material3.RemoteMaterialTheme
 import androidx.wear.compose.remote.material3.RemoteProgressIndicatorDefaults
 import androidx.wear.compose.remote.material3.RemoteText
 import ee.schimke.cadence.swim.LaneColors
-import ee.schimke.cadence.swim.LocalSwimClock
-import ee.schimke.cadence.swim.SwimClockAt
-import ee.schimke.cadence.swim.SwimLaneProgress
 import ee.schimke.cadence.swim.SwimLap
-import ee.schimke.cadence.swim.WaterBackground
 import ee.schimke.cadence.swim.WaterColors
+import ee.schimke.cadence.swim.androidx.LocalSwimClock
+import ee.schimke.cadence.swim.androidx.SwimClockAt
+import ee.schimke.cadence.swim.androidx.SwimLaneProgress
+import ee.schimke.cadence.swim.androidx.WaterBackground
 import ee.schimke.cadence.swim.rememberPreviewSeconds
 import ee.schimke.cadence.wear.CompanionSyncStatus
 import ee.schimke.cadence.wear.HeadsetAction

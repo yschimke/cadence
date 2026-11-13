@@ -1,10 +1,7 @@
-@file:Suppress("RestrictedApi", "RestrictedApiAndroidX")
-
 package ee.schimke.cadence.preview
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.remote.tooling.preview.RemoteContentPreview
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -13,7 +10,6 @@ import ee.schimke.cadence.notifications.NotificationBody
 import ee.schimke.cadence.notifications.NotificationIcon
 import ee.schimke.cadence.notifications.NotificationTemplateContent
 import ee.schimke.cadence.widgets.WidgetColors
-import ee.schimke.composeai.rcwidget.launcher.RcLauncherWidgets
 
 /** The notification template's body with [body]'s values, over the shade's surface. */
 @Composable
@@ -22,9 +18,9 @@ private fun NotificationBodyPreview(
   cancel: Boolean = false,
   colors: WidgetColors = WidgetColors.Dark,
 ) {
-  RemoteContentPreview(
+  RcContentPreview(
     Modifier.fillMaxSize().background(if (colors == WidgetColors.Dark) ShadeDark else ShadeLight),
-    RcLauncherWidgets.profileFor(),
+    key = listOf(body, cancel, colors),
   ) {
     NotificationTemplateContent(
       onOpen = null,

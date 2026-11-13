@@ -7,9 +7,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.produceState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.media3.common.util.UnstableApi
@@ -21,14 +23,14 @@ import ee.schimke.cadence.widgets.HeadphoneWidgetAction
 import ee.schimke.cadence.widgets.HeadphoneWidgetLayout
 import ee.schimke.cadence.widgets.HeadphoneWidgetState
 import ee.schimke.cadence.widgets.WidgetColors
-import ee.schimke.composeai.rcwidget.creation.androidx.RcWidgetCaptureSize
-import ee.schimke.composeai.rcwidget.creation.androidx.rcWidgetHostAction
-import ee.schimke.composeai.rcwidget.launcher.RcAdaptiveRemoteDocumentPlayer
-import ee.schimke.composeai.rcwidget.launcher.RcLauncherWidgetCapture
-import ee.schimke.composeai.rcwidget.launcher.captureLauncherWidget
-import kotlinx.coroutines.CancellationException
+import ee.schimke.composeai.rccreation.bridge.ExperimentalRcCreationApi
+import ee.schimke.composeai.rccreation.compose.capture.RemoteCreationDisplayInfo
+import ee.schimke.composeai.rcplayer.embedded.RcEmbeddedPlayer
+import ee.schimke.composeai.rcplayer.runtime.RcPlayerEvent
+import ee.schimke.composeai.rcwidget.creation.rcWidgetHostAction
 
 @androidx.annotation.OptIn(UnstableApi::class)
+@OptIn(ExperimentalRcCreationApi::class)
 @Composable
 actual fun HomeMiniPlayer(
   state: BluetoothState,
@@ -59,39 +61,30 @@ actual fun HomeMiniPlayer(
     }
   BoxWithConstraints(Modifier.fillMaxWidth().height(80.dp)) {
     val width = maxWidth.value.toInt().coerceAtLeast(1)
-    val capture by
-      produceState<RcLauncherWidgetCapture?>(null, width, widgetState, colors) {
-        value =
-          try {
-            captureLauncherWidget(context, RcWidgetCaptureSize(width, 80)) {
-              HeadphoneControlsWidgetContent(
-                state = widgetState,
-                layout = HeadphoneWidgetLayout.of(widgetState, width, 80),
-                colors = colors,
-                onOpen = null,
-                onAction = { action ->
-                  rcWidgetHostAction(name = action.wireName, payload = action.wireName)
-                },
-              )
-            }
-          } catch (cancelled: CancellationException) {
-            throw cancelled
-          } catch (_: Exception) {
-            null
-          }
+    val densityDpi = LocalConfiguration.current.densityDpi
+    val display =
+      remember(width, densityDpi) {
+        RemoteCreationDisplayInfo(
+          (width * densityDpi / 160f).toInt().coerceAtLeast(1),
+          (80 * densityDpi / 160f).toInt().coerceAtLeast(1),
+          densityDpi,
+        )
       }
-    val document = capture
-    if (document == null) HomeMiniPlayerFallback(state, onPrevious, onPlayPause, onNext)
-    else
-      RcAdaptiveRemoteDocumentPlayer(
-        document.bytes,
-        Modifier.fillMaxWidth().height(80.dp),
-        onNamedAction = { name, metadata ->
-          val payload =
-            (metadata as? String)?.substringBefore("\n--RC-METADATA-V1--\n")
-              ?: name.toIntOrNull()?.let { document.actions[it] }
-              ?: name
-          when (HeadphoneWidgetAction.fromWire(payload)) {
+    // What the card draws: a change to any of it composes the widget's content again.
+    val shown = Triple(widgetState, colors, width)
+    // A card that can't be drawn falls back to the plain controls until what it shows changes.
+    var failedAt by remember { mutableStateOf<Any?>(null) }
+    if (failedAt == shown) {
+      HomeMiniPlayerFallback(state, onPrevious, onPlayPause, onNext)
+    } else {
+      // The widget's own drawing, composed and played in the app by rc-players' Compose player:
+      // no capture, and no launcher profile, which only the launcher's player needs.
+      RcEmbeddedPlayer(
+        display = display,
+        modifier = Modifier.fillMaxWidth().height(80.dp),
+        onEvent = { event ->
+          val wire = (event as? RcPlayerEvent.HostNamedAction)?.name
+          when (wire?.let(HeadphoneWidgetAction::fromWire)) {
             HeadphoneWidgetAction.Previous ->
               if (state.localAudioControls && shokz != null) shokz.previousTrack() else onPrevious()
             HeadphoneWidgetAction.Play ->
@@ -103,6 +96,19 @@ actual fun HomeMiniPlayer(
             else -> Unit
           }
         },
-      )
+        onFailure = { failedAt = shown },
+        key = shown,
+      ) {
+        HeadphoneControlsWidgetContent(
+          state = widgetState,
+          layout = HeadphoneWidgetLayout.of(widgetState, width, 80),
+          colors = colors,
+          onOpen = null,
+          onAction = { action ->
+            rcWidgetHostAction(name = action.wireName, payload = action.wireName)
+          },
+        )
+      }
+    }
   }
 }
