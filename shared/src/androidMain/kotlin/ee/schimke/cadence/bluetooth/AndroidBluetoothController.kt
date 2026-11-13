@@ -62,6 +62,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
@@ -446,11 +447,17 @@ class AndroidBluetoothController(
   override fun fastForward() {
     if (localAudioDevice() != null) return
     matchedMediaController?.transportControls?.fastForward()
+    if (matchedMediaController == null && matchedLocalPodcastPlayer) {
+      withLocalPodcastPlayer(applicationContext) { it.seekForward() }
+    }
   }
 
   override fun rewind() {
     if (localAudioDevice() != null) return
     matchedMediaController?.transportControls?.rewind()
+    if (matchedMediaController == null && matchedLocalPodcastPlayer) {
+      withLocalPodcastPlayer(applicationContext) { it.seekBack() }
+    }
   }
 
   private fun launchFirstPlayableEpisode() {
@@ -769,6 +776,9 @@ class AndroidBluetoothController(
     var a2dpProxy: BluetoothProfile? = null
     var headsetProxy: BluetoothProfile? = null
     var leAudioProxy: BluetoothProfile? = null
+    // Profile proxies connect asynchronously; until each requested one has reported, an empty
+    // device set means "unknown", not "disconnected".
+    val awaitingProfiles: MutableSet<Int> = java.util.concurrent.ConcurrentHashMap.newKeySet()
 
     fun evaluate() {
       if (!hasBluetoothConnectPermission() || adapter?.state == BluetoothAdapter.STATE_OFF) {
@@ -826,7 +836,7 @@ class AndroidBluetoothController(
       if (winningDevice == null) {
         lastConnectedDevice = null
         // Acknowledged settings belong to that connection; the mode selection is kept.
-        headsetFlow.update { HeadsetSettings(mode = it.mode) }
+        if (awaitingProfiles.isEmpty()) headsetFlow.update { HeadsetSettings(mode = it.mode) }
         trySend(
           ConnectionSnapshot(
             device = null,
@@ -941,6 +951,7 @@ class AndroidBluetoothController(
             BluetoothProfile.HEADSET -> headsetProxy = proxy
             BluetoothProfile.LE_AUDIO -> leAudioProxy = proxy
           }
+          awaitingProfiles.remove(profile)
           evaluate()
         }
 
@@ -955,19 +966,32 @@ class AndroidBluetoothController(
       }
 
     if (hasBluetoothConnectPermission() && adapter != null) {
-      runCatching {
-        adapter.getProfileProxy(applicationContext, proxyListener, BluetoothProfile.A2DP)
-      }
-      runCatching {
-        adapter.getProfileProxy(applicationContext, proxyListener, BluetoothProfile.HEADSET)
-      }
-      runCatching {
-        adapter.getProfileProxy(applicationContext, proxyListener, BluetoothProfile.LE_AUDIO)
-      }
+      awaitingProfiles += BluetoothProfile.A2DP
+      val requestedA2DP =
+        runCatching {
+            adapter.getProfileProxy(applicationContext, proxyListener, BluetoothProfile.A2DP)
+          }
+          .getOrDefault(false)
+      if (!requestedA2DP) awaitingProfiles -= BluetoothProfile.A2DP
+      awaitingProfiles += BluetoothProfile.HEADSET
+      val requestedHEADSET =
+        runCatching {
+            adapter.getProfileProxy(applicationContext, proxyListener, BluetoothProfile.HEADSET)
+          }
+          .getOrDefault(false)
+      if (!requestedHEADSET) awaitingProfiles -= BluetoothProfile.HEADSET
+      awaitingProfiles += BluetoothProfile.LE_AUDIO
+      val requestedLEAUDIO =
+        runCatching {
+            adapter.getProfileProxy(applicationContext, proxyListener, BluetoothProfile.LE_AUDIO)
+          }
+          .getOrDefault(false)
+      if (!requestedLEAUDIO) awaitingProfiles -= BluetoothProfile.LE_AUDIO
     }
 
     val filterObserver = launch {
       combine(deviceFilterFlow, verifiedOpenSwimFlow) { filter, verified -> filter to verified }
+        .drop(1) // initial emission is just observer startup
         .collect { evaluate() }
     }
 
