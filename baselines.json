@@ -36,7 +36,7 @@
     "functionName": "HeadphoneWidgetBluetoothPreview",
     "module": "composeApp",
     "renderBasename": "HeadphoneWidgetBluetoothPreview_Headphone_widget_Bluetooth-672bb261.png",
-    "sha256": "42a45c7b5a736f84c85e373d552e81e10b20f3cf15880d0c0c7a4f8e4cd4ace8",
+    "sha256": "4d79345f50f50500daf28b8ee475569623c9450df43f95ab4e56f1ee62b4c0b5",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetChristmas3x1Preview_Headphone widget \u00b7 Christmas \u00b7 MP3 \u00b7 3\u00d71": {
@@ -44,7 +44,7 @@
     "functionName": "HeadphoneWidgetChristmas3x1Preview",
     "module": "composeApp",
     "renderBasename": "HeadphoneWidgetChristmas3x1Preview_Headphone_widget_Christmas_MP3_3_1-65188605.png",
-    "sha256": "a04a8ff943486c7112fb1e6a26165ad1a2aac9af6ada4692bdb9f11f091f1b10",
+    "sha256": "455c2ba52413926d42a7840a7cbcbfa19e9139d1fc836ad87be3f3a17a8c4c74",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetChristmasPreview_Headphone widget \u00b7 Christmas": {
@@ -52,7 +52,7 @@
     "functionName": "HeadphoneWidgetChristmasPreview",
     "module": "composeApp",
     "renderBasename": "HeadphoneWidgetChristmasPreview_Headphone_widget_Christmas-83a2914f.png",
-    "sha256": "4db99571cf550b9da8e7bf2dc1de2dae2a02bff053fd7447887d8f1ce50808d3",
+    "sha256": "9746feedba811ca1749e072e11d011182686e9998b02d0146e8a9ae77fe85496",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetDisconnectedPreview_Headphone widget \u00b7 disconnected": {
@@ -60,7 +60,7 @@
     "functionName": "HeadphoneWidgetDisconnectedPreview",
     "module": "composeApp",
     "renderBasename": "HeadphoneWidgetDisconnectedPreview_Headphone_widget_disconnected-b8bab80a.png",
-    "sha256": "a16d345a3d6bceae3d110a9281c0a91609c0b1e833ff589fde910d51517c3362",
+    "sha256": "f348c30bf53031df5cd882b9e292756e9e7e051e8a1d8684159adf9cef910f0e",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetHalloweenPreview_Headphone widget \u00b7 Halloween": {
@@ -68,7 +68,7 @@
     "functionName": "HeadphoneWidgetHalloweenPreview",
     "module": "composeApp",
     "renderBasename": "HeadphoneWidgetHalloweenPreview_Headphone_widget_Halloween-02705a4c.png",
-    "sha256": "880a0f91c549b08311fdff1465a75f52c51dc9b3b090e5e917820c18271845c7",
+    "sha256": "aa940e9f6717fd228b4e60cd2845fb106a364b6e95d1f6df5334b08ce0562c80",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetLightPreview_Headphone widget \u00b7 light": {
@@ -76,7 +76,7 @@
     "functionName": "HeadphoneWidgetLightPreview",
     "module": "composeApp",
     "renderBasename": "HeadphoneWidgetLightPreview_Headphone_widget_light-98937184.png",
-    "sha256": "bf4dd9545afd482d60d31d4977660ed32481168313b2eebd65269ee47da0a7ab",
+    "sha256": "36321cb9b56f25242cc8a4b7e4a5705af21a1000e56a68b20642e8378b5a703b",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetMp32x1Preview_Headphone widget \u00b7 MP3 \u00b7 2\u00d71": {
@@ -84,7 +84,7 @@
     "functionName": "HeadphoneWidgetMp32x1Preview",
     "module": "composeApp",
     "renderBasename": "HeadphoneWidgetMp32x1Preview_Headphone_widget_MP3_2_1-820e2ca9.png",
-    "sha256": "731f27650b399c1d54e026b23bc4a2a001031c63f551ff4b5242bb064fe25096",
+    "sha256": "df1325badc5c81d7a1ac4db2471f5ffc7406db4bceff650501ecaa1d2d52dfcd",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetMp33x1Preview_Headphone widget \u00b7 MP3 \u00b7 3\u00d71": {
@@ -92,7 +92,7 @@
     "functionName": "HeadphoneWidgetMp33x1Preview",
     "module": "composeApp",
     "renderBasename": "HeadphoneWidgetMp33x1Preview_Headphone_widget_MP3_3_1-0abd2b18.png",
-    "sha256": "d4aa47872ce8ad23db85c97b289babee3aca27c538cc25da4beea03568ddaddc",
+    "sha256": "277a025d6d24d5bae7b0cc8fd63337a0c985934d39c96b4e853019b6dd991950",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetMp33x2Preview_Headphone widget \u00b7 MP3 \u00b7 3\u00d72": {
@@ -100,7 +100,7 @@
     "functionName": "HeadphoneWidgetMp33x2Preview",
     "module": "composeApp",
     "renderBasename": "HeadphoneWidgetMp33x2Preview_Headphone_widget_MP3_3_2-c9d5ee48.png",
-    "sha256": "e99fd03ee2d18491ce9cccd9bce207091f8949be6c2b472ce6cef5f0ce954177",
+    "sha256": "ac930dc512436ad00b510d85f90e010f53174c55487c336a98b7e02a2ebfbd69",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetMp35x1Preview_Headphone widget \u00b7 MP3 \u00b7 5\u00d71": {
@@ -108,7 +108,7 @@
     "functionName": "HeadphoneWidgetMp35x1Preview",
     "module": "composeApp",
     "renderBasename": "HeadphoneWidgetMp35x1Preview_Headphone_widget_MP3_5_1-32dd6d60.png",
-    "sha256": "459e44eaeff7f128bf62a588ba81868e5c7f9295b44f2e0cef280af9536dfa74",
+    "sha256": "b79110606d46811d3014778140ccd0ffbc3e0697208506ac2fb978605c0c769c",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetMp35x3Preview_Headphone widget \u00b7 MP3 \u00b7 5\u00d73": {
@@ -116,7 +116,7 @@
     "functionName": "HeadphoneWidgetMp35x3Preview",
     "module": "composeApp",
     "renderBasename": "HeadphoneWidgetMp35x3Preview_Headphone_widget_MP3_5_3-c18f130c.png",
-    "sha256": "cfa1b15e48312658c6f9e90733d9ad278333ed565aeaabe02461135d22171829",
+    "sha256": "9d1716647914ecb332d1319cd04f7677150ddd76737884460ae60d727195b40b",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetMp3Preview_Headphone widget \u00b7 MP3": {
@@ -124,7 +124,7 @@
     "functionName": "HeadphoneWidgetMp3Preview",
     "module": "composeApp",
     "renderBasename": "HeadphoneWidgetMp3Preview_Headphone_widget_MP3-d6a1c3d9.png",
-    "sha256": "11d9f9477ec73952757999a0ffe5d39f8ed7ae231543b8d3f36abae76f68d054",
+    "sha256": "33ecb507f21a16f9ca851c5230206c5ba7e944e95c65c70a848172b9f6ffc5be",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetNewYearAnimatedPreview_Headphone widget \u00b7 New Year \u00b7 animated": {
@@ -132,7 +132,7 @@
     "functionName": "HeadphoneWidgetNewYearAnimatedPreview",
     "module": "composeApp",
     "renderBasename": "HeadphoneWidgetNewYearAnimatedPreview_Headphone_widget_New_Year_animated-51b6488c.gif",
-    "sha256": "44808d173fbcf4ee834d2ff4a1fcdc06c389089d6e0e1112f278241ea9e85dfa",
+    "sha256": "39c829f412551b8418ec300c5a5a1600827cdea568151af86507a64e8f469364",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetNewYearPreview_Headphone widget \u00b7 New Year": {
@@ -140,7 +140,7 @@
     "functionName": "HeadphoneWidgetNewYearPreview",
     "module": "composeApp",
     "renderBasename": "HeadphoneWidgetNewYearPreview_Headphone_widget_New_Year-655c9ae0.png",
-    "sha256": "20cb36221dfbd2e70595a4af0ddd32adc4a662b31df3d3925ea437a5a09c9356",
+    "sha256": "9f9d7f133789b2da11bf1af5e9062eff5607d2923da14094efe716350de65701",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetPlayingAnimatedPreview_Headphone widget \u00b7 playing \u00b7 animated": {
@@ -148,7 +148,7 @@
     "functionName": "HeadphoneWidgetPlayingAnimatedPreview",
     "module": "composeApp",
     "renderBasename": "HeadphoneWidgetPlayingAnimatedPreview_Headphone_widget_playing_animated-157e750e.gif",
-    "sha256": "9850b4dcae5c5c005794bd0952e4c391a8b4a26bf4feadff169d19b36ec35a68",
+    "sha256": "70f8e6b5d666d10fdd231e26a9131a7e2a20fe39bbf13390d0e79591a787c7c9",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetWinterPreview_Headphone widget \u00b7 winter": {
@@ -156,7 +156,7 @@
     "functionName": "HeadphoneWidgetWinterPreview",
     "module": "composeApp",
     "renderBasename": "HeadphoneWidgetWinterPreview_Headphone_widget_winter-fa859d91.png",
-    "sha256": "17bdd7033f478e9c5e2b0e223fb8a6d9f880e081cf1ad39fc74460cf107de736",
+    "sha256": "7e297965a44b012469b879d38e6d0776f707a2414a3cfcf98bc0de0f772589af",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.NotificationPreviewsKt.NotificationDownloadingPreview_Notification \u00b7 downloading": {
@@ -164,7 +164,7 @@
     "functionName": "NotificationDownloadingPreview",
     "module": "composeApp",
     "renderBasename": "NotificationDownloadingPreview_Notification_downloading-f99a71e3.png",
-    "sha256": "78b7e40e4b9b58174fb72456a0d9809e11b7b4416b8b7949546649c726408764",
+    "sha256": "f354ee8ff5760e23e5ee2909d78cdd392f7ff33bb4a803d6b7406f22b5ed62dc",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/NotificationPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.NotificationPreviewsKt.NotificationFailedPreview_Notification \u00b7 failed": {
@@ -172,7 +172,7 @@
     "functionName": "NotificationFailedPreview",
     "module": "composeApp",
     "renderBasename": "NotificationFailedPreview_Notification_failed-4cd1109f.png",
-    "sha256": "40139caeeacdee278bfe451b930de0fae2b2f111ed257015a2268476f313809f",
+    "sha256": "6d10f5686b18a9bac67103921a08b6ccc498ca2b6649206f96a127ec51bd641f",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/NotificationPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.NotificationPreviewsKt.NotificationReadyPreview_Notification \u00b7 ready": {
@@ -180,7 +180,7 @@
     "functionName": "NotificationReadyPreview",
     "module": "composeApp",
     "renderBasename": "NotificationReadyPreview_Notification_ready-5114e7a0.png",
-    "sha256": "84687fd1c469d7598bce36ba4e6c98458d8ab89fb56a19d4a18322531a387980",
+    "sha256": "0ec0ef345bb51158cc585411bd08826b1a9994443696a142eade9c1f2dc3db97",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/NotificationPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.NotificationPreviewsKt.NotificationSyncingPreview_Notification \u00b7 syncing \u00b7 light": {
@@ -188,7 +188,7 @@
     "functionName": "NotificationSyncingPreview",
     "module": "composeApp",
     "renderBasename": "NotificationSyncingPreview_Notification_syncing_light-fb11050e.png",
-    "sha256": "634b024d1dc87a89eb42cd4f63f91d911386942de63530c36104e281cfa59f9c",
+    "sha256": "c88e0767e771933290731b6693bef7362e11057ac652780a29e02231b5876eaa",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/NotificationPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.PodcastPreviewsKt.AddPodcastsPreview_Add podcasts": {
@@ -444,7 +444,7 @@
     "functionName": "HomeConnectedControlsPreview",
     "module": "composeApp",
     "renderBasename": "HomeConnectedControlsPreview_Home_headphones_and_controls-d527acc7.png",
-    "sha256": "b66e505911a32cdd526d66700c5b3b4ad5a044a03857a654db553140f3d69eb1",
+    "sha256": "a25908c2a4ec531807ec09092b0dafa7e3e027e8926cc961d9245f2890562055",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.HomeDownloadFailedPreview_Home \u2014 download failed": {
@@ -484,7 +484,7 @@
     "functionName": "HomeHeadphonesPreview",
     "module": "composeApp",
     "renderBasename": "HomeHeadphonesPreview_Home_headphones_connected-71a28d46.png",
-    "sha256": "1146d194518347f9b92df5425b361b4cd121bb4032a9eac516f5d73debac9d9c",
+    "sha256": "222d5b4b79fd614145b4d3eb5ca001f4a943b7edd0df1d3257bb0b1b76a76c42",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.HomeLibraryPreview_Home \u2014 library": {
@@ -500,7 +500,7 @@
     "functionName": "HomeReadyToCopyPreview",
     "module": "composeApp",
     "renderBasename": "HomeReadyToCopyPreview_Home_ready_to_copy-3a801e9d.png",
-    "sha256": "44557317e6d4bd12bf5d80137d808e8583bd9a02c41158f7cd2f547c189b5e71",
+    "sha256": "bbc5b526d73d6aaa7e7a8f65961aafe4f53c96dad16470e3509d055f554e9c6f",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.HomeUpToDatePreview_Home \u2014 up to date": {
@@ -548,7 +548,7 @@
     "functionName": "PlayStorePhoneHomeDark",
     "module": "composeApp",
     "renderBasename": "PlayStorePhoneHomeDark_Play_Store_phone_Home_dark-aef8b2b7.png",
-    "sha256": "be9130c270a37311efe878c65fb31aa6b5d35c69fc9304830336ea97e4043cbd",
+    "sha256": "756f3235854831ab167884be4d4d8c0e62ba82caa51a35c91b0af6a68ea9015b",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/playstore/PlayStorePreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStorePhoneHomeLight_Play Store \u00b7 phone \u00b7 Home (light)": {
@@ -556,7 +556,7 @@
     "functionName": "PlayStorePhoneHomeLight",
     "module": "composeApp",
     "renderBasename": "PlayStorePhoneHomeLight_Play_Store_phone_Home_light-a1bae343.png",
-    "sha256": "2122a7421bf12caa53cc4694bb322fee11450b5546c7f639054f9b78fdcb2da8",
+    "sha256": "406f04b965679f62eb25f285aac1f708cb3c8d7cda213ccb6ad2ad870b405733",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/playstore/PlayStorePreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStorePhoneManage_Play Store \u00b7 phone \u00b7 Manage": {
