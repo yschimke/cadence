@@ -1,5 +1,27 @@
 # Changelog
 
+## [0.1.32](https://github.com/yschimke/cadence/compare/v0.1.31...v0.1.32) (2026-11-14)
+
+
+### Features
+
+* author the headphone widget, notification and swim drawing with rc-players' CMP creation API ([#613](https://github.com/yschimke/cadence/issues/613)) ([d7cb44f](https://github.com/yschimke/cadence/commit/d7cb44ff88aa01e00ada183c09836bdc9c54bb97))
+
+
+### Bug Fixes
+
+* **android:** skip main-process initialization in :notification_listener process ([#624](https://github.com/yschimke/cadence/issues/624)) ([b91e718](https://github.com/yschimke/cadence/commit/b91e718f2a186abf2ea3ff84fac894badee7edba))
+* **deps:** update dependency ee.schimke.composeai:rc-players-bom to v3.2.0 ([#614](https://github.com/yschimke/cadence/issues/614)) ([78911b7](https://github.com/yschimke/cadence/commit/78911b736abb7bcaa78ddb1c2b6fe65635e12ee9))
+* **deps:** update dependency ee.schimke.composeai:rc-players-bom to v3.5.0 ([#623](https://github.com/yschimke/cadence/issues/623)) ([2ae8265](https://github.com/yschimke/cadence/commit/2ae8265f6ca3b6047b9e888825b3880d1f513ec4))
+* **deps:** update dependency ee.schimke.composeai:rc-players-bom to v3.5.1 ([#628](https://github.com/yschimke/cadence/issues/628)) ([c501c20](https://github.com/yschimke/cadence/commit/c501c20397ad8b5356c01a4e7782447eb1a0cd7b))
+* **deps:** update livery to v0.11.0 ([#616](https://github.com/yschimke/cadence/issues/616)) ([32f0f02](https://github.com/yschimke/cadence/commit/32f0f02a939dd3fd7b499699ffd2cc4288691ea4))
+* **deps:** update livery to v0.12.0 ([#626](https://github.com/yschimke/cadence/issues/626)) ([ab3701c](https://github.com/yschimke/cadence/commit/ab3701cb4d74f3801f116a73c98d43af897747ad))
+
+
+### Performance Improvements
+
+* **android:** apply Android memory guidance (isolate listener process, R8, ComponentCallbacks2) ([#621](https://github.com/yschimke/cadence/issues/621)) ([4b8b0d0](https://github.com/yschimke/cadence/commit/4b8b0d0c7eacdd0cd0a7e43d8933596a42947266))
+
 ## [0.1.31](https://github.com/yschimke/cadence/compare/v0.1.30...v0.1.31) (2026-11-13)
 
 
