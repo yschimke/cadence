@@ -1,6 +1,7 @@
 package ee.schimke.cadence
 
 import android.app.Application
+import android.os.Build
 import androidx.work.Configuration
 import dev.zacsweers.metro.createGraphFactory
 import ee.schimke.cadence.analytics.CadenceFirebase
@@ -33,6 +34,15 @@ class CadenceApplication : Application(), AppGraphProvider, Configuration.Provid
 
   override fun onCreate() {
     super.onCreate()
+    // NowPlayingNotificationListener runs in :notification_listener so the system's
+    // NotificationListenerService binding doesn't pin the main UI process out of CACHED.
+    // Skip main-process initialization (Bluetooth, Wear publisher, widgets, WorkManager) there.
+    if (
+      Build.VERSION.SDK_INT >= Build.VERSION_CODES.P &&
+        getProcessName().endsWith(":notification_listener")
+    ) {
+      return
+    }
     // First, so the widgets and workers created below report to it.
     CadenceFirebase.install(this)
     ee.schimke.cadence.podcasts.scheduleOvernightPodcasts(applicationContext)
