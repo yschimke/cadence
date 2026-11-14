@@ -34,6 +34,7 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
+import okio.ByteString.Companion.toByteString
 import org.junit.Rule
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -181,7 +182,9 @@ class PlatformPlayerTest {
   /** [example] of the contract, written into the bundled template as the app writes a post. */
   private fun body(example: String): ByteArray = runBlocking {
     val template =
-      File(catalog, "designs/notification-default/notification-w200-h64.rc").readBytes()
+      File(catalog, "designs/notification-default/notification-w200-h64.rc")
+        .readBytes()
+        .toByteString()
     // The app sends its colours with every post (NotificationTemplate.data); the examples don't.
     val colours = buildJsonObject {
       NotificationTemplate.COLORS.forEach { (role, of) ->
@@ -202,7 +205,7 @@ class PlatformPlayerTest {
         maxBytes = LiveryNotifications.DEFAULT_MAX_BYTES,
         numericActions = true,
       )
-    (result as InstantiateResult.Ok).bytes
+    (result as InstantiateResult.Ok).bytes.toByteArray()
   }
 
   /** The notification drawing in a column spaced by 10dp, captured at host density. */
@@ -235,6 +238,7 @@ class PlatformPlayerTest {
           content = content,
         )
         .bytes
+        .toByteArray()
     }
 
   private companion object {
