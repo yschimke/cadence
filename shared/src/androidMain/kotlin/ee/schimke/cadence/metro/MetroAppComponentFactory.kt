@@ -3,6 +3,7 @@ package ee.schimke.cadence.metro
 import android.app.Activity
 import android.app.Application
 import android.content.Intent
+import android.os.Build
 import androidx.annotation.Keep
 import androidx.core.app.AppComponentFactory
 import dev.zacsweers.metro.Provider
@@ -41,6 +42,12 @@ class MetroAppComponentFactory : AppComponentFactory() {
 
   override fun instantiateApplicationCompat(cl: ClassLoader, className: String): Application {
     val app = super.instantiateApplicationCompat(cl, className)
+    if (
+      Build.VERSION.SDK_INT >= Build.VERSION_CODES.P &&
+        Application.getProcessName().endsWith(":notification_listener")
+    ) {
+      return app
+    }
     // Renderer harnesses (e.g. Robolectric previews) may substitute a plain
     // android.app.Application that doesn't expose the Metro graph; skip wiring
     // the activity providers in that case rather than crashing on the cast.
