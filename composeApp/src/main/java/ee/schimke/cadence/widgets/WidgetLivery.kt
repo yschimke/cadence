@@ -27,7 +27,7 @@ import ee.schimke.livery.widgets.launcher.LiveryLauncherWidgetProvider
 import java.io.File
 import java.util.Locale
 import java.util.UUID
-import kotlin.io.encoding.Base64
+import okio.ByteString.Companion.decodeBase64
 
 /**
  * Cadence's widget and notification templates. The APK ships a catalog (`composeApp/livery`, built
@@ -155,7 +155,7 @@ internal class WidgetLivery(
 
     val trustedKeys: List<TrustedKey> =
       CATALOG_PUBLIC_KEY.takeIf { it.isNotBlank() }
-        ?.let { listOf(TrustedKey(CATALOG_KEY_ID, Base64.decode(it))) }
+        ?.let { listOf(TrustedKey(CATALOG_KEY_ID, requireNotNull(it.decodeBase64()))) }
         .orEmpty()
 
     @Volatile private var instance: WidgetLivery? = null
