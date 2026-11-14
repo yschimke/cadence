@@ -1,7 +1,7 @@
 package ee.schimke.cadence.widgets
 
 import android.app.PendingIntent
-import android.content.ComponentCallbacks
+import android.content.ComponentCallbacks2
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
@@ -132,8 +132,10 @@ class HeadphoneControlsWidget : LiveryLauncherWidgetProvider() {
       // The system's colours are written into each render: render again when light/dark or the
       // wallpaper palette changes so the widget keeps following the system theme.
       appContext.registerComponentCallbacks(
-        object : ComponentCallbacks {
+        object : ComponentCallbacks2 {
           override fun onConfigurationChanged(newConfig: Configuration) = updateAll(appContext)
+
+          override fun onTrimMemory(level: Int) = Unit
 
           @Deprecated("Deprecated in Java") override fun onLowMemory() = Unit
         },
