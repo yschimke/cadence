@@ -19,6 +19,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
+import okio.ByteString.Companion.toByteString
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
@@ -109,7 +110,7 @@ class HeadphoneTemplatesTest {
         val bindings = (ContractBinder.bind(contract, example) as BindResult.Ok).bindings
         val out =
           instantiator.instantiate(
-            rc.readBytes(),
+            rc.readBytes().toByteString(),
             bindings,
             600,
             400,
