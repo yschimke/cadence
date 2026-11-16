@@ -1,6 +1,6 @@
 {
     "formatVersion": "compose-preview-history/v1",
-    "generatedFrom": "18490270a29c4ee0e01c6e4bc911071746f3dfe1",
+    "generatedFrom": "25ccdd7cb56aa8c32c9bd3e40a6035839f2f77f8",
     "previews": {
         "composeApp/activity__MainActivity": {
             "path": "renders/composeApp/activity__MainActivity.png",
@@ -887,6 +887,13 @@
             "path": "renders/composeApp/NotificationDownloadingPreview_Notification_downloading-f99a71e3.png",
             "versions": [
                 {
+                    "blob": "5ddfed9ca688dde012d7f775ca7f4f5178497c2e",
+                    "commit": "25ccdd7cb56aa8c32c9bd3e40a6035839f2f77f8",
+                    "date": "2026-11-16T01:18:21Z",
+                    "sourceSha": "047236a8",
+                    "commits": 1
+                },
+                {
                     "blob": "36be7e52fdd5aa7172425091f69415cbdf7d37b4",
                     "commit": "18490270a29c4ee0e01c6e4bc911071746f3dfe1",
                     "date": "2026-11-15T18:22:19Z",
@@ -1188,7 +1195,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 43,
+            "observations": 44,
             "unstable": false,
             "flapCount": 1
         },
@@ -1253,6 +1260,13 @@
         "composeApp/ee.schimke.cadence.preview.NotificationPreviewsKt.NotificationSyncingPreview_Notification · syncing · light": {
             "path": "renders/composeApp/NotificationSyncingPreview_Notification_syncing_light-fb11050e.png",
             "versions": [
+                {
+                    "blob": "d45fe069c1da6b650cb9f03ff86ed54e755d5084",
+                    "commit": "25ccdd7cb56aa8c32c9bd3e40a6035839f2f77f8",
+                    "date": "2026-11-16T01:18:21Z",
+                    "sourceSha": "047236a8",
+                    "commits": 1
+                },
                 {
                     "blob": "df71581b0e66fd4aaf2da923b791da94d807fb56",
                     "commit": "18490270a29c4ee0e01c6e4bc911071746f3dfe1",
@@ -1555,7 +1569,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 43,
+            "observations": 44,
             "unstable": false,
             "flapCount": 1
         },
