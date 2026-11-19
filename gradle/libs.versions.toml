@@ -53,7 +53,7 @@ playPublisher = "4.1.2"
 # artifacts take their versions from rc-players-bom. Since 3.0 its widget helpers for AndroidX's
 # creation API, which the launcher and Glance Wear hosts take, are rc-widget-creation-androidx
 # (ee.schimke.composeai.rcwidget.creation.androidx), brought by rc-widget-launcher.
-rcPlayers = "3.6.0"
+rcPlayers = "3.8.0"
 # Livery: the headphone widget's templates, baked into the APK and played on the launcher.
 livery = "0.20.0"
 robolectric = "4.17"
@@ -62,9 +62,9 @@ runner = "1.7.0"
 tapmoc = "0.5.0"
 wire = "7.2.1"
 wearCompose = "1.7.1"
-wearWidgets = "1.0.0-alpha22"
-composeRemote = "1.0.0-alpha23"
-wearComposeRemote = "1.0.0-alpha15"
+wearWidgets = "1.0.0-alpha23"
+composeRemote = "1.0.0-alpha24"
+wearComposeRemote = "1.0.0-alpha16"
 playAppUpdate = "2.1.0"
 playServicesWearable = "20.0.1"
 
