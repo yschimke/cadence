@@ -1,11 +1,8 @@
 # Accessibility Report
 
-_Auto-generated from `compose-preview/a11y/pr`. 5 preview(s) across 2 module(s) · 0 error(s) · 0 warning(s) · 1 info._
+_Auto-generated from `compose-preview/a11y/pr`. 2 preview(s) across 1 module(s) · 0 error(s) · 0 warning(s) · 1 info._
 
 Browse inline; image URLs are pinned to the commit SHA on the baseline branch so links keep resolving after merge.
-
-> [!WARNING]
-> ATF data unavailable for this run — the daemon did not return accessibility findings. The renders below are **not** accessibility-checked.
 
 ## composeApp
 
@@ -20,19 +17,5 @@ Browse inline; image URLs are pinned to the commit SHA on the baseline branch so
 ### `NotificationSyncingPreview`
 
 <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/NotificationSyncingPreview_Notification_syncing_light-fb11050e.a11y.png" width="400" />
-
-_No findings._
-
-## wearApp
-
-### `LocalAudioPlaylistWearWidgetSquirclePreview`
-
-_No findings._
-
-### `ModeAndControlsWearWidgetSquirclePreview`
-
-_No findings._
-
-### `SyncStatusWearWidgetSquirclePreview`
 
 _No findings._
