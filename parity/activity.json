@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-20T10:00:53.845Z",
+  "generatedAt": "2026-11-20T13:09:22.406Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "8e3d0dbcfc6c578d548c72417f1aea32d5ab4373",
+        "subject": "fix: restore content:// scheme in AndroidSyncOrchestrator tree URIs (#660)",
+        "at": "2026-11-20T12:56:30Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "2dd25f0b67e3eced4d304f8fc120456c4967efb0",
         "subject": "fix(deps): update dependency ee.schimke.composeai:rc-players-bom to v3.9.0 (#667)",
@@ -474,14 +482,6 @@
         "sha": "05fbfc91ba26397633c49d2b78d3ede26d04d871",
         "subject": "chore(deps): update anthropics/claude-code-action action to v1.0.273 (#608)",
         "at": "2026-11-12T20:58:24Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "308a68a15136406248f4f4852dcd1211b50605eb",
-        "subject": "fix(deps): update dependency ee.schimke.composeai:rc-players-bom to v3.1.2 (#609)",
-        "at": "2026-11-12T20:51:46Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []

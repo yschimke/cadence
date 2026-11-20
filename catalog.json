@@ -11196,69 +11196,6 @@
         {
           "kind": "a11y",
           "severity": "info",
-          "message": "button \"Previous\"",
-          "detail": {
-            "role": "button",
-            "label": "Previous",
-            "bounds": {
-              "x": 583,
-              "y": 1198,
-              "width": 126,
-              "height": 126
-            }
-          },
-          "bounds": {
-            "x": 583,
-            "y": 1198,
-            "width": 126,
-            "height": 126
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button \"Pause\"",
-          "detail": {
-            "role": "button",
-            "label": "Pause",
-            "bounds": {
-              "x": 730,
-              "y": 1198,
-              "width": 126,
-              "height": 126
-            }
-          },
-          "bounds": {
-            "x": 730,
-            "y": 1198,
-            "width": 126,
-            "height": 126
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button \"Next\"",
-          "detail": {
-            "role": "button",
-            "label": "Next",
-            "bounds": {
-              "x": 877,
-              "y": 1198,
-              "width": 126,
-              "height": 126
-            }
-          },
-          "bounds": {
-            "x": 877,
-            "y": 1198,
-            "width": 126,
-            "height": 126
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
           "message": "button",
           "detail": {
             "role": "button",
@@ -15301,7 +15238,7 @@
     "ee.schimke.cadence (CadenceTheme)"
   ],
   "renderer": "compose-preview 2.79.0",
-  "generatedAt": "2026-11-20T10:00:49.652Z",
+  "generatedAt": "2026-11-20T13:09:18.420Z",
   "failures": [
     {
       "id": "render-failed--googleoauthactivity--activity-googleoauthactivity",
@@ -15373,7 +15310,7 @@
   "componentsFile": "components.json",
   "source": {
     "repo": "yschimke/cadence",
-    "ref": "2dd25f0b67e3eced4d304f8fc120456c4967efb0",
+    "ref": "8e3d0dbcfc6c578d548c72417f1aea32d5ab4373",
     "module": ""
   }
 }
