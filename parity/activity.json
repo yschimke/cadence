@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-20T09:38:47.083Z",
+  "generatedAt": "2026-11-20T10:00:53.845Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "2dd25f0b67e3eced4d304f8fc120456c4967efb0",
+        "subject": "fix(deps): update dependency ee.schimke.composeai:rc-players-bom to v3.9.0 (#667)",
+        "at": "2026-11-20T09:48:48Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "594ab4a62d6ba309a8f38d5a8a4eca02c7d81a89",
         "subject": "fix(build): exclude compose-ai-tools checkout from verifyYschimkeBoms (#669)",
@@ -474,14 +482,6 @@
         "sha": "308a68a15136406248f4f4852dcd1211b50605eb",
         "subject": "fix(deps): update dependency ee.schimke.composeai:rc-players-bom to v3.1.2 (#609)",
         "at": "2026-11-12T20:51:46Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "e490430ed566cd3254d3a28c11204d8a10a1fd5f",
-        "subject": "fix(deps): update dependency ee.schimke.composeai:compose-preview-daemon-bom to v3.27.7 (#605)",
-        "at": "2026-11-12T20:47:30Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
