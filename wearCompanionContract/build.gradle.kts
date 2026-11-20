@@ -6,7 +6,9 @@ plugins {
 kotlin {
   androidLibrary {
     namespace = "ee.schimke.cadence.wearcontract"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
+    compileSdk {
+      version = release(libs.versions.android.compileSdk.get().toInt()) { minorApiLevel = 1 }
+    }
     minSdk = libs.versions.android.minSdk.get().toInt()
   }
 

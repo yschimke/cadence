@@ -23,7 +23,9 @@ val appVersionCode =
 android {
   namespace = "ee.schimke.cadence.wear"
   sourceSets.getByName("main").res.directories.add(rootProject.file("branding/src/main/res").path)
-  compileSdk = libs.versions.android.compileSdk.get().toInt()
+  compileSdk {
+    version = release(libs.versions.android.compileSdk.get().toInt()) { minorApiLevel = 1 }
+  }
 
   defaultConfig {
     // Data Layer endpoints must share the phone app's package name and signing key.

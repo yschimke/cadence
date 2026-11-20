@@ -11,7 +11,9 @@ version = "0.1.0-SNAPSHOT"
 kotlin {
   androidLibrary {
     namespace = "ee.schimke.rcsp"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
+    compileSdk {
+      version = release(libs.versions.android.compileSdk.get().toInt()) { minorApiLevel = 1 }
+    }
     minSdk = libs.versions.android.minSdk.get().toInt()
   }
 

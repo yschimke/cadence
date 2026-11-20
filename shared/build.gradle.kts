@@ -18,7 +18,9 @@ plugins {
 kotlin {
   androidLibrary {
     namespace = "ee.schimke.cadence.shared"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
+    compileSdk {
+      version = release(libs.versions.android.compileSdk.get().toInt()) { minorApiLevel = 1 }
+    }
     minSdk = libs.versions.android.minSdk.get().toInt()
 
     // Kept for the reflective Crashlytics lookup in NonFatalReporting.kt.
