@@ -7,7 +7,8 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.hardware.usb.UsbManager
-import android.net.Uri
+import ee.schimke.cadence.data.toUri
+import okio.Path.Companion.toPath
 import android.os.storage.StorageManager
 import android.provider.DocumentsContract
 import androidx.compose.foundation.layout.*
@@ -80,7 +81,8 @@ actual fun AutomaticallyMatchHeadphones(target: String) {
     val preferences = context.associationPrefs()
     val candidate =
       runCatching {
-        val volumeId = DocumentsContract.getTreeDocumentId(Uri.parse(target)).substringBefore(':')
+        val volumeId =
+          DocumentsContract.getTreeDocumentId(target.toPath().toUri()).substringBefore(':')
         val volumes =
           (context.getSystemService(Context.STORAGE_SERVICE) as StorageManager).storageVolumes
         val isMatchingVolume = volumes.any {
