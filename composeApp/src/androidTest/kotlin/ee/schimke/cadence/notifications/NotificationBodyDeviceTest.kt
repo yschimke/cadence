@@ -53,18 +53,39 @@ class NotificationBodyDeviceTest {
 
   @Test
   fun textOnly() =
-    check("text", 7001, body("3 episodes ready", "Plug in your headphones to copy them"))
+    check(
+      "text",
+      7001,
+      body("3 episodes ready", "Plug in your headphones to copy them", NotificationIcon.Done),
+    )
+
+  @Test
+  fun indeterminate() =
+    check(
+      "indeterminate",
+      7004,
+      body(
+          "Preparing podcasts",
+          "Cadence is preparing your podcasts while charging",
+          NotificationIcon.Process,
+        )
+        .copy(indeterminate = true),
+    )
 
   @Test
   fun withProgress() =
-    check("progress", 7002, body("Downloading", "Episode 2 of 5").copy(progress = 0.4f))
+    check(
+      "progress",
+      7002,
+      body("Downloading", "Episode 2 of 5", NotificationIcon.Download).copy(progress = 0.4f),
+    )
 
   @Test
   fun withProgressAndCancel() =
     check(
       "progress-cancel",
       7003,
-      body("Processing", "Trimming silence…")
+      body("Processing", "Trimming silence…", NotificationIcon.Process)
         .copy(
           progress = 0.7f,
           cancelIntent =
@@ -77,13 +98,32 @@ class NotificationBodyDeviceTest {
         ),
     )
 
-  private fun body(title: String, text: String) =
-    NotificationBody(
-      title,
-      text,
-      NotificationIcon.Download,
-      contentIntent = CadenceNotifications.openApp(context),
+  @Test
+  fun syncing() =
+    check(
+      "syncing",
+      7005,
+      body("Syncing files", "2026-10-28.mp3 (3/12)", NotificationIcon.Sync).copy(progress = 0.25f),
     )
+
+  @Test
+  fun longError() =
+    check(
+      "error",
+      7006,
+      body(
+        "Download stopped",
+        "Couldn't download “Tides of the Pacific”: the server sent an empty file. Try again to " +
+          "retry the rest.",
+        NotificationIcon.Error,
+      ),
+    )
+
+  private fun body(
+    title: String,
+    text: String,
+    icon: NotificationIcon = NotificationIcon.Download,
+  ) = NotificationBody(title, text, icon, contentIntent = CadenceNotifications.openApp(context))
 
   private fun check(name: String, id: Int, body: NotificationBody) {
     val renderer = CadenceNotifications.renderer
@@ -115,6 +155,7 @@ class NotificationBodyDeviceTest {
   private fun inApp(name: String, views: android.widget.RemoteViews) {
     shell("cmd statusbar collapse")
     try {
+      var attachedFrame: android.widget.FrameLayout? = null
       androidx.test.core.app.ActivityScenario.launch(ee.schimke.cadence.MainActivity::class.java)
         .use { scenario ->
           scenario.onActivity { activity ->
@@ -122,6 +163,7 @@ class NotificationBodyDeviceTest {
             val frame = android.widget.FrameLayout(activity)
             frame.setBackgroundColor(android.graphics.Color.WHITE)
             frame.addView(views.apply(activity, frame))
+            attachedFrame = frame
             activity.addContentView(
               frame,
               android.widget.FrameLayout.LayoutParams(
@@ -133,6 +175,12 @@ class NotificationBodyDeviceTest {
           }
           Thread.sleep(3_000)
           screenshot("$name-inapp")
+          // Detach the animated Remote Compose view before closing ActivityScenario, otherwise its
+          // 60fps Choreographer loop keeps the main thread busy and hangs scenario.close().
+          instrumentation.runOnMainSync {
+            attachedFrame?.removeAllViews()
+            (attachedFrame?.parent as? android.view.ViewGroup)?.removeView(attachedFrame)
+          }
         }
     } catch (e: Throwable) {
       File(outputDir(), "$name-inapp-error.txt").writeText(e.stackTraceToString())
