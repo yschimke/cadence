@@ -22,7 +22,11 @@ class HomeUiStateTest {
     val profiles = MutableSharedFlow<List<SyncProfile>>(replay = 1)
     val sources = MutableSharedFlow<List<SyncSource>>(replay = 1)
     val state =
-      transform(HomeViewModel.UiState(), backgroundScope, testDispatcher) {
+      transform(
+        initialValue = HomeViewModel.UiState(),
+        scope = backgroundScope,
+        dispatcher = testDispatcher,
+      ) {
         homeUiState(
           profiles = profiles,
           sources = sources,
@@ -53,7 +57,11 @@ class HomeUiStateTest {
     val other = UsbDevice(2, "b", 0, 0x0001, null, 0x0002, null)
     val preferences = MutableStateFlow<SyncPreferences?>(null)
     val state =
-      transform(HomeViewModel.UiState(), backgroundScope, testDispatcher) {
+      transform(
+        initialValue = HomeViewModel.UiState(),
+        scope = backgroundScope,
+        dispatcher = testDispatcher,
+      ) {
         homeUiState(
           profiles = flowOf(emptyList()),
           sources = flowOf(emptyList()),
