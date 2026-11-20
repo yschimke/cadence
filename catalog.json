@@ -503,7 +503,8 @@
           "previewParams": {
             "showBackground": true
           },
-          "density": 2.625
+          "density": 2.625,
+          "figmaSvg": "https://preview.coo.ee/cadence/render/devices-loaded__ideal__default.svg"
         }
       ],
       "greenlines": [
@@ -943,14 +944,14 @@
             "role": "button",
             "bounds": {
               "x": 84,
-              "y": 242,
+              "y": 389,
               "width": 882,
               "height": 105
             }
           },
           "bounds": {
             "x": 84,
-            "y": 242,
+            "y": 389,
             "width": 882,
             "height": 105
           }
@@ -962,16 +963,36 @@
           "detail": {
             "role": "button",
             "bounds": {
-              "x": 84,
-              "y": 1251,
-              "width": 528,
+              "x": 851,
+              "y": 1275,
+              "width": 105,
               "height": 105
             }
           },
           "bounds": {
-            "x": 84,
-            "y": 1251,
-            "width": 528,
+            "x": 851,
+            "y": 1275,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 851,
+              "y": 1446,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 851,
+            "y": 1446,
+            "width": 105,
             "height": 105
           }
         },
@@ -983,14 +1004,14 @@
             "role": "button",
             "bounds": {
               "x": 113,
-              "y": 1493,
+              "y": 1688,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 113,
-            "y": 1493,
+            "y": 1688,
             "width": 105,
             "height": 105
           }
@@ -1003,14 +1024,14 @@
             "role": "button",
             "bounds": {
               "x": 257,
-              "y": 1493,
+              "y": 1688,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 257,
-            "y": 1493,
+            "y": 1688,
             "width": 105,
             "height": 105
           }
@@ -1023,14 +1044,14 @@
             "role": "button",
             "bounds": {
               "x": 401,
-              "y": 1493,
+              "y": 1688,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 401,
-            "y": 1493,
+            "y": 1688,
             "width": 105,
             "height": 105
           }
@@ -1043,14 +1064,14 @@
             "role": "button",
             "bounds": {
               "x": 545,
-              "y": 1493,
+              "y": 1688,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 545,
-            "y": 1493,
+            "y": 1688,
             "width": 105,
             "height": 105
           }
@@ -1063,14 +1084,14 @@
             "role": "button",
             "bounds": {
               "x": 689,
-              "y": 1493,
+              "y": 1688,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 689,
-            "y": 1493,
+            "y": 1688,
             "width": 105,
             "height": 105
           }
@@ -1083,14 +1104,14 @@
             "role": "button",
             "bounds": {
               "x": 833,
-              "y": 1493,
+              "y": 1688,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 833,
-            "y": 1493,
+            "y": 1688,
             "width": 105,
             "height": 105
           }
@@ -1103,14 +1124,14 @@
             "role": "button",
             "bounds": {
               "x": 95,
-              "y": 1966,
+              "y": 2161,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 95,
-            "y": 1966,
+            "y": 2161,
             "width": 105,
             "height": 105
           }
@@ -1123,14 +1144,14 @@
             "role": "button",
             "bounds": {
               "x": 242,
-              "y": 1966,
+              "y": 2161,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 242,
-            "y": 1966,
+            "y": 2161,
             "width": 105,
             "height": 105
           }
@@ -1143,14 +1164,14 @@
             "role": "button",
             "bounds": {
               "x": 389,
-              "y": 1966,
+              "y": 2161,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 389,
-            "y": 1966,
+            "y": 2161,
             "width": 105,
             "height": 105
           }
@@ -1162,7 +1183,7 @@
             "x": 42,
             "y": 42,
             "width": 966,
-            "height": 357
+            "height": 504
           },
           "cornerRadius": 12
         },
@@ -1178,27 +1199,8 @@
         },
         {
           "bounds": {
-            "x": 84,
-            "y": 242,
-            "width": 882,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 42,
-            "y": 431,
-            "width": 966,
-            "height": 441
-          },
-          "cornerRadius": 12
-        },
-        {
-          "bounds": {
             "x": 523,
-            "y": 568,
+            "y": 242,
             "width": 443,
             "height": 105
           },
@@ -1208,7 +1210,46 @@
         {
           "bounds": {
             "x": 84,
-            "y": 568,
+            "y": 242,
+            "width": 442,
+            "height": 105
+          },
+          "role": "RadioButton",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 389,
+            "width": 882,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 578,
+            "width": 966,
+            "height": 441
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 523,
+            "y": 715,
+            "width": 443,
+            "height": 105
+          },
+          "role": "RadioButton",
+          "cornerRadius": 0
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 715,
             "width": 442,
             "height": 105
           },
@@ -1218,17 +1259,27 @@
         {
           "bounds": {
             "x": 42,
-            "y": 904,
+            "y": 1051,
             "width": 966,
-            "height": 504
+            "height": 552
           },
           "cornerRadius": 12
         },
         {
           "bounds": {
-            "x": 84,
-            "y": 1251,
-            "width": 528,
+            "x": 851,
+            "y": 1275,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 851,
+            "y": 1446,
+            "width": 105,
             "height": 105
           },
           "role": "Button",
@@ -1237,7 +1288,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 1440,
+            "y": 1635,
             "width": 966,
             "height": 210
           },
@@ -1246,7 +1297,7 @@
         {
           "bounds": {
             "x": 113,
-            "y": 1493,
+            "y": 1688,
             "width": 105,
             "height": 105
           },
@@ -1256,7 +1307,7 @@
         {
           "bounds": {
             "x": 257,
-            "y": 1493,
+            "y": 1688,
             "width": 105,
             "height": 105
           },
@@ -1266,7 +1317,7 @@
         {
           "bounds": {
             "x": 401,
-            "y": 1493,
+            "y": 1688,
             "width": 105,
             "height": 105
           },
@@ -1276,7 +1327,7 @@
         {
           "bounds": {
             "x": 545,
-            "y": 1493,
+            "y": 1688,
             "width": 105,
             "height": 105
           },
@@ -1286,7 +1337,7 @@
         {
           "bounds": {
             "x": 689,
-            "y": 1493,
+            "y": 1688,
             "width": 105,
             "height": 105
           },
@@ -1296,7 +1347,7 @@
         {
           "bounds": {
             "x": 833,
-            "y": 1493,
+            "y": 1688,
             "width": 105,
             "height": 105
           },
@@ -1306,7 +1357,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 1682,
+            "y": 1877,
             "width": 966,
             "height": 441
           },
@@ -1315,7 +1366,7 @@
         {
           "bounds": {
             "x": 58,
-            "y": 1813,
+            "y": 2008,
             "width": 934,
             "height": 116
           },
@@ -1329,7 +1380,7 @@
         {
           "bounds": {
             "x": 389,
-            "y": 1813,
+            "y": 2008,
             "width": 11,
             "height": 116
           },
@@ -1338,7 +1389,7 @@
         {
           "bounds": {
             "x": 95,
-            "y": 1966,
+            "y": 2161,
             "width": 105,
             "height": 105
           },
@@ -1348,7 +1399,7 @@
         {
           "bounds": {
             "x": 242,
-            "y": 1966,
+            "y": 2161,
             "width": 105,
             "height": 105
           },
@@ -1358,7 +1409,7 @@
         {
           "bounds": {
             "x": 389,
-            "y": 1966,
+            "y": 2161,
             "width": 105,
             "height": 105
           },
@@ -1368,7 +1419,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 2155,
+            "y": 2350,
             "width": 966,
             "height": 357
           },
@@ -1377,7 +1428,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 2292,
+            "y": 2487,
             "width": 296,
             "height": 105
           },
@@ -1387,7 +1438,7 @@
         {
           "bounds": {
             "x": 670,
-            "y": 2292,
+            "y": 2487,
             "width": 296,
             "height": 105
           },
@@ -1397,7 +1448,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 2544,
+            "y": 2739,
             "width": 966,
             "height": 357
           },
@@ -1406,7 +1457,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 2681,
+            "y": 2876,
             "width": 296,
             "height": 105
           },
@@ -1416,7 +1467,7 @@
         {
           "bounds": {
             "x": 670,
-            "y": 2681,
+            "y": 2876,
             "width": 296,
             "height": 105
           },
@@ -1480,14 +1531,14 @@
             "role": "button",
             "bounds": {
               "x": 84,
-              "y": 326,
+              "y": 473,
               "width": 882,
               "height": 105
             }
           },
           "bounds": {
             "x": 84,
-            "y": 326,
+            "y": 473,
             "width": 882,
             "height": 105
           }
@@ -1500,14 +1551,14 @@
             "role": "button",
             "bounds": {
               "x": 113,
-              "y": 1714,
+              "y": 1861,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 113,
-            "y": 1714,
+            "y": 1861,
             "width": 105,
             "height": 105
           }
@@ -1520,14 +1571,14 @@
             "role": "button",
             "bounds": {
               "x": 257,
-              "y": 1714,
+              "y": 1861,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 257,
-            "y": 1714,
+            "y": 1861,
             "width": 105,
             "height": 105
           }
@@ -1540,14 +1591,14 @@
             "role": "button",
             "bounds": {
               "x": 401,
-              "y": 1714,
+              "y": 1861,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 401,
-            "y": 1714,
+            "y": 1861,
             "width": 105,
             "height": 105
           }
@@ -1560,14 +1611,14 @@
             "role": "button",
             "bounds": {
               "x": 545,
-              "y": 1714,
+              "y": 1861,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 545,
-            "y": 1714,
+            "y": 1861,
             "width": 105,
             "height": 105
           }
@@ -1580,14 +1631,14 @@
             "role": "button",
             "bounds": {
               "x": 689,
-              "y": 1714,
+              "y": 1861,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 689,
-            "y": 1714,
+            "y": 1861,
             "width": 105,
             "height": 105
           }
@@ -1600,14 +1651,14 @@
             "role": "button",
             "bounds": {
               "x": 833,
-              "y": 1714,
+              "y": 1861,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 833,
-            "y": 1714,
+            "y": 1861,
             "width": 105,
             "height": 105
           }
@@ -1620,14 +1671,14 @@
             "role": "button",
             "bounds": {
               "x": 95,
-              "y": 2187,
+              "y": 2334,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 95,
-            "y": 2187,
+            "y": 2334,
             "width": 105,
             "height": 105
           }
@@ -1640,14 +1691,14 @@
             "role": "button",
             "bounds": {
               "x": 242,
-              "y": 2187,
+              "y": 2334,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 242,
-            "y": 2187,
+            "y": 2334,
             "width": 105,
             "height": 105
           }
@@ -1660,14 +1711,14 @@
             "role": "button",
             "bounds": {
               "x": 389,
-              "y": 2187,
+              "y": 2334,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 389,
-            "y": 2187,
+            "y": 2334,
             "width": 105,
             "height": 105
           }
@@ -1679,7 +1730,7 @@
             "x": 42,
             "y": 42,
             "width": 966,
-            "height": 441
+            "height": 588
           },
           "cornerRadius": 12
         },
@@ -1695,27 +1746,8 @@
         },
         {
           "bounds": {
-            "x": 84,
-            "y": 326,
-            "width": 882,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 42,
-            "y": 515,
-            "width": 966,
-            "height": 441
-          },
-          "cornerRadius": 12
-        },
-        {
-          "bounds": {
             "x": 523,
-            "y": 652,
+            "y": 326,
             "width": 443,
             "height": 105
           },
@@ -1725,7 +1757,46 @@
         {
           "bounds": {
             "x": 84,
-            "y": 652,
+            "y": 326,
+            "width": 442,
+            "height": 105
+          },
+          "role": "RadioButton",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 473,
+            "width": 882,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 662,
+            "width": 966,
+            "height": 441
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 523,
+            "y": 799,
+            "width": 443,
+            "height": 105
+          },
+          "role": "RadioButton",
+          "cornerRadius": 0
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 799,
             "width": 442,
             "height": 105
           },
@@ -1735,7 +1806,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 988,
+            "y": 1135,
             "width": 966,
             "height": 641
           },
@@ -1744,7 +1815,7 @@
         {
           "bounds": {
             "x": 58,
-            "y": 1403,
+            "y": 1550,
             "width": 934,
             "height": 116
           },
@@ -1758,7 +1829,7 @@
         {
           "bounds": {
             "x": 343,
-            "y": 1403,
+            "y": 1550,
             "width": 11,
             "height": 116
           },
@@ -1767,7 +1838,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 1661,
+            "y": 1808,
             "width": 966,
             "height": 210
           },
@@ -1776,7 +1847,7 @@
         {
           "bounds": {
             "x": 113,
-            "y": 1714,
+            "y": 1861,
             "width": 105,
             "height": 105
           },
@@ -1786,7 +1857,7 @@
         {
           "bounds": {
             "x": 257,
-            "y": 1714,
+            "y": 1861,
             "width": 105,
             "height": 105
           },
@@ -1796,7 +1867,7 @@
         {
           "bounds": {
             "x": 401,
-            "y": 1714,
+            "y": 1861,
             "width": 105,
             "height": 105
           },
@@ -1806,7 +1877,7 @@
         {
           "bounds": {
             "x": 545,
-            "y": 1714,
+            "y": 1861,
             "width": 105,
             "height": 105
           },
@@ -1816,7 +1887,7 @@
         {
           "bounds": {
             "x": 689,
-            "y": 1714,
+            "y": 1861,
             "width": 105,
             "height": 105
           },
@@ -1826,7 +1897,7 @@
         {
           "bounds": {
             "x": 833,
-            "y": 1714,
+            "y": 1861,
             "width": 105,
             "height": 105
           },
@@ -1836,7 +1907,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 1903,
+            "y": 2050,
             "width": 966,
             "height": 441
           },
@@ -1845,7 +1916,7 @@
         {
           "bounds": {
             "x": 58,
-            "y": 2034,
+            "y": 2181,
             "width": 934,
             "height": 116
           },
@@ -1859,7 +1930,7 @@
         {
           "bounds": {
             "x": 641,
-            "y": 2034,
+            "y": 2181,
             "width": 11,
             "height": 116
           },
@@ -1868,7 +1939,7 @@
         {
           "bounds": {
             "x": 95,
-            "y": 2187,
+            "y": 2334,
             "width": 105,
             "height": 105
           },
@@ -1878,7 +1949,7 @@
         {
           "bounds": {
             "x": 242,
-            "y": 2187,
+            "y": 2334,
             "width": 105,
             "height": 105
           },
@@ -1888,7 +1959,7 @@
         {
           "bounds": {
             "x": 389,
-            "y": 2187,
+            "y": 2334,
             "width": 105,
             "height": 105
           },
@@ -1898,16 +1969,16 @@
         {
           "bounds": {
             "x": 42,
-            "y": 2376,
+            "y": 2523,
             "width": 966,
-            "height": 357
+            "height": 294
           },
           "cornerRadius": 12
         },
         {
           "bounds": {
             "x": 84,
-            "y": 2513,
+            "y": 2660,
             "width": 296,
             "height": 105
           },
@@ -1917,7 +1988,7 @@
         {
           "bounds": {
             "x": 670,
-            "y": 2513,
+            "y": 2660,
             "width": 296,
             "height": 105
           },
@@ -1927,7 +1998,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 2765,
+            "y": 2849,
             "width": 966,
             "height": 357
           },
@@ -1936,7 +2007,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 2902,
+            "y": 2986,
             "width": 296,
             "height": 105
           },
@@ -1946,7 +2017,7 @@
         {
           "bounds": {
             "x": 670,
-            "y": 2902,
+            "y": 2986,
             "width": 296,
             "height": 105
           },
@@ -2010,14 +2081,14 @@
             "role": "button",
             "bounds": {
               "x": 84,
-              "y": 242,
+              "y": 389,
               "width": 882,
               "height": 105
             }
           },
           "bounds": {
             "x": 84,
-            "y": 242,
+            "y": 389,
             "width": 882,
             "height": 105
           }
@@ -2030,14 +2101,14 @@
             "role": "button",
             "bounds": {
               "x": 84,
-              "y": 715,
+              "y": 862,
               "width": 503,
               "height": 105
             }
           },
           "bounds": {
             "x": 84,
-            "y": 715,
+            "y": 862,
             "width": 503,
             "height": 105
           }
@@ -2050,14 +2121,14 @@
             "role": "button",
             "bounds": {
               "x": 84,
-              "y": 862,
+              "y": 1009,
               "width": 550,
               "height": 105
             }
           },
           "bounds": {
             "x": 84,
-            "y": 862,
+            "y": 1009,
             "width": 550,
             "height": 105
           }
@@ -2069,16 +2140,36 @@
           "detail": {
             "role": "button",
             "bounds": {
-              "x": 84,
-              "y": 1871,
-              "width": 528,
+              "x": 851,
+              "y": 1895,
+              "width": 105,
               "height": 105
             }
           },
           "bounds": {
-            "x": 84,
-            "y": 1871,
-            "width": 528,
+            "x": 851,
+            "y": 1895,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 851,
+              "y": 2066,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 851,
+            "y": 2066,
+            "width": 105,
             "height": 105
           }
         },
@@ -2090,14 +2181,14 @@
             "role": "button",
             "bounds": {
               "x": 113,
-              "y": 2113,
+              "y": 2308,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 113,
-            "y": 2113,
+            "y": 2308,
             "width": 105,
             "height": 105
           }
@@ -2110,14 +2201,14 @@
             "role": "button",
             "bounds": {
               "x": 257,
-              "y": 2113,
+              "y": 2308,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 257,
-            "y": 2113,
+            "y": 2308,
             "width": 105,
             "height": 105
           }
@@ -2130,14 +2221,14 @@
             "role": "button",
             "bounds": {
               "x": 401,
-              "y": 2113,
+              "y": 2308,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 401,
-            "y": 2113,
+            "y": 2308,
             "width": 105,
             "height": 105
           }
@@ -2150,14 +2241,14 @@
             "role": "button",
             "bounds": {
               "x": 545,
-              "y": 2113,
+              "y": 2308,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 545,
-            "y": 2113,
+            "y": 2308,
             "width": 105,
             "height": 105
           }
@@ -2170,14 +2261,14 @@
             "role": "button",
             "bounds": {
               "x": 689,
-              "y": 2113,
+              "y": 2308,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 689,
-            "y": 2113,
+            "y": 2308,
             "width": 105,
             "height": 105
           }
@@ -2190,14 +2281,14 @@
             "role": "button",
             "bounds": {
               "x": 833,
-              "y": 2113,
+              "y": 2308,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 833,
-            "y": 2113,
+            "y": 2308,
             "width": 105,
             "height": 105
           }
@@ -2210,14 +2301,14 @@
             "role": "button",
             "bounds": {
               "x": 95,
-              "y": 2586,
+              "y": 2781,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 95,
-            "y": 2586,
+            "y": 2781,
             "width": 105,
             "height": 105
           }
@@ -2230,14 +2321,14 @@
             "role": "button",
             "bounds": {
               "x": 242,
-              "y": 2586,
+              "y": 2781,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 242,
-            "y": 2586,
+            "y": 2781,
             "width": 105,
             "height": 105
           }
@@ -2250,14 +2341,14 @@
             "role": "button",
             "bounds": {
               "x": 389,
-              "y": 2586,
+              "y": 2781,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 389,
-            "y": 2586,
+            "y": 2781,
             "width": 105,
             "height": 105
           }
@@ -2269,7 +2360,7 @@
             "x": 42,
             "y": 42,
             "width": 966,
-            "height": 357
+            "height": 504
           },
           "cornerRadius": 12
         },
@@ -2285,56 +2376,8 @@
         },
         {
           "bounds": {
-            "x": 84,
-            "y": 242,
-            "width": 882,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 42,
-            "y": 431,
-            "width": 966,
-            "height": 588
-          },
-          "cornerRadius": 12
-        },
-        {
-          "bounds": {
-            "x": 84,
-            "y": 715,
-            "width": 503,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 84,
-            "y": 862,
-            "width": 550,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 42,
-            "y": 1051,
-            "width": 966,
-            "height": 441
-          },
-          "cornerRadius": 12
-        },
-        {
-          "bounds": {
             "x": 523,
-            "y": 1188,
+            "y": 242,
             "width": 443,
             "height": 105
           },
@@ -2344,7 +2387,75 @@
         {
           "bounds": {
             "x": 84,
-            "y": 1188,
+            "y": 242,
+            "width": 442,
+            "height": 105
+          },
+          "role": "RadioButton",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 389,
+            "width": 882,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 578,
+            "width": 966,
+            "height": 588
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 862,
+            "width": 503,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 1009,
+            "width": 550,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 1198,
+            "width": 966,
+            "height": 441
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 523,
+            "y": 1335,
+            "width": 443,
+            "height": 105
+          },
+          "role": "RadioButton",
+          "cornerRadius": 0
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 1335,
             "width": 442,
             "height": 105
           },
@@ -2354,17 +2465,27 @@
         {
           "bounds": {
             "x": 42,
-            "y": 1524,
+            "y": 1671,
             "width": 966,
-            "height": 504
+            "height": 552
           },
           "cornerRadius": 12
         },
         {
           "bounds": {
-            "x": 84,
-            "y": 1871,
-            "width": 528,
+            "x": 851,
+            "y": 1895,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 851,
+            "y": 2066,
+            "width": 105,
             "height": 105
           },
           "role": "Button",
@@ -2373,7 +2494,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 2060,
+            "y": 2255,
             "width": 966,
             "height": 210
           },
@@ -2382,7 +2503,7 @@
         {
           "bounds": {
             "x": 113,
-            "y": 2113,
+            "y": 2308,
             "width": 105,
             "height": 105
           },
@@ -2392,7 +2513,7 @@
         {
           "bounds": {
             "x": 257,
-            "y": 2113,
+            "y": 2308,
             "width": 105,
             "height": 105
           },
@@ -2402,7 +2523,7 @@
         {
           "bounds": {
             "x": 401,
-            "y": 2113,
+            "y": 2308,
             "width": 105,
             "height": 105
           },
@@ -2412,7 +2533,7 @@
         {
           "bounds": {
             "x": 545,
-            "y": 2113,
+            "y": 2308,
             "width": 105,
             "height": 105
           },
@@ -2422,7 +2543,7 @@
         {
           "bounds": {
             "x": 689,
-            "y": 2113,
+            "y": 2308,
             "width": 105,
             "height": 105
           },
@@ -2432,7 +2553,7 @@
         {
           "bounds": {
             "x": 833,
-            "y": 2113,
+            "y": 2308,
             "width": 105,
             "height": 105
           },
@@ -2442,7 +2563,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 2302,
+            "y": 2497,
             "width": 966,
             "height": 441
           },
@@ -2451,7 +2572,7 @@
         {
           "bounds": {
             "x": 58,
-            "y": 2433,
+            "y": 2628,
             "width": 934,
             "height": 116
           },
@@ -2465,7 +2586,7 @@
         {
           "bounds": {
             "x": 389,
-            "y": 2433,
+            "y": 2628,
             "width": 11,
             "height": 116
           },
@@ -2474,7 +2595,7 @@
         {
           "bounds": {
             "x": 95,
-            "y": 2586,
+            "y": 2781,
             "width": 105,
             "height": 105
           },
@@ -2484,7 +2605,7 @@
         {
           "bounds": {
             "x": 242,
-            "y": 2586,
+            "y": 2781,
             "width": 105,
             "height": 105
           },
@@ -2494,7 +2615,7 @@
         {
           "bounds": {
             "x": 389,
-            "y": 2586,
+            "y": 2781,
             "width": 105,
             "height": 105
           },
@@ -2504,7 +2625,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 2775,
+            "y": 2970,
             "width": 966,
             "height": 357
           },
@@ -2513,7 +2634,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 2912,
+            "y": 3107,
             "width": 296,
             "height": 105
           },
@@ -2523,7 +2644,7 @@
         {
           "bounds": {
             "x": 670,
-            "y": 2912,
+            "y": 3107,
             "width": 296,
             "height": 105
           },
@@ -2533,7 +2654,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 3164,
+            "y": 3359,
             "width": 966,
             "height": 357
           },
@@ -2542,7 +2663,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 3301,
+            "y": 3496,
             "width": 296,
             "height": 105
           },
@@ -2552,7 +2673,7 @@
         {
           "bounds": {
             "x": 670,
-            "y": 3301,
+            "y": 3496,
             "width": 296,
             "height": 105
           },
@@ -2616,14 +2737,14 @@
             "role": "button",
             "bounds": {
               "x": 84,
-              "y": 326,
+              "y": 473,
               "width": 882,
               "height": 105
             }
           },
           "bounds": {
             "x": 84,
-            "y": 326,
+            "y": 473,
             "width": 882,
             "height": 105
           }
@@ -2636,14 +2757,14 @@
             "role": "button",
             "bounds": {
               "x": 221,
-              "y": 1347,
+              "y": 1494,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 221,
-            "y": 1347,
+            "y": 1494,
             "width": 105,
             "height": 105
           }
@@ -2656,14 +2777,14 @@
             "role": "button",
             "bounds": {
               "x": 473,
-              "y": 1347,
+              "y": 1494,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 473,
-            "y": 1347,
+            "y": 1494,
             "width": 105,
             "height": 105
           }
@@ -2676,14 +2797,14 @@
             "role": "button",
             "bounds": {
               "x": 725,
-              "y": 1347,
+              "y": 1494,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 725,
-            "y": 1347,
+            "y": 1494,
             "width": 105,
             "height": 105
           }
@@ -2696,14 +2817,14 @@
             "role": "button",
             "bounds": {
               "x": 95,
-              "y": 1820,
+              "y": 1967,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 95,
-            "y": 1820,
+            "y": 1967,
             "width": 105,
             "height": 105
           }
@@ -2716,14 +2837,14 @@
             "role": "button",
             "bounds": {
               "x": 242,
-              "y": 1820,
+              "y": 1967,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 242,
-            "y": 1820,
+            "y": 1967,
             "width": 105,
             "height": 105
           }
@@ -2735,7 +2856,7 @@
             "x": 42,
             "y": 42,
             "width": 966,
-            "height": 441
+            "height": 588
           },
           "cornerRadius": 12
         },
@@ -2751,8 +2872,28 @@
         },
         {
           "bounds": {
+            "x": 523,
+            "y": 326,
+            "width": 443,
+            "height": 105
+          },
+          "role": "RadioButton",
+          "cornerRadius": 0
+        },
+        {
+          "bounds": {
             "x": 84,
             "y": 326,
+            "width": 442,
+            "height": 105
+          },
+          "role": "RadioButton",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 473,
             "width": 882,
             "height": 105
           },
@@ -2762,7 +2903,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 515,
+            "y": 662,
             "width": 966,
             "height": 441
           },
@@ -2771,7 +2912,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 652,
+            "y": 799,
             "width": 442,
             "height": 105
           },
@@ -2781,7 +2922,7 @@
         {
           "bounds": {
             "x": 523,
-            "y": 652,
+            "y": 799,
             "width": 443,
             "height": 105
           },
@@ -2791,7 +2932,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 988,
+            "y": 1135,
             "width": 966,
             "height": 274
           },
@@ -2800,7 +2941,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 1294,
+            "y": 1441,
             "width": 966,
             "height": 210
           },
@@ -2809,7 +2950,7 @@
         {
           "bounds": {
             "x": 221,
-            "y": 1347,
+            "y": 1494,
             "width": 105,
             "height": 105
           },
@@ -2819,7 +2960,7 @@
         {
           "bounds": {
             "x": 473,
-            "y": 1347,
+            "y": 1494,
             "width": 105,
             "height": 105
           },
@@ -2829,7 +2970,7 @@
         {
           "bounds": {
             "x": 725,
-            "y": 1347,
+            "y": 1494,
             "width": 105,
             "height": 105
           },
@@ -2839,7 +2980,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 1536,
+            "y": 1683,
             "width": 966,
             "height": 504
           },
@@ -2848,7 +2989,7 @@
         {
           "bounds": {
             "x": 58,
-            "y": 1667,
+            "y": 1814,
             "width": 934,
             "height": 116
           },
@@ -2862,7 +3003,7 @@
         {
           "bounds": {
             "x": 572,
-            "y": 1667,
+            "y": 1814,
             "width": 11,
             "height": 116
           },
@@ -2871,7 +3012,7 @@
         {
           "bounds": {
             "x": 95,
-            "y": 1820,
+            "y": 1967,
             "width": 105,
             "height": 105
           },
@@ -2881,7 +3022,7 @@
         {
           "bounds": {
             "x": 242,
-            "y": 1820,
+            "y": 1967,
             "width": 105,
             "height": 105
           },
@@ -2891,7 +3032,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 2072,
+            "y": 2219,
             "width": 966,
             "height": 294
           },
@@ -2900,7 +3041,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 2209,
+            "y": 2356,
             "width": 296,
             "height": 105
           },
@@ -2910,7 +3051,7 @@
         {
           "bounds": {
             "x": 670,
-            "y": 2209,
+            "y": 2356,
             "width": 296,
             "height": 105
           },
@@ -2920,7 +3061,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 2398,
+            "y": 2545,
             "width": 966,
             "height": 294
           },
@@ -2929,7 +3070,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 2535,
+            "y": 2682,
             "width": 296,
             "height": 105
           },
@@ -2939,7 +3080,7 @@
         {
           "bounds": {
             "x": 670,
-            "y": 2535,
+            "y": 2682,
             "width": 296,
             "height": 105
           },
@@ -3043,14 +3184,14 @@
             "role": "button",
             "bounds": {
               "x": 84,
-              "y": 557,
+              "y": 704,
               "width": 882,
               "height": 105
             }
           },
           "bounds": {
             "x": 84,
-            "y": 557,
+            "y": 704,
             "width": 882,
             "height": 105
           }
@@ -3063,14 +3204,14 @@
             "role": "button",
             "bounds": {
               "x": 113,
-              "y": 1945,
+              "y": 2092,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 113,
-            "y": 1945,
+            "y": 2092,
             "width": 105,
             "height": 105
           }
@@ -3083,14 +3224,14 @@
             "role": "button",
             "bounds": {
               "x": 257,
-              "y": 1945,
+              "y": 2092,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 257,
-            "y": 1945,
+            "y": 2092,
             "width": 105,
             "height": 105
           }
@@ -3103,14 +3244,14 @@
             "role": "button",
             "bounds": {
               "x": 401,
-              "y": 1945,
+              "y": 2092,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 401,
-            "y": 1945,
+            "y": 2092,
             "width": 105,
             "height": 105
           }
@@ -3123,14 +3264,14 @@
             "role": "button",
             "bounds": {
               "x": 545,
-              "y": 1945,
+              "y": 2092,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 545,
-            "y": 1945,
+            "y": 2092,
             "width": 105,
             "height": 105
           }
@@ -3143,14 +3284,14 @@
             "role": "button",
             "bounds": {
               "x": 689,
-              "y": 1945,
+              "y": 2092,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 689,
-            "y": 1945,
+            "y": 2092,
             "width": 105,
             "height": 105
           }
@@ -3163,14 +3304,14 @@
             "role": "button",
             "bounds": {
               "x": 833,
-              "y": 1945,
+              "y": 2092,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 833,
-            "y": 1945,
+            "y": 2092,
             "width": 105,
             "height": 105
           }
@@ -3183,14 +3324,14 @@
             "role": "button",
             "bounds": {
               "x": 95,
-              "y": 2418,
+              "y": 2565,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 95,
-            "y": 2418,
+            "y": 2565,
             "width": 105,
             "height": 105
           }
@@ -3203,14 +3344,14 @@
             "role": "button",
             "bounds": {
               "x": 242,
-              "y": 2418,
+              "y": 2565,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 242,
-            "y": 2418,
+            "y": 2565,
             "width": 105,
             "height": 105
           }
@@ -3223,14 +3364,14 @@
             "role": "button",
             "bounds": {
               "x": 389,
-              "y": 2418,
+              "y": 2565,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 389,
-            "y": 2418,
+            "y": 2565,
             "width": 105,
             "height": 105
           }
@@ -3243,14 +3384,14 @@
             "role": "button",
             "bounds": {
               "x": 851,
-              "y": 3449,
+              "y": 3533,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 851,
-            "y": 3449,
+            "y": 3533,
             "width": 105,
             "height": 105
           }
@@ -3262,7 +3403,7 @@
             "x": 42,
             "y": 42,
             "width": 966,
-            "height": 672
+            "height": 819
           },
           "cornerRadius": 12
         },
@@ -3298,27 +3439,8 @@
         },
         {
           "bounds": {
-            "x": 84,
-            "y": 557,
-            "width": 882,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 42,
-            "y": 746,
-            "width": 966,
-            "height": 441
-          },
-          "cornerRadius": 12
-        },
-        {
-          "bounds": {
             "x": 523,
-            "y": 883,
+            "y": 557,
             "width": 443,
             "height": 105
           },
@@ -3328,7 +3450,46 @@
         {
           "bounds": {
             "x": 84,
-            "y": 883,
+            "y": 557,
+            "width": 442,
+            "height": 105
+          },
+          "role": "RadioButton",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 704,
+            "width": 882,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 893,
+            "width": 966,
+            "height": 441
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 523,
+            "y": 1030,
+            "width": 443,
+            "height": 105
+          },
+          "role": "RadioButton",
+          "cornerRadius": 0
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 1030,
             "width": 442,
             "height": 105
           },
@@ -3338,7 +3499,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 1219,
+            "y": 1366,
             "width": 966,
             "height": 641
           },
@@ -3347,7 +3508,7 @@
         {
           "bounds": {
             "x": 58,
-            "y": 1634,
+            "y": 1781,
             "width": 934,
             "height": 116
           },
@@ -3361,7 +3522,7 @@
         {
           "bounds": {
             "x": 343,
-            "y": 1634,
+            "y": 1781,
             "width": 11,
             "height": 116
           },
@@ -3370,7 +3531,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 1892,
+            "y": 2039,
             "width": 966,
             "height": 210
           },
@@ -3379,7 +3540,7 @@
         {
           "bounds": {
             "x": 113,
-            "y": 1945,
+            "y": 2092,
             "width": 105,
             "height": 105
           },
@@ -3389,7 +3550,7 @@
         {
           "bounds": {
             "x": 257,
-            "y": 1945,
+            "y": 2092,
             "width": 105,
             "height": 105
           },
@@ -3399,7 +3560,7 @@
         {
           "bounds": {
             "x": 401,
-            "y": 1945,
+            "y": 2092,
             "width": 105,
             "height": 105
           },
@@ -3409,7 +3570,7 @@
         {
           "bounds": {
             "x": 545,
-            "y": 1945,
+            "y": 2092,
             "width": 105,
             "height": 105
           },
@@ -3419,7 +3580,7 @@
         {
           "bounds": {
             "x": 689,
-            "y": 1945,
+            "y": 2092,
             "width": 105,
             "height": 105
           },
@@ -3429,7 +3590,7 @@
         {
           "bounds": {
             "x": 833,
-            "y": 1945,
+            "y": 2092,
             "width": 105,
             "height": 105
           },
@@ -3439,7 +3600,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 2134,
+            "y": 2281,
             "width": 966,
             "height": 441
           },
@@ -3448,7 +3609,7 @@
         {
           "bounds": {
             "x": 58,
-            "y": 2265,
+            "y": 2412,
             "width": 934,
             "height": 116
           },
@@ -3462,7 +3623,7 @@
         {
           "bounds": {
             "x": 641,
-            "y": 2265,
+            "y": 2412,
             "width": 11,
             "height": 116
           },
@@ -3471,7 +3632,7 @@
         {
           "bounds": {
             "x": 95,
-            "y": 2418,
+            "y": 2565,
             "width": 105,
             "height": 105
           },
@@ -3481,7 +3642,7 @@
         {
           "bounds": {
             "x": 242,
-            "y": 2418,
+            "y": 2565,
             "width": 105,
             "height": 105
           },
@@ -3491,7 +3652,7 @@
         {
           "bounds": {
             "x": 389,
-            "y": 2418,
+            "y": 2565,
             "width": 105,
             "height": 105
           },
@@ -3501,16 +3662,16 @@
         {
           "bounds": {
             "x": 42,
-            "y": 2607,
+            "y": 2754,
             "width": 966,
-            "height": 357
+            "height": 294
           },
           "cornerRadius": 12
         },
         {
           "bounds": {
             "x": 84,
-            "y": 2744,
+            "y": 2891,
             "width": 296,
             "height": 105
           },
@@ -3520,7 +3681,7 @@
         {
           "bounds": {
             "x": 670,
-            "y": 2744,
+            "y": 2891,
             "width": 296,
             "height": 105
           },
@@ -3530,7 +3691,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 2996,
+            "y": 3080,
             "width": 966,
             "height": 357
           },
@@ -3539,7 +3700,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 3133,
+            "y": 3217,
             "width": 296,
             "height": 105
           },
@@ -3549,7 +3710,7 @@
         {
           "bounds": {
             "x": 670,
-            "y": 3133,
+            "y": 3217,
             "width": 296,
             "height": 105
           },
@@ -3559,7 +3720,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 3385,
+            "y": 3469,
             "width": 966,
             "height": 231
           },
@@ -3568,7 +3729,7 @@
         {
           "bounds": {
             "x": 851,
-            "y": 3449,
+            "y": 3533,
             "width": 105,
             "height": 105
           },
@@ -4852,9 +5013,10 @@
       "redlines": [],
       "group": "Launcher widgets",
       "caption": "Headphone launcher widget, Bluetooth mode.",
+      "wireframe": "wireframes/widgets-headphone-bluetooth.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 111,
+      "bodyLine": 104,
       "sourceDirectory": "composeApp",
       "sourceFunction": "HeadphoneWidgetBluetoothPreview",
       "parameters": [
@@ -4903,9 +5065,10 @@
       "redlines": [],
       "group": "Launcher widgets",
       "caption": "Headphone launcher widget, MP3 mode.",
+      "wireframe": "wireframes/widgets-headphone-mp3.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 104,
+      "bodyLine": 97,
       "sourceDirectory": "composeApp",
       "sourceFunction": "HeadphoneWidgetMp3Preview",
       "parameters": [
@@ -4954,9 +5117,10 @@
       "redlines": [],
       "group": "Launcher widgets",
       "caption": "Headphone launcher widget, disconnected.",
+      "wireframe": "wireframes/widgets-headphone-disconnected.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 122,
+      "bodyLine": 115,
       "sourceDirectory": "composeApp",
       "sourceFunction": "HeadphoneWidgetDisconnectedPreview",
       "parameters": [
@@ -5006,9 +5170,10 @@
       "redlines": [],
       "group": "Launcher widgets",
       "caption": "Headphone launcher widget, light theme.",
+      "wireframe": "wireframes/widgets-headphone-light.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 129,
+      "bodyLine": 122,
       "sourceDirectory": "composeApp",
       "sourceFunction": "HeadphoneWidgetLightPreview",
       "parameters": [
@@ -5130,9 +5295,10 @@
       "section": ":composeApp",
       "group": "Previews",
       "caption": "Headphone widget · MP3 · 2×1",
+      "wireframe": "wireframes/composeapp-headphonewidgetmp32x1preview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 69,
+      "bodyLine": 62,
       "sourceDirectory": "composeApp",
       "sourceFunction": "HeadphoneWidgetMp32x1Preview",
       "parameters": [
@@ -5182,9 +5348,10 @@
       "section": ":composeApp",
       "group": "Previews",
       "caption": "Headphone widget · MP3 · 3×1",
+      "wireframe": "wireframes/composeapp-headphonewidgetmp33x1preview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 76,
+      "bodyLine": 69,
       "sourceDirectory": "composeApp",
       "sourceFunction": "HeadphoneWidgetMp33x1Preview",
       "parameters": [
@@ -5234,9 +5401,10 @@
       "section": ":composeApp",
       "group": "Previews",
       "caption": "Headphone widget · MP3 · 5×1",
+      "wireframe": "wireframes/composeapp-headphonewidgetmp35x1preview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 83,
+      "bodyLine": 76,
       "sourceDirectory": "composeApp",
       "sourceFunction": "HeadphoneWidgetMp35x1Preview",
       "parameters": [
@@ -5286,9 +5454,10 @@
       "section": ":composeApp",
       "group": "Previews",
       "caption": "Headphone widget · MP3 · 3×2",
+      "wireframe": "wireframes/composeapp-headphonewidgetmp33x2preview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 90,
+      "bodyLine": 83,
       "sourceDirectory": "composeApp",
       "sourceFunction": "HeadphoneWidgetMp33x2Preview",
       "parameters": [
@@ -5338,9 +5507,10 @@
       "section": ":composeApp",
       "group": "Previews",
       "caption": "Headphone widget · MP3 · 5×3",
+      "wireframe": "wireframes/composeapp-headphonewidgetmp35x3preview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 97,
+      "bodyLine": 90,
       "sourceDirectory": "composeApp",
       "sourceFunction": "HeadphoneWidgetMp35x3Preview",
       "parameters": [
@@ -5390,9 +5560,10 @@
       "section": ":composeApp",
       "group": "Previews",
       "caption": "Headphone widget · winter",
+      "wireframe": "wireframes/composeapp-headphonewidgetwinterpreview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 156,
+      "bodyLine": 149,
       "sourceDirectory": "composeApp",
       "sourceFunction": "HeadphoneWidgetWinterPreview",
       "parameters": [
@@ -5442,9 +5613,10 @@
       "section": ":composeApp",
       "group": "Previews",
       "caption": "Headphone widget · Christmas",
+      "wireframe": "wireframes/composeapp-headphonewidgetchristmaspreview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 163,
+      "bodyLine": 156,
       "sourceDirectory": "composeApp",
       "sourceFunction": "HeadphoneWidgetChristmasPreview",
       "parameters": [
@@ -5494,9 +5666,10 @@
       "section": ":composeApp",
       "group": "Previews",
       "caption": "Headphone widget · New Year",
+      "wireframe": "wireframes/composeapp-headphonewidgetnewyearpreview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 170,
+      "bodyLine": 163,
       "sourceDirectory": "composeApp",
       "sourceFunction": "HeadphoneWidgetNewYearPreview",
       "parameters": [
@@ -5546,9 +5719,10 @@
       "section": ":composeApp",
       "group": "Previews",
       "caption": "Headphone widget · Halloween",
+      "wireframe": "wireframes/composeapp-headphonewidgethalloweenpreview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 177,
+      "bodyLine": 170,
       "sourceDirectory": "composeApp",
       "sourceFunction": "HeadphoneWidgetHalloweenPreview",
       "parameters": [
@@ -5598,9 +5772,10 @@
       "section": ":composeApp",
       "group": "Previews",
       "caption": "Headphone widget · Christmas · MP3 · 3×1",
+      "wireframe": "wireframes/composeapp-headphonewidgetchristmas3x1preview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/HeadphoneWidgetPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 184,
+      "bodyLine": 177,
       "sourceDirectory": "composeApp",
       "sourceFunction": "HeadphoneWidgetChristmas3x1Preview",
       "parameters": [
@@ -5638,7 +5813,7 @@
           "path": "images/composeapp-notificationdownloadingpreview/ideal__default__compact.png",
           "state": "default",
           "width": 945,
-          "height": 394,
+          "height": 210,
           "size": "compact",
           "livePreview": "https://preview.coo.ee/cadence/p/composeapp-notificationdownloadingpreview__ideal__default__compact",
           "previewId": "ee.schimke.cadence.preview.NotificationPreviewsKt.NotificationDownloadingPreview_Notification___downloading",
@@ -5646,13 +5821,29 @@
         }
       ],
       "greenlines": [],
-      "redlines": [],
+      "redlines": [
+        {
+          "bounds": {
+            "x": 0,
+            "y": 124,
+            "width": 945,
+            "height": 63
+          },
+          "padding": {
+            "start": 0,
+            "top": 8,
+            "end": 0,
+            "bottom": 0
+          }
+        }
+      ],
       "section": ":composeApp",
       "group": "Previews",
       "caption": "Notification · downloading",
+      "wireframe": "wireframes/composeapp-notificationdownloadingpreview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/NotificationPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 44,
+      "bodyLine": 40,
       "sourceDirectory": "composeApp",
       "sourceFunction": "NotificationDownloadingPreview",
       "parameters": [
@@ -5680,7 +5871,7 @@
           "path": "images/composeapp-notificationsyncingpreview/ideal__default__light__compact.png",
           "state": "default",
           "width": 945,
-          "height": 273,
+          "height": 210,
           "theme": "light",
           "size": "compact",
           "livePreview": "https://preview.coo.ee/cadence/p/composeapp-notificationsyncingpreview__ideal__default__light__compact",
@@ -5689,13 +5880,29 @@
         }
       ],
       "greenlines": [],
-      "redlines": [],
+      "redlines": [
+        {
+          "bounds": {
+            "x": 0,
+            "y": 124,
+            "width": 945,
+            "height": 63
+          },
+          "padding": {
+            "start": 0,
+            "top": 8,
+            "end": 0,
+            "bottom": 0
+          }
+        }
+      ],
       "section": ":composeApp",
       "group": "Previews",
       "caption": "Notification · syncing · light",
+      "wireframe": "wireframes/composeapp-notificationsyncingpreview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/NotificationPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 58,
+      "bodyLine": 53,
       "sourceDirectory": "composeApp",
       "sourceFunction": "NotificationSyncingPreview",
       "parameters": [
@@ -5723,21 +5930,38 @@
           "path": "images/composeapp-notificationreadypreview/ideal__default__compact.png",
           "state": "default",
           "width": 945,
-          "height": 231,
+          "height": 126,
           "size": "compact",
           "livePreview": "https://preview.coo.ee/cadence/p/composeapp-notificationreadypreview__ideal__default__compact",
           "previewId": "ee.schimke.cadence.preview.NotificationPreviewsKt.NotificationReadyPreview_Notification___ready",
-          "density": 2.625
+          "density": 2.625,
+          "figmaSvg": "https://preview.coo.ee/cadence/render/composeapp-notificationreadypreview__ideal__default__compact.svg"
         }
       ],
       "greenlines": [],
-      "redlines": [],
+      "redlines": [
+        {
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          },
+          "padding": {
+            "start": 0,
+            "top": 0,
+            "end": 0,
+            "bottom": 0
+          }
+        }
+      ],
       "section": ":composeApp",
       "group": "Previews",
       "caption": "Notification · ready",
+      "wireframe": "wireframes/composeapp-notificationreadypreview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/NotificationPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 72,
+      "bodyLine": 67,
       "sourceDirectory": "composeApp",
       "sourceFunction": "NotificationReadyPreview",
       "parameters": [
@@ -5765,21 +5989,38 @@
           "path": "images/composeapp-notificationfailedpreview/ideal__default__compact.png",
           "state": "default",
           "width": 945,
-          "height": 273,
+          "height": 231,
           "size": "compact",
           "livePreview": "https://preview.coo.ee/cadence/p/composeapp-notificationfailedpreview__ideal__default__compact",
           "previewId": "ee.schimke.cadence.preview.NotificationPreviewsKt.NotificationFailedPreview_Notification___failed",
-          "density": 2.625
+          "density": 2.625,
+          "figmaSvg": "https://preview.coo.ee/cadence/render/composeapp-notificationfailedpreview__ideal__default__compact.svg"
         }
       ],
       "greenlines": [],
-      "redlines": [],
+      "redlines": [
+        {
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          },
+          "padding": {
+            "start": 0,
+            "top": 0,
+            "end": 0,
+            "bottom": 0
+          }
+        }
+      ],
       "section": ":composeApp",
       "group": "Previews",
       "caption": "Notification · failed",
+      "wireframe": "wireframes/composeapp-notificationfailedpreview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/NotificationPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 84,
+      "bodyLine": 79,
       "sourceDirectory": "composeApp",
       "sourceFunction": "NotificationFailedPreview",
       "parameters": [
@@ -8587,6 +8828,69 @@
         {
           "kind": "a11y",
           "severity": "info",
+          "message": "button \"Previous\"",
+          "detail": {
+            "role": "button",
+            "label": "Previous",
+            "bounds": {
+              "x": 583,
+              "y": 1535,
+              "width": 126,
+              "height": 126
+            }
+          },
+          "bounds": {
+            "x": 583,
+            "y": 1535,
+            "width": 126,
+            "height": 126
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button \"Pause\"",
+          "detail": {
+            "role": "button",
+            "label": "Pause",
+            "bounds": {
+              "x": 730,
+              "y": 1535,
+              "width": 126,
+              "height": 126
+            }
+          },
+          "bounds": {
+            "x": 730,
+            "y": 1535,
+            "width": 126,
+            "height": 126
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button \"Next\"",
+          "detail": {
+            "role": "button",
+            "label": "Next",
+            "bounds": {
+              "x": 877,
+              "y": 1535,
+              "width": 126,
+              "height": 126
+            }
+          },
+          "bounds": {
+            "x": 877,
+            "y": 1535,
+            "width": 126,
+            "height": 126
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
           "message": "button",
           "detail": {
             "role": "button",
@@ -10892,6 +11196,69 @@
         {
           "kind": "a11y",
           "severity": "info",
+          "message": "button \"Previous\"",
+          "detail": {
+            "role": "button",
+            "label": "Previous",
+            "bounds": {
+              "x": 583,
+              "y": 1198,
+              "width": 126,
+              "height": 126
+            }
+          },
+          "bounds": {
+            "x": 583,
+            "y": 1198,
+            "width": 126,
+            "height": 126
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button \"Pause\"",
+          "detail": {
+            "role": "button",
+            "label": "Pause",
+            "bounds": {
+              "x": 730,
+              "y": 1198,
+              "width": 126,
+              "height": 126
+            }
+          },
+          "bounds": {
+            "x": 730,
+            "y": 1198,
+            "width": 126,
+            "height": 126
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button \"Next\"",
+          "detail": {
+            "role": "button",
+            "label": "Next",
+            "bounds": {
+              "x": 877,
+              "y": 1198,
+              "width": 126,
+              "height": 126
+            }
+          },
+          "bounds": {
+            "x": 877,
+            "y": 1198,
+            "width": 126,
+            "height": 126
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
           "message": "button",
           "detail": {
             "role": "button",
@@ -11091,6 +11458,69 @@
             "y": 1019,
             "width": 247,
             "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button \"Previous\"",
+          "detail": {
+            "role": "button",
+            "label": "Previous",
+            "bounds": {
+              "x": 583,
+              "y": 1198,
+              "width": 126,
+              "height": 126
+            }
+          },
+          "bounds": {
+            "x": 583,
+            "y": 1198,
+            "width": 126,
+            "height": 126
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button \"Pause\"",
+          "detail": {
+            "role": "button",
+            "label": "Pause",
+            "bounds": {
+              "x": 730,
+              "y": 1198,
+              "width": 126,
+              "height": 126
+            }
+          },
+          "bounds": {
+            "x": 730,
+            "y": 1198,
+            "width": 126,
+            "height": 126
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button \"Next\"",
+          "detail": {
+            "role": "button",
+            "label": "Next",
+            "bounds": {
+              "x": 877,
+              "y": 1198,
+              "width": 126,
+              "height": 126
+            }
+          },
+          "bounds": {
+            "x": 877,
+            "y": 1198,
+            "width": 126,
+            "height": 126
           }
         },
         {
@@ -11505,14 +11935,14 @@
             "role": "button",
             "bounds": {
               "x": 84,
-              "y": 326,
+              "y": 473,
               "width": 908,
               "height": 105
             }
           },
           "bounds": {
             "x": 84,
-            "y": 326,
+            "y": 473,
             "width": 908,
             "height": 105
           }
@@ -11525,16 +11955,16 @@
             "role": "button",
             "bounds": {
               "x": 117,
-              "y": 1714,
+              "y": 1861,
               "width": 105,
-              "height": 105
+              "height": 55
             }
           },
           "bounds": {
             "x": 117,
-            "y": 1714,
+            "y": 1861,
             "width": 105,
-            "height": 105
+            "height": 55
           }
         },
         {
@@ -11545,16 +11975,16 @@
             "role": "button",
             "bounds": {
               "x": 264,
-              "y": 1714,
+              "y": 1861,
               "width": 105,
-              "height": 105
+              "height": 55
             }
           },
           "bounds": {
             "x": 264,
-            "y": 1714,
+            "y": 1861,
             "width": 105,
-            "height": 105
+            "height": 55
           }
         },
         {
@@ -11565,16 +11995,16 @@
             "role": "button",
             "bounds": {
               "x": 412,
-              "y": 1714,
+              "y": 1861,
               "width": 105,
-              "height": 105
+              "height": 55
             }
           },
           "bounds": {
             "x": 412,
-            "y": 1714,
+            "y": 1861,
             "width": 105,
-            "height": 105
+            "height": 55
           }
         },
         {
@@ -11585,16 +12015,16 @@
             "role": "button",
             "bounds": {
               "x": 560,
-              "y": 1714,
+              "y": 1861,
               "width": 105,
-              "height": 105
+              "height": 55
             }
           },
           "bounds": {
             "x": 560,
-            "y": 1714,
+            "y": 1861,
             "width": 105,
-            "height": 105
+            "height": 55
           }
         },
         {
@@ -11605,16 +12035,16 @@
             "role": "button",
             "bounds": {
               "x": 708,
-              "y": 1714,
+              "y": 1861,
               "width": 105,
-              "height": 105
+              "height": 55
             }
           },
           "bounds": {
             "x": 708,
-            "y": 1714,
+            "y": 1861,
             "width": 105,
-            "height": 105
+            "height": 55
           }
         },
         {
@@ -11625,76 +12055,16 @@
             "role": "button",
             "bounds": {
               "x": 855,
-              "y": 1714,
+              "y": 1861,
               "width": 105,
-              "height": 105
+              "height": 55
             }
           },
           "bounds": {
             "x": 855,
-            "y": 1714,
+            "y": 1861,
             "width": 105,
-            "height": 105
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button",
-          "detail": {
-            "role": "button",
-            "bounds": {
-              "x": 0,
-              "y": 0,
-              "width": 0,
-              "height": 0
-            }
-          },
-          "bounds": {
-            "x": 0,
-            "y": 0,
-            "width": 0,
-            "height": 0
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button",
-          "detail": {
-            "role": "button",
-            "bounds": {
-              "x": 0,
-              "y": 0,
-              "width": 0,
-              "height": 0
-            }
-          },
-          "bounds": {
-            "x": 0,
-            "y": 0,
-            "width": 0,
-            "height": 0
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
-          "message": "button",
-          "detail": {
-            "role": "button",
-            "bounds": {
-              "x": 0,
-              "y": 0,
-              "width": 0,
-              "height": 0
-            }
-          },
-          "bounds": {
-            "x": 0,
-            "y": 0,
-            "width": 0,
-            "height": 0
+            "height": 55
           }
         }
       ],
@@ -11704,7 +12074,7 @@
             "x": 42,
             "y": 42,
             "width": 992,
-            "height": 441
+            "height": 588
           },
           "cornerRadius": 12
         },
@@ -11720,27 +12090,8 @@
         },
         {
           "bounds": {
-            "x": 84,
-            "y": 326,
-            "width": 908,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 42,
-            "y": 515,
-            "width": 992,
-            "height": 441
-          },
-          "cornerRadius": 12
-        },
-        {
-          "bounds": {
             "x": 536,
-            "y": 652,
+            "y": 326,
             "width": 456,
             "height": 105
           },
@@ -11750,7 +12101,46 @@
         {
           "bounds": {
             "x": 84,
-            "y": 652,
+            "y": 326,
+            "width": 455,
+            "height": 105
+          },
+          "role": "RadioButton",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 473,
+            "width": 908,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 662,
+            "width": 992,
+            "height": 441
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 536,
+            "y": 799,
+            "width": 456,
+            "height": 105
+          },
+          "role": "RadioButton",
+          "cornerRadius": 0
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 799,
             "width": 455,
             "height": 105
           },
@@ -11760,7 +12150,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 988,
+            "y": 1135,
             "width": 992,
             "height": 641
           },
@@ -11769,7 +12159,7 @@
         {
           "bounds": {
             "x": 58,
-            "y": 1403,
+            "y": 1550,
             "width": 960,
             "height": 116
           },
@@ -11783,7 +12173,7 @@
         {
           "bounds": {
             "x": 351,
-            "y": 1403,
+            "y": 1550,
             "width": 11,
             "height": 116
           },
@@ -11792,18 +12182,18 @@
         {
           "bounds": {
             "x": 42,
-            "y": 1661,
+            "y": 1808,
             "width": 992,
-            "height": 210
+            "height": 108
           },
           "cornerRadius": 12
         },
         {
           "bounds": {
             "x": 117,
-            "y": 1714,
+            "y": 1861,
             "width": 105,
-            "height": 105
+            "height": 55
           },
           "role": "Button",
           "cornerRadius": 20
@@ -11811,9 +12201,9 @@
         {
           "bounds": {
             "x": 264,
-            "y": 1714,
+            "y": 1861,
             "width": 105,
-            "height": 105
+            "height": 55
           },
           "role": "Button",
           "cornerRadius": 20
@@ -11821,9 +12211,9 @@
         {
           "bounds": {
             "x": 412,
-            "y": 1714,
+            "y": 1861,
             "width": 105,
-            "height": 105
+            "height": 55
           },
           "role": "Button",
           "cornerRadius": 20
@@ -11831,9 +12221,9 @@
         {
           "bounds": {
             "x": 560,
-            "y": 1714,
+            "y": 1861,
             "width": 105,
-            "height": 105
+            "height": 55
           },
           "role": "Button",
           "cornerRadius": 20
@@ -11841,9 +12231,9 @@
         {
           "bounds": {
             "x": 708,
-            "y": 1714,
+            "y": 1861,
             "width": 105,
-            "height": 105
+            "height": 55
           },
           "role": "Button",
           "cornerRadius": 20
@@ -11851,71 +12241,9 @@
         {
           "bounds": {
             "x": 855,
-            "y": 1714,
+            "y": 1861,
             "width": 105,
-            "height": 105
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 42,
-            "y": 1903,
-            "width": 992,
-            "height": 13
-          },
-          "cornerRadius": 12
-        },
-        {
-          "bounds": {
-            "x": 0,
-            "y": 0,
-            "width": 0,
-            "height": 0
-          },
-          "padding": {
-            "start": 10,
-            "top": 0,
-            "end": 10,
-            "bottom": 0
-          }
-        },
-        {
-          "bounds": {
-            "x": 0,
-            "y": 0,
-            "width": 0,
-            "height": 0
-          },
-          "cornerRadius": 2.1
-        },
-        {
-          "bounds": {
-            "x": 0,
-            "y": 0,
-            "width": 0,
-            "height": 0
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 0,
-            "y": 0,
-            "width": 0,
-            "height": 0
-          },
-          "role": "Button",
-          "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 0,
-            "y": 0,
-            "width": 0,
-            "height": 0
+            "height": 55
           },
           "role": "Button",
           "cornerRadius": 20
@@ -12239,6 +12567,69 @@
             "y": 760,
             "width": 193,
             "height": 80
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button \"Previous\"",
+          "detail": {
+            "role": "button",
+            "label": "Previous",
+            "bounds": {
+              "x": 824,
+              "y": 896,
+              "width": 96,
+              "height": 96
+            }
+          },
+          "bounds": {
+            "x": 824,
+            "y": 896,
+            "width": 96,
+            "height": 96
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button \"Pause\"",
+          "detail": {
+            "role": "button",
+            "label": "Pause",
+            "bounds": {
+              "x": 936,
+              "y": 896,
+              "width": 96,
+              "height": 96
+            }
+          },
+          "bounds": {
+            "x": 936,
+            "y": 896,
+            "width": 96,
+            "height": 96
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button \"Next\"",
+          "detail": {
+            "role": "button",
+            "label": "Next",
+            "bounds": {
+              "x": 1048,
+              "y": 896,
+              "width": 96,
+              "height": 96
+            }
+          },
+          "bounds": {
+            "x": 1048,
+            "y": 896,
+            "width": 96,
+            "height": 96
           }
         },
         {
@@ -12568,6 +12959,69 @@
         {
           "kind": "a11y",
           "severity": "info",
+          "message": "button \"Previous\"",
+          "detail": {
+            "role": "button",
+            "label": "Previous",
+            "bounds": {
+              "x": 824,
+              "y": 896,
+              "width": 96,
+              "height": 96
+            }
+          },
+          "bounds": {
+            "x": 824,
+            "y": 896,
+            "width": 96,
+            "height": 96
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button \"Pause\"",
+          "detail": {
+            "role": "button",
+            "label": "Pause",
+            "bounds": {
+              "x": 936,
+              "y": 896,
+              "width": 96,
+              "height": 96
+            }
+          },
+          "bounds": {
+            "x": 936,
+            "y": 896,
+            "width": 96,
+            "height": 96
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button \"Next\"",
+          "detail": {
+            "role": "button",
+            "label": "Next",
+            "bounds": {
+              "x": 1048,
+              "y": 896,
+              "width": 96,
+              "height": 96
+            }
+          },
+          "bounds": {
+            "x": 1048,
+            "y": 896,
+            "width": 96,
+            "height": 96
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
           "message": "button",
           "detail": {
             "role": "button",
@@ -12887,6 +13341,69 @@
             "y": 760,
             "width": 193,
             "height": 80
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button \"Previous\"",
+          "detail": {
+            "role": "button",
+            "label": "Previous",
+            "bounds": {
+              "x": 1224,
+              "y": 896,
+              "width": 96,
+              "height": 96
+            }
+          },
+          "bounds": {
+            "x": 1224,
+            "y": 896,
+            "width": 96,
+            "height": 96
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button \"Pause\"",
+          "detail": {
+            "role": "button",
+            "label": "Pause",
+            "bounds": {
+              "x": 1336,
+              "y": 896,
+              "width": 96,
+              "height": 96
+            }
+          },
+          "bounds": {
+            "x": 1336,
+            "y": 896,
+            "width": 96,
+            "height": 96
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button \"Next\"",
+          "detail": {
+            "role": "button",
+            "label": "Next",
+            "bounds": {
+              "x": 1448,
+              "y": 896,
+              "width": 96,
+              "height": 96
+            }
+          },
+          "bounds": {
+            "x": 1448,
+            "y": 896,
+            "width": 96,
+            "height": 96
           }
         },
         {
@@ -13255,6 +13772,69 @@
         {
           "kind": "a11y",
           "severity": "info",
+          "message": "button \"Previous\"",
+          "detail": {
+            "role": "button",
+            "label": "Previous",
+            "bounds": {
+              "x": 1224,
+              "y": 896,
+              "width": 96,
+              "height": 96
+            }
+          },
+          "bounds": {
+            "x": 1224,
+            "y": 896,
+            "width": 96,
+            "height": 96
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button \"Pause\"",
+          "detail": {
+            "role": "button",
+            "label": "Pause",
+            "bounds": {
+              "x": 1336,
+              "y": 896,
+              "width": 96,
+              "height": 96
+            }
+          },
+          "bounds": {
+            "x": 1336,
+            "y": 896,
+            "width": 96,
+            "height": 96
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button \"Next\"",
+          "detail": {
+            "role": "button",
+            "label": "Next",
+            "bounds": {
+              "x": 1448,
+              "y": 896,
+              "width": 96,
+              "height": 96
+            }
+          },
+          "bounds": {
+            "x": 1448,
+            "y": 896,
+            "width": 96,
+            "height": 96
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
           "message": "button",
           "detail": {
             "role": "button",
@@ -13597,7 +14177,7 @@
       "caption": "Water buttons · launcher",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/swim/SwimPreviews.kt",
       "sourceModule": ":swimUi",
-      "bodyLine": 50,
+      "bodyLine": 55,
       "sourceDirectory": "swimUi",
       "sourceFunction": "WaterButtonsLauncherPreview",
       "parameters": [
@@ -13629,7 +14209,7 @@
       "caption": "Swim lane · odd and even laps",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/swim/SwimPreviews.kt",
       "sourceModule": ":swimUi",
-      "bodyLine": 107,
+      "bodyLine": 112,
       "sourceDirectory": "swimUi",
       "sourceFunction": "SwimLaneLapsPreview",
       "parameters": [
@@ -13674,7 +14254,7 @@
       "caption": "Swim lane · flip turn",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/swim/SwimPreviews.kt",
       "sourceModule": ":swimUi",
-      "bodyLine": 123,
+      "bodyLine": 128,
       "sourceDirectory": "swimUi",
       "sourceFunction": "SwimLaneFlipTurnPreview",
       "parameters": [
@@ -13710,7 +14290,7 @@
       "caption": "Swim lane · flip turn · launcher",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/swim/SwimPreviews.kt",
       "sourceModule": ":swimUi",
-      "bodyLine": 129,
+      "bodyLine": 134,
       "sourceDirectory": "swimUi",
       "sourceFunction": "SwimLaneFlipTurnLauncherPreview",
       "parameters": [
@@ -13746,7 +14326,7 @@
       "caption": "Swim lane · endless laps",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/swim/SwimPreviews.kt",
       "sourceModule": ":swimUi",
-      "bodyLine": 157,
+      "bodyLine": 162,
       "sourceDirectory": "swimUi",
       "sourceFunction": "SwimLaneEndlessPreview",
       "parameters": [
@@ -13791,7 +14371,7 @@
       "caption": "Swimming pool",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/swim/SwimPreviews.kt",
       "sourceModule": ":swimUi",
-      "bodyLine": 173,
+      "bodyLine": 178,
       "sourceDirectory": "swimUi",
       "sourceFunction": "SwimmingPoolPreview",
       "parameters": [
@@ -14379,8 +14959,8 @@
           "variant": "ideal",
           "path": "images/wearapp-modeandcontrolswearwidgetsquirclepreview/ideal__default.png",
           "state": "default",
-          "width": 364,
-          "height": 152,
+          "width": 366,
+          "height": 128,
           "livePreview": "https://preview.coo.ee/cadence/p/wearapp-modeandcontrolswearwidgetsquirclepreview__ideal__default",
           "previewId": "module_3a77656172417070__module_77656172417070__ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetSquirclePreview_Now_playing___squircle",
           "previewParams": {
@@ -14517,8 +15097,8 @@
           "variant": "ideal",
           "path": "images/wearapp-localaudioplaylistwearwidgetsquirclepreview/ideal__default.png",
           "state": "default",
-          "width": 364,
-          "height": 152,
+          "width": 366,
+          "height": 128,
           "livePreview": "https://preview.coo.ee/cadence/p/wearapp-localaudioplaylistwearwidgetsquirclepreview__ideal__default",
           "previewId": "module_3a77656172417070__module_77656172417070__ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetSquirclePreview_Playlist___squircle",
           "previewParams": {
@@ -14655,8 +15235,8 @@
           "variant": "ideal",
           "path": "images/wearapp-syncstatuswearwidgetsquirclepreview/ideal__default.png",
           "state": "default",
-          "width": 364,
-          "height": 152,
+          "width": 366,
+          "height": 128,
           "livePreview": "https://preview.coo.ee/cadence/p/wearapp-syncstatuswearwidgetsquirclepreview__ideal__default",
           "previewId": "module_3a77656172417070__module_77656172417070__ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetSquirclePreview_Sync___squircle",
           "previewParams": {
@@ -14721,7 +15301,7 @@
     "ee.schimke.cadence (CadenceTheme)"
   ],
   "renderer": "compose-preview 2.79.0",
-  "generatedAt": "2026-11-12T03:56:36.944Z",
+  "generatedAt": "2026-11-20T09:38:42.352Z",
   "failures": [
     {
       "id": "render-failed--googleoauthactivity--activity-googleoauthactivity",
@@ -14730,7 +15310,7 @@
       "phase": "render",
       "errorClass": "java.lang.IllegalStateException",
       "message": "Composed into the View which doesn't propagate ViewTreeLifecycleOwner!",
-      "stackTrace": "java.lang.IllegalStateException: Composed into the View which doesn't propagate ViewTreeLifecycleOwner!\n\tat androidx.compose.ui.platform.AbstractComposeView.resolveComposeViewContext(ComposeView.android.kt:355)\n\tat androidx.compose.ui.platform.AbstractComposeView.ensureCompositionCreated(ComposeView.android.kt:334)\n\tat androidx.compose.ui.platform.AbstractComposeView.attachedToWindow(ComposeView.android.kt:464)\n\tat androidx.compose.ui.platform.AbstractComposeView.onAttachedToWindow(ComposeView.android.kt:440)\n\tat android.view.View.dispatchAttachedToWindow(View.java:23535)\n\tat android.view.ViewGroup.dispatchAttachedToWindow(ViewGroup.java:3627)\n\tat android.view.ViewGroup.addViewInner(ViewGroup.java:5467)\n\tat android.view.ViewGroup.addView(ViewGroup.java:5253)\n\tat java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)\n\tat org.robolectric.shadows.ShadowViewGroup$ViewGroupReflector$$Reflector40.addView(Unknown Source)\n\tat org.robolectric.shadows.ShadowViewGroup.lambda$addView$0(ShadowViewGroup.java:31)\n\tat org.robolectric.shadows.ShadowViewGroup.addView(ShadowViewGroup.java:35)\n\tat android.view.ViewGroup.addView(ViewGroup.java)\n\tat android.view.ViewGroup.addView(ViewGroup.java:5225)\n\tat ee.schimke.composeai.renderer.AppTourRenderer.addSystemBarsOverlay$renderer_android(AppTourRenderer.kt:351)\n\tat ee.schimke.composeai.renderer.AppTourRenderer$TourSession.capture(AppTourRenderer.kt:174)\n\tat ee.schimke.composeai.renderer.AppTourRenderer$render$statement$1.evaluate(AppTourRenderer.kt:101)\n\tat androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$testWithDisposal$1.evaluate(AndroidComposeTestRule.android.kt:426)\n\tat androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$1$evaluate$1.invokeSuspend(AndroidComposeTestRule.android.kt:448)\n\tat androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$1$evaluate$1.invoke(AndroidComposeTestRule.android.kt)\n\tat androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1$1$1$1.invokeSuspend(ComposeUiTest.android.kt:689)\n\tat androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1$1$1$1.invoke(ComposeUiTest.android.kt)\n\tat androidx.compose.ui.test.IdlingStrategy.withStrategy$suspendImpl(IdlingStrategy.android.kt:55)\n\tat androidx.compose.ui.test.IdlingStrategy.withStrategy(IdlingStrategy.android.kt)\n\tat androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1.invokeSuspend(ComposeUiTest.android.kt:686)\n\tat androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1.invoke(ComposeUiTest.android.kt)\n\tat kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt$runTest$2$1$1.invokeSuspend(TestBuilders.kt:317)\n\tat kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)\n\tat kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)\n\tat kotlinx.coroutines.test.TestDispatcher.processEvent$kotlinx_coroutines_test(TestDispatcher.kt:24)\n\tat kotlinx.coroutines.test.TestCoroutineScheduler.tryRunNextTaskUnless$kotlinx_coroutines_test(TestCoroutineScheduler.kt:98)\n\tat kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt$runTest$2$1$workRunner$1.invokeSuspend(TestBuilders.kt:326)\n\tat kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)\n\tat kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)\n\tat kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)\n\tat kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)\n\tat kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)\n\tat kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source)\n\tat kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)\n\tat kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source)\n\tat kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)\n\tat kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source)\n\tat kotlinx.coroutines.test.TestBuildersJvmKt.createTestResult(TestBuildersJvm.kt:10)\n\tat kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:309)\n\tat kotlinx.coroutines.test.TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:1)\n\tat kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:167)\n\tat kotlinx.coroutines.test.TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:1)\n\tat androidx.compose.ui.test.AndroidComposeUiTestEnvironment.runTest(ComposeUiTest.android.kt:665)\n\tat androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$1.evaluate(AndroidComposeTestRule.android.kt:447)\n\tat ee.schimke.composeai.renderer.AppTourRenderer.render(AppTourRenderer.kt:113)\n\tat ee.schimke.composeai.renderer.RobolectricRenderTestBase.renderPreview(RobolectricRenderTest.kt:1074)\n\tat java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)\n\tat org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)\n\tat org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)\n\tat org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)\n\tat org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)\n\tat org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)\n\tat org.robolectric.RobolectricTestRunner$HelperTestRunner$1.evaluate(RobolectricTestRunner.java:542)\n\tat org.robolectric.internal.SandboxTestRunner.lambda$executeInSandbox$4(SandboxTestRunner.java:429)\n\tat org.robolectric.internal.SandboxTestRunner.runInSandbox(SandboxTestRunner.java:455)\n\tat org.robolectric.internal.SandboxTestRunner.executeInSandbox(SandboxTestRunner.java:420)\n\tat org.robolectric.internal.SandboxTestRunner$5.evaluate(SandboxTestRunner.java:405)\n\tat org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)\n\tat org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)\n\tat org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)\n\tat org.robolectric.internal.SandboxTestRunner.access$000(SandboxTestRunner.java:64)\n\tat org.robolectric.internal.SandboxTestRunner$4.evaluate(SandboxTestRunner.java:294)\n\tat org.robolectric.internal.SandboxTestRunner$2.evaluate(SandboxTestRunner.java:260)\n\tat org.robolectric.internal.SandboxTestRunner$3.lambda$evaluate$0(SandboxTestRunner.java:280)\n\tat org.robolectric.internal.bytecode.Sandbox.lambda$runOnMainThreadWithClassLoader$1(Sandbox.java:112)\n\tat java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)\n\tat java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)\n\tat java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)\n\tat java.base/java.lang.Thread.run(Thread.java:1583)\n",
+      "stackTrace": "java.lang.IllegalStateException: Composed into the View which doesn't propagate ViewTreeLifecycleOwner!\n\tat androidx.compose.ui.platform.AbstractComposeView.resolveComposeViewContext(ComposeView.android.kt:373)\n\tat androidx.compose.ui.platform.AbstractComposeView.ensureCompositionCreated(ComposeView.android.kt:350)\n\tat androidx.compose.ui.platform.AbstractComposeView.attachedToWindow(ComposeView.android.kt:484)\n\tat androidx.compose.ui.platform.AbstractComposeView.onAttachedToWindow(ComposeView.android.kt:460)\n\tat android.view.View.dispatchAttachedToWindow(View.java:23535)\n\tat android.view.ViewGroup.dispatchAttachedToWindow(ViewGroup.java:3627)\n\tat android.view.ViewGroup.addViewInner(ViewGroup.java:5467)\n\tat android.view.ViewGroup.addView(ViewGroup.java:5253)\n\tat java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)\n\tat org.robolectric.shadows.ShadowViewGroup$ViewGroupReflector$$Reflector40.addView(Unknown Source)\n\tat org.robolectric.shadows.ShadowViewGroup.lambda$addView$0(ShadowViewGroup.java:31)\n\tat org.robolectric.shadows.ShadowViewGroup.addView(ShadowViewGroup.java:35)\n\tat android.view.ViewGroup.addView(ViewGroup.java)\n\tat android.view.ViewGroup.addView(ViewGroup.java:5225)\n\tat ee.schimke.composeai.renderer.AppTourRenderer.addSystemBarsOverlay$renderer_android(AppTourRenderer.kt:351)\n\tat ee.schimke.composeai.renderer.AppTourRenderer$TourSession.capture(AppTourRenderer.kt:174)\n\tat ee.schimke.composeai.renderer.AppTourRenderer$render$statement$1.evaluate(AppTourRenderer.kt:101)\n\tat androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$testWithDisposal$1.evaluate(AndroidComposeTestRule.android.kt:430)\n\tat androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$1$evaluate$1.invokeSuspend(AndroidComposeTestRule.android.kt:454)\n\tat androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$1$evaluate$1.invoke(AndroidComposeTestRule.android.kt)\n\tat androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1$1$1.invokeSuspend(ComposeUiTest.android.kt:774)\n\tat androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1$1$1.invoke(ComposeUiTest.android.kt)\n\tat androidx.compose.ui.test.IdlingStrategy.withStrategy$suspendImpl(IdlingStrategy.android.kt:49)\n\tat androidx.compose.ui.test.IdlingStrategy.withStrategy(IdlingStrategy.android.kt)\n\tat androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1.invokeSuspend(ComposeUiTest.android.kt:770)\n\tat androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1.invoke(ComposeUiTest.android.kt)\n\tat kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt$runTest$2$1$1.invokeSuspend(TestBuilders.kt:317)\n\tat kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)\n\tat kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)\n\tat kotlinx.coroutines.test.TestDispatcher.processEvent$kotlinx_coroutines_test(TestDispatcher.kt:24)\n\tat kotlinx.coroutines.test.TestCoroutineScheduler.tryRunNextTaskUnless$kotlinx_coroutines_test(TestCoroutineScheduler.kt:98)\n\tat kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt$runTest$2$1$workRunner$1.invokeSuspend(TestBuilders.kt:326)\n\tat kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)\n\tat kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)\n\tat kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)\n\tat kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)\n\tat kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)\n\tat kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source)\n\tat kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)\n\tat kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source)\n\tat kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)\n\tat kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source)\n\tat kotlinx.coroutines.test.TestBuildersJvmKt.createTestResult(TestBuildersJvm.kt:10)\n\tat kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:309)\n\tat kotlinx.coroutines.test.TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:1)\n\tat kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:167)\n\tat kotlinx.coroutines.test.TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:1)\n\tat androidx.compose.ui.test.AndroidComposeUiTestEnvironment.runTest(ComposeUiTest.android.kt:751)\n\tat androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$1.evaluate(AndroidComposeTestRule.android.kt:453)\n\tat ee.schimke.composeai.renderer.AppTourRenderer.render(AppTourRenderer.kt:113)\n\tat ee.schimke.composeai.renderer.RobolectricRenderTestBase.renderPreview(RobolectricRenderTest.kt:1074)\n\tat java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)\n\tat org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)\n\tat org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)\n\tat org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)\n\tat org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)\n\tat org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)\n\tat org.robolectric.RobolectricTestRunner$HelperTestRunner$1.evaluate(RobolectricTestRunner.java:542)\n\tat org.robolectric.internal.SandboxTestRunner.lambda$executeInSandbox$4(SandboxTestRunner.java:429)\n\tat org.robolectric.internal.SandboxTestRunner.runInSandbox(SandboxTestRunner.java:455)\n\tat org.robolectric.internal.SandboxTestRunner.executeInSandbox(SandboxTestRunner.java:420)\n\tat org.robolectric.internal.SandboxTestRunner$5.evaluate(SandboxTestRunner.java:405)\n\tat org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)\n\tat org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)\n\tat org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)\n\tat org.robolectric.internal.SandboxTestRunner.access$000(SandboxTestRunner.java:64)\n\tat org.robolectric.internal.SandboxTestRunner$4.evaluate(SandboxTestRunner.java:294)\n\tat org.robolectric.internal.SandboxTestRunner$2.evaluate(SandboxTestRunner.java:260)\n\tat org.robolectric.internal.SandboxTestRunner$3.lambda$evaluate$0(SandboxTestRunner.java:280)\n\tat org.robolectric.internal.bytecode.Sandbox.lambda$runOnMainThreadWithClassLoader$1(Sandbox.java:112)\n\tat java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)\n\tat java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)\n\tat java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)\n\tat java.base/java.lang.Thread.run(Thread.java:1583)\n",
       "topAppFrame": {
         "file": "View.java",
         "line": 23535,
@@ -14744,7 +15324,7 @@
       "phase": "render",
       "errorClass": "java.lang.IllegalStateException",
       "message": "You need to use a Theme.AppCompat theme (or descendant) with this activity.",
-      "stackTrace": "java.lang.IllegalStateException: You need to use a Theme.AppCompat theme (or descendant) with this activity.\n\tat androidx.appcompat.app.AppCompatDelegateImpl.createSubDecor(AppCompatDelegateImpl.java:902)\n\tat androidx.appcompat.app.AppCompatDelegateImpl.ensureSubDecor(AppCompatDelegateImpl.java:865)\n\tat androidx.appcompat.app.AppCompatDelegateImpl.onPostCreate(AppCompatDelegateImpl.java:561)\n\tat androidx.appcompat.app.AppCompatActivity.onPostCreate(AppCompatActivity.java:149)\n\tat java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)\n\tat java.base/java.lang.reflect.Method.invoke(Method.java:580)\n\tat org.robolectric.shadows.ActivityReflector$$Reflector30.onPostCreate(Unknown Source)\n\tat org.robolectric.android.controller.ActivityController.lambda$postCreate$4(ActivityController.java:185)\n\tat org.robolectric.shadows.ShadowPausedLooper.runPaused(ShadowPausedLooper.java:257)\n\tat org.robolectric.android.controller.ComponentController.invokeWhilePaused(ComponentController.java:64)\n\tat org.robolectric.android.controller.ActivityController.postCreate(ActivityController.java:185)\n\tat org.robolectric.android.controller.ActivityController.setup(ActivityController.java:340)\n\tat ee.schimke.composeai.renderer.AppTourRenderer$TourSession.launchIntent(AppTourRenderer.kt:231)\n\tat ee.schimke.composeai.renderer.AppTourRenderer$TourSession.launch(AppTourRenderer.kt:136)\n\tat ee.schimke.composeai.renderer.AppTourRenderer$render$statement$1.evaluate(AppTourRenderer.kt:84)\n\tat androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$testWithDisposal$1.evaluate(AndroidComposeTestRule.android.kt:426)\n\tat androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$1$evaluate$1.invokeSuspend(AndroidComposeTestRule.android.kt:448)\n\tat androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$1$evaluate$1.invoke(AndroidComposeTestRule.android.kt)\n\tat androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$1$evaluate$1.invoke(AndroidComposeTestRule.android.kt)\n\tat androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1$1$1$1.invokeSuspend(ComposeUiTest.android.kt:689)\n\tat androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1$1$1$1.invoke(ComposeUiTest.android.kt)\n\tat androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1$1$1$1.invoke(ComposeUiTest.android.kt)\n\tat androidx.compose.ui.test.IdlingStrategy.withStrategy$suspendImpl(IdlingStrategy.android.kt:55)\n\tat androidx.compose.ui.test.IdlingStrategy.withStrategy(IdlingStrategy.android.kt)\n\tat androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1.invokeSuspend(ComposeUiTest.android.kt:686)\n\tat androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1.invoke(ComposeUiTest.android.kt)\n\tat androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1.invoke(ComposeUiTest.android.kt)\n\tat kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt$runTest$2$1$1.invokeSuspend(TestBuilders.kt:317)\n\tat kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)\n\tat kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)\n\tat kotlinx.coroutines.test.TestDispatcher.processEvent$kotlinx_coroutines_test(TestDispatcher.kt:24)\n\tat kotlinx.coroutines.test.TestCoroutineScheduler.tryRunNextTaskUnless$kotlinx_coroutines_test(TestCoroutineScheduler.kt:98)\n\tat kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt$runTest$2$1$workRunner$1.invokeSuspend(TestBuilders.kt:326)\n\tat kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)\n\tat kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)\n\tat kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)\n\tat kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)\n\tat kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)\n\tat kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source)\n\tat kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)\n\tat kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source)\n\tat kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)\n\tat kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source)\n\tat kotlinx.coroutines.test.TestBuildersJvmKt.createTestResult(TestBuildersJvm.kt:10)\n\tat kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:309)\n\tat kotlinx.coroutines.test.TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:1)\n\tat kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:167)\n\tat kotlinx.coroutines.test.TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:1)\n\tat androidx.compose.ui.test.AndroidComposeUiTestEnvironment.runTest(ComposeUiTest.android.kt:665)\n\tat androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$1.evaluate(AndroidComposeTestRule.android.kt:447)\n\tat ee.schimke.composeai.renderer.AppTourRenderer.render(AppTourRenderer.kt:113)\n\tat ee.schimke.composeai.renderer.RobolectricRenderTestBase.renderPreview(RobolectricRenderTest.kt:1074)\n\tat java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)\n\tat java.base/java.lang.reflect.Method.invoke(Method.java:580)\n\tat org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)\n\tat org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)\n\tat org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)\n\tat org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)\n\tat org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)\n\tat org.robolectric.RobolectricTestRunner$HelperTestRunner$1.evaluate(RobolectricTestRunner.java:542)\n\tat org.robolectric.internal.SandboxTestRunner.lambda$executeInSandbox$4(SandboxTestRunner.java:429)\n\tat org.robolectric.internal.SandboxTestRunner.runInSandbox(SandboxTestRunner.java:455)\n\tat org.robolectric.internal.SandboxTestRunner.executeInSandbox(SandboxTestRunner.java:420)\n\tat org.robolectric.internal.SandboxTestRunner$5.evaluate(SandboxTestRunner.java:405)\n\tat org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)\n\tat org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)\n\tat org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)\n\tat org.robolectric.internal.SandboxTestRunner.access$000(SandboxTestRunner.java:64)\n\tat org.robolectric.internal.SandboxTestRunner$4.evaluate(SandboxTestRunner.java:294)\n\tat org.robolectric.internal.SandboxTestRunner$2.evaluate(SandboxTestRunner.java:260)\n\tat org.robolectric.internal.SandboxTestRunner$3.lambda$evaluate$0(SandboxTestRunner.java:280)\n\tat org.robolectric.internal.bytecode.Sandbox.lambda$runOnMainThreadWithClassLoader$1(Sandbox.java:112)\n\tat java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)\n\tat java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)\n\tat java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)\n\tat java.base/java.lang.Thread.run(Thread.java:1583)\n",
+      "stackTrace": "java.lang.IllegalStateException: You need to use a Theme.AppCompat theme (or descendant) with this activity.\n\tat androidx.appcompat.app.AppCompatDelegateImpl.createSubDecor(AppCompatDelegateImpl.java:902)\n\tat androidx.appcompat.app.AppCompatDelegateImpl.ensureSubDecor(AppCompatDelegateImpl.java:865)\n\tat androidx.appcompat.app.AppCompatDelegateImpl.onPostCreate(AppCompatDelegateImpl.java:561)\n\tat androidx.appcompat.app.AppCompatActivity.onPostCreate(AppCompatActivity.java:149)\n\tat java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)\n\tat java.base/java.lang.reflect.Method.invoke(Method.java:580)\n\tat org.robolectric.shadows.ActivityReflector$$Reflector30.onPostCreate(Unknown Source)\n\tat org.robolectric.android.controller.ActivityController.lambda$postCreate$4(ActivityController.java:185)\n\tat org.robolectric.shadows.ShadowPausedLooper.runPaused(ShadowPausedLooper.java:257)\n\tat org.robolectric.android.controller.ComponentController.invokeWhilePaused(ComponentController.java:64)\n\tat org.robolectric.android.controller.ActivityController.postCreate(ActivityController.java:185)\n\tat org.robolectric.android.controller.ActivityController.setup(ActivityController.java:340)\n\tat ee.schimke.composeai.renderer.AppTourRenderer$TourSession.launchIntent(AppTourRenderer.kt:231)\n\tat ee.schimke.composeai.renderer.AppTourRenderer$TourSession.launch(AppTourRenderer.kt:136)\n\tat ee.schimke.composeai.renderer.AppTourRenderer$render$statement$1.evaluate(AppTourRenderer.kt:84)\n\tat androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$testWithDisposal$1.evaluate(AndroidComposeTestRule.android.kt:430)\n\tat androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$1$evaluate$1.invokeSuspend(AndroidComposeTestRule.android.kt:454)\n\tat androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$1$evaluate$1.invoke(AndroidComposeTestRule.android.kt)\n\tat androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$1$evaluate$1.invoke(AndroidComposeTestRule.android.kt)\n\tat androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1$1$1.invokeSuspend(ComposeUiTest.android.kt:774)\n\tat androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1$1$1.invoke(ComposeUiTest.android.kt)\n\tat androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1$1$1.invoke(ComposeUiTest.android.kt)\n\tat androidx.compose.ui.test.IdlingStrategy.withStrategy$suspendImpl(IdlingStrategy.android.kt:49)\n\tat androidx.compose.ui.test.IdlingStrategy.withStrategy(IdlingStrategy.android.kt)\n\tat androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1.invokeSuspend(ComposeUiTest.android.kt:770)\n\tat androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1.invoke(ComposeUiTest.android.kt)\n\tat androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1.invoke(ComposeUiTest.android.kt)\n\tat kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt$runTest$2$1$1.invokeSuspend(TestBuilders.kt:317)\n\tat kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)\n\tat kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)\n\tat kotlinx.coroutines.test.TestDispatcher.processEvent$kotlinx_coroutines_test(TestDispatcher.kt:24)\n\tat kotlinx.coroutines.test.TestCoroutineScheduler.tryRunNextTaskUnless$kotlinx_coroutines_test(TestCoroutineScheduler.kt:98)\n\tat kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt$runTest$2$1$workRunner$1.invokeSuspend(TestBuilders.kt:326)\n\tat kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)\n\tat kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)\n\tat kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)\n\tat kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)\n\tat kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)\n\tat kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source)\n\tat kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)\n\tat kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source)\n\tat kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)\n\tat kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source)\n\tat kotlinx.coroutines.test.TestBuildersJvmKt.createTestResult(TestBuildersJvm.kt:10)\n\tat kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:309)\n\tat kotlinx.coroutines.test.TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:1)\n\tat kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:167)\n\tat kotlinx.coroutines.test.TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:1)\n\tat androidx.compose.ui.test.AndroidComposeUiTestEnvironment.runTest(ComposeUiTest.android.kt:751)\n\tat androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$1.evaluate(AndroidComposeTestRule.android.kt:453)\n\tat ee.schimke.composeai.renderer.AppTourRenderer.render(AppTourRenderer.kt:113)\n\tat ee.schimke.composeai.renderer.RobolectricRenderTestBase.renderPreview(RobolectricRenderTest.kt:1074)\n\tat java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)\n\tat java.base/java.lang.reflect.Method.invoke(Method.java:580)\n\tat org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)\n\tat org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)\n\tat org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)\n\tat org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)\n\tat org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)\n\tat org.robolectric.RobolectricTestRunner$HelperTestRunner$1.evaluate(RobolectricTestRunner.java:542)\n\tat org.robolectric.internal.SandboxTestRunner.lambda$executeInSandbox$4(SandboxTestRunner.java:429)\n\tat org.robolectric.internal.SandboxTestRunner.runInSandbox(SandboxTestRunner.java:455)\n\tat org.robolectric.internal.SandboxTestRunner.executeInSandbox(SandboxTestRunner.java:420)\n\tat org.robolectric.internal.SandboxTestRunner$5.evaluate(SandboxTestRunner.java:405)\n\tat org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)\n\tat org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)\n\tat org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)\n\tat org.robolectric.internal.SandboxTestRunner.access$000(SandboxTestRunner.java:64)\n\tat org.robolectric.internal.SandboxTestRunner$4.evaluate(SandboxTestRunner.java:294)\n\tat org.robolectric.internal.SandboxTestRunner$2.evaluate(SandboxTestRunner.java:260)\n\tat org.robolectric.internal.SandboxTestRunner$3.lambda$evaluate$0(SandboxTestRunner.java:280)\n\tat org.robolectric.internal.bytecode.Sandbox.lambda$runOnMainThreadWithClassLoader$1(Sandbox.java:112)\n\tat java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)\n\tat java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)\n\tat java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)\n\tat java.base/java.lang.Thread.run(Thread.java:1583)\n",
       "topAppFrame": {
         "file": "AppCompatDelegateImpl.java",
         "line": 902,
@@ -14758,7 +15338,7 @@
       "phase": "render",
       "errorClass": "java.lang.NullPointerException",
       "message": "Parameter specified as non-null is null: method androidx.activity.ComponentActivity.startActivityForResult, parameter intent",
-      "stackTrace": "java.lang.NullPointerException: Parameter specified as non-null is null: method androidx.activity.ComponentActivity.startActivityForResult, parameter intent\n\tat androidx.activity.ComponentActivity.startActivityForResult(ComponentActivity.kt)\n\tat android.app.Activity.startActivity(Activity.java:6530)\n\tat android.app.Activity.startActivity(Activity.java:6497)\n\tat net.openid.appauth.AuthorizationManagementActivity.onResume(AuthorizationManagementActivity.java:228)\n\tat android.app.Instrumentation.callActivityOnResume(Instrumentation.java:1739)\n\tat org.robolectric.android.internal.RoboMonitoringInstrumentation.callActivityOnResume(RoboMonitoringInstrumentation.java:400)\n\tat android.app.Activity.performResume(Activity.java:9500)\n\tat java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)\n\tat org.robolectric.shadows.ActivityReflector$$Reflector30.performResume(Unknown Source)\n\tat org.robolectric.android.controller.ActivityController.lambda$resume$5(ActivityController.java:195)\n\tat org.robolectric.shadows.ShadowPausedLooper.runPaused(ShadowPausedLooper.java:257)\n\tat org.robolectric.android.controller.ComponentController.invokeWhilePaused(ComponentController.java:64)\n\tat org.robolectric.android.controller.ActivityController.resume(ActivityController.java:190)\n\tat org.robolectric.android.controller.ActivityController.setup(ActivityController.java:340)\n\tat ee.schimke.composeai.renderer.AppTourRenderer$TourSession.launchIntent(AppTourRenderer.kt:231)\n\tat ee.schimke.composeai.renderer.AppTourRenderer$TourSession.launch(AppTourRenderer.kt:136)\n\tat ee.schimke.composeai.renderer.AppTourRenderer$render$statement$1.evaluate(AppTourRenderer.kt:84)\n\tat androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$testWithDisposal$1.evaluate(AndroidComposeTestRule.android.kt:426)\n\tat androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$1$evaluate$1.invokeSuspend(AndroidComposeTestRule.android.kt:448)\n\tat androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$1$evaluate$1.invoke(AndroidComposeTestRule.android.kt)\n\tat androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1$1$1$1.invokeSuspend(ComposeUiTest.android.kt:689)\n\tat androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1$1$1$1.invoke(ComposeUiTest.android.kt)\n\tat androidx.compose.ui.test.IdlingStrategy.withStrategy$suspendImpl(IdlingStrategy.android.kt:55)\n\tat androidx.compose.ui.test.IdlingStrategy.withStrategy(IdlingStrategy.android.kt)\n\tat androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1.invokeSuspend(ComposeUiTest.android.kt:686)\n\tat androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1.invoke(ComposeUiTest.android.kt)\n\tat kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt$runTest$2$1$1.invokeSuspend(TestBuilders.kt:317)\n\tat kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)\n\tat kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)\n\tat kotlinx.coroutines.test.TestDispatcher.processEvent$kotlinx_coroutines_test(TestDispatcher.kt:24)\n\tat kotlinx.coroutines.test.TestCoroutineScheduler.tryRunNextTaskUnless$kotlinx_coroutines_test(TestCoroutineScheduler.kt:98)\n\tat kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt$runTest$2$1$workRunner$1.invokeSuspend(TestBuilders.kt:326)\n\tat kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)\n\tat kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)\n\tat kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)\n\tat kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)\n\tat kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)\n\tat kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source)\n\tat kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)\n\tat kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source)\n\tat kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)\n\tat kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source)\n\tat kotlinx.coroutines.test.TestBuildersJvmKt.createTestResult(TestBuildersJvm.kt:10)\n\tat kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:309)\n\tat kotlinx.coroutines.test.TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:1)\n\tat kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:167)\n\tat kotlinx.coroutines.test.TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:1)\n\tat androidx.compose.ui.test.AndroidComposeUiTestEnvironment.runTest(ComposeUiTest.android.kt:665)\n\tat androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$1.evaluate(AndroidComposeTestRule.android.kt:447)\n\tat ee.schimke.composeai.renderer.AppTourRenderer.render(AppTourRenderer.kt:113)\n\tat ee.schimke.composeai.renderer.RobolectricRenderTestBase.renderPreview(RobolectricRenderTest.kt:1074)\n\tat java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)\n\tat org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)\n\tat org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)\n\tat org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)\n\tat org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)\n\tat org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)\n\tat org.robolectric.RobolectricTestRunner$HelperTestRunner$1.evaluate(RobolectricTestRunner.java:542)\n\tat org.robolectric.internal.SandboxTestRunner.lambda$executeInSandbox$4(SandboxTestRunner.java:429)\n\tat org.robolectric.internal.SandboxTestRunner.runInSandbox(SandboxTestRunner.java:455)\n\tat org.robolectric.internal.SandboxTestRunner.executeInSandbox(SandboxTestRunner.java:420)\n\tat org.robolectric.internal.SandboxTestRunner$5.evaluate(SandboxTestRunner.java:405)\n\tat org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)\n\tat org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)\n\tat org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)\n\tat org.robolectric.internal.SandboxTestRunner.access$000(SandboxTestRunner.java:64)\n\tat org.robolectric.internal.SandboxTestRunner$4.evaluate(SandboxTestRunner.java:294)\n\tat org.robolectric.internal.SandboxTestRunner$2.evaluate(SandboxTestRunner.java:260)\n\tat org.robolectric.internal.SandboxTestRunner$3.lambda$evaluate$0(SandboxTestRunner.java:280)\n\tat org.robolectric.internal.bytecode.Sandbox.lambda$runOnMainThreadWithClassLoader$1(Sandbox.java:112)\n\tat java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)\n\tat java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)\n\tat java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)\n\tat java.base/java.lang.Thread.run(Thread.java:1583)\n",
+      "stackTrace": "java.lang.NullPointerException: Parameter specified as non-null is null: method androidx.activity.ComponentActivity.startActivityForResult, parameter intent\n\tat androidx.activity.ComponentActivity.startActivityForResult(ComponentActivity.kt)\n\tat android.app.Activity.startActivity(Activity.java:6530)\n\tat android.app.Activity.startActivity(Activity.java:6497)\n\tat net.openid.appauth.AuthorizationManagementActivity.onResume(AuthorizationManagementActivity.java:228)\n\tat android.app.Instrumentation.callActivityOnResume(Instrumentation.java:1739)\n\tat org.robolectric.android.internal.RoboMonitoringInstrumentation.callActivityOnResume(RoboMonitoringInstrumentation.java:400)\n\tat android.app.Activity.performResume(Activity.java:9500)\n\tat java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)\n\tat org.robolectric.shadows.ActivityReflector$$Reflector30.performResume(Unknown Source)\n\tat org.robolectric.android.controller.ActivityController.lambda$resume$5(ActivityController.java:195)\n\tat org.robolectric.shadows.ShadowPausedLooper.runPaused(ShadowPausedLooper.java:257)\n\tat org.robolectric.android.controller.ComponentController.invokeWhilePaused(ComponentController.java:64)\n\tat org.robolectric.android.controller.ActivityController.resume(ActivityController.java:190)\n\tat org.robolectric.android.controller.ActivityController.setup(ActivityController.java:340)\n\tat ee.schimke.composeai.renderer.AppTourRenderer$TourSession.launchIntent(AppTourRenderer.kt:231)\n\tat ee.schimke.composeai.renderer.AppTourRenderer$TourSession.launch(AppTourRenderer.kt:136)\n\tat ee.schimke.composeai.renderer.AppTourRenderer$render$statement$1.evaluate(AppTourRenderer.kt:84)\n\tat androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$testWithDisposal$1.evaluate(AndroidComposeTestRule.android.kt:430)\n\tat androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$1$evaluate$1.invokeSuspend(AndroidComposeTestRule.android.kt:454)\n\tat androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$1$evaluate$1.invoke(AndroidComposeTestRule.android.kt)\n\tat androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1$1$1.invokeSuspend(ComposeUiTest.android.kt:774)\n\tat androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1$1$1$1.invoke(ComposeUiTest.android.kt)\n\tat androidx.compose.ui.test.IdlingStrategy.withStrategy$suspendImpl(IdlingStrategy.android.kt:49)\n\tat androidx.compose.ui.test.IdlingStrategy.withStrategy(IdlingStrategy.android.kt)\n\tat androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1.invokeSuspend(ComposeUiTest.android.kt:770)\n\tat androidx.compose.ui.test.AndroidComposeUiTestEnvironment$runTest$1.invoke(ComposeUiTest.android.kt)\n\tat kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt$runTest$2$1$1.invokeSuspend(TestBuilders.kt:317)\n\tat kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)\n\tat kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)\n\tat kotlinx.coroutines.test.TestDispatcher.processEvent$kotlinx_coroutines_test(TestDispatcher.kt:24)\n\tat kotlinx.coroutines.test.TestCoroutineScheduler.tryRunNextTaskUnless$kotlinx_coroutines_test(TestCoroutineScheduler.kt:98)\n\tat kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt$runTest$2$1$workRunner$1.invokeSuspend(TestBuilders.kt:326)\n\tat kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)\n\tat kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)\n\tat kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:256)\n\tat kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:54)\n\tat kotlinx.coroutines.BuildersKt__BuildersKt.runBlockingImpl(Builders.kt:30)\n\tat kotlinx.coroutines.BuildersKt.runBlockingImpl(Unknown Source)\n\tat kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK(Builders.concurrent.kt:172)\n\tat kotlinx.coroutines.BuildersKt.runBlockingK(Unknown Source)\n\tat kotlinx.coroutines.BuildersKt__Builders_concurrentKt.runBlockingK$default(Builders.concurrent.kt:157)\n\tat kotlinx.coroutines.BuildersKt.runBlockingK$default(Unknown Source)\n\tat kotlinx.coroutines.test.TestBuildersJvmKt.createTestResult(TestBuildersJvm.kt:10)\n\tat kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:309)\n\tat kotlinx.coroutines.test.TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:1)\n\tat kotlinx.coroutines.test.TestBuildersKt__TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:167)\n\tat kotlinx.coroutines.test.TestBuildersKt.runTest-8Mi8wO0(TestBuilders.kt:1)\n\tat androidx.compose.ui.test.AndroidComposeUiTestEnvironment.runTest(ComposeUiTest.android.kt:751)\n\tat androidx.compose.ui.test.junit4.AndroidComposeTestRule$apply$1.evaluate(AndroidComposeTestRule.android.kt:453)\n\tat ee.schimke.composeai.renderer.AppTourRenderer.render(AppTourRenderer.kt:113)\n\tat ee.schimke.composeai.renderer.RobolectricRenderTestBase.renderPreview(RobolectricRenderTest.kt:1074)\n\tat java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)\n\tat org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)\n\tat org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)\n\tat org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)\n\tat org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)\n\tat org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)\n\tat org.robolectric.RobolectricTestRunner$HelperTestRunner$1.evaluate(RobolectricTestRunner.java:542)\n\tat org.robolectric.internal.SandboxTestRunner.lambda$executeInSandbox$4(SandboxTestRunner.java:429)\n\tat org.robolectric.internal.SandboxTestRunner.runInSandbox(SandboxTestRunner.java:455)\n\tat org.robolectric.internal.SandboxTestRunner.executeInSandbox(SandboxTestRunner.java:420)\n\tat org.robolectric.internal.SandboxTestRunner$5.evaluate(SandboxTestRunner.java:405)\n\tat org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)\n\tat org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)\n\tat org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)\n\tat org.robolectric.internal.SandboxTestRunner.access$000(SandboxTestRunner.java:64)\n\tat org.robolectric.internal.SandboxTestRunner$4.evaluate(SandboxTestRunner.java:294)\n\tat org.robolectric.internal.SandboxTestRunner$2.evaluate(SandboxTestRunner.java:260)\n\tat org.robolectric.internal.SandboxTestRunner$3.lambda$evaluate$0(SandboxTestRunner.java:280)\n\tat org.robolectric.internal.bytecode.Sandbox.lambda$runOnMainThreadWithClassLoader$1(Sandbox.java:112)\n\tat java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)\n\tat java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)\n\tat java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)\n\tat java.base/java.lang.Thread.run(Thread.java:1583)\n",
       "topAppFrame": {
         "file": "Activity.java",
         "line": 6530,
@@ -14793,7 +15373,7 @@
   "componentsFile": "components.json",
   "source": {
     "repo": "yschimke/cadence",
-    "ref": "05e14fa35b3d49e7845e45b993e99224a578b32a",
+    "ref": "594ab4a62d6ba309a8f38d5a8a4eca02c7d81a89",
     "module": ""
   }
 }

@@ -47,7 +47,7 @@
                   <text x="42" y="266.99" font-size="42" font-family="Roboto Flex" font-weight="500" letter-spacing="0.53" fill="#30323A">On your headphones</text>
                 </g>
                 <g id="AndroidViewHolder">
-                  <image href="ideal__default.figma-raster/472.png" x="42" y="336" width="966" height="399"/>
+                  <image href="ideal__default.figma-raster/1619.png" x="42" y="336" width="966" height="399"/>
                 </g>
                 <g id="Box">
                   <rect x="42" y="756" width="966" height="210" rx="52.5" ry="52.5" fill="#E7E7F1"/>
@@ -73,7 +73,7 @@
                   <text x="42" y="1085.99" font-size="42" font-family="Roboto Flex" font-weight="500" letter-spacing="0.53" fill="#30323A">On this phone</text>
                 </g>
                 <g id="AndroidViewHolder">
-                  <image href="ideal__default.figma-raster/474.png" x="42" y="1155" width="966" height="504"/>
+                  <image href="ideal__default.figma-raster/1617.png" x="42" y="1155" width="966" height="504"/>
                 </g>
                 <g id="Row">
                   <g id="Box">
@@ -126,7 +126,7 @@
               </g>
               <clipPath id="clip-2"><rect x="42" y="2269" width="966" height="724" rx="31.5" ry="31.5"/></clipPath>
               <g id="Box">
-                  <rect x="43" y="2270" width="964" height="722" rx="30.5" ry="30.5" fill="#FAF8FE" stroke="#B0B1BC" stroke-width="2.62"/>
+                <rect x="43" y="2270" width="964" height="722" rx="30.5" ry="30.5" fill="#FAF8FE" stroke="#B0B1BC" stroke-width="2.62"/>
                 <g clip-path="url(#clip-2)">
                   <g id="Column">
                     <g id="Row">
@@ -153,7 +153,6 @@
                     </g>
                     <g id="Box">
                       <g id="Box">
-                        <image href="ideal__default.figma-raster/366.png" x="105" y="2420" width="840" height="189"/>
                       </g>
                       <g id="Box">
                         <rect x="42" y="2420" width="966" height="189" fill="#FAF8FE"/>
@@ -191,7 +190,6 @@
                     </g>
                     <g id="Box">
                       <g id="Box">
-                        <image href="ideal__default.figma-raster/386.png" x="105" y="2612" width="840" height="189"/>
                       </g>
                       <g id="Box">
                         <rect x="42" y="2612" width="966" height="189" fill="#FAF8FE"/>
@@ -229,7 +227,6 @@
                     </g>
                     <g id="Box">
                       <g id="Box">
-                        <image href="ideal__default.figma-raster/406.png" x="105" y="2804" width="840" height="189"/>
                       </g>
                       <g id="Box">
                         <rect x="42" y="2804" width="966" height="189" fill="#FAF8FE"/>
