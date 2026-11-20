@@ -35,6 +35,7 @@ import androidx.compose.material.icons.filled.Bedtime
 import androidx.compose.material.icons.filled.Bluetooth
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Cloud
+import androidx.compose.material.icons.filled.Eject
 import androidx.compose.material.icons.filled.ErrorOutline
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
@@ -100,6 +101,7 @@ import androidx.compose.ui.unit.dp
 import ee.schimke.cadence.bluetooth.MediaInfo
 import ee.schimke.cadence.datastore.proto.SourceKind
 import ee.schimke.cadence.datastore.proto.SyncSource
+import ee.schimke.cadence.devices.rememberEjectUsb
 import ee.schimke.cadence.devices.rememberFileExplorerOpenLauncher
 import ee.schimke.cadence.metro.metroViewModel
 import ee.schimke.cadence.podcasts.CloudSyncHomeCard
@@ -149,6 +151,7 @@ data class HomeActions(
   val onSyncPodcasts: () -> Unit = {},
   val onPreparePodcasts: () -> Unit = {},
   val onChooseHeadphoneStorage: () -> Unit = {},
+  val onEjectUsb: (() -> Unit)? = null,
   val onBluetoothControls: () -> Unit = {},
   val onManageSources: () -> Unit = {},
   val onFileExplorer: () -> Unit = {},
@@ -242,6 +245,7 @@ fun HomeScreen(
     attachedDeviceId = state.attachedDevice?.id,
     onResult = ::showSyncResult,
   )
+  val ejectUsb = rememberEjectUsb()
   HomeContent(
     state = state,
     podcasts = podcastState,
@@ -275,6 +279,16 @@ fun HomeScreen(
         },
         onPreparePodcasts = podcastWork.process,
         onChooseHeadphoneStorage = chooseHeadphoneStorage,
+        onEjectUsb =
+          ejectUsb?.let { eject ->
+            {
+              if (!eject()) {
+                scope.launch {
+                  snackbar.showSnackbar("Open Storage in Settings to eject USB storage.")
+                }
+              }
+            }
+          },
         onBluetoothControls = onBluetoothControls,
         onManageSources = onManageSources,
         onFileExplorer = onFileExplorer,
@@ -798,8 +812,20 @@ private fun HeadphoneSyncPrompt(
             }
         is HeadphoneSyncStep.UpToDate ->
           if (step.pluggedIn && !busy)
-            TextButton(enabled = enabled, onClick = actions.onSyncPodcasts) {
-              Text("Sync again", color = content)
+            Row(
+              horizontalArrangement = Arrangement.spacedBy(8.dp),
+              verticalAlignment = Alignment.CenterVertically,
+            ) {
+              actions.onEjectUsb?.let { eject ->
+                FilledTonalButton(onClick = eject) {
+                  Icon(Icons.Filled.Eject, contentDescription = null, Modifier.size(18.dp))
+                  Spacer(Modifier.width(8.dp))
+                  Text("Eject USB")
+                }
+              }
+              TextButton(enabled = enabled, onClick = actions.onSyncPodcasts) {
+                Text("Sync again", color = content)
+              }
             }
         is HeadphoneSyncStep.Folders ->
           if (step.pluggedIn)

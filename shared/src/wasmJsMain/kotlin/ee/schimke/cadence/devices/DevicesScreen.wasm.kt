@@ -40,3 +40,6 @@ actual fun rememberFileExplorerOpenLauncher(
 
 /** A browser can't hand a picked folder to another app. */
 @Composable actual fun rememberOpenInFilesApp(): ((Path) -> Boolean)? = null
+
+/** A browser can't unmount OS USB storage. */
+@Composable actual fun rememberEjectUsb(): (() -> Boolean)? = null
