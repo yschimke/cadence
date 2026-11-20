@@ -1,7 +1,6 @@
 package ee.schimke.cadence.sync
 
 import android.content.Context
-import android.net.Uri
 import androidx.documentfile.provider.DocumentFile
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesBinding
@@ -9,6 +8,7 @@ import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.SingleIn
 import dev.zacsweers.metro.binding
 import ee.schimke.cadence.data.DevicesRepo
+import ee.schimke.cadence.data.toUri
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import okio.Path.Companion.toPath
 import okio.buffer
 
 @ContributesBinding(AppScope::class, binding = binding<SyncOrchestrator>())
@@ -67,9 +68,8 @@ class AndroidSyncOrchestrator(
 
     currentJob = scope.launch {
       _progress.value = SyncProgress(running = true, filesTotal = totalFiles)
-      val rootUri = Uri.parse(device.path)
       val rootDoc =
-        DocumentFile.fromTreeUri(context, rootUri)
+        openDeviceTree(context, device.path)
           ?: return@launch reportError("Cannot open device tree URI")
 
       var completed = 0
@@ -181,5 +181,16 @@ class AndroidSyncOrchestrator(
 
   override fun cancel() {
     currentJob?.cancel()
+  }
+
+  companion object {
+    internal fun openDeviceTree(context: Context, devicePath: String): DocumentFile? {
+      if (devicePath.isBlank()) return null
+      return runCatching { DocumentFile.fromTreeUri(context, devicePath.toPath().toUri()) }
+        .getOrNull()
+    }
+
+    fun resolveDeviceTreeUri(context: Context, devicePath: String): android.net.Uri? =
+      openDeviceTree(context, devicePath)?.uri
   }
 }

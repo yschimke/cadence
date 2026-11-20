@@ -35,6 +35,14 @@
   export the bearer as `COMPOSE_PREVIEW_TOKEN` and reconnect the server — an
   MCP host cannot inject a header its config never declared. A box older
   than that change answers `401` to every message, handshake included.
+- **Firebase is reachable over MCP too.** `.mcp.json` also registers the
+  local Firebase MCP server (`firebase`, `npx -y firebase-tools@latest mcp`,
+  [docs](https://firebase.google.com/docs/ai-assistance/mcp-server)). It
+  runs with the Firebase CLI's credentials — call `firebase_login` (or run
+  `npx firebase-tools login`) first. Use project `cadence-yschimke` and
+  Android app ID `1:684558084231:android:c84c0837583aa6558f7022` (see
+  `docs/play-publishing.md`) with the `crashlytics_*` tools for triaging
+  crash reports.
 - **Design review uses the Preview Audit's guidelines.**
   `.github/preview-audit/mobile.guidelines.json` pins the shared rule packs
   from compose-ai-tools (`compose-ui` for every screen and component;
