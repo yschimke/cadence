@@ -100,7 +100,9 @@ extensions.configure<LibraryAndroidComponentsExtension> {
 
 android {
   namespace = "ee.schimke.cadence.swim"
-  compileSdk = libs.versions.android.compileSdk.get().toInt()
+  compileSdk {
+    version = release(libs.versions.android.compileSdk.get().toInt()) { minorApiLevel = 1 }
+  }
   defaultConfig { minSdk = libs.versions.android.minSdk.get().toInt() }
 }
 
