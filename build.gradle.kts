@@ -235,6 +235,7 @@ val verifyYschimkeBoms by
           "**/node_modules/**",
           ".claude/**",
           ".worktrees/**",
+          "compose-ai-tools/**",
         )
       },
     )
