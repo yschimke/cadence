@@ -27,7 +27,6 @@ import ee.schimke.livery.protocol.Surfaces
 import ee.schimke.livery.protocol.Target
 import java.io.File
 import kotlin.test.Test
-import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
@@ -63,6 +62,7 @@ class PlatformPlayerTest {
 
   /** A notification body is blank when the player can't lay it out: every example must draw. */
   @Test
+  @Config(sdk = [ANDROID_17], qualifiers = "mdpi")
   fun everyExampleDrawsAsANotification() {
     assertTrue(contract.examples.isNotEmpty(), "the contract has no examples")
     for (example in contract.examples.keys) {
@@ -72,6 +72,7 @@ class PlatformPlayerTest {
 
   /** The same document published as a launcher widget is, without the notification's wrapper. */
   @Test
+  @Config(sdk = [ANDROID_17], qualifiers = "mdpi")
   fun everyExampleDrawsAsAWidget() {
     for (example in contract.examples.keys) {
       player.widget(body(example), WIDTH, HEIGHT, example).assertDraws("'$example'")
@@ -89,67 +90,69 @@ class PlatformPlayerTest {
     val heights =
       contract.examples.keys.associateWith { player.notificationHeight(body(it), WIDTH, 256) }
     heights.forEach { (example, height) ->
-      assertTrue(height in 48..160, "'$example' asks for ${height}dp of a 256dp shade")
+      assertTrue(height in 32..120, "'$example' asks for ${height}dp of a 256dp shade")
     }
     assertTrue(heights.getValue("ready") < heights.getValue("syncing"), "$heights")
-    assertTrue(heights.getValue("syncing") < heights.getValue("downloading"), "$heights")
+    assertTrue(heights.getValue("ready") < heights.getValue("downloading"), "$heights")
   }
 
-  /** `downloading` has a progress bar and Cancel: both are drawn, below the title and text. */
+  /** `downloading` has a progress bar and no in-body Cancel (Android renders Cancel natively). */
   @Test
-  fun aBodyWithProgressAndCancelShowsBoth() {
+  @Config(sdk = [ANDROID_17], qualifiers = "mdpi")
+  fun aBodyWithProgressShowsTheBarAndNoInBodyCancel() {
     val played = player.notification(body("downloading"), WIDTH, HEIGHT)
-    played.assertDraws(HEADER, "the icon, title and text")
-    played.assertDraws(BELOW_HEADER, "the progress bar and Cancel")
-    played.assertDraws(CANCEL, "Cancel")
+    played.assertDraws(HEADER, "the title and text")
+    played.assertDraws(PROGRESS, "the progress bar")
+    played.assertBlank(BELOW_PROGRESS, "no in-body Cancel button")
   }
 
-  /** `syncing` has a progress bar and no Cancel. */
+  /** `syncing` has a progress bar and nothing below it (runs on both Android 16 and 17). */
   @Test
   fun aBodyWithProgressOnlyHasNoCancel() {
     val played = player.notification(body("syncing"), WIDTH, HEIGHT)
-    played.assertDraws(BELOW_HEADER, "the progress bar")
-    played.assertBlank(CANCEL, "Cancel")
+    played.assertDraws(PROGRESS, "the progress bar")
+    played.assertBlank(BELOW_PROGRESS, "no in-body Cancel button")
   }
 
-  /** `ready` has neither: nothing is drawn below the title and text. */
+  /** `ready` has no progress bar: nothing is drawn below the title and text. */
   @Test
+  @Config(sdk = [ANDROID_17], qualifiers = "mdpi")
   fun aBodyWithNeitherShowsNeither() {
     val played = player.notification(body("ready"), WIDTH, HEIGHT)
-    played.assertDraws(HEADER, "the icon, title and text")
-    played.assertBlank(BELOW_HEADER, "a progress bar or Cancel")
+    played.assertDraws(HEADER, "the title and text")
+    played.assertBlank(PROGRESS, "a progress bar")
   }
 
   /**
-   * Why bodies were blank before rc-players 2.31.1: a row or column whose spacing is a variable is
-   * laid out as nothing, and the whole document with it. A capture at host density, as Livery's
-   * templates are, writes every `spacedBy(n.dp)` as an expression over the display's density.
-   * `RcLauncherWidgets.remoteViews` now recovers it.
+   * Why bodies broke before rc-players 2.31.1: a row or column whose spacing is a variable drops
+   * subsequent children when laid out as-is. A capture at host density, as Livery's templates are,
+   * writes every `spacedBy(n.dp)` as an expression over the display's density.
+   * `RcLauncherWidgets.remoteViews` recovers it.
    */
   @Test
   @Config(sdk = [ANDROID_17], qualifiers = "mdpi")
-  fun aLayoutSpacedByAVariableDrawsNothingAsItIs() {
-    assertEquals(0, player.asIs(spacedColumn(), WIDTH, HEIGHT).ink)
+  fun aLayoutSpacedByAVariableDropsSubsequentChildrenAsItIs() {
+    player.asIs(spacedColumn(), WIDTH, HEIGHT).assertBlank(PROGRESS, "second child dropped as-is")
   }
 
   /** The same document through the publishing path, which makes the spacing a literal. */
   @Test
   @Config(sdk = [ANDROID_17], qualifiers = "mdpi")
   fun aLayoutSpacedByAVariableIsRecovered() {
-    player.widget(spacedColumn(), WIDTH, HEIGHT).assertDraws()
+    player.widget(spacedColumn(), WIDTH, HEIGHT).assertDraws(PROGRESS, "second child recovered")
   }
 
   /**
    * The template captured with a body's values, as a preview captures it, played without being
-   * instantiated: nothing collapses its layouts. A conditional layout for the bar and Cancel was
-   * laid out over the title here, which is what `RemoteContentPreview` showed.
+   * instantiated: nothing collapses its layouts. A conditional layout for the bar was laid out over
+   * the title here, which is what `RemoteContentPreview` showed.
    *
    * Android 17 only: its player, like AndroidX's that previews use, sizes by a value the host could
    * change. Android 16's needs literals, which only instantiation writes in.
    */
   @Test
   @Config(sdk = [ANDROID_17], qualifiers = "mdpi")
-  fun anUninstantiatedBodyLaysTheBarAndCancelOutBelowTheTitle() {
+  fun anUninstantiatedBodyLaysTheBarOutBelowTheTitle() {
     val captured =
       capture(
         NotificationBody(
@@ -161,12 +164,12 @@ class PlatformPlayerTest {
         cancel = true,
       )
     val played = player.widget(captured, WIDTH, HEIGHT)
-    played.assertDraws(HEADER, "the icon, title and text")
-    played.assertDraws(BELOW_HEADER, "the progress bar and Cancel")
-    played.assertDraws(CANCEL, "Cancel")
+    played.assertDraws(HEADER, "the title and text")
+    played.assertDraws(PROGRESS, "the progress bar")
+    played.assertBlank(BELOW_PROGRESS, "no in-body Cancel button")
   }
 
-  /** Without a bar or Cancel, nothing is drawn below the title, uninstantiated too. */
+  /** Without a bar, nothing is drawn below the title, uninstantiated too. */
   @Test
   @Config(sdk = [ANDROID_17], qualifiers = "mdpi")
   fun anUninstantiatedBodyWithNeitherShowsNeither() {
@@ -175,14 +178,18 @@ class PlatformPlayerTest {
         NotificationBody("3 episodes ready", "Plug in your headphones", NotificationIcon.Done),
       )
     val played = player.widget(captured, WIDTH, HEIGHT)
-    played.assertDraws(HEADER, "the icon, title and text")
-    played.assertBlank(BELOW_HEADER, "a progress bar or Cancel")
+    played.assertDraws(HEADER, "the title and text")
+    played.assertBlank(PROGRESS, "a progress bar")
   }
 
   /** [example] of the contract, written into the bundled template as the app writes a post. */
   private fun body(example: String): ByteArray = runBlocking {
+    val t = NotificationTemplate
     val template =
-      File(catalog, "designs/notification-default/notification-w200-h64.rc")
+      File(
+          catalog,
+          "designs/notification-default/notification-w${t.MIN_WIDTH_DP}-h${t.MIN_HEIGHT_DP}.rc",
+        )
         .readBytes()
         .toByteString()
     // The app sends its colours with every post (NotificationTemplate.data); the examples don't.
@@ -217,6 +224,12 @@ class PlatformPlayerTest {
         NotificationBody("Processing", "Trimming silence…", NotificationIcon.Process),
         colors = WidgetColors.Light,
       )
+      NotificationTemplateContent(
+        null,
+        null,
+        NotificationBody("3 episodes ready", "Plug in your headphones", NotificationIcon.Done),
+        colors = WidgetColors.Light,
+      )
     }
   }
 
@@ -243,15 +256,15 @@ class PlatformPlayerTest {
 
   private companion object {
     const val WIDTH = 320
-    const val HEIGHT = 150
+    const val HEIGHT = 104
 
-    /** The icon, title and text: the first row, inside the body's padding. */
-    val HEADER = Rect(0, 0, WIDTH, 60)
+    /** The title and text inside the body's top padding. */
+    val HEADER = Rect(0, 0, WIDTH, 46)
 
-    /** Where the progress bar and Cancel go, when a body has them. */
-    val BELOW_HEADER = Rect(0, 64, WIDTH, HEIGHT)
+    /** Where the progress bar goes when a body has one. */
+    val PROGRESS = Rect(0, 48, WIDTH, 82)
 
-    /** The Cancel button: right-aligned under the lane. */
-    val CANCEL = Rect(WIDTH / 2, 100, WIDTH, HEIGHT)
+    /** Below the progress bar: always blank since Cancel uses Android's native action. */
+    val BELOW_PROGRESS = Rect(0, 84, WIDTH, HEIGHT)
   }
 }

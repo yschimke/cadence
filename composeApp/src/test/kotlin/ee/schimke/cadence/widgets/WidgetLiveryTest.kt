@@ -131,7 +131,7 @@ class WidgetLiveryTest {
         Contract.serializer(),
         File(catalogDir, "contracts/notification.json").readText(),
       )
-    for ((name, example) in notifications.examples) for (heightDp in listOf(88, 150, 256)) {
+    for ((name, example) in notifications.examples) for (heightDp in listOf(48, 80, 150, 256)) {
       val result =
         livery.planner.forAppData(
           TemplateQuery(

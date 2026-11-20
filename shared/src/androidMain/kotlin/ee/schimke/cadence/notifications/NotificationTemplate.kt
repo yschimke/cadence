@@ -76,7 +76,7 @@ object NotificationTemplate {
 
   /** Template sizes: the shade's width, and up to Android's 256dp cap on a custom body. */
   const val MIN_WIDTH_DP = 200
-  const val MIN_HEIGHT_DP = 64
+  const val MIN_HEIGHT_DP = 44
   const val MAX_HEIGHT_DP = 256
 
   /** The progress bar: a pool lane tall enough to see its swimmer. */
@@ -87,7 +87,7 @@ object NotificationTemplate {
    * draws: Android 17's player gives a body all the height it is offered unless it asks for less.
    */
   const val CAPTURE_WIDTH_DP = 360
-  const val CAPTURE_HEIGHT_DP = 128
+  const val CAPTURE_HEIGHT_DP = 104
 
   /** Colour roles, as `theme.*` inputs written in per post: text over the system's shade. */
   val COLORS: Map<String, (WidgetColors) -> Color> =
@@ -122,9 +122,9 @@ enum class NotificationIcon(val vector: ImageVector, val label: String) {
 }
 
 /**
- * The template: [onOpen] on the body, [onCancel] on its Cancel button. The icon is a conditional
- * layout over a named value, and the progress bar and Cancel are sized by named flags, so one
- * document serves every notification.
+ * The template: [onOpen] on the body. SystemUI's decorated notification chrome already provides the
+ * app icon column, horizontal margins, and native Cancel action, so the custom body stays compact:
+ * title, text, and an optional swim-lane progress bar sized by a named flag.
  *
  * [sample] and [colors] are only the named values' defaults, for previews: SystemUI is handed the
  * values written in by instantiation. The captured template leaves them blank.
@@ -133,7 +133,7 @@ enum class NotificationIcon(val vector: ImageVector, val label: String) {
 @RemoteComposable
 fun NotificationTemplateContent(
   onOpen: RemoteAction?,
-  onCancel: RemoteAction?,
+  onCancel: RemoteAction? = null,
   sample: NotificationBody? = null,
   sampleCancel: Boolean = sample?.cancelIntent != null,
   colors: WidgetColors = WidgetColors.Dark,
@@ -144,78 +144,38 @@ fun NotificationTemplateContent(
     RemoteColor.createNamedRemoteColor(role, t.COLORS.getValue(role)(colors).toArgb(), user)
   val title = RemoteString.createNamedRemoteString(t.TITLE, sample?.title.orEmpty(), user)
   val text = RemoteString.createNamedRemoteString(t.TEXT, sample?.text.orEmpty(), user)
-  val icon = RemoteInt.createNamedRemoteInt(t.ICON, sample?.icon?.ordinal ?: 0, user)
   val hasProgress =
     RemoteBoolean.createNamedRemoteBoolean(t.HAS_PROGRESS, sample?.progress != null, user)
   val progress = RemoteFloat.createNamedRemoteFloat(t.PROGRESS, sample?.progress ?: 0f, user)
-  val hasCancel =
-    RemoteBoolean.createNamedRemoteBoolean(t.HAS_CANCEL, sampleCancel, user)
   val onBackground = color("theme.on_background")
   val supporting = color("theme.supporting")
-  val tonal = color("theme.tonal")
-  val onTonal = color("theme.on_tonal")
-  val primary = color("theme.primary")
-  val onPrimary = color("theme.on_primary")
-  val tertiary = color("theme.tertiary")
   RemoteColumn(
-    modifier =
-      RemoteModifier.fillMaxWidth()
-        .padding(horizontal = 16.rdp, vertical = 12.rdp)
-        .cadenceClickable(onOpen),
+    modifier = RemoteModifier.fillMaxWidth().padding(vertical = 4.rdp).cadenceClickable(onOpen),
   ) {
-    RemoteRow(
+    RemoteText(
+      title,
       modifier = RemoteModifier.fillMaxWidth(),
-      verticalAlignment = RemoteAlignment.CenterVertically,
-    ) {
-      val entries = NotificationIcon.entries
-      RemoteStateLayout(icon, *entries.map { it.ordinal }.toIntArray()) { index: Int ->
-        val which = entries[index]
-        val done = which == NotificationIcon.Done
-        val error = which == NotificationIcon.Error
-        RemoteBox(
-          modifier =
-            RemoteModifier.size(40.rdp)
-              .clip(RemoteRoundedCornerShape(20.rdp))
-              .background(if (done) tertiary else if (error) primary else tonal)
-              .semantics { contentDescription = which.label.rs },
-          contentAlignment = RemoteAlignment.Center,
-        ) {
-          WidgetIcon(which.vector, if (done || error) onPrimary else onTonal)
-        }
-      }
-      RemoteBox(RemoteModifier.width(16.rdp))
-      RemoteColumn(
-        modifier = RemoteModifier.weight(1f.rf),
-        verticalArrangement = RemoteArrangement.spacedBy(2.rdp),
-      ) {
-        RemoteText(
-          title,
-          color = onBackground,
-          fontSize = 15.rsp,
-          fontWeight = RemoteFontWeight.Medium,
-          maxLines = 1,
-          overflow = RemoteTextOverflow.Ellipsis,
-        )
-        RemoteText(
-          text,
-          color = supporting,
-          fontSize = 13.rsp,
-          maxLines = 3,
-          overflow = RemoteTextOverflow.Ellipsis,
-        )
-      }
-    }
-    // Present or absent by the named flags, as a height that is 0 when absent: instantiation writes
-    // each flag in as a constant, which makes the height a literal. Not a conditional layout, which
-    // AndroidX's player and the platform's lay out over the content above it in a column, nor a
-    // visibility modifier, which the platform's player ignores. Each brings its own gap above.
-    // The swimmer's one lap: a canvas draws it from the value, where a box could only be sized by
-    // a constant fraction. The box is sized by the flag, like Cancel; inside it a conditional layout
-    // picks the lane or nothing, so a body without a bar holds no lane at all once instantiated
-    // (the layout collapses), and nothing animates. Placed in a box, the conditional layout can't be
-    // laid out over the title.
+      color = onBackground,
+      fontSize = 15.rsp,
+      fontWeight = RemoteFontWeight.Medium,
+      maxLines = 1,
+      overflow = RemoteTextOverflow.Ellipsis,
+    )
+    RemoteBox(RemoteModifier.height(2.rdp))
+    RemoteText(
+      text,
+      modifier = RemoteModifier.fillMaxWidth(),
+      color = supporting,
+      fontSize = 13.rsp,
+      maxLines = 3,
+      overflow = RemoteTextOverflow.Ellipsis,
+    )
+    // Present or absent by the named flag, as a height that is 0 when absent: instantiation writes
+    // the flag in as a constant, which makes the height a literal. Inside the box a conditional
+    // layout picks the lane or nothing, so a body without a bar holds no lane at all once
+    // instantiated (the layout collapses), and nothing animates.
     RemoteBox(
-      RemoteModifier.padding(top = hasProgress.select(10.rdp, 0.rdp))
+      RemoteModifier.padding(top = hasProgress.select(8.rdp, 0.rdp))
         .fillMaxWidth()
         .height(hasProgress.select(t.LANE_HEIGHT_DP.rdp, 0.rdp))
         .clip(RemoteRoundedCornerShape((t.LANE_HEIGHT_DP / 2).rdp)),
@@ -231,23 +191,6 @@ fun NotificationTemplateContent(
         } else {
           RemoteBox(RemoteModifier.fillMaxSize())
         }
-      }
-    }
-    RemoteRow(
-      modifier = RemoteModifier.padding(top = hasCancel.select(10.rdp, 0.rdp)).fillMaxWidth(),
-      horizontalArrangement = RemoteArrangement.End,
-    ) {
-      // Clipped to its height, so at 0 its label isn't drawn either.
-      RemoteBox(
-        modifier =
-          RemoteModifier.height(hasCancel.select(36.rdp, 0.rdp))
-            .clip(RemoteRoundedCornerShape(18.rdp))
-            .background(tonal)
-            .cadenceClickable(onCancel, "Cancel".rs)
-            .padding(horizontal = 16.rdp),
-        contentAlignment = RemoteAlignment.Center,
-      ) {
-        RemoteText("Cancel".rs, color = onTonal, fontSize = 14.rsp, fontWeight = RemoteFontWeight.Medium)
       }
     }
   }

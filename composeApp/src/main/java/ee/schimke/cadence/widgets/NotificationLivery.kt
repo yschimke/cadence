@@ -57,9 +57,20 @@ internal class NotificationLivery(private val livery: WidgetLivery) : Notificati
     return render.views
   }
 
-  /** Room for what this body shows: the text, then the bar and the Cancel button. */
-  private fun heightDp(body: NotificationBody): Int =
-    88 +
-      (if (body.progress != null) 10 + NotificationTemplate.LANE_HEIGHT_DP else 0) +
-      (if (body.cancelIntent != null) 46 else 0)
+  /** Room for what this body shows: title, wrapped text lines, and optional swim lane. */
+  internal fun heightDp(body: NotificationBody): Int {
+    val textLines =
+      when {
+        body.text.isBlank() -> 0
+        body.text.length <= 45 -> 1
+        body.text.length <= 90 -> 2
+        else -> 3
+      }
+    val textHeight = 28 + textLines * 20
+    val progressHeight = if (body.progress != null) 8 + NotificationTemplate.LANE_HEIGHT_DP else 0
+    return (textHeight + progressHeight).coerceIn(
+      NotificationTemplate.MIN_HEIGHT_DP,
+      NotificationTemplate.MAX_HEIGHT_DP,
+    )
+  }
 }

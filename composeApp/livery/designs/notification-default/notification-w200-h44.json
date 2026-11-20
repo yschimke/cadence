@@ -7,27 +7,19 @@
         ],
         "size": {
             "minWidthDp": 200,
-            "minHeightDp": 64,
+            "minHeightDp": 44,
             "maxHeightDp": 256
         }
     },
     "reads": [
-        "has_cancel",
         "has_progress",
-        "icon",
         "progress",
         "text",
         "theme.on_background",
-        "theme.on_primary",
-        "theme.on_tonal",
-        "theme.primary",
         "theme.supporting",
-        "theme.tertiary",
-        "theme.tonal",
         "title"
     ],
     "emits": [
-        "cancel",
         "open"
     ],
     "source": {
