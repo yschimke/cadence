@@ -35,7 +35,7 @@ private fun NotificationBodyPreview(
 private val ShadeDark = Color(0xFF1F1F23)
 private val ShadeLight = Color(0xFFF3EDF7)
 
-@Preview(name = "Notification · downloading", widthDp = 360, heightDp = 150)
+@Preview(name = "Notification · downloading", widthDp = 360, heightDp = 80)
 @Composable
 internal fun NotificationDownloadingPreview() {
   NotificationBodyPreview(
@@ -45,11 +45,10 @@ internal fun NotificationDownloadingPreview() {
       NotificationIcon.Download,
       progress = 0.42f,
     ),
-    cancel = true,
   )
 }
 
-@Preview(name = "Notification · syncing · light", widthDp = 360, heightDp = 104)
+@Preview(name = "Notification · syncing · light", widthDp = 360, heightDp = 80)
 @Composable
 internal fun NotificationSyncingPreview() {
   NotificationBodyPreview(
@@ -63,7 +62,7 @@ internal fun NotificationSyncingPreview() {
   )
 }
 
-@Preview(name = "Notification · ready", widthDp = 360, heightDp = 88)
+@Preview(name = "Notification · ready", widthDp = 360, heightDp = 48)
 @Composable
 internal fun NotificationReadyPreview() {
   NotificationBodyPreview(
@@ -75,7 +74,7 @@ internal fun NotificationReadyPreview() {
   )
 }
 
-@Preview(name = "Notification · failed", widthDp = 360, heightDp = 104)
+@Preview(name = "Notification · failed", widthDp = 360, heightDp = 88)
 @Composable
 internal fun NotificationFailedPreview() {
   NotificationBodyPreview(
