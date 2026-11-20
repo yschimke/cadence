@@ -1,5 +1,27 @@
 # Changelog
 
+## [0.1.33](https://github.com/yschimke/cadence/compare/v0.1.32...v0.1.33) (2026-11-20)
+
+
+### Features
+
+* add USB eject button opening Android Storage settings ([#661](https://github.com/yschimke/cadence/issues/661)) ([79de124](https://github.com/yschimke/cadence/commit/79de124ade43d62d70a064cca3f8b636e5be9a6b))
+
+
+### Bug Fixes
+
+* **build:** exclude compose-ai-tools checkout from verifyYschimkeBoms ([#669](https://github.com/yschimke/cadence/issues/669)) ([594ab4a](https://github.com/yschimke/cadence/commit/594ab4a62d6ba309a8f38d5a8a4eca02c7d81a89))
+* **deps:** update androidx to v1.0.0-alpha03 ([#657](https://github.com/yschimke/cadence/issues/657)) ([53b3b51](https://github.com/yschimke/cadence/commit/53b3b512d9e289b1408eb69f436865d474419247))
+* **deps:** update androidx-compose ([#658](https://github.com/yschimke/cadence/issues/658)) ([1785173](https://github.com/yschimke/cadence/commit/1785173b2de79ffffe9dfb5dd1016ae71910cffb))
+* **deps:** update androidx-wear to v1.7.2 ([#664](https://github.com/yschimke/cadence/issues/664)) ([52e8d66](https://github.com/yschimke/cadence/commit/52e8d66425c5adb3a4da8e0bd368926152f497eb))
+* **deps:** update dependency ee.schimke.composeai:compose-preview-daemon-bom to v3.28.1 ([#665](https://github.com/yschimke/cadence/issues/665)) ([377218e](https://github.com/yschimke/cadence/commit/377218eeec560c4ec379b9418f70f0f0546b40eb))
+* **deps:** update dependency ee.schimke.composeai:rc-players-bom to v3.9.0 ([#667](https://github.com/yschimke/cadence/issues/667)) ([2dd25f0](https://github.com/yschimke/cadence/commit/2dd25f0b67e3eced4d304f8fc120456c4967efb0))
+* **deps:** update livery to v0.19.0 ([#642](https://github.com/yschimke/cadence/issues/642)) ([da9cc22](https://github.com/yschimke/cadence/commit/da9cc22e53c1e2ab04cf0cf6b07574a0ca6e5dee))
+* **deps:** update livery to v0.20.0 ([#648](https://github.com/yschimke/cadence/issues/648)) ([adbcafe](https://github.com/yschimke/cadence/commit/adbcafe7c4dcd8cb5f74c5e4589a339ea931e75a))
+* **deps:** update remote-compose ([#641](https://github.com/yschimke/cadence/issues/641)) ([d65e32a](https://github.com/yschimke/cadence/commit/d65e32a47e31ad94178029a5f4051d2e45927dbf))
+* restore content:// scheme in AndroidSyncOrchestrator tree URIs ([#660](https://github.com/yschimke/cadence/issues/660)) ([8e3d0db](https://github.com/yschimke/cadence/commit/8e3d0dbcfc6c578d548c72417f1aea32d5ab4373))
+* tighten Remote Compose notification body height and drop duplicate Cancel pill ([#668](https://github.com/yschimke/cadence/issues/668)) ([8b16d0b](https://github.com/yschimke/cadence/commit/8b16d0b21ce6abbe1f920d4a0122987d8f44bd78))
+
 ## [0.1.32](https://github.com/yschimke/cadence/compare/v0.1.31...v0.1.32) (2026-11-16)
 
 
