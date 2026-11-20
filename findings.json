@@ -31,17 +31,9 @@
       "variant": ""
     },
     {
-      "annotatedBasename": "LocalAudioPlaylistWearWidgetSquirclePreview_Playlist_squircle-fe5fe95f.a11y.png",
-      "cleanBasename": "LocalAudioPlaylistWearWidgetSquirclePreview_Playlist_squircle-fe5fe95f.png",
-      "findings": [
-        {
-          "boundsInScreen": "0,0,366,128",
-          "level": "ERROR",
-          "message": "This item may not have a label readable by screen readers.",
-          "type": "SpeakableTextPresentCheck",
-          "viewDescription": "androidx.compose.remote.player.view.RemoteComposePlayer"
-        }
-      ],
+      "annotatedBasename": "",
+      "cleanBasename": "",
+      "findings": [],
       "functionName": "LocalAudioPlaylistWearWidgetSquirclePreview",
       "module": "wearApp",
       "previewId": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetSquirclePreview_Playlist \u00b7 squircle",
@@ -50,17 +42,9 @@
       "variant": ""
     },
     {
-      "annotatedBasename": "ModeAndControlsWearWidgetSquirclePreview_Now_playing_squircle-f7452489.a11y.png",
-      "cleanBasename": "ModeAndControlsWearWidgetSquirclePreview_Now_playing_squircle-f7452489.png",
-      "findings": [
-        {
-          "boundsInScreen": "0,0,366,128",
-          "level": "ERROR",
-          "message": "This item may not have a label readable by screen readers.",
-          "type": "SpeakableTextPresentCheck",
-          "viewDescription": "androidx.compose.remote.player.view.RemoteComposePlayer"
-        }
-      ],
+      "annotatedBasename": "",
+      "cleanBasename": "",
+      "findings": [],
       "functionName": "ModeAndControlsWearWidgetSquirclePreview",
       "module": "wearApp",
       "previewId": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetSquirclePreview_Now playing \u00b7 squircle",
@@ -69,17 +53,9 @@
       "variant": ""
     },
     {
-      "annotatedBasename": "SyncStatusWearWidgetSquirclePreview_Sync_squircle-d27e8677.a11y.png",
-      "cleanBasename": "SyncStatusWearWidgetSquirclePreview_Sync_squircle-d27e8677.png",
-      "findings": [
-        {
-          "boundsInScreen": "0,0,366,128",
-          "level": "ERROR",
-          "message": "This item may not have a label readable by screen readers.",
-          "type": "SpeakableTextPresentCheck",
-          "viewDescription": "androidx.compose.remote.player.view.RemoteComposePlayer"
-        }
-      ],
+      "annotatedBasename": "",
+      "cleanBasename": "",
+      "findings": [],
       "functionName": "SyncStatusWearWidgetSquirclePreview",
       "module": "wearApp",
       "previewId": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetSquirclePreview_Sync \u00b7 squircle",
@@ -89,6 +65,7 @@
     }
   ],
   "scope": "changed-previews",
+  "status": "atf-unavailable",
   "uncheckedPreviews": [
     {
       "module": "composeApp",
