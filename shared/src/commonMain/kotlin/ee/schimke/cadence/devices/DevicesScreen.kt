@@ -15,6 +15,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.OpenInNew
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Eject
 import androidx.compose.material.icons.filled.Folder
 import androidx.compose.material.icons.filled.Headphones
 import androidx.compose.material.icons.filled.LinkOff
@@ -68,6 +69,7 @@ fun DevicesScreen(
   val permissionCheck =
     rememberFileExplorerOpenLauncher(onGranted = { name, path -> viewModel.addDevice(path, name) })
   val openInFiles = rememberOpenInFilesApp()
+  val ejectUsb = rememberEjectUsb()
   DevicesScreen(
     modifier = modifier,
     uiState = uiState,
@@ -76,6 +78,7 @@ fun DevicesScreen(
     podcastTarget = podcastTarget,
     onForget = { viewModel.forgetDevice(it.id) },
     onOpenInFiles = openInFiles?.let { open -> { device: Device -> open(device.path.toPath()) } },
+    onEjectUsb = ejectUsb,
     usbConnection =
       if (viewModel.usbManager.explicitConnection)
         UsbConnectionUi(connection, viewModel.usbManager::requestConnection)
@@ -102,6 +105,8 @@ fun DevicesScreen(
    * Opens a folder in another app (Files); reports whether one took it. Null where there's none.
    */
   onOpenInFiles: ((Device) -> Boolean)? = null,
+  /** Opens platform USB eject controls (Storage settings on Android). Null where unsupported. */
+  onEjectUsb: (() -> Boolean)? = null,
   usbConnection: UsbConnectionUi? = null,
 ) {
   val colors = MaterialTheme.colorScheme
@@ -193,7 +198,22 @@ fun DevicesScreen(
               Text("Add a folder")
             }
           }
-          item(key = "plugged-in") { PluggedIn(uiState.usbDevices, usbConnection) }
+          item(key = "plugged-in") {
+            PluggedIn(
+              uiState.usbDevices,
+              usbConnection,
+              onEjectUsb =
+                onEjectUsb?.let { eject ->
+                  {
+                    if (!eject()) {
+                      scope.launch {
+                        snackbar.showSnackbar("Open Storage in Settings to eject USB storage.")
+                      }
+                    }
+                  }
+                },
+            )
+          }
         }
       }
     }
@@ -264,7 +284,11 @@ private fun FolderRow(
 
 /** What is plugged in by USB, in words; the raw ids only matter to debugging. */
 @Composable
-private fun PluggedIn(devices: List<UsbDevice>, connection: UsbConnectionUi?) {
+private fun PluggedIn(
+  devices: List<UsbDevice>,
+  connection: UsbConnectionUi?,
+  onEjectUsb: (() -> Unit)? = null,
+) {
   Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
     Text(
       "Plugged in",
@@ -286,6 +310,13 @@ private fun PluggedIn(devices: List<UsbDevice>, connection: UsbConnectionUi?) {
           if (headphones) "USB storage. Add its folder above to browse it."
           else listOfNotNull(device.manufacturerName, "USB storage").joinToString(" · "),
       )
+    }
+    if (devices.isNotEmpty() && onEjectUsb != null) {
+      FilledTonalButton(onClick = onEjectUsb) {
+        Icon(Icons.Filled.Eject, contentDescription = null, Modifier.size(18.dp))
+        Spacer(Modifier.width(8.dp))
+        Text("Eject USB")
+      }
     }
     if (connection != null) {
       Text(
@@ -323,6 +354,12 @@ private const val HEADPHONE_PRODUCT = 1889
  * result says whether an app took it. Null where folders can't be handed to another app.
  */
 @Composable expect fun rememberOpenInFilesApp(): ((Path) -> Boolean)?
+
+/**
+ * Opens platform controls to safely eject USB storage (Storage settings on Android); the result
+ * says whether they opened. Null on platforms without an in-app eject handoff.
+ */
+@Composable expect fun rememberEjectUsb(): (() -> Boolean)?
 
 @Composable
 expect fun rememberFileExplorerOpenLauncher(

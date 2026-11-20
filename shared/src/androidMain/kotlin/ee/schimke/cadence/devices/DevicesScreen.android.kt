@@ -119,3 +119,31 @@ actual fun rememberOpenInFilesApp(): ((Path) -> Boolean)? {
       }
   }
 }
+
+/**
+ * Android reserves programmatic USB unmounting for system apps (`MOUNT_UNMOUNT_FILESYSTEMS`), so
+ * ejecting opens system Storage settings where Android's Eject action is one tap away.
+ */
+@Composable
+actual fun rememberEjectUsb(): (() -> Boolean)? {
+  val context = LocalContext.current
+  return { openStorageSettingsForEject(context) }
+}
+
+fun openStorageSettingsForEject(context: android.content.Context): Boolean {
+  val actions =
+    listOf(
+      android.provider.Settings.ACTION_INTERNAL_STORAGE_SETTINGS,
+      android.provider.Settings.ACTION_MEMORY_CARD_SETTINGS,
+      android.provider.Settings.ACTION_SETTINGS,
+    )
+  return actions.any { action ->
+    val intent = Intent(action).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    try {
+      context.startActivity(intent)
+      true
+    } catch (_: android.content.ActivityNotFoundException) {
+      false
+    }
+  }
+}

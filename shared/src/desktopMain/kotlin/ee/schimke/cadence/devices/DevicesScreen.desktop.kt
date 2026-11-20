@@ -41,3 +41,5 @@ actual fun rememberOpenInFilesApp(): ((Path) -> Boolean)? =
   if (java.awt.Desktop.isDesktopSupported())
     { path -> runCatching { java.awt.Desktop.getDesktop().open(path.toFile()) }.isSuccess }
   else null
+
+@Composable actual fun rememberEjectUsb(): (() -> Boolean)? = null
