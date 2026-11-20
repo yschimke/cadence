@@ -8,6 +8,7 @@ import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.GraphicEq
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.remote.creation.compose.action.RemoteAction
+import androidx.compose.remote.creation.compose.capture.toRemoteImageVector
 import androidx.compose.remote.creation.compose.layout.RemoteAlignment
 import androidx.compose.remote.creation.compose.layout.RemoteArrangement
 import androidx.compose.remote.creation.compose.layout.RemoteBox
@@ -17,6 +18,7 @@ import androidx.compose.remote.creation.compose.layout.RemoteComposable
 import androidx.compose.remote.creation.compose.layout.RemoteRow
 import androidx.compose.remote.creation.compose.layout.RemoteText
 import androidx.compose.remote.creation.compose.modifier.RemoteModifier
+import androidx.compose.remote.creation.compose.modifier.RemoteRole
 import androidx.compose.remote.creation.compose.modifier.background
 import androidx.compose.remote.creation.compose.modifier.clickable
 import androidx.compose.remote.creation.compose.modifier.clip
@@ -35,13 +37,12 @@ import androidx.compose.remote.creation.compose.state.rc
 import androidx.compose.remote.creation.compose.state.rdp
 import androidx.compose.remote.creation.compose.state.rs
 import androidx.compose.remote.creation.compose.state.rsp
+import androidx.compose.remote.creation.compose.text.RemoteFontWeight
+import androidx.compose.remote.creation.compose.text.RemoteTextOverflow
 import androidx.compose.remote.creation.compose.vector.painterRemoteVector
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import ee.schimke.cadence.widgets.WidgetColors
 
 @Composable
@@ -111,7 +112,7 @@ fun CloudSyncWidgetContent(
                   .semantics {
                     contentDescription =
                       (if (status.hasSource) "Open podcasts" else "Connect podcasts").rs
-                    role = Role.Button
+                    role = RemoteRole.Button
                   }
                   .clickable(onOpen)
               else it
@@ -127,7 +128,7 @@ fun CloudSyncWidgetContent(
             "CLOUD SYNC".rs,
             color = colors.supporting.rc,
             fontSize = labelSp.rsp,
-            fontWeight = FontWeight.Medium,
+            fontWeight = RemoteFontWeight.Medium,
             maxLines = 1,
           )
         }
@@ -135,9 +136,9 @@ fun CloudSyncWidgetContent(
           status.source.rs,
           color = colors.onBackground.rc,
           fontSize = titleSp.rsp,
-          fontWeight = FontWeight.Medium,
+          fontWeight = RemoteFontWeight.Medium,
           maxLines = 1,
-          overflow = TextOverflow.Ellipsis,
+          overflow = RemoteTextOverflow.Ellipsis,
         )
       }
       if (status.hasSource) {
@@ -148,7 +149,7 @@ fun CloudSyncWidgetContent(
               .clip(RemoteRoundedCornerShape(24.rdp))
               .semantics {
                 contentDescription = "Refresh podcasts".rs
-                role = Role.Button
+                role = RemoteRole.Button
               }
               .let { if (refresh != null) it.clickable(refresh) else it },
           contentAlignment = RemoteAlignment.Center,
@@ -216,7 +217,7 @@ fun CloudSyncWidgetContent(
         color = colors.supporting.rc,
         fontSize = labelSp.rsp,
         maxLines = 1,
-        overflow = TextOverflow.Ellipsis,
+        overflow = RemoteTextOverflow.Ellipsis,
       )
     } else if (status.hasSource) {
       RemoteText(
@@ -286,7 +287,7 @@ private fun CloudMetric(
             it
               .semantics {
                 contentDescription = description.rs
-                role = Role.Button
+                role = RemoteRole.Button
               }
               .clickable(action)
           else it
@@ -303,7 +304,7 @@ private fun CloudMetric(
         value.toString().rs,
         color = color.rc,
         fontSize = (21 * scale).rsp,
-        fontWeight = FontWeight.Medium,
+        fontWeight = RemoteFontWeight.Medium,
         maxLines = 1,
       )
     }
@@ -312,7 +313,7 @@ private fun CloudMetric(
       color = colors.supporting.rc,
       fontSize = labelSp.rsp,
       maxLines = 1,
-      overflow = TextOverflow.Ellipsis,
+      overflow = RemoteTextOverflow.Ellipsis,
     )
   }
 }
@@ -320,7 +321,7 @@ private fun CloudMetric(
 @Composable
 @RemoteComposable
 internal fun SyncStatusIcon(icon: ImageVector, color: Color, size: Int) {
-  val painter = painterRemoteVector(icon, color.rc)
+  val painter = painterRemoteVector(icon.toRemoteImageVector(), color.rc)
   RemoteCanvas(RemoteModifier.size(size.rdp)) { with(painter) { draw() } }
 }
 

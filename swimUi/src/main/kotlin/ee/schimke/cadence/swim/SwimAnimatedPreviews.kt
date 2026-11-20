@@ -21,6 +21,7 @@ import androidx.compose.remote.creation.compose.state.rc
 import androidx.compose.remote.creation.compose.state.rdp
 import androidx.compose.remote.creation.compose.state.rs
 import androidx.compose.remote.creation.compose.state.rsp
+import androidx.compose.remote.creation.compose.text.RemoteFontWeight
 import androidx.compose.remote.creation.profile.Profile
 import androidx.compose.remote.creation.profile.RcPlatformProfiles
 import androidx.compose.remote.tooling.preview.RemoteContentPreview
@@ -34,7 +35,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -82,7 +82,7 @@ fun WaterButtonAnimatedPreview() {
           "Play".rs,
           color = Color(0xFF06243D).rc,
           fontSize = 18.rsp,
-          fontWeight = FontWeight.SemiBold,
+          fontWeight = RemoteFontWeight.SemiBold,
         )
       }
     }

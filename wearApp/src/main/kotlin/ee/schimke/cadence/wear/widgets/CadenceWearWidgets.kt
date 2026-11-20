@@ -17,7 +17,7 @@ import androidx.compose.material.icons.filled.SkipNext
 import androidx.compose.material.icons.filled.SkipPrevious
 import androidx.compose.material.icons.filled.Sync
 import androidx.compose.remote.creation.compose.action.RemoteAction
-import androidx.compose.remote.creation.compose.action.pendingIntentAction
+import androidx.compose.remote.creation.compose.action.rememberPendingIntentAction
 import androidx.compose.remote.creation.compose.capture.toRemoteImageVector
 import androidx.compose.remote.creation.compose.layout.RemoteAlignment
 import androidx.compose.remote.creation.compose.layout.RemoteArrangement
@@ -26,6 +26,7 @@ import androidx.compose.remote.creation.compose.layout.RemoteColumn
 import androidx.compose.remote.creation.compose.layout.RemoteComposable
 import androidx.compose.remote.creation.compose.layout.RemoteRow
 import androidx.compose.remote.creation.compose.modifier.RemoteModifier
+import androidx.compose.remote.creation.compose.modifier.RemoteRole
 import androidx.compose.remote.creation.compose.modifier.background
 import androidx.compose.remote.creation.compose.modifier.clickable
 import androidx.compose.remote.creation.compose.modifier.clip
@@ -45,13 +46,12 @@ import androidx.compose.remote.creation.compose.state.rc
 import androidx.compose.remote.creation.compose.state.rdp
 import androidx.compose.remote.creation.compose.state.rf
 import androidx.compose.remote.creation.compose.state.rs
+import androidx.compose.remote.creation.compose.text.RemoteTextAlign
+import androidx.compose.remote.creation.compose.text.RemoteTextOverflow
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.key
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.glance.wear.AssociateWithGlanceWearWidget
@@ -201,11 +201,11 @@ private fun ModeAndControlsWidgetContent(snapshot: HeadsetSnapshot, compact: Boo
       )
       RemoteText(
         text = episode.rs,
-        modifier = RemoteModifier.weight(1f),
+        modifier = RemoteModifier.weight(1f.rf),
         style = RemoteMaterialTheme.typography.titleSmall,
         color = if (currentTrack == null) colors.onSurfaceVariant else colors.onSurface,
         maxLines = 2,
-        overflow = TextOverflow.Ellipsis,
+        overflow = RemoteTextOverflow.Ellipsis,
       )
     }
     return
@@ -224,18 +224,18 @@ private fun ModeAndControlsWidgetContent(snapshot: HeadsetSnapshot, compact: Boo
           if (compact) RemoteMaterialTheme.typography.titleSmall
           else RemoteMaterialTheme.typography.titleMedium,
         color = if (currentTrack == null) colors.onSurfaceVariant else colors.onSurface,
-        textAlign = TextAlign.Center,
+        textAlign = RemoteTextAlign.Center,
         maxLines = 1,
-        overflow = TextOverflow.Ellipsis,
+        overflow = RemoteTextOverflow.Ellipsis,
       )
       if (!compact && currentTrack != null) {
         RemoteText(
           text = currentTrack.podcastTitle.rs,
           style = RemoteMaterialTheme.typography.bodySmall,
           color = colors.onSurfaceVariant,
-          textAlign = TextAlign.Center,
+          textAlign = RemoteTextAlign.Center,
           maxLines = 1,
-          overflow = TextOverflow.Ellipsis,
+          overflow = RemoteTextOverflow.Ellipsis,
         )
       }
     }
@@ -378,9 +378,9 @@ private fun LocalAudioPlaylistWidgetContent(snapshot: HeadsetSnapshot, itemLimit
         text = "No episodes on your headphones".rs,
         style = RemoteMaterialTheme.typography.bodyMedium,
         color = colors.onSurfaceVariant,
-        textAlign = TextAlign.Center,
+        textAlign = RemoteTextAlign.Center,
         maxLines = 2,
-        overflow = TextOverflow.Ellipsis,
+        overflow = RemoteTextOverflow.Ellipsis,
       )
     } else {
       tracks.forEach { track ->
@@ -418,7 +418,7 @@ private fun CompactPlaylistWidgetContent(snapshot: HeadsetSnapshot) {
           .clickable(
             playTrackAction(track.id),
             enabled = snapshot.isSupported(RcspCommand.PlayLocalAudio(track.id)),
-            role = Role.Button,
+            role = RemoteRole.Button,
           )
           .semantics {
             contentDescription =
@@ -439,7 +439,7 @@ private fun CompactPlaylistWidgetContent(snapshot: HeadsetSnapshot) {
         style = RemoteMaterialTheme.typography.titleSmall,
         color = content,
         maxLines = 2,
-        overflow = TextOverflow.Ellipsis,
+        overflow = RemoteTextOverflow.Ellipsis,
       )
     }
   }
@@ -509,10 +509,10 @@ private fun PlaylistButtonContent(track: LocalAudioTrack, enabled: Boolean) {
     )
     RemoteText(
       text = track.podcast.episodeTitle.rs,
-      modifier = RemoteModifier.padding(start = 8.rdp).weight(1f),
+      modifier = RemoteModifier.padding(start = 8.rdp).weight(1f.rf),
       style = RemoteMaterialTheme.typography.labelSmall,
       maxLines = 2,
-      overflow = TextOverflow.Ellipsis,
+      overflow = RemoteTextOverflow.Ellipsis,
     )
   }
 }
@@ -550,7 +550,7 @@ private fun SyncStatusWidgetContent(snapshot: HeadsetSnapshot, compact: Boolean)
           style = RemoteMaterialTheme.typography.titleSmall,
           color = colors.onSurface,
           maxLines = 2,
-          overflow = TextOverflow.Ellipsis,
+          overflow = RemoteTextOverflow.Ellipsis,
         )
       }
     } else {
@@ -572,18 +572,18 @@ private fun SyncStatusWidgetContent(snapshot: HeadsetSnapshot, compact: Boolean)
           text = sync.widgetLabel.rs,
           style = RemoteMaterialTheme.typography.titleSmall,
           color = colors.onSurface,
-          textAlign = TextAlign.Center,
+          textAlign = RemoteTextAlign.Center,
           maxLines = 1,
-          overflow = TextOverflow.Ellipsis,
+          overflow = RemoteTextOverflow.Ellipsis,
         )
         if (detail != null) {
           RemoteText(
             text = detail.rs,
             style = RemoteMaterialTheme.typography.bodySmall,
             color = colors.onSurfaceVariant,
-            textAlign = TextAlign.Center,
+            textAlign = RemoteTextAlign.Center,
             maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
+            overflow = RemoteTextOverflow.Ellipsis,
           )
         }
       }
@@ -687,7 +687,7 @@ object WearWidgets {
 
 @Composable
 @RemoteComposable
-private fun widgetAction(action: WidgetAction) = pendingIntentAction { context ->
+private fun widgetAction(action: WidgetAction) = rememberPendingIntentAction { context ->
   PendingIntent.getBroadcast(
     context,
     action.ordinal,
@@ -698,7 +698,7 @@ private fun widgetAction(action: WidgetAction) = pendingIntentAction { context -
 
 @Composable
 @RemoteComposable
-private fun playTrackAction(trackId: UInt) = pendingIntentAction { context ->
+private fun playTrackAction(trackId: UInt) = rememberPendingIntentAction { context ->
   PendingIntent.getBroadcast(
     context,
     // One PendingIntent per track: request codes must differ or extras collapse onto one intent.
