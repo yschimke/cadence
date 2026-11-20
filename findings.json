@@ -1,25 +1,6 @@
 {
   "entries": [
     {
-      "annotatedBasename": "NotificationDownloadingPreview_Notification_downloading-f99a71e3.a11y.png",
-      "cleanBasename": "NotificationDownloadingPreview_Notification_downloading-f99a71e3.png",
-      "findings": [
-        {
-          "boundsInScreen": "750,252,861,347",
-          "level": "INFO",
-          "message": "This non-clickable item's speakable text: \"Cancel\" is identical to that of 1 other item(s).",
-          "type": "DuplicateSpeakableTextCheck",
-          "viewDescription": "android.view.View  desc=\"Cancel\""
-        }
-      ],
-      "functionName": "NotificationDownloadingPreview",
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.NotificationPreviewsKt.NotificationDownloadingPreview_Notification \u00b7 downloading",
-      "rendersDir": "composeApp",
-      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/NotificationPreviews.kt",
-      "variant": ""
-    },
-    {
       "annotatedBasename": "NotificationSyncingPreview_Notification_syncing_light-fb11050e.a11y.png",
       "cleanBasename": "NotificationSyncingPreview_Notification_syncing_light-fb11050e.png",
       "findings": [],
@@ -29,9 +10,175 @@
       "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/NotificationPreviews.kt",
       "variant": ""
+    },
+    {
+      "annotatedBasename": "",
+      "cleanBasename": "SwimLaneEndlessPreview_Swim_lane_endless_laps-3bd8ff30.png",
+      "findings": [],
+      "functionName": "SwimLaneEndlessPreview",
+      "module": "swimUi",
+      "previewId": "ee.schimke.cadence.swim.SwimPreviewsKt.SwimLaneEndlessPreview_Swim lane \u00b7 endless laps",
+      "rendersDir": "swimUi",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/swim/SwimPreviews.kt",
+      "variant": ""
+    },
+    {
+      "annotatedBasename": "",
+      "cleanBasename": "SwimLaneFlipTurnLauncherPreview_Swim_lane_flip_turn_launcher-ca909f07.png",
+      "findings": [],
+      "functionName": "SwimLaneFlipTurnLauncherPreview",
+      "module": "swimUi",
+      "previewId": "ee.schimke.cadence.swim.SwimPreviewsKt.SwimLaneFlipTurnLauncherPreview_Swim lane \u00b7 flip turn \u00b7 launcher",
+      "rendersDir": "swimUi",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/swim/SwimPreviews.kt",
+      "variant": ""
+    },
+    {
+      "annotatedBasename": "",
+      "cleanBasename": "SwimLaneFlipTurnPreview_Swim_lane_flip_turn-31a2260f.png",
+      "findings": [],
+      "functionName": "SwimLaneFlipTurnPreview",
+      "module": "swimUi",
+      "previewId": "ee.schimke.cadence.swim.SwimPreviewsKt.SwimLaneFlipTurnPreview_Swim lane \u00b7 flip turn",
+      "rendersDir": "swimUi",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/swim/SwimPreviews.kt",
+      "variant": ""
+    },
+    {
+      "annotatedBasename": "",
+      "cleanBasename": "SwimLaneLapsPreview_Swim_lane_odd_and_even_laps-35df6d6f.png",
+      "findings": [],
+      "functionName": "SwimLaneLapsPreview",
+      "module": "swimUi",
+      "previewId": "ee.schimke.cadence.swim.SwimPreviewsKt.SwimLaneLapsPreview_Swim lane \u00b7 odd and even laps",
+      "rendersDir": "swimUi",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/swim/SwimPreviews.kt",
+      "variant": ""
+    },
+    {
+      "annotatedBasename": "",
+      "cleanBasename": "SwimmingPoolPreview_Swimming_pool-28ed1567.png",
+      "findings": [],
+      "functionName": "SwimmingPoolPreview",
+      "module": "swimUi",
+      "previewId": "ee.schimke.cadence.swim.SwimPreviewsKt.SwimmingPoolPreview_Swimming pool",
+      "rendersDir": "swimUi",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/swim/SwimPreviews.kt",
+      "variant": ""
+    },
+    {
+      "annotatedBasename": "",
+      "cleanBasename": "WaterButtonsLauncherPreview_Water_buttons_launcher-5df3807f.png",
+      "findings": [],
+      "functionName": "WaterButtonsLauncherPreview",
+      "module": "swimUi",
+      "previewId": "ee.schimke.cadence.swim.SwimPreviewsKt.WaterButtonsLauncherPreview_Water buttons \u00b7 launcher",
+      "rendersDir": "swimUi",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/swim/SwimPreviews.kt",
+      "variant": ""
+    },
+    {
+      "annotatedBasename": "",
+      "cleanBasename": "",
+      "findings": [],
+      "functionName": "LocalAudioPlaylistWearWidgetRectangularPreview",
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetRectangularPreview_Playlist \u00b7 rectangular",
+      "rendersDir": "wearApp",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt",
+      "variant": ""
+    },
+    {
+      "annotatedBasename": "",
+      "cleanBasename": "",
+      "findings": [],
+      "functionName": "LocalAudioPlaylistWearWidgetRoundPreview",
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetRoundPreview_Playlist \u00b7 round (Samsung)",
+      "rendersDir": "wearApp",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt",
+      "variant": ""
+    },
+    {
+      "annotatedBasename": "",
+      "cleanBasename": "",
+      "findings": [],
+      "functionName": "LocalAudioPlaylistWearWidgetSquirclePreview",
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.LocalAudioPlaylistWearWidgetSquirclePreview_Playlist \u00b7 squircle",
+      "rendersDir": "wearApp",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt",
+      "variant": ""
+    },
+    {
+      "annotatedBasename": "",
+      "cleanBasename": "",
+      "findings": [],
+      "functionName": "ModeAndControlsWearWidgetRectangularPreview",
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetRectangularPreview_Now playing \u00b7 rectangular",
+      "rendersDir": "wearApp",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt",
+      "variant": ""
+    },
+    {
+      "annotatedBasename": "",
+      "cleanBasename": "",
+      "findings": [],
+      "functionName": "ModeAndControlsWearWidgetRoundPreview",
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetRoundPreview_Now playing \u00b7 round (Samsung)",
+      "rendersDir": "wearApp",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt",
+      "variant": ""
+    },
+    {
+      "annotatedBasename": "",
+      "cleanBasename": "",
+      "findings": [],
+      "functionName": "ModeAndControlsWearWidgetSquirclePreview",
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.ModeAndControlsWearWidgetSquirclePreview_Now playing \u00b7 squircle",
+      "rendersDir": "wearApp",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt",
+      "variant": ""
+    },
+    {
+      "annotatedBasename": "",
+      "cleanBasename": "",
+      "findings": [],
+      "functionName": "SyncStatusWearWidgetRectangularPreview",
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetRectangularPreview_Sync \u00b7 rectangular",
+      "rendersDir": "wearApp",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt",
+      "variant": ""
+    },
+    {
+      "annotatedBasename": "",
+      "cleanBasename": "",
+      "findings": [],
+      "functionName": "SyncStatusWearWidgetRoundPreview",
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetRoundPreview_Sync \u00b7 round (Samsung)",
+      "rendersDir": "wearApp",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt",
+      "variant": ""
+    },
+    {
+      "annotatedBasename": "",
+      "cleanBasename": "",
+      "findings": [],
+      "functionName": "SyncStatusWearWidgetSquirclePreview",
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.widgets.CadenceWearWidgetsKt.SyncStatusWearWidgetSquirclePreview_Sync \u00b7 squircle",
+      "rendersDir": "wearApp",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/widgets/CadenceWearWidgets.kt",
+      "variant": ""
     }
   ],
   "scope": "changed-previews",
+  "status": "atf-unavailable",
   "uncheckedPreviews": [
     {
       "module": "composeApp",
@@ -100,6 +247,10 @@
     {
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.HeadphoneWidgetPreviewsKt.HeadphoneWidgetWinterPreview_Headphone widget \u00b7 winter"
+    },
+    {
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.NotificationPreviewsKt.NotificationDownloadingPreview_Notification \u00b7 downloading"
     },
     {
       "module": "composeApp",
@@ -328,6 +479,70 @@
     {
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeSyncingPreview_Sync syncing"
+    },
+    {
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.ConnectedWearCompanionPreview_Devices - Large Round"
+    },
+    {
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.ConnectedWearCompanionPreview_Devices - Small Round"
+    },
+    {
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.ConnectedWearCompanionPreview_Fonts - Large"
+    },
+    {
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.ConnectedWearCompanionPreview_Fonts - Larger"
+    },
+    {
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.ConnectedWearCompanionPreview_Fonts - Largest"
+    },
+    {
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.ConnectedWearCompanionPreview_Fonts - Medium"
+    },
+    {
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.ConnectedWearCompanionPreview_Fonts - Normal"
+    },
+    {
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.ConnectedWearCompanionPreview_Fonts - Small"
+    },
+    {
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.LocalAudioPlaylistPreview_Devices - Large Round"
+    },
+    {
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.LocalAudioPlaylistPreview_Devices - Small Round"
+    },
+    {
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.LocalAudioPlaylistPreview_Fonts - Large"
+    },
+    {
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.LocalAudioPlaylistPreview_Fonts - Larger"
+    },
+    {
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.LocalAudioPlaylistPreview_Fonts - Largest"
+    },
+    {
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.LocalAudioPlaylistPreview_Fonts - Medium"
+    },
+    {
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.LocalAudioPlaylistPreview_Fonts - Normal"
+    },
+    {
+      "module": "wearApp",
+      "previewId": "ee.schimke.cadence.wear.WearCompanionAppKt.LocalAudioPlaylistPreview_Fonts - Small"
     }
   ]
 }
