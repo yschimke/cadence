@@ -25,11 +25,11 @@ import androidx.compose.remote.creation.compose.state.rc
 import androidx.compose.remote.creation.compose.state.rdp
 import androidx.compose.remote.creation.compose.state.rs
 import androidx.compose.remote.creation.compose.state.rsp
+import androidx.compose.remote.creation.compose.text.RemoteFontWeight
+import androidx.compose.remote.creation.compose.text.RemoteTextOverflow
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import ee.schimke.cadence.swim.PoolSeason
 import ee.schimke.cadence.swim.androidx.SwimmingPool
 import ee.schimke.cadence.widgets.WidgetColors
@@ -109,7 +109,7 @@ fun PodcastSyncWidgetContent(
             color = colors.supporting.rc,
             fontSize = bodySp.rsp,
             maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
+            overflow = RemoteTextOverflow.Ellipsis,
           )
         }
       }
@@ -153,7 +153,7 @@ private fun SyncMetricLine(
         count.toString().rs,
         color = color.rc,
         fontSize = (17 * scale).rsp,
-        fontWeight = FontWeight.Medium,
+        fontWeight = RemoteFontWeight.Medium,
         maxLines = 1,
       )
       val remainder = detail.substringAfter(" eps", "").replace(" marked", " played")
@@ -162,7 +162,7 @@ private fun SyncMetricLine(
         color = bodyColor.rc,
         fontSize = bodySp.rsp,
         maxLines = 1,
-        overflow = TextOverflow.Ellipsis,
+        overflow = RemoteTextOverflow.Ellipsis,
       )
     } else {
       RemoteText(
@@ -170,7 +170,7 @@ private fun SyncMetricLine(
         color = bodyColor.rc,
         fontSize = bodySp.rsp,
         maxLines = 1,
-        overflow = TextOverflow.Ellipsis,
+        overflow = RemoteTextOverflow.Ellipsis,
       )
     }
   }
