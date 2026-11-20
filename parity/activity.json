@@ -1,11 +1,35 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-20T13:09:22.406Z",
+  "generatedAt": "2026-11-20T13:22:45.328Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "966d5c450acf374f3f948767cbc4dc2a140caa91",
+        "subject": "chore(deps): update github-actions (#670)",
+        "at": "2026-11-20T13:06:04Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "541c71f62993167f87977a0cc3953b45e2599abc",
+        "subject": "chore(main): release 0.1.33 (#643)",
+        "at": "2026-11-20T12:57:43Z",
+        "author": "github-actions[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "79de124ade43d62d70a064cca3f8b636e5be9a6b",
+        "subject": "feat: add USB eject button opening Android Storage settings (#661)",
+        "at": "2026-11-20T12:56:55Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "8e3d0dbcfc6c578d548c72417f1aea32d5ab4373",
         "subject": "fix: restore content:// scheme in AndroidSyncOrchestrator tree URIs (#660)",
@@ -459,30 +483,6 @@
         "subject": "feat: filter Bluetooth devices by protocol and scope media controls (#607)",
         "at": "2026-11-13T10:04:06Z",
         "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "61a3c2491d29e1f3a0e359b7338a2b4020437ef3",
-        "subject": "chore(deps): update anthropics/claude-code-action action to v1.0.275 (#610)",
-        "at": "2026-11-13T04:58:52Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "5125662290b659404240f80c3e96b0bb6fe902dd",
-        "subject": "chore(deps): update yschimke/livery action to v0.11.0 (#611)",
-        "at": "2026-11-13T04:58:48Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "05fbfc91ba26397633c49d2b78d3ede26d04d871",
-        "subject": "chore(deps): update anthropics/claude-code-action action to v1.0.273 (#608)",
-        "at": "2026-11-12T20:58:24Z",
-        "author": "renovate[bot]",
         "previewIds": [],
         "components": []
       }
