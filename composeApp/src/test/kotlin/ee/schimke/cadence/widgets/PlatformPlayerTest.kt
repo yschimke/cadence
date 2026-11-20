@@ -96,6 +96,23 @@ class PlatformPlayerTest {
     assertTrue(heights.getValue("ready") < heights.getValue("downloading"), "$heights")
   }
 
+  @Test
+  @Config(sdk = [ANDROID_17], qualifiers = "xxhdpi")
+  fun aBodyIsOnlyAsTallAsWhatItShowsAtHighDensity() {
+    val density = 3
+    val heightsDp =
+      contract.examples.keys.associateWith {
+        val bytes = body(it, widthPx = WIDTH * density, heightPx = HEIGHT * density)
+        player.notificationHeight(bytes, WIDTH * density, 256 * density) / density
+      }
+    heightsDp.forEach { (example, heightDp) ->
+      assertTrue(
+        heightDp in 32..120,
+        "'$example' asks for ${heightDp}dp of a 256dp shade at xxhdpi",
+      )
+    }
+  }
+
   /** `downloading` has a progress bar and no in-body Cancel (Android renders Cancel natively). */
   @Test
   @Config(sdk = [ANDROID_17], qualifiers = "mdpi")
@@ -183,37 +200,38 @@ class PlatformPlayerTest {
   }
 
   /** [example] of the contract, written into the bundled template as the app writes a post. */
-  private fun body(example: String): ByteArray = runBlocking {
-    val t = NotificationTemplate
-    val template =
-      File(
-          catalog,
-          "designs/notification-default/notification-w${t.MIN_WIDTH_DP}-h${t.MIN_HEIGHT_DP}.rc",
-        )
-        .readBytes()
-        .toByteString()
-    // The app sends its colours with every post (NotificationTemplate.data); the examples don't.
-    val colours = buildJsonObject {
-      NotificationTemplate.COLORS.forEach { (role, of) ->
-        put(role, "#%08X".format(of(WidgetColors.Light).toArgb()))
+  private fun body(example: String, widthPx: Int = WIDTH, heightPx: Int = HEIGHT): ByteArray =
+    runBlocking {
+      val t = NotificationTemplate
+      val template =
+        File(
+            catalog,
+            "designs/notification-default/notification-w${t.MIN_WIDTH_DP}-h${t.MIN_HEIGHT_DP}.rc",
+          )
+          .readBytes()
+          .toByteString()
+      // The app sends its colours with every post (NotificationTemplate.data); the examples don't.
+      val colours = buildJsonObject {
+        NotificationTemplate.COLORS.forEach { (role, of) ->
+          put(role, "#%08X".format(of(WidgetColors.Light).toArgb()))
+        }
       }
+      val data =
+        JsonObject(requireNotNull(contract.examples[example]) { "no example '$example'" } + colours)
+      val bindings = (ContractBinder.bind(contract, data) as BindResult.Ok).bindings
+      val result = TemplateInstantiator { _, _, _ ->
+        null
+      }
+        .instantiate(
+          template,
+          bindings,
+          widthPx,
+          heightPx,
+          maxBytes = LiveryNotifications.DEFAULT_MAX_BYTES,
+          numericActions = true,
+        )
+      (result as InstantiateResult.Ok).bytes.toByteArray()
     }
-    val data =
-      JsonObject(requireNotNull(contract.examples[example]) { "no example '$example'" } + colours)
-    val bindings = (ContractBinder.bind(contract, data) as BindResult.Ok).bindings
-    val result = TemplateInstantiator { _, _, _ ->
-      null
-    }
-      .instantiate(
-        template,
-        bindings,
-        WIDTH,
-        HEIGHT,
-        maxBytes = LiveryNotifications.DEFAULT_MAX_BYTES,
-        numericActions = true,
-      )
-    (result as InstantiateResult.Ok).bytes.toByteArray()
-  }
 
   /** The notification drawing in a column spaced by 10dp, captured at host density. */
   private fun spacedColumn(): ByteArray = captureDocument {
