@@ -148,7 +148,11 @@ internal fun PodcastPocketCastsPreview() {
   }
 }
 
-@Preview(name = "Add podcasts — Libro.fm signed in", showBackground = true, heightDp = 1000)
+@Preview(
+  name = "Add podcasts — Libro.fm signed in",
+  showBackground = true,
+  device = "spec:width=411dp,height=1000dp,dpi=420",
+)
 @Composable
 internal fun PodcastLibroFmPreview() {
   AndroidMaterialTheme {
