@@ -680,7 +680,6 @@ class PodcastController(val platform: PodcastPlatform) {
       else -> episode.copy(audioUrl = libroFm().m4bUrl(episode.id))
     }
 
-  /** Saves the measured lengths of the original tracks [episode] was joined from, once known. */
   /**
    * Finds chapters for each episode set to split by chapter that doesn't have them yet: a joined
    * book's original tracks, else the feed's chapter index, else the chapter marks in the downloaded
@@ -689,7 +688,10 @@ class PodcastController(val platform: PodcastPlatform) {
   private suspend fun readChapters() {
     val library = state.value.library
     library.playlist?.episodes.orEmpty().forEach { episode ->
-      if (library.configFor(episode).splitMode != SplitMode.Chapters) return@forEach
+      val config = library.configFor(episode)
+      if (config.splitMode != SplitMode.Chapters) return@forEach
+      // A finished episode isn't prepared at all, so its chapters aren't worth a download.
+      if (segment(episode, config.copy(split = SplitMode.Whole)).isEmpty()) return@forEach
       when {
         episode.backend == LIBRO_FM_BACKEND && episode.extension == "mp3" ->
           if (episode.trackMs.isEmpty()) {

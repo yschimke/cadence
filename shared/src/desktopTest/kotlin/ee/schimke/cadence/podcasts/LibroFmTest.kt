@@ -177,6 +177,29 @@ class LibroFmTest {
   }
 
   @Test
+  fun aFinishedBookIsNotDownloadedForItsChapters() = runBlocking {
+    val platform = LibroPlatform()
+    val controller = PodcastController(platform)
+    controller.signInLibroFm("me@example.com", "secret")
+    controller.importLibroFm(LIBRO_FM_LIBRARY, 2)
+    val (finished, unheard) = controller.state.value.library.playlist!!.episodes
+    controller.setEpisodePosition(finished.key, finished.durationMs)
+    controller.refreshSource()
+    controller.configure(
+      controller.state.value.library.config.copy(split = SplitMode.Chapters, skipListened = true),
+    )
+    controller.prepare()
+    // Nothing is left to hear in the finished book, so it isn't fetched to find its chapters;
+    // the unheard one is, and is split at them.
+    assertTrue(platform.downloads.none { finished.id in it }, platform.downloads.toString())
+    assertTrue(platform.downloads.any { unheard.id in it }, platform.downloads.toString())
+    assertEquals(
+      listOf(unheard.key),
+      controller.state.value.library.manifests.map { it.episode.key },
+    )
+  }
+
+  @Test
   fun anOutageDoesNotSwitchABookToMp3() = runBlocking {
     val platform = LibroPlatform()
     platform.m4bOutage = true
