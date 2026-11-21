@@ -66,6 +66,9 @@ internal class NotificationLivery(private val livery: WidgetLivery) : Notificati
     // document asks for, which left a short download note a screen tall. A container of the
     // body's own height is all the player is offered.
     return RemoteViews(context.packageName, R.layout.notification_body).apply {
+      // An update can be reapplied to the shown views, where addView appends: clear first, so
+      // progress posts don't stack bodies.
+      removeAllViews(R.id.notification_body)
       addView(R.id.notification_body, views)
       setViewLayoutHeight(
         R.id.notification_body,
