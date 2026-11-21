@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.36](https://github.com/yschimke/cadence/compare/v0.1.35...v0.1.36) (2026-11-21)
+
+
+### Features
+
+* keep Pocket Casts and Libro.fm together; shorter download notification and podcast UI fixes ([#686](https://github.com/yschimke/cadence/issues/686)) ([3325906](https://github.com/yschimke/cadence/commit/33259066473bb917bb2ccd18f32d0f5d9c26543d))
+
 ## [0.1.35](https://github.com/yschimke/cadence/compare/v0.1.34...v0.1.35) (2026-11-21)
 
 
