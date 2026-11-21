@@ -1,6 +1,6 @@
 {
     "formatVersion": "compose-preview-history/v1",
-    "generatedFrom": "4deac6a16dcc7dfc5711d3610af450a1e8769bd3",
+    "generatedFrom": "8fd13341b535f0755b4b36cfcba69561b42c9cca",
     "previews": {
         "composeApp/activity__MainActivity": {
             "path": "renders/composeApp/activity__MainActivity.png",
@@ -887,6 +887,13 @@
             "path": "renders/composeApp/NotificationDownloadingPreview_Notification_downloading-f99a71e3.png",
             "versions": [
                 {
+                    "blob": "d899624d646c5d747133c98469ef77b55afbb507",
+                    "commit": "8fd13341b535f0755b4b36cfcba69561b42c9cca",
+                    "date": "2026-11-21T09:21:02Z",
+                    "sourceSha": "67c86b0f",
+                    "commits": 1
+                },
+                {
                     "blob": "11dc61b086b814cb6748cd3e8aac72eded6aac9f",
                     "commit": "4deac6a16dcc7dfc5711d3610af450a1e8769bd3",
                     "date": "2026-11-21T03:36:20Z",
@@ -1398,7 +1405,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 73,
+            "observations": 74,
             "unstable": false,
             "flapCount": 1
         },
@@ -1477,6 +1484,13 @@
         "composeApp/ee.schimke.cadence.preview.NotificationPreviewsKt.NotificationSyncingPreview_Notification · syncing · light": {
             "path": "renders/composeApp/NotificationSyncingPreview_Notification_syncing_light-fb11050e.png",
             "versions": [
+                {
+                    "blob": "7647942c9a7a47ec4c61427e25e26ff9afb7183c",
+                    "commit": "8fd13341b535f0755b4b36cfcba69561b42c9cca",
+                    "date": "2026-11-21T09:21:02Z",
+                    "sourceSha": "67c86b0f",
+                    "commits": 1
+                },
                 {
                     "blob": "6ad5394060834c19a011864e2a47645f93aaa79c",
                     "commit": "4deac6a16dcc7dfc5711d3610af450a1e8769bd3",
@@ -1989,13 +2003,20 @@
                     "commits": 1
                 }
             ],
-            "observations": 73,
+            "observations": 74,
             "unstable": false,
             "flapCount": 1
         },
         "composeApp/ee.schimke.cadence.preview.PodcastPreviewsKt.AddPodcastsPreview_Add podcasts": {
             "path": "renders/composeApp/AddPodcastsPreview_Add_podcasts-e09ca4b7.png",
             "versions": [
+                {
+                    "blob": "32c24c3103a0cf9a14501c10a698e202e480c317",
+                    "commit": "8fd13341b535f0755b4b36cfcba69561b42c9cca",
+                    "date": "2026-11-21T09:21:02Z",
+                    "sourceSha": "67c86b0f",
+                    "commits": 1
+                },
                 {
                     "blob": "9d1fb6ef374d17a8c9ffa5aa9466285c4b6c59db",
                     "commit": "7ae997328b2ed68ea4238366ae6673e68a1df72b",
@@ -2011,7 +2032,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 2,
+            "observations": 3,
             "unstable": false,
             "flapCount": 0
         },
@@ -2069,6 +2090,21 @@
                 }
             ],
             "observations": 7,
+            "unstable": false,
+            "flapCount": 0
+        },
+        "composeApp/ee.schimke.cadence.preview.PodcastPreviewsKt.PodcastLibroFmPreview_Add podcasts — Libro.fm signed in": {
+            "path": "renders/composeApp/PodcastLibroFmPreview_Add_podcasts_Libro_fm_signed_in-e6dad901.png",
+            "versions": [
+                {
+                    "blob": "2ae4cc904e25fa3e900f42d5b1e9a774fc116704",
+                    "commit": "8fd13341b535f0755b4b36cfcba69561b42c9cca",
+                    "date": "2026-11-21T09:21:02Z",
+                    "sourceSha": "67c86b0f",
+                    "commits": 1
+                }
+            ],
+            "observations": 1,
             "unstable": false,
             "flapCount": 0
         },
