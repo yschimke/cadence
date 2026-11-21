@@ -19,26 +19,35 @@ import ee.schimke.composeai.rcwidget.launcher.captureLauncherWidget
 import kotlinx.coroutines.CancellationException
 
 /**
- * The card's height for what it shows, at scale 1. Each row adds its own height plus the column's
- * 2dp gap: the 40dp headline row (its icon buttons set the height), two 23dp count lines (17sp
- * numbers), the 20dp battery and source lines (their icons set the height), the change summary
- * (at least 40dp) and its 16dp lines, each 44dp row of buttons (4dp above a 40dp pill), then 16dp
- * of padding and the pool.
+ * The card's height at scale 1: the taller of its two columns, then 16dp of padding and the pool.
+ * On the left, each row plus the column's 2dp gap: the headline (up to two 22dp lines), two 23dp
+ * count lines (17sp numbers), the 20dp battery and source lines (their icons set the height), and
+ * the change summary (at least 48dp) with its 16dp lines. On the right, the 48dp icon buttons and
+ * a 48dp pill per button, 4dp apart.
  */
-internal fun statusCardHeight(source: String?, extras: StatusCardExtras): Int {
-  val rows = buildList {
-    add(40)
+internal fun statusCardHeight(
+  source: String?,
+  extras: StatusCardExtras,
+  headline: String? = null,
+): Int {
+  val left = buildList {
+    if (headline != null) add(if (headline.length > 26) 44 else 22)
     add(23)
     add(23)
     add(20)
     if (source != null) add(20)
     if (extras.changes != null) {
-      add(40)
+      add(48)
       repeat(extras.changeLines.size) { add(16) }
     }
-    repeat(extras.buttons.chunked(STATUS_BUTTONS_PER_ROW).size) { add(44) }
   }
-  return rows.sum() + (rows.size - 1) * 2 + 16 + STATUS_CARD_POOL_DP
+  val right = buildList {
+    if (extras.refresh || extras.audioControls) add(48)
+    repeat(extras.buttons.size) { add(48) }
+  }
+  val leftHeight = left.sum() + (left.size - 1) * 2
+  val rightHeight = right.sum() + (right.size - 1).coerceAtLeast(0) * 4
+  return maxOf(leftHeight, rightHeight) + 16 + STATUS_CARD_POOL_DP
 }
 
 @Composable
@@ -56,7 +65,7 @@ actual fun PodcastSyncHomeCard(
 ) {
   val context = LocalContext.current
   val colors = WidgetColors.from(MaterialTheme.colorScheme)
-  val height = statusCardHeight(source, extras)
+  val height = statusCardHeight(source, extras, headline)
   val currentOnAction by rememberUpdatedState(onAction)
   BoxWithConstraints(Modifier.fillMaxWidth().height(height.dp)) {
     val width = maxWidth.value.toInt().coerceAtLeast(1)
@@ -108,6 +117,8 @@ actual fun PodcastSyncHomeCard(
       RcAdaptiveRemoteDocumentPlayer(
         document.bytes,
         Modifier.fillMaxWidth().height(height.dp),
+        // The player is an Android View; screen readers need a name for it as well.
+        contentDescription = headline ?: "Sync status",
         onNamedAction = { name, metadata ->
           // Host actions arrive by name, or by index into the capture's actions.
           val id =
