@@ -1,11 +1,27 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-21T15:50:37.680Z",
+  "generatedAt": "2026-11-21T17:31:33.699Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "8693842bb593067b9093a4eab48dbe4a94e37515",
+        "subject": "feat: restore sign-in on a new phone via Restore Credentials (#690)",
+        "at": "2026-11-21T17:20:28Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "3bd537e0259153a5ba26fdc8018a392eaee951db",
+        "subject": "chore(deps): update yschimke/livery action to v0.21.0 (#688)",
+        "at": "2026-11-21T16:14:26Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "ed2e8ccf8d1d8d9e16100b3bd8564ae2e3295d60",
         "subject": "chore(main): release 0.1.36 (#687)",
@@ -466,22 +482,6 @@
         "sha": "c501c20397ad8b5356c01a4e7782447eb1a0cd7b",
         "subject": "fix(deps): update dependency ee.schimke.composeai:rc-players-bom to v3.5.1 (#628)",
         "at": "2026-11-14T21:37:47Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "2d7d02687adef688ac8006f96431c42f2aa8dfc2",
-        "subject": "chore(deps): update yschimke/livery action to v0.14.0 (#629)",
-        "at": "2026-11-14T21:30:19Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "2ae8265f6ca3b6047b9e888825b3880d1f513ec4",
-        "subject": "fix(deps): update dependency ee.schimke.composeai:rc-players-bom to v3.5.0 (#623)",
-        "at": "2026-11-14T21:19:31Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []

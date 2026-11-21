@@ -15659,7 +15659,7 @@
     "ee.schimke.cadence (CadenceTheme)"
   ],
   "renderer": "compose-preview 2.79.0",
-  "generatedAt": "2026-11-21T15:50:34.054Z",
+  "generatedAt": "2026-11-21T17:31:30.259Z",
   "failures": [
     {
       "id": "render-failed--googleoauthactivity--activity-googleoauthactivity",
@@ -15731,7 +15731,7 @@
   "componentsFile": "components.json",
   "source": {
     "repo": "yschimke/cadence",
-    "ref": "ed2e8ccf8d1d8d9e16100b3bd8564ae2e3295d60",
+    "ref": "8693842bb593067b9093a4eab48dbe4a94e37515",
     "module": ""
   }
 }
