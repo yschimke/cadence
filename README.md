@@ -32,6 +32,7 @@ Auto-generated from `main`. Browse inline or compare against PR branches.
 | `NotificationSyncingPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/NotificationSyncingPreview_Notification_syncing_light-fb11050e.png" width="150" /> |
 | `AddPodcastsPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/AddPodcastsPreview_Add_podcasts-e09ca4b7.png" width="150" /> |
 | `PodcastImportedPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/PodcastImportedPreview_Podcast_sync_imported-8403888a.png" width="150" /> |
+| `PodcastLibroFmPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/PodcastLibroFmPreview_Add_podcasts_Libro_fm_signed_in-e6dad901.png" width="150" /> |
 | `PodcastPocketCastsPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/PodcastPocketCastsPreview_Add_podcasts_Pocket_Casts_signed_in-cd7341fe.png" width="150" /> |
 | `PodcastPreparedPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/PodcastPreparedPreview_Podcast_sync_prepared-2db5b8ad.png" width="150" /> |
 | `CloudSyncWidgetLargePreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/CloudSyncWidgetLargePreview_Cloud_sync_widget_large-2f8e7fdc.png" width="150" /> |
