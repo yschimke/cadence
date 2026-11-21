@@ -25,7 +25,7 @@ import kotlinx.coroutines.CancellationException
 internal fun statusCardHeight(source: String?, extras: StatusCardExtras): Int {
   var height = if (source != null) 104 else 86
   if (extras.changes != null) height += 44 + extras.changeLines.size * 17
-  if (extras.buttons.isNotEmpty()) height += 48
+  height += extras.buttons.chunked(STATUS_BUTTONS_PER_ROW).size * 44
   return height + STATUS_CARD_POOL_DP
 }
 

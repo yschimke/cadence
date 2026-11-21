@@ -1,7 +1,8 @@
 package ee.schimke.cadence.podcasts
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -56,6 +57,7 @@ expect fun PodcastSyncHomeCard(
 )
 
 /** Fallback for platforms that cannot host the Android Remote Compose document. */
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun PodcastSyncHomeFallback(
   copied: String,
@@ -79,7 +81,8 @@ fun PodcastSyncHomeFallback(
         }
         extras.changeLines.forEach { Text(it, style = MaterialTheme.typography.bodySmall) }
       }
-      Row {
+      // Wraps: three actions plus refresh and audio controls don't fit one row on a phone.
+      FlowRow {
         extras.buttons.forEach { button ->
           if (button.primary) Button(onClick = { onAction(button.id) }) { Text(button.label) }
           else TextButton(onClick = { onAction(button.id) }) { Text(button.label) }

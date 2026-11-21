@@ -187,14 +187,17 @@ fun PodcastSyncWidgetContent(
             )
           }
         extras?.changes?.let { changes -> SyncChangesRow(changes, extras.changeLines, colors, bodySp) }
-        if (!extras?.buttons.isNullOrEmpty())
+        // Two to a row: three buttons ("Eject USB", "Sync again", "Sync folders") don't fit a
+        // 360dp phone, and a Remote Compose row can't wrap.
+        extras?.buttons.orEmpty().chunked(STATUS_BUTTONS_PER_ROW).forEach { row ->
           RemoteRow(
             modifier = RemoteModifier.padding(top = 4.rdp),
             horizontalArrangement = RemoteArrangement.spacedBy(8.rdp),
             verticalAlignment = RemoteAlignment.CenterVertically,
           ) {
-            extras.buttons.forEach { StatusButton(it, colors) }
+            row.forEach { StatusButton(it, colors) }
           }
+        }
       }
       if (lane) {
         SwimmingPool(
@@ -258,6 +261,9 @@ private fun SyncMetricLine(
     }
   }
 }
+
+/** At most this many buttons share a row in the status card. */
+const val STATUS_BUTTONS_PER_ROW = 2
 
 /** Height of the pool strip on Home's status card. */
 const val STATUS_CARD_POOL_DP = 44
