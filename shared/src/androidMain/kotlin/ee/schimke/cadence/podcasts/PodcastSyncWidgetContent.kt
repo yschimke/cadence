@@ -24,6 +24,7 @@ import androidx.compose.remote.creation.compose.modifier.height
 import androidx.compose.remote.creation.compose.modifier.padding
 import androidx.compose.remote.creation.compose.state.rc
 import androidx.compose.remote.creation.compose.state.rdp
+import androidx.compose.remote.creation.compose.state.rf
 import androidx.compose.remote.creation.compose.state.rs
 import androidx.compose.remote.creation.compose.state.rsp
 import androidx.compose.remote.creation.compose.text.RemoteFontWeight
@@ -127,6 +128,13 @@ fun PodcastSyncWidgetContent(
   RemoteBox(
     modifier =
       RemoteModifier.fillMaxSize()
+        // Home's card has buttons of its own; the document's root still needs a name so screen
+        // readers don't land on an unlabelled container.
+        .let {
+          if (extras != null)
+            it.semantics { contentDescription = (headline ?: "Sync status").rs }
+          else it
+        }
         .let { if (onTap != null) it.clickable(onTap) else it }
         .background(colors.background.rc),
   ) {
@@ -136,84 +144,125 @@ fun PodcastSyncWidgetContent(
       modifier = RemoteModifier.fillMaxSize(),
       verticalArrangement = if (lane) RemoteArrangement.SpaceBetween else RemoteArrangement.Center,
     ) {
-      RemoteColumn(
-        modifier = RemoteModifier.fillMaxWidth().padding((8 * scale).rdp),
-        verticalArrangement = RemoteArrangement.spacedBy((2 * scale).rdp),
-      ) {
-        if (headline != null)
-          RemoteRow(verticalAlignment = RemoteAlignment.CenterVertically) {
-            val textWidth = widthDp - 2 * padding - icons.size * ICON_BUTTON_DP
-            RemoteText(
-              headline.rs,
-              modifier = if (icons.isEmpty()) RemoteModifier else RemoteModifier.width(textWidth.rdp),
-              color = (if (attention) colors.primary else colors.onBackground).rc,
-              fontSize = (15 * scale).coerceAtLeast(13f).rsp,
-              fontWeight = RemoteFontWeight.Medium,
-              maxLines = 1,
-              overflow = RemoteTextOverflow.Ellipsis,
-            )
-            icons.forEach { (id, icon) -> StatusIconButton(icon.first, icon.second, id, colors) }
-          }
-        SyncMetricLine(
-          copied,
-          Icons.Default.Headphones,
-          "on headphones",
-          colors.primary,
-          colors.onBackground,
-          scale,
-          bodySp,
-        )
-        SyncMetricLine(
-          available,
-          Icons.Default.Sync,
-          if (ready) "ready" else "to prepare",
-          if (ready) colors.tertiary else colors.warning,
-          colors.onBackground,
-          scale,
-          bodySp,
-        )
-        // A one-row slot with a headline has room for two more lines, not three.
-        if (lane || headline == null) RemoteRow(
-          horizontalArrangement = RemoteArrangement.spacedBy(6.rdp),
-          verticalAlignment = RemoteAlignment.CenterVertically,
-        ) {
-          SyncStatusIcon(Icons.Default.BatteryFull, colors.supporting, iconSize)
-          RemoteText(
-            // "50% · ~3h MP3 · ~4h 30m BT" reads as "50% · ~3h MP3": the charge and one estimate.
-            (battery?.split(" · ")?.take(2)?.joinToString(" · ") ?: "Battery unknown").rs,
-            color = colors.supporting.rc,
-            fontSize = bodySp.rsp,
-            maxLines = 1,
-            overflow = RemoteTextOverflow.Ellipsis,
+      // Home has room beside the status for its buttons, so the card stays short: status on the
+      // left, the icons and buttons stacked on the right. The widget keeps them underneath.
+      val side = fixedScale != null && (buttons.isNotEmpty() || icons.isNotEmpty())
+      val status: @Composable @RemoteComposable () -> Unit = {
+          SyncMetricLine(
+            copied,
+            Icons.Default.Headphones,
+            "on headphones",
+            colors.primary,
+            colors.onBackground,
+            scale,
+            bodySp,
           )
-        }
-        if (shown != null)
-          RemoteRow(
+          SyncMetricLine(
+            available,
+            Icons.Default.Sync,
+            if (ready) "ready" else "to prepare",
+            if (ready) colors.tertiary else colors.warning,
+            colors.onBackground,
+            scale,
+            bodySp,
+          )
+          // A one-row slot with a headline has room for two more lines, not three.
+          if (lane || headline == null) RemoteRow(
             horizontalArrangement = RemoteArrangement.spacedBy(6.rdp),
             verticalAlignment = RemoteAlignment.CenterVertically,
           ) {
-            SyncStatusIcon(Icons.Default.Cloud, colors.supporting, iconSize)
+            SyncStatusIcon(Icons.Default.BatteryFull, colors.supporting, iconSize)
             RemoteText(
-              shown.rs,
+              // "50% · ~3h MP3 · ~4h 30m BT" reads as "50% · ~3h MP3": the charge and one estimate.
+              (battery?.split(" · ")?.take(2)?.joinToString(" · ") ?: "Battery unknown").rs,
               color = colors.supporting.rc,
               fontSize = bodySp.rsp,
               maxLines = 1,
               overflow = RemoteTextOverflow.Ellipsis,
             )
           }
-        extras?.changes?.let { changes -> SyncChangesRow(changes, extras.changeLines, colors, bodySp) }
-        // Two to a row: three buttons ("Eject USB", "Sync again", "Sync folders") don't fit a
-        // 360dp phone, and a Remote Compose row can't wrap.
-        buttons.chunked(STATUS_BUTTONS_PER_ROW).forEach { row ->
-          RemoteRow(
-            modifier = RemoteModifier.padding(top = 4.rdp),
-            horizontalArrangement = RemoteArrangement.spacedBy(8.rdp),
-            verticalAlignment = RemoteAlignment.CenterVertically,
+          if (shown != null)
+            RemoteRow(
+              horizontalArrangement = RemoteArrangement.spacedBy(6.rdp),
+              verticalAlignment = RemoteAlignment.CenterVertically,
+            ) {
+              SyncStatusIcon(Icons.Default.Cloud, colors.supporting, iconSize)
+              RemoteText(
+                shown.rs,
+                color = colors.supporting.rc,
+                fontSize = bodySp.rsp,
+                maxLines = 1,
+                overflow = RemoteTextOverflow.Ellipsis,
+              )
+            }
+          extras?.changes?.let { changes -> SyncChangesRow(changes, extras.changeLines, colors, bodySp) }
+      }
+      if (side)
+        RemoteRow(
+          modifier = RemoteModifier.fillMaxWidth().padding(padding.rdp),
+          horizontalArrangement = RemoteArrangement.spacedBy(8.rdp),
+        ) {
+          RemoteColumn(
+            modifier = RemoteModifier.weight(1f.rf),
+            verticalArrangement = RemoteArrangement.spacedBy((2 * scale).rdp),
           ) {
-            row.forEach { StatusButton(it, colors) }
+            if (headline != null)
+              RemoteText(
+                headline.rs,
+                color = (if (attention) colors.primary else colors.onBackground).rc,
+                fontSize = (15 * scale).coerceAtLeast(13f).rsp,
+                fontWeight = RemoteFontWeight.Medium,
+                maxLines = 2,
+                overflow = RemoteTextOverflow.Ellipsis,
+              )
+            status()
+          }
+          // Icons and buttons hug the card's end edge; the buttons share the widest one's width.
+          RemoteColumn(
+            // The weighted row measures from its full width, padding included, so the end
+            // column carries the end padding itself.
+            modifier = RemoteModifier.width((SIDE_COLUMN_DP + padding).rdp).padding(end = padding.rdp),
+            verticalArrangement = RemoteArrangement.spacedBy(4.rdp),
+            horizontalAlignment = RemoteAlignment.End,
+          ) {
+            if (icons.isNotEmpty())
+              RemoteRow(verticalAlignment = RemoteAlignment.CenterVertically) {
+                icons.forEach { (id, icon) -> StatusIconButton(icon.first, icon.second, id, colors) }
+              }
+            buttons.forEach { StatusButton(it, colors, fill = true) }
           }
         }
-      }
+      else
+        RemoteColumn(
+          modifier = RemoteModifier.fillMaxWidth().padding((8 * scale).rdp),
+          verticalArrangement = RemoteArrangement.spacedBy((2 * scale).rdp),
+        ) {
+          if (headline != null)
+            RemoteRow(verticalAlignment = RemoteAlignment.CenterVertically) {
+              RemoteText(
+                headline.rs,
+                modifier = if (icons.isEmpty()) RemoteModifier else RemoteModifier.weight(1f.rf),
+                color = (if (attention) colors.primary else colors.onBackground).rc,
+                fontSize = (15 * scale).coerceAtLeast(13f).rsp,
+                fontWeight = RemoteFontWeight.Medium,
+                maxLines = 1,
+                overflow = RemoteTextOverflow.Ellipsis,
+              )
+              icons.forEach { (id, icon) -> StatusIconButton(icon.first, icon.second, id, colors) }
+            }
+          status()
+          // Two to a row: three buttons ("Eject USB", "Sync again", "Sync folders") don't fit a
+          // 360dp phone, and a Remote Compose row can't wrap.
+          buttons.chunked(STATUS_BUTTONS_PER_ROW).forEach { row ->
+            RemoteRow(
+              modifier = RemoteModifier.padding(top = 4.rdp),
+              horizontalArrangement = RemoteArrangement.spacedBy(8.rdp),
+              verticalAlignment = RemoteAlignment.CenterVertically,
+            ) {
+              row.forEach { StatusButton(it, colors) }
+            }
+          }
+        }
       if (lane) {
         SwimmingPool(
           RemoteModifier.fillMaxWidth().height(poolHeight.rdp),
@@ -286,14 +335,17 @@ private fun SyncMetricLine(
 /** The shortest launcher slot that has room for the widget's button. */
 private const val WIDGET_BUTTON_MIN_DP = 196
 
+/** Width of Home's right-hand column of icons and buttons: room for a "Sync folders" pill. */
+const val SIDE_COLUMN_DP = 148f
+
 /** At most this many buttons share a row in the status card. */
 const val STATUS_BUTTONS_PER_ROW = 2
 
 /** Height of the pool strip on Home's status card. */
 const val STATUS_CARD_POOL_DP = 44
 
-/** Width (and height) of each icon button beside the headline. */
-private const val ICON_BUTTON_DP = 40f
+/** Width (and height) of each icon button beside the headline: the 48dp minimum touch target. */
+private const val ICON_BUTTON_DP = 48f
 
 @Composable
 @RemoteComposable
@@ -325,7 +377,7 @@ private fun SyncChangesRow(
   val expanded = lines.isNotEmpty()
   RemoteRow(
     modifier =
-      RemoteModifier.heightIn(40.rdp, 48.rdp)
+      RemoteModifier.heightIn(48.rdp, 56.rdp)
         .semantics {
           contentDescription =
             ((if (expanded) "Hide changes. " else "Show changes. ") + "What will change: $summary").rs
@@ -363,11 +415,12 @@ private fun SyncChangesRow(
 /** A filled pill for the step's main action, a text button for the others. */
 @Composable
 @RemoteComposable
-private fun StatusButton(button: StatusCardButton, colors: WidgetColors) {
+private fun StatusButton(button: StatusCardButton, colors: WidgetColors, fill: Boolean = false) {
   RemoteBox(
     modifier =
-      RemoteModifier.height(40.rdp)
-        .clip(RemoteRoundedCornerShape(20.rdp))
+      RemoteModifier.height(48.rdp)
+        .let { if (fill) it.fillMaxWidth() else it }
+        .clip(RemoteRoundedCornerShape(24.rdp))
         .let { if (button.primary) it.background(colors.primary.rc) else it }
         .semantics {
           contentDescription = button.label.rs

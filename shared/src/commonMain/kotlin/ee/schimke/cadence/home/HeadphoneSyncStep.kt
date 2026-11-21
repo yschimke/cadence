@@ -157,7 +157,7 @@ fun statusButtons(
     HeadphoneSyncStep.NoSource -> add(StatusCardButton("add", "Add a source", primary = true))
     HeadphoneSyncStep.PlugInToSetUp -> Unit
     HeadphoneSyncStep.ChooseStorage ->
-      add(StatusCardButton("storage", "Choose headphone storage", primary = true))
+      add(StatusCardButton("storage", "Choose drive", primary = true))
     is HeadphoneSyncStep.Prepare ->
       add(
         if (cloud.canDownload) StatusCardButton("download", "Download", primary = true)

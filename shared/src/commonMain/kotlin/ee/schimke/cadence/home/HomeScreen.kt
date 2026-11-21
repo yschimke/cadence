@@ -560,12 +560,8 @@ private fun StatusSection(
           refresh = cloud.hasSource,
           audioControls = state.bluetoothSupported,
         )
-      // The card is a Remote Compose document: name it, and leave its buttons to screen readers.
-      Box(
-        Modifier.fillMaxWidth().clip(RoundedCornerShape(20.dp)).semantics {
-          contentDescription = "Sync status"
-        },
-      ) {
+      // The card is a Remote Compose document that names itself and its buttons.
+      Box(Modifier.fillMaxWidth().clip(RoundedCornerShape(20.dp))) {
         PodcastSyncHomeCard(
           copied = summary.copied,
           available = summary.available,
