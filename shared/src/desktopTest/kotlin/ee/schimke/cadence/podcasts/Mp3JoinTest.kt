@@ -49,6 +49,33 @@ class Mp3JoinTest {
   }
 
   @Test
+  fun eachTracksInfoFrameIsLeftOut() {
+    // A LAME-encoded fixture: ID3v2, then an Info frame counting only its own frames.
+    val tone = File("../tests/fixtures/podcast-tone.mp3").readBytes()
+    val tags = tone.decodeToString(0, 3).let { if (it == "ID3") id3v2LengthForTest(tone) else 0 }
+    val info = infoFrameLength(tone, tags)
+    assertTrue(info > 0, "fixture should start with an Info frame")
+    val a = File(dir, "a.mp3").apply { writeBytes(tone) }
+    val b = File(dir, "b.mp3").apply { writeBytes(tone) }
+    val out = File(dir, "joined.mp3")
+    joinMp3Tracks(listOf(a, b), out)
+    val joined = out.readBytes()
+    // One ID3 header, no Info frames, and both tracks' audio.
+    assertEquals(tags + 2 * (tone.size - tags - info), joined.size)
+    assertEquals(-1, String(joined, Charsets.ISO_8859_1).indexOf("Info"))
+    // Ordinary audio frames aren't mistaken for one.
+    assertEquals(0, infoFrameLength(joined, tags))
+  }
+
+  private fun id3v2LengthForTest(bytes: ByteArray): Int =
+    10 +
+      ((bytes[6].toInt() and 0x7f) shl
+        21 or
+        ((bytes[7].toInt() and 0x7f) shl 14) or
+        ((bytes[8].toInt() and 0x7f) shl 7) or
+        (bytes[9].toInt() and 0x7f))
+
+  @Test
   fun entryNamesNeverBecomePaths() {
     val archive = zip("evil.zip", "../../escape.mp3" to "[x]".encodeToByteArray())
     val into = File(dir, "safe")

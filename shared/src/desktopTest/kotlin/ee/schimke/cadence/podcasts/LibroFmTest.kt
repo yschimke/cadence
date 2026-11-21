@@ -96,10 +96,10 @@ class LibroFmTest {
     assertEquals("m4a", m4b.extension)
     assertEquals("mp3", mp3.extension)
     assertNotEquals(m4b.audioVersion, libroFmAudioVersion(mp3.id, "m4b", mp3.durationMs))
-    // A refresh keeps the format without asking again.
-    val asked = platform.m4bChecks.size
+    // A refresh keeps the MP3 format without asking again.
+    val asked = platform.m4bChecks.count { it == "9780000000002" }
     controller.refreshSource()
-    assertEquals(asked, platform.m4bChecks.size)
+    assertEquals(asked, platform.m4bChecks.count { it == "9780000000002" })
     assertEquals("mp3", controller.state.value.library.playlist!!.episodes[1].extension)
 
     assertTrue(controller.run { downloadOriginals() })
@@ -118,6 +118,19 @@ class LibroFmTest {
       ),
       platform.parts.single(),
     )
+  }
+
+  @Test
+  fun aBookImportedBeforeTheFallbackMovesToMp3() = runBlocking {
+    val platform = LibroPlatform()
+    val controller = PodcastController(platform)
+    controller.signInLibroFm("me@example.com", "secret")
+    // Imported as M4B (the only format before the fallback), never downloaded.
+    controller.importLibroFm(LIBRO_FM_LIBRARY, 2)
+    assertEquals("m4a", controller.state.value.library.playlist!!.episodes[1].extension)
+    platform.noM4b += "9780000000002"
+    controller.refreshSource()
+    assertEquals("mp3", controller.state.value.library.playlist!!.episodes[1].extension)
   }
 
   @Test

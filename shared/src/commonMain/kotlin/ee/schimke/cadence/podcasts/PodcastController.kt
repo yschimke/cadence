@@ -678,8 +678,14 @@ class PodcastController(val platform: PodcastPlatform) {
     return episodes.mapIndexed { index, episode ->
       val previous = known[episode.key]
       when {
-        previous != null && previous.durationMs == episode.durationMs ->
-          if (previous.extension == "mp3") episode.asLibroFmMp3() else episode
+        previous != null &&
+          previous.durationMs == episode.durationMs &&
+          previous.extension == "mp3" -> episode.asLibroFmMp3()
+        // An M4B already on this phone stays; one not downloaded yet is asked about again, which
+        // also moves books imported before the MP3 fallback (all assumed M4B) to MP3 when needed.
+        previous != null &&
+          previous.durationMs == episode.durationMs &&
+          platform.originalAvailable(previous) -> episode
         index < latest && api.m4bUrlOrNull(episode.id) == null -> episode.asLibroFmMp3()
         else -> episode
       }

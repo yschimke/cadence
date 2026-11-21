@@ -510,14 +510,19 @@ private val naturalOrder =
 
 /**
  * Joins MP3 [tracks] into [out]. MP3 is a stream of self-contained frames, so tracks join end to
- * end; each track's ID3v2 header (after the first) and ID3v1 trailer are left out so tag bytes
- * don't play as noise between chapters.
+ * end. Each track's ID3v2 header (after the first) and ID3v1 trailer are left out so tag bytes
+ * don't play as noise between chapters, and every track's Xing/Info or VBRI frame is left out: it
+ * counts only that track's frames, so players would take the first chapter's length (and seek
+ * table) for the whole book. Without it they work from the bitrate, which is exact for the
+ * constant-bitrate MP3s audiobooks use.
  */
 internal fun joinMp3Tracks(tracks: List<File>, out: File) {
   out.outputStream().buffered().use { output ->
     tracks.forEachIndexed { index, track ->
       val bytes = track.readBytes()
-      val start = if (index == 0) 0 else id3v2Length(bytes)
+      val tags = id3v2Length(bytes)
+      if (index == 0) output.write(bytes, 0, tags)
+      val start = tags + infoFrameLength(bytes, tags)
       val end =
         if (
           bytes.size - start >= 128 &&
@@ -540,4 +545,41 @@ private fun id3v2Length(bytes: ByteArray): Int {
       (bytes[9].toInt() and 0x7f)
   val footer = if (bytes[5].toInt() and 0x10 != 0) 10 else 0
   return (10 + size + footer).coerceAtMost(bytes.size)
+}
+
+/** Layer III bitrates in kbps by index, for MPEG-1 and for MPEG-2/2.5. */
+private val mpeg1Bitrates =
+  intArrayOf(0, 32, 40, 48, 56, 64, 80, 96, 112, 128, 160, 192, 224, 256, 320)
+private val mpeg2Bitrates = intArrayOf(0, 8, 16, 24, 32, 40, 48, 56, 64, 80, 96, 112, 128, 144, 160)
+
+/**
+ * The length of the Xing/Info or VBRI frame at [offset] (the first MPEG audio frame), or 0 when the
+ * first frame is ordinary audio.
+ */
+internal fun infoFrameLength(bytes: ByteArray, offset: Int): Int {
+  if (offset + 4 > bytes.size) return 0
+  val b1 = bytes[offset + 1].toInt() and 0xff
+  val b2 = bytes[offset + 2].toInt() and 0xff
+  val b3 = bytes[offset + 3].toInt() and 0xff
+  // Frame sync and Layer III.
+  if (bytes[offset].toInt() and 0xff != 0xff || b1 and 0xe0 != 0xe0 || b1 shr 1 and 3 != 1) return 0
+  val version = b1 shr 3 and 3 // 3 = MPEG-1, 2 = MPEG-2, 0 = MPEG-2.5
+  if (version == 1) return 0
+  val mpeg1 = version == 3
+  val bitrateIndex = b2 shr 4
+  val rateIndex = b2 shr 2 and 3
+  if (bitrateIndex !in 1..14 || rateIndex == 3) return 0
+  val sampleRate =
+    intArrayOf(44100, 48000, 32000)[rateIndex] / if (mpeg1) 1 else if (version == 2) 2 else 4
+  val bitrate = (if (mpeg1) mpeg1Bitrates else mpeg2Bitrates)[bitrateIndex] * 1000
+  val padding = b2 shr 1 and 1
+  val length = (if (mpeg1) 144 else 72) * bitrate / sampleRate + padding
+  val mono = b3 shr 6 == 3
+  val sideInfo = if (mpeg1) (if (mono) 17 else 32) else if (mono) 9 else 17
+  fun tagAt(position: Int) =
+    offset + position + 4 <= bytes.size &&
+      bytes.decodeToString(offset + position, offset + position + 4).let {
+        it == "Xing" || it == "Info" || it == "VBRI"
+      }
+  return if (tagAt(4 + sideInfo) || tagAt(36)) length.coerceAtMost(bytes.size - offset) else 0
 }
