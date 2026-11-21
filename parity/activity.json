@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-21T11:54:04.999Z",
+  "generatedAt": "2026-11-21T12:54:45.451Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "acef3ae46e8a8739486ad179f4baaf3886191775",
+        "subject": "feat: add the Libro.fm MP3 fallback, and split as is, by time or by chapter (#683)",
+        "at": "2026-11-21T12:43:58Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "cdcf602cce374d7cde4e2eef2846674ea7aa0ca9",
         "subject": "fix: pin swim clock in notification previews (#681)",
@@ -475,14 +483,6 @@
         "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.92.0 (#622)",
         "at": "2026-11-14T11:17:25Z",
         "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "4b8b0d0c7eacdd0cd0a7e43d8933596a42947266",
-        "subject": "perf(android): apply Android memory guidance (isolate listener process, R8, ComponentCallbacks2) (#621)",
-        "at": "2026-11-14T11:14:32Z",
-        "author": "Yuri Schimke",
         "previewIds": [],
         "components": []
       }
