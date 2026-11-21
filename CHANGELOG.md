@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.1.35](https://github.com/yschimke/cadence/compare/v0.1.34...v0.1.35) (2026-11-21)
+
+
+### Features
+
+* add the Libro.fm MP3 fallback, and split as is, by time or by chapter ([#683](https://github.com/yschimke/cadence/issues/683)) ([acef3ae](https://github.com/yschimke/cadence/commit/acef3ae46e8a8739486ad179f4baaf3886191775))
+* one status card on Home, and clearer folders-plus-one-service sources ([#677](https://github.com/yschimke/cadence/issues/677)) ([8210f30](https://github.com/yschimke/cadence/commit/8210f30b8f768e27b7bd65ecfb7d0c3fca4ec147))
+* put the status card's buttons beside the status, at 48dp ([#680](https://github.com/yschimke/cadence/issues/680)) ([466aead](https://github.com/yschimke/cadence/commit/466aeada88c40b36a67d8c5fd011242604ada638))
+
+
+### Bug Fixes
+
+* **deps:** update dependency ee.schimke.composeai:rc-players-bom to v3.10.0 ([#679](https://github.com/yschimke/cadence/issues/679)) ([9235498](https://github.com/yschimke/cadence/commit/9235498e998fcdf012f175997b2fa4366870950a))
+* pin swim clock in notification previews ([#681](https://github.com/yschimke/cadence/issues/681)) ([cdcf602](https://github.com/yschimke/cadence/commit/cdcf602cce374d7cde4e2eef2846674ea7aa0ca9))
+
 ## [0.1.34](https://github.com/yschimke/cadence/compare/v0.1.33...v0.1.34) (2026-11-21)
 
 
