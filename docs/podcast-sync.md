@@ -77,7 +77,7 @@ for the browser build: run it in your own Pocket Casts tab and paste its export.
 | Backend | Selection/positions | Exportable audio | Implemented |
 | --- | --- | --- | --- |
 | Pocket Casts | Up Next, in progress and manual playlists, with positions | Episode enclosure URLs from the account | Private web-player API (Android/desktop); passive browser helper on web |
-| Libro.fm | Owned audiobooks, whole library or one book; no position | Packaged M4B from a fresh signed link | Private app API (Android/desktop) |
+| Libro.fm | Owned audiobooks, whole library or one book; no position | Packaged M4B, else the MP3 tracks joined into one file, from fresh signed links | Private app API (Android/desktop) |
 | Public RSS | Newest 1–50 feed items; no account position service | HTTPS, unencrypted enclosures with permission to download | Feed import/refresh, download and preparation |
 | gpodder API v2 (gpodder.net, oPodSync) and Nextcloud GPodder Sync | Unfinished episodes and positions (no queue); used by AntennaPod, Kasts, gPodder | Enclosures resolved from each show's public feed | Import; explicit **Send position** with a re-read conflict check |
 | Overcast | "All data" OPML has per-episode `progress` (seconds) and `played`; no queue or durations | Enclosures resolved from each show's public feed | Paste-import of the export file |
@@ -107,7 +107,8 @@ Libro.fm's terms.
 | --- | --- |
 | `POST /oauth/token` `{grant_type: "password", username, password}` | Password sign-in; returns `access_token` |
 | `GET /api/v10/library?page=N` | Owned audiobooks (`isbn`, `title`, `authors`, `cover_url`, `audiobook_info.duration` in seconds), `total_pages` |
-| `GET /api/v10/audiobooks/{isbn}/packaged_m4b` | `m4b_url`, a signed download link that expires within minutes |
+| `GET /api/v10/audiobooks/{isbn}/packaged_m4b` | `m4b_url`, a signed download link that expires within minutes; any refusal but a 401 means no M4B |
+| `GET /api/v10/download-manifest?isbn=` | `parts[].url`, signed zip archives of the MP3 tracks, for books without an M4B |
 
 Every request sends `User-Agent: okhttp/…` and `X-LibroFm-AppVer: …` matching a
 current Android app build: Libro.fm's load balancer answers anything else with an
@@ -118,9 +119,12 @@ and desktop only.
 Choose the whole library (newest purchases first, the first 1–50 downloaded,
 the rest listed) or one book. Because the download link expires, the library
 stores the book's page as its audio URL and Cadence asks for a fresh M4B link
-right before each download. A book downloads as one M4B file (treated as M4A).
-Books with no packaged M4B can't be downloaded yet: Libro.fm offers those only as
-zip archives of MP3 tracks, which Cadence doesn't unpack. Libro.fm doesn't
+right before each download. A book downloads as one M4B file (treated as M4A)
+when Libro.fm has packaged one. Otherwise, as open-source Libro.fm downloaders do,
+Cadence falls back to `GET /api/v10/download-manifest?isbn=`: zip archives of the
+book's MP3 tracks, which it unpacks and joins in track order into one MP3, leaving
+out each later track's ID3 tags. Cadence checks for an M4B when a book is first
+imported for download and keeps that choice on refresh. Libro.fm doesn't
 share a listening position, so books start at zero and Cadence keeps its own
 position across refreshes. The token is saved with the local library until
 **Sign out** or a `401`.

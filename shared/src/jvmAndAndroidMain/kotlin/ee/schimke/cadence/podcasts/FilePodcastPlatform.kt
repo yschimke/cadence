@@ -226,6 +226,79 @@ abstract class FilePodcastPlatform(protected val root: File) : PodcastPlatform {
     destination: File,
     onProgress: (downloaded: Long, total: Long) -> Unit = { _, _ -> },
   ) =
+    if (episode.audioParts.isNotEmpty()) downloadParts(episode, destination, onProgress)
+    else downloadWhole(episode, destination, onProgress)
+
+  /**
+   * Fetches each zip archive in [Episode.audioParts], takes its MP3 tracks in order and joins them
+   * into [destination]. Progress counts whole parts, each weighted equally.
+   */
+  private suspend fun downloadParts(
+    episode: Episode,
+    destination: File,
+    onProgress: (downloaded: Long, total: Long) -> Unit,
+  ) =
+    withContext(Dispatchers.IO) {
+      episode.validate()
+      destination.parentFile!!.mkdirs()
+      val work = File(destination.parentFile, destination.name + ".tracks")
+      val temp = File(destination.parentFile, destination.name + ".part")
+      val parts = episode.audioParts.size
+      try {
+        work.deleteRecursively()
+        work.mkdirs()
+        val tracks = mutableListOf<File>()
+        episode.audioParts.forEachIndexed { index, url ->
+          val zip = File(work, "part-$index.zip")
+          fetchTo(url, zip) { bytes, total ->
+            if (total > 0)
+              onProgress(index * PART_SCALE + bytes * PART_SCALE / total, parts * PART_SCALE)
+          }
+          tracks += extractMp3Tracks(zip, File(work, "part-$index"))
+          zip.delete()
+        }
+        if (tracks.isEmpty()) throw PodcastProblem("the download had no MP3 tracks")
+        joinMp3Tracks(tracks, temp)
+        onProgress(parts * PART_SCALE, parts * PART_SCALE)
+        replacePodcastFile(temp, destination)
+      } finally {
+        work.deleteRecursively()
+        temp.delete()
+      }
+    }
+
+  /** Streams a public HTTPS file to [target], cancellable, refusing anything over 2 GB. */
+  private suspend fun fetchTo(url: String, target: File, onProgress: (Long, Long) -> Unit) {
+    val conn = openPublic(url)
+    try {
+      val total = conn.contentLengthLong
+      var count = 0L
+      conn.inputStream.use { source ->
+        target.outputStream().use { output ->
+          val buffer = ByteArray(64 * 1024)
+          while (true) {
+            currentCoroutineContext().ensureActive()
+            val read = source.read(buffer)
+            if (read < 0) break
+            count += read
+            if (count > 2_000_000_000L) throw PodcastProblem("the audio is over 2 GB")
+            output.write(buffer, 0, read)
+            onProgress(count, total)
+          }
+        }
+      }
+      if (total >= 0 && total != count)
+        throw PodcastProblem("the download stopped early, at ${count * 100 / total}%")
+    } finally {
+      conn.disconnect()
+    }
+  }
+
+  private suspend fun downloadWhole(
+    episode: Episode,
+    destination: File,
+    onProgress: (downloaded: Long, total: Long) -> Unit,
+  ) =
     withContext(Dispatchers.IO) {
       episode.validate()
       destination.parentFile!!.mkdirs()
@@ -391,3 +464,80 @@ private fun downloadProblem(e: Exception): PodcastProblem? =
     is java.net.URISyntaxException -> PodcastProblem("the audio address isn't a valid HTTPS URL")
     else -> null
   }
+
+/** Progress units per part when joining several downloads, so whole parts weigh the same. */
+private const val PART_SCALE = 1_000_000L
+
+/**
+ * The MP3 entries of [zip], written to [into] in track order (by name, numbers compared as
+ * numbers). Entry names never become paths, so an archive can't write outside [into].
+ */
+internal fun extractMp3Tracks(zip: File, into: File): List<File> {
+  into.mkdirs()
+  val names = mutableListOf<Pair<String, File>>()
+  java.util.zip.ZipInputStream(zip.inputStream().buffered()).use { input ->
+    while (true) {
+      val entry = input.nextEntry ?: break
+      if (!entry.isDirectory && entry.name.endsWith(".mp3", ignoreCase = true)) {
+        val file = File(into, "track-${names.size}.mp3")
+        file.outputStream().use { input.copyTo(it) }
+        names += entry.name.substringAfterLast('/') to file
+      }
+      input.closeEntry()
+    }
+  }
+  return names.sortedWith(compareBy(naturalOrder) { it.first }).map { it.second }
+}
+
+/** "Track 2" before "Track 10". */
+private val naturalOrder =
+  Comparator<String> { a, b ->
+    val chunk = Regex("\\d+|\\D+")
+    val left = chunk.findAll(a.lowercase()).map { it.value }.toList()
+    val right = chunk.findAll(b.lowercase()).map { it.value }.toList()
+    for (i in 0 until minOf(left.size, right.size)) {
+      val x = left[i]
+      val y = right[i]
+      val order =
+        if (x[0].isDigit() && y[0].isDigit())
+          x.trimStart('0').length.compareTo(y.trimStart('0').length).takeIf { it != 0 }
+            ?: x.trimStart('0').compareTo(y.trimStart('0'))
+        else x.compareTo(y)
+      if (order != 0) return@Comparator order
+    }
+    left.size.compareTo(right.size)
+  }
+
+/**
+ * Joins MP3 [tracks] into [out]. MP3 is a stream of self-contained frames, so tracks join end to
+ * end; each track's ID3v2 header (after the first) and ID3v1 trailer are left out so tag bytes
+ * don't play as noise between chapters.
+ */
+internal fun joinMp3Tracks(tracks: List<File>, out: File) {
+  out.outputStream().buffered().use { output ->
+    tracks.forEachIndexed { index, track ->
+      val bytes = track.readBytes()
+      val start = if (index == 0) 0 else id3v2Length(bytes)
+      val end =
+        if (
+          bytes.size - start >= 128 &&
+            bytes.decodeToString(bytes.size - 128, bytes.size - 125) == "TAG"
+        )
+          bytes.size - 128
+        else bytes.size
+      output.write(bytes, start, end - start)
+    }
+  }
+}
+
+/** The length of a leading ID3v2 tag (header, body and any footer), or 0 without one. */
+private fun id3v2Length(bytes: ByteArray): Int {
+  if (bytes.size < 10 || bytes.decodeToString(0, 3) != "ID3") return 0
+  val size =
+    (bytes[6].toInt() and 0x7f shl 21) or
+      (bytes[7].toInt() and 0x7f shl 14) or
+      (bytes[8].toInt() and 0x7f shl 7) or
+      (bytes[9].toInt() and 0x7f)
+  val footer = if (bytes[5].toInt() and 0x10 != 0) 10 else 0
+  return (10 + size + footer).coerceAtMost(bytes.size)
+}

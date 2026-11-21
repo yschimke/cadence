@@ -84,6 +84,19 @@ fun libroFmLibraryPage(body: String): Pair<List<LibroFmBook>, Int> {
   return books to (json["total_pages"]?.jsonPrimitive?.intOrNull ?: 1)
 }
 
+/**
+ * `GET /api/v10/download-manifest?isbn=` answers `{parts: [{url, size_bytes}], tracks}`: zip
+ * archives of the book's MP3 tracks, in order, as short-lived signed URLs.
+ */
+fun libroFmMp3Parts(body: String): List<String> {
+  val parts =
+    (libroFmObject(body)["parts"] as? JsonArray).orEmpty().mapNotNull {
+      (it as? JsonObject)?.text("url")?.takeIf { url -> url.startsWith("https://") }
+    }
+  if (parts.isEmpty()) throw PodcastProblem("Libro.fm didn't return a download for this book")
+  return parts
+}
+
 /** `GET /api/v10/audiobooks/{isbn}/packaged_m4b` answers `{m4b_url}`, a short-lived signed URL. */
 fun libroFmM4bUrl(body: String): String =
   libroFmObject(body).text("m4b_url").takeIf { it.startsWith("https://") }
@@ -110,7 +123,7 @@ fun libroFmToEpisode(book: LibroFmBook): Episode? {
       0,
       "librofm:0",
       // The packaged M4B of this edition; a re-mastered edition comes with a new length.
-      digest("$LIBRO_FM_BACKEND|${book.isbn}|m4b|$durationMs"),
+      libroFmAudioVersion(book.isbn, "m4b", durationMs),
       // An M4B is an M4A with chapters; players and the encoder treat it as one.
       "m4a",
       podcastId = "$LIBRO_FM_BACKEND:${book.isbn}",
@@ -128,6 +141,16 @@ fun libroFmToEpisode(book: LibroFmBook): Episode? {
     )
     .takeIf { runCatching { it.validate() }.isSuccess }
 }
+
+internal fun libroFmAudioVersion(isbn: String, format: String, durationMs: Long) =
+  digest("$LIBRO_FM_BACKEND|$isbn|$format|$durationMs")
+
+/**
+ * [episode] as the book's MP3 tracks, joined into one file when downloaded: for books Libro.fm
+ * hasn't packaged as an M4B.
+ */
+fun Episode.asLibroFmMp3(): Episode =
+  copy(extension = "mp3", audioVersion = libroFmAudioVersion(id, "mp3", durationMs))
 
 /** A book or the whole library, read from [books]; the second value counts skipped books. */
 fun libroFmSnapshot(books: List<LibroFmBook>, list: String): Pair<PlaylistSnapshot, Int> {
@@ -179,14 +202,26 @@ class LibroFmApi(
     }
   }
 
-  /** A fresh signed link to the book's M4B; not every book has one packaged. */
-  suspend fun m4bUrl(isbn: String): String =
+  /**
+   * A fresh signed link to the book's M4B, or null when Libro.fm has none packaged. Like the
+   * open-source downloaders, any refusal other than a lost sign-in counts as "no M4B"; an outage
+   * (5xx) still fails, so a book isn't switched to MP3 by mistake.
+   */
+  suspend fun m4bUrlOrNull(isbn: String): String? =
     try {
       libroFmM4bUrl(get("/api/v10/audiobooks/$isbn/packaged_m4b"))
     } catch (e: PodcastProblem) {
-      if (e.status != 404) throw e
-      throw PodcastProblem("Libro.fm has no single-file (M4B) download for this book yet", 404)
+      if (e.status == 401 || e.status !in 400..499) throw e
+      null
     }
+
+  suspend fun m4bUrl(isbn: String): String =
+    m4bUrlOrNull(isbn)
+      ?: throw PodcastProblem("Libro.fm no longer has an M4B for this book. Refresh Libro.fm.")
+
+  /** Fresh signed links to the zip archives of the book's MP3 tracks, in order. */
+  suspend fun mp3Parts(isbn: String): List<String> =
+    libroFmMp3Parts(get("/api/v10/download-manifest?isbn=$isbn"))
 
   companion object {
     private const val MAX_LIBRARY_PAGES = 50

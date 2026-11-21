@@ -29,6 +29,12 @@ data class Episode(
   val published: String = "",
   // The show's cover art, when the source names one (RSS `itunes:image`).
   val artwork: String = "",
+  /**
+   * Zip archives of MP3 tracks to join, in order, into this episode's audio instead of fetching
+   * [audioUrl] (Libro.fm books without a single-file download). Set just before downloading, since
+   * the links are signed and expire within minutes; never kept in the library.
+   */
+  val audioParts: List<String> = emptyList(),
 ) {
   val key: String
     get() = digest("$backend\u0000$id")
@@ -58,6 +64,8 @@ data class Episode(
       "Unsupported audio format"
     }
     require(audioUrl.startsWith("https://")) { "Audio requires an HTTPS enclosure URL" }
+    require(audioParts.all { it.startsWith("https://") }) { "Audio parts require HTTPS URLs" }
+    require(audioParts.isEmpty() || extension == "mp3") { "Only MP3 tracks can be joined" }
   }
 }
 

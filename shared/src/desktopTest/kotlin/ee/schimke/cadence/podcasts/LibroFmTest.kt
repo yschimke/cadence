@@ -86,6 +86,50 @@ class LibroFmTest {
   }
 
   @Test
+  fun aBookWithoutAnM4bDownloadsItsMp3Tracks() = runBlocking {
+    val platform = LibroPlatform()
+    platform.noM4b += "9780000000002"
+    val controller = PodcastController(platform)
+    controller.signInLibroFm("me@example.com", "secret")
+    controller.importLibroFm(LIBRO_FM_LIBRARY, 2)
+    val (m4b, mp3) = controller.state.value.library.playlist!!.episodes
+    assertEquals("m4a", m4b.extension)
+    assertEquals("mp3", mp3.extension)
+    assertNotEquals(m4b.audioVersion, libroFmAudioVersion(mp3.id, "m4b", mp3.durationMs))
+    // A refresh keeps the format without asking again.
+    val asked = platform.m4bChecks.size
+    controller.refreshSource()
+    assertEquals(asked, platform.m4bChecks.size)
+    assertEquals("mp3", controller.state.value.library.playlist!!.episodes[1].extension)
+
+    assertTrue(controller.run { downloadOriginals() })
+    // The MP3 book downloads from its zip parts, in order; the M4B one from its file.
+    assertEquals(
+      listOf(
+        "https://s3.example/9780000000001.m4b?sig=1",
+        "https://s3.example/9780000000002-1.zip?sig=1",
+      ),
+      platform.downloads,
+    )
+    assertEquals(
+      listOf(
+        "https://s3.example/9780000000002-1.zip?sig=1",
+        "https://s3.example/9780000000002-2.zip?sig=1",
+      ),
+      platform.parts.single(),
+    )
+  }
+
+  @Test
+  fun anOutageDoesNotSwitchABookToMp3() = runBlocking {
+    val platform = LibroPlatform()
+    platform.m4bOutage = true
+    val controller = PodcastController(platform)
+    controller.signInLibroFm("me@example.com", "secret")
+    assertFalse(controller.run { importLibroFm(LIBRO_FM_LIBRARY, 1) })
+  }
+
+  @Test
   fun aBookThatLeftTheLibraryFails() = runBlocking {
     val controller = PodcastController(LibroPlatform())
     controller.signInLibroFm("me@example.com", "secret")
@@ -102,6 +146,10 @@ class LibroFmTest {
     var loginBody: String? = null
     val agents = mutableListOf<String>()
     val downloads = mutableListOf<String>()
+    val parts = mutableListOf<List<String>>()
+    val noM4b = mutableSetOf<String>()
+    val m4bChecks = mutableListOf<String>()
+    var m4bOutage = false
     private val downloaded = mutableSetOf<String>()
 
     override suspend fun readState() = saved
@@ -132,8 +180,17 @@ class LibroFmTest {
           """{"page":1,"total_pages":2,"audiobooks":[${book("9780000000001", "One", 3600)},${book("9780000000002", "Two", 7200)}]}"""
         path == "/api/v10/library?page=2" ->
           """{"page":2,"total_pages":2,"audiobooks":[${book("9780000000003", "No length", 0)}]}"""
-        path.startsWith("/api/v10/audiobooks/") && path.endsWith("/packaged_m4b") ->
-          """{"m4b_url":"https://s3.example/${path.split('/')[4]}.m4b?sig=1"}"""
+        path.startsWith("/api/v10/download-manifest?isbn=") -> {
+          val isbn = path.substringAfter("isbn=")
+          """{"parts":[{"url":"https://s3.example/$isbn-1.zip?sig=1","size_bytes":10},{"url":"https://s3.example/$isbn-2.zip?sig=1","size_bytes":10}],"tracks":[]}"""
+        }
+        path.startsWith("/api/v10/audiobooks/") && path.endsWith("/packaged_m4b") -> {
+          val isbn = path.split('/')[4]
+          m4bChecks += isbn
+          if (m4bOutage) throw PodcastProblem("Unavailable", 503)
+          if (isbn in noM4b) throw PodcastProblem("Not found (HTTP 404).", 404)
+          """{"m4b_url":"https://s3.example/$isbn.m4b?sig=1"}"""
+        }
         else -> error("Unexpected $path")
       }
     }
@@ -142,6 +199,7 @@ class LibroFmTest {
 
     override suspend fun downloadOriginal(episode: Episode, onProgress: (Long, Long) -> Unit) {
       downloads += episode.audioUrl
+      if (episode.audioParts.isNotEmpty()) parts += episode.audioParts
       downloaded += episode.key
     }
 

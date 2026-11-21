@@ -623,10 +623,11 @@ class PodcastController(val platform: PodcastPlatform) {
    * position is kept across refreshes.
    */
   suspend fun importLibroFm(list: String, latest: Int = state.value.library.feedLatest) {
-    val books = libroFm().library()
+    val api = libroFm()
+    val books = api.library()
     libroFmBooks.value = books
     val (snapshot, skipped) = libroFmSnapshot(books, list)
-    val all = keepLocalPositions(snapshot.episodes)
+    val all = keepLocalPositions(libroFmFormats(api, snapshot.episodes, latest))
     importSnapshot(
       podcastJson.encodeToString(snapshot.copy(episodes = all.take(latest))),
       upcoming = all.drop(latest),
@@ -655,8 +656,35 @@ class PodcastController(val platform: PodcastPlatform) {
    * a book not yet on this device gets a fresh one.
    */
   private suspend fun downloadable(episode: Episode): Episode =
-    if (episode.backend != LIBRO_FM_BACKEND || platform.originalAvailable(episode)) episode
-    else episode.copy(audioUrl = libroFm().m4bUrl(episode.id))
+    when {
+      episode.backend != LIBRO_FM_BACKEND || platform.originalAvailable(episode) -> episode
+      episode.extension == "mp3" ->
+        libroFm().mp3Parts(episode.id).let { episode.copy(audioUrl = it.first(), audioParts = it) }
+      else -> episode.copy(audioUrl = libroFm().m4bUrl(episode.id))
+    }
+
+  /**
+   * Each book's download: the packaged M4B where Libro.fm has one, else its MP3 tracks joined into
+   * one file. Only the first [latest] are asked about, since only they are downloaded; a book seen
+   * before keeps the format it had, so its download and position stay valid.
+   */
+  private suspend fun libroFmFormats(
+    api: LibroFmApi,
+    episodes: List<Episode>,
+    latest: Int,
+  ): List<Episode> {
+    // Only the synced playlist was asked about; books waiting further down were not.
+    val known = state.value.library.playlist?.episodes.orEmpty().associateBy { it.key }
+    return episodes.mapIndexed { index, episode ->
+      val previous = known[episode.key]
+      when {
+        previous != null && previous.durationMs == episode.durationMs ->
+          if (previous.extension == "mp3") episode.asLibroFmMp3() else episode
+        index < latest && api.m4bUrlOrNull(episode.id) == null -> episode.asLibroFmMp3()
+        else -> episode
+      }
+    }
+  }
 
   /** Writes need the token on this device; the web-player capture and servers only read. */
   private val pocketCastsWritable: Boolean
