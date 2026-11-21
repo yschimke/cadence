@@ -576,6 +576,8 @@ private fun StatusSection(
       podcastWork = podcastWork,
       actions = actions,
       bluetooth = state.bluetoothSupported && device == null,
+      // Folders copy on their own screen; alongside episodes they need their own button too.
+      syncFolders = pluggedIn && state.sources.isNotEmpty(),
       onConnectSource = onConnectSource,
     )
     if (step is HeadphoneSyncStep.ReadyToCopy && !copying) {
@@ -597,6 +599,7 @@ private fun StatusActions(
   podcastWork: PodcastWorkUi,
   actions: HomeActions,
   bluetooth: Boolean,
+  syncFolders: Boolean,
   onConnectSource: () -> Unit,
 ) {
   Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
@@ -633,7 +636,8 @@ private fun StatusActions(
         is HeadphoneSyncStep.UpToDate ->
           if (step.pluggedIn) {
             actions.onEjectUsb?.let { eject ->
-              FilledTonalButton(onClick = eject) {
+              // Ejecting mid-copy ("Sync again") would cut off the files being written.
+              FilledTonalButton(enabled = enabled, onClick = eject) {
                 Icon(Icons.Filled.Eject, contentDescription = null, Modifier.size(18.dp))
                 Spacer(Modifier.width(8.dp))
                 Text("Eject USB")
@@ -645,6 +649,8 @@ private fun StatusActions(
           if (step.pluggedIn)
             Button(enabled = enabled, onClick = actions.onCopyToHeadphones) { Text("Sync folders") }
       }
+      if (syncFolders && step !is HeadphoneSyncStep.Folders)
+        TextButton(enabled = enabled, onClick = actions.onCopyToHeadphones) { Text("Sync folders") }
     }
     if (cloud.hasSource)
       TopBarAction(Icons.Filled.Refresh, "Check for new episodes") {
@@ -919,8 +925,8 @@ private fun AddSourceSheet(
       modifier = Modifier.padding(start = 24.dp, end = 24.dp, top = 8.dp),
     )
     Text(
-      "Add as many folders as you like, plus one podcast or audiobook service. Each sync puts " +
-        "them all on your headphones.",
+      "Add as many folders as you like, plus one podcast or audiobook service. Both go on " +
+        "the same headphones: plug them in, then sync episodes and folders from Home.",
       style = MaterialTheme.typography.bodyMedium,
       color = MaterialTheme.colorScheme.onSurfaceVariant,
       modifier = Modifier.padding(start = 24.dp, end = 24.dp, top = 4.dp, bottom = 8.dp),
