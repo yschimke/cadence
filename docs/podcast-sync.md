@@ -123,8 +123,12 @@ right before each download. A book downloads as one M4B file (treated as M4A)
 when Libro.fm has packaged one. Otherwise, as open-source Libro.fm downloaders do,
 Cadence falls back to `GET /api/v10/download-manifest?isbn=`: zip archives of the
 book's MP3 tracks, which it unpacks and joins in track order into one MP3, leaving
-out each later track's ID3 tags. Cadence checks for an M4B when a book is first
-imported for download and keeps that choice on refresh. Libro.fm doesn't
+out each later track's ID3 tags and every track's Xing/Info frame. Cadence checks
+for an M4B when a book is first imported for download and keeps that choice on
+refresh. With **Audio options → Keep audiobook tracks as separate files**, such a
+book goes on the headphones as Libro.fm's original track files, copied unchanged
+(one file per track); splitting, trims and the part format don't apply to it, and
+skipping what you've heard leaves out tracks already finished. Libro.fm doesn't
 share a listening position, so books start at zero and Cadence keeps its own
 position across refreshes. The token is saved with the local library until
 **Sign out** or a `401`.

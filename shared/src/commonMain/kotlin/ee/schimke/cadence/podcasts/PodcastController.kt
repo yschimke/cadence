@@ -59,6 +59,12 @@ interface PodcastPlatform {
 
   suspend fun available(section: Section): Boolean
 
+  /**
+   * The measured lengths of the original tracks a downloaded episode was joined from (see
+   * [Episode.audioParts]), or empty when it wasn't joined or isn't downloaded.
+   */
+  suspend fun trackLengths(episode: Episode): List<Long> = emptyList()
+
   /** Remove staged audio for episodes no longer in the imported source. */
   suspend fun pruneAudio(episodes: List<Episode>) {}
 
@@ -317,6 +323,7 @@ class PodcastController(val platform: PodcastPlatform) {
         save(
           state.value.copy(downloadedEpisodeKeys = state.value.downloadedEpisodeKeys + episode.key),
         )
+        recordTracks(episode)
       } catch (e: CancellationException) {
         throw e
       } catch (e: PodcastProblem) {
@@ -663,6 +670,27 @@ class PodcastController(val platform: PodcastPlatform) {
       else -> episode.copy(audioUrl = libroFm().m4bUrl(episode.id))
     }
 
+  /** Saves the measured lengths of the original tracks [episode] was joined from, once known. */
+  private suspend fun recordTracks(episode: Episode) {
+    val lengths = platform.trackLengths(episode)
+    if (lengths.isEmpty() || lengths == episode.trackMs) return
+    fun List<Episode>.withTracks() = map {
+      if (it.key == episode.key && it.audioVersion == episode.audioVersion)
+        it.copy(trackMs = lengths)
+      else it
+    }
+    val library = state.value.library
+    save(
+      state.value.copy(
+        library =
+          library.copy(
+            playlist = library.playlist?.let { it.copy(episodes = it.episodes.withTracks()) },
+            upcoming = library.upcoming.withTracks(),
+          ),
+      ),
+    )
+  }
+
   /**
    * Each book's download: the packaged M4B where Libro.fm has one, else its MP3 tracks joined into
    * one file. Only the first [latest] are asked about, since only they are downloaded; a book seen
@@ -680,7 +708,7 @@ class PodcastController(val platform: PodcastPlatform) {
       when {
         previous != null &&
           previous.durationMs == episode.durationMs &&
-          previous.extension == "mp3" -> episode.asLibroFmMp3()
+          previous.extension == "mp3" -> episode.asLibroFmMp3().copy(trackMs = previous.trackMs)
         // An M4B already on this phone stays; one not downloaded yet is asked about again, which
         // also moves books imported before the MP3 fallback (all assumed M4B) to MP3 when needed.
         previous != null &&
@@ -979,6 +1007,16 @@ class PodcastController(val platform: PodcastPlatform) {
   }
 
   suspend fun prepare() {
+    // Keeping original tracks needs their lengths, known once each joined book is downloaded.
+    if (state.value.library.config.keepTracks)
+      state.value.library.playlist
+        ?.episodes
+        .orEmpty()
+        .filter { it.backend == LIBRO_FM_BACKEND && it.extension == "mp3" && it.trackMs.isEmpty() }
+        .forEach { episode ->
+          if (!platform.originalAvailable(episode)) platform.downloadOriginal(downloadable(episode))
+          recordTracks(episode)
+        }
     val library = state.value.library
     val playlist = requireNotNull(library.playlist) { "Import a playlist first" }
     // An empty source (a Pocket Casts playlist with nothing in it yet) has nothing to prepare;

@@ -134,6 +134,29 @@ class LibroFmTest {
   }
 
   @Test
+  fun keptTracksBecomeOneFileEach() = runBlocking {
+    val platform = LibroPlatform()
+    platform.noM4b += "9780000000002"
+    val controller = PodcastController(platform)
+    controller.signInLibroFm("me@example.com", "secret")
+    controller.importLibroFm("9780000000002", 1)
+    controller.configure(controller.state.value.library.config.copy(keepTracks = true))
+    // Preparing downloads the book first, to measure its tracks.
+    controller.prepare()
+    val book = controller.state.value.library.playlist!!.episodes.single()
+    assertEquals(listOf(3_000_000L, 4_200_000L), book.trackMs)
+    val sections = controller.state.value.library.manifests.single().sections
+    assertEquals(
+      listOf(0L to 3_000_000L, 3_000_000L to 7_200_000L),
+      sections.map { it.startMs to it.endMs },
+    )
+    assertTrue(sections.all { it.fileName.endsWith(".mp3") })
+    // The measured tracks survive a refresh.
+    controller.refreshSource()
+    assertEquals(book.trackMs, controller.state.value.library.playlist!!.episodes.single().trackMs)
+  }
+
+  @Test
   fun anOutageDoesNotSwitchABookToMp3() = runBlocking {
     val platform = LibroPlatform()
     platform.m4bOutage = true
@@ -218,9 +241,19 @@ class LibroFmTest {
 
     override suspend fun rss(url: String) = error("No feeds")
 
-    override suspend fun prepare(episode: Episode, sections: List<Section>) {}
+    val prepared = mutableListOf<Section>()
 
-    override suspend fun available(section: Section) = false
+    override suspend fun prepare(episode: Episode, sections: List<Section>) {
+      prepared += sections
+    }
+
+    override suspend fun available(section: Section) = section in prepared
+
+    /** The joined books' measured tracks: two, adding up to the listed length. */
+    override suspend fun trackLengths(episode: Episode) =
+      if (episode.extension == "mp3" && episode.key in downloaded)
+        listOf(3_000_000L, episode.durationMs - 3_000_000L)
+      else emptyList()
 
     override suspend fun export(sections: List<Section>, target: String, manifest: String) {}
   }

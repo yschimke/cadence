@@ -35,6 +35,12 @@ data class Episode(
    * the links are signed and expire within minutes; never kept in the library.
    */
   val audioParts: List<String> = emptyList(),
+  /**
+   * The lengths of the original audio files this episode was joined from, in order (a Libro.fm
+   * book's MP3 tracks), once downloaded and measured; empty otherwise. With
+   * [Segmentation.keepTracks] each becomes its own file, copied unchanged.
+   */
+  val trackMs: List<Long> = emptyList(),
 ) {
   val key: String
     get() = digest("$backend\u0000$id")
@@ -66,6 +72,7 @@ data class Episode(
     require(audioUrl.startsWith("https://")) { "Audio requires an HTTPS enclosure URL" }
     require(audioParts.all { it.startsWith("https://") }) { "Audio parts require HTTPS URLs" }
     require(audioParts.isEmpty() || extension == "mp3") { "Only MP3 tracks can be joined" }
+    require(trackMs.all { it > 0 }) { "Invalid track length" }
   }
 }
 
@@ -92,6 +99,12 @@ data class Segmentation(
   val skipListened: Boolean = false,
   val trimStartSeconds: Int = 0,
   val trimEndSeconds: Int = 0,
+  /**
+   * Copy an episode that came as separate tracks (a Libro.fm book's MP3s) as those original files,
+   * one per track, instead of one joined file. Splitting, trims and the chunk format don't apply to
+   * such episodes; skipping what you've heard leaves out tracks already finished.
+   */
+  val keepTracks: Boolean = false,
 ) {
   fun validate() {
     require(chunkFormat in listOf("mp3", "m4a"))
@@ -131,6 +144,7 @@ fun digest(value: String): String = value.encodeUtf8().sha256().hex()
 fun segment(episode: Episode, config: Segmentation): List<Section> {
   episode.validate()
   config.validate()
+  if (config.keepTracks && episode.trackMs.isNotEmpty()) return trackSections(episode, config)
   val start = config.trimStartSeconds * 1000L
   val end = episode.durationMs - config.trimEndSeconds * 1000L
   require(start < end) { "Trim exceeds the length of ${episode.title}" }
@@ -171,6 +185,34 @@ fun segment(episode: Episode, config: Segmentation): List<Section> {
       "$name.${if (whole) episode.extension else config.chunkFormat}",
     )
   }
+}
+
+/**
+ * Where each original track sits on [Episode]'s timeline, as (start, end) in ms. Measured lengths
+ * can drift from the listed duration, so the ends are clamped and the last track ends the episode.
+ */
+fun Episode.trackRanges(): List<Pair<Long, Long>> {
+  var start = 0L
+  return trackMs
+    .mapIndexed { index, length ->
+      val end = if (index == trackMs.lastIndex) durationMs else minOf(start + length, durationMs)
+      (start to end).also { start = end }
+    }
+    .filter { (from, to) -> to > from }
+}
+
+/** One section per original track, each the untouched file; finished tracks left out if asked. */
+private fun trackSections(episode: Episode, config: Segmentation): List<Section> {
+  val title =
+    episode.title.replace(Regex("[^a-zA-Z0-9]"), "_").take(40).trim('_').ifBlank { "episode" }
+  return episode
+    .trackRanges()
+    .filter { (_, end) -> !config.skipListened || end > episode.positionMs }
+    .map { (start, end) ->
+      val id = digest("${episode.key}|${episode.audioVersion}|$start|$end")
+      val name = "$title-${episode.key.take(8)}-${start.toString().padStart(12, '0')}-$id"
+      Section(id, episode.key, episode.audioVersion, start, end, "$name.${episode.extension}")
+    }
 }
 
 @Serializable

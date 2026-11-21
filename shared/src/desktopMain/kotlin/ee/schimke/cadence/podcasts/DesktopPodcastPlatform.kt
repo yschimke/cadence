@@ -19,9 +19,13 @@ open class DesktopPodcastPlatform(root: File) : FilePodcastPlatform(root) {
   override val description =
     "Desktop: HTTPS audio downloads and FFmpeg MP3 or AAC/M4A segmentation. Select the OS-mounted headphone volume for USB copying. FFmpeg must be installed separately."
 
-  override suspend fun prepare(episode: Episode, sections: List<Section>) =
+  override suspend fun prepare(episode: Episode, all: List<Section>) =
     withContext(Dispatchers.IO) {
-      if (sections.all { available(it) }) return@withContext
+      if (all.all { available(it) }) return@withContext
+      // Original tracks are copied as they are; only the rest is cut or copied whole.
+      if (episode.trackMs.isNotEmpty()) cachedSource(episode)
+      val sections = copyTracks(episode, all)
+      if (sections.isEmpty()) return@withContext
       val whole =
         sections.size == 1 && sections[0].startMs == 0L && sections[0].endMs == episode.durationMs
       if (whole) {

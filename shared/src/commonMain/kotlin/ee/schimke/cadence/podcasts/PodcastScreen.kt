@@ -1032,6 +1032,15 @@ private fun AudioOptions(
     LabeledCheckbox("Split at your listening position", library.config.splitAtPosition, !busy) {
       action { configure(library.config.copy(splitAtPosition = it)) }
     }
+    // Libro.fm books without an M4B come as MP3 tracks: one file each, or joined into one.
+    if (library.source == PodcastSourceKind.LibroFm)
+      LabeledCheckbox(
+        "Keep audiobook tracks as separate files",
+        library.config.keepTracks,
+        !busy,
+      ) {
+        action { configure(library.config.copy(keepTracks = it)) }
+      }
     OutlinedTextField(
       chunks,
       {
