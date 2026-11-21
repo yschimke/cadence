@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-21T11:11:37.678Z",
+  "generatedAt": "2026-11-21T11:36:11.497Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "9235498e998fcdf012f175997b2fa4366870950a",
+        "subject": "fix(deps): update dependency ee.schimke.composeai:rc-players-bom to v3.10.0 (#679)",
+        "at": "2026-11-21T11:20:25Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "8210f30b8f768e27b7bd65ecfb7d0c3fca4ec147",
         "subject": "feat: one status card on Home, and clearer folders-plus-one-service sources (#677)",
@@ -474,14 +482,6 @@
         "sha": "dc07aefedec18953f86f6b5ae7e231024301d2bc",
         "subject": "chore(deps): update actions/setup-java action to v6.3.0 (#620)",
         "at": "2026-11-14T05:51:18Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "78911b736abb7bcaa78ddb1c2b6fe65635e12ee9",
-        "subject": "fix(deps): update dependency ee.schimke.composeai:rc-players-bom to v3.2.0 (#614)",
-        "at": "2026-11-14T03:01:35Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
