@@ -43,7 +43,10 @@ import kotlinx.serialization.json.Json
 class CredentialVault(
   private val vaultFile: File,
   private val dataKeyFile: File,
-  /** Present once the current data key is escrowed; missing means escrow is still owed. */
+  /**
+   * Records how far the current data key is escrowed: [RestoreKeyEscrow.Stored.CLOUD] or
+   * [RestoreKeyEscrow.Stored.DEVICE_ONLY]. Missing means it isn't escrowed yet.
+   */
   private val escrowedFile: File,
   private val keyWrapper: KeyWrapper,
   private val escrow: RestoreKeyEscrow,
@@ -67,7 +70,7 @@ class CredentialVault(
   private val json = Json { ignoreUnknownKeys = true }
   private val random = SecureRandom()
 
-  /** Whether this process already tried to escrow a key that wasn't marked escrowed. */
+  /** Whether this process already tried to escrow a key that isn't escrowed to the cloud. */
   private var escrowRetried = false
 
   /** The secret stored in [slot], or null when there is none (or it can't be read yet). */
@@ -99,13 +102,10 @@ class CredentialVault(
       clearLocked(slot)
       return@locked Lookup.Absent
     }
-    // A read whose key isn't escrowed yet (it failed at sign-in, or the key was just recovered on
-    // a new phone) escrows it, once per process, so a secret that is never rewritten doesn't leave
-    // the vault unrecoverable on the next phone.
-    if (!escrowRetried && !escrowedFile.exists()) {
-      escrowRetried = true
-      escrowLocked(dataKey)
-    }
+    // A read whose key isn't escrowed to the cloud yet (it failed at sign-in, the phone had no
+    // screen lock then, or the key was just recovered on a new phone) escrows it, so a secret that
+    // is never rewritten doesn't leave the vault unrecoverable on the next phone.
+    escrowIfOwedLocked(dataKey)
     Lookup.Found(plaintext.decodeToString())
   }
 
@@ -116,7 +116,7 @@ class CredentialVault(
     val current = vault.entries[slot]
     if (current != null && dataKey.open(slot, current)?.decodeToString() == secret) {
       // Unchanged: the library saves often, so don't rewrite the vault or escrow again.
-      if (!escrowedFile.exists()) escrowLocked(dataKey)
+      escrowIfOwedLocked(dataKey)
       return@locked
     }
     val sealed = dataKey.seal(slot, secret.encodeToByteArray())
@@ -126,7 +126,7 @@ class CredentialVault(
         readVaultLocked().entries + (slot to Entry(sealed.iv.b64(), sealed.ciphertext.b64())),
       ),
     )
-    if (!escrowedFile.exists()) escrowLocked(dataKey)
+    escrowIfOwedLocked(dataKey)
   }
 
   /** Forgets [slot]. Forgetting the last one forgets the data key too. */
@@ -210,17 +210,36 @@ class CredentialVault(
     return DataKey(raw)
   }
 
-  private suspend fun escrowLocked(dataKey: DataKey) {
-    if (escrow.store(dataKey.raw)) {
-      escrowedFile.parentFile?.mkdirs()
-      escrowedFile.createNewFile()
-    } else {
-      escrowedFile.delete()
+  /**
+   * Escrows [dataKey] unless it is already escrowed to the cloud. Tried once per process (and once
+   * per new key), so a phone without Play services isn't asked on every save, and a key escrowed
+   * for device transfer only, before a screen lock was set, reaches the cloud on a later launch.
+   */
+  private suspend fun escrowIfOwedLocked(dataKey: DataKey) {
+    if (escrowRetried || escrowStateLocked() == RestoreKeyEscrow.Stored.CLOUD) return
+    escrowRetried = true
+    when (val stored = escrow.store(dataKey.raw)) {
+      RestoreKeyEscrow.Stored.FAILED ->
+        // Keep a device-only escrow that succeeded before: a failed retry doesn't undo it.
+        if (escrowStateLocked() == null) escrowedFile.delete()
+      else -> writeAtomically(escrowedFile, stored.name)
     }
   }
 
+  private fun escrowStateLocked(): RestoreKeyEscrow.Stored? =
+    escrowedFile
+      .takeIf { it.exists() }
+      ?.readText()
+      ?.trim()
+      ?.let { text ->
+        // A marker from before the state was recorded was a cloud escrow, or the fallback.
+        RestoreKeyEscrow.Stored.entries.firstOrNull { it.name == text }
+          ?: RestoreKeyEscrow.Stored.DEVICE_ONLY
+      }
+      ?.takeIf { it != RestoreKeyEscrow.Stored.FAILED }
+
   private fun wrapAndStoreLocked(dataKey: DataKey) {
-    // A newly made or recovered key: not known to be escrowed until escrowLocked says so.
+    // A newly made or recovered key: not known to be escrowed until escrowIfOwedLocked says so.
     escrowedFile.delete()
     escrowRetried = false
     val sealed = keyWrapper.wrap(dataKey.raw)
@@ -325,8 +344,23 @@ class CredentialVault(
  */
 interface RestoreKeyEscrow {
 
-  /** Escrows [key] (32 bytes), replacing any key escrowed before. False when it can't. */
-  suspend fun store(key: ByteArray): Boolean
+  /** Escrows [key] (32 bytes), replacing any key escrowed before. */
+  suspend fun store(key: ByteArray): Stored
+
+  /** How far [store] got. */
+  enum class Stored {
+    /** In the end-to-end encrypted cloud backup, and for device-to-device transfer. */
+    CLOUD,
+
+    /**
+     * For device-to-device transfer only: the phone had no screen lock, so no end-to-end encrypted
+     * cloud backup. Tried again later, in case one is set.
+     */
+    DEVICE_ONLY,
+
+    /** Not escrowed (no Play services, say). A restored phone signs in again. */
+    FAILED,
+  }
 
   /** The escrowed key, read back on a restored phone. */
   suspend fun recover(): Recovery
@@ -347,7 +381,7 @@ interface RestoreKeyEscrow {
 
   /** No escrow: the key stays on this device, and a restored phone signs in again. */
   object Disabled : RestoreKeyEscrow {
-    override suspend fun store(key: ByteArray): Boolean = false
+    override suspend fun store(key: ByteArray): Stored = Stored.FAILED
 
     override suspend fun recover(): Recovery = Recovery.None
 

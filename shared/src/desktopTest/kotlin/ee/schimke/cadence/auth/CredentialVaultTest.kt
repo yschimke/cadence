@@ -120,6 +120,33 @@ class CredentialVaultTest {
   }
 
   @Test
+  fun deviceOnlyEscrowReachesTheCloudOnALaterLaunch() = runBlocking {
+    escrow.deviceOnly = true
+    val vault = oldPhone.vault(escrow)
+    vault.put("google", "refresh-1")
+    vault.put("google", "refresh-2")
+    assertEquals("refresh-2", vault.get("google"))
+    assertEquals(1, escrow.stores, "Asked once per process")
+
+    // A screen lock is set; the next launch escrows to the cloud, then stops asking.
+    escrow.deviceOnly = false
+    val relaunched = oldPhone.vault(escrow)
+    assertEquals("refresh-2", relaunched.get("google"))
+    assertEquals(2, escrow.stores)
+    assertEquals("refresh-2", oldPhone.vault(escrow).get("google"))
+    assertEquals(2, escrow.stores)
+  }
+
+  @Test
+  fun failedRetryKeepsADeviceOnlyEscrow() = runBlocking {
+    escrow.deviceOnly = true
+    oldPhone.vault(escrow).put("google", "refresh-1")
+    escrow.failStores = true
+    assertEquals("refresh-1", oldPhone.vault(escrow).get("google"))
+    assertEquals("DEVICE_ONLY", oldPhone.escrowedFile.readText())
+  }
+
+  @Test
   fun vaultSecretFileMovesTheLegacyPlaintextIn() = runBlocking {
     val legacy = File(root, "google-auth.json").apply { writeText("{\"email\":\"a\"}") }
     val file = VaultSecretFile(oldPhone.vault(escrow), "google", legacy)
@@ -167,14 +194,15 @@ class CredentialVaultTest {
     var key: ByteArray? = null
     var unavailable = false
     var failStores = false
+    var deviceOnly = false
     var stores = 0
     var clears = 0
 
-    override suspend fun store(key: ByteArray): Boolean {
-      if (failStores) return false
+    override suspend fun store(key: ByteArray): RestoreKeyEscrow.Stored {
+      if (failStores) return RestoreKeyEscrow.Stored.FAILED
       stores++
       this.key = key.copyOf()
-      return true
+      return if (deviceOnly) RestoreKeyEscrow.Stored.DEVICE_ONLY else RestoreKeyEscrow.Stored.CLOUD
     }
 
     override suspend fun recover(): RestoreKeyEscrow.Recovery =
