@@ -186,7 +186,7 @@ dependencies { robolectricSdk(libs.robolectric.sdk35) }
 // The platform's own Remote Compose player (PlatformPlayerTest): Android 16 and 17. One
 // configuration each, as Gradle would resolve several versions of the one module to the newest.
 val robolectricPlatformSdks =
-  listOf("16-robolectric-13921718-i7", "17-robolectric-15733970-i7").map { version ->
+  listOf("16-robolectric-13921718-2-i7", "17-robolectric-16653203-i7").map { version ->
     configurations
       .detachedConfiguration(
         dependencies.create("org.robolectric:android-all-instrumented:$version"),
