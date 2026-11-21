@@ -123,6 +123,11 @@
                     "group": null
                 },
                 {
+                    "previewId": "ee.schimke.cadence.preview.PodcastPreviewsKt.PodcastReplaceSourcePreview_Add_podcasts___Libro.fm_replaces_Pocket_Casts",
+                    "componentId": null,
+                    "group": null
+                },
+                {
                     "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.BluetoothConnectedPlayingPreview_BT_controls_-_connected___playing",
                     "componentId": null,
                     "group": null
@@ -1663,6 +1668,11 @@
                 },
                 {
                     "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetNewYearPreview_Podcast_widget___New_Year",
+                    "componentId": null,
+                    "group": null
+                },
+                {
+                    "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetTallPreview_Podcast_widget___MP3___tall",
                     "componentId": null,
                     "group": null
                 },
