@@ -161,7 +161,9 @@ fun AddPodcastsScreen(
         )
         Text(
           local.library.playlist?.let {
-            "Choose one service. It replaces ${local.library.source.title}; your folders stay."
+            if (local.library.source in PAIRED_SOURCES)
+              "Pocket Casts and Libro.fm can be kept together. Another service replaces ${local.library.source.title}; your folders stay."
+            else "Choose one service. It replaces ${local.library.source.title}; your folders stay."
           } ?: "Choose one service. Your folders stay alongside it.",
           style = MaterialTheme.typography.bodyMedium,
           color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -193,9 +195,27 @@ fun AddPodcastsScreen(
         Modifier.padding(horizontal = 16.dp).fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(12.dp),
       ) {
-        replacedSource(local.library, chosen)?.let { replaced ->
-          ReplaceNotice(replaced, local.library.allEpisodes.size)
-        }
+        val besideKind = pairedKind(local.library, chosen)
+        var beside by rememberSaveable(chosen) { mutableStateOf(true) }
+        if (besideKind != null)
+          Row(verticalAlignment = Alignment.CenterVertically) {
+            Column(Modifier.weight(1f)) {
+              Text(
+                "Keep ${local.library.source.title} too",
+                style = MaterialTheme.typography.titleSmall,
+              )
+              Text(
+                "Both sync to your headphones, ${local.library.source.title} first.",
+                style = MaterialTheme.typography.bodySmall,
+              )
+            }
+            Switch(checked = beside, enabled = !working, onCheckedChange = { beside = it })
+          }
+        val alongside = besideKind != null && beside
+        if (!alongside)
+          replacedSource(local.library, chosen)?.let { replaced ->
+            ReplaceNotice(replaced, local.library.allEpisodes.size)
+          }
         if (chosen != PodcastProvider.Export)
           EpisodeCount(
             latest,
@@ -206,9 +226,18 @@ fun AddPodcastsScreen(
           }
         when (chosen) {
           PodcastProvider.PocketCasts ->
-            PocketCastsForm(controller, local, working, pending, latest, ::import, ::action)
+            PocketCastsForm(
+              controller,
+              local,
+              working,
+              pending,
+              latest,
+              alongside,
+              ::import,
+              ::action,
+            )
           PodcastProvider.LibroFm ->
-            LibroFmForm(controller, local, working, pending, latest, ::import, ::action)
+            LibroFmForm(controller, local, working, pending, latest, alongside, ::import, ::action)
           PodcastProvider.Rss ->
             RssForm(local, working) { url -> import { importRss(url, latest) } }
           PodcastProvider.Gpodder ->
@@ -221,6 +250,16 @@ fun AddPodcastsScreen(
       }
     }
   }
+}
+
+/**
+ * The service [provider] would be added as beside the connected one, or null when it can only
+ * replace it: Pocket Casts and Libro.fm pair up, one of each.
+ */
+fun pairedKind(library: PodcastLibrary, provider: PodcastProvider): PodcastSourceKind? {
+  val kind = provider.kinds.singleOrNull()?.takeIf { it in PAIRED_SOURCES } ?: return null
+  val main = library.source
+  return kind.takeIf { library.playlist != null && main in PAIRED_SOURCES && main != kind }
 }
 
 /** Says up front that adding replaces the connected service, so it never happens by surprise. */
@@ -267,13 +306,21 @@ private fun PocketCastsForm(
   busy: Boolean,
   pending: String?,
   latest: Int,
+  /** Added beside the connected Libro.fm instead of replacing it. */
+  alongside: Boolean,
   import: (suspend PodcastController.() -> Unit) -> Unit,
   action: (suspend PodcastController.() -> Unit) -> Unit,
 ) {
   val lists by controller.pocketCastsLists.collectAsState()
   val loaded by controller.loaded.collectAsState()
   var list by rememberSaveable {
-    mutableStateOf(local.library.sourceList.ifBlank { POCKET_CASTS_UP_NEXT })
+    mutableStateOf(
+      local.library.second?.takeIf { it.kind == PodcastSourceKind.PocketCasts }?.list
+        ?: local.library.sourceList
+          .takeIf { local.library.source == PodcastSourceKind.PocketCasts }
+          ?.ifBlank { null }
+        ?: POCKET_CASTS_UP_NEXT,
+    )
   }
   var web by rememberSaveable { mutableStateOf(false) }
   var email by rememberSaveable { mutableStateOf(local.pocketCasts.email) }
@@ -337,7 +384,12 @@ private fun PocketCastsForm(
     }
     Button(
       enabled = !busy && lists.any { it.id == list },
-      onClick = { import { importPocketCasts(list, latest) } },
+      onClick = {
+        import {
+          if (alongside) importSecond(PodcastSourceKind.PocketCasts, list, latest)
+          else importPocketCasts(list, latest)
+        }
+      },
     ) {
       Text(if (pending == "Adding podcasts…") "Adding…" else "Add")
     }
@@ -397,6 +449,8 @@ private fun LibroFmForm(
   busy: Boolean,
   pending: String?,
   latest: Int,
+  /** Added beside the connected Pocket Casts instead of replacing it. */
+  alongside: Boolean,
   import: (suspend PodcastController.() -> Unit) -> Unit,
   action: (suspend PodcastController.() -> Unit) -> Unit,
 ) {
@@ -404,7 +458,8 @@ private fun LibroFmForm(
   val loaded by controller.loaded.collectAsState()
   var list by rememberSaveable {
     mutableStateOf(
-      local.library.sourceList.takeIf { local.library.source == PodcastSourceKind.LibroFm }
+      local.library.second?.takeIf { it.kind == PodcastSourceKind.LibroFm }?.list
+        ?: local.library.sourceList.takeIf { local.library.source == PodcastSourceKind.LibroFm }
         ?: LIBRO_FM_LIBRARY,
     )
   }
@@ -450,7 +505,12 @@ private fun LibroFmForm(
     }
     Button(
       enabled = !busy && (list == LIBRO_FM_LIBRARY || books.any { it.isbn == list }),
-      onClick = { import { importLibroFm(list, latest) } },
+      onClick = {
+        import {
+          if (alongside) importSecond(PodcastSourceKind.LibroFm, list, latest)
+          else importLibroFm(list, latest)
+        }
+      },
     ) {
       Text(if (pending == "Adding podcasts…") "Adding…" else "Add")
     }
@@ -658,6 +718,23 @@ fun PodcastScreen(
           style = MaterialTheme.typography.bodySmall,
           color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
+        library.second?.let { second ->
+          Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+              "Also ${second.name.ifBlank { second.kind.title }} from ${second.kind.title}",
+              Modifier.weight(1f),
+              style = MaterialTheme.typography.bodyMedium,
+            )
+            TextButton(
+              enabled = !busy,
+              onClick = { action { removeSecondSource() } },
+              colors =
+                ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.error),
+            ) {
+              Text("Remove")
+            }
+          }
+        }
       }
       item {
         val prepared = library.manifests.isNotEmpty() && local.readyForDevice()

@@ -108,6 +108,7 @@ import ee.schimke.cadence.podcasts.StatusCardExtras
 import ee.schimke.cadence.podcasts.cloudSyncStatus
 import ee.schimke.cadence.podcasts.episodePosition
 import ee.schimke.cadence.podcasts.formatTime
+import ee.schimke.cadence.podcasts.fromSecond
 import ee.schimke.cadence.podcasts.loadEpisodeDetails
 import ee.schimke.cadence.podcasts.plainShowNotes
 import ee.schimke.cadence.podcasts.podcastWidgetBattery
@@ -115,6 +116,8 @@ import ee.schimke.cadence.podcasts.podcastWidgetSummary
 import ee.schimke.cadence.podcasts.readyForDevice
 import ee.schimke.cadence.podcasts.rememberPodcastPlayer
 import ee.schimke.cadence.podcasts.rememberPodcastWork
+import ee.schimke.cadence.podcasts.sourceBackend
+import ee.schimke.cadence.podcasts.title
 import ee.schimke.cadence.sync.BrowsedItem
 import ee.schimke.cadence.sync.SourceSuggestion
 import ee.schimke.cadence.sync.formatLastRefreshed
@@ -944,13 +947,20 @@ private fun PodcastSection(
   val ready = playlist.episodes.count { it.key in podcasts.downloadedEpisodeKeys }
   OutlinedCard(Modifier.fillMaxWidth()) {
     val audiobooks = library.source == PodcastSourceKind.LibroFm
+    val second = library.second
+    // Beside a second service, each side is counted in its own words: "3 episodes · 1 audiobook".
+    val (beside, main) = playlist.episodes.partition { library.fromSecond(it) }
+    fun noun(kind: PodcastSourceKind?) =
+      if (kind == PodcastSourceKind.LibroFm) "audiobook" else "episode"
+    val waiting = library.upcoming.size + second?.upcoming.orEmpty().size
     SectionHeader(
       if (audiobooks) Icons.Filled.Headphones else Icons.Filled.Podcasts,
-      playlist.name,
+      listOfNotNull(playlist.name, second?.name?.ifBlank { second.kind.title }).joinToString(" + "),
       buildString {
-        append(count(playlist.episodes.size, if (audiobooks) "audiobook" else "episode"))
+        append(count(main.size, noun(library.source)))
+        if (second != null) append(" · ").append(count(beside.size, noun(second.kind)))
         if (ready > 0) append(" · $ready downloaded")
-        if (library.upcoming.isNotEmpty()) append(" · ${library.upcoming.size} next")
+        if (waiting > 0) append(" · $waiting next")
       },
       // Refresh is on the cloud sync card above; removing the source is on the Podcasts screen.
       onClick = actions.onOpenPodcasts,
@@ -978,7 +988,9 @@ private fun PodcastSection(
         SwipeActionRow(
           onSwipeRight = null,
           onSwipeLeft =
-            if (canArchive) archiveAction { actions.onArchiveEpisode(episode.key) } else null,
+            if (canArchive && episode.backend == sourceBackend(PodcastSourceKind.PocketCasts))
+              archiveAction { actions.onArchiveEpisode(episode.key) }
+            else null,
         ) {
           EpisodeRow(
             episode,

@@ -42,6 +42,7 @@ fun cloudSyncStatus(
       progress,
     )
   val source = library.source.title
+  val beside = library.second?.let { " + ${it.kind.title}" }.orEmpty()
   val downloaded = playlist.episodes.count { it.key in state.downloadedEpisodeKeys }
   val ready =
     playlist.episodes.count { episode ->
@@ -54,7 +55,7 @@ fun cloudSyncStatus(
   val missing = playlist.episodes.size - downloaded
   val pending = playlist.episodes.size - ready
   return CloudSyncStatus(
-    "$source · ${playlist.name}",
+    "$source · ${playlist.name}$beside",
     if (supportsDownload) "$downloaded downloaded · $missing to download"
     else "${playlist.episodes.size} episodes",
     "$ready processed · $pending to process",

@@ -374,10 +374,23 @@ data class PodcastLibrary(
   val episodeProgress: Map<String, EpisodeProgress> = emptyMap(),
   val podcastTrims: Map<String, PodcastTrim> = emptyMap(),
   val lastBackendSync: String = "Never",
+  /**
+   * A second service kept beside [source]: Libro.fm audiobooks beside Pocket Casts, or the reverse.
+   * Its synced items sit in [playlist] after the main source's, told apart by [Episode.backend].
+   */
+  val second: SecondSource? = null,
 ) {
   fun validate() {
     require(schema == 1)
     config.validate()
+    second?.let { second ->
+      require(second.kind in PAIRED_SOURCES && second.kind != source) {
+        "Unsupported second source"
+      }
+      require(second.latest in 1..MAX_FEED_EPISODES)
+      second.upcoming.forEach(Episode::validate)
+      require(second.upcoming.all { it.backend == second.backend })
+    }
     episodeProgress.forEach { (key, value) ->
       require(key.isNotBlank() && value.positionMs >= 0 && value.updatedAtMs >= 0)
     }
@@ -403,9 +416,45 @@ data class PodcastLibrary(
   }
 }
 
-/** Everything listed from the source: the synced [PodcastLibrary.playlist], then what's next. */
+/**
+ * The services that can be kept together, one as [PodcastLibrary.source] and the other as
+ * [PodcastLibrary.second]: both are signed in, so either refreshes on its own.
+ */
+val PAIRED_SOURCES = setOf(PodcastSourceKind.PocketCasts, PodcastSourceKind.LibroFm)
+
+/** The service kept beside the main source, and what it lists past its first [latest]. */
+@Serializable
+data class SecondSource(
+  val kind: PodcastSourceKind,
+  /** As [PodcastLibrary.sourceList]: the Pocket Casts list, or the Libro.fm library or a book. */
+  val list: String = "",
+  /** The list's own name ("Up Next", "Your Libro.fm library"), for the podcast screen. */
+  val name: String = "",
+  val latest: Int = 1,
+  val upcoming: List<Episode> = emptyList(),
+) {
+  /** The [Episode.backend] of its episodes, which is how they are told apart in the playlist. */
+  val backend: String
+    get() = sourceBackend(kind)
+}
+
+/** The [Episode.backend] a paired source's episodes carry. */
+fun sourceBackend(kind: PodcastSourceKind): String =
+  when (kind) {
+    PodcastSourceKind.PocketCasts -> "pocket-casts"
+    PodcastSourceKind.LibroFm -> LIBRO_FM_BACKEND
+    else -> throw PodcastProblem("${kind.title} can't be kept beside another service")
+  }
+
+/** Whether [episode] came from the [PodcastLibrary.second] source, not the main one. */
+fun PodcastLibrary.fromSecond(episode: Episode): Boolean = second?.backend == episode.backend
+
+/**
+ * Everything listed from the sources: the synced [PodcastLibrary.playlist], then what's next from
+ * the main source and from the second.
+ */
 val PodcastLibrary.allEpisodes: List<Episode>
-  get() = playlist?.episodes.orEmpty() + upcoming
+  get() = playlist?.episodes.orEmpty() + upcoming + second?.upcoming.orEmpty()
 
 /** A manually chosen episode position supersedes legacy per-section acknowledgements. */
 fun episodePosition(episode: Episode, library: PodcastLibrary, config: Segmentation? = null): Long {

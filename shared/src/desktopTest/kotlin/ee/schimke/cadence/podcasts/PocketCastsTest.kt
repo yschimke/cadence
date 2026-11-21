@@ -491,6 +491,103 @@ class PocketCastsTest {
     }
   }
 
+  @Test
+  fun libroFmAudiobooksSitBesidePocketCasts() = runBlocking {
+    val platform = BothPlatform(ApiPlatform())
+    val controller = PodcastController(platform)
+    controller.signInPocketCasts("listener@example.com", "secret")
+    controller.importPocketCasts(POCKET_CASTS_UP_NEXT, 1)
+    controller.signInLibroFm("me@example.com", "secret")
+    assertEquals(
+      PodcastSourceKind.LibroFm,
+      pairedKind(controller.state.value.library, PodcastProvider.LibroFm),
+    )
+
+    controller.importSecond(PodcastSourceKind.LibroFm, LIBRO_FM_LIBRARY, 1)
+    var library = controller.state.value.library
+    assertEquals(PodcastSourceKind.PocketCasts, library.source)
+    assertEquals(PodcastSourceKind.LibroFm, library.second!!.kind)
+    // The main source's episodes first, then the second's; each keeps its own waiting list.
+    assertEquals(listOf("e1", B1), library.playlist!!.episodes.map { it.id })
+    assertEquals(listOf("e2"), library.upcoming.map { it.id })
+    assertEquals(listOf(B2), library.second!!.upcoming.map { it.id })
+    assertEquals(listOf("e1", B1), platform.kept.last())
+
+    // A refresh reads both, and the book's local position survives it.
+    val book = library.playlist!!.episodes[1]
+    controller.setEpisodePosition(book.key, 60_000)
+    controller.refreshSource()
+    library = controller.state.value.library
+    assertEquals(listOf("e1", B1), library.playlist!!.episodes.map { it.id })
+    assertEquals(60_000, library.playlist!!.episodes[1].positionMs)
+
+    // Archiving a Pocket Casts episode moves its own next one up, ahead of the book.
+    assertTrue(controller.canArchive)
+    assertFalse(controller.canArchive(book))
+    assertFalse(controller.run { archiveEpisode(book.key) })
+    assertTrue(controller.run { archiveEpisode(library.playlist!!.episodes.first().key) })
+    library = controller.state.value.library
+    assertEquals(listOf("e2", B1), library.playlist!!.episodes.map { it.id })
+    assertEquals(listOf(B2), library.second!!.upcoming.map { it.id })
+
+    // Saved and read back as is.
+    val restored = PodcastController(platform)
+    restored.load()
+    assertEquals(library, restored.state.value.library)
+
+    // Removing the second source leaves the main one.
+    controller.removeSecondSource()
+    library = controller.state.value.library
+    assertNull(library.second)
+    assertEquals(listOf("e2"), library.playlist!!.episodes.map { it.id })
+    assertEquals(listOf("e2"), platform.kept.last())
+
+    // Choosing Libro.fm as the main source replaces Pocket Casts, as before.
+    controller.importSecond(PodcastSourceKind.LibroFm, LIBRO_FM_LIBRARY, 1)
+    controller.importLibroFm(LIBRO_FM_LIBRARY, 2)
+    library = controller.state.value.library
+    assertEquals(PodcastSourceKind.LibroFm, library.source)
+    assertNull(library.second)
+    assertEquals(listOf(B1, B2), library.playlist!!.episodes.map { it.id })
+    // And Pocket Casts can then go beside it (the fixture's Up Next still lists both).
+    controller.importSecond(PodcastSourceKind.PocketCasts, POCKET_CASTS_UP_NEXT, 5)
+    assertEquals(
+      listOf(B1, B2, "e1", "e2"),
+      controller.state.value.library.playlist!!.episodes.map { it.id },
+    )
+  }
+
+  /** [pocketCasts] with a Libro.fm library of two books, recording what audio is kept. */
+  private inner class BothPlatform(private val pocketCasts: ApiPlatform) :
+    PodcastPlatform by pocketCasts {
+    val kept = mutableListOf<List<String>>()
+
+    private fun book(isbn: String, title: String) =
+      """{"title":"$title","authors":["A. Writer"],"isbn":"$isbn","audiobook_info":{"duration":3600}}"""
+
+    override suspend fun request(
+      url: String,
+      method: String,
+      headers: Map<String, String>,
+      body: String?,
+    ): String {
+      if (!url.startsWith(LIBRO_FM_API)) return pocketCasts.request(url, method, headers, body)
+      val path = url.removePrefix(LIBRO_FM_API)
+      return when {
+        path == "/oauth/token" -> """{"access_token":"t1"}"""
+        path == "/api/v10/library?page=1" ->
+          """{"page":1,"total_pages":1,"audiobooks":[${book(B1, "One")},${book(B2, "Two")}]}"""
+        path.endsWith("/packaged_m4b") ->
+          """{"m4b_url":"https://s3.example/${path.split('/')[4]}.m4b?sig=1"}"""
+        else -> error("Unexpected $path")
+      }
+    }
+
+    override suspend fun pruneAudio(episodes: List<Episode>) {
+      kept += episodes.map { it.id }
+    }
+  }
+
   private inner class ApiPlatform(override val pocketCastsServer: PocketCastsServer? = null) :
     PodcastPlatform {
     override val splitFormats = setOf("mp3", "m4a")
@@ -562,3 +659,6 @@ class PocketCastsTest {
     override suspend fun export(sections: List<Section>, target: String, manifest: String) {}
   }
 }
+
+private const val B1 = "9780000000001"
+private const val B2 = "9780000000002"
