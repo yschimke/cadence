@@ -62,6 +62,9 @@ abstract class FilePodcastPlatform(protected val root: File) : PodcastPlatform {
     val ranges = episode.trackRanges()
     val dir = tracks(episode)
     return sections.filterNot { section ->
+      // Only a section asking for the track's own format can be the track; one asking for M4A
+      // (a time split that happens to land on track boundaries) still needs encoding.
+      if (!section.fileName.endsWith(".${episode.extension}")) return@filterNot false
       val index = ranges.indexOf(section.startMs to section.endMs)
       val track = File(dir, trackName(index))
       if (index < 0 || !withContext(Dispatchers.IO) { track.isFile }) return@filterNot false
