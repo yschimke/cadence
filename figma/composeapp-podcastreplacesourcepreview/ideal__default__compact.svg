@@ -24,40 +24,50 @@
             </g>
           </g>
           <g id="Column">
-            <g id="Box">
-              <rect x="42" y="168" width="992" height="170" rx="31.5" ry="31.5" fill="#DCE2F9"/>
-              <g id="Empty">
-                <text font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#4B5164"><tspan x="74" y="239" textLength="875" lengthAdjust="spacing">Adding this replaces Pocket Casts. Your folders aren't</tspan><tspan x="74" y="292" textLength="142" lengthAdjust="spacing">affected.</tspan></text>
+            <g id="Row">
+              <g id="Column">
+                <g id="Empty">
+                  <text x="42" y="222.92" font-size="36.75" font-family="Roboto Flex" font-weight="500" letter-spacing="0.26" fill="#30323A">Keep Pocket Casts too</text>
+                </g>
+                <g id="Empty">
+                  <text x="42" y="268.86" font-size="31.5" font-family="Roboto Flex" font-weight="400" letter-spacing="1.05" fill="#30323A">Both sync to your headphones, Pocket Casts first.</text>
+                </g>
+              </g>
+              <g id="Box">
+                <rect x="897" y="189" width="137" height="84" rx="42" ry="42" fill="#4C5E8B"/>
+                <g id="Box">
+                  <rect x="960" y="200" width="63" height="63" rx="31.5" ry="31.5" fill="#F9F8FF"/>
+                </g>
               </g>
             </g>
             <g id="Row">
               <g id="Empty">
-                <text x="42" y="447.99" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">Up to 3 audiobooks</text>
+                <text x="42" y="403.99" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">Up to 3 audiobooks</text>
               </g>
               <g id="Box">
                 <g id="Empty">
-                  <text x="751" y="445.92" font-size="36.75" font-family="Roboto Flex" font-weight="500" letter-spacing="0.26" fill="#4C5E8B">Fewer</text>
+                  <text x="751" y="401.92" font-size="36.75" font-family="Roboto Flex" font-weight="500" letter-spacing="0.26" fill="#4C5E8B">Fewer</text>
                 </g>
               </g>
               <g id="Box">
                 <g id="Empty">
-                  <text x="916" y="445.92" font-size="36.75" font-family="Roboto Flex" font-weight="500" letter-spacing="0.26" fill="#4C5E8B">More</text>
+                  <text x="916" y="401.92" font-size="36.75" font-family="Roboto Flex" font-weight="500" letter-spacing="0.26" fill="#4C5E8B">More</text>
                 </g>
               </g>
             </g>
             <g id="Empty">
-              <text font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#30323A"><tspan x="42" y="567" textLength="953" lengthAdjust="spacing">Cadence reads your library through the Libro.fm app's API,</tspan><tspan x="42" y="620" textLength="576" lengthAdjust="spacing">which isn't public and may change.</tspan></text>
+              <text font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#30323A"><tspan x="42" y="523" textLength="953" lengthAdjust="spacing">Cadence reads your library through the Libro.fm app's API,</tspan><tspan x="42" y="576" textLength="576" lengthAdjust="spacing">which isn't public and may change.</tspan></text>
             </g>
             <g id="OutlinedTextField">
-              <image href="ideal__default__compact.figma-raster/1425.png" x="42" y="687" width="992" height="147"/>
+              <image href="ideal__default__compact.figma-raster/896.png" x="42" y="643" width="992" height="147"/>
             </g>
             <g id="OutlinedTextField">
-              <image href="ideal__default__compact.figma-raster/1435.png" x="42" y="887" width="992" height="147"/>
+              <image href="ideal__default__compact.figma-raster/906.png" x="42" y="843" width="992" height="147"/>
             </g>
             <g id="Box">
-              <rect x="42" y="1077" width="238" height="105" rx="52.5" ry="52.5" fill="#30323A" fill-opacity="0.1"/>
+              <rect x="42" y="1033" width="238" height="105" rx="52.5" ry="52.5" fill="#30323A" fill-opacity="0.1"/>
               <g id="Empty">
-                <text x="105" y="1141.92" font-size="36.75" font-family="Roboto Flex" font-weight="500" letter-spacing="0.26" fill="#5D5F68" fill-opacity="0.38">Sign in</text>
+                <text x="105" y="1097.92" font-size="36.75" font-family="Roboto Flex" font-weight="500" letter-spacing="0.26" fill="#5D5F68" fill-opacity="0.38">Sign in</text>
               </g>
             </g>
           </g>

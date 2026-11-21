@@ -7168,19 +7168,39 @@
         {
           "kind": "a11y",
           "severity": "info",
+          "message": "switch",
+          "detail": {
+            "role": "switch",
+            "bounds": {
+              "x": 897,
+              "y": 189,
+              "width": 137,
+              "height": 84
+            }
+          },
+          "bounds": {
+            "x": 897,
+            "y": 189,
+            "width": 137,
+            "height": 84
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
           "message": "button",
           "detail": {
             "role": "button",
             "bounds": {
               "x": 719,
-              "y": 381,
+              "y": 337,
               "width": 163,
               "height": 105
             }
           },
           "bounds": {
             "x": 719,
-            "y": 381,
+            "y": 337,
             "width": 163,
             "height": 105
           }
@@ -7193,14 +7213,14 @@
             "role": "button",
             "bounds": {
               "x": 882,
-              "y": 381,
+              "y": 337,
               "width": 152,
               "height": 105
             }
           },
           "bounds": {
             "x": 882,
-            "y": 381,
+            "y": 337,
             "width": 152,
             "height": 105
           }
@@ -7213,14 +7233,14 @@
             "role": "button",
             "bounds": {
               "x": 42,
-              "y": 1077,
+              "y": 1033,
               "width": 238,
               "height": 105
             }
           },
           "bounds": {
             "x": 42,
-            "y": 1077,
+            "y": 1033,
             "width": 238,
             "height": 105
           }
@@ -7239,32 +7259,27 @@
         },
         {
           "bounds": {
-            "x": 42,
-            "y": 168,
-            "width": 992,
-            "height": 170
+            "x": 897,
+            "y": 189,
+            "width": 137,
+            "height": 84
+          },
+          "role": "Switch",
+          "cornerRadius": 16
+        },
+        {
+          "bounds": {
+            "x": 960,
+            "y": 200,
+            "width": 63,
+            "height": 63
           },
           "cornerRadius": 12
         },
         {
           "bounds": {
-            "x": 74,
-            "y": 200,
-            "width": 928,
-            "height": 106
-          },
-          "label": "Adding this replaces Pocket Casts. Your folders aren't affected.",
-          "padding": {
-            "start": 12,
-            "top": 12,
-            "end": 12,
-            "bottom": 12
-          }
-        },
-        {
-          "bounds": {
             "x": 719,
-            "y": 381,
+            "y": 337,
             "width": 163,
             "height": 105
           },
@@ -7274,7 +7289,7 @@
         {
           "bounds": {
             "x": 882,
-            "y": 381,
+            "y": 337,
             "width": 152,
             "height": 105
           },
@@ -7284,7 +7299,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 666,
+            "y": 622,
             "width": 992,
             "height": 168
           },
@@ -7298,7 +7313,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 687,
+            "y": 643,
             "width": 992,
             "height": 147
           },
@@ -7307,7 +7322,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 866,
+            "y": 822,
             "width": 992,
             "height": 168
           },
@@ -7321,7 +7336,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 887,
+            "y": 843,
             "width": 992,
             "height": 147
           },
@@ -7330,7 +7345,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 1077,
+            "y": 1033,
             "width": 238,
             "height": 105
           },
@@ -15644,7 +15659,7 @@
     "ee.schimke.cadence (CadenceTheme)"
   ],
   "renderer": "compose-preview 2.79.0",
-  "generatedAt": "2026-11-21T15:03:17.184Z",
+  "generatedAt": "2026-11-21T15:39:35.551Z",
   "failures": [
     {
       "id": "render-failed--googleoauthactivity--activity-googleoauthactivity",
@@ -15716,7 +15731,7 @@
   "componentsFile": "components.json",
   "source": {
     "repo": "yschimke/cadence",
-    "ref": "51ae1d3da57f0f74c2b02cba235b4e4b3471b072",
+    "ref": "33259066473bb917bb2ccd18f32d0f5d9c26543d",
     "module": ""
   }
 }
