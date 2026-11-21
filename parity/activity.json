@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-21T17:31:33.699Z",
+  "generatedAt": "2026-11-21T17:44:58.658Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "d58385d611af10633247cc3660a78cd8c06a280d",
+        "subject": "fix(deps): update compose-preview-daemon-bom to v3.28.2 with Robolectric 4.18 (#689)",
+        "at": "2026-11-21T17:21:23Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "8693842bb593067b9093a4eab48dbe4a94e37515",
         "subject": "feat: restore sign-in on a new phone via Restore Credentials (#690)",
@@ -474,14 +482,6 @@
         "sha": "cf1670132634cd049c56b03bd3e607a039d850ff",
         "subject": "fix(deps): update livery to v0.14.0 (#630)",
         "at": "2026-11-14T22:11:27Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "c501c20397ad8b5356c01a4e7782447eb1a0cd7b",
-        "subject": "fix(deps): update dependency ee.schimke.composeai:rc-players-bom to v3.5.1 (#628)",
-        "at": "2026-11-14T21:37:47Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
