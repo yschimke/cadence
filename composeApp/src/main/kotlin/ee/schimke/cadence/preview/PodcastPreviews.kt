@@ -147,3 +147,43 @@ internal fun PodcastPocketCastsPreview() {
     )
   }
 }
+
+@Preview(name = "Add podcasts — Libro.fm signed in", showBackground = true, heightDp = 1000)
+@Composable
+internal fun PodcastLibroFmPreview() {
+  AndroidMaterialTheme {
+    AddPodcastsScreen(
+      remember {
+        PodcastController(PreviewPodcastPlatform).apply {
+          state.value =
+            LocalPodcastState(libroFm = LibroFmSession("preview", "listener@example.com"))
+          libroFmBooks.value =
+            listOf(
+              LibroFmBook(
+                "9780000000001",
+                "The Long Swim",
+                listOf("A. Writer"),
+                listOf("N. Reader"),
+                41_400,
+                "",
+                "",
+                "",
+              ),
+              LibroFmBook(
+                "9780000000002",
+                "Cold Water Stories",
+                listOf("B. Author", "C. Author"),
+                emptyList(),
+                22_800,
+                "",
+                "",
+                "",
+              ),
+            )
+        }
+      },
+      onDone = {},
+      initialProvider = PodcastProvider.LibroFm,
+    )
+  }
+}

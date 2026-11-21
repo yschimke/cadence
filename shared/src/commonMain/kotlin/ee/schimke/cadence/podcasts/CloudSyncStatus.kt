@@ -47,6 +47,7 @@ fun cloudSyncStatus(
       PodcastSourceKind.Rss -> "Podcast feed"
       PodcastSourceKind.Gpodder -> "gpodder"
       PodcastSourceKind.Overcast -> "Overcast"
+      PodcastSourceKind.LibroFm -> "Libro.fm"
       PodcastSourceKind.Snapshot,
       null -> "Podcast import"
     }
