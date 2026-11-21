@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-21T12:54:45.451Z",
+  "generatedAt": "2026-11-21T13:12:10.245Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "cf16752ebf974483293159e81c916ef69f7de9d3",
+        "subject": "ci: speed up compose-preview with module scoping and PR gate (#684)",
+        "at": "2026-11-21T12:51:00Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "acef3ae46e8a8739486ad179f4baaf3886191775",
         "subject": "feat: add the Libro.fm MP3 fallback, and split as is, by time or by chapter (#683)",
@@ -474,14 +482,6 @@
         "sha": "4797568c646fdbeaeef6f2f9bca6632ab7b842e3",
         "subject": "chore(deps): update yschimke/livery action to v0.12.0 (#625)",
         "at": "2026-11-14T14:49:37Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "e8d196d45995cd1e93b4185bbefa94a99300243f",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.92.0 (#622)",
-        "at": "2026-11-14T11:17:25Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
