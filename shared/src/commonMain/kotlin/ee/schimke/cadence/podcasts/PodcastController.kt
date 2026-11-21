@@ -189,7 +189,11 @@ class PodcastController(val platform: PodcastPlatform) {
                 ?: restored.target
                   .takeIf { it.isNotBlank() }
                   ?.let { platform.readDeviceManifest(it) },
-            library = restored.library.copy(config = supported(restored.library.config)),
+            library =
+              restored.library.copy(
+                config = supported(restored.library.config),
+                podcastTrims = supportedTrims(restored.library.podcastTrims),
+              ),
           )
       }
       platform.pocketCastsServer?.let { server ->
@@ -1034,6 +1038,15 @@ class PodcastController(val platform: PodcastPlatform) {
       else -> config
     }
   }
+
+  /**
+   * Per-podcast splits this platform can't make, set elsewhere (Android or desktop), are dropped
+   * here like the library's own; the browser copies whole episodes and has no per-podcast settings
+   * to clear them from.
+   */
+  fun supportedTrims(trims: Map<String, PodcastTrim>): Map<String, PodcastTrim> =
+    if (platform.splitFormats.isNotEmpty()) trims
+    else trims.mapValues { (_, trim) -> trim.copy(split = null) }
 
   suspend fun configure(config: Segmentation) {
     config.validate()

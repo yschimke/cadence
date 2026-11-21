@@ -417,6 +417,7 @@ class PodcastTest {
                   chunkFormat = "mp3",
                   skipListened = true,
                 ),
+              podcastTrims = mapOf("feed:a" to PodcastTrim(30, 0, SplitMode.Chapters)),
             ),
         ),
       )
@@ -432,6 +433,12 @@ class PodcastTest {
     assertEquals(
       Segmentation(false, 0, "mp3", false, split = SplitMode.Whole),
       web.state.value.library.config,
+    )
+    // A podcast set to split by chapter elsewhere keeps its trim but is copied whole here.
+    assertEquals(PodcastTrim(30, 0), web.state.value.library.podcastTrims["feed:a"])
+    assertEquals(
+      SplitMode.Chapters,
+      android.state.value.library.podcastTrims.getValue("feed:a").split,
     )
     web.configure(Segmentation(splitAtPosition = true, split = SplitMode.Chapters))
     assertFalse(web.state.value.library.config.splitAtPosition)
