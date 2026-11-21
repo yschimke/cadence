@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-21T17:44:58.658Z",
+  "generatedAt": "2026-11-21T18:27:20.198Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "367060b7da7f221e36d65ef5c2902213e5666b01",
+        "subject": "fix: retry a device-only restore-key escrow until it reaches the cloud (#693)",
+        "at": "2026-11-21T18:14:35Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "d58385d611af10633247cc3660a78cd8c06a280d",
         "subject": "fix(deps): update compose-preview-daemon-bom to v3.28.2 with Robolectric 4.18 (#689)",
@@ -474,14 +482,6 @@
         "sha": "7e9e43d1a46c3ee2e3f8e7f6f949e41fc8522256",
         "subject": "fix(deps): update dependency ee.schimke.composeai:rc-players-bom to v3.5.2 (#631)",
         "at": "2026-11-15T05:14:00Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "cf1670132634cd049c56b03bd3e607a039d850ff",
-        "subject": "fix(deps): update livery to v0.14.0 (#630)",
-        "at": "2026-11-14T22:11:27Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
