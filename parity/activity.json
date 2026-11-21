@@ -1,11 +1,27 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-21T03:23:38.771Z",
+  "generatedAt": "2026-11-21T09:27:54.974Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "67c86b0f815e48f05ee3630f4b66aae9c704d774",
+        "subject": "feat: add Libro.fm as an audiobook source (#675)",
+        "at": "2026-11-21T09:15:43Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "2e26213f4fbc4da20156f79b304c4aa3d0634461",
+        "subject": "chore(deps): update github-actions (#674)",
+        "at": "2026-11-21T03:24:02Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "e237503123467f0761d710b46270fa9b21bd877d",
         "subject": "chore(deps): update agp to v9.5.2 (#673)",
@@ -467,22 +483,6 @@
         "subject": "feat: author the headphone widget, notification and swim drawing with rc-players' CMP creation API (#613)",
         "at": "2026-11-13T11:28:58Z",
         "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "32f0f02a939dd3fd7b499699ffd2cc4288691ea4",
-        "subject": "fix(deps): update livery to v0.11.0 (#616)",
-        "at": "2026-11-13T11:14:25Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "21f33531e048cf62e7a2944c0ea55e050b3f3b2d",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.91.0 (#615)",
-        "at": "2026-11-13T11:12:42Z",
-        "author": "renovate[bot]",
         "previewIds": [],
         "components": []
       }

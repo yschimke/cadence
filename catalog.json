@@ -6923,6 +6923,192 @@
       "sourceFunction": "PodcastPocketCastsPreview"
     },
     {
+      "componentId": "composeApp/PodcastLibroFmPreview",
+      "images": [
+        {
+          "variant": "ideal",
+          "path": "images/composeapp-podcastlibrofmpreview/ideal__default__compact.png",
+          "state": "default",
+          "width": 1078,
+          "height": 2625,
+          "size": "compact",
+          "livePreview": "https://preview.coo.ee/cadence/p/composeapp-podcastlibrofmpreview__ideal__default__compact",
+          "previewId": "ee.schimke.cadence.preview.PodcastPreviewsKt.PodcastLibroFmPreview_Add_podcasts___Libro.fm_signed_in",
+          "previewParams": {
+            "showBackground": true,
+            "device": "spec:width=411dp,height=1000dp,dpi=420",
+            "widthDp": 411,
+            "heightDp": 1000
+          },
+          "density": 2.625,
+          "figmaSvg": "https://preview.coo.ee/cadence/render/composeapp-podcastlibrofmpreview__ideal__default__compact.svg"
+        }
+      ],
+      "greenlines": [
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 22,
+              "y": 32,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 22,
+            "y": 32,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 719,
+              "y": 179,
+              "width": 163,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 719,
+            "y": 179,
+            "width": 163,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 882,
+              "y": 179,
+              "width": 152,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 882,
+            "y": 179,
+            "width": 152,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 836,
+              "y": 337,
+              "width": 198,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 836,
+            "y": 337,
+            "width": 198,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 42,
+              "y": 1094,
+              "width": 193,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 42,
+            "y": 1094,
+            "width": 193,
+            "height": 105
+          }
+        }
+      ],
+      "redlines": [
+        {
+          "bounds": {
+            "x": 22,
+            "y": 32,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 719,
+            "y": 179,
+            "width": 163,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 882,
+            "y": 179,
+            "width": 152,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 836,
+            "y": 337,
+            "width": 198,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 1094,
+            "width": 193,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        }
+      ],
+      "section": ":composeApp",
+      "group": "Previews",
+      "caption": "Add podcasts — Libro.fm signed in",
+      "wireframe": "wireframes/composeapp-podcastlibrofmpreview.svg",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastPreviews.kt",
+      "sourceModule": ":composeApp",
+      "bodyLine": 157,
+      "sourceDirectory": "composeApp",
+      "sourceFunction": "PodcastLibroFmPreview"
+    },
+    {
       "componentId": "composeApp/PodcastWidgetBluetoothPreview",
       "images": [
         {
@@ -11196,6 +11382,69 @@
         {
           "kind": "a11y",
           "severity": "info",
+          "message": "button \"Previous\"",
+          "detail": {
+            "role": "button",
+            "label": "Previous",
+            "bounds": {
+              "x": 583,
+              "y": 1198,
+              "width": 126,
+              "height": 126
+            }
+          },
+          "bounds": {
+            "x": 583,
+            "y": 1198,
+            "width": 126,
+            "height": 126
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button \"Pause\"",
+          "detail": {
+            "role": "button",
+            "label": "Pause",
+            "bounds": {
+              "x": 730,
+              "y": 1198,
+              "width": 126,
+              "height": 126
+            }
+          },
+          "bounds": {
+            "x": 730,
+            "y": 1198,
+            "width": 126,
+            "height": 126
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button \"Next\"",
+          "detail": {
+            "role": "button",
+            "label": "Next",
+            "bounds": {
+              "x": 877,
+              "y": 1198,
+              "width": 126,
+              "height": 126
+            }
+          },
+          "bounds": {
+            "x": 877,
+            "y": 1198,
+            "width": 126,
+            "height": 126
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
           "message": "button",
           "detail": {
             "role": "button",
@@ -15238,7 +15487,7 @@
     "ee.schimke.cadence (CadenceTheme)"
   ],
   "renderer": "compose-preview 2.79.0",
-  "generatedAt": "2026-11-21T03:23:34.592Z",
+  "generatedAt": "2026-11-21T09:27:50.989Z",
   "failures": [
     {
       "id": "render-failed--googleoauthactivity--activity-googleoauthactivity",
@@ -15310,7 +15559,7 @@
   "componentsFile": "components.json",
   "source": {
     "repo": "yschimke/cadence",
-    "ref": "e237503123467f0761d710b46270fa9b21bd877d",
+    "ref": "67c86b0f815e48f05ee3630f4b66aae9c704d774",
     "module": ""
   }
 }
