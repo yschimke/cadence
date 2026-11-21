@@ -59,6 +59,18 @@ interface PodcastPlatform {
 
   suspend fun available(section: Section): Boolean
 
+  /**
+   * The measured lengths of the original tracks a downloaded episode was joined from (see
+   * [Episode.audioParts]), or empty when it wasn't joined or isn't downloaded.
+   */
+  suspend fun trackLengths(episode: Episode): List<Long> = emptyList()
+
+  /**
+   * Chapter starts (ms) marked in a downloaded episode's own audio: ID3v2 `CHAP` frames in an MP3,
+   * a Nero `chpl` list in an M4A/M4B. Empty when it has none or isn't downloaded.
+   */
+  suspend fun chapters(episode: Episode): List<Long> = emptyList()
+
   /** Remove staged audio for episodes no longer in the imported source. */
   suspend fun pruneAudio(episodes: List<Episode>) {}
 
@@ -177,7 +189,11 @@ class PodcastController(val platform: PodcastPlatform) {
                 ?: restored.target
                   .takeIf { it.isNotBlank() }
                   ?.let { platform.readDeviceManifest(it) },
-            library = restored.library.copy(config = supported(restored.library.config)),
+            library =
+              restored.library.copy(
+                config = supported(restored.library.config),
+                podcastTrims = supportedTrims(restored.library.podcastTrims),
+              ),
           )
       }
       platform.pocketCastsServer?.let { server ->
@@ -317,6 +333,7 @@ class PodcastController(val platform: PodcastPlatform) {
         save(
           state.value.copy(downloadedEpisodeKeys = state.value.downloadedEpisodeKeys + episode.key),
         )
+        recordTracks(episode)
       } catch (e: CancellationException) {
         throw e
       } catch (e: PodcastProblem) {
@@ -623,10 +640,11 @@ class PodcastController(val platform: PodcastPlatform) {
    * position is kept across refreshes.
    */
   suspend fun importLibroFm(list: String, latest: Int = state.value.library.feedLatest) {
-    val books = libroFm().library()
+    val api = libroFm()
+    val books = api.library()
     libroFmBooks.value = books
     val (snapshot, skipped) = libroFmSnapshot(books, list)
-    val all = keepLocalPositions(snapshot.episodes)
+    val all = keepLocalPositions(libroFmFormats(api, snapshot.episodes, latest))
     importSnapshot(
       podcastJson.encodeToString(snapshot.copy(episodes = all.take(latest))),
       upcoming = all.drop(latest),
@@ -655,8 +673,111 @@ class PodcastController(val platform: PodcastPlatform) {
    * a book not yet on this device gets a fresh one.
    */
   private suspend fun downloadable(episode: Episode): Episode =
-    if (episode.backend != LIBRO_FM_BACKEND || platform.originalAvailable(episode)) episode
-    else episode.copy(audioUrl = libroFm().m4bUrl(episode.id))
+    when {
+      episode.backend != LIBRO_FM_BACKEND || platform.originalAvailable(episode) -> episode
+      episode.extension == "mp3" ->
+        libroFm().mp3Parts(episode.id).let { episode.copy(audioUrl = it.first(), audioParts = it) }
+      else -> episode.copy(audioUrl = libroFm().m4bUrl(episode.id))
+    }
+
+  /**
+   * Finds chapters for each episode set to split by chapter that doesn't have them yet: a joined
+   * book's original tracks, else the feed's chapter index, else the chapter marks in the downloaded
+   * audio. An episode without any is left whole.
+   */
+  private suspend fun readChapters() {
+    val library = state.value.library
+    library.playlist?.episodes.orEmpty().forEach { episode ->
+      val config = library.configFor(episode)
+      if (config.splitMode != SplitMode.Chapters) return@forEach
+      // A finished episode isn't prepared at all, so its chapters aren't worth a download.
+      if (segment(episode, config.copy(split = SplitMode.Whole)).isEmpty()) return@forEach
+      when {
+        episode.backend == LIBRO_FM_BACKEND && episode.extension == "mp3" ->
+          if (episode.trackMs.isEmpty()) {
+            if (!platform.originalAvailable(episode))
+              platform.downloadOriginal(downloadable(episode))
+            recordTracks(episode)
+          }
+        episode.chapterMs.isEmpty() -> {
+          val listed =
+            episode.chaptersUrl
+              .takeIf { it.isNotBlank() }
+              ?.let { url ->
+                try {
+                  podcastChapters(platform.publicText(url), episode.durationMs)
+                } catch (e: CancellationException) {
+                  throw e
+                } catch (_: Exception) {
+                  // An index that can't be read just means no chapters from it.
+                  emptyList()
+                }
+              }
+              .orEmpty()
+          val starts = listed.ifEmpty {
+            if (!platform.supportsOriginalDownloads) return@ifEmpty emptyList()
+            if (!platform.originalAvailable(episode))
+              platform.downloadOriginal(downloadable(episode))
+            chapterStarts(platform.chapters(episode), episode.durationMs)
+          }
+          if (starts.isNotEmpty()) updateEpisode(episode) { it.copy(chapterMs = starts) }
+        }
+      }
+    }
+  }
+
+  /** Saves the measured lengths of the original tracks [episode] was joined from, once known. */
+  private suspend fun recordTracks(episode: Episode) {
+    val lengths = platform.trackLengths(episode)
+    if (lengths.isEmpty() || lengths == episode.trackMs) return
+    updateEpisode(episode) { it.copy(trackMs = lengths) }
+  }
+
+  /** Applies [change] to [episode] wherever the library lists it. */
+  private suspend fun updateEpisode(episode: Episode, change: (Episode) -> Episode) {
+    fun List<Episode>.changed() = map {
+      if (it.key == episode.key && it.audioVersion == episode.audioVersion) change(it) else it
+    }
+    val library = state.value.library
+    save(
+      state.value.copy(
+        library =
+          library.copy(
+            playlist = library.playlist?.let { it.copy(episodes = it.episodes.changed()) },
+            upcoming = library.upcoming.changed(),
+          ),
+      ),
+    )
+  }
+
+  /**
+   * Each book's download: the packaged M4B where Libro.fm has one, else its MP3 tracks joined into
+   * one file. Only the first [latest] are asked about, since only they are downloaded; a book seen
+   * before keeps the format it had, so its download and position stay valid.
+   */
+  private suspend fun libroFmFormats(
+    api: LibroFmApi,
+    episodes: List<Episode>,
+    latest: Int,
+  ): List<Episode> {
+    // Only the synced playlist was asked about; books waiting further down were not.
+    val known = state.value.library.playlist?.episodes.orEmpty().associateBy { it.key }
+    return episodes.mapIndexed { index, episode ->
+      val previous = known[episode.key]
+      when {
+        previous != null &&
+          previous.durationMs == episode.durationMs &&
+          previous.extension == "mp3" -> episode.asLibroFmMp3().copy(trackMs = previous.trackMs)
+        // An M4B already on this phone stays; one not downloaded yet is asked about again, which
+        // also moves books imported before the MP3 fallback (all assumed M4B) to MP3 when needed.
+        previous != null &&
+          previous.durationMs == episode.durationMs &&
+          platform.originalAvailable(previous) -> episode
+        index < latest && api.m4bUrlOrNull(episode.id) == null -> episode.asLibroFmMp3()
+        else -> episode
+      }
+    }
+  }
 
   /** Writes need the token on this device; the web-player capture and servers only read. */
   private val pocketCastsWritable: Boolean
@@ -909,11 +1030,25 @@ class PodcastController(val platform: PodcastPlatform) {
     val formats = platform.splitFormats
     return when {
       formats.isEmpty() ->
-        config.copy(splitAtPosition = false, skipListened = false, chunkMinutes = 0)
+        config.copy(
+          splitAtPosition = false,
+          skipListened = false,
+          chunkMinutes = 0,
+          split = SplitMode.Whole,
+        )
       config.chunkFormat !in formats -> config.copy(chunkFormat = formats.sorted().first())
       else -> config
     }
   }
+
+  /**
+   * Per-podcast splits this platform can't make, set elsewhere (Android or desktop), are dropped
+   * here like the library's own; the browser copies whole episodes and has no per-podcast settings
+   * to clear them from.
+   */
+  fun supportedTrims(trims: Map<String, PodcastTrim>): Map<String, PodcastTrim> =
+    if (platform.splitFormats.isNotEmpty()) trims
+    else trims.mapValues { (_, trim) -> trim.copy(split = null) }
 
   suspend fun configure(config: Segmentation) {
     config.validate()
@@ -945,6 +1080,7 @@ class PodcastController(val platform: PodcastPlatform) {
   }
 
   suspend fun prepare() {
+    readChapters()
     val library = state.value.library
     val playlist = requireNotNull(library.playlist) { "Import a playlist first" }
     // An empty source (a Pocket Casts playlist with nothing in it yet) has nothing to prepare;

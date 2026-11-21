@@ -417,6 +417,7 @@ class PodcastTest {
                   chunkFormat = "mp3",
                   skipListened = true,
                 ),
+              podcastTrims = mapOf("feed:a" to PodcastTrim(30, 0, SplitMode.Chapters)),
             ),
         ),
       )
@@ -428,9 +429,20 @@ class PodcastTest {
     // The browser copies whole episodes only.
     val web = PodcastController(FakePlatform(emptySet()).apply { saved = stored })
     web.load()
-    assertEquals(Segmentation(false, 0, "mp3", false), web.state.value.library.config)
-    web.configure(Segmentation(splitAtPosition = true))
+    // Whole episodes only, chapters included: it can't cut audio.
+    assertEquals(
+      Segmentation(false, 0, "mp3", false, split = SplitMode.Whole),
+      web.state.value.library.config,
+    )
+    // A podcast set to split by chapter elsewhere keeps its trim but is copied whole here.
+    assertEquals(PodcastTrim(30, 0), web.state.value.library.podcastTrims["feed:a"])
+    assertEquals(
+      SplitMode.Chapters,
+      android.state.value.library.podcastTrims.getValue("feed:a").split,
+    )
+    web.configure(Segmentation(splitAtPosition = true, split = SplitMode.Chapters))
     assertFalse(web.state.value.library.config.splitAtPosition)
+    assertEquals(SplitMode.Whole, web.state.value.library.config.splitMode)
   }
 
   @Test

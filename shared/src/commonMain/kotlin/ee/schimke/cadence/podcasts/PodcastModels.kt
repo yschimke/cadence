@@ -2,6 +2,9 @@ package ee.schimke.cadence.podcasts
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
 import okio.ByteString.Companion.encodeUtf8
 
 val podcastJson = Json {
@@ -29,6 +32,28 @@ data class Episode(
   val published: String = "",
   // The show's cover art, when the source names one (RSS `itunes:image`).
   val artwork: String = "",
+  /**
+   * Zip archives of MP3 tracks to join, in order, into this episode's audio instead of fetching
+   * [audioUrl] (Libro.fm books without a single-file download). Set just before downloading, since
+   * the links are signed and expire within minutes; never kept in the library.
+   */
+  val audioParts: List<String> = emptyList(),
+  /**
+   * The lengths of the original audio files this episode was joined from, in order (a Libro.fm
+   * book's MP3 tracks), once downloaded and measured; empty otherwise. Splitting by chapter copies
+   * each as its own file, unchanged.
+   */
+  val trackMs: List<Long> = emptyList(),
+  /**
+   * Where chapters start, in ms, after the first (which starts at 0): from the feed's chapter
+   * index, or the audio's own chapter marks, once read. Empty when unknown or there are none.
+   */
+  val chapterMs: List<Long> = emptyList(),
+  /**
+   * A Podcasting 2.0 chapter index (`<podcast:chapters>` JSON) for this episode, if the feed has
+   * one.
+   */
+  val chaptersUrl: String = "",
 ) {
   val key: String
     get() = digest("$backend\u0000$id")
@@ -58,6 +83,15 @@ data class Episode(
       "Unsupported audio format"
     }
     require(audioUrl.startsWith("https://")) { "Audio requires an HTTPS enclosure URL" }
+    require(audioParts.all { it.startsWith("https://") }) { "Audio parts require HTTPS URLs" }
+    require(audioParts.isEmpty() || extension == "mp3") { "Only MP3 tracks can be joined" }
+    require(trackMs.all { it > 0 }) { "Invalid track length" }
+    require(
+      chapterMs.all { it in 1 until durationMs } && chapterMs == chapterMs.sorted().distinct(),
+    ) {
+      "Invalid chapter starts"
+    }
+    require(chaptersUrl.isBlank() || chaptersUrl.startsWith("https://"))
   }
 }
 
@@ -75,6 +109,23 @@ data class PlaylistSnapshot(
   }
 }
 
+/** The part length "By time" uses until one is chosen. */
+const val DEFAULT_PART_MINUTES = 30
+
+/** How prepared audio is cut into files for the headphones. */
+@Serializable
+enum class SplitMode {
+  /** One file per episode, apart from cutting at your position. */
+  Whole,
+  /** Parts of [Segmentation.chunkMinutes] each. */
+  Time,
+  /**
+   * One file per chapter, where the episode has chapter information; otherwise left whole. Books
+   * that came as separate tracks keep those original files.
+   */
+  Chapters,
+}
+
 @Serializable
 data class Segmentation(
   val splitAtPosition: Boolean = true,
@@ -84,7 +135,15 @@ data class Segmentation(
   val skipListened: Boolean = false,
   val trimStartSeconds: Int = 0,
   val trimEndSeconds: Int = 0,
+  /**
+   * How to cut episodes into files. Null in settings saved before there was a choice: they split by
+   * time when [chunkMinutes] is set, else not at all.
+   */
+  val split: SplitMode? = null,
 ) {
+  val splitMode: SplitMode
+    get() = split ?: if (chunkMinutes > 0) SplitMode.Time else SplitMode.Whole
+
   fun validate() {
     require(chunkFormat in listOf("mp3", "m4a"))
     require(chunkMinutes in 0..120) { "Chunks must be 0 (off) or 1–120 minutes" }
@@ -123,6 +182,9 @@ fun digest(value: String): String = value.encodeUtf8().sha256().hex()
 fun segment(episode: Episode, config: Segmentation): List<Section> {
   episode.validate()
   config.validate()
+  val mode = config.splitMode
+  if (mode == SplitMode.Chapters && episode.trackMs.isNotEmpty())
+    return trackSections(episode, config)
   val start = config.trimStartSeconds * 1000L
   val end = episode.durationMs - config.trimEndSeconds * 1000L
   require(start < end) { "Trim exceeds the length of ${episode.title}" }
@@ -132,10 +194,18 @@ fun segment(episode: Episode, config: Segmentation): List<Section> {
   val boundaries =
     mutableListOf(if (config.skipListened && resumable) episode.positionMs else start)
   if (config.splitAtPosition && resumable && !config.skipListened) boundaries += episode.positionMs
+  // Chapter starts inside what's left become cuts too; an episode without any stays whole.
+  if (mode == SplitMode.Chapters)
+    boundaries += episode.chapterMs.filter { it > boundaries.first() && it < end }
   boundaries += end
+  boundaries.sort()
+  // "By time" chosen for one podcast while the library keeps episodes whole has no part length of
+  // its own yet; it still splits, at the default length.
+  val chunk =
+    if (mode == SplitMode.Time) config.chunkMinutes.takeIf { it > 0 } ?: DEFAULT_PART_MINUTES else 0
   val ranges =
-    boundaries.zipWithNext().flatMap { (start, end) ->
-      val size = if (config.chunkMinutes == 0) end - start else config.chunkMinutes * 60_000L
+    boundaries.distinct().zipWithNext().flatMap { (start, end) ->
+      val size = if (chunk == 0) end - start else chunk * 60_000L
       buildList {
         var offset = start
         while (offset < end) {
@@ -163,6 +233,34 @@ fun segment(episode: Episode, config: Segmentation): List<Section> {
       "$name.${if (whole) episode.extension else config.chunkFormat}",
     )
   }
+}
+
+/**
+ * Where each original track sits on [Episode]'s timeline, as (start, end) in ms. Measured lengths
+ * can drift from the listed duration, so the ends are clamped and the last track ends the episode.
+ */
+fun Episode.trackRanges(): List<Pair<Long, Long>> {
+  var start = 0L
+  return trackMs
+    .mapIndexed { index, length ->
+      val end = if (index == trackMs.lastIndex) durationMs else minOf(start + length, durationMs)
+      (start to end).also { start = end }
+    }
+    .filter { (from, to) -> to > from }
+}
+
+/** One section per original track, each the untouched file; finished tracks left out if asked. */
+private fun trackSections(episode: Episode, config: Segmentation): List<Section> {
+  val title =
+    episode.title.replace(Regex("[^a-zA-Z0-9]"), "_").take(40).trim('_').ifBlank { "episode" }
+  return episode
+    .trackRanges()
+    .filter { (_, end) -> !config.skipListened || end > episode.positionMs }
+    .map { (start, end) ->
+      val id = digest("${episode.key}|${episode.audioVersion}|$start|$end")
+      val name = "$title-${episode.key.take(8)}-${start.toString().padStart(12, '0')}-$id"
+      Section(id, episode.key, episode.audioVersion, start, end, "$name.${episode.extension}")
+    }
 }
 
 @Serializable
@@ -245,7 +343,14 @@ val PodcastSourceKind?.title: String
       null -> "Podcast import"
     }
 
-@Serializable data class PodcastTrim(val startSeconds: Int = 0, val endSeconds: Int = 0)
+/** One podcast's own settings: seconds to skip at each end and, if set, how to split it. */
+@Serializable
+data class PodcastTrim(
+  val startSeconds: Int = 0,
+  val endSeconds: Int = 0,
+  /** Overrides the library's [Segmentation.split] for this podcast; null follows it. */
+  val split: SplitMode? = null,
+)
 
 @Serializable
 data class PodcastLibrary(
@@ -316,8 +421,35 @@ fun episodePosition(episode: Episode, library: PodcastLibrary, config: Segmentat
 
 fun PodcastLibrary.configFor(episode: Episode): Segmentation {
   val trim = podcastTrims[episode.podcastId] ?: return config
-  return config.copy(trimStartSeconds = trim.startSeconds, trimEndSeconds = trim.endSeconds)
+  return config.copy(
+    trimStartSeconds = trim.startSeconds,
+    trimEndSeconds = trim.endSeconds,
+    split = trim.split ?: config.splitMode,
+  )
 }
+
+/**
+ * Chapter starts from a Podcasting 2.0 chapter index (`{"chapters": [{"startTime": 0, …}]}`, in
+ * seconds), leaving out chapters marked `"toc": false` and any outside the episode.
+ */
+fun podcastChapters(json: String, durationMs: Long): List<Long> = runCatching {
+  (podcastJson.parseToJsonElement(json) as JsonObject)["chapters"]
+    .let { it as? JsonArray }
+    .orEmpty()
+    .mapNotNull { node ->
+      val chapter = node as? JsonObject ?: return@mapNotNull null
+      if ((chapter["toc"] as? JsonPrimitive)?.content == "false") return@mapNotNull null
+      (chapter["startTime"] as? JsonPrimitive)?.content?.toDoubleOrNull()?.let {
+        (it * 1000).toLong()
+      }
+    }
+}
+  .getOrDefault(emptyList())
+  .let { chapterStarts(it, durationMs) }
+
+/** Chapter starts as [Episode.chapterMs] keeps them: inside the episode, sorted, no duplicates. */
+fun chapterStarts(starts: List<Long>, durationMs: Long): List<Long> =
+  starts.filter { it in 1 until durationMs }.sorted().distinct()
 
 @Serializable
 data class LocalPodcastState(
@@ -427,6 +559,8 @@ data class RssItem(
   val summary: String = "",
   val transcriptUrl: String = "",
   val published: String = "",
+  /** The item's `<podcast:chapters>` index, a JSON list of chapter start times. */
+  val chaptersUrl: String = "",
 )
 
 data class RssFeed(val name: String, val items: List<RssItem>, val image: String = "")
@@ -474,6 +608,7 @@ fun rssSnapshot(url: String, feed: RssFeed, latest: Int): RssImport {
           podcastTitle = feed.name,
           summary = item.summary,
           transcriptUrl = item.transcriptUrl,
+          chaptersUrl = item.chaptersUrl.takeIf { it.startsWith("https://") }.orEmpty(),
           published = item.published,
           artwork = feed.image.takeIf { it.startsWith("https://") }.orEmpty(),
         )

@@ -86,6 +86,129 @@ class LibroFmTest {
   }
 
   @Test
+  fun aBookWithoutAnM4bDownloadsItsMp3Tracks() = runBlocking {
+    val platform = LibroPlatform()
+    platform.noM4b += "9780000000002"
+    val controller = PodcastController(platform)
+    controller.signInLibroFm("me@example.com", "secret")
+    controller.importLibroFm(LIBRO_FM_LIBRARY, 2)
+    val (m4b, mp3) = controller.state.value.library.playlist!!.episodes
+    assertEquals("m4a", m4b.extension)
+    assertEquals("mp3", mp3.extension)
+    assertNotEquals(m4b.audioVersion, libroFmAudioVersion(mp3.id, "m4b", mp3.durationMs))
+    // A refresh keeps the MP3 format without asking again.
+    val asked = platform.m4bChecks.count { it == "9780000000002" }
+    controller.refreshSource()
+    assertEquals(asked, platform.m4bChecks.count { it == "9780000000002" })
+    assertEquals("mp3", controller.state.value.library.playlist!!.episodes[1].extension)
+
+    assertTrue(controller.run { downloadOriginals() })
+    // The MP3 book downloads from its zip parts, in order; the M4B one from its file.
+    assertEquals(
+      listOf(
+        "https://s3.example/9780000000001.m4b?sig=1",
+        "https://s3.example/9780000000002-1.zip?sig=1",
+      ),
+      platform.downloads,
+    )
+    assertEquals(
+      listOf(
+        "https://s3.example/9780000000002-1.zip?sig=1",
+        "https://s3.example/9780000000002-2.zip?sig=1",
+      ),
+      platform.parts.single(),
+    )
+  }
+
+  @Test
+  fun aBookImportedBeforeTheFallbackMovesToMp3() = runBlocking {
+    val platform = LibroPlatform()
+    val controller = PodcastController(platform)
+    controller.signInLibroFm("me@example.com", "secret")
+    // Imported as M4B (the only format before the fallback), never downloaded.
+    controller.importLibroFm(LIBRO_FM_LIBRARY, 2)
+    assertEquals("m4a", controller.state.value.library.playlist!!.episodes[1].extension)
+    platform.noM4b += "9780000000002"
+    controller.refreshSource()
+    assertEquals("mp3", controller.state.value.library.playlist!!.episodes[1].extension)
+  }
+
+  @Test
+  fun keptTracksBecomeOneFileEach() = runBlocking {
+    val platform = LibroPlatform()
+    platform.noM4b += "9780000000002"
+    val controller = PodcastController(platform)
+    controller.signInLibroFm("me@example.com", "secret")
+    controller.importLibroFm("9780000000002", 1)
+    controller.configure(controller.state.value.library.config.copy(split = SplitMode.Chapters))
+    // Preparing downloads the book first, to measure its tracks.
+    controller.prepare()
+    val book = controller.state.value.library.playlist!!.episodes.single()
+    assertEquals(listOf(3_000_000L, 4_200_000L), book.trackMs)
+    val sections = controller.state.value.library.manifests.single().sections
+    assertEquals(
+      listOf(0L to 3_000_000L, 3_000_000L to 7_200_000L),
+      sections.map { it.startMs to it.endMs },
+    )
+    assertTrue(sections.all { it.fileName.endsWith(".mp3") })
+    // The measured tracks survive a refresh.
+    controller.refreshSource()
+    assertEquals(book.trackMs, controller.state.value.library.playlist!!.episodes.single().trackMs)
+  }
+
+  @Test
+  fun anM4bSplitsAtItsChapterMarks() = runBlocking {
+    val platform = LibroPlatform()
+    val controller = PodcastController(platform)
+    controller.signInLibroFm("me@example.com", "secret")
+    controller.importLibroFm("9780000000001", 1)
+    controller.configure(controller.state.value.library.config.copy(split = SplitMode.Chapters))
+    controller.prepare()
+    val book = controller.state.value.library.playlist!!.episodes.single()
+    assertEquals(listOf(1_200_000L, 2_400_000L), book.chapterMs)
+    assertEquals(
+      listOf(0L to 1_200_000L, 1_200_000L to 2_400_000L, 2_400_000L to 3_600_000L),
+      controller.state.value.library.manifests.single().sections.map { it.startMs to it.endMs },
+    )
+    // A podcast's own setting overrides the library's: kept whole here.
+    controller.configurePodcastTrim(book.podcastId, PodcastTrim(split = SplitMode.Whole))
+    controller.prepare()
+    assertEquals(1, controller.state.value.library.manifests.single().sections.size)
+  }
+
+  @Test
+  fun aFinishedBookIsNotDownloadedForItsChapters() = runBlocking {
+    val platform = LibroPlatform()
+    val controller = PodcastController(platform)
+    controller.signInLibroFm("me@example.com", "secret")
+    controller.importLibroFm(LIBRO_FM_LIBRARY, 2)
+    val (finished, unheard) = controller.state.value.library.playlist!!.episodes
+    controller.setEpisodePosition(finished.key, finished.durationMs)
+    controller.refreshSource()
+    controller.configure(
+      controller.state.value.library.config.copy(split = SplitMode.Chapters, skipListened = true),
+    )
+    controller.prepare()
+    // Nothing is left to hear in the finished book, so it isn't fetched to find its chapters;
+    // the unheard one is, and is split at them.
+    assertTrue(platform.downloads.none { finished.id in it }, platform.downloads.toString())
+    assertTrue(platform.downloads.any { unheard.id in it }, platform.downloads.toString())
+    assertEquals(
+      listOf(unheard.key),
+      controller.state.value.library.manifests.map { it.episode.key },
+    )
+  }
+
+  @Test
+  fun anOutageDoesNotSwitchABookToMp3() = runBlocking {
+    val platform = LibroPlatform()
+    platform.m4bOutage = true
+    val controller = PodcastController(platform)
+    controller.signInLibroFm("me@example.com", "secret")
+    assertFalse(controller.run { importLibroFm(LIBRO_FM_LIBRARY, 1) })
+  }
+
+  @Test
   fun aBookThatLeftTheLibraryFails() = runBlocking {
     val controller = PodcastController(LibroPlatform())
     controller.signInLibroFm("me@example.com", "secret")
@@ -102,6 +225,10 @@ class LibroFmTest {
     var loginBody: String? = null
     val agents = mutableListOf<String>()
     val downloads = mutableListOf<String>()
+    val parts = mutableListOf<List<String>>()
+    val noM4b = mutableSetOf<String>()
+    val m4bChecks = mutableListOf<String>()
+    var m4bOutage = false
     private val downloaded = mutableSetOf<String>()
 
     override suspend fun readState() = saved
@@ -132,8 +259,17 @@ class LibroFmTest {
           """{"page":1,"total_pages":2,"audiobooks":[${book("9780000000001", "One", 3600)},${book("9780000000002", "Two", 7200)}]}"""
         path == "/api/v10/library?page=2" ->
           """{"page":2,"total_pages":2,"audiobooks":[${book("9780000000003", "No length", 0)}]}"""
-        path.startsWith("/api/v10/audiobooks/") && path.endsWith("/packaged_m4b") ->
-          """{"m4b_url":"https://s3.example/${path.split('/')[4]}.m4b?sig=1"}"""
+        path.startsWith("/api/v10/download-manifest?isbn=") -> {
+          val isbn = path.substringAfter("isbn=")
+          """{"parts":[{"url":"https://s3.example/$isbn-1.zip?sig=1","size_bytes":10},{"url":"https://s3.example/$isbn-2.zip?sig=1","size_bytes":10}],"tracks":[]}"""
+        }
+        path.startsWith("/api/v10/audiobooks/") && path.endsWith("/packaged_m4b") -> {
+          val isbn = path.split('/')[4]
+          m4bChecks += isbn
+          if (m4bOutage) throw PodcastProblem("Unavailable", 503)
+          if (isbn in noM4b) throw PodcastProblem("Not found (HTTP 404).", 404)
+          """{"m4b_url":"https://s3.example/$isbn.m4b?sig=1"}"""
+        }
         else -> error("Unexpected $path")
       }
     }
@@ -142,14 +278,30 @@ class LibroFmTest {
 
     override suspend fun downloadOriginal(episode: Episode, onProgress: (Long, Long) -> Unit) {
       downloads += episode.audioUrl
+      if (episode.audioParts.isNotEmpty()) parts += episode.audioParts
       downloaded += episode.key
     }
 
     override suspend fun rss(url: String) = error("No feeds")
 
-    override suspend fun prepare(episode: Episode, sections: List<Section>) {}
+    val prepared = mutableListOf<Section>()
 
-    override suspend fun available(section: Section) = false
+    override suspend fun prepare(episode: Episode, sections: List<Section>) {
+      prepared += sections
+    }
+
+    override suspend fun available(section: Section) = section in prepared
+
+    /** Chapter marks in a downloaded M4B: two, inside the first book's hour. */
+    override suspend fun chapters(episode: Episode) =
+      if (episode.extension == "m4a" && episode.key in downloaded) listOf(1_200_000L, 2_400_000L)
+      else emptyList()
+
+    /** The joined books' measured tracks: two, adding up to the listed length. */
+    override suspend fun trackLengths(episode: Episode) =
+      if (episode.extension == "mp3" && episode.key in downloaded)
+        listOf(3_000_000L, episode.durationMs - 3_000_000L)
+      else emptyList()
 
     override suspend fun export(sections: List<Section>, target: String, manifest: String) {}
   }

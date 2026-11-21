@@ -85,6 +85,7 @@ suspend fun resolveProgress(
             podcastTitle = feed.name,
             summary = it.summary,
             transcriptUrl = it.transcriptUrl,
+            chaptersUrl = it.chaptersUrl.takeIf { url -> url.startsWith("https://") }.orEmpty(),
             published = it.published,
           )
           .also(Episode::validate)
