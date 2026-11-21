@@ -428,9 +428,14 @@ class PodcastTest {
     // The browser copies whole episodes only.
     val web = PodcastController(FakePlatform(emptySet()).apply { saved = stored })
     web.load()
-    assertEquals(Segmentation(false, 0, "mp3", false), web.state.value.library.config)
-    web.configure(Segmentation(splitAtPosition = true))
+    // Whole episodes only, chapters included: it can't cut audio.
+    assertEquals(
+      Segmentation(false, 0, "mp3", false, split = SplitMode.Whole),
+      web.state.value.library.config,
+    )
+    web.configure(Segmentation(splitAtPosition = true, split = SplitMode.Chapters))
     assertFalse(web.state.value.library.config.splitAtPosition)
+    assertEquals(SplitMode.Whole, web.state.value.library.config.splitMode)
   }
 
   @Test
