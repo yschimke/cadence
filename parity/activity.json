@@ -1,11 +1,27 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-20T13:22:45.328Z",
+  "generatedAt": "2026-11-21T03:23:38.771Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "e237503123467f0761d710b46270fa9b21bd877d",
+        "subject": "chore(deps): update agp to v9.5.2 (#673)",
+        "at": "2026-11-21T03:10:29Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "13d78078758894529b4d52bf8b4c8ad83172fd16",
+        "subject": "test: cover all notification shapes on API 37.0 and fix ActivityScenario hang (#672)",
+        "at": "2026-11-20T21:33:20Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "966d5c450acf374f3f948767cbc4dc2a140caa91",
         "subject": "chore(deps): update github-actions (#670)",
@@ -467,22 +483,6 @@
         "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.91.0 (#615)",
         "at": "2026-11-13T11:12:42Z",
         "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "f192e328649d4c01337aa02792c3d2715b61dbb6",
-        "subject": "chore(main): release 0.1.31 (#597)",
-        "at": "2026-11-13T10:04:26Z",
-        "author": "github-actions[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "e05b595254e388db79a3402e170abb8785c7d273",
-        "subject": "feat: filter Bluetooth devices by protocol and scope media controls (#607)",
-        "at": "2026-11-13T10:04:06Z",
-        "author": "Yuri Schimke",
         "previewIds": [],
         "components": []
       }
