@@ -5,7 +5,10 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Download
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
@@ -84,8 +87,13 @@ fun PodcastSyncHomeFallback(
       // Wraps: three actions plus refresh and audio controls don't fit one row on a phone.
       FlowRow {
         extras.buttons.forEach { button ->
-          if (button.primary) Button(onClick = { onAction(button.id) }) { Text(button.label) }
-          else TextButton(onClick = { onAction(button.id) }) { Text(button.label) }
+          val label: @Composable () -> Unit = {
+            if (button.id == "download")
+              Icon(Icons.Filled.Download, contentDescription = button.label)
+            else Text(button.label)
+          }
+          if (button.primary) Button(onClick = { onAction(button.id) }) { label() }
+          else TextButton(onClick = { onAction(button.id) }) { label() }
         }
         if (extras.refresh)
           TextButton(onClick = { onAction(StatusCardExtras.REFRESH) }) { Text("Refresh") }

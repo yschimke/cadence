@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Holds a notification's Remote Compose body at the height NotificationLivery sets: SystemUI's
+  player otherwise takes all 256dp a custom expanded body may have.
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/notification_body"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />

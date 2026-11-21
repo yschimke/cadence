@@ -607,6 +607,7 @@ private fun ExportForm(busy: Boolean, onImport: (String) -> Unit) {
 }
 
 /** One podcast source's episodes: download them, mark what you've heard, copy to headphones. */
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun PodcastScreen(
   controller: PodcastController,
@@ -660,7 +661,7 @@ fun PodcastScreen(
       }
       item {
         val prepared = library.manifests.isNotEmpty() && local.readyForDevice()
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
           if (!prepared) {
             val missing = playlist.episodes.count { it.key !in local.downloadedEpisodeKeys }
             if (work.supportsDownload && missing > 0)
@@ -732,7 +733,9 @@ fun PodcastScreen(
         }
       }
       item {
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        // Wraps rather than squeezing: side by side, a long label left "Remove podcasts" a few
+        // letters a line at larger font sizes.
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
           TextButton(onClick = onChangeSource) { Text("Use a different podcast source") }
           if (playlist != null) RemovePodcastsButton(enabled = !busy) { action { removeSource() } }
         }

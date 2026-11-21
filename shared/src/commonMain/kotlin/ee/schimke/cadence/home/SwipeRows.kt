@@ -31,7 +31,10 @@ import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -66,8 +69,19 @@ fun SwipeActionRow(
 ) {
   val state = rememberSwipeToDismissBoxState()
   val scope = rememberCoroutineScope()
+  // One run per swipe. The box can report the same dismissal more than once while the row is still
+  // shown (and the row stays until the action's save removes it), and each repeat archived the
+  // already-archived episode again: "Episode no longer available", once per repeat.
+  var running by remember { mutableStateOf(false) }
   fun perform(action: SwipeAction) {
-    scope.launch { if (!action.run()) state.reset() }
+    if (running) return
+    running = true
+    scope.launch {
+      if (!action.run()) {
+        state.reset()
+        running = false
+      }
+    }
   }
   SwipeToDismissBox(
     state = state,
