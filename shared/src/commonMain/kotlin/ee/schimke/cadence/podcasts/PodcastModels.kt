@@ -232,6 +232,19 @@ enum class PodcastSourceKind {
   LibroFm,
 }
 
+/** The service's name, as the home screen and the replace warning show it. */
+val PodcastSourceKind?.title: String
+  get() =
+    when (this) {
+      PodcastSourceKind.PocketCasts -> "Pocket Casts"
+      PodcastSourceKind.LibroFm -> "Libro.fm"
+      PodcastSourceKind.Rss -> "Podcast feed"
+      PodcastSourceKind.Gpodder -> "gpodder"
+      PodcastSourceKind.Overcast -> "Overcast"
+      PodcastSourceKind.Snapshot,
+      null -> "Podcast import"
+    }
+
 @Serializable data class PodcastTrim(val startSeconds: Int = 0, val endSeconds: Int = 0)
 
 @Serializable

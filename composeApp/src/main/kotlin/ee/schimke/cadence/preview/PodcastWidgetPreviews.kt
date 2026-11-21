@@ -15,6 +15,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import ee.schimke.cadence.podcasts.CloudSyncStatus
 import ee.schimke.cadence.podcasts.CloudSyncWidgetContent
 import ee.schimke.cadence.podcasts.PodcastSyncWidgetContent
+import ee.schimke.cadence.podcasts.StatusCardButton
+import ee.schimke.cadence.podcasts.StatusCardExtras
 import ee.schimke.cadence.swim.PoolSeason
 import ee.schimke.cadence.swim.androidx.SwimClockAt
 import ee.schimke.cadence.swim.rememberPreviewSeconds
@@ -49,6 +51,11 @@ private fun PodcastWidgetPreview(
             widthDp = width,
             colors = colors,
             season = season,
+            headline = "Plug in to sync",
+            source = "Up Next · 2 h ago",
+            attention = true,
+            extras =
+              StatusCardExtras(buttons = listOf(StatusCardButton("open", "Sync", primary = true))),
           )
         }
         SwimClockAt(seconds, content)
@@ -68,6 +75,13 @@ internal fun PodcastWidgetBluetoothPreview() {
 @LauncherWidgetPreview(width = 4, height = 2)
 @Composable
 internal fun PodcastWidgetMp3Preview() {
+  PodcastWidgetPreview(true)
+}
+
+@Preview(name = "Podcast widget · MP3 · tall", widthDp = 312, heightDp = 220)
+@LauncherWidgetPreview(width = 4, height = 3)
+@Composable
+internal fun PodcastWidgetTallPreview() {
   PodcastWidgetPreview(true)
 }
 

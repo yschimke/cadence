@@ -17,6 +17,13 @@ content matching is not used to make the suggestion.
 
 ## Sources
 
+The library holds any number of folders (music or audiobooks already on the
+device, such as Bandcamp or Libro.fm downloads) plus one podcast or audiobook
+service. Both go on the same headphones: with them plugged in, Home offers
+**Sync now** for episodes and **Sync folders** for folders, which copy separately. Adding a different service replaces
+the connected one, with its episodes and downloads; the add screen says so
+before you choose. Folders are never affected.
+
 Cadence imports from Pocket Casts, Libro.fm, public RSS feeds,
 gpodder-compatible servers, Overcast exports and Cadence JSON snapshots.
 

@@ -42,21 +42,57 @@ fun rememberPodcastController(): PodcastController {
   return controller
 }
 
-/** The podcast services you can add, one at a time. */
-enum class PodcastProvider(val title: String, val detail: String, val icon: ImageVector) {
-  PocketCasts("Pocket Casts", "Up Next, in-progress episodes or a playlist", Icons.Filled.Podcasts),
-  LibroFm("Libro.fm", "Audiobooks you own on Libro.fm", Icons.Filled.Headphones),
-  Rss("Podcast feed", "The newest episodes of any public RSS feed", Icons.Filled.RssFeed),
+/**
+ * The podcast and audiobook services you can add. Only one is connected at a time, alongside any
+ * number of folders; [kinds] are the sources it stands for, to tell when adding it replaces
+ * another.
+ */
+enum class PodcastProvider(
+  val title: String,
+  val detail: String,
+  val icon: ImageVector,
+  val kinds: Set<PodcastSourceKind>,
+) {
+  PocketCasts(
+    "Pocket Casts",
+    "Up Next, in-progress episodes or a playlist",
+    Icons.Filled.Podcasts,
+    setOf(PodcastSourceKind.PocketCasts),
+  ),
+  LibroFm(
+    "Libro.fm",
+    "Audiobooks you own on Libro.fm",
+    Icons.Filled.Headphones,
+    setOf(PodcastSourceKind.LibroFm),
+  ),
+  Rss(
+    "Podcast feed",
+    "The newest episodes of any public RSS feed",
+    Icons.Filled.RssFeed,
+    setOf(PodcastSourceKind.Rss),
+  ),
   Gpodder(
     "gpodder or Nextcloud",
     "Episodes in progress in AntennaPod, Kasts and other apps that sync",
     Icons.Filled.Sync,
+    setOf(PodcastSourceKind.Gpodder),
   ),
   Export(
     "Overcast or a saved export",
     "Paste an Overcast All data export",
     Icons.Filled.ContentPaste,
+    setOf(PodcastSourceKind.Overcast, PodcastSourceKind.Snapshot),
   ),
+}
+
+/**
+ * What adding [provider] would replace: the connected service's name when it is a different one
+ * with episodes, or null. Folders are never replaced.
+ */
+fun replacedSource(library: PodcastLibrary, provider: PodcastProvider): String? {
+  val current = library.source ?: return null
+  if (library.playlist == null || current in provider.kinds) return null
+  return current.title
 }
 
 /** Runs [block], reports anything worth saying, and returns whether it worked. */
@@ -119,9 +155,17 @@ fun AddPodcastsScreen(
       val chosen = provider
       if (chosen == null) {
         Text(
-          "Add podcasts",
+          "Add podcasts or audiobooks",
           style = MaterialTheme.typography.headlineMedium,
-          modifier = Modifier.padding(16.dp),
+          modifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp),
+        )
+        Text(
+          local.library.playlist?.let {
+            "Choose one service. It replaces ${local.library.source.title}; your folders stay."
+          } ?: "Choose one service. Your folders stay alongside it.",
+          style = MaterialTheme.typography.bodyMedium,
+          color = MaterialTheme.colorScheme.onSurfaceVariant,
+          modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 4.dp, bottom = 8.dp),
         )
         PodcastProvider.entries
           .filter { it != PodcastProvider.PocketCasts || controller.platform.pocketCastsApi }
@@ -149,6 +193,9 @@ fun AddPodcastsScreen(
         Modifier.padding(horizontal = 16.dp).fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(12.dp),
       ) {
+        replacedSource(local.library, chosen)?.let { replaced ->
+          ReplaceNotice(replaced, local.library.allEpisodes.size)
+        }
         if (chosen != PodcastProvider.Export)
           EpisodeCount(
             latest,
@@ -173,6 +220,26 @@ fun AddPodcastsScreen(
         }
       }
     }
+  }
+}
+
+/** Says up front that adding replaces the connected service, so it never happens by surprise. */
+@Composable
+private fun ReplaceNotice(replaced: String, episodes: Int) {
+  Surface(
+    color = MaterialTheme.colorScheme.secondaryContainer,
+    shape = MaterialTheme.shapes.medium,
+    modifier = Modifier.fillMaxWidth(),
+  ) {
+    Text(
+      when (episodes) {
+        0 -> "Adding this replaces $replaced."
+        1 -> "Adding this replaces the episode from $replaced, with its download."
+        else -> "Adding this replaces the $episodes episodes from $replaced, with their downloads."
+      } + " Your folders aren't affected.",
+      style = MaterialTheme.typography.bodyMedium,
+      modifier = Modifier.padding(12.dp),
+    )
   }
 }
 

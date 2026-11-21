@@ -1,6 +1,8 @@
 package ee.schimke.cadence.home
 
+import ee.schimke.cadence.podcasts.CloudSyncStatus
 import ee.schimke.cadence.podcasts.LocalPodcastState
+import ee.schimke.cadence.podcasts.StatusCardButton
 import ee.schimke.cadence.podcasts.readyForDevice
 import ee.schimke.cadence.podcasts.upToDateOnDevice
 
@@ -14,7 +16,7 @@ sealed interface HeadphoneSyncStep {
 
   /** Nothing to sync yet; the welcome card offers sources instead. */
   data object NoSource : HeadphoneSyncStep {
-    override val message = "Add podcasts or a folder to get started."
+    override val message = "Add podcasts, audiobooks or a folder to get started."
   }
 
   /** First time: the headphones' storage has never been chosen. */
@@ -87,3 +89,90 @@ fun shouldCopyOnConnect(step: HeadphoneSyncStep): Boolean =
  */
 fun needsStorageChoice(message: String): Boolean =
   message.contains("headphone storage", ignoreCase = true)
+
+/**
+ * The step as one short headline, for the top of the status card and the launcher widget, with the
+ * counts that say how much is left to do.
+ */
+fun syncHeadline(step: HeadphoneSyncStep, cloud: CloudSyncStatus): String =
+  when (step) {
+    HeadphoneSyncStep.NoSource -> "Add podcasts or a folder"
+    HeadphoneSyncStep.PlugInToSetUp -> "Plug in your headphones to finish setup"
+    HeadphoneSyncStep.ChooseStorage -> "Choose the headphone drive to finish setup"
+    is HeadphoneSyncStep.Prepare ->
+      cloud.downloadNeeded?.takeIf { it > 0 && cloud.canDownload }?.let { "$it to download" }
+        ?: cloud.processingNeeded?.takeIf { it > 0 }?.let { "$it to process" }
+        ?: "To process"
+    is HeadphoneSyncStep.ReadyToCopy -> if (step.pluggedIn) "Ready to sync" else "Plug in to sync"
+    is HeadphoneSyncStep.UpToDate -> "In sync"
+    is HeadphoneSyncStep.Folders ->
+      if (step.pluggedIn) "Headphones connected" else "Plug in to sync your folders"
+  }
+
+/** Whether [step] asks for something now, so the headline stands out. */
+val HeadphoneSyncStep.needsAttention: Boolean
+  get() =
+    this == HeadphoneSyncStep.ChooseStorage ||
+      this is HeadphoneSyncStep.Prepare ||
+      this is HeadphoneSyncStep.ReadyToCopy
+
+/**
+ * The list the episodes come from and when it was last checked, kept short: "Up Next · 2 h ago".
+ * The service's name is left out when there is a list name, since the list is what changes.
+ */
+fun syncSourceLine(cloud: CloudSyncStatus): String? =
+  cloud.source
+    .takeIf { cloud.hasSource }
+    ?.let { source ->
+      val list = source.substringAfter(" · ", source)
+      val checked = cloud.checked.removePrefix("Last checked: ")
+      if (checked.isBlank()) list else "$list · $checked"
+    }
+
+/**
+ * The one action the launcher widget offers for [step]: Download or Process run in the background,
+ * Sync opens Cadence (which copies on its own once the headphones are plugged in). Null when there
+ * is nothing to do from the home screen.
+ */
+fun widgetButton(step: HeadphoneSyncStep, cloud: CloudSyncStatus): StatusCardButton? =
+  when (step) {
+    is HeadphoneSyncStep.Prepare ->
+      if (cloud.canDownload) StatusCardButton("download", "Download", primary = true)
+      else StatusCardButton("process", "Process", primary = true)
+    is HeadphoneSyncStep.ReadyToCopy -> StatusCardButton("open", "Sync", primary = true)
+    else -> null
+  }
+
+/**
+ * The buttons [step] needs, main action first: "Sync now" when plugged in and ready, "Download" or
+ * "Process now" while preparing, and so on. [syncFolders] adds "Sync folders" beside them.
+ */
+fun statusButtons(
+  step: HeadphoneSyncStep,
+  cloud: CloudSyncStatus,
+  ejectable: Boolean,
+  syncFolders: Boolean,
+): List<StatusCardButton> = buildList {
+  when (step) {
+    HeadphoneSyncStep.NoSource -> add(StatusCardButton("add", "Add a source", primary = true))
+    HeadphoneSyncStep.PlugInToSetUp -> Unit
+    HeadphoneSyncStep.ChooseStorage ->
+      add(StatusCardButton("storage", "Choose headphone storage", primary = true))
+    is HeadphoneSyncStep.Prepare ->
+      add(
+        if (cloud.canDownload) StatusCardButton("download", "Download", primary = true)
+        else StatusCardButton("process", "Process now", primary = true),
+      )
+    is HeadphoneSyncStep.ReadyToCopy ->
+      if (step.pluggedIn) add(StatusCardButton("sync", "Sync now", primary = true))
+    is HeadphoneSyncStep.UpToDate ->
+      if (step.pluggedIn) {
+        if (ejectable) add(StatusCardButton("eject", "Eject USB", primary = true))
+        add(StatusCardButton("sync-again", "Sync again"))
+      }
+    is HeadphoneSyncStep.Folders ->
+      if (step.pluggedIn) add(StatusCardButton("folders", "Sync folders", primary = true))
+  }
+  if (syncFolders && step !is HeadphoneSyncStep.Folders)
+    add(StatusCardButton("folders", "Sync folders"))
+}

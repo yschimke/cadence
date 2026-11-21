@@ -191,3 +191,30 @@ internal fun PodcastLibroFmPreview() {
     )
   }
 }
+
+@Preview(
+  name = "Add podcasts — Libro.fm replaces Pocket Casts",
+  showBackground = true,
+  device = "spec:width=411dp,height=900dp,dpi=420",
+)
+@Composable
+internal fun PodcastReplaceSourcePreview() {
+  AndroidMaterialTheme {
+    AddPodcastsScreen(
+      remember {
+        PodcastController(PreviewPodcastPlatform).apply {
+          state.value =
+            LocalPodcastState(
+              library =
+                PodcastLibrary(
+                  playlist = PlaylistSnapshot(name = "Up Next", episodes = emptyList()),
+                  source = PodcastSourceKind.PocketCasts,
+                ),
+            )
+        }
+      },
+      onDone = {},
+      initialProvider = PodcastProvider.LibroFm,
+    )
+  }
+}

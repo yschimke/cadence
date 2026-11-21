@@ -1,7 +1,5 @@
 package ee.schimke.cadence.home
 
-import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -33,12 +31,8 @@ import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Bedtime
 import androidx.compose.material.icons.filled.Bluetooth
-import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Cloud
-import androidx.compose.material.icons.filled.Eject
 import androidx.compose.material.icons.filled.ErrorOutline
-import androidx.compose.material.icons.filled.ExpandLess
-import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.Folder
 import androidx.compose.material.icons.filled.Headphones
 import androidx.compose.material.icons.filled.NewReleases
@@ -48,11 +42,9 @@ import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.SdStorage
 import androidx.compose.material.icons.filled.Source
-import androidx.compose.material.icons.filled.Sync
 import androidx.compose.material.icons.filled.Usb
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -61,7 +53,6 @@ import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.Scaffold
@@ -98,13 +89,11 @@ import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import ee.schimke.cadence.bluetooth.MediaInfo
 import ee.schimke.cadence.datastore.proto.SourceKind
 import ee.schimke.cadence.datastore.proto.SyncSource
 import ee.schimke.cadence.devices.rememberEjectUsb
 import ee.schimke.cadence.devices.rememberFileExplorerOpenLauncher
 import ee.schimke.cadence.metro.metroViewModel
-import ee.schimke.cadence.podcasts.CloudSyncHomeCard
 import ee.schimke.cadence.podcasts.Episode
 import ee.schimke.cadence.podcasts.EpisodeDetails
 import ee.schimke.cadence.podcasts.KeepPodcastScreenAwake
@@ -112,8 +101,10 @@ import ee.schimke.cadence.podcasts.LocalPodcastState
 import ee.schimke.cadence.podcasts.POCKET_CASTS_UP_NEXT
 import ee.schimke.cadence.podcasts.PodcastController
 import ee.schimke.cadence.podcasts.PodcastPlayerUi
+import ee.schimke.cadence.podcasts.PodcastSourceKind
 import ee.schimke.cadence.podcasts.PodcastSyncHomeCard
 import ee.schimke.cadence.podcasts.PodcastWorkUi
+import ee.schimke.cadence.podcasts.StatusCardExtras
 import ee.schimke.cadence.podcasts.cloudSyncStatus
 import ee.schimke.cadence.podcasts.episodePosition
 import ee.schimke.cadence.podcasts.formatTime
@@ -394,36 +385,18 @@ fun HomeContent(
         item(key = "welcome") { WelcomeCard(suggestions, actions) }
         return@LazyColumn
       }
-      // The order follows the morning routine: what's on the headphones and syncing them first,
-      // then playback, then what this phone has fetched and prepared for the next sync.
-      item(key = "headphones") {
-        HeadphonesSection(state, podcasts, podcastBusy, podcastWork, actions)
-      }
-      val headphonesConnected =
-        state.attachedDevice != null || state.bluetooth.connectedDevice != null
-      val playingOnPhone = podcastPlayer.title != null && !state.bluetooth.localAudioControls
-      // The phone's own player (with seeking) stays whenever something plays here; the headphone
-      // transport joins it over Bluetooth, or on USB explains why there is none.
-      if (headphonesConnected || podcastPlayer.title != null)
-        item(key = "controls") {
-          AudioControlsSection(state, podcastPlayer, playingOnPhone, actions)
+      // One card says where things stand (headphones, this phone, the source) and what to do
+      // next, so the episodes themselves start high on the screen; playback follows it.
+      item(key = "status") {
+        StatusSection(state, podcasts, canRefreshPodcasts, podcastBusy, podcastWork, actions) {
+          adding = true
         }
-      item(key = "phone") {
-        PhoneSection(state, podcasts, canRefreshPodcasts, podcastWork, actions) { adding = true }
       }
-      if (podcastPlayer.suggestMediaAccess)
-        item(key = "media-access") {
-          OutlinedCard(Modifier.fillMaxWidth()) {
-            Column(Modifier.padding(16.dp)) {
-              Text("Connect your media apps", style = MaterialTheme.typography.titleMedium)
-              Text(
-                "Allow notification access to show and control playback from installed media apps.",
-                style = MaterialTheme.typography.bodyMedium,
-              )
-              TextButton(onClick = podcastPlayer.requestMediaAccess) { Text("Allow media access") }
-            }
-          }
-        }
+      // Headphone transport, volume and media-app access live on the Audio controls screen
+      // (the icon on the status row). Only an episode playing on this phone keeps a player here,
+      // so it can be paused without leaving Home.
+      if (podcastPlayer.title != null && !state.bluetooth.localAudioControls)
+        item(key = "phone-player") { PhonePodcastPlayer(podcastPlayer) }
       if (playlist != null)
         item(key = "podcasts") {
           PodcastSection(podcasts, canArchive, actions, podcastPlayer) { opened = it }
@@ -523,141 +496,131 @@ private fun SectionTitle(title: String, action: (@Composable () -> Unit)? = null
 }
 
 /** What the headphones hold, whether that matches this phone, and one big button to sync. */
+/**
+ * Where things stand, in one card shared with the launcher widget: the next step as a headline,
+ * what the headphones hold, what this phone has ready, the battery and the source, with the step's
+ * buttons and what the next sync changes inside it. Below it, only the running task's progress or
+ * the last failure.
+ */
 @Composable
-private fun HeadphonesSection(
+private fun StatusSection(
   state: HomeViewModel.UiState,
   podcasts: LocalPodcastState,
+  canRefresh: Boolean,
   podcastBusy: Boolean,
-  podcastWork: PodcastWorkUi,
-  actions: HomeActions,
-) {
-  val device = state.bluetooth.connectedDevice
-  val pluggedIn = state.attachedDevice != null
-  val step = headphoneSyncStep(podcasts, state.sources.isNotEmpty(), pluggedIn)
-  // Downloads and processing report under "On this phone"; here, busy means a copy.
-  val copying = podcastBusy && !podcastWork.active
-  Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-    SectionTitle(
-      "On your headphones",
-      action =
-        if (state.bluetoothSupported && device == null) {
-          { TextButton(onClick = actions.onBluetoothControls) { Text("Bluetooth controls") } }
-        } else null,
-    )
-    if (podcasts.library.playlist != null) {
-      val summary = podcastWidgetSummary(podcasts)
-      PodcastSyncHomeCard(
-        copied = summary.copied,
-        available = summary.available,
-        battery = podcastWidgetBattery(device, podcasts.target),
-        ready = podcasts.readyForDevice(),
-        showSwimming = state.bluetooth.localAudioControls,
-      )
-    }
-    HeadphoneSyncPrompt(
-      step = step,
-      busy = copying,
-      enabled = !podcastWork.active,
-      progress = podcastWork.status.takeIf { copying },
-      actions = actions,
-      // Only meaningful once there is something prepared to copy.
-      changes =
-        if (step is HeadphoneSyncStep.ReadyToCopy) headphoneSyncChanges(podcasts) else emptyList(),
-    )
-  }
-}
-
-/** Playback on the connected headphones, or on this phone while it plays through them. */
-@Composable
-private fun AudioControlsSection(
-  state: HomeViewModel.UiState,
-  podcastPlayer: PodcastPlayerUi,
-  playingOnPhone: Boolean,
-  actions: HomeActions,
-) {
-  val bluetooth =
-    if (playingOnPhone)
-      state.bluetooth.copy(
-        mediaInfo =
-          MediaInfo(
-            title = podcastPlayer.title,
-            artist = null,
-            album = null,
-            playing = podcastPlayer.playing,
-            durationMs = podcastPlayer.durationMs,
-            positionMs = podcastPlayer.positionMs,
-            packageName = "ee.schimke.cadence",
-          ),
-      )
-    else state.bluetooth
-  val bluetoothConnected = state.bluetooth.connectedDevice != null
-  Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-    SectionTitle("Audio controls") {
-      if (bluetoothConnected)
-        TextButton(onClick = actions.onBluetoothControls) { Text("All controls") }
-    }
-    if (podcastPlayer.title != null) PhonePodcastPlayer(podcastPlayer)
-    // Over Bluetooth this drives the headphones; plugged in over USB with nothing playing on the
-    // phone, it says why there are no controls.
-    if (bluetoothConnected || podcastPlayer.title == null)
-      HomeMiniPlayer(
-        bluetooth,
-        actions.onPrevious,
-        if (playingOnPhone) podcastPlayer.playPause else actions.onPlayPause,
-        actions.onNext,
-      )
-  }
-}
-
-/** What this phone has fetched and prepared for the next sync, and the buttons to get more. */
-@Composable
-private fun PhoneSection(
-  state: HomeViewModel.UiState,
-  podcasts: LocalPodcastState,
-  canRefreshPodcasts: Boolean,
   podcastWork: PodcastWorkUi,
   actions: HomeActions,
   onConnectSource: () -> Unit,
 ) {
-  Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-    SectionTitle("On this phone")
-    val cloudStatus =
-      cloudSyncStatus(
-        podcasts,
-        canRefreshPodcasts,
-        podcastWork.supportsDownload,
-        busy = podcastWork.active,
-        // Shown once, with its progress bar, just below the card.
-        progress = null,
+  val device = state.bluetooth.connectedDevice
+  val pluggedIn = state.attachedDevice != null
+  val step = headphoneSyncStep(podcasts, state.sources.isNotEmpty(), pluggedIn)
+  // Downloads and processing report through [podcastWork]; otherwise, busy means a copy.
+  val copying = podcastBusy && !podcastWork.active
+  val cloud =
+    cloudSyncStatus(podcasts, canRefresh, podcastWork.supportsDownload, busy = podcastWork.active)
+  val headline = syncHeadline(step, cloud)
+  // Nothing to tap while a task runs: ejecting or syncing again mid-copy would cut off its files.
+  val buttons =
+    if (podcastWork.active || copying) emptyList()
+    else
+      statusButtons(
+        step,
+        cloud,
+        ejectable = actions.onEjectUsb != null,
+        // Folders copy on their own screen; alongside episodes they need their own button too.
+        syncFolders = pluggedIn && state.sources.isNotEmpty(),
       )
-    CloudSyncHomeCard(
-      status = cloudStatus,
-      onOpen = if (cloudStatus.hasSource) actions.onOpenPodcasts else onConnectSource,
-      onRefresh = podcastWork.refresh,
-      onDownload = podcastWork.download,
-      onProcess = podcastWork.process,
-    )
-    if (podcastWork.active) WorkProgress(podcastWork)
-    else podcastWork.error?.let { WorkError(it, podcastWork) }
-    if (state.profiles.isNotEmpty() || podcasts.library.playlist != null)
-      Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        if (podcasts.library.playlist != null)
-          OutlinedButton(onClick = actions.onOpenPodcasts) {
-            Icon(Icons.Filled.Podcasts, contentDescription = null, Modifier.size(18.dp))
-            Spacer(Modifier.width(8.dp))
-            Text("All episodes")
-          }
-        if (state.profiles.isNotEmpty())
-          OutlinedButton(
-            enabled = !state.refresh.running,
-            onClick = { state.profiles.forEach { actions.onRefreshFolder(it.id) } },
-          ) {
-            Icon(Icons.Filled.Refresh, contentDescription = null, Modifier.size(18.dp))
-            Spacer(Modifier.width(8.dp))
-            Text(if (state.refresh.running) "Refreshing…" else "Refresh folders")
-          }
-      }
+  fun act(id: String) {
+    when (id) {
+      StatusCardExtras.REFRESH -> if (cloud.canRefresh) podcastWork.refresh()
+      StatusCardExtras.AUDIO_CONTROLS -> actions.onBluetoothControls()
+      "add" -> onConnectSource()
+      "storage" -> actions.onChooseHeadphoneStorage()
+      "download" -> podcastWork.download()
+      "process" -> actions.onPreparePodcasts()
+      "sync",
+      "sync-again" -> actions.onSyncPodcasts()
+      "eject" -> actions.onEjectUsb?.invoke()
+      "folders" -> actions.onCopyToHeadphones()
+    }
   }
+  Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+    if (podcasts.library.playlist != null) {
+      val summary = podcastWidgetSummary(podcasts)
+      val changes =
+        if (step is HeadphoneSyncStep.ReadyToCopy && !copying) headphoneSyncChanges(podcasts)
+        else emptyList()
+      var changesExpanded by rememberSaveable { mutableStateOf(false) }
+      val extras =
+        StatusCardExtras(
+          buttons = buttons,
+          changes = changes.takeIf { it.isNotEmpty() }?.summary(),
+          changeLines = if (changesExpanded) changeLines(changes) else emptyList(),
+          refresh = cloud.hasSource,
+          audioControls = state.bluetoothSupported,
+        )
+      // The card is a Remote Compose document: name it, and leave its buttons to screen readers.
+      Box(
+        Modifier.fillMaxWidth().clip(RoundedCornerShape(20.dp)).semantics {
+          contentDescription = "Sync status"
+        },
+      ) {
+        PodcastSyncHomeCard(
+          copied = summary.copied,
+          available = summary.available,
+          battery = podcastWidgetBattery(device, podcasts.target),
+          ready = podcasts.readyForDevice(),
+          showSwimming = state.bluetooth.localAudioControls,
+          headline = headline,
+          source = syncSourceLine(cloud),
+          attention = step.needsAttention,
+          extras = extras,
+        ) { id ->
+          if (id == StatusCardExtras.CHANGES) changesExpanded = !changesExpanded else act(id)
+        }
+      }
+    } else {
+      // Only folders, or nothing yet: no card, just the step and its buttons.
+      Text(
+        step.message,
+        style = MaterialTheme.typography.bodyLarge,
+        modifier = Modifier.padding(horizontal = 4.dp),
+      )
+      Row(
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+      ) {
+        buttons.forEach { button ->
+          if (button.primary) Button(onClick = { act(button.id) }) { Text(button.label) }
+          else TextButton(onClick = { act(button.id) }) { Text(button.label) }
+        }
+        if (state.bluetoothSupported)
+          TopBarAction(Icons.Filled.Headphones, "Audio controls", actions.onBluetoothControls)
+      }
+    }
+    when {
+      copying -> WorkProgress(PodcastWorkUi(status = podcastWork.status ?: "Syncing…"))
+      podcastWork.active -> WorkProgress(podcastWork)
+      else -> podcastWork.error?.let { WorkError(it, podcastWork) }
+    }
+  }
+}
+
+/** One line per change for the expanded card, the first few with a count of the rest. */
+private fun changeLines(changes: List<HeadphoneSyncChange>, limit: Int = 6): List<String> {
+  val lines =
+    changes.take(limit).map { change ->
+      val mark =
+        when (change.kind) {
+          HeadphoneSyncChange.Kind.Add -> "+"
+          HeadphoneSyncChange.Kind.Update -> "↻"
+          HeadphoneSyncChange.Kind.Remove -> "−"
+        }
+      "$mark ${change.title} · ${change.detail}"
+    }
+  val more = changes.size - lines.size
+  return if (more > 0) lines + "and $more more" else lines
 }
 
 /** The running download or processing, with a real percentage once there is one. */
@@ -736,198 +699,6 @@ private fun FindMoreContent(releases: Int, onExpand: () -> Unit) {
   }
 }
 
-/** One status line and, at most, one button: whatever [step] says to do next. */
-@Composable
-private fun HeadphoneSyncPrompt(
-  step: HeadphoneSyncStep,
-  busy: Boolean,
-  enabled: Boolean,
-  progress: String?,
-  actions: HomeActions,
-  changes: List<HeadphoneSyncChange> = emptyList(),
-) {
-  val colors = MaterialTheme.colorScheme
-  // The moment to act stands out; everything else is a calm, tonal status.
-  val (targetContainer, targetContent) =
-    when {
-      busy -> colors.surfaceContainerHigh to colors.onSurface
-      step is HeadphoneSyncStep.ReadyToCopy && step.pluggedIn ->
-        colors.primaryContainer to colors.onPrimaryContainer
-      step == HeadphoneSyncStep.ChooseStorage ->
-        colors.primaryContainer to colors.onPrimaryContainer
-      step is HeadphoneSyncStep.UpToDate -> colors.tertiaryContainer to colors.onTertiaryContainer
-      else -> colors.surfaceContainerHigh to colors.onSurface
-    }
-  val container by animateColorAsState(targetContainer)
-  val content by animateColorAsState(targetContent)
-  Surface(
-    color = container,
-    contentColor = content,
-    shape = RoundedCornerShape(20.dp),
-    modifier = Modifier.fillMaxWidth().animateContentSize(),
-  ) {
-    Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-      Row(verticalAlignment = Alignment.CenterVertically) {
-        Box(
-          Modifier.size(40.dp).clip(CircleShape).background(content.copy(alpha = 0.12f)),
-          contentAlignment = Alignment.Center,
-        ) {
-          Icon(step.icon(busy), contentDescription = null, modifier = Modifier.size(22.dp))
-        }
-        Spacer(Modifier.width(12.dp))
-        Text(
-          if (busy) progress ?: "Syncing…" else step.message,
-          style = MaterialTheme.typography.bodyLarge,
-          modifier = Modifier.weight(1f).semantics { liveRegion = LiveRegionMode.Polite },
-        )
-      }
-      if (busy) LinearProgressIndicator(Modifier.fillMaxWidth())
-      val wide = Modifier.fillMaxWidth().heightIn(min = 56.dp)
-      when (step) {
-        HeadphoneSyncStep.NoSource,
-        HeadphoneSyncStep.PlugInToSetUp -> Unit
-        HeadphoneSyncStep.ChooseStorage ->
-          Button(
-            enabled = enabled && !busy,
-            onClick = actions.onChooseHeadphoneStorage,
-            modifier = wide,
-          ) {
-            Text("Choose headphone storage")
-          }
-        is HeadphoneSyncStep.Prepare ->
-          if (!busy)
-            FilledTonalButton(
-              enabled = enabled,
-              onClick = actions.onPreparePodcasts,
-              modifier = wide,
-            ) {
-              Text("Process now")
-            }
-        is HeadphoneSyncStep.ReadyToCopy ->
-          if (step.pluggedIn)
-            Button(enabled = enabled && !busy, onClick = actions.onSyncPodcasts, modifier = wide) {
-              Icon(Icons.Filled.Sync, contentDescription = null, Modifier.size(20.dp))
-              Spacer(Modifier.width(8.dp))
-              Text("Sync now", style = MaterialTheme.typography.titleMedium)
-            }
-        is HeadphoneSyncStep.UpToDate ->
-          if (step.pluggedIn && !busy)
-            Row(
-              horizontalArrangement = Arrangement.spacedBy(8.dp),
-              verticalAlignment = Alignment.CenterVertically,
-            ) {
-              actions.onEjectUsb?.let { eject ->
-                FilledTonalButton(onClick = eject) {
-                  Icon(Icons.Filled.Eject, contentDescription = null, Modifier.size(18.dp))
-                  Spacer(Modifier.width(8.dp))
-                  Text("Eject USB")
-                }
-              }
-              TextButton(enabled = enabled, onClick = actions.onSyncPodcasts) {
-                Text("Sync again", color = content)
-              }
-            }
-        is HeadphoneSyncStep.Folders ->
-          if (step.pluggedIn)
-            Button(
-              enabled = enabled && !busy,
-              onClick = actions.onCopyToHeadphones,
-              modifier = wide,
-            ) {
-              Text("Sync folders")
-            }
-      }
-      if (changes.isNotEmpty() && !busy) SyncChanges(changes, content)
-    }
-  }
-}
-
-/** The episodes the next sync adds, updates and drops, folded behind a one-line summary. */
-@Composable
-private fun SyncChanges(changes: List<HeadphoneSyncChange>, content: Color) {
-  var expanded by rememberSaveable { mutableStateOf(false) }
-  Column {
-    Row(
-      Modifier.fillMaxWidth()
-        .clip(RoundedCornerShape(12.dp))
-        .clickable(onClickLabel = if (expanded) "Hide changes" else "Show changes") {
-          expanded = !expanded
-        }
-        .heightIn(min = 48.dp)
-        .padding(horizontal = 4.dp),
-      verticalAlignment = Alignment.CenterVertically,
-    ) {
-      Column(Modifier.weight(1f)) {
-        Text("What will change", style = MaterialTheme.typography.labelLarge)
-        Text(
-          changes.summary(),
-          style = MaterialTheme.typography.bodySmall,
-          color = content.copy(alpha = 0.8f),
-        )
-      }
-      Icon(
-        if (expanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
-        contentDescription = null,
-      )
-    }
-    if (expanded)
-      Column(
-        Modifier.padding(top = 4.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-      ) {
-        changes.forEach { change ->
-          Row(verticalAlignment = Alignment.Top) {
-            Icon(
-              when (change.kind) {
-                HeadphoneSyncChange.Kind.Add -> Icons.Filled.Add
-                HeadphoneSyncChange.Kind.Update -> Icons.Filled.Sync
-                HeadphoneSyncChange.Kind.Remove -> Icons.Filled.Remove
-              },
-              contentDescription =
-                when (change.kind) {
-                  HeadphoneSyncChange.Kind.Add -> "New"
-                  HeadphoneSyncChange.Kind.Update -> "Updated"
-                  HeadphoneSyncChange.Kind.Remove -> "Removed"
-                },
-              modifier = Modifier.padding(top = 2.dp).size(18.dp),
-            )
-            Spacer(Modifier.width(12.dp))
-            Column(Modifier.weight(1f)) {
-              Text(
-                change.title,
-                style = MaterialTheme.typography.bodyMedium,
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis,
-              )
-              Text(
-                listOf(change.podcast, change.detail)
-                  .filter { it.isNotBlank() }
-                  .joinToString(" · "),
-                style = MaterialTheme.typography.bodySmall,
-                color = content.copy(alpha = 0.8f),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-              )
-            }
-          }
-        }
-      }
-  }
-}
-
-private fun HeadphoneSyncStep.icon(busy: Boolean): ImageVector =
-  when {
-    busy -> Icons.Filled.Sync
-    this == HeadphoneSyncStep.NoSource -> Icons.Filled.Add
-    this == HeadphoneSyncStep.PlugInToSetUp -> Icons.Filled.Usb
-    this == HeadphoneSyncStep.ChooseStorage -> Icons.Filled.SdStorage
-    this is HeadphoneSyncStep.Prepare -> Icons.Filled.Bedtime
-    this is HeadphoneSyncStep.ReadyToCopy ->
-      if (pluggedIn) Icons.Filled.Headphones else Icons.Filled.Usb
-    this is HeadphoneSyncStep.UpToDate -> Icons.Filled.CheckCircle
-    else -> Icons.Filled.Folder
-  }
-
 /**
  * First run only: what Cadence does, in three steps, and the ways to add something to sync.
  * Replaced by the library as soon as a source exists.
@@ -998,7 +769,14 @@ private fun AddSourceSheet(
     Text(
       "Add a source",
       style = MaterialTheme.typography.titleLarge,
-      modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp),
+      modifier = Modifier.padding(start = 24.dp, end = 24.dp, top = 8.dp),
+    )
+    Text(
+      "Add as many folders as you like, plus one podcast or audiobook service. Both go on " +
+        "the same headphones: plug them in, then sync episodes and folders from Home.",
+      style = MaterialTheme.typography.bodyMedium,
+      color = MaterialTheme.colorScheme.onSurfaceVariant,
+      modifier = Modifier.padding(start = 24.dp, end = 24.dp, top = 4.dp, bottom = 8.dp),
     )
     SourceOptions(suggestions, actions, onChosen = onDismiss)
     Spacer(Modifier.height(24.dp))
@@ -1006,8 +784,10 @@ private fun AddSourceSheet(
 }
 
 /**
- * The three kinds of source: a folder, an app that provides files, or a podcast service. As [tiles]
- * (the first-run welcome) podcasts come first and stand out, since that is what most people want.
+ * The three kinds of source: a folder, an app that provides files, or one podcast or audiobook
+ * service. Folders and the service sit side by side; a second service replaces the first. As
+ * [tiles] (the first-run welcome) podcasts come first and stand out, since that is what most people
+ * want.
  */
 @Composable
 private fun SourceOptions(
@@ -1021,8 +801,8 @@ private fun SourceOptions(
     @Composable {
       SourceOption(
         Icons.Filled.Podcasts,
-        "Podcasts",
-        "Pocket Casts, a podcast feed, or apps that sync with gpodder",
+        "Podcasts or audiobooks",
+        "Pocket Casts, Libro.fm, a podcast feed, or apps that sync with gpodder",
         tile = tiles,
         highlighted = tiles,
       ) {
@@ -1035,7 +815,7 @@ private fun SourceOptions(
     SourceOption(
       Icons.Filled.Folder,
       "Folder",
-      "Music or audiobooks already on this device",
+      "Music or audiobooks already on this device, such as Bandcamp downloads",
       tile = tiles,
     ) {
       onChosen()
@@ -1167,11 +947,12 @@ private fun PodcastSection(
   val playlist = library.playlist ?: return
   val ready = playlist.episodes.count { it.key in podcasts.downloadedEpisodeKeys }
   OutlinedCard(Modifier.fillMaxWidth()) {
+    val audiobooks = library.source == PodcastSourceKind.LibroFm
     SectionHeader(
-      Icons.Filled.Podcasts,
+      if (audiobooks) Icons.Filled.Headphones else Icons.Filled.Podcasts,
       playlist.name,
       buildString {
-        append(count(playlist.episodes.size, "episode"))
+        append(count(playlist.episodes.size, if (audiobooks) "audiobook" else "episode"))
         if (ready > 0) append(" · $ready downloaded")
         if (library.upcoming.isNotEmpty()) append(" · ${library.upcoming.size} next")
       },
