@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-21T15:39:38.910Z",
+  "generatedAt": "2026-11-21T15:50:37.680Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "ed2e8ccf8d1d8d9e16100b3bd8564ae2e3295d60",
+        "subject": "chore(main): release 0.1.36 (#687)",
+        "at": "2026-11-21T15:33:46Z",
+        "author": "github-actions[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "33259066473bb917bb2ccd18f32d0f5d9c26543d",
         "subject": "feat: keep Pocket Casts and Libro.fm together; shorter download notification and podcast UI fixes (#686)",
@@ -474,14 +482,6 @@
         "sha": "2ae8265f6ca3b6047b9e888825b3880d1f513ec4",
         "subject": "fix(deps): update dependency ee.schimke.composeai:rc-players-bom to v3.5.0 (#623)",
         "at": "2026-11-14T21:19:31Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "6dce5d936018cca80134598188aba4930011c019",
-        "subject": "chore(deps): update yschimke/livery action to v0.13.0 (#627)",
-        "at": "2026-11-14T17:41:24Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
