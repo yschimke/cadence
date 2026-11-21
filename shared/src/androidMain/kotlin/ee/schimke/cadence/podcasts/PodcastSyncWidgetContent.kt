@@ -69,10 +69,10 @@ fun PodcastSyncWidgetContent(
 ) {
   val lane = heightDp >= 140
   // A tall slot also has room for the source line under the battery.
-  val roomy = lane && heightDp >= 176
+  val roomy = lane && heightDp >= 156
   val shown = source.takeIf { roomy }
   val scale =
-    minOf(widthDp / 232f, heightDp / if (shown != null) 196f else if (lane) 152f else 72f)
+    minOf(widthDp / 232f, heightDp / if (shown != null) 172f else if (lane) 152f else 72f)
       .coerceIn(0.8f, 1.35f)
   val poolHeight = (heightDp * 0.28f).toInt().coerceIn(40, 72)
   // Body text stays at least 12sp after scale (launcher.type.min-size).

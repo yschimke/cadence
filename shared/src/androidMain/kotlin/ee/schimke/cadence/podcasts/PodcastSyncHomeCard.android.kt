@@ -30,7 +30,7 @@ actual fun PodcastSyncHomeCard(
   val context = LocalContext.current
   val colors = WidgetColors.from(MaterialTheme.colorScheme)
   // Tall enough for the headline, three status lines, the source line and the pool.
-  val height = if (source != null) 196 else 168
+  val height = if (source != null) 156 else 144
   BoxWithConstraints(Modifier.fillMaxWidth().height(height.dp)) {
     val width = maxWidth.value.toInt().coerceAtLeast(1)
     val bytes by

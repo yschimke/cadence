@@ -89,13 +89,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import ee.schimke.cadence.bluetooth.MediaInfo
 import ee.schimke.cadence.datastore.proto.SourceKind
 import ee.schimke.cadence.datastore.proto.SyncSource
 import ee.schimke.cadence.devices.rememberEjectUsb
@@ -399,28 +399,11 @@ fun HomeContent(
           adding = true
         }
       }
-      val headphonesConnected =
-        state.attachedDevice != null || state.bluetooth.connectedDevice != null
-      val playingOnPhone = podcastPlayer.title != null && !state.bluetooth.localAudioControls
-      // The phone's own player (with seeking) stays whenever something plays here; the headphone
-      // transport joins it over Bluetooth, or on USB explains why there is none.
-      if (headphonesConnected || podcastPlayer.title != null)
-        item(key = "controls") {
-          AudioControlsSection(state, podcastPlayer, playingOnPhone, actions)
-        }
-      if (podcastPlayer.suggestMediaAccess)
-        item(key = "media-access") {
-          OutlinedCard(Modifier.fillMaxWidth()) {
-            Column(Modifier.padding(16.dp)) {
-              Text("Connect your media apps", style = MaterialTheme.typography.titleMedium)
-              Text(
-                "Allow notification access to show and control playback from installed media apps.",
-                style = MaterialTheme.typography.bodyMedium,
-              )
-              TextButton(onClick = podcastPlayer.requestMediaAccess) { Text("Allow media access") }
-            }
-          }
-        }
+      // Headphone transport, volume and media-app access live on the Audio controls screen
+      // (the icon on the status row). Only an episode playing on this phone keeps a player here,
+      // so it can be paused without leaving Home.
+      if (podcastPlayer.title != null && !state.bluetooth.localAudioControls)
+        item(key = "phone-player") { PhonePodcastPlayer(podcastPlayer) }
       if (playlist != null)
         item(key = "podcasts") {
           PodcastSection(podcasts, canArchive, actions, podcastPlayer) { opened = it }
@@ -546,15 +529,25 @@ private fun StatusSection(
   Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
     if (podcasts.library.playlist != null) {
       val summary = podcastWidgetSummary(podcasts)
-      Box(Modifier.fillMaxWidth().clip(RoundedCornerShape(20.dp))) {
+      val battery = podcastWidgetBattery(device, podcasts.target)
+      val source = syncSourceLine(cloud)
+      // The card is a Remote Compose document; screen readers get its lines as one label.
+      val spoken =
+        listOfNotNull(headline, summary.copied, summary.available, battery, source)
+          .joinToString(". ")
+      Box(
+        Modifier.fillMaxWidth().clip(RoundedCornerShape(20.dp)).clearAndSetSemantics {
+          contentDescription = spoken
+        },
+      ) {
         PodcastSyncHomeCard(
           copied = summary.copied,
           available = summary.available,
-          battery = podcastWidgetBattery(device, podcasts.target),
+          battery = battery,
           ready = podcasts.readyForDevice(),
           showSwimming = state.bluetooth.localAudioControls,
           headline = headline,
-          source = syncSourceLine(cloud),
+          source = source,
           attention = step.needsAttention,
         )
       }
@@ -575,7 +568,7 @@ private fun StatusSection(
       enabled = !podcastWork.active && !copying,
       podcastWork = podcastWork,
       actions = actions,
-      bluetooth = state.bluetoothSupported && device == null,
+      audioControls = state.bluetoothSupported,
       // Folders copy on their own screen; alongside episodes they need their own button too.
       syncFolders = pluggedIn && state.sources.isNotEmpty(),
       onConnectSource = onConnectSource,
@@ -588,7 +581,7 @@ private fun StatusSection(
 }
 
 /**
- * The one button the step needs, with refresh and Bluetooth as icons at the end. Nothing to do
+ * The one button the step needs, with refresh and audio controls as icons at the end. Nothing to do
  * leaves just the icons, so the row stays short.
  */
 @Composable
@@ -598,7 +591,7 @@ private fun StatusActions(
   enabled: Boolean,
   podcastWork: PodcastWorkUi,
   actions: HomeActions,
-  bluetooth: Boolean,
+  audioControls: Boolean,
   syncFolders: Boolean,
   onConnectSource: () -> Unit,
 ) {
@@ -656,50 +649,8 @@ private fun StatusActions(
       TopBarAction(Icons.Filled.Refresh, "Check for new episodes") {
         if (cloud.canRefresh) podcastWork.refresh()
       }
-    if (bluetooth)
-      TopBarAction(Icons.Filled.Bluetooth, "Bluetooth controls", actions.onBluetoothControls)
-  }
-}
-
-/** Playback on the connected headphones, or on this phone while it plays through them. */
-@Composable
-private fun AudioControlsSection(
-  state: HomeViewModel.UiState,
-  podcastPlayer: PodcastPlayerUi,
-  playingOnPhone: Boolean,
-  actions: HomeActions,
-) {
-  val bluetooth =
-    if (playingOnPhone)
-      state.bluetooth.copy(
-        mediaInfo =
-          MediaInfo(
-            title = podcastPlayer.title,
-            artist = null,
-            album = null,
-            playing = podcastPlayer.playing,
-            durationMs = podcastPlayer.durationMs,
-            positionMs = podcastPlayer.positionMs,
-            packageName = "ee.schimke.cadence",
-          ),
-      )
-    else state.bluetooth
-  val bluetoothConnected = state.bluetooth.connectedDevice != null
-  Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-    SectionTitle("Audio controls") {
-      if (bluetoothConnected)
-        TextButton(onClick = actions.onBluetoothControls) { Text("All controls") }
-    }
-    if (podcastPlayer.title != null) PhonePodcastPlayer(podcastPlayer)
-    // Over Bluetooth this drives the headphones; plugged in over USB with nothing playing on the
-    // phone, it says why there are no controls.
-    if (bluetoothConnected || podcastPlayer.title == null)
-      HomeMiniPlayer(
-        bluetooth,
-        actions.onPrevious,
-        if (playingOnPhone) podcastPlayer.playPause else actions.onPlayPause,
-        actions.onNext,
-      )
+    if (audioControls)
+      TopBarAction(Icons.Filled.Headphones, "Audio controls", actions.onBluetoothControls)
   }
 }
 
