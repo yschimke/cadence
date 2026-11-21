@@ -41,16 +41,7 @@ fun cloudSyncStatus(
       busy,
       progress,
     )
-  val source =
-    when (library.source) {
-      PodcastSourceKind.PocketCasts -> "Pocket Casts"
-      PodcastSourceKind.Rss -> "Podcast feed"
-      PodcastSourceKind.Gpodder -> "gpodder"
-      PodcastSourceKind.Overcast -> "Overcast"
-      PodcastSourceKind.LibroFm -> "Libro.fm"
-      PodcastSourceKind.Snapshot,
-      null -> "Podcast import"
-    }
+  val source = library.source.title
   val downloaded = playlist.episodes.count { it.key in state.downloadedEpisodeKeys }
   val ready =
     playlist.episodes.count { episode ->

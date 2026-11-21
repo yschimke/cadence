@@ -14,7 +14,7 @@ sealed interface HeadphoneSyncStep {
 
   /** Nothing to sync yet; the welcome card offers sources instead. */
   data object NoSource : HeadphoneSyncStep {
-    override val message = "Add podcasts or a folder to get started."
+    override val message = "Add podcasts, audiobooks or a folder to get started."
   }
 
   /** First time: the headphones' storage has never been chosen. */

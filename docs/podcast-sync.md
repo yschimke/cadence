@@ -17,6 +17,12 @@ content matching is not used to make the suggestion.
 
 ## Sources
 
+The library holds any number of folders (music or audiobooks already on the
+device, such as Bandcamp or Libro.fm downloads) plus one podcast or audiobook
+service. Both sync to the same headphones. Adding a different service replaces
+the connected one, with its episodes and downloads; the add screen says so
+before you choose. Folders are never affected.
+
 Cadence imports from Pocket Casts, Libro.fm, public RSS feeds,
 gpodder-compatible servers, Overcast exports and Cadence JSON snapshots.
 

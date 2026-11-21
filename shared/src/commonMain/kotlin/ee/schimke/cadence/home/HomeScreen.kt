@@ -112,6 +112,7 @@ import ee.schimke.cadence.podcasts.LocalPodcastState
 import ee.schimke.cadence.podcasts.POCKET_CASTS_UP_NEXT
 import ee.schimke.cadence.podcasts.PodcastController
 import ee.schimke.cadence.podcasts.PodcastPlayerUi
+import ee.schimke.cadence.podcasts.PodcastSourceKind
 import ee.schimke.cadence.podcasts.PodcastSyncHomeCard
 import ee.schimke.cadence.podcasts.PodcastWorkUi
 import ee.schimke.cadence.podcasts.cloudSyncStatus
@@ -998,7 +999,14 @@ private fun AddSourceSheet(
     Text(
       "Add a source",
       style = MaterialTheme.typography.titleLarge,
-      modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp),
+      modifier = Modifier.padding(start = 24.dp, end = 24.dp, top = 8.dp),
+    )
+    Text(
+      "Add as many folders as you like, plus one podcast or audiobook service. Each sync puts " +
+        "them all on your headphones.",
+      style = MaterialTheme.typography.bodyMedium,
+      color = MaterialTheme.colorScheme.onSurfaceVariant,
+      modifier = Modifier.padding(start = 24.dp, end = 24.dp, top = 4.dp, bottom = 8.dp),
     )
     SourceOptions(suggestions, actions, onChosen = onDismiss)
     Spacer(Modifier.height(24.dp))
@@ -1006,8 +1014,10 @@ private fun AddSourceSheet(
 }
 
 /**
- * The three kinds of source: a folder, an app that provides files, or a podcast service. As [tiles]
- * (the first-run welcome) podcasts come first and stand out, since that is what most people want.
+ * The three kinds of source: a folder, an app that provides files, or one podcast or audiobook
+ * service. Folders and the service sit side by side; a second service replaces the first. As
+ * [tiles] (the first-run welcome) podcasts come first and stand out, since that is what most people
+ * want.
  */
 @Composable
 private fun SourceOptions(
@@ -1021,8 +1031,8 @@ private fun SourceOptions(
     @Composable {
       SourceOption(
         Icons.Filled.Podcasts,
-        "Podcasts",
-        "Pocket Casts, a podcast feed, or apps that sync with gpodder",
+        "Podcasts or audiobooks",
+        "Pocket Casts, Libro.fm, a podcast feed, or apps that sync with gpodder",
         tile = tiles,
         highlighted = tiles,
       ) {
@@ -1035,7 +1045,7 @@ private fun SourceOptions(
     SourceOption(
       Icons.Filled.Folder,
       "Folder",
-      "Music or audiobooks already on this device",
+      "Music or audiobooks already on this device, such as Bandcamp downloads",
       tile = tiles,
     ) {
       onChosen()
@@ -1167,11 +1177,12 @@ private fun PodcastSection(
   val playlist = library.playlist ?: return
   val ready = playlist.episodes.count { it.key in podcasts.downloadedEpisodeKeys }
   OutlinedCard(Modifier.fillMaxWidth()) {
+    val audiobooks = library.source == PodcastSourceKind.LibroFm
     SectionHeader(
-      Icons.Filled.Podcasts,
+      if (audiobooks) Icons.Filled.Headphones else Icons.Filled.Podcasts,
       playlist.name,
       buildString {
-        append(count(playlist.episodes.size, "episode"))
+        append(count(playlist.episodes.size, if (audiobooks) "audiobook" else "episode"))
         if (ready > 0) append(" · $ready downloaded")
         if (library.upcoming.isNotEmpty()) append(" · ${library.upcoming.size} next")
       },
