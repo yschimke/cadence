@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-21T09:27:54.974Z",
+  "generatedAt": "2026-11-21T09:41:24.212Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "f1c7be734a062ed9a2271b826de8404288a3f362",
+        "subject": "chore(main): release 0.1.34 (#676)",
+        "at": "2026-11-21T09:25:18Z",
+        "author": "github-actions[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "67c86b0f815e48f05ee3630f4b66aae9c704d774",
         "subject": "feat: add Libro.fm as an audiobook source (#675)",
@@ -475,14 +483,6 @@
         "subject": "chore(deps): update anthropics/claude-code-action action to v1.0.276 (#619)",
         "at": "2026-11-13T23:02:50Z",
         "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "d7cb44ff88aa01e00ada183c09836bdc9c54bb97",
-        "subject": "feat: author the headphone widget, notification and swim drawing with rc-players' CMP creation API (#613)",
-        "at": "2026-11-13T11:28:58Z",
-        "author": "Yuri Schimke",
         "previewIds": [],
         "components": []
       }
