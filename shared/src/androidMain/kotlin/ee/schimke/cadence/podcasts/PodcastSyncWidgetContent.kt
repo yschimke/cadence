@@ -91,12 +91,26 @@ fun PodcastSyncWidgetContent(
   // A tall slot also has room for the source line under the battery.
   val roomy = lane && heightDp >= 156
   val shown = source.takeIf { roomy }
+  // A launcher slot fits the button only at 4x3 and up; Home sizes its card to fit.
+  val buttons =
+    extras?.buttons.orEmpty().takeIf { fixedScale != null || heightDp >= WIDGET_BUTTON_MIN_DP }
+      .orEmpty()
   val scale =
     fixedScale
-      ?: minOf(widthDp / 232f, heightDp / if (shown != null) 172f else if (lane) 152f else 72f)
+      ?: minOf(
+          widthDp / 232f,
+          heightDp /
+            when {
+              buttons.isNotEmpty() -> 220f
+              shown != null -> 172f
+              lane -> 152f
+              else -> 72f
+            },
+        )
         .coerceIn(0.8f, 1.35f)
   val poolHeight =
-    if (extras != null) STATUS_CARD_POOL_DP else (heightDp * 0.28f).toInt().coerceIn(40, 72)
+    if (fixedScale != null) STATUS_CARD_POOL_DP else (heightDp * 0.28f).toInt().coerceIn(40, 72)
+  val iconSize = (20 * scale).toInt()
   val padding = 8 * scale
   val icons =
     listOfNotNull(
@@ -152,7 +166,7 @@ fun PodcastSyncWidgetContent(
         SyncMetricLine(
           available,
           Icons.Default.Sync,
-          if (ready) "ready to sync" else "to prepare",
+          if (ready) "ready" else "to prepare",
           if (ready) colors.tertiary else colors.warning,
           colors.onBackground,
           scale,
@@ -163,9 +177,10 @@ fun PodcastSyncWidgetContent(
           horizontalArrangement = RemoteArrangement.spacedBy(6.rdp),
           verticalAlignment = RemoteAlignment.CenterVertically,
         ) {
-          SyncStatusIcon(Icons.Default.BatteryFull, colors.supporting, (14 * scale).toInt())
+          SyncStatusIcon(Icons.Default.BatteryFull, colors.supporting, iconSize)
           RemoteText(
-            (battery ?: "Battery unavailable").rs,
+            // "50% · ~3h MP3 · ~4h 30m BT" reads as "50% · ~3h MP3": the charge and one estimate.
+            (battery?.split(" · ")?.take(2)?.joinToString(" · ") ?: "Battery unknown").rs,
             color = colors.supporting.rc,
             fontSize = bodySp.rsp,
             maxLines = 1,
@@ -177,7 +192,7 @@ fun PodcastSyncWidgetContent(
             horizontalArrangement = RemoteArrangement.spacedBy(6.rdp),
             verticalAlignment = RemoteAlignment.CenterVertically,
           ) {
-            SyncStatusIcon(Icons.Default.Cloud, colors.supporting, (14 * scale).toInt())
+            SyncStatusIcon(Icons.Default.Cloud, colors.supporting, iconSize)
             RemoteText(
               shown.rs,
               color = colors.supporting.rc,
@@ -189,7 +204,7 @@ fun PodcastSyncWidgetContent(
         extras?.changes?.let { changes -> SyncChangesRow(changes, extras.changeLines, colors, bodySp) }
         // Two to a row: three buttons ("Eject USB", "Sync again", "Sync folders") don't fit a
         // 360dp phone, and a Remote Compose row can't wrap.
-        extras?.buttons.orEmpty().chunked(STATUS_BUTTONS_PER_ROW).forEach { row ->
+        buttons.chunked(STATUS_BUTTONS_PER_ROW).forEach { row ->
           RemoteRow(
             modifier = RemoteModifier.padding(top = 4.rdp),
             horizontalArrangement = RemoteArrangement.spacedBy(8.rdp),
@@ -233,7 +248,7 @@ private fun SyncMetricLine(
     horizontalArrangement = RemoteArrangement.spacedBy(6.rdp),
     verticalAlignment = RemoteAlignment.CenterVertically,
   ) {
-    SyncStatusIcon(icon, color, (14 * scale).toInt())
+    SyncStatusIcon(icon, color, (20 * scale).toInt())
     if (count != null) {
       RemoteText(
         count.toString().rs,
@@ -242,7 +257,13 @@ private fun SyncMetricLine(
         fontWeight = RemoteFontWeight.Medium,
         maxLines = 1,
       )
-      val remainder = detail.substringAfter(" eps", "").replace(" marked", " played")
+      // "3 eps · 138m · 0 marked" shows as "3 on headphones · 2h 18m", leaving out none played.
+      val remainder =
+        detail
+          .substringAfter(" eps", "")
+          .split(" · ")
+          .filter { it.isNotBlank() && it != "0 marked" }
+          .joinToString("") { " · " + compactMinutes(it).replace(" marked", " played") }
       RemoteText(
         "$label$remainder".rs,
         color = bodyColor.rc,
@@ -261,6 +282,9 @@ private fun SyncMetricLine(
     }
   }
 }
+
+/** The shortest launcher slot that has room for the widget's button. */
+private const val WIDGET_BUTTON_MIN_DP = 196
 
 /** At most this many buttons share a row in the status card. */
 const val STATUS_BUTTONS_PER_ROW = 2
@@ -361,4 +385,11 @@ private fun StatusButton(button: StatusCardButton, colors: WidgetColors) {
       maxLines = 1,
     )
   }
+}
+
+/** "138m" as "2h 18m"; anything else unchanged. */
+internal fun compactMinutes(part: String): String {
+  val minutes = part.removeSuffix("m").toIntOrNull()?.takeIf { part.endsWith("m") } ?: return part
+  return if (minutes < 60) "${minutes}m"
+  else if (minutes % 60 == 0) "${minutes / 60}h" else "${minutes / 60}h ${minutes % 60}m"
 }

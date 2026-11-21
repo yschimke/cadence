@@ -72,6 +72,9 @@ class PodcastSyncWidget : AppWidgetProvider() {
     /** Payload of the card's tap: open Cadence. */
     private const val OPEN_APP = "open"
 
+    /** Button payloads that run as background work instead of opening Cadence. */
+    private val BACKGROUND_TASKS = setOf("download", "process")
+
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
     /**
@@ -217,6 +220,11 @@ class PodcastSyncWidget : AppWidgetProvider() {
       val headline = prefs.getString("headline", null)
       val source = prefs.getString("source", null)
       val attention = prefs.getBoolean("attention", false)
+      // The step's one action: Download or Process run in the background, Sync opens Cadence.
+      val button =
+        prefs.getString("button-id", null)?.let { id ->
+          StatusCardButton(id, prefs.getString("button-label", null) ?: id, primary = true)
+        }
       val launch = launchIntent(context)
       val season = runCatching { WidgetSeason.current().pool }.getOrDefault(PoolSeason.None)
       for (id in ids) {
@@ -238,14 +246,29 @@ class PodcastSyncWidget : AppWidgetProvider() {
                 headline = headline,
                 source = source,
                 attention = attention,
+                extras = button?.let { StatusCardExtras(buttons = listOf(it)) },
               )
             }
           val taps =
-            if (launch == null) emptyMap()
-            else
-              capture.actions.mapValues { (actionId, _) ->
-                RcLauncherWidgets.actionActivity(context, Intent(launch), id, actionId)
+            capture.actions
+              .mapNotNull { (actionId, payload) ->
+                val tap =
+                  if (payload in BACKGROUND_TASKS)
+                  // The cloud widget's receiver already runs these as the podcast work job.
+                  RcLauncherWidgets.actionBroadcast(
+                      context,
+                      CloudSyncWidget::class.java,
+                      id,
+                      actionId,
+                      payload,
+                    )
+                  else
+                    launch?.let {
+                      RcLauncherWidgets.actionActivity(context, Intent(it), id, actionId)
+                    }
+                tap?.let { actionId to it }
               }
+              .toMap()
           RcLauncherWidgets.remoteViews(capture.bytes, taps)
         }
         // A capture that fails still leaves the widget showing its status.

@@ -103,8 +103,7 @@ fun syncHeadline(step: HeadphoneSyncStep, cloud: CloudSyncStatus): String =
       cloud.downloadNeeded?.takeIf { it > 0 && cloud.canDownload }?.let { "$it to download" }
         ?: cloud.processingNeeded?.takeIf { it > 0 }?.let { "$it to process" }
         ?: "To process"
-    is HeadphoneSyncStep.ReadyToCopy ->
-      if (step.pluggedIn) "Ready to sync" else "Not in sync · plug in to copy"
+    is HeadphoneSyncStep.ReadyToCopy -> if (step.pluggedIn) "Ready to sync" else "Plug in to sync"
     is HeadphoneSyncStep.UpToDate -> "In sync"
     is HeadphoneSyncStep.Folders ->
       if (step.pluggedIn) "Headphones connected" else "Plug in to sync your folders"
@@ -117,14 +116,32 @@ val HeadphoneSyncStep.needsAttention: Boolean
       this is HeadphoneSyncStep.Prepare ||
       this is HeadphoneSyncStep.ReadyToCopy
 
-/** Where the episodes come from and when they were last checked, as one line. */
+/**
+ * The list the episodes come from and when it was last checked, kept short: "Up Next · 2 h ago".
+ * The service's name is left out when there is a list name, since the list is what changes.
+ */
 fun syncSourceLine(cloud: CloudSyncStatus): String? =
   cloud.source
     .takeIf { cloud.hasSource }
     ?.let { source ->
+      val list = source.substringAfter(" · ", source)
       val checked = cloud.checked.removePrefix("Last checked: ")
-      if (checked.isBlank()) source else "$source · checked $checked"
+      if (checked.isBlank()) list else "$list · $checked"
     }
+
+/**
+ * The one action the launcher widget offers for [step]: Download or Process run in the background,
+ * Sync opens Cadence (which copies on its own once the headphones are plugged in). Null when there
+ * is nothing to do from the home screen.
+ */
+fun widgetButton(step: HeadphoneSyncStep, cloud: CloudSyncStatus): StatusCardButton? =
+  when (step) {
+    is HeadphoneSyncStep.Prepare ->
+      if (cloud.canDownload) StatusCardButton("download", "Download", primary = true)
+      else StatusCardButton("process", "Process", primary = true)
+    is HeadphoneSyncStep.ReadyToCopy -> StatusCardButton("open", "Sync", primary = true)
+    else -> null
+  }
 
 /**
  * The buttons [step] needs, main action first: "Sync now" when plugged in and ready, "Download" or

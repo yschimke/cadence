@@ -4,6 +4,7 @@ import ee.schimke.cadence.home.headphoneSyncStep
 import ee.schimke.cadence.home.needsAttention
 import ee.schimke.cadence.home.syncHeadline
 import ee.schimke.cadence.home.syncSourceLine
+import ee.schimke.cadence.home.widgetButton
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
@@ -377,6 +378,8 @@ open class AndroidPodcastPlatform(private val context: Context) :
       .putString("headline", syncHeadline(step, cloud))
       .putString("source", syncSourceLine(cloud))
       .putBoolean("attention", step.needsAttention)
+      .putString("button-id", widgetButton(step, cloud)?.id)
+      .putString("button-label", widgetButton(step, cloud)?.label)
       .putString("target", state.target)
       .apply()
     if (state.upToDateOnDevice())

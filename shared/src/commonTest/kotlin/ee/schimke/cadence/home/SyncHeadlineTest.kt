@@ -47,7 +47,7 @@ class SyncHeadlineTest {
     val cloud = cloudSyncStatus(imported, true, true)
     assertEquals("Ready to sync", syncHeadline(HeadphoneSyncStep.ReadyToCopy(true), cloud))
     assertEquals(
-      "Not in sync · plug in to copy",
+      "Plug in to sync",
       syncHeadline(HeadphoneSyncStep.ReadyToCopy(false), cloud),
     )
     assertEquals("In sync", syncHeadline(HeadphoneSyncStep.UpToDate(false), cloud))
@@ -57,7 +57,8 @@ class SyncHeadlineTest {
   @Test
   fun theSourceLineNamesTheServiceAndList() {
     val line = syncSourceLine(cloudSyncStatus(imported, true, true))!!
-    assertTrue(line.startsWith("Pocket Casts · Swim Series · checked "), line)
+    assertTrue(line.startsWith("Swim Series · "), line)
+    assertFalse("checked" in line, line)
     assertNull(syncSourceLine(cloudSyncStatus(LocalPodcastState(), true, true)))
   }
 
