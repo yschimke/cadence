@@ -1,5 +1,6 @@
 package ee.schimke.cadence.home
 
+import ee.schimke.cadence.podcasts.CloudSyncStatus
 import ee.schimke.cadence.podcasts.LocalPodcastState
 import ee.schimke.cadence.podcasts.readyForDevice
 import ee.schimke.cadence.podcasts.upToDateOnDevice
@@ -87,3 +88,39 @@ fun shouldCopyOnConnect(step: HeadphoneSyncStep): Boolean =
  */
 fun needsStorageChoice(message: String): Boolean =
   message.contains("headphone storage", ignoreCase = true)
+
+/**
+ * The step as one short headline, for the top of the status card and the launcher widget, with the
+ * counts that say how much is left to do.
+ */
+fun syncHeadline(step: HeadphoneSyncStep, cloud: CloudSyncStatus): String =
+  when (step) {
+    HeadphoneSyncStep.NoSource -> "Add podcasts or a folder"
+    HeadphoneSyncStep.PlugInToSetUp -> "Plug in your headphones to finish setup"
+    HeadphoneSyncStep.ChooseStorage -> "Choose the headphone drive to finish setup"
+    is HeadphoneSyncStep.Prepare ->
+      cloud.downloadNeeded?.takeIf { it > 0 && cloud.canDownload }?.let { "$it to download" }
+        ?: cloud.processingNeeded?.takeIf { it > 0 }?.let { "$it to process" }
+        ?: "To process"
+    is HeadphoneSyncStep.ReadyToCopy ->
+      if (step.pluggedIn) "Ready to sync" else "Not in sync · plug in to copy"
+    is HeadphoneSyncStep.UpToDate -> "In sync"
+    is HeadphoneSyncStep.Folders ->
+      if (step.pluggedIn) "Headphones connected" else "Plug in to sync your folders"
+  }
+
+/** Whether [step] asks for something now, so the headline stands out. */
+val HeadphoneSyncStep.needsAttention: Boolean
+  get() =
+    this == HeadphoneSyncStep.ChooseStorage ||
+      this is HeadphoneSyncStep.Prepare ||
+      this is HeadphoneSyncStep.ReadyToCopy
+
+/** Where the episodes come from and when they were last checked, as one line. */
+fun syncSourceLine(cloud: CloudSyncStatus): String? =
+  cloud.source
+    .takeIf { cloud.hasSource }
+    ?.let { source ->
+      val checked = cloud.checked.removePrefix("Last checked: ")
+      if (checked.isBlank()) source else "$source · checked $checked"
+    }

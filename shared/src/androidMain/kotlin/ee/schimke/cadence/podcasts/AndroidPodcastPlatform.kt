@@ -1,5 +1,9 @@
 package ee.schimke.cadence.podcasts
 
+import ee.schimke.cadence.home.headphoneSyncStep
+import ee.schimke.cadence.home.needsAttention
+import ee.schimke.cadence.home.syncHeadline
+import ee.schimke.cadence.home.syncSourceLine
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
@@ -359,6 +363,10 @@ open class AndroidPodcastPlatform(private val context: Context) :
 
   override fun publishStatus(status: String, state: LocalPodcastState) {
     val summary = podcastWidgetSummary(state)
+    // The launcher can't tell whether the headphones are plugged in; plugging them in opens
+    // Cadence, which shows the plugged-in step itself.
+    val step = headphoneSyncStep(state, hasFolders = false, pluggedIn = false)
+    val cloud = cloudSyncStatus(state, sharedController.canRefresh, supportsOriginalDownloads)
     context
       .getSharedPreferences("podcast-widget", Context.MODE_PRIVATE)
       .edit()
@@ -366,6 +374,9 @@ open class AndroidPodcastPlatform(private val context: Context) :
       .putBoolean("ready", state.readyForDevice())
       .putString("copied", summary.copied)
       .putString("available", summary.available)
+      .putString("headline", syncHeadline(step, cloud))
+      .putString("source", syncSourceLine(cloud))
+      .putBoolean("attention", step.needsAttention)
       .putString("target", state.target)
       .apply()
     if (state.upToDateOnDevice())

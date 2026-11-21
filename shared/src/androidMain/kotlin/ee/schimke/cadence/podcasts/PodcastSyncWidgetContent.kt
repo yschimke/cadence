@@ -4,6 +4,7 @@ package ee.schimke.cadence.podcasts
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BatteryFull
+import androidx.compose.material.icons.filled.Cloud
 import androidx.compose.material.icons.filled.Headphones
 import androidx.compose.material.icons.filled.Sync
 import androidx.compose.remote.creation.compose.action.RemoteAction
@@ -36,8 +37,9 @@ import ee.schimke.cadence.widgets.WidgetColors
 import ee.schimke.cadence.widgets.waterColors
 
 /**
- * The podcast sync widget as Remote Compose: whether the audio is ready to copy to the headphones,
- * and what preparation last reported. Drawn by the launcher itself (Android 16+), so it fills and
+ * The podcast sync widget as Remote Compose, and the status card at the top of Home: [headline]
+ * says what to do next, then what the headphones hold, what this phone has ready, the battery and
+ * where the episodes come from ([source]), as far as the slot has room. Drawn by the launcher itself (Android 16+), so it fills and
  * reflows with whatever slot the user resizes it to; [onTap] opens Cadence.
  *
  * Colours come from [colors] (system dynamic Material on device, [WidgetColors.Light] /
@@ -58,9 +60,20 @@ fun PodcastSyncWidgetContent(
   colors: WidgetColors = WidgetColors.Dark,
   /** The season's pool: its water, the swimmer's hat and what's going on around them. */
   season: PoolSeason = PoolSeason.None,
+  /** What to do next, such as "Ready to sync"; null leaves it out. */
+  headline: String? = null,
+  /** Where the episodes come from and when they were checked; shown when the slot is tall. */
+  source: String? = null,
+  /** The headline asks for something now, so it takes the accent colour. */
+  attention: Boolean = false,
 ) {
   val lane = heightDp >= 140
-  val scale = minOf(widthDp / 232f, heightDp / if (lane) 152f else 72f).coerceIn(0.8f, 1.35f)
+  // A tall slot also has room for the source line under the battery.
+  val roomy = lane && heightDp >= 176
+  val shown = source.takeIf { roomy }
+  val scale =
+    minOf(widthDp / 232f, heightDp / if (shown != null) 196f else if (lane) 152f else 72f)
+      .coerceIn(0.8f, 1.35f)
   val poolHeight = (heightDp * 0.28f).toInt().coerceIn(40, 72)
   // Body text stays at least 12sp after scale (launcher.type.min-size).
   val bodySp = (12 * scale).coerceAtLeast(12f)
@@ -81,6 +94,15 @@ fun PodcastSyncWidgetContent(
         modifier = RemoteModifier.fillMaxWidth().padding((8 * scale).rdp),
         verticalArrangement = RemoteArrangement.spacedBy((2 * scale).rdp),
       ) {
+        if (headline != null)
+          RemoteText(
+            headline.rs,
+            color = (if (attention) colors.primary else colors.onBackground).rc,
+            fontSize = (15 * scale).coerceAtLeast(13f).rsp,
+            fontWeight = RemoteFontWeight.Medium,
+            maxLines = 1,
+            overflow = RemoteTextOverflow.Ellipsis,
+          )
         SyncMetricLine(
           copied,
           Icons.Default.Headphones,
@@ -99,7 +121,8 @@ fun PodcastSyncWidgetContent(
           scale,
           bodySp,
         )
-        RemoteRow(
+        // A one-row slot with a headline has room for two more lines, not three.
+        if (lane || headline == null) RemoteRow(
           horizontalArrangement = RemoteArrangement.spacedBy(6.rdp),
           verticalAlignment = RemoteAlignment.CenterVertically,
         ) {
@@ -112,6 +135,20 @@ fun PodcastSyncWidgetContent(
             overflow = RemoteTextOverflow.Ellipsis,
           )
         }
+        if (shown != null)
+          RemoteRow(
+            horizontalArrangement = RemoteArrangement.spacedBy(6.rdp),
+            verticalAlignment = RemoteAlignment.CenterVertically,
+          ) {
+            SyncStatusIcon(Icons.Default.Cloud, colors.supporting, (14 * scale).toInt())
+            RemoteText(
+              shown.rs,
+              color = colors.supporting.rc,
+              fontSize = bodySp.rsp,
+              maxLines = 1,
+              overflow = RemoteTextOverflow.Ellipsis,
+            )
+          }
       }
       if (lane) {
         SwimmingPool(

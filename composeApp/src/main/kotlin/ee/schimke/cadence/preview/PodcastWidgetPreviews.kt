@@ -49,6 +49,9 @@ private fun PodcastWidgetPreview(
             widthDp = width,
             colors = colors,
             season = season,
+            headline = "Not in sync · plug in to copy",
+            source = "Pocket Casts · Up Next · checked 2 h ago",
+            attention = true,
           )
         }
         SwimClockAt(seconds, content)
@@ -68,6 +71,13 @@ internal fun PodcastWidgetBluetoothPreview() {
 @LauncherWidgetPreview(width = 4, height = 2)
 @Composable
 internal fun PodcastWidgetMp3Preview() {
+  PodcastWidgetPreview(true)
+}
+
+@Preview(name = "Podcast widget · MP3 · tall", widthDp = 312, heightDp = 220)
+@LauncherWidgetPreview(width = 4, height = 3)
+@Composable
+internal fun PodcastWidgetTallPreview() {
   PodcastWidgetPreview(true)
 }
 

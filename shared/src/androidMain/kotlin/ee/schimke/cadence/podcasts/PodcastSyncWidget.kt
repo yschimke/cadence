@@ -183,7 +183,10 @@ class PodcastSyncWidget : AppWidgetProvider() {
       val details =
         context.resources.getIdentifier("podcast_widget_details", "id", context.packageName)
       val views = RemoteViews(context.packageName, layout)
-      views.setTextViewText(title, copied(context))
+      views.setTextViewText(
+        title,
+        prefs(context).getString("headline", null) ?: copied(context),
+      )
       views.setTextViewText(
         details,
         listOfNotNull(available(context), battery(context)).joinToString(" · "),
@@ -211,6 +214,9 @@ class PodcastSyncWidget : AppWidgetProvider() {
       val ready = prefs.getBoolean("ready", false)
       val copied = copied(context)
       val available = available(context)
+      val headline = prefs.getString("headline", null)
+      val source = prefs.getString("source", null)
+      val attention = prefs.getBoolean("attention", false)
       val launch = launchIntent(context)
       val season = runCatching { WidgetSeason.current().pool }.getOrDefault(PoolSeason.None)
       for (id in ids) {
@@ -229,6 +235,9 @@ class PodcastSyncWidget : AppWidgetProvider() {
                 onTap = rcWidgetHostAction(name = OPEN_APP, payload = OPEN_APP),
                 colors = context.systemWidgetColors(),
                 season = season,
+                headline = headline,
+                source = source,
+                attention = attention,
               )
             }
           val taps =

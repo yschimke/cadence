@@ -9,6 +9,9 @@ actual fun PodcastSyncHomeCard(
   battery: String?,
   ready: Boolean,
   showSwimming: Boolean,
+  headline: String?,
+  source: String?,
+  attention: Boolean,
 ) {
-  PodcastSyncHomeFallback(copied, available, battery)
+  PodcastSyncHomeFallback(copied, available, battery, headline, source)
 }

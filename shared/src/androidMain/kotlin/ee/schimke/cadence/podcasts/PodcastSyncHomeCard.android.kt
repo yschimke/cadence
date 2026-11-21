@@ -23,10 +23,14 @@ actual fun PodcastSyncHomeCard(
   battery: String?,
   ready: Boolean,
   showSwimming: Boolean,
+  headline: String?,
+  source: String?,
+  attention: Boolean,
 ) {
   val context = LocalContext.current
   val colors = WidgetColors.from(MaterialTheme.colorScheme)
-  val height = 152
+  // Tall enough for the headline, three status lines, the source line and the pool.
+  val height = if (source != null) 196 else 168
   BoxWithConstraints(Modifier.fillMaxWidth().height(height.dp)) {
     val width = maxWidth.value.toInt().coerceAtLeast(1)
     val bytes by
@@ -39,6 +43,9 @@ actual fun PodcastSyncHomeCard(
         battery,
         ready,
         showSwimming,
+        headline,
+        source,
+        attention,
         colors,
       ) {
         value =
@@ -53,6 +60,9 @@ actual fun PodcastSyncHomeCard(
                   height,
                   widthDp = width,
                   colors = colors,
+                  headline = headline,
+                  source = source,
+                  attention = attention,
                 )
               }
               .bytes
@@ -63,7 +73,7 @@ actual fun PodcastSyncHomeCard(
           }
       }
     val document = bytes
-    if (document == null) PodcastSyncHomeFallback(copied, available, battery)
+    if (document == null) PodcastSyncHomeFallback(copied, available, battery, headline, source)
     else RcAdaptiveRemoteDocumentPlayer(document, Modifier.fillMaxWidth().height(height.dp))
   }
 }
