@@ -125,10 +125,9 @@ Cadence falls back to `GET /api/v10/download-manifest?isbn=`: zip archives of th
 book's MP3 tracks, which it unpacks and joins in track order into one MP3, leaving
 out each later track's ID3 tags and every track's Xing/Info frame. Cadence checks
 for an M4B when a book is first imported for download and keeps that choice on
-refresh. With **Audio options → Keep audiobook tracks as separate files**, such a
-book goes on the headphones as Libro.fm's original track files, copied unchanged
-(one file per track); splitting, trims and the part format don't apply to it, and
-skipping what you've heard leaves out tracks already finished. Libro.fm doesn't
+refresh. Splitting such a book **by chapter** (see
+[Splitting into files](#splitting-into-files)) puts Libro.fm's original track
+files on the headphones, copied unchanged, one per track. Libro.fm doesn't
 share a listening position, so books start at zero and Cadence keeps its own
 position across refreshes. The token is saved with the local library until
 **Sign out** or a `401`.
@@ -166,6 +165,29 @@ lists episodes under each feed with `progress` (seconds), `played` and
 `userUpdatedDate`. Cadence imports unplayed episodes with progress, most recently
 updated first. Paste the file contents into **Overcast or a saved export**. A subscriptions-only
 OPML is rejected with a pointer to the All data export.
+
+## Splitting into files
+
+**Audio options → Split into files** chooses how prepared audio is cut for the
+headphones, and **Per-podcast settings** can override it for one podcast:
+
+- **As is:** one file per episode (apart from cutting at your position).
+- **By time:** parts of a chosen length (1–120 minutes).
+- **By chapter:** one file per chapter, where Cadence finds chapters; an episode
+  without any stays whole. Chapters come from, in order:
+  1. a Libro.fm book that came as separate MP3 tracks: those original files,
+     copied unchanged (trims and the part format don't apply; skipping what
+     you've heard leaves out finished tracks);
+  2. the feed's [Podcasting 2.0 chapter index](https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/1.0.md#chapters)
+     (`<podcast:chapters>` JSON; chapters marked `"toc": false` are skipped);
+  3. chapter marks in the downloaded audio: ID3v2 `CHAP` frames in an MP3 (the
+     ID3v2 Chapter Frame Addendum many podcast tools write), or a Nero `chpl`
+     list in an M4A/M4B. QuickTime chapter tracks, which some M4Bs use instead,
+     aren't read yet.
+
+Cut chapters are re-encoded in the part format like any other cut; only an
+untouched whole episode or original track keeps its file. Settings saved before
+this choice existed split by time when a part length was set.
 
 ## Use the workflow
 

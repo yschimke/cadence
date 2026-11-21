@@ -34,6 +34,17 @@ abstract class FilePodcastPlatform(protected val root: File) : PodcastPlatform {
   private fun tracks(episode: Episode): File =
     File(root, "source/${episode.key}-${digest(episode.audioVersion)}.tracks")
 
+  override suspend fun chapters(episode: Episode): List<Long> =
+    withContext(Dispatchers.IO) {
+      val file = source(episode).takeIf { it.isFile } ?: return@withContext emptyList()
+      runCatching {
+          Mp3Window(file).use {
+            if (episode.extension == "mp3") id3Chapters(it) else mp4Chapters(it)
+          }
+        }
+        .getOrDefault(emptyList())
+    }
+
   override suspend fun trackLengths(episode: Episode): List<Long> =
     withContext(Dispatchers.IO) {
       File(tracks(episode), LENGTHS)
@@ -441,6 +452,9 @@ abstract class FilePodcastPlatform(protected val root: File) : PodcastPlatform {
             ?.getAttribute("url")
             .orEmpty(),
           item.child("pubDate"),
+          (item.getElementsByTagName("podcast:chapters").item(0) as? Element)
+            ?.getAttribute("url")
+            .orEmpty(),
         )
       },
       channel
@@ -677,7 +691,17 @@ private class Mp3Window(private val size: Long, private val read: (Long, ByteArr
     return window[(at - windowStart).toInt()].toInt() and 0xff
   }
 
-  private fun text(at: Long, length: Int) =
+  /** A big-endian unsigned integer of [bytes] bytes at [at]. */
+  fun number(at: Long, bytes: Int): Long {
+    var value = 0L
+    for (i in 0 until bytes) value = value shl 8 or (this[at + i].takeIf { it >= 0 } ?: 0).toLong()
+    return value
+  }
+
+  val length: Long
+    get() = size
+
+  fun text(at: Long, length: Int) =
     String(CharArray(length) { (this[at + it].takeIf { b -> b >= 0 } ?: 0).toChar() })
 
   /** The length of a leading ID3v2 tag (header, body and any footer), or 0 without one. */
@@ -769,3 +793,80 @@ internal fun mp3DurationMs(bytes: ByteArray): Long = Mp3Window(bytes).durationMs
 
 /** The same, streamed from [file]. */
 internal fun mp3DurationMs(file: File): Long = Mp3Window(file).use { it.durationMs() }
+
+/**
+ * Chapter starts from an MP3's ID3v2 `CHAP` frames (the ID3v2 Chapter Frame Addendum podcast tools
+ * write): each holds its element id, then start and end in ms.
+ */
+private fun id3Chapters(file: Mp3Window): List<Long> {
+  if (file.length < 10 || file.text(0, 3) != "ID3") return emptyList()
+  val version = file[3]
+  if (version !in 3..4) return emptyList()
+  fun syncsafe(at: Long) =
+    (file[at].toLong() and 0x7f shl 21) or
+      (file[at + 1].toLong() and 0x7f shl 14) or
+      (file[at + 2].toLong() and 0x7f shl 7) or
+      (file[at + 3].toLong() and 0x7f)
+  val end = 10 + syncsafe(6)
+  var offset = 10L
+  // An extended header sits before the frames.
+  if (file[5] and 0x40 != 0) offset += if (version == 4) syncsafe(10) else file.number(10, 4) + 4
+  val starts = mutableListOf<Long>()
+  while (offset + 10 <= end) {
+    val id = file.text(offset, 4)
+    if (id[0] == '\u0000') break // padding
+    val size = if (version == 4) syncsafe(offset + 4) else file.number(offset + 4, 4)
+    if (size <= 0 || offset + 10 + size > end) break
+    if (id == "CHAP") {
+      var at = offset + 10
+      while (at < offset + 10 + size && file[at] != 0) at++ // element id, null-terminated
+      if (at + 9 <= offset + 10 + size) starts += file.number(at + 1, 4)
+    }
+    offset += 10 + size
+  }
+  return starts
+}
+
+/**
+ * Chapter starts from an M4A/M4B's Nero chapter list (`moov/udta/chpl`): a count, then for each a
+ * 64-bit start in 100 ns units and a length-prefixed title, as ffmpeg reads it.
+ */
+private fun mp4Chapters(file: Mp3Window): List<Long> {
+  /** The body (start, end) of the first [type] box between [from] and [to]. */
+  fun box(type: String, from: Long, to: Long): Pair<Long, Long>? {
+    var at = from
+    while (at + 8 <= to) {
+      var size = file.number(at, 4)
+      var header = 8L
+      if (size == 1L) {
+        size = file.number(at + 8, 8)
+        header = 16
+      } else if (size == 0L) size = to - at
+      if (size < header) return null
+      if (file.text(at + 4, 4) == type) return (at + header) to minOf(at + size, to)
+      at += size
+    }
+    return null
+  }
+  val moov = box("moov", 0, file.length) ?: return emptyList()
+  val udta = box("udta", moov.first, moov.second) ?: return emptyList()
+  val (start, end) = box("chpl", udta.first, udta.second) ?: return emptyList()
+  var at = start
+  val version = file[at]
+  at += 4 // version and flags
+  if (version != 0) at += 4
+  val count = file[at]
+  at++
+  val starts = mutableListOf<Long>()
+  repeat(count.coerceAtLeast(0)) {
+    if (at + 9 > end) return starts
+    starts += file.number(at, 8) / 10_000
+    at += 8
+    at += 1 + file[at]
+  }
+  return starts
+}
+
+internal fun id3ChaptersOf(bytes: ByteArray): List<Long> = id3Chapters(Mp3Window(bytes))
+
+internal fun mp4ChaptersOf(bytes: ByteArray): List<Long> = mp4Chapters(Mp3Window(bytes))

@@ -119,7 +119,7 @@ class Mp3JoinTest {
         extension = "mp3",
         trackMs = listOf(3_000, 3_000, 4_100),
       )
-    val keep = Segmentation(keepTracks = true, chunkMinutes = 5, skipListened = false)
+    val keep = Segmentation(split = SplitMode.Chapters, chunkMinutes = 5, skipListened = false)
     // Measured lengths that overrun the listed duration end with the episode.
     assertEquals(
       listOf(0L to 3_000L, 3_000L to 6_000L, 6_000L to 10_000L),
@@ -133,9 +133,7 @@ class Mp3JoinTest {
     // Without the option the book is cut by time as usual: at the position, not the tracks.
     assertEquals(
       listOf(0L to 4_000L, 4_000L to 10_000L),
-      segment(episode, keep.copy(keepTracks = false, chunkMinutes = 0)).map {
-        it.startMs to it.endMs
-      },
+      segment(episode, keep.copy(split = SplitMode.Whole)).map { it.startMs to it.endMs },
     )
   }
 

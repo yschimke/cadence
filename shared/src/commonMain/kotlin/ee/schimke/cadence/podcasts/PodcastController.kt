@@ -65,6 +65,12 @@ interface PodcastPlatform {
    */
   suspend fun trackLengths(episode: Episode): List<Long> = emptyList()
 
+  /**
+   * Chapter starts (ms) marked in a downloaded episode's own audio: ID3v2 `CHAP` frames in an MP3,
+   * a Nero `chpl` list in an M4A/M4B. Empty when it has none or isn't downloaded.
+   */
+  suspend fun chapters(episode: Episode): List<Long> = emptyList()
+
   /** Remove staged audio for episodes no longer in the imported source. */
   suspend fun pruneAudio(episodes: List<Episode>) {}
 
@@ -671,21 +677,68 @@ class PodcastController(val platform: PodcastPlatform) {
     }
 
   /** Saves the measured lengths of the original tracks [episode] was joined from, once known. */
+  /**
+   * Finds chapters for each episode set to split by chapter that doesn't have them yet: a joined
+   * book's original tracks, else the feed's chapter index, else the chapter marks in the downloaded
+   * audio. An episode without any is left whole.
+   */
+  private suspend fun readChapters() {
+    val library = state.value.library
+    library.playlist?.episodes.orEmpty().forEach { episode ->
+      if (library.configFor(episode).splitMode != SplitMode.Chapters) return@forEach
+      when {
+        episode.backend == LIBRO_FM_BACKEND && episode.extension == "mp3" ->
+          if (episode.trackMs.isEmpty()) {
+            if (!platform.originalAvailable(episode))
+              platform.downloadOriginal(downloadable(episode))
+            recordTracks(episode)
+          }
+        episode.chapterMs.isEmpty() -> {
+          val listed =
+            episode.chaptersUrl
+              .takeIf { it.isNotBlank() }
+              ?.let { url ->
+                try {
+                  podcastChapters(platform.publicText(url), episode.durationMs)
+                } catch (e: CancellationException) {
+                  throw e
+                } catch (_: Exception) {
+                  // An index that can't be read just means no chapters from it.
+                  emptyList()
+                }
+              }
+              .orEmpty()
+          val starts = listed.ifEmpty {
+            if (!platform.supportsOriginalDownloads) return@ifEmpty emptyList()
+            if (!platform.originalAvailable(episode))
+              platform.downloadOriginal(downloadable(episode))
+            chapterStarts(platform.chapters(episode), episode.durationMs)
+          }
+          if (starts.isNotEmpty()) updateEpisode(episode) { it.copy(chapterMs = starts) }
+        }
+      }
+    }
+  }
+
+  /** Saves the measured lengths of the original tracks [episode] was joined from, once known. */
   private suspend fun recordTracks(episode: Episode) {
     val lengths = platform.trackLengths(episode)
     if (lengths.isEmpty() || lengths == episode.trackMs) return
-    fun List<Episode>.withTracks() = map {
-      if (it.key == episode.key && it.audioVersion == episode.audioVersion)
-        it.copy(trackMs = lengths)
-      else it
+    updateEpisode(episode) { it.copy(trackMs = lengths) }
+  }
+
+  /** Applies [change] to [episode] wherever the library lists it. */
+  private suspend fun updateEpisode(episode: Episode, change: (Episode) -> Episode) {
+    fun List<Episode>.changed() = map {
+      if (it.key == episode.key && it.audioVersion == episode.audioVersion) change(it) else it
     }
     val library = state.value.library
     save(
       state.value.copy(
         library =
           library.copy(
-            playlist = library.playlist?.let { it.copy(episodes = it.episodes.withTracks()) },
-            upcoming = library.upcoming.withTracks(),
+            playlist = library.playlist?.let { it.copy(episodes = it.episodes.changed()) },
+            upcoming = library.upcoming.changed(),
           ),
       ),
     )
@@ -971,7 +1024,12 @@ class PodcastController(val platform: PodcastPlatform) {
     val formats = platform.splitFormats
     return when {
       formats.isEmpty() ->
-        config.copy(splitAtPosition = false, skipListened = false, chunkMinutes = 0)
+        config.copy(
+          splitAtPosition = false,
+          skipListened = false,
+          chunkMinutes = 0,
+          split = SplitMode.Whole,
+        )
       config.chunkFormat !in formats -> config.copy(chunkFormat = formats.sorted().first())
       else -> config
     }
@@ -1007,16 +1065,7 @@ class PodcastController(val platform: PodcastPlatform) {
   }
 
   suspend fun prepare() {
-    // Keeping original tracks needs their lengths, known once each joined book is downloaded.
-    if (state.value.library.config.keepTracks)
-      state.value.library.playlist
-        ?.episodes
-        .orEmpty()
-        .filter { it.backend == LIBRO_FM_BACKEND && it.extension == "mp3" && it.trackMs.isEmpty() }
-        .forEach { episode ->
-          if (!platform.originalAvailable(episode)) platform.downloadOriginal(downloadable(episode))
-          recordTracks(episode)
-        }
+    readChapters()
     val library = state.value.library
     val playlist = requireNotNull(library.playlist) { "Import a playlist first" }
     // An empty source (a Pocket Casts playlist with nothing in it yet) has nothing to prepare;

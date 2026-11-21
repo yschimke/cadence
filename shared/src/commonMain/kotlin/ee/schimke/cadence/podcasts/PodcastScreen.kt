@@ -788,9 +788,9 @@ private fun PodcastTrimming(
       .orEmpty()
       .filter { it.podcastId.isNotBlank() }
       .distinctBy { it.podcastId }
-  Expandable("Trim podcast intros and outros") {
+  Expandable("Per-podcast settings") {
     Text(
-      "Skip a fixed number of seconds for every episode of a podcast. Changes apply when audio is next prepared.",
+      "How each podcast is split into files, and seconds to skip at the start and end of every episode. Changes apply when audio is next prepared.",
     )
     if (shows.isEmpty()) Text("Refresh your podcast source to load show information.")
     shows.forEach { episode ->
@@ -808,6 +808,10 @@ private fun PodcastTrimming(
           episode.podcastTitle.ifBlank { "Podcast: ${episode.title}" },
           style = MaterialTheme.typography.titleSmall,
         )
+        // Saved on its own: the split applies straight away, trims with their button below.
+        SplitChoice(saved.split, enabled = !busy, default = library.config.splitMode) { mode ->
+          action { configurePodcastTrim(episode.podcastId, saved.copy(split = mode)) }
+        }
         OutlinedTextField(
           start,
           { start = it },
@@ -833,10 +837,15 @@ private fun PodcastTrimming(
               last != null &&
               first in 0..3600 &&
               last in 0..3600 &&
-              PodcastTrim(first, last) != saved,
+              saved.copy(startSeconds = first, endSeconds = last) != saved,
           onClick = {
             if (first != null && last != null)
-              action { configurePodcastTrim(episode.podcastId, PodcastTrim(first, last)) }
+              action {
+                configurePodcastTrim(
+                  episode.podcastId,
+                  saved.copy(startSeconds = first, endSeconds = last),
+                )
+              }
           },
         ) {
           Text("Save trim")
@@ -1032,30 +1041,44 @@ private fun AudioOptions(
     LabeledCheckbox("Split at your listening position", library.config.splitAtPosition, !busy) {
       action { configure(library.config.copy(splitAtPosition = it)) }
     }
-    // Libro.fm books without an M4B come as MP3 tracks: one file each, or joined into one.
-    if (library.source == PodcastSourceKind.LibroFm)
-      LabeledCheckbox(
-        "Keep audiobook tracks as separate files",
-        library.config.keepTracks,
-        !busy,
-      ) {
-        action { configure(library.config.copy(keepTracks = it)) }
+    Text("Split into files", style = MaterialTheme.typography.titleSmall)
+    SplitChoice(library.config.splitMode, enabled = !busy) { mode ->
+      action {
+        configure(
+          library.config.copy(
+            split = mode,
+            // Choosing "by time" with no part length yet starts at 30 minutes.
+            chunkMinutes =
+              if (mode == SplitMode.Time && library.config.chunkMinutes == 0) 30
+              else library.config.chunkMinutes,
+          ),
+        )
       }
-    OutlinedTextField(
-      chunks,
-      {
-        chunks = it
-        it
-          .toIntOrNull()
-          ?.takeIf { minutes -> minutes in 0..120 }
-          ?.let { minutes -> action { configure(library.config.copy(chunkMinutes = minutes)) } }
-      },
-      label = { Text("Split into parts of (minutes)") },
-      supportingText = { Text("0 keeps each episode in one piece") },
-      enabled = !busy,
-      singleLine = true,
-      modifier = Modifier.fillMaxWidth(),
-    )
+    }
+    when (library.config.splitMode) {
+      SplitMode.Whole -> Unit
+      SplitMode.Time ->
+        OutlinedTextField(
+          chunks,
+          {
+            chunks = it
+            it
+              .toIntOrNull()
+              ?.takeIf { minutes -> minutes in 1..120 }
+              ?.let { minutes -> action { configure(library.config.copy(chunkMinutes = minutes)) } }
+          },
+          label = { Text("Part length (minutes)") },
+          enabled = !busy,
+          singleLine = true,
+          modifier = Modifier.fillMaxWidth(),
+        )
+      SplitMode.Chapters ->
+        Text(
+          "Uses the feed's chapter index or the chapter marks in the audio; audiobooks that come " +
+            "as separate tracks keep those files as they are. Episodes without chapters stay whole.",
+          style = MaterialTheme.typography.bodySmall,
+        )
+    }
     if (chooseFormat && formats.size > 1)
       FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
         formats.sorted().forEach { format ->
@@ -1068,6 +1091,44 @@ private fun AudioOptions(
       }
   }
 }
+
+/**
+ * Leave as is, by time or by chapter. With [default], a podcast can also follow the library's
+ * setting (null).
+ */
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun SplitChoice(
+  selected: SplitMode?,
+  enabled: Boolean,
+  default: SplitMode? = null,
+  onSelect: (SplitMode?) -> Unit,
+) {
+  FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+    if (default != null)
+      FilterChip(
+        selected == null,
+        { onSelect(null) },
+        enabled = enabled,
+        label = { Text("Default (${splitLabel(default).lowercase()})") },
+      )
+    SplitMode.entries.forEach { mode ->
+      FilterChip(
+        selected == mode,
+        { onSelect(mode) },
+        enabled = enabled,
+        label = { Text(splitLabel(mode)) },
+      )
+    }
+  }
+}
+
+private fun splitLabel(mode: SplitMode) =
+  when (mode) {
+    SplitMode.Whole -> "As is"
+    SplitMode.Time -> "By time"
+    SplitMode.Chapters -> "By chapter"
+  }
 
 @Composable
 private fun CloudBackup(

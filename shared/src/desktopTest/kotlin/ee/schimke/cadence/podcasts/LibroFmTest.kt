@@ -140,7 +140,7 @@ class LibroFmTest {
     val controller = PodcastController(platform)
     controller.signInLibroFm("me@example.com", "secret")
     controller.importLibroFm("9780000000002", 1)
-    controller.configure(controller.state.value.library.config.copy(keepTracks = true))
+    controller.configure(controller.state.value.library.config.copy(split = SplitMode.Chapters))
     // Preparing downloads the book first, to measure its tracks.
     controller.prepare()
     val book = controller.state.value.library.playlist!!.episodes.single()
@@ -154,6 +154,26 @@ class LibroFmTest {
     // The measured tracks survive a refresh.
     controller.refreshSource()
     assertEquals(book.trackMs, controller.state.value.library.playlist!!.episodes.single().trackMs)
+  }
+
+  @Test
+  fun anM4bSplitsAtItsChapterMarks() = runBlocking {
+    val platform = LibroPlatform()
+    val controller = PodcastController(platform)
+    controller.signInLibroFm("me@example.com", "secret")
+    controller.importLibroFm("9780000000001", 1)
+    controller.configure(controller.state.value.library.config.copy(split = SplitMode.Chapters))
+    controller.prepare()
+    val book = controller.state.value.library.playlist!!.episodes.single()
+    assertEquals(listOf(1_200_000L, 2_400_000L), book.chapterMs)
+    assertEquals(
+      listOf(0L to 1_200_000L, 1_200_000L to 2_400_000L, 2_400_000L to 3_600_000L),
+      controller.state.value.library.manifests.single().sections.map { it.startMs to it.endMs },
+    )
+    // A podcast's own setting overrides the library's: kept whole here.
+    controller.configurePodcastTrim(book.podcastId, PodcastTrim(split = SplitMode.Whole))
+    controller.prepare()
+    assertEquals(1, controller.state.value.library.manifests.single().sections.size)
   }
 
   @Test
@@ -248,6 +268,11 @@ class LibroFmTest {
     }
 
     override suspend fun available(section: Section) = section in prepared
+
+    /** Chapter marks in a downloaded M4B: two, inside the first book's hour. */
+    override suspend fun chapters(episode: Episode) =
+      if (episode.extension == "m4a" && episode.key in downloaded) listOf(1_200_000L, 2_400_000L)
+      else emptyList()
 
     /** The joined books' measured tracks: two, adding up to the listed length. */
     override suspend fun trackLengths(episode: Episode) =
