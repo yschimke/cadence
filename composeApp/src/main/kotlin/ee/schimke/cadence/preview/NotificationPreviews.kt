@@ -9,6 +9,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import ee.schimke.cadence.notifications.NotificationBody
 import ee.schimke.cadence.notifications.NotificationIcon
 import ee.schimke.cadence.notifications.NotificationTemplateContent
+import ee.schimke.cadence.swim.SwimClockAt
 import ee.schimke.cadence.widgets.WidgetColors
 
 /** The notification template's body with [body]'s values, over the shade's surface. */
@@ -22,13 +23,16 @@ private fun NotificationBodyPreview(
     Modifier.fillMaxSize().background(if (colors == WidgetColors.Dark) ShadeDark else ShadeLight),
     key = listOf(body, cancel, colors),
   ) {
-    NotificationTemplateContent(
-      onOpen = null,
-      onCancel = null,
-      sample = body,
-      sampleCancel = cancel,
-      colors = colors,
-    )
+    // Pin the swimmer's stroke so still previews render deterministically.
+    SwimClockAt(0.4f) {
+      NotificationTemplateContent(
+        onOpen = null,
+        onCancel = null,
+        sample = body,
+        sampleCancel = cancel,
+        colors = colors,
+      )
+    }
   }
 }
 
