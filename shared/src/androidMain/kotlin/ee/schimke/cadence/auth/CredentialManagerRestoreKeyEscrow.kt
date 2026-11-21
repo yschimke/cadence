@@ -42,7 +42,7 @@ class CredentialManagerRestoreKeyEscrow(context: Context) : RestoreKeyEscrow {
   private val credentialManager by lazy { CredentialManager.create(this.context) }
   private val json = Json { ignoreUnknownKeys = true }
 
-  override suspend fun store(key: ByteArray): Boolean {
+  override suspend fun store(key: ByteArray): RestoreKeyEscrow.Stored {
     require(key.size == CredentialVault.DATA_KEY_BYTES) { "Expected a 32-byte key" }
     val requestJson = createRequestJson(key)
     return try {
@@ -51,22 +51,23 @@ class CredentialManagerRestoreKeyEscrow(context: Context) : RestoreKeyEscrow {
           context,
           CreateRestoreCredentialRequest(requestJson, isCloudBackupEnabled = true),
         )
+        RestoreKeyEscrow.Stored.CLOUD
       } catch (_: E2eeUnavailableException) {
         // No screen lock, so no end-to-end encrypted cloud backup. Device-to-device transfer is
-        // always end-to-end, so escrow for that alone.
+        // always end-to-end, so escrow for that alone; the vault asks for the cloud again later.
         credentialManager.createCredential(
           context,
           CreateRestoreCredentialRequest(requestJson, isCloudBackupEnabled = false),
         )
+        RestoreKeyEscrow.Stored.DEVICE_ONLY
       }
-      true
     } catch (e: CancellationException) {
       throw e
     } catch (e: Exception) {
       // No Play services, or one too old for Restore Credentials. The vault still works on this
       // device; a restored phone signs in again.
       Log.w(TAG, "Can't escrow the credential vault key; a restored phone will sign in again", e)
-      false
+      RestoreKeyEscrow.Stored.FAILED
     }
   }
 
