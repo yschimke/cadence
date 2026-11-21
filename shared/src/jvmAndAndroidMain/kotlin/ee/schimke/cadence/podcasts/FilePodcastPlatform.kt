@@ -340,8 +340,11 @@ abstract class FilePodcastPlatform(protected val root: File) : PodcastPlatform {
       }
     }
 
-  /** Streams a public HTTPS file to [target], cancellable, refusing anything over 2 GB. */
-  private suspend fun fetchTo(url: String, target: File, onProgress: (Long, Long) -> Unit) {
+  /**
+   * Streams a public HTTPS file to [target], cancellable, refusing anything over 2 GB. Open so
+   * device and desktop tests can serve parts locally.
+   */
+  protected open suspend fun fetchTo(url: String, target: File, onProgress: (Long, Long) -> Unit) {
     val conn = openPublic(url)
     try {
       val total = conn.contentLengthLong

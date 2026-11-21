@@ -34,6 +34,8 @@ internal fun parseAndroidRss(text: String): RssFeed {
             feedImage = parser.getAttributeValue(null, "href").orEmpty()
         "podcast:transcript" ->
           item?.putIfAbsent("transcript", parser.getAttributeValue(null, "url").orEmpty())
+        "podcast:chapters" ->
+          item?.putIfAbsent("chapters", parser.getAttributeValue(null, "url").orEmpty())
         "title",
         "guid",
         "description",
@@ -72,6 +74,7 @@ internal fun parseAndroidRss(text: String): RssFeed {
           fields["description"].orEmpty().ifBlank { fields["itunes:summary"].orEmpty() },
           fields["transcript"].orEmpty(),
           fields["pubDate"].orEmpty(),
+          fields["chapters"].orEmpty(),
         )
       item = null
     }

@@ -1049,7 +1049,7 @@ private fun AudioOptions(
             split = mode,
             // Choosing "by time" with no part length yet starts at 30 minutes.
             chunkMinutes =
-              if (mode == SplitMode.Time && library.config.chunkMinutes == 0) 30
+              if (mode == SplitMode.Time && library.config.chunkMinutes == 0) DEFAULT_PART_MINUTES
               else library.config.chunkMinutes,
           ),
         )

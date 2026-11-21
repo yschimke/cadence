@@ -64,6 +64,18 @@ class ChapterSplitTest {
   }
 
   @Test
+  fun aPodcastSplitByTimeUnderAWholeLibraryUsesTheDefaultLength() {
+    val library =
+      PodcastLibrary(
+        config = Segmentation(splitAtPosition = false),
+        podcastTrims = mapOf("feed:a" to PodcastTrim(split = SplitMode.Time)),
+      )
+    val long = episode.copy(podcastId = "feed:a", durationMs = 3_600_000, chapterMs = emptyList())
+    // Thirty-minute parts, though the library itself has no part length.
+    assertEquals(2, segment(long, library.configFor(long)).size)
+  }
+
+  @Test
   fun feedChapterIndexesReadAsStarts() {
     val json =
       """{"version":"1.2.0","chapters":[

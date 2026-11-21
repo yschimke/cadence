@@ -109,6 +109,9 @@ data class PlaylistSnapshot(
   }
 }
 
+/** The part length "By time" uses until one is chosen. */
+const val DEFAULT_PART_MINUTES = 30
+
 /** How prepared audio is cut into files for the headphones. */
 @Serializable
 enum class SplitMode {
@@ -196,7 +199,10 @@ fun segment(episode: Episode, config: Segmentation): List<Section> {
     boundaries += episode.chapterMs.filter { it > boundaries.first() && it < end }
   boundaries += end
   boundaries.sort()
-  val chunk = if (mode == SplitMode.Time) config.chunkMinutes else 0
+  // "By time" chosen for one podcast while the library keeps episodes whole has no part length of
+  // its own yet; it still splits, at the default length.
+  val chunk =
+    if (mode == SplitMode.Time) config.chunkMinutes.takeIf { it > 0 } ?: DEFAULT_PART_MINUTES else 0
   val ranges =
     boundaries.distinct().zipWithNext().flatMap { (start, end) ->
       val size = if (chunk == 0) end - start else chunk * 60_000L
