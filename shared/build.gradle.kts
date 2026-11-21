@@ -70,6 +70,8 @@ kotlin {
       implementation(libs.androidx.activity.compose)
       implementation(libs.androidx.documentfile)
       implementation(libs.androidx.work.runtime)
+      implementation(libs.androidx.credentials)
+      implementation(libs.androidx.credentials.play.services.auth)
       implementation(project.dependencies.platform(libs.rc.players.bom))
       implementation(libs.rc.widget.launcher)
       // The Livery templates and the home screen's player card are written against rc-players'

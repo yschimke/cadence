@@ -15,6 +15,7 @@ import androidx.media3.common.MediaItem
 import androidx.media3.common.MimeTypes
 import androidx.media3.transformer.*
 import androidx.media3.transformer.Composition
+import ee.schimke.cadence.auth.AndroidCredentialVault
 import ee.schimke.cadence.data.toUri
 import ee.schimke.cadence.platform.reportNonFatal
 import java.io.File
@@ -35,8 +36,32 @@ actual fun rememberPodcastPlatform(): PodcastPlatform {
 open class AndroidPodcastPlatform(private val context: Context) :
   FilePodcastPlatform(File(context.filesDir, "podcasts")) {
   private val sharedController by lazy { PodcastController(this) }
+  private val vault by lazy { AndroidCredentialVault.instance(context) }
 
   override fun controller(): PodcastController = sharedController
+
+  /**
+   * The library, with the Pocket Casts and Libro.fm sessions read back from the credential vault,
+   * which keeps them encrypted and restores them with the app on a new phone. A library from before
+   * the vault, with the sessions in the clear, moves them in.
+   */
+  override suspend fun readState(): String? {
+    val stored = super.readState() ?: return null
+    val split = runCatching { PodcastSecrets.split(stored) }.getOrNull() ?: return stored
+    if (split.changed) {
+      split.secrets?.let { vault.put(AndroidCredentialVault.PODCASTS_SLOT, it) }
+      super.saveState(split.library)
+    }
+    val secrets = split.secrets ?: vault.get(AndroidCredentialVault.PODCASTS_SLOT)
+    return runCatching { PodcastSecrets.merge(split.library, secrets) }.getOrDefault(split.library)
+  }
+
+  override suspend fun saveState(state: String) {
+    val split = PodcastSecrets.split(state)
+    if (split.secrets == null) vault.clear(AndroidCredentialVault.PODCASTS_SLOT)
+    else vault.put(AndroidCredentialVault.PODCASTS_SLOT, split.secrets)
+    super.saveState(split.library)
+  }
 
   companion object {
     @Volatile private var singleton: AndroidPodcastPlatform? = null

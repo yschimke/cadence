@@ -49,6 +49,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
         android:theme="@android:style/Theme.Material.NoActionBar"
         android:appComponentFactory="ee.schimke.cadence.metro.MetroAppComponentFactory"
         tools:replace="android:appComponentFactory"

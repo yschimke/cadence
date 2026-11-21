@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  What Android backs up (cloud backup) and copies to a new phone (device-to-device transfer).
+  Everything not excluded here is included: the podcast library (files/podcasts/library.json),
+  devices, settings and widgets, so a restored app picks up where the old phone left off.
+
+  Kept: files/credential_vault.json, the sign-in secrets (Google Drive, Pocket Casts, Libro.fm)
+  encrypted under the vault's own data key. The backup alone can't read it: the data key is wrapped
+  by the Keystore in noBackupFilesDir on this phone, and reaches a new phone separately, escrowed in
+  Credential Manager's Restore Credentials (CredentialManagerRestoreKeyEscrow). That is Google
+  Play's zero-tap sign-in restoration: the restored app is still signed in.
+
+  Left out:
+  - podcasts/source and podcasts/audio: downloaded and split episode audio. It is fetched again on
+    the new phone, and would put a cloud backup over its 25 MB limit, so nothing would be backed up.
+  - sync-staging: files staged for a headset sync, rebuilt on the next sync.
+  - google-auth.json: the plaintext Google sign-in from before the vault, moved into it on first
+    read. This keeps a copy that hasn't moved yet out.
+
+  Cloud backups are made only when they are end-to-end encrypted (a screen lock is set).
+  Device-to-device transfer is always end-to-end, so it has no such flag.
+-->
+<data-extraction-rules>
+    <cloud-backup disableIfNoEncryptionCapabilities="true">
+        <exclude domain="file" path="podcasts/source/" />
+        <exclude domain="file" path="podcasts/audio/" />
+        <exclude domain="file" path="sync-staging/" />
+        <exclude domain="file" path="google-auth.json" />
+    </cloud-backup>
+    <device-transfer>
+        <exclude domain="file" path="podcasts/source/" />
+        <exclude domain="file" path="podcasts/audio/" />
+        <exclude domain="file" path="sync-staging/" />
+        <exclude domain="file" path="google-auth.json" />
+    </device-transfer>
+</data-extraction-rules>
