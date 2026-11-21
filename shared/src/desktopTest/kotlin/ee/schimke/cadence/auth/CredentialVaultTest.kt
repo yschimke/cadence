@@ -76,7 +76,8 @@ class CredentialVaultTest {
     val newPhone = oldPhone.restoreTo(File(root, "new"))
 
     escrow.unavailable = true
-    assertNull(newPhone.vault(escrow).get("google"))
+    assertEquals(CredentialVault.Lookup.Pending, newPhone.vault(escrow).lookup("google"))
+    assertEquals(CredentialVault.Lookup.Absent, newPhone.vault(escrow).lookup("podcasts"))
     escrow.unavailable = false
     assertEquals("refresh-1", newPhone.vault(escrow).get("google"))
   }

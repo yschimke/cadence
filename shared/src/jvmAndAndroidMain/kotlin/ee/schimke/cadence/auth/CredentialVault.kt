@@ -70,15 +70,34 @@ class CredentialVault(
   /** Whether this process already tried to escrow a key that wasn't marked escrowed. */
   private var escrowRetried = false
 
-  /** The secret stored in [slot], or null when there is none (or it can't be read any more). */
-  suspend fun get(slot: String): String? = locked {
-    val entry = readVaultLocked().entries[slot] ?: return@locked null
-    val dataKey = dataKeyLocked(create = false) ?: return@locked null
+  /** The secret stored in [slot], or null when there is none (or it can't be read yet). */
+  suspend fun get(slot: String): String? = (lookup(slot) as? Lookup.Found)?.secret
+
+  /** What [slot] holds, telling a missing secret from one that can't be read yet. */
+  sealed interface Lookup {
+    class Found(val secret: String) : Lookup
+
+    /** Nothing is stored, or what was stored can never be read. */
+    data object Absent : Lookup
+
+    /**
+     * Stored, but the escrow couldn't answer yet on this restored phone. A later read may recover
+     * it, so don't [clear] it just because it read as missing.
+     */
+    data object Pending : Lookup
+  }
+
+  suspend fun lookup(slot: String): Lookup = locked {
+    val entry = readVaultLocked().entries[slot] ?: return@locked Lookup.Absent
+    val dataKey =
+      dataKeyLocked(create = false)
+        ?: return@locked if (readVaultLocked().entries[slot] != null) Lookup.Pending
+        else Lookup.Absent
     val plaintext = dataKey.open(slot, entry)
     if (plaintext == null) {
       log("The stored secret for $slot can't be decrypted; signing in again", null)
       clearLocked(slot)
-      return@locked null
+      return@locked Lookup.Absent
     }
     // A read whose key isn't escrowed yet (it failed at sign-in, or the key was just recovered on
     // a new phone) escrows it, once per process, so a secret that is never rewritten doesn't leave
@@ -87,7 +106,7 @@ class CredentialVault(
       escrowRetried = true
       escrowLocked(dataKey)
     }
-    plaintext.decodeToString()
+    Lookup.Found(plaintext.decodeToString())
   }
 
   /** Stores [secret] in [slot], replacing what was there. */

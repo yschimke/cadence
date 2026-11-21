@@ -16,6 +16,7 @@ import androidx.media3.common.MimeTypes
 import androidx.media3.transformer.*
 import androidx.media3.transformer.Composition
 import ee.schimke.cadence.auth.AndroidCredentialVault
+import ee.schimke.cadence.auth.CredentialVault
 import ee.schimke.cadence.data.toUri
 import ee.schimke.cadence.platform.reportNonFatal
 import java.io.File
@@ -38,6 +39,9 @@ open class AndroidPodcastPlatform(private val context: Context) :
   private val sharedController by lazy { PodcastController(this) }
   private val vault by lazy { AndroidCredentialVault.instance(context) }
 
+  /** Whether the stored sessions couldn't be read yet ([CredentialVault.Lookup.Pending]). */
+  @Volatile private var secretsPending = false
+
   override fun controller(): PodcastController = sharedController
 
   /**
@@ -52,14 +56,32 @@ open class AndroidPodcastPlatform(private val context: Context) :
       split.secrets?.let { vault.put(AndroidCredentialVault.PODCASTS_SLOT, it) }
       super.saveState(split.library)
     }
-    val secrets = split.secrets ?: vault.get(AndroidCredentialVault.PODCASTS_SLOT)
+    val secrets =
+      split.secrets
+        ?: when (val lookup = vault.lookup(AndroidCredentialVault.PODCASTS_SLOT)) {
+          is CredentialVault.Lookup.Found -> lookup.secret
+          CredentialVault.Lookup.Pending -> {
+            // A restored phone whose escrow can't answer yet: the sessions read as signed out
+            // for now, and the next launch tries again.
+            secretsPending = true
+            null
+          }
+          CredentialVault.Lookup.Absent -> null
+        }
     return runCatching { PodcastSecrets.merge(split.library, secrets) }.getOrDefault(split.library)
   }
 
   override suspend fun saveState(state: String) {
     val split = PodcastSecrets.split(state)
-    if (split.secrets == null) vault.clear(AndroidCredentialVault.PODCASTS_SLOT)
-    else vault.put(AndroidCredentialVault.PODCASTS_SLOT, split.secrets)
+    when {
+      split.secrets != null -> {
+        secretsPending = false
+        vault.put(AndroidCredentialVault.PODCASTS_SLOT, split.secrets)
+      }
+      // Sessions that only read as signed out because they're still being recovered aren't a
+      // sign-out: the library saves right after loading, and that mustn't throw them away.
+      !secretsPending -> vault.clear(AndroidCredentialVault.PODCASTS_SLOT)
+    }
     super.saveState(split.library)
   }
 
