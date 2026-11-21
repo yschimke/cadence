@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-21T13:12:10.245Z",
+  "generatedAt": "2026-11-21T13:36:04.351Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "cca156f378ca6b11b02d852cd6d9a4cb844f1d89",
+        "subject": "chore(main): release 0.1.35 (#678)",
+        "at": "2026-11-21T13:10:39Z",
+        "author": "github-actions[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "cf16752ebf974483293159e81c916ef69f7de9d3",
         "subject": "ci: speed up compose-preview with module scoping and PR gate (#684)",
@@ -475,14 +483,6 @@
         "subject": "fix(android): skip main-process initialization in :notification_listener process (#624)",
         "at": "2026-11-14T14:57:20Z",
         "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "4797568c646fdbeaeef6f2f9bca6632ab7b842e3",
-        "subject": "chore(deps): update yschimke/livery action to v0.12.0 (#625)",
-        "at": "2026-11-14T14:49:37Z",
-        "author": "renovate[bot]",
         "previewIds": [],
         "components": []
       }
