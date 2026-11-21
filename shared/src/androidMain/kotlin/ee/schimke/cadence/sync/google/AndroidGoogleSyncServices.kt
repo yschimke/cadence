@@ -6,6 +6,8 @@ import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.SingleIn
 import dev.zacsweers.metro.binding
+import ee.schimke.cadence.auth.AndroidCredentialVault
+import ee.schimke.cadence.auth.VaultSecretFile
 import ee.schimke.cadence.sync.SyncRepo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -34,8 +36,16 @@ class AndroidGoogleSyncServices(
       val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
       val configFile = context.filesDir.resolve("google-oauth.json").toOkioPath()
       val configLoader = GoogleOAuthConfigLoader(configFile = configFile, bundled = bundled)
+      // Encrypted and restored with the app on a new phone; google-auth.json is the plaintext file
+      // from before the vault, moved in on first read.
       val accountStore =
-        GoogleAccountStore(context.filesDir.resolve("google-auth.json").toOkioPath())
+        GoogleAccountStore(
+          VaultSecretFile(
+            vault = AndroidCredentialVault.instance(context),
+            slot = AndroidCredentialVault.GOOGLE_SLOT,
+            legacy = context.filesDir.resolve("google-auth.json"),
+          )
+        )
       val accounts =
         GoogleAccountRepo(
           store = accountStore,
