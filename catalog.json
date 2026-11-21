@@ -5843,7 +5843,7 @@
       "wireframe": "wireframes/composeapp-notificationdownloadingpreview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/NotificationPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 40,
+      "bodyLine": 44,
       "sourceDirectory": "composeApp",
       "sourceFunction": "NotificationDownloadingPreview",
       "parameters": [
@@ -5902,7 +5902,7 @@
       "wireframe": "wireframes/composeapp-notificationsyncingpreview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/NotificationPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 53,
+      "bodyLine": 57,
       "sourceDirectory": "composeApp",
       "sourceFunction": "NotificationSyncingPreview",
       "parameters": [
@@ -5961,7 +5961,7 @@
       "wireframe": "wireframes/composeapp-notificationreadypreview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/NotificationPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 67,
+      "bodyLine": 71,
       "sourceDirectory": "composeApp",
       "sourceFunction": "NotificationReadyPreview",
       "parameters": [
@@ -6020,7 +6020,7 @@
       "wireframe": "wireframes/composeapp-notificationfailedpreview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/NotificationPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 79,
+      "bodyLine": 83,
       "sourceDirectory": "composeApp",
       "sourceFunction": "NotificationFailedPreview",
       "parameters": [
@@ -8190,14 +8190,14 @@
             "role": "button",
             "bounds": {
               "x": 882,
-              "y": 1549,
+              "y": 1560,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 882,
-            "y": 1549,
+            "y": 1560,
             "width": 105,
             "height": 105
           }
@@ -8210,14 +8210,14 @@
             "role": "button",
             "bounds": {
               "x": 882,
-              "y": 2336,
+              "y": 2347,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 882,
-            "y": 2336,
+            "y": 2347,
             "width": 105,
             "height": 105
           }
@@ -8230,14 +8230,14 @@
             "role": "button",
             "bounds": {
               "x": 63,
-              "y": 3436,
+              "y": 3447,
               "width": 231,
               "height": 105
             }
           },
           "bounds": {
             "x": 63,
-            "y": 3436,
+            "y": 3447,
             "width": 231,
             "height": 105
           }
@@ -8250,16 +8250,16 @@
             "role": "button",
             "bounds": {
               "x": 882,
-              "y": 3647,
+              "y": 3658,
               "width": 105,
-              "height": 28
+              "height": 17
             }
           },
           "bounds": {
             "x": 882,
-            "y": 3647,
+            "y": 3658,
             "width": 105,
-            "height": 28
+            "height": 17
           }
         },
         {
@@ -8309,15 +8309,14 @@
             "x": 42,
             "y": 189,
             "width": 966,
-            "height": 509
+            "height": 520
           },
-          "label": "Sync status",
           "cornerRadius": 20
         },
         {
           "bounds": {
             "x": 42,
-            "y": 740,
+            "y": 751,
             "width": 966,
             "height": 724
           },
@@ -8326,7 +8325,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 740,
+            "y": 751,
             "width": 966,
             "height": 148
           },
@@ -8340,7 +8339,7 @@
         {
           "bounds": {
             "x": 105,
-            "y": 891,
+            "y": 902,
             "width": 840,
             "height": 189
           },
@@ -8354,7 +8353,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 933,
+            "y": 944,
             "width": 105,
             "height": 105
           },
@@ -8363,7 +8362,7 @@
         {
           "bounds": {
             "x": 231,
-            "y": 1020,
+            "y": 1031,
             "width": 735,
             "height": 60
           },
@@ -8377,7 +8376,7 @@
         {
           "bounds": {
             "x": 105,
-            "y": 1083,
+            "y": 1094,
             "width": 840,
             "height": 189
           },
@@ -8391,7 +8390,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 1125,
+            "y": 1136,
             "width": 105,
             "height": 105
           },
@@ -8400,7 +8399,7 @@
         {
           "bounds": {
             "x": 231,
-            "y": 1212,
+            "y": 1223,
             "width": 735,
             "height": 60
           },
@@ -8414,7 +8413,7 @@
         {
           "bounds": {
             "x": 105,
-            "y": 1275,
+            "y": 1286,
             "width": 840,
             "height": 189
           },
@@ -8428,7 +8427,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 1317,
+            "y": 1328,
             "width": 105,
             "height": 105
           },
@@ -8437,7 +8436,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 1506,
+            "y": 1517,
             "width": 966,
             "height": 745
           },
@@ -8446,7 +8445,7 @@
         {
           "bounds": {
             "x": 882,
-            "y": 1549,
+            "y": 1560,
             "width": 105,
             "height": 105
           },
@@ -8456,7 +8455,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 2293,
+            "y": 2304,
             "width": 966,
             "height": 1258
           },
@@ -8465,7 +8464,7 @@
         {
           "bounds": {
             "x": 882,
-            "y": 2336,
+            "y": 2347,
             "width": 105,
             "height": 105
           },
@@ -8475,7 +8474,7 @@
         {
           "bounds": {
             "x": 63,
-            "y": 3436,
+            "y": 3447,
             "width": 231,
             "height": 105
           },
@@ -8491,18 +8490,18 @@
         {
           "bounds": {
             "x": 42,
-            "y": 3593,
+            "y": 3604,
             "width": 966,
-            "height": 82
+            "height": 71
           },
           "cornerRadius": 12
         },
         {
           "bounds": {
             "x": 882,
-            "y": 3647,
+            "y": 3658,
             "width": 105,
-            "height": 28
+            "height": 17
           },
           "role": "Button",
           "cornerRadius": 20
@@ -8564,16 +8563,56 @@
             "role": "button",
             "bounds": {
               "x": 882,
-              "y": 1670,
+              "y": 1597,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 882,
-            "y": 1670,
+            "y": 1597,
             "width": 105,
             "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            }
+          },
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            }
+          },
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
           }
         },
         {
@@ -8623,15 +8662,14 @@
             "x": 42,
             "y": 189,
             "width": 966,
-            "height": 630
+            "height": 557
           },
-          "label": "Sync status",
           "cornerRadius": 20
         },
         {
           "bounds": {
             "x": 42,
-            "y": 861,
+            "y": 788,
             "width": 966,
             "height": 724
           },
@@ -8640,7 +8678,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 861,
+            "y": 788,
             "width": 966,
             "height": 148
           },
@@ -8654,7 +8692,7 @@
         {
           "bounds": {
             "x": 105,
-            "y": 1012,
+            "y": 939,
             "width": 840,
             "height": 189
           },
@@ -8668,7 +8706,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 1054,
+            "y": 981,
             "width": 105,
             "height": 105
           },
@@ -8677,7 +8715,7 @@
         {
           "bounds": {
             "x": 231,
-            "y": 1141,
+            "y": 1068,
             "width": 735,
             "height": 60
           },
@@ -8691,7 +8729,7 @@
         {
           "bounds": {
             "x": 105,
-            "y": 1204,
+            "y": 1131,
             "width": 840,
             "height": 189
           },
@@ -8705,7 +8743,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 1246,
+            "y": 1173,
             "width": 105,
             "height": 105
           },
@@ -8714,7 +8752,7 @@
         {
           "bounds": {
             "x": 231,
-            "y": 1333,
+            "y": 1260,
             "width": 735,
             "height": 60
           },
@@ -8728,7 +8766,7 @@
         {
           "bounds": {
             "x": 105,
-            "y": 1396,
+            "y": 1323,
             "width": 840,
             "height": 189
           },
@@ -8742,7 +8780,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 1438,
+            "y": 1365,
             "width": 105,
             "height": 105
           },
@@ -8751,20 +8789,55 @@
         {
           "bounds": {
             "x": 42,
-            "y": 1627,
+            "y": 1554,
             "width": 966,
-            "height": 735
+            "height": 745
           },
           "cornerRadius": 12
         },
         {
           "bounds": {
             "x": 882,
-            "y": 1670,
+            "y": 1597,
             "width": 105,
             "height": 105
           },
           "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 2341,
+            "width": 966,
+            "height": 21
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          },
+          "role": "Button",
+          "padding": {
+            "start": 8,
+            "top": 0,
+            "end": 8,
+            "bottom": 0
+          },
           "cornerRadius": 20
         },
         {
@@ -8828,14 +8901,14 @@
             "role": "button",
             "bounds": {
               "x": 908,
-              "y": 1780,
+              "y": 1633,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 908,
-            "y": 1780,
+            "y": 1633,
             "width": 105,
             "height": 105
           }
@@ -8887,15 +8960,14 @@
             "x": 42,
             "y": 189,
             "width": 992,
-            "height": 740
+            "height": 593
           },
-          "label": "Sync status",
           "cornerRadius": 20
         },
         {
           "bounds": {
             "x": 42,
-            "y": 971,
+            "y": 824,
             "width": 992,
             "height": 724
           },
@@ -8904,7 +8976,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 971,
+            "y": 824,
             "width": 992,
             "height": 148
           },
@@ -8918,7 +8990,7 @@
         {
           "bounds": {
             "x": 105,
-            "y": 1122,
+            "y": 975,
             "width": 866,
             "height": 189
           },
@@ -8932,7 +9004,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 1164,
+            "y": 1017,
             "width": 105,
             "height": 105
           },
@@ -8941,7 +9013,7 @@
         {
           "bounds": {
             "x": 231,
-            "y": 1251,
+            "y": 1104,
             "width": 761,
             "height": 60
           },
@@ -8955,7 +9027,7 @@
         {
           "bounds": {
             "x": 105,
-            "y": 1314,
+            "y": 1167,
             "width": 866,
             "height": 189
           },
@@ -8969,7 +9041,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 1356,
+            "y": 1209,
             "width": 105,
             "height": 105
           },
@@ -8978,7 +9050,7 @@
         {
           "bounds": {
             "x": 231,
-            "y": 1443,
+            "y": 1296,
             "width": 761,
             "height": 60
           },
@@ -8992,7 +9064,7 @@
         {
           "bounds": {
             "x": 105,
-            "y": 1506,
+            "y": 1359,
             "width": 866,
             "height": 189
           },
@@ -9006,7 +9078,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 1548,
+            "y": 1401,
             "width": 105,
             "height": 105
           },
@@ -9015,16 +9087,16 @@
         {
           "bounds": {
             "x": 42,
-            "y": 1737,
+            "y": 1590,
             "width": 992,
-            "height": 622
+            "height": 745
           },
           "cornerRadius": 12
         },
         {
           "bounds": {
             "x": 908,
-            "y": 1780,
+            "y": 1633,
             "width": 105,
             "height": 105
           },
@@ -9092,14 +9164,14 @@
             "role": "button",
             "bounds": {
               "x": 908,
-              "y": 1549,
+              "y": 1502,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 908,
-            "y": 1549,
+            "y": 1502,
             "width": 105,
             "height": 105
           }
@@ -9112,16 +9184,16 @@
             "role": "button",
             "bounds": {
               "x": 908,
-              "y": 2336,
+              "y": 2289,
               "width": 105,
-              "height": 23
+              "height": 70
             }
           },
           "bounds": {
             "x": 908,
-            "y": 2336,
+            "y": 2289,
             "width": 105,
-            "height": 23
+            "height": 70
           }
         },
         {
@@ -9191,15 +9263,14 @@
             "x": 42,
             "y": 189,
             "width": 992,
-            "height": 509
+            "height": 462
           },
-          "label": "Sync status",
           "cornerRadius": 20
         },
         {
           "bounds": {
             "x": 42,
-            "y": 740,
+            "y": 693,
             "width": 992,
             "height": 724
           },
@@ -9208,7 +9279,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 740,
+            "y": 693,
             "width": 992,
             "height": 148
           },
@@ -9222,7 +9293,7 @@
         {
           "bounds": {
             "x": 105,
-            "y": 891,
+            "y": 844,
             "width": 866,
             "height": 189
           },
@@ -9236,7 +9307,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 933,
+            "y": 886,
             "width": 105,
             "height": 105
           },
@@ -9245,7 +9316,7 @@
         {
           "bounds": {
             "x": 231,
-            "y": 1020,
+            "y": 973,
             "width": 761,
             "height": 60
           },
@@ -9259,7 +9330,7 @@
         {
           "bounds": {
             "x": 105,
-            "y": 1083,
+            "y": 1036,
             "width": 866,
             "height": 189
           },
@@ -9273,7 +9344,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 1125,
+            "y": 1078,
             "width": 105,
             "height": 105
           },
@@ -9282,7 +9353,7 @@
         {
           "bounds": {
             "x": 231,
-            "y": 1212,
+            "y": 1165,
             "width": 761,
             "height": 60
           },
@@ -9296,7 +9367,7 @@
         {
           "bounds": {
             "x": 105,
-            "y": 1275,
+            "y": 1228,
             "width": 866,
             "height": 189
           },
@@ -9310,7 +9381,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 1317,
+            "y": 1270,
             "width": 105,
             "height": 105
           },
@@ -9319,7 +9390,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 1506,
+            "y": 1459,
             "width": 992,
             "height": 745
           },
@@ -9328,7 +9399,7 @@
         {
           "bounds": {
             "x": 908,
-            "y": 1549,
+            "y": 1502,
             "width": 105,
             "height": 105
           },
@@ -9338,18 +9409,18 @@
         {
           "bounds": {
             "x": 42,
-            "y": 2293,
+            "y": 2246,
             "width": 992,
-            "height": 66
+            "height": 113
           },
           "cornerRadius": 12
         },
         {
           "bounds": {
             "x": 908,
-            "y": 2336,
+            "y": 2289,
             "width": 105,
-            "height": 23
+            "height": 70
           },
           "role": "Button",
           "cornerRadius": 20
@@ -9431,14 +9502,14 @@
             "role": "button",
             "bounds": {
               "x": 908,
-              "y": 1780,
+              "y": 1633,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 908,
-            "y": 1780,
+            "y": 1633,
             "width": 105,
             "height": 105
           }
@@ -9451,14 +9522,14 @@
             "role": "button",
             "bounds": {
               "x": 908,
-              "y": 2567,
+              "y": 2420,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 908,
-            "y": 2567,
+            "y": 2420,
             "width": 105,
             "height": 105
           }
@@ -9530,15 +9601,14 @@
             "x": 42,
             "y": 189,
             "width": 992,
-            "height": 740
+            "height": 593
           },
-          "label": "Sync status",
           "cornerRadius": 20
         },
         {
           "bounds": {
             "x": 42,
-            "y": 971,
+            "y": 824,
             "width": 992,
             "height": 724
           },
@@ -9547,7 +9617,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 971,
+            "y": 824,
             "width": 992,
             "height": 148
           },
@@ -9561,7 +9631,7 @@
         {
           "bounds": {
             "x": 105,
-            "y": 1122,
+            "y": 975,
             "width": 866,
             "height": 189
           },
@@ -9575,7 +9645,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 1164,
+            "y": 1017,
             "width": 105,
             "height": 105
           },
@@ -9584,7 +9654,7 @@
         {
           "bounds": {
             "x": 231,
-            "y": 1251,
+            "y": 1104,
             "width": 761,
             "height": 60
           },
@@ -9598,7 +9668,7 @@
         {
           "bounds": {
             "x": 105,
-            "y": 1314,
+            "y": 1167,
             "width": 866,
             "height": 189
           },
@@ -9612,7 +9682,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 1356,
+            "y": 1209,
             "width": 105,
             "height": 105
           },
@@ -9621,7 +9691,7 @@
         {
           "bounds": {
             "x": 231,
-            "y": 1443,
+            "y": 1296,
             "width": 761,
             "height": 60
           },
@@ -9635,7 +9705,7 @@
         {
           "bounds": {
             "x": 105,
-            "y": 1506,
+            "y": 1359,
             "width": 866,
             "height": 189
           },
@@ -9649,7 +9719,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 1548,
+            "y": 1401,
             "width": 105,
             "height": 105
           },
@@ -9658,7 +9728,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 1737,
+            "y": 1590,
             "width": 992,
             "height": 745
           },
@@ -9667,7 +9737,7 @@
         {
           "bounds": {
             "x": 908,
-            "y": 1780,
+            "y": 1633,
             "width": 105,
             "height": 105
           },
@@ -9677,16 +9747,16 @@
         {
           "bounds": {
             "x": 42,
-            "y": 2524,
+            "y": 2377,
             "width": 992,
-            "height": 626
+            "height": 773
           },
           "cornerRadius": 12
         },
         {
           "bounds": {
             "x": 908,
-            "y": 2567,
+            "y": 2420,
             "width": 105,
             "height": 105
           },
@@ -9770,14 +9840,14 @@
             "role": "button",
             "bounds": {
               "x": 908,
-              "y": 1650,
+              "y": 1661,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 908,
-            "y": 1650,
+            "y": 1661,
             "width": 105,
             "height": 105
           }
@@ -9790,14 +9860,14 @@
             "role": "button",
             "bounds": {
               "x": 908,
-              "y": 2437,
+              "y": 2448,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 908,
-            "y": 2437,
+            "y": 2448,
             "width": 105,
             "height": 105
           }
@@ -9869,15 +9939,14 @@
             "x": 42,
             "y": 189,
             "width": 992,
-            "height": 509
+            "height": 520
           },
-          "label": "Sync status",
           "cornerRadius": 20
         },
         {
           "bounds": {
             "x": 42,
-            "y": 719,
+            "y": 730,
             "width": 992,
             "height": 80
           },
@@ -9886,7 +9955,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 762,
+            "y": 773,
             "width": 992,
             "height": 63
           },
@@ -9900,7 +9969,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 841,
+            "y": 852,
             "width": 992,
             "height": 724
           },
@@ -9909,7 +9978,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 841,
+            "y": 852,
             "width": 992,
             "height": 148
           },
@@ -9923,7 +9992,7 @@
         {
           "bounds": {
             "x": 105,
-            "y": 992,
+            "y": 1003,
             "width": 866,
             "height": 189
           },
@@ -9937,7 +10006,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 1034,
+            "y": 1045,
             "width": 105,
             "height": 105
           },
@@ -9946,7 +10015,7 @@
         {
           "bounds": {
             "x": 231,
-            "y": 1121,
+            "y": 1132,
             "width": 761,
             "height": 60
           },
@@ -9960,7 +10029,7 @@
         {
           "bounds": {
             "x": 105,
-            "y": 1184,
+            "y": 1195,
             "width": 866,
             "height": 189
           },
@@ -9974,7 +10043,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 1226,
+            "y": 1237,
             "width": 105,
             "height": 105
           },
@@ -9983,7 +10052,7 @@
         {
           "bounds": {
             "x": 231,
-            "y": 1313,
+            "y": 1324,
             "width": 761,
             "height": 60
           },
@@ -9997,7 +10066,7 @@
         {
           "bounds": {
             "x": 105,
-            "y": 1376,
+            "y": 1387,
             "width": 866,
             "height": 189
           },
@@ -10011,7 +10080,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 1418,
+            "y": 1429,
             "width": 105,
             "height": 105
           },
@@ -10020,7 +10089,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 1607,
+            "y": 1618,
             "width": 992,
             "height": 745
           },
@@ -10029,7 +10098,7 @@
         {
           "bounds": {
             "x": 908,
-            "y": 1650,
+            "y": 1661,
             "width": 105,
             "height": 105
           },
@@ -10039,16 +10108,16 @@
         {
           "bounds": {
             "x": 42,
-            "y": 2394,
+            "y": 2405,
             "width": 992,
-            "height": 756
+            "height": 745
           },
           "cornerRadius": 12
         },
         {
           "bounds": {
             "x": 908,
-            "y": 2437,
+            "y": 2448,
             "width": 105,
             "height": 105
           },
@@ -10132,14 +10201,14 @@
             "role": "button",
             "bounds": {
               "x": 607,
-              "y": 921,
+              "y": 932,
               "width": 194,
               "height": 105
             }
           },
           "bounds": {
             "x": 607,
-            "y": 921,
+            "y": 932,
             "width": 194,
             "height": 105
           }
@@ -10152,14 +10221,14 @@
             "role": "button",
             "bounds": {
               "x": 801,
-              "y": 921,
+              "y": 932,
               "width": 212,
               "height": 105
             }
           },
           "bounds": {
             "x": 801,
-            "y": 921,
+            "y": 932,
             "width": 212,
             "height": 105
           }
@@ -10172,14 +10241,14 @@
             "role": "button",
             "bounds": {
               "x": 908,
-              "y": 1898,
+              "y": 1909,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 908,
-            "y": 1898,
+            "y": 1909,
             "width": 105,
             "height": 105
           }
@@ -10192,14 +10261,14 @@
             "role": "button",
             "bounds": {
               "x": 908,
-              "y": 2685,
+              "y": 2696,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 908,
-            "y": 2685,
+            "y": 2696,
             "width": 105,
             "height": 105
           }
@@ -10271,15 +10340,14 @@
             "x": 42,
             "y": 189,
             "width": 992,
-            "height": 509
+            "height": 520
           },
-          "label": "Sync status",
           "cornerRadius": 20
         },
         {
           "bounds": {
             "x": 42,
-            "y": 719,
+            "y": 730,
             "width": 992,
             "height": 328
           },
@@ -10288,7 +10356,7 @@
         {
           "bounds": {
             "x": 607,
-            "y": 921,
+            "y": 932,
             "width": 194,
             "height": 105
           },
@@ -10298,7 +10366,7 @@
         {
           "bounds": {
             "x": 801,
-            "y": 921,
+            "y": 932,
             "width": 212,
             "height": 105
           },
@@ -10308,7 +10376,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 1089,
+            "y": 1100,
             "width": 992,
             "height": 724
           },
@@ -10317,7 +10385,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 1089,
+            "y": 1100,
             "width": 992,
             "height": 148
           },
@@ -10331,7 +10399,7 @@
         {
           "bounds": {
             "x": 105,
-            "y": 1240,
+            "y": 1251,
             "width": 866,
             "height": 189
           },
@@ -10345,7 +10413,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 1282,
+            "y": 1293,
             "width": 105,
             "height": 105
           },
@@ -10354,7 +10422,7 @@
         {
           "bounds": {
             "x": 231,
-            "y": 1369,
+            "y": 1380,
             "width": 761,
             "height": 60
           },
@@ -10368,7 +10436,7 @@
         {
           "bounds": {
             "x": 105,
-            "y": 1432,
+            "y": 1443,
             "width": 866,
             "height": 189
           },
@@ -10382,7 +10450,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 1474,
+            "y": 1485,
             "width": 105,
             "height": 105
           },
@@ -10391,7 +10459,7 @@
         {
           "bounds": {
             "x": 231,
-            "y": 1561,
+            "y": 1572,
             "width": 761,
             "height": 60
           },
@@ -10405,7 +10473,7 @@
         {
           "bounds": {
             "x": 105,
-            "y": 1624,
+            "y": 1635,
             "width": 866,
             "height": 189
           },
@@ -10419,7 +10487,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 1666,
+            "y": 1677,
             "width": 105,
             "height": 105
           },
@@ -10428,7 +10496,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 1855,
+            "y": 1866,
             "width": 992,
             "height": 745
           },
@@ -10437,7 +10505,7 @@
         {
           "bounds": {
             "x": 908,
-            "y": 1898,
+            "y": 1909,
             "width": 105,
             "height": 105
           },
@@ -10447,16 +10515,16 @@
         {
           "bounds": {
             "x": 42,
-            "y": 2642,
+            "y": 2653,
             "width": 992,
-            "height": 508
+            "height": 497
           },
           "cornerRadius": 12
         },
         {
           "bounds": {
             "x": 908,
-            "y": 2685,
+            "y": 2696,
             "width": 105,
             "height": 105
           },
@@ -10540,14 +10608,14 @@
             "role": "button",
             "bounds": {
               "x": 908,
-              "y": 2437,
+              "y": 2410,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 908,
-            "y": 2437,
+            "y": 2410,
             "width": 105,
             "height": 105
           }
@@ -10560,14 +10628,14 @@
             "role": "button",
             "bounds": {
               "x": 908,
-              "y": 3224,
+              "y": 3197,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 908,
-            "y": 3224,
+            "y": 3197,
             "width": 105,
             "height": 105
           }
@@ -10639,15 +10707,14 @@
             "x": 42,
             "y": 189,
             "width": 992,
-            "height": 620
+            "height": 593
           },
-          "label": "Sync status",
           "cornerRadius": 20
         },
         {
           "bounds": {
             "x": 42,
-            "y": 851,
+            "y": 824,
             "width": 992,
             "height": 1270
           },
@@ -10656,7 +10723,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 851,
+            "y": 824,
             "width": 992,
             "height": 148
           },
@@ -10670,7 +10737,7 @@
         {
           "bounds": {
             "x": 189,
-            "y": 999,
+            "y": 972,
             "width": 772,
             "height": 42
           },
@@ -10685,7 +10752,7 @@
         {
           "bounds": {
             "x": 105,
-            "y": 1065,
+            "y": 1038,
             "width": 866,
             "height": 189
           },
@@ -10699,7 +10766,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 1107,
+            "y": 1080,
             "width": 105,
             "height": 105
           },
@@ -10708,7 +10775,7 @@
         {
           "bounds": {
             "x": 231,
-            "y": 1194,
+            "y": 1167,
             "width": 761,
             "height": 60
           },
@@ -10722,7 +10789,7 @@
         {
           "bounds": {
             "x": 105,
-            "y": 1257,
+            "y": 1230,
             "width": 866,
             "height": 189
           },
@@ -10736,7 +10803,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 1299,
+            "y": 1272,
             "width": 105,
             "height": 105
           },
@@ -10745,7 +10812,7 @@
         {
           "bounds": {
             "x": 231,
-            "y": 1386,
+            "y": 1359,
             "width": 761,
             "height": 60
           },
@@ -10759,7 +10826,7 @@
         {
           "bounds": {
             "x": 105,
-            "y": 1449,
+            "y": 1422,
             "width": 866,
             "height": 189
           },
@@ -10773,7 +10840,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 1491,
+            "y": 1464,
             "width": 105,
             "height": 105
           },
@@ -10782,7 +10849,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 1673,
+            "y": 1646,
             "width": 896,
             "height": 53
           },
@@ -10797,7 +10864,7 @@
         {
           "bounds": {
             "x": 105,
-            "y": 1740,
+            "y": 1713,
             "width": 866,
             "height": 189
           },
@@ -10811,7 +10878,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 1782,
+            "y": 1755,
             "width": 105,
             "height": 105
           },
@@ -10820,7 +10887,7 @@
         {
           "bounds": {
             "x": 105,
-            "y": 1932,
+            "y": 1905,
             "width": 866,
             "height": 189
           },
@@ -10834,7 +10901,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 1974,
+            "y": 1947,
             "width": 105,
             "height": 105
           },
@@ -10843,7 +10910,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 2163,
+            "y": 2136,
             "width": 992,
             "height": 189
           },
@@ -10852,7 +10919,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 2394,
+            "y": 2367,
             "width": 992,
             "height": 745
           },
@@ -10861,7 +10928,7 @@
         {
           "bounds": {
             "x": 908,
-            "y": 2437,
+            "y": 2410,
             "width": 105,
             "height": 105
           },
@@ -10871,16 +10938,16 @@
         {
           "bounds": {
             "x": 42,
-            "y": 3181,
+            "y": 3154,
             "width": 992,
-            "height": 1019
+            "height": 1046
           },
           "cornerRadius": 12
         },
         {
           "bounds": {
             "x": 908,
-            "y": 3224,
+            "y": 3197,
             "width": 105,
             "height": 105
           },
@@ -11733,14 +11800,14 @@
             "role": "button",
             "bounds": {
               "x": 908,
-              "y": 1549,
+              "y": 1560,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 908,
-            "y": 1549,
+            "y": 1560,
             "width": 105,
             "height": 105
           }
@@ -11792,15 +11859,14 @@
             "x": 42,
             "y": 189,
             "width": 992,
-            "height": 509
+            "height": 520
           },
-          "label": "Sync status",
           "cornerRadius": 20
         },
         {
           "bounds": {
             "x": 42,
-            "y": 740,
+            "y": 751,
             "width": 992,
             "height": 724
           },
@@ -11809,7 +11875,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 740,
+            "y": 751,
             "width": 992,
             "height": 148
           },
@@ -11823,7 +11889,7 @@
         {
           "bounds": {
             "x": 105,
-            "y": 891,
+            "y": 902,
             "width": 866,
             "height": 189
           },
@@ -11837,7 +11903,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 933,
+            "y": 944,
             "width": 105,
             "height": 105
           },
@@ -11846,7 +11912,7 @@
         {
           "bounds": {
             "x": 231,
-            "y": 1020,
+            "y": 1031,
             "width": 761,
             "height": 60
           },
@@ -11860,7 +11926,7 @@
         {
           "bounds": {
             "x": 105,
-            "y": 1083,
+            "y": 1094,
             "width": 866,
             "height": 189
           },
@@ -11874,7 +11940,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 1125,
+            "y": 1136,
             "width": 105,
             "height": 105
           },
@@ -11883,7 +11949,7 @@
         {
           "bounds": {
             "x": 231,
-            "y": 1212,
+            "y": 1223,
             "width": 761,
             "height": 60
           },
@@ -11897,7 +11963,7 @@
         {
           "bounds": {
             "x": 105,
-            "y": 1275,
+            "y": 1286,
             "width": 866,
             "height": 189
           },
@@ -11911,7 +11977,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 1317,
+            "y": 1328,
             "width": 105,
             "height": 105
           },
@@ -11920,16 +11986,16 @@
         {
           "bounds": {
             "x": 42,
-            "y": 1506,
+            "y": 1517,
             "width": 992,
-            "height": 410
+            "height": 399
           },
           "cornerRadius": 12
         },
         {
           "bounds": {
             "x": 908,
-            "y": 1549,
+            "y": 1560,
             "width": 105,
             "height": 105
           },
@@ -11998,14 +12064,14 @@
             "role": "button",
             "bounds": {
               "x": 908,
-              "y": 1549,
+              "y": 1560,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 908,
-            "y": 1549,
+            "y": 1560,
             "width": 105,
             "height": 105
           }
@@ -12057,15 +12123,14 @@
             "x": 42,
             "y": 189,
             "width": 992,
-            "height": 509
+            "height": 520
           },
-          "label": "Sync status",
           "cornerRadius": 20
         },
         {
           "bounds": {
             "x": 42,
-            "y": 740,
+            "y": 751,
             "width": 992,
             "height": 724
           },
@@ -12074,7 +12139,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 740,
+            "y": 751,
             "width": 992,
             "height": 148
           },
@@ -12088,7 +12153,7 @@
         {
           "bounds": {
             "x": 105,
-            "y": 891,
+            "y": 902,
             "width": 866,
             "height": 189
           },
@@ -12102,7 +12167,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 933,
+            "y": 944,
             "width": 105,
             "height": 105
           },
@@ -12111,7 +12176,7 @@
         {
           "bounds": {
             "x": 231,
-            "y": 1020,
+            "y": 1031,
             "width": 761,
             "height": 60
           },
@@ -12125,7 +12190,7 @@
         {
           "bounds": {
             "x": 105,
-            "y": 1083,
+            "y": 1094,
             "width": 866,
             "height": 189
           },
@@ -12139,7 +12204,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 1125,
+            "y": 1136,
             "width": 105,
             "height": 105
           },
@@ -12148,7 +12213,7 @@
         {
           "bounds": {
             "x": 231,
-            "y": 1212,
+            "y": 1223,
             "width": 761,
             "height": 60
           },
@@ -12162,7 +12227,7 @@
         {
           "bounds": {
             "x": 105,
-            "y": 1275,
+            "y": 1286,
             "width": 866,
             "height": 189
           },
@@ -12176,7 +12241,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 1317,
+            "y": 1328,
             "width": 105,
             "height": 105
           },
@@ -12185,16 +12250,16 @@
         {
           "bounds": {
             "x": 42,
-            "y": 1506,
+            "y": 1517,
             "width": 992,
-            "height": 410
+            "height": 399
           },
           "cornerRadius": 12
         },
         {
           "bounds": {
             "x": 908,
-            "y": 1549,
+            "y": 1560,
             "width": 105,
             "height": 105
           },
@@ -13105,14 +13170,14 @@
             "role": "button",
             "bounds": {
               "x": 1072,
-              "y": 1178,
+              "y": 1186,
               "width": 80,
               "height": 80
             }
           },
           "bounds": {
             "x": 1072,
-            "y": 1178,
+            "y": 1186,
             "width": 80,
             "height": 80
           }
@@ -13125,14 +13190,14 @@
             "role": "button",
             "bounds": {
               "x": 1072,
-              "y": 1776,
+              "y": 1784,
               "width": 80,
               "height": 80
             }
           },
           "bounds": {
             "x": 1072,
-            "y": 1776,
+            "y": 1784,
             "width": 80,
             "height": 80
           }
@@ -13204,15 +13269,14 @@
             "x": 32,
             "y": 144,
             "width": 1136,
-            "height": 388
+            "height": 396
           },
-          "label": "Sync status",
           "cornerRadius": 20
         },
         {
           "bounds": {
             "x": 32,
-            "y": 564,
+            "y": 572,
             "width": 1136,
             "height": 550
           },
@@ -13221,7 +13285,7 @@
         {
           "bounds": {
             "x": 32,
-            "y": 564,
+            "y": 572,
             "width": 1136,
             "height": 112
           },
@@ -13235,7 +13299,7 @@
         {
           "bounds": {
             "x": 80,
-            "y": 678,
+            "y": 686,
             "width": 1040,
             "height": 144
           },
@@ -13249,7 +13313,7 @@
         {
           "bounds": {
             "x": 64,
-            "y": 710,
+            "y": 718,
             "width": 80,
             "height": 80
           },
@@ -13258,7 +13322,7 @@
         {
           "bounds": {
             "x": 176,
-            "y": 776,
+            "y": 784,
             "width": 960,
             "height": 46
           },
@@ -13272,7 +13336,7 @@
         {
           "bounds": {
             "x": 80,
-            "y": 824,
+            "y": 832,
             "width": 1040,
             "height": 144
           },
@@ -13286,7 +13350,7 @@
         {
           "bounds": {
             "x": 64,
-            "y": 856,
+            "y": 864,
             "width": 80,
             "height": 80
           },
@@ -13295,7 +13359,7 @@
         {
           "bounds": {
             "x": 176,
-            "y": 922,
+            "y": 930,
             "width": 960,
             "height": 46
           },
@@ -13309,7 +13373,7 @@
         {
           "bounds": {
             "x": 80,
-            "y": 970,
+            "y": 978,
             "width": 1040,
             "height": 144
           },
@@ -13323,7 +13387,7 @@
         {
           "bounds": {
             "x": 64,
-            "y": 1002,
+            "y": 1010,
             "width": 80,
             "height": 80
           },
@@ -13332,7 +13396,7 @@
         {
           "bounds": {
             "x": 32,
-            "y": 1146,
+            "y": 1154,
             "width": 1136,
             "height": 566
           },
@@ -13341,7 +13405,7 @@
         {
           "bounds": {
             "x": 1072,
-            "y": 1178,
+            "y": 1186,
             "width": 80,
             "height": 80
           },
@@ -13351,16 +13415,16 @@
         {
           "bounds": {
             "x": 32,
-            "y": 1744,
+            "y": 1752,
             "width": 1136,
-            "height": 176
+            "height": 168
           },
           "cornerRadius": 12
         },
         {
           "bounds": {
             "x": 1072,
-            "y": 1776,
+            "y": 1784,
             "width": 80,
             "height": 80
           },
@@ -13445,14 +13509,14 @@
             "role": "button",
             "bounds": {
               "x": 1072,
-              "y": 1178,
+              "y": 1186,
               "width": 80,
               "height": 80
             }
           },
           "bounds": {
             "x": 1072,
-            "y": 1178,
+            "y": 1186,
             "width": 80,
             "height": 80
           }
@@ -13465,14 +13529,14 @@
             "role": "button",
             "bounds": {
               "x": 1072,
-              "y": 1776,
+              "y": 1784,
               "width": 80,
               "height": 80
             }
           },
           "bounds": {
             "x": 1072,
-            "y": 1776,
+            "y": 1784,
             "width": 80,
             "height": 80
           }
@@ -13544,15 +13608,14 @@
             "x": 32,
             "y": 144,
             "width": 1136,
-            "height": 388
+            "height": 396
           },
-          "label": "Sync status",
           "cornerRadius": 20
         },
         {
           "bounds": {
             "x": 32,
-            "y": 564,
+            "y": 572,
             "width": 1136,
             "height": 550
           },
@@ -13561,7 +13624,7 @@
         {
           "bounds": {
             "x": 32,
-            "y": 564,
+            "y": 572,
             "width": 1136,
             "height": 112
           },
@@ -13575,7 +13638,7 @@
         {
           "bounds": {
             "x": 80,
-            "y": 678,
+            "y": 686,
             "width": 1040,
             "height": 144
           },
@@ -13589,7 +13652,7 @@
         {
           "bounds": {
             "x": 64,
-            "y": 710,
+            "y": 718,
             "width": 80,
             "height": 80
           },
@@ -13598,7 +13661,7 @@
         {
           "bounds": {
             "x": 176,
-            "y": 776,
+            "y": 784,
             "width": 960,
             "height": 46
           },
@@ -13612,7 +13675,7 @@
         {
           "bounds": {
             "x": 80,
-            "y": 824,
+            "y": 832,
             "width": 1040,
             "height": 144
           },
@@ -13626,7 +13689,7 @@
         {
           "bounds": {
             "x": 64,
-            "y": 856,
+            "y": 864,
             "width": 80,
             "height": 80
           },
@@ -13635,7 +13698,7 @@
         {
           "bounds": {
             "x": 176,
-            "y": 922,
+            "y": 930,
             "width": 960,
             "height": 46
           },
@@ -13649,7 +13712,7 @@
         {
           "bounds": {
             "x": 80,
-            "y": 970,
+            "y": 978,
             "width": 1040,
             "height": 144
           },
@@ -13663,7 +13726,7 @@
         {
           "bounds": {
             "x": 64,
-            "y": 1002,
+            "y": 1010,
             "width": 80,
             "height": 80
           },
@@ -13672,7 +13735,7 @@
         {
           "bounds": {
             "x": 32,
-            "y": 1146,
+            "y": 1154,
             "width": 1136,
             "height": 566
           },
@@ -13681,7 +13744,7 @@
         {
           "bounds": {
             "x": 1072,
-            "y": 1178,
+            "y": 1186,
             "width": 80,
             "height": 80
           },
@@ -13691,16 +13754,16 @@
         {
           "bounds": {
             "x": 32,
-            "y": 1744,
+            "y": 1752,
             "width": 1136,
-            "height": 176
+            "height": 168
           },
           "cornerRadius": 12
         },
         {
           "bounds": {
             "x": 1072,
-            "y": 1776,
+            "y": 1784,
             "width": 80,
             "height": 80
           },
@@ -13785,14 +13848,14 @@
             "role": "button",
             "bounds": {
               "x": 1472,
-              "y": 1178,
+              "y": 1186,
               "width": 80,
               "height": 80
             }
           },
           "bounds": {
             "x": 1472,
-            "y": 1178,
+            "y": 1186,
             "width": 80,
             "height": 80
           }
@@ -13805,14 +13868,14 @@
             "role": "button",
             "bounds": {
               "x": 1472,
-              "y": 1776,
+              "y": 1784,
               "width": 80,
               "height": 80
             }
           },
           "bounds": {
             "x": 1472,
-            "y": 1776,
+            "y": 1784,
             "width": 80,
             "height": 80
           }
@@ -13884,15 +13947,14 @@
             "x": 32,
             "y": 144,
             "width": 1536,
-            "height": 388
+            "height": 396
           },
-          "label": "Sync status",
           "cornerRadius": 20
         },
         {
           "bounds": {
             "x": 32,
-            "y": 564,
+            "y": 572,
             "width": 1536,
             "height": 550
           },
@@ -13901,7 +13963,7 @@
         {
           "bounds": {
             "x": 32,
-            "y": 564,
+            "y": 572,
             "width": 1536,
             "height": 112
           },
@@ -13915,7 +13977,7 @@
         {
           "bounds": {
             "x": 80,
-            "y": 678,
+            "y": 686,
             "width": 1440,
             "height": 144
           },
@@ -13929,7 +13991,7 @@
         {
           "bounds": {
             "x": 64,
-            "y": 710,
+            "y": 718,
             "width": 80,
             "height": 80
           },
@@ -13938,7 +14000,7 @@
         {
           "bounds": {
             "x": 176,
-            "y": 776,
+            "y": 784,
             "width": 1360,
             "height": 46
           },
@@ -13952,7 +14014,7 @@
         {
           "bounds": {
             "x": 80,
-            "y": 824,
+            "y": 832,
             "width": 1440,
             "height": 144
           },
@@ -13966,7 +14028,7 @@
         {
           "bounds": {
             "x": 64,
-            "y": 856,
+            "y": 864,
             "width": 80,
             "height": 80
           },
@@ -13975,7 +14037,7 @@
         {
           "bounds": {
             "x": 176,
-            "y": 922,
+            "y": 930,
             "width": 1360,
             "height": 46
           },
@@ -13989,7 +14051,7 @@
         {
           "bounds": {
             "x": 80,
-            "y": 970,
+            "y": 978,
             "width": 1440,
             "height": 144
           },
@@ -14003,7 +14065,7 @@
         {
           "bounds": {
             "x": 64,
-            "y": 1002,
+            "y": 1010,
             "width": 80,
             "height": 80
           },
@@ -14012,7 +14074,7 @@
         {
           "bounds": {
             "x": 32,
-            "y": 1146,
+            "y": 1154,
             "width": 1536,
             "height": 566
           },
@@ -14021,7 +14083,7 @@
         {
           "bounds": {
             "x": 1472,
-            "y": 1178,
+            "y": 1186,
             "width": 80,
             "height": 80
           },
@@ -14031,16 +14093,16 @@
         {
           "bounds": {
             "x": 32,
-            "y": 1744,
+            "y": 1752,
             "width": 1536,
-            "height": 816
+            "height": 808
           },
           "cornerRadius": 12
         },
         {
           "bounds": {
             "x": 1472,
-            "y": 1776,
+            "y": 1784,
             "width": 80,
             "height": 80
           },
@@ -14125,14 +14187,14 @@
             "role": "button",
             "bounds": {
               "x": 1472,
-              "y": 1178,
+              "y": 1186,
               "width": 80,
               "height": 80
             }
           },
           "bounds": {
             "x": 1472,
-            "y": 1178,
+            "y": 1186,
             "width": 80,
             "height": 80
           }
@@ -14145,14 +14207,14 @@
             "role": "button",
             "bounds": {
               "x": 1472,
-              "y": 1776,
+              "y": 1784,
               "width": 80,
               "height": 80
             }
           },
           "bounds": {
             "x": 1472,
-            "y": 1776,
+            "y": 1784,
             "width": 80,
             "height": 80
           }
@@ -14224,15 +14286,14 @@
             "x": 32,
             "y": 144,
             "width": 1536,
-            "height": 388
+            "height": 396
           },
-          "label": "Sync status",
           "cornerRadius": 20
         },
         {
           "bounds": {
             "x": 32,
-            "y": 564,
+            "y": 572,
             "width": 1536,
             "height": 550
           },
@@ -14241,7 +14302,7 @@
         {
           "bounds": {
             "x": 32,
-            "y": 564,
+            "y": 572,
             "width": 1536,
             "height": 112
           },
@@ -14255,7 +14316,7 @@
         {
           "bounds": {
             "x": 80,
-            "y": 678,
+            "y": 686,
             "width": 1440,
             "height": 144
           },
@@ -14269,7 +14330,7 @@
         {
           "bounds": {
             "x": 64,
-            "y": 710,
+            "y": 718,
             "width": 80,
             "height": 80
           },
@@ -14278,7 +14339,7 @@
         {
           "bounds": {
             "x": 176,
-            "y": 776,
+            "y": 784,
             "width": 1360,
             "height": 46
           },
@@ -14292,7 +14353,7 @@
         {
           "bounds": {
             "x": 80,
-            "y": 824,
+            "y": 832,
             "width": 1440,
             "height": 144
           },
@@ -14306,7 +14367,7 @@
         {
           "bounds": {
             "x": 64,
-            "y": 856,
+            "y": 864,
             "width": 80,
             "height": 80
           },
@@ -14315,7 +14376,7 @@
         {
           "bounds": {
             "x": 176,
-            "y": 922,
+            "y": 930,
             "width": 1360,
             "height": 46
           },
@@ -14329,7 +14390,7 @@
         {
           "bounds": {
             "x": 80,
-            "y": 970,
+            "y": 978,
             "width": 1440,
             "height": 144
           },
@@ -14343,7 +14404,7 @@
         {
           "bounds": {
             "x": 64,
-            "y": 1002,
+            "y": 1010,
             "width": 80,
             "height": 80
           },
@@ -14352,7 +14413,7 @@
         {
           "bounds": {
             "x": 32,
-            "y": 1146,
+            "y": 1154,
             "width": 1536,
             "height": 566
           },
@@ -14361,7 +14422,7 @@
         {
           "bounds": {
             "x": 1472,
-            "y": 1178,
+            "y": 1186,
             "width": 80,
             "height": 80
           },
@@ -14371,16 +14432,16 @@
         {
           "bounds": {
             "x": 32,
-            "y": 1744,
+            "y": 1752,
             "width": 1536,
-            "height": 816
+            "height": 808
           },
           "cornerRadius": 12
         },
         {
           "bounds": {
             "x": 1472,
-            "y": 1776,
+            "y": 1784,
             "width": 80,
             "height": 80
           },
@@ -15583,7 +15644,7 @@
     "ee.schimke.cadence (CadenceTheme)"
   ],
   "renderer": "compose-preview 2.79.0",
-  "generatedAt": "2026-11-21T11:36:07.358Z",
+  "generatedAt": "2026-11-21T11:54:00.874Z",
   "failures": [
     {
       "id": "render-failed--googleoauthactivity--activity-googleoauthactivity",
@@ -15655,7 +15716,7 @@
   "componentsFile": "components.json",
   "source": {
     "repo": "yschimke/cadence",
-    "ref": "9235498e998fcdf012f175997b2fa4366870950a",
+    "ref": "cdcf602cce374d7cde4e2eef2846674ea7aa0ca9",
     "module": ""
   }
 }

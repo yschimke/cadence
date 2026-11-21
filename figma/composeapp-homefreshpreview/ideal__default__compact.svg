@@ -42,22 +42,22 @@
           <clipPath id="clip-1"><rect x="0" y="168" width="1076" height="4032"/></clipPath>
           <g id="LayoutNodeSubcompositionsState">
             <g clip-path="url(#clip-1)">
-              <clipPath id="clip-2"><rect x="42" y="189" width="992" height="620" rx="52.5" ry="52.5"/></clipPath>
+              <clipPath id="clip-2"><rect x="42" y="189" width="992" height="593" rx="52.5" ry="52.5"/></clipPath>
               <g id="Box">
                 <g clip-path="url(#clip-2)">
                   <g id="AndroidViewHolder">
-                    <image href="ideal__default__compact.figma-raster/2227.png" x="42" y="189" width="992" height="620"/>
+                    <image href="ideal__default__compact.figma-raster/1642.png" x="42" y="189" width="992" height="593"/>
                   </g>
                 </g>
               </g>
-              <clipPath id="clip-3"><rect x="42" y="851" width="992" height="1270" rx="31.5" ry="31.5"/></clipPath>
+              <clipPath id="clip-3"><rect x="42" y="824" width="992" height="1270" rx="31.5" ry="31.5"/></clipPath>
               <g id="Box">
-                <rect x="43" y="852" width="990" height="1268" rx="30.5" ry="30.5" fill="#FAF8FE" stroke="#B0B1BC" stroke-width="2.62"/>
+                <rect x="43" y="825" width="990" height="1268" rx="30.5" ry="30.5" fill="#FAF8FE" stroke="#B0B1BC" stroke-width="2.62"/>
                 <g clip-path="url(#clip-3)">
                   <g id="Column">
                     <g id="Row">
                       <g id="BoxKt" data-material-icon="podcasts" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/podcasts/v1/24px.svg">
-                        <g transform="translate(84 904) scale(2.62 2.62)">
+                        <g transform="translate(84 877) scale(2.62 2.62)">
                           <use href="#material-icon-materialicons-podcasts" xlink:href="#material-icon-materialicons-podcasts"/>
                         </g>
                       </g>
@@ -65,18 +65,18 @@
                       </g>
                       <g id="Column">
                         <g id="Empty">
-                          <text x="189" y="928.99" font-size="42" font-family="Roboto Flex" font-weight="500" letter-spacing="0.53" fill="#30323A">Pocket Casts Up Next</text>
+                          <text x="189" y="901.99" font-size="42" font-family="Roboto Flex" font-weight="500" letter-spacing="0.53" fill="#30323A">Pocket Casts Up Next</text>
                         </g>
                         <g id="Empty">
-                          <text x="189" y="977.86" font-size="31.5" font-family="Roboto Flex" font-weight="400" letter-spacing="1.05" fill="#5D5F68">3 episodes · 3 downloaded · 2 next</text>
+                          <text x="189" y="950.86" font-size="31.5" font-family="Roboto Flex" font-weight="400" letter-spacing="1.05" fill="#5D5F68">3 episodes · 3 downloaded · 2 next</text>
                         </g>
                       </g>
                     </g>
                     <g id="Empty">
-                      <text x="189" y="1030.86" font-size="31.5" font-family="Roboto Flex" font-weight="400" letter-spacing="1.05" fill="#5D5F68">Swipe left on an episode you've finished to archive it</text>
+                      <text x="189" y="1003.86" font-size="31.5" font-family="Roboto Flex" font-weight="400" letter-spacing="1.05" fill="#5D5F68">Swipe left on an episode you've finished to archive it</text>
                     </g>
                     <g id="Spacer">
-                      <g transform="translate(42 1062) scale(1 1)">
+                      <g transform="translate(42 1035) scale(1 1)">
                         <path d="M0,1.31 L992,1.31" fill="none" stroke="#B0B1BC" stroke-width="2.62"/>
                       </g>
                     </g>
@@ -84,25 +84,25 @@
                       <g id="Box">
                       </g>
                       <g id="Box">
-                        <rect x="42" y="1065" width="992" height="189" fill="#FAF8FE"/>
+                        <rect x="42" y="1038" width="992" height="189" fill="#FAF8FE"/>
                         <g id="MultiContentMeasurePolicyImpl">
                           <g id="Box">
-                            <rect x="84" y="1107" width="105" height="105" rx="21" ry="21" fill="#DCE2F9"/>
+                            <rect x="84" y="1080" width="105" height="105" rx="21" ry="21" fill="#DCE2F9"/>
                             <g id="BoxKt" data-material-icon="podcasts" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/podcasts/v1/24px.svg">
-                              <g transform="translate(110 1133) scale(2.2 2.2)">
+                              <g transform="translate(110 1106) scale(2.2 2.2)">
                                 <use href="#material-icon-materialicons-podcasts-2" xlink:href="#material-icon-materialicons-podcasts-2"/>
                               </g>
                             </g>
                           </g>
                           <g id="Empty">
-                            <text x="231" y="1133.99" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">412 — Tides of the Pacific</text>
+                            <text x="231" y="1106.99" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">412 — Tides of the Pacific</text>
                           </g>
                           <g id="Column">
                             <g id="Empty">
-                              <text x="231" y="1189.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">31:00 left · Downloaded</text>
+                              <text x="231" y="1162.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">31:00 left · Downloaded</text>
                             </g>
                             <g id="Spacer">
-                              <g transform="translate(231 1220) scale(1 1)">
+                              <g transform="translate(231 1193) scale(1 1)">
                                 <path d="M328.83,5.5 L755.5,5.5" fill="none" stroke="#DCE2F9" stroke-width="11" stroke-linecap="round"/>
                                 <path d="M5.5,5.5 L307.33,5.5" fill="none" stroke="#4C5E8B" stroke-width="11" stroke-linecap="round"/>
                                 <path d="M750.25,5.5 A5.25,5.25 0 1 0 760.75,5.5 A5.25,5.25 0 1 0 750.25,5.5 Z" fill="#4C5E8B"/>
@@ -113,7 +113,7 @@
                       </g>
                     </g>
                     <g id="Spacer">
-                      <g transform="translate(42 1254) scale(1 1)">
+                      <g transform="translate(42 1227) scale(1 1)">
                         <path d="M0,1.31 L992,1.31" fill="none" stroke="#B0B1BC" stroke-width="2.62"/>
                       </g>
                     </g>
@@ -121,25 +121,25 @@
                       <g id="Box">
                       </g>
                       <g id="Box">
-                        <rect x="42" y="1257" width="992" height="189" fill="#FAF8FE"/>
+                        <rect x="42" y="1230" width="992" height="189" fill="#FAF8FE"/>
                         <g id="MultiContentMeasurePolicyImpl">
                           <g id="Box">
-                            <rect x="84" y="1299" width="105" height="105" rx="21" ry="21" fill="#DCE2F9"/>
+                            <rect x="84" y="1272" width="105" height="105" rx="21" ry="21" fill="#DCE2F9"/>
                             <g id="BoxKt" data-material-icon="podcasts" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/podcasts/v1/24px.svg">
-                              <g transform="translate(110 1325) scale(2.2 2.2)">
+                              <g transform="translate(110 1298) scale(2.2 2.2)">
                                 <use href="#material-icon-materialicons-podcasts-2" xlink:href="#material-icon-materialicons-podcasts-2"/>
                               </g>
                             </g>
                           </g>
                           <g id="Empty">
-                            <text x="231" y="1325.99" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">Lighthouses of the North Sea</text>
+                            <text x="231" y="1298.99" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">Lighthouses of the North Sea</text>
                           </g>
                           <g id="Column">
                             <g id="Empty">
-                              <text x="231" y="1381.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">40:00 left · Downloaded</text>
+                              <text x="231" y="1354.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">40:00 left · Downloaded</text>
                             </g>
                             <g id="Spacer">
-                              <g transform="translate(231 1412) scale(1 1)">
+                              <g transform="translate(231 1385) scale(1 1)">
                                 <path d="M106.06,5.5 L755.5,5.5" fill="none" stroke="#DCE2F9" stroke-width="11" stroke-linecap="round"/>
                                 <path d="M5.5,5.5 L84.56,5.5" fill="none" stroke="#4C5E8B" stroke-width="11" stroke-linecap="round"/>
                                 <path d="M750.25,5.5 A5.25,5.25 0 1 0 760.75,5.5 A5.25,5.25 0 1 0 750.25,5.5 Z" fill="#4C5E8B"/>
@@ -150,7 +150,7 @@
                       </g>
                     </g>
                     <g id="Spacer">
-                      <g transform="translate(42 1446) scale(1 1)">
+                      <g transform="translate(42 1419) scale(1 1)">
                         <path d="M0,1.31 L992,1.31" fill="none" stroke="#B0B1BC" stroke-width="2.62"/>
                       </g>
                     </g>
@@ -158,35 +158,35 @@
                       <g id="Box">
                       </g>
                       <g id="Box">
-                        <rect x="42" y="1449" width="992" height="189" fill="#FAF8FE"/>
+                        <rect x="42" y="1422" width="992" height="189" fill="#FAF8FE"/>
                         <g id="MultiContentMeasurePolicyImpl">
                           <g id="Box">
-                            <rect x="84" y="1491" width="105" height="105" rx="21" ry="21" fill="#DCE2F9"/>
+                            <rect x="84" y="1464" width="105" height="105" rx="21" ry="21" fill="#DCE2F9"/>
                             <g id="BoxKt" data-material-icon="podcasts" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/podcasts/v1/24px.svg">
-                              <g transform="translate(110 1517) scale(2.2 2.2)">
+                              <g transform="translate(110 1490) scale(2.2 2.2)">
                                 <use href="#material-icon-materialicons-podcasts-2" xlink:href="#material-icon-materialicons-podcasts-2"/>
                               </g>
                             </g>
                           </g>
                           <g id="Empty">
-                            <text x="231" y="1531.99" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">Why the ocean is salty</text>
+                            <text x="231" y="1504.99" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">Why the ocean is salty</text>
                           </g>
                           <g id="Empty">
-                            <text x="231" y="1587.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">38:00 · Downloaded</text>
+                            <text x="231" y="1560.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">38:00 · Downloaded</text>
                           </g>
                         </g>
                       </g>
                     </g>
                     <g id="Spacer">
-                      <g transform="translate(42 1638) scale(1 1)">
+                      <g transform="translate(42 1611) scale(1 1)">
                         <path d="M0,1.31 L992,1.31" fill="none" stroke="#B0B1BC" stroke-width="2.62"/>
                       </g>
                     </g>
                     <g id="Empty">
-                      <text x="84" y="1711.92" font-size="36.75" font-family="Roboto Flex" font-weight="500" letter-spacing="0.26" fill="#5D5F68">Next in Pocket Casts Up Next · moves up as you archive</text>
+                      <text x="84" y="1684.92" font-size="36.75" font-family="Roboto Flex" font-weight="500" letter-spacing="0.26" fill="#5D5F68">Next in Pocket Casts Up Next · moves up as you archive</text>
                     </g>
                     <g id="Spacer">
-                      <g transform="translate(42 1737) scale(1 1)">
+                      <g transform="translate(42 1710) scale(1 1)">
                         <path d="M0,1.31 L992,1.31" fill="none" stroke="#B0B1BC" stroke-width="2.62"/>
                       </g>
                     </g>
@@ -194,27 +194,27 @@
                       <g id="Box">
                       </g>
                       <g id="Box">
-                        <rect x="42" y="1740" width="992" height="189" fill="#FAF8FE"/>
+                        <rect x="42" y="1713" width="992" height="189" fill="#FAF8FE"/>
                         <g id="MultiContentMeasurePolicyImpl">
                           <g id="Box">
-                            <rect x="84" y="1782" width="105" height="105" rx="21" ry="21" fill="#DCE2F9"/>
+                            <rect x="84" y="1755" width="105" height="105" rx="21" ry="21" fill="#DCE2F9"/>
                             <g id="BoxKt" data-material-icon="podcasts" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/podcasts/v1/24px.svg">
-                              <g transform="translate(110 1808) scale(2.2 2.2)">
+                              <g transform="translate(110 1781) scale(2.2 2.2)">
                                 <use href="#material-icon-materialicons-podcasts-2" xlink:href="#material-icon-materialicons-podcasts-2"/>
                               </g>
                             </g>
                           </g>
                           <g id="Empty">
-                            <text x="231" y="1822.99" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">The long swim home</text>
+                            <text x="231" y="1795.99" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">The long swim home</text>
                           </g>
                           <g id="Empty">
-                            <text x="231" y="1878.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">41:00</text>
+                            <text x="231" y="1851.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">41:00</text>
                           </g>
                         </g>
                       </g>
                     </g>
                     <g id="Spacer">
-                      <g transform="translate(42 1929) scale(1 1)">
+                      <g transform="translate(42 1902) scale(1 1)">
                         <path d="M0,1.31 L992,1.31" fill="none" stroke="#B0B1BC" stroke-width="2.62"/>
                       </g>
                     </g>
@@ -222,21 +222,21 @@
                       <g id="Box">
                       </g>
                       <g id="Box">
-                        <rect x="42" y="1932" width="992" height="189" fill="#FAF8FE"/>
+                        <rect x="42" y="1905" width="992" height="189" fill="#FAF8FE"/>
                         <g id="MultiContentMeasurePolicyImpl">
                           <g id="Box">
-                            <rect x="84" y="1974" width="105" height="105" rx="21" ry="21" fill="#DCE2F9"/>
+                            <rect x="84" y="1947" width="105" height="105" rx="21" ry="21" fill="#DCE2F9"/>
                             <g id="BoxKt" data-material-icon="podcasts" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/podcasts/v1/24px.svg">
-                              <g transform="translate(110 2000) scale(2.2 2.2)">
+                              <g transform="translate(110 1973) scale(2.2 2.2)">
                                 <use href="#material-icon-materialicons-podcasts-2" xlink:href="#material-icon-materialicons-podcasts-2"/>
                               </g>
                             </g>
                           </g>
                           <g id="Empty">
-                            <text x="231" y="2014.99" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">Cold water, warm hearts</text>
+                            <text x="231" y="1987.99" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">Cold water, warm hearts</text>
                           </g>
                           <g id="Empty">
-                            <text x="231" y="2070.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">33:00</text>
+                            <text x="231" y="2043.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">33:00</text>
                           </g>
                         </g>
                       </g>
@@ -245,34 +245,34 @@
                 </g>
               </g>
               <g id="Box">
-                <rect x="43" y="2164" width="990" height="187" rx="30.5" ry="30.5" fill="#FAF8FE" stroke="#B0B1BC" stroke-width="2.62"/>
+                <rect x="43" y="2137" width="990" height="187" rx="30.5" ry="30.5" fill="#FAF8FE" stroke="#B0B1BC" stroke-width="2.62"/>
                 <g id="MultiContentMeasurePolicyImpl">
                   <g id="BoxKt" data-material-icon="new_releases" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/new_releases/v1/24px.svg">
-                    <g transform="translate(84 2226) scale(2.62 2.62)">
+                    <g transform="translate(84 2199) scale(2.62 2.62)">
                       <use href="#material-icon-materialicons-new_releases" xlink:href="#material-icon-materialicons-new_releases"/>
                     </g>
                   </g>
                   <g id="Empty">
-                    <text x="189" y="2245.98" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">Find more content</text>
+                    <text x="189" y="2218.98" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">Find more content</text>
                   </g>
                   <g id="Empty">
-                    <text x="189" y="2301.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">3 new releases from your subscriptions</text>
+                    <text x="189" y="2274.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">3 new releases from your subscriptions</text>
                   </g>
                   <g id="BoxKt" data-material-icon="keyboard_arrow_right" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/keyboard_arrow_right/v1/24px.svg" data-material-icon-auto-mirrored="true">
-                    <g transform="translate(929 2226) scale(2.62 2.62)">
+                    <g transform="translate(929 2199) scale(2.62 2.62)">
                       <use href="#material-icon-materialicons-keyboard_arrow_right" xlink:href="#material-icon-materialicons-keyboard_arrow_right"/>
                     </g>
                   </g>
                 </g>
               </g>
-              <clipPath id="clip-4"><rect x="42" y="2394" width="992" height="745" rx="31.5" ry="31.5"/></clipPath>
+              <clipPath id="clip-4"><rect x="42" y="2367" width="992" height="745" rx="31.5" ry="31.5"/></clipPath>
               <g id="Box">
-                <rect x="43" y="2395" width="990" height="743" rx="30.5" ry="30.5" fill="#FAF8FE" stroke="#B0B1BC" stroke-width="2.62"/>
+                <rect x="43" y="2368" width="990" height="743" rx="30.5" ry="30.5" fill="#FAF8FE" stroke="#B0B1BC" stroke-width="2.62"/>
                 <g clip-path="url(#clip-4)">
                   <g id="Column">
                     <g id="Row">
                       <g id="BoxKt" data-material-icon="folder" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/folder/v1/24px.svg">
-                        <g transform="translate(84 2458) scale(2.62 2.62)">
+                        <g transform="translate(84 2431) scale(2.62 2.62)">
                           <use href="#material-icon-materialicons-folder" xlink:href="#material-icon-materialicons-folder"/>
                         </g>
                       </g>
@@ -280,80 +280,80 @@
                       </g>
                       <g id="Column">
                         <g id="Empty">
-                          <text x="189" y="2482.98" font-size="42" font-family="Roboto Flex" font-weight="500" letter-spacing="0.53" fill="#30323A">Podbean — staged</text>
+                          <text x="189" y="2455.98" font-size="42" font-family="Roboto Flex" font-weight="500" letter-spacing="0.53" fill="#30323A">Podbean — staged</text>
                         </g>
                         <g id="Empty">
-                          <text x="189" y="2531.86" font-size="31.5" font-family="Roboto Flex" font-weight="400" letter-spacing="1.05" fill="#5D5F68">3 files · 153 MB · staged 2026-04-25</text>
+                          <text x="189" y="2504.86" font-size="31.5" font-family="Roboto Flex" font-weight="400" letter-spacing="1.05" fill="#5D5F68">3 files · 153 MB · staged 2026-04-25</text>
                         </g>
                       </g>
                       <g id="Box">
                         <g id="BoxKt" data-material-icon="refresh" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/refresh/v1/24px.svg">
-                          <g transform="translate(929 2458) scale(2.62 2.62)">
+                          <g transform="translate(929 2431) scale(2.62 2.62)">
                             <use href="#material-icon-materialicons-refresh" xlink:href="#material-icon-materialicons-refresh"/>
                           </g>
                         </g>
                       </g>
                     </g>
                     <g id="Spacer">
-                      <g transform="translate(42 2563) scale(1 1)">
+                      <g transform="translate(42 2536) scale(1 1)">
                         <path d="M0,1.31 L992,1.31" fill="none" stroke="#B0B1BC" stroke-width="2.62"/>
                       </g>
                     </g>
                     <g id="Box">
-                      <rect x="42" y="2566" width="992" height="189" fill="#FAF8FE"/>
+                      <rect x="42" y="2539" width="992" height="189" fill="#FAF8FE"/>
                       <g id="MultiContentMeasurePolicyImpl">
                         <g id="BoxKt" data-material-icon="insert_drive_file" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/insert_drive_file/v1/24px.svg" data-material-icon-auto-mirrored="true">
-                          <g transform="translate(84 2629) scale(2.62 2.62)">
+                          <g transform="translate(84 2602) scale(2.62 2.62)">
                             <use href="#material-icon-materialicons-insert_drive_file" xlink:href="#material-icon-materialicons-insert_drive_file"/>
                           </g>
                         </g>
                         <g id="Empty">
-                          <text x="189" y="2648.99" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">2026-10-28.mp3</text>
+                          <text x="189" y="2621.99" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">2026-10-28.mp3</text>
                         </g>
                         <g id="Empty">
-                          <text x="189" y="2704.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">Morning Briefing · 38 MB</text>
+                          <text x="189" y="2677.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">Morning Briefing · 38 MB</text>
                         </g>
                       </g>
                     </g>
                     <g id="Spacer">
-                      <g transform="translate(42 2755) scale(1 1)">
+                      <g transform="translate(42 2728) scale(1 1)">
                         <path d="M0,1.31 L992,1.31" fill="none" stroke="#B0B1BC" stroke-width="2.62"/>
                       </g>
                     </g>
                     <g id="Box">
-                      <rect x="42" y="2758" width="992" height="189" fill="#FAF8FE"/>
+                      <rect x="42" y="2731" width="992" height="189" fill="#FAF8FE"/>
                       <g id="MultiContentMeasurePolicyImpl">
                         <g id="BoxKt" data-material-icon="insert_drive_file" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/insert_drive_file/v1/24px.svg" data-material-icon-auto-mirrored="true">
-                          <g transform="translate(84 2821) scale(2.62 2.62)">
+                          <g transform="translate(84 2794) scale(2.62 2.62)">
                             <use href="#material-icon-materialicons-insert_drive_file" xlink:href="#material-icon-materialicons-insert_drive_file"/>
                           </g>
                         </g>
                         <g id="Empty">
-                          <text x="189" y="2840.99" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">2026-10-27.mp3</text>
+                          <text x="189" y="2813.99" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">2026-10-27.mp3</text>
                         </g>
                         <g id="Empty">
-                          <text x="189" y="2896.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">Morning Briefing · 41 MB</text>
+                          <text x="189" y="2869.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">Morning Briefing · 41 MB</text>
                         </g>
                       </g>
                     </g>
                     <g id="Spacer">
-                      <g transform="translate(42 2947) scale(1 1)">
+                      <g transform="translate(42 2920) scale(1 1)">
                         <path d="M0,1.31 L992,1.31" fill="none" stroke="#B0B1BC" stroke-width="2.62"/>
                       </g>
                     </g>
                     <g id="Box">
-                      <rect x="42" y="2950" width="992" height="189" fill="#FAF8FE"/>
+                      <rect x="42" y="2923" width="992" height="189" fill="#FAF8FE"/>
                       <g id="MultiContentMeasurePolicyImpl">
                         <g id="BoxKt" data-material-icon="insert_drive_file" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/insert_drive_file/v1/24px.svg" data-material-icon-auto-mirrored="true">
-                          <g transform="translate(84 3013) scale(2.62 2.62)">
+                          <g transform="translate(84 2986) scale(2.62 2.62)">
                             <use href="#material-icon-materialicons-insert_drive_file" xlink:href="#material-icon-materialicons-insert_drive_file"/>
                           </g>
                         </g>
                         <g id="Empty">
-                          <text x="189" y="3032.99" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">412 Tides of the Pacific.mp3</text>
+                          <text x="189" y="3005.99" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">412 Tides of the Pacific.mp3</text>
                         </g>
                         <g id="Empty">
-                          <text x="189" y="3088.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">Tides · 74 MB</text>
+                          <text x="189" y="3061.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">Tides · 74 MB</text>
                         </g>
                       </g>
                     </g>
@@ -361,11 +361,11 @@
                 </g>
               </g>
               <g id="Box">
-                <rect x="43" y="3182" width="990" height="1256" rx="30.5" ry="30.5" fill="#FAF8FE" stroke="#B0B1BC" stroke-width="2.62"/>
+                <rect x="43" y="3155" width="990" height="1256" rx="30.5" ry="30.5" fill="#FAF8FE" stroke="#B0B1BC" stroke-width="2.62"/>
                 <g id="Column">
                   <g id="Row">
                     <g id="BoxKt" data-material-icon="cloud" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/cloud/v1/24px.svg">
-                      <g transform="translate(84 3245) scale(2.62 2.62)">
+                      <g transform="translate(84 3218) scale(2.62 2.62)">
                         <use href="#material-icon-materialicons-cloud" xlink:href="#material-icon-materialicons-cloud"/>
                       </g>
                     </g>
@@ -373,133 +373,133 @@
                     </g>
                     <g id="Column">
                       <g id="Empty">
-                        <text x="189" y="3269.99" font-size="42" font-family="Roboto Flex" font-weight="500" letter-spacing="0.53" fill="#30323A">Drive — Swim Mixes</text>
+                        <text x="189" y="3242.99" font-size="42" font-family="Roboto Flex" font-weight="500" letter-spacing="0.53" fill="#30323A">Drive — Swim Mixes</text>
                       </g>
                       <g id="Empty">
-                        <text x="189" y="3318.86" font-size="31.5" font-family="Roboto Flex" font-weight="400" letter-spacing="1.05" fill="#5D5F68">8 files · 108 MB · staged 2026-04-24</text>
+                        <text x="189" y="3291.86" font-size="31.5" font-family="Roboto Flex" font-weight="400" letter-spacing="1.05" fill="#5D5F68">8 files · 108 MB · staged 2026-04-24</text>
                       </g>
                     </g>
                     <g id="Box">
                       <g id="BoxKt" data-material-icon="refresh" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/refresh/v1/24px.svg">
-                        <g transform="translate(929 3245) scale(2.62 2.62)">
+                        <g transform="translate(929 3218) scale(2.62 2.62)">
                           <use href="#material-icon-materialicons-refresh" xlink:href="#material-icon-materialicons-refresh"/>
                         </g>
                       </g>
                     </g>
                   </g>
                   <g id="Spacer">
-                    <g transform="translate(42 3350) scale(1 1)">
+                    <g transform="translate(42 3323) scale(1 1)">
                       <path d="M0,1.31 L992,1.31" fill="none" stroke="#B0B1BC" stroke-width="2.62"/>
                     </g>
                   </g>
                   <g id="Box">
-                    <rect x="42" y="3353" width="992" height="189" fill="#FAF8FE"/>
+                    <rect x="42" y="3326" width="992" height="189" fill="#FAF8FE"/>
                     <g id="MultiContentMeasurePolicyImpl">
                       <g id="BoxKt" data-material-icon="insert_drive_file" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/insert_drive_file/v1/24px.svg" data-material-icon-auto-mirrored="true">
-                        <g transform="translate(84 3416) scale(2.62 2.62)">
+                        <g transform="translate(84 3389) scale(2.62 2.62)">
                           <use href="#material-icon-materialicons-insert_drive_file" xlink:href="#material-icon-materialicons-insert_drive_file"/>
                         </g>
                       </g>
                       <g id="Empty">
-                        <text x="189" y="3435.99" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">Set 1.mp3</text>
+                        <text x="189" y="3408.99" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">Set 1.mp3</text>
                       </g>
                       <g id="Empty">
-                        <text x="189" y="3491.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">Intervals · 10 MB</text>
+                        <text x="189" y="3464.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">Intervals · 10 MB</text>
                       </g>
                     </g>
                   </g>
                   <g id="Spacer">
-                    <g transform="translate(42 3542) scale(1 1)">
+                    <g transform="translate(42 3515) scale(1 1)">
                       <path d="M0,1.31 L992,1.31" fill="none" stroke="#B0B1BC" stroke-width="2.62"/>
                     </g>
                   </g>
                   <g id="Box">
-                    <rect x="42" y="3545" width="992" height="189" fill="#FAF8FE"/>
+                    <rect x="42" y="3518" width="992" height="189" fill="#FAF8FE"/>
                     <g id="MultiContentMeasurePolicyImpl">
                       <g id="BoxKt" data-material-icon="insert_drive_file" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/insert_drive_file/v1/24px.svg" data-material-icon-auto-mirrored="true">
-                        <g transform="translate(84 3608) scale(2.62 2.62)">
+                        <g transform="translate(84 3581) scale(2.62 2.62)">
                           <use href="#material-icon-materialicons-insert_drive_file" xlink:href="#material-icon-materialicons-insert_drive_file"/>
                         </g>
                       </g>
                       <g id="Empty">
-                        <text x="189" y="3627.99" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">Set 2.mp3</text>
+                        <text x="189" y="3600.99" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">Set 2.mp3</text>
                       </g>
                       <g id="Empty">
-                        <text x="189" y="3683.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">Intervals · 11 MB</text>
+                        <text x="189" y="3656.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">Intervals · 11 MB</text>
                       </g>
                     </g>
                   </g>
                   <g id="Spacer">
-                    <g transform="translate(42 3734) scale(1 1)">
+                    <g transform="translate(42 3707) scale(1 1)">
                       <path d="M0,1.31 L992,1.31" fill="none" stroke="#B0B1BC" stroke-width="2.62"/>
                     </g>
                   </g>
                   <g id="Box">
-                    <rect x="42" y="3737" width="992" height="189" fill="#FAF8FE"/>
+                    <rect x="42" y="3710" width="992" height="189" fill="#FAF8FE"/>
                     <g id="MultiContentMeasurePolicyImpl">
                       <g id="BoxKt" data-material-icon="insert_drive_file" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/insert_drive_file/v1/24px.svg" data-material-icon-auto-mirrored="true">
-                        <g transform="translate(84 3800) scale(2.62 2.62)">
+                        <g transform="translate(84 3773) scale(2.62 2.62)">
                           <use href="#material-icon-materialicons-insert_drive_file" xlink:href="#material-icon-materialicons-insert_drive_file"/>
                         </g>
                       </g>
                       <g id="Empty">
-                        <text x="189" y="3819.99" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">Set 3.mp3</text>
+                        <text x="189" y="3792.99" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">Set 3.mp3</text>
                       </g>
                       <g id="Empty">
-                        <text x="189" y="3875.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">Intervals · 12 MB</text>
+                        <text x="189" y="3848.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">Intervals · 12 MB</text>
                       </g>
                     </g>
                   </g>
                   <g id="Spacer">
-                    <g transform="translate(42 3926) scale(1 1)">
+                    <g transform="translate(42 3899) scale(1 1)">
                       <path d="M0,1.31 L992,1.31" fill="none" stroke="#B0B1BC" stroke-width="2.62"/>
                     </g>
                   </g>
                   <g id="Box">
-                    <rect x="42" y="3929" width="992" height="189" fill="#FAF8FE"/>
+                    <rect x="42" y="3902" width="992" height="189" fill="#FAF8FE"/>
                     <g id="MultiContentMeasurePolicyImpl">
                       <g id="BoxKt" data-material-icon="insert_drive_file" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/insert_drive_file/v1/24px.svg" data-material-icon-auto-mirrored="true">
-                        <g transform="translate(84 3992) scale(2.62 2.62)">
+                        <g transform="translate(84 3965) scale(2.62 2.62)">
                           <use href="#material-icon-materialicons-insert_drive_file" xlink:href="#material-icon-materialicons-insert_drive_file"/>
                         </g>
                       </g>
                       <g id="Empty">
-                        <text x="189" y="4011.99" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">Set 4.mp3</text>
+                        <text x="189" y="3984.99" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">Set 4.mp3</text>
                       </g>
                       <g id="Empty">
-                        <text x="189" y="4067.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">Intervals · 13 MB</text>
+                        <text x="189" y="4040.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">Intervals · 13 MB</text>
                       </g>
                     </g>
                   </g>
                   <g id="Spacer">
-                    <g transform="translate(42 4118) scale(1 1)">
+                    <g transform="translate(42 4091) scale(1 1)">
                       <path d="M0,1.31 L992,1.31" fill="none" stroke="#B0B1BC" stroke-width="2.62"/>
                     </g>
                   </g>
                   <g id="Box">
-                    <rect x="42" y="4121" width="992" height="189" fill="#FAF8FE"/>
+                    <rect x="42" y="4094" width="992" height="189" fill="#FAF8FE"/>
                     <g id="MultiContentMeasurePolicyImpl">
                       <g id="BoxKt" data-material-icon="insert_drive_file" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/insert_drive_file/v1/24px.svg" data-material-icon-auto-mirrored="true">
-                        <g transform="translate(84 4184) scale(2.62 2.62)">
+                        <g transform="translate(84 4157) scale(2.62 2.62)">
                           <use href="#material-icon-materialicons-insert_drive_file" xlink:href="#material-icon-materialicons-insert_drive_file"/>
                         </g>
                       </g>
                       <g id="Empty">
-                        <text x="189" y="4203.99" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">Set 5.mp3</text>
+                        <text x="189" y="4176.99" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">Set 5.mp3</text>
                       </g>
                       <g id="Empty">
-                        <text x="189" y="4259.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">Intervals · 14 MB</text>
+                        <text x="189" y="4232.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">Intervals · 14 MB</text>
                       </g>
                     </g>
                   </g>
                   <g id="Spacer">
-                    <g transform="translate(42 4310) scale(1 1)">
+                    <g transform="translate(42 4283) scale(1 1)">
                       <path d="M0,1.31 L992,1.31" fill="none" stroke="#B0B1BC" stroke-width="2.62"/>
                     </g>
                   </g>
                   <g id="Box">
                     <g id="Empty">
-                      <text x="95" y="4388.92" font-size="36.75" font-family="Roboto Flex" font-weight="500" letter-spacing="0.26" fill="#4C5E8B">Show all 8</text>
+                      <text x="95" y="4361.92" font-size="36.75" font-family="Roboto Flex" font-weight="500" letter-spacing="0.26" fill="#4C5E8B">Show all 8</text>
                     </g>
                   </g>
                 </g>

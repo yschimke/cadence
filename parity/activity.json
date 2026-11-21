@@ -1,11 +1,27 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-21T11:36:11.497Z",
+  "generatedAt": "2026-11-21T11:54:04.999Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "cdcf602cce374d7cde4e2eef2846674ea7aa0ca9",
+        "subject": "fix: pin swim clock in notification previews (#681)",
+        "at": "2026-11-21T11:36:55Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "466aeada88c40b36a67d8c5fd011242604ada638",
+        "subject": "feat: put the status card's buttons beside the status, at 48dp (#680)",
+        "at": "2026-11-21T11:30:12Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "9235498e998fcdf012f175997b2fa4366870950a",
         "subject": "fix(deps): update dependency ee.schimke.composeai:rc-players-bom to v3.10.0 (#679)",
@@ -467,22 +483,6 @@
         "subject": "perf(android): apply Android memory guidance (isolate listener process, R8, ComponentCallbacks2) (#621)",
         "at": "2026-11-14T11:14:32Z",
         "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "639cd2b5a397352d9eb25bb522b33dd53a16f02c",
-        "subject": "ci: run the Livery CLI at 0.11.0 to match the workflow (#617)",
-        "at": "2026-11-14T10:25:35Z",
-        "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "dc07aefedec18953f86f6b5ae7e231024301d2bc",
-        "subject": "chore(deps): update actions/setup-java action to v6.3.0 (#620)",
-        "at": "2026-11-14T05:51:18Z",
-        "author": "renovate[bot]",
         "previewIds": [],
         "components": []
       }
