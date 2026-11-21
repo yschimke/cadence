@@ -5,6 +5,7 @@ package ee.schimke.cadence.podcasts
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BatteryFull
 import androidx.compose.material.icons.filled.Cloud
+import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.Headphones
 import androidx.compose.material.icons.filled.Sync
 import androidx.compose.remote.creation.compose.action.RemoteAction
@@ -430,15 +431,27 @@ private fun StatusButton(button: StatusCardButton, colors: WidgetColors, fill: B
         .padding(horizontal = 16.rdp),
     contentAlignment = RemoteAlignment.Center,
   ) {
-    RemoteText(
-      button.label.rs,
-      color = (if (button.primary) colors.onPrimary else colors.primary).rc,
-      fontSize = 14.rsp,
-      fontWeight = RemoteFontWeight.Medium,
-      maxLines = 1,
-    )
+    val content = if (button.primary) colors.onPrimary else colors.primary
+    val icon = statusButtonIcon(button.id)
+    // A known action reads as its icon; the label stays as what a screen reader says.
+    if (icon != null) SyncStatusIcon(icon, content, 24)
+    else
+      RemoteText(
+        button.label.rs,
+        color = content.rc,
+        fontSize = 14.rsp,
+        fontWeight = RemoteFontWeight.Medium,
+        maxLines = 1,
+      )
   }
 }
+
+/** The icon drawn in place of a button's label, or null to show the label. */
+internal fun statusButtonIcon(id: String): ImageVector? =
+  when (id) {
+    "download" -> Icons.Filled.Download
+    else -> null
+  }
 
 /** "138m" as "2h 18m"; anything else unchanged. */
 internal fun compactMinutes(part: String): String {

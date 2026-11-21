@@ -233,32 +233,46 @@ class PodcastController(val platform: PodcastPlatform) {
   }
 
   /**
-   * Replaces the playlist with [text]'s snapshot. [upcoming] and [added] are saved in the same
-   * write, so a refresh cancelled during the cache checks below never loses them.
+   * Replaces the main source's episodes with [text]'s snapshot. [upcoming] and [added] are saved in
+   * the same write, so a refresh cancelled during the cache checks below never loses them.
+   *
+   * A [PodcastLibrary.second] source stays, with its episodes, when [kind] is the other service of
+   * the pair; any other import replaces both.
    */
   suspend fun importSnapshot(
     text: String,
     upcoming: List<Episode> = emptyList(),
     added: List<Episode> = emptyList(),
+    kind: PodcastSourceKind? = null,
   ) {
     val snapshot = podcastJson.decodeFromString<PlaylistSnapshot>(text)
     snapshot.validate()
+    val library = state.value.library
+    val second = library.second?.takeIf { kind in PAIRED_SOURCES && kind != it.kind }
+    val playlist =
+      snapshot.copy(
+        episodes =
+          snapshot.episodes.filterNot { it.backend == second?.backend } +
+            library.playlist?.episodes.orEmpty().filter { it.backend == second?.backend },
+      )
+    playlist.validate()
     save(
       state.value.copy(
         library =
-          state.value.library.copy(
-            playlist = snapshot,
+          library.copy(
+            playlist = playlist,
             upcoming = upcoming,
             added = added,
             feedUrl = "",
             manifests = emptyList(),
+            second = second,
             lastBackendSync = Clock.System.now().toString(),
           ),
         readySectionIds = emptySet(),
         copiedSectionIds = emptySet(),
       ),
     )
-    platform.pruneAudio(snapshot.episodes)
+    platform.pruneAudio(playlist.episodes)
     recheckDownloads()
     recheckCachedProcessing()
   }
@@ -499,6 +513,102 @@ class PodcastController(val platform: PodcastPlatform) {
       PodcastSourceKind.LibroFm -> importLibroFm(library.sourceList, library.feedLatest)
       else -> throw PodcastProblem("Import a new export to update these episodes")
     }
+    val second = state.value.library.second ?: return
+    val first = notice
+    importSecond(second.kind, second.list, second.latest)
+    notice = listOfNotNull(first, notice).joinToString(" · ")
+  }
+
+  /**
+   * Adds [kind] beside the main source, or reads it again: the first [latest] of [list] join the
+   * synced episodes after the main source's, and the rest wait in [SecondSource.upcoming]. Only
+   * Pocket Casts and Libro.fm pair up, one of each.
+   */
+  suspend fun importSecond(
+    kind: PodcastSourceKind,
+    list: String,
+    latest: Int = state.value.library.feedLatest,
+  ) {
+    val main = state.value.library.source
+    if (state.value.library.playlist == null || main !in PAIRED_SOURCES)
+      throw PodcastProblem("Add Pocket Casts or Libro.fm first, then the other beside it")
+    if (kind !in PAIRED_SOURCES || kind == main)
+      throw PodcastProblem("${kind.title} can't be added beside ${main.title}")
+    val backend = sourceBackend(kind)
+    val name: String
+    val all: List<Episode>
+    val skipped: Int
+    if (kind == PodcastSourceKind.PocketCasts) {
+      val (snapshot, missing) = readPocketCasts(pocketCastsReader(), list, MAX_FEED_EPISODES)
+      name = snapshot.name
+      all = snapshot.episodes
+      skipped = missing
+    } else {
+      val api = libroFm()
+      val books = api.library()
+      libroFmBooks.value = books
+      val (snapshot, missing) = libroFmSnapshot(books, list)
+      name = snapshot.name
+      // Libro.fm has no position to read, so this app's own is kept across refreshes.
+      all = keepLocalPositions(libroFmFormats(api, snapshot.episodes, latest))
+      skipped = missing
+    }
+    val library = state.value.library
+    val current = library.playlist ?: throw PodcastProblem("Connect a source first")
+    val playlist =
+      current.copy(
+        episodes = current.episodes.filterNot { it.backend == backend } + all.take(latest),
+      )
+    playlist.validate()
+    save(
+      state.value.copy(
+        library =
+          library.copy(
+            playlist = playlist,
+            second = SecondSource(kind, list, name, latest, all.drop(latest)),
+            manifests =
+              library.manifests.filter { manifest ->
+                playlist.episodes.any { it.key == manifest.episode.key }
+              },
+            lastBackendSync = Clock.System.now().toString(),
+          ),
+      ),
+    )
+    platform.pruneAudio(playlist.episodes)
+    recheckDownloads()
+    recheckCachedProcessing()
+    val noun = if (kind == PodcastSourceKind.LibroFm) "audiobook" else "episode"
+    val later = all.size - minOf(all.size, latest)
+    notice =
+      if (all.isEmpty()) "Added $name beside ${main.title}, empty for now"
+      else
+        "Added ${count(minOf(all.size, latest), noun)} from $name beside ${main.title}" +
+          (if (later > 0) " · $later more listed" else "") +
+          if (skipped > 0) " · skipped $skipped without a known length" else ""
+  }
+
+  /** Forgets the second source's episodes and their audio; the main source stays. */
+  suspend fun removeSecondSource() {
+    val library = state.value.library
+    val second = library.second ?: return
+    val playlist =
+      library.playlist?.let { playlist ->
+        playlist.copy(episodes = playlist.episodes.filterNot { it.backend == second.backend })
+      }
+    save(
+      state.value.copy(
+        library =
+          library.copy(
+            playlist = playlist,
+            second = null,
+            manifests = library.manifests.filterNot { it.episode.backend == second.backend },
+          ),
+      ),
+    )
+    playlist?.let { platform.pruneAudio(it.episodes) }
+    recheckDownloads()
+    recheckCachedProcessing()
+    notice = "Removed ${second.name.ifBlank { second.kind.title }}"
   }
 
   /** Forgets the imported episodes and prepared sections; sign-ins and settings stay. */
@@ -589,6 +699,7 @@ class PodcastController(val platform: PodcastPlatform) {
       podcastJson.encodeToString(snapshot.copy(episodes = all.take(latest))),
       upcoming = all.drop(latest),
       added = added,
+      kind = PodcastSourceKind.PocketCasts,
     )
     save(
       state.value.copy(
@@ -648,6 +759,7 @@ class PodcastController(val platform: PodcastPlatform) {
     importSnapshot(
       podcastJson.encodeToString(snapshot.copy(episodes = all.take(latest))),
       upcoming = all.drop(latest),
+      kind = PodcastSourceKind.LibroFm,
     )
     save(
       state.value.copy(
@@ -788,7 +900,14 @@ class PodcastController(val platform: PodcastPlatform) {
 
   /** Whether an episode can be archived in its source from here. */
   val canArchive: Boolean
-    get() = state.value.library.source == PodcastSourceKind.PocketCasts && pocketCastsWritable
+    get() =
+      PodcastSourceKind.PocketCasts.let {
+        state.value.library.source == it || state.value.library.second?.kind == it
+      } && pocketCastsWritable
+
+  /** Whether [episode] can be archived: a Pocket Casts one, when [canArchive]. */
+  fun canArchive(episode: Episode): Boolean =
+    canArchive && episode.backend == sourceBackend(PodcastSourceKind.PocketCasts)
 
   /**
    * Whether a fresh episode can be added to the source. Up Next takes it in Pocket Casts too;
@@ -796,11 +915,11 @@ class PodcastController(val platform: PodcastPlatform) {
    * here.
    */
   val canAddFresh: Boolean
-    get() = canArchive
+    get() = canArchive && state.value.library.source == PodcastSourceKind.PocketCasts
 
   /** Whether this source offers fresh episodes at all. */
   val supportsFresh: Boolean
-    get() = canArchive
+    get() = canAddFresh
 
   private fun pocketCastsWriter() =
     PocketCastsApi(platform, state.value.pocketCasts, ::nowMs) { session ->
@@ -825,10 +944,13 @@ class PodcastController(val platform: PodcastPlatform) {
     val episode =
       library.allEpisodes.firstOrNull { it.key == episodeKey }
         ?: throw PodcastProblem("Episode no longer available")
+    if (!canArchive(episode)) throw PodcastProblem("Only Pocket Casts episodes can be archived")
+    val fromSecond = library.fromSecond(episode)
+    val list = if (fromSecond) library.second?.list else library.sourceList
     val api = pocketCastsWriter()
     val podcast = podcastUuid(api, episode)
     api.sendPosition(episode.id, podcast, episode.durationMs, episode.durationMs)
-    if (library.sourceList == POCKET_CASTS_UP_NEXT) api.upNext(UP_NEXT_REMOVE, episode, podcast)
+    if (list == POCKET_CASTS_UP_NEXT) api.upNext(UP_NEXT_REMOVE, episode, podcast)
     // Archiving is a web-player call; played and out of Up Next is already the important part.
     val archived =
       try {
@@ -845,21 +967,37 @@ class PodcastController(val platform: PodcastPlatform) {
       }
     val current = state.value.library
     val kept = (current.playlist ?: playlist).episodes.filterNot { it.key == episodeKey }
-    val waiting = current.upcoming.filterNot { it.key == episodeKey }
-    // The next one in the list moves up into the synced episodes without another refresh.
-    val promoted = waiting.take((current.feedLatest - kept.size).coerceAtLeast(0))
+    // The next one in its source's list moves up into the synced episodes without another
+    // refresh. Each source counts only its own toward its limit.
+    val (main, beside) = kept.partition { !current.fromSecond(it) }
+    val second = current.second
+    val next =
+      if (fromSecond && second != null) {
+        val waiting = second.upcoming.filterNot { it.key == episodeKey }
+        val promoted = waiting.take((second.latest - beside.size).coerceAtLeast(0))
+        current.copy(
+          playlist = (current.playlist ?: playlist).copy(episodes = main + beside + promoted),
+          second = second.copy(upcoming = waiting.drop(promoted.size)),
+        )
+      } else {
+        val waiting = current.upcoming.filterNot { it.key == episodeKey }
+        val promoted = waiting.take((current.feedLatest - main.size).coerceAtLeast(0))
+        current.copy(
+          playlist = (current.playlist ?: playlist).copy(episodes = main + promoted + beside),
+          upcoming = waiting.drop(promoted.size),
+        )
+      }
+    val promoted = next.playlist!!.episodes.size - kept.size
     save(
       state.value.copy(
         library =
-          current.copy(
-            playlist = (current.playlist ?: playlist).copy(episodes = kept + promoted),
-            upcoming = waiting.drop(promoted.size),
+          next.copy(
             added = current.added.filterNot { it.key == episodeKey },
             manifests = current.manifests.filterNot { it.episode.key == episodeKey },
           ),
       ),
     )
-    if (promoted.isNotEmpty()) {
+    if (promoted > 0) {
       recheckDownloads()
       recheckCachedProcessing()
     }
@@ -899,14 +1037,14 @@ class PodcastController(val platform: PodcastPlatform) {
     val library = current.library
     val playlist = library.playlist ?: throw PodcastProblem("Connect a source first")
     val present = library.allEpisodes.any { it.key == episodeKey }
-    val room = library.upcoming.isEmpty() && playlist.episodes.size < library.feedLatest
+    val (main, beside) = playlist.episodes.partition { !library.fromSecond(it) }
+    val room = library.upcoming.isEmpty() && main.size < library.feedLatest
     save(
       current.copy(
         library =
           library.copy(
             playlist =
-              if (present || !room) playlist
-              else playlist.copy(episodes = playlist.episodes + episode),
+              if (present || !room) playlist else playlist.copy(episodes = main + episode + beside),
             upcoming = if (present || room) library.upcoming else library.upcoming + episode,
             added = if (upNext || present) library.added else library.added + episode,
           ),
