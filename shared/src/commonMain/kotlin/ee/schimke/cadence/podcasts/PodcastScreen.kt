@@ -5,11 +5,13 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ContentPaste
+import androidx.compose.material.icons.filled.Headphones
 import androidx.compose.material.icons.filled.Podcasts
 import androidx.compose.material.icons.filled.RssFeed
 import androidx.compose.material.icons.filled.Sync
@@ -43,6 +45,7 @@ fun rememberPodcastController(): PodcastController {
 /** The podcast services you can add, one at a time. */
 enum class PodcastProvider(val title: String, val detail: String, val icon: ImageVector) {
   PocketCasts("Pocket Casts", "Up Next, in-progress episodes or a playlist", Icons.Filled.Podcasts),
+  LibroFm("Libro.fm", "Audiobooks you own on Libro.fm", Icons.Filled.Headphones),
   Rss("Podcast feed", "The newest episodes of any public RSS feed", Icons.Filled.RssFeed),
   Gpodder(
     "gpodder or Nextcloud",
@@ -96,7 +99,7 @@ fun AddPodcastsScreen(
   }
   fun action(block: suspend PodcastController.() -> Unit) {
     if (pending != null || controller.busy.value) return
-    pending = "Connecting to Pocket Casts…"
+    pending = "Connecting to ${provider?.title ?: "the service"}…"
     scope.launch {
       val ok: Boolean
       try {
@@ -122,6 +125,7 @@ fun AddPodcastsScreen(
         )
         PodcastProvider.entries
           .filter { it != PodcastProvider.PocketCasts || controller.platform.pocketCastsApi }
+          .filter { it != PodcastProvider.LibroFm || controller.platform.libroFmApi }
           .forEach { option ->
             ListItem(
               leadingContent = { Icon(option.icon, contentDescription = null) },
@@ -146,10 +150,18 @@ fun AddPodcastsScreen(
         verticalArrangement = Arrangement.spacedBy(12.dp),
       ) {
         if (chosen != PodcastProvider.Export)
-          EpisodeCount(latest, enabled = !working) { latest = it }
+          EpisodeCount(
+            latest,
+            if (chosen == PodcastProvider.LibroFm) "audiobooks" else "episodes",
+            enabled = !working,
+          ) {
+            latest = it
+          }
         when (chosen) {
           PodcastProvider.PocketCasts ->
             PocketCastsForm(controller, local, working, pending, latest, ::import, ::action)
+          PodcastProvider.LibroFm ->
+            LibroFmForm(controller, local, working, pending, latest, ::import, ::action)
           PodcastProvider.Rss ->
             RssForm(local, working) { url -> import { importRss(url, latest) } }
           PodcastProvider.Gpodder ->
@@ -165,9 +177,9 @@ fun AddPodcastsScreen(
 }
 
 @Composable
-private fun EpisodeCount(latest: Int, enabled: Boolean, onChange: (Int) -> Unit) {
+private fun EpisodeCount(latest: Int, noun: String, enabled: Boolean, onChange: (Int) -> Unit) {
   Row(verticalAlignment = Alignment.CenterVertically) {
-    Text("Up to $latest episodes", Modifier.weight(1f))
+    Text("Up to $latest $noun", Modifier.weight(1f))
     TextButton(enabled = enabled && latest > 1, onClick = { onChange(latest - 1) }) {
       Text("Fewer")
     }
@@ -308,6 +320,126 @@ private fun PocketCastsForm(
     else
       "Accounts created with Google or Apple have no password until you set one with Forgot password on pocketcasts.com.",
     style = MaterialTheme.typography.bodySmall,
+  )
+}
+
+@Composable
+private fun LibroFmForm(
+  controller: PodcastController,
+  local: LocalPodcastState,
+  busy: Boolean,
+  pending: String?,
+  latest: Int,
+  import: (suspend PodcastController.() -> Unit) -> Unit,
+  action: (suspend PodcastController.() -> Unit) -> Unit,
+) {
+  val books by controller.libroFmBooks.collectAsState()
+  val loaded by controller.loaded.collectAsState()
+  var list by rememberSaveable {
+    mutableStateOf(
+      local.library.sourceList.takeIf { local.library.source == PodcastSourceKind.LibroFm }
+        ?: LIBRO_FM_LIBRARY,
+    )
+  }
+  var email by rememberSaveable { mutableStateOf(local.libroFm.email) }
+  var password by remember { mutableStateOf("") }
+  // A sign-in saved earlier needs its library; signing in loads it itself.
+  LaunchedEffect(loaded) {
+    if (controller.state.value.libroFm.signedIn && controller.libroFmBooks.value.isEmpty())
+      controller.run { refreshLibroFmBooks() }
+  }
+  if (local.libroFm.signedIn) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+      Text(
+        "Signed in" + local.libroFm.email.takeIf { it.isNotBlank() }?.let { " as $it" }.orEmpty(),
+        Modifier.weight(1f),
+        style = MaterialTheme.typography.bodyMedium,
+      )
+      TextButton(enabled = !busy, onClick = { action { signOutLibroFm() } }) { Text("Sign out") }
+    }
+    Column {
+      LibroFmChoice(
+        "Whole library",
+        "Newest purchases first",
+        list == LIBRO_FM_LIBRARY,
+        enabled = !busy,
+      ) {
+        list = LIBRO_FM_LIBRARY
+      }
+      books.forEach { book ->
+        LibroFmChoice(
+          book.title.ifBlank { "Audiobook" },
+          listOfNotNull(
+              book.authors.joinToString(", ").takeIf { it.isNotBlank() },
+              book.durationSeconds.takeIf { it > 0 }?.let { formatTime(it * 1000) },
+            )
+            .joinToString(" · "),
+          list == book.isbn,
+          enabled = !busy,
+        ) {
+          list = book.isbn
+        }
+      }
+    }
+    Button(
+      enabled = !busy && (list == LIBRO_FM_LIBRARY || books.any { it.isbn == list }),
+      onClick = { import { importLibroFm(list, latest) } },
+    ) {
+      Text(if (pending == "Adding podcasts…") "Adding…" else "Add")
+    }
+    Text(
+      "Books download as one M4B file and start from the beginning: Libro.fm doesn't share your listening position.",
+      style = MaterialTheme.typography.bodySmall,
+    )
+    return
+  }
+  Text(
+    "Cadence reads your library through the Libro.fm app's API, which isn't public and may change.",
+    style = MaterialTheme.typography.bodyMedium,
+  )
+  OutlinedTextField(
+    email,
+    { email = it },
+    enabled = !busy,
+    label = { Text("Email") },
+    singleLine = true,
+    modifier = Modifier.fillMaxWidth(),
+  )
+  OutlinedTextField(
+    password,
+    { password = it },
+    enabled = !busy,
+    label = { Text("Password") },
+    singleLine = true,
+    visualTransformation = PasswordVisualTransformation(),
+    modifier = Modifier.fillMaxWidth(),
+  )
+  Button(
+    enabled = !busy && email.isNotBlank() && password.isNotBlank(),
+    onClick = {
+      val supplied = password
+      password = ""
+      action { signInLibroFm(email, supplied) }
+    },
+  ) {
+    Text(if (pending != null) "Signing in…" else "Sign in")
+  }
+}
+
+@Composable
+private fun LibroFmChoice(
+  title: String,
+  detail: String,
+  selected: Boolean,
+  enabled: Boolean,
+  onSelect: () -> Unit,
+) {
+  ListItem(
+    leadingContent = { RadioButton(selected, onClick = null, enabled = enabled) },
+    headlineContent = { Text(title, maxLines = 2, overflow = TextOverflow.Ellipsis) },
+    supportingContent = detail.takeIf { it.isNotBlank() }?.let { { Text(it) } },
+    modifier =
+      Modifier.selectable(selected, enabled = enabled, role = Role.RadioButton, onClick = onSelect),
   )
 }
 

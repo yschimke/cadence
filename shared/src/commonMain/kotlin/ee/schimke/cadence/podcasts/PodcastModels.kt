@@ -229,6 +229,7 @@ enum class PodcastSourceKind {
   Gpodder,
   Overcast,
   Snapshot,
+  LibroFm,
 }
 
 @Serializable data class PodcastTrim(val startSeconds: Int = 0, val endSeconds: Int = 0)
@@ -238,7 +239,8 @@ data class PodcastLibrary(
   val schema: Int = 1,
   val playlist: PlaylistSnapshot? = null,
   val source: PodcastSourceKind? = null,
-  // The Pocket Casts list (Up Next, In progress or a playlist id) for a Pocket Casts source.
+  // The Pocket Casts list (Up Next, In progress or a playlist id) for a Pocket Casts source, or
+  // the Libro.fm library or one book's ISBN for a Libro.fm source.
   val sourceList: String = "",
   val feedUrl: String = "",
   val feedLatest: Int = 3,
@@ -323,6 +325,7 @@ data class LocalPodcastState(
   // Positions this device sent to the source, by episode key, for the status shown per episode.
   val sentPositions: Map<String, Long> = emptyMap(),
   val pocketCasts: PocketCastsSession = PocketCastsSession(),
+  val libroFm: LibroFmSession = LibroFmSession(),
   // New episodes offered on Home to add to the source or dismiss, from Pocket Casts New Releases.
   val fresh: List<Episode> = emptyList(),
   val dismissedFresh: Set<String> = emptySet(),

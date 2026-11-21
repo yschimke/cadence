@@ -88,6 +88,10 @@ interface PodcastPlatform {
   /** Set where a server keeps the Pocket Casts sign-in and makes the calls. */
   val pocketCastsServer: PocketCastsServer?
     get() = null
+
+  /** False in the browser, which can't send the headers Libro.fm's API requires. */
+  val libroFmApi: Boolean
+    get() = true
 }
 
 @Composable expect fun rememberPodcastPlatform(): PodcastPlatform
@@ -124,6 +128,8 @@ class PodcastController(val platform: PodcastPlatform) {
   val pocketCastsLists = MutableStateFlow<List<PocketCastsList>>(emptyList())
   // Set when the web view could only capture the player's own responses, not its token.
   private var pocketCastsCapture: PocketCastsCapture? = null
+  /** The signed-in Libro.fm library, newest purchase first, to pick a book from. */
+  val libroFmBooks = MutableStateFlow<List<LibroFmBook>>(emptyList())
   // A successful action's summary, shown instead of the generic "Saved".
   private var notice: String? = null
 
@@ -295,7 +301,7 @@ class PodcastController(val platform: PodcastPlatform) {
       var shownPercent = -1
       var shownAt: TimeMark? = null
       try {
-        platform.downloadOriginal(episode) { bytes, total ->
+        platform.downloadOriginal(downloadable(episode)) { bytes, total ->
           if (total <= 0) return@downloadOriginal
           // Reported per buffer; the UI and notification get whole-percent steps, at most once a
           // second (plus the first and the last).
@@ -341,24 +347,7 @@ class PodcastController(val platform: PodcastPlatform) {
     if (!url.startsWith("https://")) throw PodcastProblem("Enter an HTTPS feed URL")
     val (snapshot, skipped) = RssBackend(platform, url, latest).read()
     // RSS carries no account position; retain this app's position for matching enclosure versions.
-    val old = state.value.library
-    val episodes =
-      snapshot.episodes.map { episode ->
-        val previous =
-          old.playlist?.episodes?.find {
-            it.key == episode.key && it.audioVersion == episode.audioVersion
-          }
-        if (previous == null) episode
-        else
-          episode.copy(
-            positionMs =
-              episodePosition(
-                previous,
-                old,
-                old.manifests.firstOrNull { it.episode.key == previous.key }?.config,
-              ),
-          )
-      }
+    val episodes = keepLocalPositions(snapshot.episodes)
     importSnapshot(podcastJson.encodeToString(snapshot.copy(episodes = episodes)))
     save(
       state.value.copy(
@@ -373,6 +362,25 @@ class PodcastController(val platform: PodcastPlatform) {
     notice =
       "Imported the latest ${count(episodes.size, "episode")} of ${snapshot.name}" +
         if (skipped > 0) " · skipped $skipped without HTTPS audio or duration" else ""
+  }
+
+  /** For sources without a position: this app's position for each matching audio version. */
+  private fun keepLocalPositions(episodes: List<Episode>): List<Episode> {
+    val old = state.value.library
+    return episodes.map { episode ->
+      val previous =
+        old.allEpisodes.find { it.key == episode.key && it.audioVersion == episode.audioVersion }
+      if (previous == null) episode
+      else
+        episode.copy(
+          positionMs =
+            episodePosition(
+              previous,
+              old,
+              old.manifests.firstOrNull { it.episode.key == previous.key }?.config,
+            ),
+        )
+    }
   }
 
   /** Detects a Cadence snapshot (JSON) or an Overcast "All data" OPML export. */
@@ -446,6 +454,7 @@ class PodcastController(val platform: PodcastPlatform) {
         PodcastSourceKind.PocketCasts -> state.value.pocketCasts.signedIn
         PodcastSourceKind.Rss -> state.value.library.feedUrl.isNotBlank()
         PodcastSourceKind.Gpodder -> gpodderPassword.isNotBlank()
+        PodcastSourceKind.LibroFm -> state.value.libroFm.signedIn
         else -> false
       }
 
@@ -470,6 +479,7 @@ class PodcastController(val platform: PodcastPlatform) {
         if (gpodderPassword.isBlank())
           throw PodcastProblem("Enter your gpodder password again to refresh")
         else importGpodder(state.value.gpodder, gpodderPassword, library.feedLatest)
+      PodcastSourceKind.LibroFm -> importLibroFm(library.sourceList, library.feedLatest)
       else -> throw PodcastProblem("Import a new export to update these episodes")
     }
   }
@@ -582,6 +592,71 @@ class PodcastController(val platform: PodcastPlatform) {
           (if (later > 0) " · $later more listed" else "") +
           if (skipped > 0) " · skipped $skipped without HTTPS audio or a known length" else ""
   }
+
+  private fun libroFm() =
+    LibroFmApi(platform, state.value.libroFm) {
+      save(state.value.copy(libroFm = LibroFmSession()))
+      libroFmBooks.value = emptyList()
+    }
+
+  suspend fun signInLibroFm(email: String, password: String) {
+    if (email.isBlank() || password.isBlank())
+      throw PodcastProblem("Enter your Libro.fm email and password")
+    save(state.value.copy(libroFm = LibroFmApi.signIn(platform, email.trim(), password)))
+    refreshLibroFmBooks()
+    notice = "Signed in to Libro.fm as ${email.trim()}"
+  }
+
+  suspend fun refreshLibroFmBooks() {
+    libroFmBooks.value = libroFm().library()
+  }
+
+  suspend fun signOutLibroFm() {
+    libroFmBooks.value = emptyList()
+    save(state.value.copy(libroFm = LibroFmSession()))
+    notice = "Signed out of Libro.fm"
+  }
+
+  /**
+   * Imports one book, or the library newest first: the first [latest] are downloaded and synced,
+   * the rest wait in [PodcastLibrary.upcoming]. Libro.fm has no position to read, so this app's own
+   * position is kept across refreshes.
+   */
+  suspend fun importLibroFm(list: String, latest: Int = state.value.library.feedLatest) {
+    val books = libroFm().library()
+    libroFmBooks.value = books
+    val (snapshot, skipped) = libroFmSnapshot(books, list)
+    val all = keepLocalPositions(snapshot.episodes)
+    importSnapshot(
+      podcastJson.encodeToString(snapshot.copy(episodes = all.take(latest))),
+      upcoming = all.drop(latest),
+    )
+    save(
+      state.value.copy(
+        library =
+          state.value.library.copy(
+            feedLatest = latest,
+            source = PodcastSourceKind.LibroFm,
+            sourceList = list,
+          ),
+      ),
+    )
+    val later = all.size - minOf(all.size, latest)
+    notice =
+      if (all.isEmpty()) "Your Libro.fm library is empty for now. Refresh once you have a book."
+      else
+        "Imported ${count(minOf(all.size, latest), "audiobook")} from Libro.fm" +
+          (if (later > 0) " · $later more listed" else "") +
+          if (skipped > 0) " · skipped $skipped without a known length" else ""
+  }
+
+  /**
+   * [episode] with audio it can be downloaded from now. Libro.fm's links expire within minutes, so
+   * a book not yet on this device gets a fresh one.
+   */
+  private suspend fun downloadable(episode: Episode): Episode =
+    if (episode.backend != LIBRO_FM_BACKEND || platform.originalAvailable(episode)) episode
+    else episode.copy(audioUrl = libroFm().m4bUrl(episode.id))
 
   /** Writes need the token on this device; the web-player capture and servers only read. */
   private val pocketCastsWritable: Boolean
@@ -909,7 +984,7 @@ class PodcastController(val platform: PodcastPlatform) {
     manifests.forEachIndexed { index, manifest ->
       status.value = "Preparing ${index + 1} of ${manifests.size}: ${manifest.episode.title}"
       publish()
-      platform.prepare(manifest.episode, manifest.sections)
+      platform.prepare(downloadable(manifest.episode), manifest.sections)
       val current = state.value
       save(
         current.copy(

@@ -17,8 +17,8 @@ content matching is not used to make the suggestion.
 
 ## Sources
 
-Cadence imports from Pocket Casts, public RSS feeds, gpodder-compatible servers,
-Overcast exports and Cadence JSON snapshots.
+Cadence imports from Pocket Casts, Libro.fm, public RSS feeds,
+gpodder-compatible servers, Overcast exports and Cadence JSON snapshots.
 
 ### Pocket Casts (private web-player API)
 
@@ -70,6 +70,7 @@ for the browser build: run it in your own Pocket Casts tab and paste its export.
 | Backend | Selection/positions | Exportable audio | Implemented |
 | --- | --- | --- | --- |
 | Pocket Casts | Up Next, in progress and manual playlists, with positions | Episode enclosure URLs from the account | Private web-player API (Android/desktop); passive browser helper on web |
+| Libro.fm | Owned audiobooks, whole library or one book; no position | Packaged M4B from a fresh signed link | Private app API (Android/desktop) |
 | Public RSS | Newest 1–50 feed items; no account position service | HTTPS, unencrypted enclosures with permission to download | Feed import/refresh, download and preparation |
 | gpodder API v2 (gpodder.net, oPodSync) and Nextcloud GPodder Sync | Unfinished episodes and positions (no queue); used by AntennaPod, Kasts, gPodder | Enclosures resolved from each show's public feed | Import; explicit **Send position** with a re-read conflict check |
 | Overcast | "All data" OPML has per-episode `progress` (seconds) and `played`; no queue or durations | Enclosures resolved from each show's public feed | Paste-import of the export file |
@@ -87,6 +88,35 @@ or repackage protected audio. Apple Podcasts, YouTube Music, Castro and Player F
 offer no export with positions. AntennaPod's database export (SQLite) has the
 queue order and positions in milliseconds and is a candidate for a future file
 import; today AntennaPod users can sync to a gpodder/Nextcloud server instead.
+
+### Libro.fm (private app API)
+
+Libro.fm has no supported third-party API either. Cadence uses the private API
+its Android app calls, as documented by open-source library downloaders
+(2026). It can change without notice, and using it may not be permitted by
+Libro.fm's terms.
+
+| Request | Used for |
+| --- | --- |
+| `POST /oauth/token` `{grant_type: "password", username, password}` | Password sign-in; returns `access_token` |
+| `GET /api/v10/library?page=N` | Owned audiobooks (`isbn`, `title`, `authors`, `cover_url`, `audiobook_info.duration` in seconds), `total_pages` |
+| `GET /api/v10/audiobooks/{isbn}/packaged_m4b` | `m4b_url`, a signed download link that expires within minutes |
+
+Every request sends `User-Agent: okhttp/…` and `X-LibroFm-AppVer: …` matching a
+current Android app build: Libro.fm's load balancer answers anything else with an
+empty `401`. When that starts happening the values in `LibroFm.kt` need
+refreshing. Browsers can't set `User-Agent`, so the source is offered on Android
+and desktop only.
+
+Choose the whole library (newest purchases first, the first 1–50 downloaded,
+the rest listed) or one book. Because the download link expires, the library
+stores the book's page as its audio URL and Cadence asks for a fresh M4B link
+right before each download. A book downloads as one M4B file (treated as M4A).
+Books with no packaged M4B can't be downloaded yet: Libro.fm offers those only as
+zip archives of MP3 tracks, which Cadence doesn't unpack. Libro.fm doesn't
+share a listening position, so books start at zero and Cadence keeps its own
+position across refreshes. The token is saved with the local library until
+**Sign out** or a `401`.
 
 ### Sources that only report positions
 
@@ -129,6 +159,7 @@ OPML is rejected with a pointer to the All data export.
    - **Pocket Casts**: sign in, then choose Up Next, In progress or a manual
      playlist. Episodes without HTTPS audio or a known length are skipped and
      counted.
+   - **Libro.fm**: sign in, then choose the whole library or one audiobook.
    - **Podcast feed**: the newest episodes of a public HTTPS feed. Items without
      an HTTPS enclosure or `itunes:duration` are skipped and counted. RSS has no
      account position, so first import starts at zero; refresh retains
@@ -140,7 +171,7 @@ OPML is rejected with a pointer to the All data export.
      helper export or a Cadence snapshot.
 
    Adding returns to the library. The episodes' overflow menu offers
-   **Refresh** (Pocket Casts, feeds, and gpodder while its password is held)
+   **Refresh** (Pocket Casts, Libro.fm, feeds, and gpodder while its password is held)
    and **Remove**.
 2. Tap the episodes to open them and choose **Download**. By default Cadence
    skips what you've already heard; **Audio options** controls that, splitting
