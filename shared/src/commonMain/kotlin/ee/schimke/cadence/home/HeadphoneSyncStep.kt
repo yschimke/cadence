@@ -2,6 +2,7 @@ package ee.schimke.cadence.home
 
 import ee.schimke.cadence.podcasts.CloudSyncStatus
 import ee.schimke.cadence.podcasts.LocalPodcastState
+import ee.schimke.cadence.podcasts.StatusCardButton
 import ee.schimke.cadence.podcasts.readyForDevice
 import ee.schimke.cadence.podcasts.upToDateOnDevice
 
@@ -124,3 +125,37 @@ fun syncSourceLine(cloud: CloudSyncStatus): String? =
       val checked = cloud.checked.removePrefix("Last checked: ")
       if (checked.isBlank()) source else "$source · checked $checked"
     }
+
+/**
+ * The buttons [step] needs, main action first: "Sync now" when plugged in and ready, "Download" or
+ * "Process now" while preparing, and so on. [syncFolders] adds "Sync folders" beside them.
+ */
+fun statusButtons(
+  step: HeadphoneSyncStep,
+  cloud: CloudSyncStatus,
+  ejectable: Boolean,
+  syncFolders: Boolean,
+): List<StatusCardButton> = buildList {
+  when (step) {
+    HeadphoneSyncStep.NoSource -> add(StatusCardButton("add", "Add a source", primary = true))
+    HeadphoneSyncStep.PlugInToSetUp -> Unit
+    HeadphoneSyncStep.ChooseStorage ->
+      add(StatusCardButton("storage", "Choose headphone storage", primary = true))
+    is HeadphoneSyncStep.Prepare ->
+      add(
+        if (cloud.canDownload) StatusCardButton("download", "Download", primary = true)
+        else StatusCardButton("process", "Process now", primary = true),
+      )
+    is HeadphoneSyncStep.ReadyToCopy ->
+      if (step.pluggedIn) add(StatusCardButton("sync", "Sync now", primary = true))
+    is HeadphoneSyncStep.UpToDate ->
+      if (step.pluggedIn) {
+        if (ejectable) add(StatusCardButton("eject", "Eject USB", primary = true))
+        add(StatusCardButton("sync-again", "Sync again"))
+      }
+    is HeadphoneSyncStep.Folders ->
+      if (step.pluggedIn) add(StatusCardButton("folders", "Sync folders", primary = true))
+  }
+  if (syncFolders && step !is HeadphoneSyncStep.Folders)
+    add(StatusCardButton("folders", "Sync folders"))
+}

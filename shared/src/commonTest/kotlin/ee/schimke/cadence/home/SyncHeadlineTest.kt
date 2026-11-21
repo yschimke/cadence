@@ -60,4 +60,26 @@ class SyncHeadlineTest {
     assertTrue(line.startsWith("Pocket Casts · Swim Series · checked "), line)
     assertNull(syncSourceLine(cloudSyncStatus(LocalPodcastState(), true, true)))
   }
+
+  @Test
+  fun theCardOffersTheStepsButtonsMainActionFirst() {
+    val cloud = cloudSyncStatus(imported, true, true)
+    fun ids(step: HeadphoneSyncStep, ejectable: Boolean = true, folders: Boolean = false) =
+      statusButtons(step, cloud, ejectable, folders).map { it.id }
+    assertEquals(listOf("sync"), ids(HeadphoneSyncStep.ReadyToCopy(true)))
+    // Not plugged in: nothing to press yet.
+    assertEquals(emptyList(), ids(HeadphoneSyncStep.ReadyToCopy(false)))
+    assertEquals(listOf("download"), ids(HeadphoneSyncStep.Prepare(false)))
+    assertEquals(listOf("eject", "sync-again"), ids(HeadphoneSyncStep.UpToDate(true)))
+    assertEquals(listOf("sync-again"), ids(HeadphoneSyncStep.UpToDate(true), ejectable = false))
+    // Folders sit beside the episode sync, once.
+    assertEquals(
+      listOf("sync", "folders"),
+      ids(HeadphoneSyncStep.ReadyToCopy(true), folders = true),
+    )
+    assertEquals(listOf("folders"), ids(HeadphoneSyncStep.Folders(true), folders = true))
+    assertTrue(
+      statusButtons(HeadphoneSyncStep.ReadyToCopy(true), cloud, true, true).first().primary,
+    )
+  }
 }

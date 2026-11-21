@@ -28,6 +28,19 @@ import androidx.compose.remote.creation.compose.state.rs
 import androidx.compose.remote.creation.compose.state.rsp
 import androidx.compose.remote.creation.compose.text.RemoteFontWeight
 import androidx.compose.remote.creation.compose.text.RemoteTextOverflow
+import androidx.compose.material.icons.filled.ExpandLess
+import androidx.compose.material.icons.filled.ExpandMore
+import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.remote.creation.compose.modifier.RemoteRole
+import androidx.compose.remote.creation.compose.modifier.clip
+import androidx.compose.remote.creation.compose.modifier.contentDescription
+import androidx.compose.remote.creation.compose.modifier.heightIn
+import androidx.compose.remote.creation.compose.modifier.role
+import androidx.compose.remote.creation.compose.modifier.semantics
+import androidx.compose.remote.creation.compose.modifier.size
+import androidx.compose.remote.creation.compose.modifier.width
+import androidx.compose.remote.creation.compose.shapes.RemoteRoundedCornerShape
+import ee.schimke.composeai.rcwidget.creation.androidx.rcWidgetHostAction
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -66,15 +79,34 @@ fun PodcastSyncWidgetContent(
   source: String? = null,
   /** The headline asks for something now, so it takes the accent colour. */
   attention: Boolean = false,
+  /**
+   * Home's buttons, change list and icons, each tapping a host action named by its id. The
+   * launcher widget leaves this out and opens Cadence on any tap.
+   */
+  extras: StatusCardExtras? = null,
+  /** Home sizes the card to its content, so it draws at a fixed scale instead of the slot's. */
+  fixedScale: Float? = null,
 ) {
   val lane = heightDp >= 140
   // A tall slot also has room for the source line under the battery.
   val roomy = lane && heightDp >= 156
   val shown = source.takeIf { roomy }
   val scale =
-    minOf(widthDp / 232f, heightDp / if (shown != null) 172f else if (lane) 152f else 72f)
-      .coerceIn(0.8f, 1.35f)
-  val poolHeight = (heightDp * 0.28f).toInt().coerceIn(40, 72)
+    fixedScale
+      ?: minOf(widthDp / 232f, heightDp / if (shown != null) 172f else if (lane) 152f else 72f)
+        .coerceIn(0.8f, 1.35f)
+  val poolHeight =
+    if (extras != null) STATUS_CARD_POOL_DP else (heightDp * 0.28f).toInt().coerceIn(40, 72)
+  val padding = 8 * scale
+  val icons =
+    listOfNotNull(
+      (Icons.Default.Refresh to "Check for new episodes").takeIf { extras?.refresh == true }?.let {
+        StatusCardExtras.REFRESH to it
+      },
+      (Icons.Default.Headphones to "Audio controls").takeIf { extras?.audioControls == true }?.let {
+        StatusCardExtras.AUDIO_CONTROLS to it
+      },
+    )
   // Body text stays at least 12sp after scale (launcher.type.min-size).
   val bodySp = (12 * scale).coerceAtLeast(12f)
   // No outer clip: the launcher applies its own system corner radius to the widget.
@@ -95,14 +127,19 @@ fun PodcastSyncWidgetContent(
         verticalArrangement = RemoteArrangement.spacedBy((2 * scale).rdp),
       ) {
         if (headline != null)
-          RemoteText(
-            headline.rs,
-            color = (if (attention) colors.primary else colors.onBackground).rc,
-            fontSize = (15 * scale).coerceAtLeast(13f).rsp,
-            fontWeight = RemoteFontWeight.Medium,
-            maxLines = 1,
-            overflow = RemoteTextOverflow.Ellipsis,
-          )
+          RemoteRow(verticalAlignment = RemoteAlignment.CenterVertically) {
+            val textWidth = widthDp - 2 * padding - icons.size * ICON_BUTTON_DP
+            RemoteText(
+              headline.rs,
+              modifier = if (icons.isEmpty()) RemoteModifier else RemoteModifier.width(textWidth.rdp),
+              color = (if (attention) colors.primary else colors.onBackground).rc,
+              fontSize = (15 * scale).coerceAtLeast(13f).rsp,
+              fontWeight = RemoteFontWeight.Medium,
+              maxLines = 1,
+              overflow = RemoteTextOverflow.Ellipsis,
+            )
+            icons.forEach { (id, icon) -> StatusIconButton(icon.first, icon.second, id, colors) }
+          }
         SyncMetricLine(
           copied,
           Icons.Default.Headphones,
@@ -148,6 +185,15 @@ fun PodcastSyncWidgetContent(
               maxLines = 1,
               overflow = RemoteTextOverflow.Ellipsis,
             )
+          }
+        extras?.changes?.let { changes -> SyncChangesRow(changes, extras.changeLines, colors, bodySp) }
+        if (!extras?.buttons.isNullOrEmpty())
+          RemoteRow(
+            modifier = RemoteModifier.padding(top = 4.rdp),
+            horizontalArrangement = RemoteArrangement.spacedBy(8.rdp),
+            verticalAlignment = RemoteAlignment.CenterVertically,
+          ) {
+            extras.buttons.forEach { StatusButton(it, colors) }
           }
       }
       if (lane) {
@@ -210,5 +256,103 @@ private fun SyncMetricLine(
         overflow = RemoteTextOverflow.Ellipsis,
       )
     }
+  }
+}
+
+/** Height of the pool strip on Home's status card. */
+const val STATUS_CARD_POOL_DP = 44
+
+/** Width (and height) of each icon button beside the headline. */
+private const val ICON_BUTTON_DP = 40f
+
+@Composable
+@RemoteComposable
+private fun StatusIconButton(icon: ImageVector, label: String, id: String, colors: WidgetColors) {
+  RemoteBox(
+    modifier =
+      RemoteModifier.size(ICON_BUTTON_DP.rdp)
+        .clip(RemoteRoundedCornerShape((ICON_BUTTON_DP / 2).rdp))
+        .semantics {
+          contentDescription = label.rs
+          role = RemoteRole.Button
+        }
+        .clickable(rcWidgetHostAction(name = id, payload = id)),
+    contentAlignment = RemoteAlignment.Center,
+  ) {
+    SyncStatusIcon(icon, colors.primary, 22)
+  }
+}
+
+/** "What will change · 3 new", tapping to show or hide one line per change below it. */
+@Composable
+@RemoteComposable
+private fun SyncChangesRow(
+  summary: String,
+  lines: List<String>,
+  colors: WidgetColors,
+  bodySp: Float,
+) {
+  val expanded = lines.isNotEmpty()
+  RemoteRow(
+    modifier =
+      RemoteModifier.heightIn(40.rdp, 48.rdp)
+        .semantics {
+          contentDescription =
+            ((if (expanded) "Hide changes. " else "Show changes. ") + "What will change: $summary").rs
+          role = RemoteRole.Button
+        }
+        .clickable(rcWidgetHostAction(name = StatusCardExtras.CHANGES, payload = StatusCardExtras.CHANGES)),
+    horizontalArrangement = RemoteArrangement.spacedBy(6.rdp),
+    verticalAlignment = RemoteAlignment.CenterVertically,
+  ) {
+    RemoteText(
+      "What will change · $summary".rs,
+      color = colors.onBackground.rc,
+      fontSize = bodySp.rsp,
+      fontWeight = RemoteFontWeight.Medium,
+      maxLines = 1,
+      overflow = RemoteTextOverflow.Ellipsis,
+    )
+    SyncStatusIcon(
+      if (expanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
+      colors.onBackground,
+      18,
+    )
+  }
+  lines.forEach { line ->
+    RemoteText(
+      line.rs,
+      color = colors.supporting.rc,
+      fontSize = bodySp.rsp,
+      maxLines = 1,
+      overflow = RemoteTextOverflow.Ellipsis,
+    )
+  }
+}
+
+/** A filled pill for the step's main action, a text button for the others. */
+@Composable
+@RemoteComposable
+private fun StatusButton(button: StatusCardButton, colors: WidgetColors) {
+  RemoteBox(
+    modifier =
+      RemoteModifier.height(40.rdp)
+        .clip(RemoteRoundedCornerShape(20.rdp))
+        .let { if (button.primary) it.background(colors.primary.rc) else it }
+        .semantics {
+          contentDescription = button.label.rs
+          role = RemoteRole.Button
+        }
+        .clickable(rcWidgetHostAction(name = button.id, payload = button.id))
+        .padding(horizontal = 16.rdp),
+    contentAlignment = RemoteAlignment.Center,
+  ) {
+    RemoteText(
+      button.label.rs,
+      color = (if (button.primary) colors.onPrimary else colors.primary).rc,
+      fontSize = 14.rsp,
+      fontWeight = RemoteFontWeight.Medium,
+      maxLines = 1,
+    )
   }
 }
