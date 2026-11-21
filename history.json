@@ -1,6 +1,6 @@
 {
     "formatVersion": "compose-preview-history/v1",
-    "generatedFrom": "7e04023ad74340d3cfff327aa388bfae414945bb",
+    "generatedFrom": "130217198b5ae4e32851b17a153e7d6e659c159f",
     "previews": {
         "composeApp/activity__MainActivity": {
             "path": "renders/composeApp/activity__MainActivity.png",
@@ -2282,6 +2282,13 @@
             "path": "renders/composeApp/PodcastReplaceSourcePreview_Add_podcasts_Libro_fm_replaces_Pocket_Casts-b6c570ef.png",
             "versions": [
                 {
+                    "blob": "022f8d696850a9bead5527892f2e2f9674f45ca6",
+                    "commit": "130217198b5ae4e32851b17a153e7d6e659c159f",
+                    "date": "2026-11-21T15:34:56Z",
+                    "sourceSha": "33259066",
+                    "commits": 1
+                },
+                {
                     "blob": "d48e05b639f88cfbaf1aedbd541548132fe4805a",
                     "commit": "3f6e25c42d3f50f7ef794668cc4058e9d76dd18a",
                     "date": "2026-11-21T11:04:10Z",
@@ -2289,7 +2296,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 1,
+            "observations": 2,
             "unstable": false,
             "flapCount": 0
         },
