@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.34](https://github.com/yschimke/cadence/compare/v0.1.33...v0.1.34) (2026-11-21)
+
+
+### Features
+
+* add Libro.fm as an audiobook source ([#675](https://github.com/yschimke/cadence/issues/675)) ([67c86b0](https://github.com/yschimke/cadence/commit/67c86b0f815e48f05ee3630f4b66aae9c704d774))
+
 ## [0.1.33](https://github.com/yschimke/cadence/compare/v0.1.32...v0.1.33) (2026-11-20)
 
 
