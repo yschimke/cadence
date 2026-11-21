@@ -19,14 +19,26 @@ import ee.schimke.composeai.rcwidget.launcher.captureLauncherWidget
 import kotlinx.coroutines.CancellationException
 
 /**
- * The card's height for what it shows, at scale 1: the status lines, the change summary and any
- * expanded lines, the button row, and the pool.
+ * The card's height for what it shows, at scale 1. Each row adds its own height plus the column's
+ * 2dp gap: the 40dp headline row (its icon buttons set the height), two 23dp count lines (17sp
+ * numbers), the 20dp battery and source lines (their icons set the height), the change summary
+ * (at least 40dp) and its 16dp lines, each 44dp row of buttons (4dp above a 40dp pill), then 16dp
+ * of padding and the pool.
  */
 internal fun statusCardHeight(source: String?, extras: StatusCardExtras): Int {
-  var height = if (source != null) 116 else 94
-  if (extras.changes != null) height += 44 + extras.changeLines.size * 17
-  height += extras.buttons.chunked(STATUS_BUTTONS_PER_ROW).size * 44
-  return height + STATUS_CARD_POOL_DP
+  val rows = buildList {
+    add(40)
+    add(23)
+    add(23)
+    add(20)
+    if (source != null) add(20)
+    if (extras.changes != null) {
+      add(40)
+      repeat(extras.changeLines.size) { add(16) }
+    }
+    repeat(extras.buttons.chunked(STATUS_BUTTONS_PER_ROW).size) { add(44) }
+  }
+  return rows.sum() + (rows.size - 1) * 2 + 16 + STATUS_CARD_POOL_DP
 }
 
 @Composable
