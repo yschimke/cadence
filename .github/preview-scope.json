@@ -1,0 +1,31 @@
+{
+  "//": "Change-scope config for compose-ai-tools/apply. PRs whose changes all live inside modules under scopedRoots render only those modules plus their transitive Gradle dependents; PRs that only touch ignorePaths skip the preview pipelines. Global build files (gradle/libs.versions.toml, root build scripts, CI) fail open to a full render.",
+  "scopedRoots": [
+    "composeApp",
+    "desktopApp",
+    "mobileBaselineProfile",
+    "rcsp",
+    "shared",
+    "swimUi",
+    "wearApp",
+    "wearBaselineProfile",
+    "wearCompanionContract"
+  ],
+  "ignorePaths": [
+    "docs/**",
+    "**/*.md",
+    "branding/**",
+    "cloud/**",
+    "packaging/**",
+    "research/**",
+    "scripts/**",
+    "tools/**",
+    ".githooks/**",
+    ".idea/**",
+    ".vscode/**",
+    "LICENSE",
+    ".gitignore",
+    ".gitattributes",
+    "renovate.json"
+  ]
+}
