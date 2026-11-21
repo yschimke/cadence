@@ -1,6 +1,6 @@
 # Accessibility Report
 
-_Auto-generated from `compose-preview/a11y/pr`. 40 preview(s) across 1 module(s) · 14 error(s) · 0 warning(s) · 0 info._
+_Auto-generated from `compose-preview/a11y/pr`. 40 preview(s) across 1 module(s) · 37 error(s) · 0 warning(s) · 0 info._
 
 Browse inline; image URLs are pinned to the commit SHA on the baseline branch so links keep resolving after merge.
 
@@ -43,6 +43,10 @@ _No findings._
 | # | Level | Rule | Element | Message |
 |--:|---|---|---|---|
 | 1 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+| 2 | ERROR | TouchTargetSizeCheck | android.view.View  desc="Check for new episodes" | This item's size is 40dp x 40dp. Consider making this touch target 48dp wide and 48dp high or larger. |
+| 3 | ERROR | TouchTargetSizeCheck | android.view.View  desc="Show changes. What will change: 3 new" | This item's height is 40dp. Consider making the height of this touch target 48dp or larger. |
+| 4 | ERROR | TouchTargetSizeCheck | android.view.View  desc="Sync now" | This item's height is 40dp. Consider making the height of this touch target 48dp or larger. |
+| 5 | ERROR | TouchTargetSizeCheck | android.view.View  desc="Sync folders" | This item's height is 40dp. Consider making the height of this touch target 48dp or larger. |
 
 ### `HomeDownloadFailedPreview` · `spec:width=411dp,height=1200dp,dpi=420`
 
@@ -51,6 +55,7 @@ _No findings._
 | # | Level | Rule | Element | Message |
 |--:|---|---|---|---|
 | 1 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+| 2 | ERROR | TouchTargetSizeCheck | android.view.View  desc="Check for new episodes" | This item's size is 40dp x 40dp. Consider making this touch target 48dp wide and 48dp high or larger. |
 
 ### `HomeDownloadingPreview` · `spec:width=411dp,height=1200dp,dpi=420`
 
@@ -59,6 +64,7 @@ _No findings._
 | # | Level | Rule | Element | Message |
 |--:|---|---|---|---|
 | 1 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+| 2 | ERROR | TouchTargetSizeCheck | android.view.View  desc="Check for new episodes" | This item's size is 40dp x 40dp. Consider making this touch target 48dp wide and 48dp high or larger. |
 
 ### `HomeEmptyPreview`
 
@@ -73,6 +79,8 @@ _No findings._
 | # | Level | Rule | Element | Message |
 |--:|---|---|---|---|
 | 1 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+| 2 | ERROR | TouchTargetSizeCheck | android.view.View  desc="Check for new episodes" | This item's size is 40dp x 40dp. Consider making this touch target 48dp wide and 48dp high or larger. |
+| 3 | ERROR | TouchTargetSizeCheck | android.view.View  desc="Show changes. What will change: 3 new" | This item's height is 40dp. Consider making the height of this touch target 48dp or larger. |
 
 ### `HomeHeadphonesPreview`
 
@@ -81,6 +89,9 @@ _No findings._
 | # | Level | Rule | Element | Message |
 |--:|---|---|---|---|
 | 1 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+| 2 | ERROR | TouchTargetSizeCheck | android.view.View  desc="Check for new episodes" | This item's size is 40dp x 40dp. Consider making this touch target 48dp wide and 48dp high or larger. |
+| 3 | ERROR | TouchTargetSizeCheck | android.view.View  desc="Choose headphone storage" | This item's height is 40dp. Consider making the height of this touch target 48dp or larger. |
+| 4 | ERROR | TouchTargetSizeCheck | android.view.View  desc="Sync folders" | This item's height is 40dp. Consider making the height of this touch target 48dp or larger. |
 
 ### `HomeLibraryPreview`
 
@@ -89,6 +100,7 @@ _No findings._
 | # | Level | Rule | Element | Message |
 |--:|---|---|---|---|
 | 1 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+| 2 | ERROR | TouchTargetSizeCheck | android.view.View  desc="Check for new episodes" | This item's size is 40dp x 40dp. Consider making this touch target 48dp wide and 48dp high or larger. |
 
 ### `HomeReadyToCopyPreview` · `spec:width=411dp,height=900dp,dpi=420`
 
@@ -97,6 +109,10 @@ _No findings._
 | # | Level | Rule | Element | Message |
 |--:|---|---|---|---|
 | 1 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+| 2 | ERROR | TouchTargetSizeCheck | android.view.View  desc="Check for new episodes" | This item's size is 40dp x 40dp. Consider making this touch target 48dp wide and 48dp high or larger. |
+| 3 | ERROR | TouchTargetSizeCheck | android.view.View  desc="Show changes. What will change: 3 new" | This item's height is 40dp. Consider making the height of this touch target 48dp or larger. |
+| 4 | ERROR | TouchTargetSizeCheck | android.view.View  desc="Sync now" | This item's height is 40dp. Consider making the height of this touch target 48dp or larger. |
+| 5 | ERROR | TouchTargetSizeCheck | android.view.View  desc="Sync folders" | This item's height is 40dp. Consider making the height of this touch target 48dp or larger. |
 
 ### `HomeUpToDatePreview` · `spec:width=411dp,height=900dp,dpi=420`
 
@@ -105,6 +121,7 @@ _No findings._
 | # | Level | Rule | Element | Message |
 |--:|---|---|---|---|
 | 1 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+| 2 | ERROR | TouchTargetSizeCheck | android.view.View  desc="Check for new episodes" | This item's size is 40dp x 40dp. Consider making this touch target 48dp wide and 48dp high or larger. |
 
 ### `NotificationDownloadingPreview`
 
@@ -125,6 +142,7 @@ _No findings._
 | # | Level | Rule | Element | Message |
 |--:|---|---|---|---|
 | 1 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+| 2 | ERROR | TouchTargetSizeCheck | android.view.View  desc="Check for new episodes" | This item's size is 40dp x 40dp. Consider making this touch target 48dp wide and 48dp high or larger. |
 
 ### `PlayStorePhoneHomeLight` · `pixel_2`
 
@@ -133,6 +151,7 @@ _No findings._
 | # | Level | Rule | Element | Message |
 |--:|---|---|---|---|
 | 1 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+| 2 | ERROR | TouchTargetSizeCheck | android.view.View  desc="Check for new episodes" | This item's size is 40dp x 40dp. Consider making this touch target 48dp wide and 48dp high or larger. |
 
 ### `PlayStoreSevenInchHomeDark` · `spec:width=600dp,height=960dp,dpi=320`
 
@@ -141,6 +160,7 @@ _No findings._
 | # | Level | Rule | Element | Message |
 |--:|---|---|---|---|
 | 1 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+| 2 | ERROR | TouchTargetSizeCheck | android.view.View  desc="Check for new episodes" | This item's size is 40dp x 40dp. Consider making this touch target 48dp wide and 48dp high or larger. |
 
 ### `PlayStoreSevenInchHomeLight` · `spec:width=600dp,height=960dp,dpi=320`
 
@@ -149,6 +169,7 @@ _No findings._
 | # | Level | Rule | Element | Message |
 |--:|---|---|---|---|
 | 1 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+| 2 | ERROR | TouchTargetSizeCheck | android.view.View  desc="Check for new episodes" | This item's size is 40dp x 40dp. Consider making this touch target 48dp wide and 48dp high or larger. |
 
 ### `PlayStoreTenInchHomeDark` · `spec:width=800dp,height=1280dp,dpi=320`
 
@@ -157,6 +178,7 @@ _No findings._
 | # | Level | Rule | Element | Message |
 |--:|---|---|---|---|
 | 1 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+| 2 | ERROR | TouchTargetSizeCheck | android.view.View  desc="Check for new episodes" | This item's size is 40dp x 40dp. Consider making this touch target 48dp wide and 48dp high or larger. |
 
 ### `PlayStoreTenInchHomeLight` · `spec:width=800dp,height=1280dp,dpi=320`
 
@@ -165,6 +187,7 @@ _No findings._
 | # | Level | Rule | Element | Message |
 |--:|---|---|---|---|
 | 1 | ERROR | SpeakableTextPresentCheck | androidx.compose.remote.player.view.RemoteComposePlayer | This item may not have a label readable by screen readers. |
+| 2 | ERROR | TouchTargetSizeCheck | android.view.View  desc="Check for new episodes" | This item's size is 40dp x 40dp. Consider making this touch target 48dp wide and 48dp high or larger. |
 
 ### `PodcastImportedPreview`
 
