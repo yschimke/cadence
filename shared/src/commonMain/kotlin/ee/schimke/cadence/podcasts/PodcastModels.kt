@@ -1,6 +1,7 @@
 package ee.schimke.cadence.podcasts
 
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
@@ -33,9 +34,9 @@ data class Episode(
   // The show's cover art, when the source names one (RSS `itunes:image`).
   val artwork: String = "",
   /**
-   * Zip archives of MP3 tracks to join, in order, into this episode's audio instead of fetching
-   * [audioUrl] (Libro.fm books without a single-file download). Set just before downloading, since
-   * the links are signed and expire within minutes; never kept in the library.
+   * Zip archives or raw MP3 tracks to join, in order, into this episode's audio instead of fetching
+   * [audioUrl] (Libro.fm books without a single-file download, or multi-file Audiobookshelf MP3
+   * books). Set just before downloading when links expire; never persisted with credentials.
    */
   val audioParts: List<String> = emptyList(),
   /**
@@ -54,6 +55,11 @@ data class Episode(
    * one.
    */
   val chaptersUrl: String = "",
+  /**
+   * Request headers attached right before downloading from an authenticated server (Audiobookshelf,
+   * Jellyfin). Never serialized to local storage, USB manifests or cloud sync.
+   */
+  @Transient val downloadHeaders: Map<String, String> = emptyMap(),
 ) {
   val key: String
     get() = digest("$backend\u0000$id")
@@ -328,6 +334,10 @@ enum class PodcastSourceKind {
   Overcast,
   Snapshot,
   LibroFm,
+  Audiobookshelf,
+  Subsonic,
+  Jellyfin,
+  Plex,
 }
 
 /** The service's name, as the home screen and the replace warning show it. */
@@ -336,6 +346,10 @@ val PodcastSourceKind?.title: String
     when (this) {
       PodcastSourceKind.PocketCasts -> "Pocket Casts"
       PodcastSourceKind.LibroFm -> "Libro.fm"
+      PodcastSourceKind.Audiobookshelf -> "Audiobookshelf"
+      PodcastSourceKind.Subsonic -> "Subsonic"
+      PodcastSourceKind.Jellyfin -> "Jellyfin"
+      PodcastSourceKind.Plex -> "Plex"
       PodcastSourceKind.Rss -> "Podcast feed"
       PodcastSourceKind.Gpodder -> "gpodder"
       PodcastSourceKind.Overcast -> "Overcast"
@@ -420,13 +434,21 @@ data class PodcastLibrary(
  * The services that can be kept together, one as [PodcastLibrary.source] and the other as
  * [PodcastLibrary.second]: both are signed in, so either refreshes on its own.
  */
-val PAIRED_SOURCES = setOf(PodcastSourceKind.PocketCasts, PodcastSourceKind.LibroFm)
+val PAIRED_SOURCES =
+  setOf(
+    PodcastSourceKind.PocketCasts,
+    PodcastSourceKind.LibroFm,
+    PodcastSourceKind.Audiobookshelf,
+    PodcastSourceKind.Subsonic,
+    PodcastSourceKind.Jellyfin,
+    PodcastSourceKind.Plex,
+  )
 
 /** The service kept beside the main source, and what it lists past its first [latest]. */
 @Serializable
 data class SecondSource(
   val kind: PodcastSourceKind,
-  /** As [PodcastLibrary.sourceList]: the Pocket Casts list, or the Libro.fm library or a book. */
+  /** As [PodcastLibrary.sourceList]: the list, library, playlist or album id. */
   val list: String = "",
   /** The list's own name ("Up Next", "Your Libro.fm library"), for the podcast screen. */
   val name: String = "",
@@ -443,6 +465,10 @@ fun sourceBackend(kind: PodcastSourceKind): String =
   when (kind) {
     PodcastSourceKind.PocketCasts -> "pocket-casts"
     PodcastSourceKind.LibroFm -> LIBRO_FM_BACKEND
+    PodcastSourceKind.Audiobookshelf -> AUDIOBOOKSHELF_BACKEND
+    PodcastSourceKind.Subsonic -> SUBSONIC_BACKEND
+    PodcastSourceKind.Jellyfin -> JELLYFIN_BACKEND
+    PodcastSourceKind.Plex -> PLEX_BACKEND
     else -> throw PodcastProblem("${kind.title} can't be kept beside another service")
   }
 
@@ -520,6 +546,10 @@ data class LocalPodcastState(
   val sentPositions: Map<String, Long> = emptyMap(),
   val pocketCasts: PocketCastsSession = PocketCastsSession(),
   val libroFm: LibroFmSession = LibroFmSession(),
+  val audiobookshelf: AudiobookshelfSession = AudiobookshelfSession(),
+  val subsonic: SubsonicSession = SubsonicSession(),
+  val jellyfin: JellyfinSession = JellyfinSession(),
+  val plex: PlexSession = PlexSession(),
   // New episodes offered on Home to add to the source or dismiss, from Pocket Casts New Releases.
   val fresh: List<Episode> = emptyList(),
   val dismissedFresh: Set<String> = emptySet(),

@@ -35,6 +35,7 @@ import androidx.compose.material.icons.filled.Cloud
 import androidx.compose.material.icons.filled.ErrorOutline
 import androidx.compose.material.icons.filled.Folder
 import androidx.compose.material.icons.filled.Headphones
+import androidx.compose.material.icons.filled.LibraryMusic
 import androidx.compose.material.icons.filled.NewReleases
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Podcasts
@@ -946,15 +947,30 @@ private fun PodcastSection(
   val playlist = library.playlist ?: return
   val ready = playlist.episodes.count { it.key in podcasts.downloadedEpisodeKeys }
   OutlinedCard(Modifier.fillMaxWidth()) {
-    val audiobooks = library.source == PodcastSourceKind.LibroFm
     val second = library.second
     // Beside a second service, each side is counted in its own words: "3 episodes · 1 audiobook".
     val (beside, main) = playlist.episodes.partition { library.fromSecond(it) }
     fun noun(kind: PodcastSourceKind?) =
-      if (kind == PodcastSourceKind.LibroFm) "audiobook" else "episode"
+      when (kind) {
+        PodcastSourceKind.LibroFm -> "audiobook"
+        PodcastSourceKind.Subsonic -> "track"
+        PodcastSourceKind.Audiobookshelf,
+        PodcastSourceKind.Jellyfin,
+        PodcastSourceKind.Plex -> "item"
+        else -> "episode"
+      }
+    val icon =
+      when (library.source) {
+        PodcastSourceKind.LibroFm,
+        PodcastSourceKind.Audiobookshelf -> Icons.Filled.Headphones
+        PodcastSourceKind.Subsonic,
+        PodcastSourceKind.Jellyfin,
+        PodcastSourceKind.Plex -> Icons.Filled.LibraryMusic
+        else -> Icons.Filled.Podcasts
+      }
     val waiting = library.upcoming.size + second?.upcoming.orEmpty().size
     SectionHeader(
-      if (audiobooks) Icons.Filled.Headphones else Icons.Filled.Podcasts,
+      icon,
       listOfNotNull(playlist.name, second?.name?.ifBlank { second.kind.title }).joinToString(" + "),
       buildString {
         append(count(main.size, noun(library.source)))

@@ -78,6 +78,11 @@ for the browser build: run it in your own Pocket Casts tab and paste its export.
 | --- | --- | --- | --- |
 | Pocket Casts | Up Next, in progress and manual playlists, with positions | Episode enclosure URLs from the account | Private web-player API (Android/desktop); passive browser helper on web |
 | Libro.fm | Owned audiobooks, whole library or one book; no position | Packaged M4B, else the MP3 tracks joined into one file, from fresh signed links | Private app API (Android/desktop) |
+| Audiobookshelf | Continue listening or any audiobook/podcast library, with positions and chapters | Direct DRM-free downloads (`/api/items/{id}/file/{ino}/download`) with Bearer auth | Official REST API; explicit **Send position** with conflict check |
+| Subsonic / OpenSubsonic | Starred songs, playlists and newest albums (Navidrome, Airsonic, Gonic, Ampache, Funkwhale) | Direct DRM-free downloads (`/rest/download`) | Official OpenSubsonic/Subsonic REST API (salted MD5 or API key) |
+| Jellyfin | Audiobooks, favorites, playlists and newest music albums, with resume positions | Direct DRM-free downloads (`/Items/{id}/Download`) with `MediaBrowser` auth | Official Jellyfin REST API |
+| Plex | Audio playlists and music/audiobook libraries, with resume positions (`viewOffset`) | Direct DRM-free downloads (`{partKey}?download=1`) with `X-Plex-Token` header | Official Plex Media Server API (`plex.tv` PIN or `X-Plex-Token`); explicit **Send position** with conflict check |
+| LibriVox | Search 40,000+ free public-domain audiobooks; no account needed | DRM-free MP3 chapters via each book's official RSS feed | Official public catalog JSON API + RSS import |
 | Public RSS | Newest 1–50 feed items; no account position service | HTTPS, unencrypted enclosures with permission to download | Feed import/refresh, download and preparation |
 | gpodder API v2 (gpodder.net, oPodSync) and Nextcloud GPodder Sync | Unfinished episodes and positions (no queue); used by AntennaPod, Kasts, gPodder | Enclosures resolved from each show's public feed | Import; explicit **Send position** with a re-read conflict check |
 | Overcast | "All data" OPML has per-episode `progress` (seconds) and `played`; no queue or durations | Enclosures resolved from each show's public feed | Paste-import of the export file |
@@ -91,10 +96,13 @@ can be imported independently through its publisher's RSS feed; this is not an
 export of Spotify audio. Audible's
 [AudibleSync workflow](https://help.audible.com/s/article/listen-with-audiblesync?language=en_US)
 is Windows-specific and limited to supported devices. Cadence does not decrypt
-or repackage protected audio. Apple Podcasts, YouTube Music, Castro and Player FM
-offer no export with positions. AntennaPod's database export (SQLite) has the
-queue order and positions in milliseconds and is a candidate for a future file
-import; today AntennaPod users can sync to a gpodder/Nextcloud server instead.
+or repackage protected audio. Apple Podcasts, YouTube Music, Apple Music, Tidal,
+Qobuz, Libby/OverDrive, Kobo, Everand, Chirp, Castro and Player FM offer no
+official third-party download API; Bandcamp and Downpour offer DRM-free web
+downloads without an official consumer library API (sync those as local folders
+instead). AntennaPod's database export (SQLite) has the queue order and
+positions in milliseconds and is a candidate for a future file import; today
+AntennaPod users can sync to a gpodder/Nextcloud server instead.
 
 ### Libro.fm (private app API)
 
