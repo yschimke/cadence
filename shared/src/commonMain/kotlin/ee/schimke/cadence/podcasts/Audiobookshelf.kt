@@ -79,6 +79,48 @@ internal fun validateHttpsServer(server: String, service: String): String {
   return normalized
 }
 
+/**
+ * True when [url] has the exact same HTTPS origin (case-insensitive host and port, with default
+ * `:443` normalized) as [serverBaseUrl], with no userinfo (`@`). Ensures credentials are never
+ * attached to a crafted or stale-server URL.
+ */
+internal fun sameHttpsOrigin(url: String, serverBaseUrl: String): Boolean {
+  fun origin(raw: String): Pair<String, Int>? {
+    if (!raw.startsWith("https://")) return null
+    val authority =
+      raw.removePrefix("https://").substringBefore('/').substringBefore('?').substringBefore('#')
+    if (authority.isBlank() || '@' in authority) return null
+    val (host, port) =
+      if (authority.startsWith("[")) {
+        val close = authority.indexOf(']')
+        if (close < 0) return null
+        val h = authority.substring(0, close + 1).lowercase()
+        val rest = authority.substring(close + 1)
+        val p =
+          when {
+            rest.isEmpty() -> 443
+            rest.startsWith(":") -> rest.drop(1).toIntOrNull() ?: return null
+            else -> return null
+          }
+        h to p
+      } else {
+        val colon = authority.lastIndexOf(':')
+        if (colon >= 0) {
+          val h = authority.substring(0, colon).lowercase()
+          val p = authority.substring(colon + 1).toIntOrNull() ?: return null
+          h to p
+        } else {
+          authority.lowercase() to 443
+        }
+      }
+    if (host.isBlank() || port !in 1..65535) return null
+    return host to port
+  }
+  val a = origin(url) ?: return false
+  val b = origin(serverBaseUrl) ?: return false
+  return a == b
+}
+
 private fun absObject(body: String): JsonObject =
   runCatching { Json.parseToJsonElement(body).jsonObject }.getOrNull()
     ?: throw PodcastProblem("Audiobookshelf returned an unexpected response")

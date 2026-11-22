@@ -347,10 +347,12 @@ abstract class FilePodcastPlatform(protected val root: File) : PodcastPlatform {
         val tracks = mutableListOf<File>()
         episode.audioParts.forEachIndexed { index, url ->
           val part = File(work, "part-$index.bin")
-          fetchTo(url, part, episode.downloadHeaders) { bytes, total ->
+          val onPartProgress: (Long, Long) -> Unit = { bytes, total ->
             if (total > 0)
               onProgress(index * PART_SCALE + bytes * PART_SCALE / total, parts * PART_SCALE)
           }
+          if (episode.downloadHeaders.isEmpty()) fetchTo(url, part, onPartProgress)
+          else fetchTo(url, part, episode.downloadHeaders, onPartProgress)
           if (isZipFile(part)) {
             tracks += extractMp3Tracks(part, File(work, "part-$index"))
             part.delete()

@@ -104,6 +104,13 @@ interface PodcastPlatform {
   /** False in the browser, which can't send the headers Libro.fm's API requires. */
   val libroFmApi: Boolean
     get() = true
+
+  /**
+   * False in the browser, whose JS download handler cannot forward custom authentication headers
+   * (Audiobookshelf, Jellyfin, Plex).
+   */
+  val authenticatedDownloads: Boolean
+    get() = true
 }
 
 @Composable expect fun rememberPodcastPlatform(): PodcastPlatform
@@ -1200,6 +1207,18 @@ class PodcastController(val platform: PodcastPlatform) {
    * a book not yet on this device gets a fresh one; authenticated self-hosted servers attach their
    * credentials only for the download request, never persisting them in the library.
    */
+  private fun requireMatchingServerOrigin(
+    episode: Episode,
+    serverBaseUrl: String,
+    service: String,
+  ) {
+    val urls = listOf(episode.audioUrl) + episode.audioParts
+    if (serverBaseUrl.isBlank() || urls.any { !sameHttpsOrigin(it, serverBaseUrl) })
+      throw PodcastProblem(
+        "This item's audio URL doesn't match your signed-in $service server. Refresh $service before downloading.",
+      )
+  }
+
   private suspend fun downloadable(episode: Episode): Episode {
     if (platform.originalAvailable(episode)) return episode
     return when (episode.backend) {
@@ -1209,10 +1228,26 @@ class PodcastController(val platform: PodcastPlatform) {
             episode.copy(audioUrl = it.first(), audioParts = it)
           }
         else episode.copy(audioUrl = libroFm().m4bUrl(episode.id))
-      AUDIOBOOKSHELF_BACKEND -> episode.copy(downloadHeaders = audiobookshelf().authHeaders())
-      SUBSONIC_BACKEND -> episode.copy(audioUrl = subsonic().downloadUrl(episode.id))
-      JELLYFIN_BACKEND -> episode.copy(downloadHeaders = jellyfin().authHeaders())
-      PLEX_BACKEND -> episode.copy(downloadHeaders = plex().authHeaders())
+      AUDIOBOOKSHELF_BACKEND -> {
+        val api = audiobookshelf()
+        requireMatchingServerOrigin(episode, state.value.audiobookshelf.baseUrl, "Audiobookshelf")
+        episode.copy(downloadHeaders = api.authHeaders())
+      }
+      SUBSONIC_BACKEND -> {
+        val api = subsonic()
+        requireMatchingServerOrigin(episode, state.value.subsonic.baseUrl, "Subsonic")
+        episode.copy(audioUrl = api.downloadUrl(episode.id))
+      }
+      JELLYFIN_BACKEND -> {
+        val api = jellyfin()
+        requireMatchingServerOrigin(episode, state.value.jellyfin.baseUrl, "Jellyfin")
+        episode.copy(downloadHeaders = api.authHeaders())
+      }
+      PLEX_BACKEND -> {
+        val api = plex()
+        requireMatchingServerOrigin(episode, state.value.plex.baseUrl, "Plex")
+        episode.copy(downloadHeaders = api.authHeaders())
+      }
       else -> episode
     }
   }

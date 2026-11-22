@@ -79,6 +79,7 @@ class BrowserPodcastPlatform : PodcastPlatform {
     if (wasmoPocketCasts()) WasmoPocketCasts() else null
   override val pocketCastsApi = pocketCastsServer != null
   override val libroFmApi = false
+  override val authenticatedDownloads = false
   override val description =
     "Web: unsplit downloads to browser storage. Feed/audio servers must allow CORS. USB copies require HTTPS and Chrome/Edge desktop's writable directory picker. Safari, Firefox and mobile browsers do not support this USB workflow."
 

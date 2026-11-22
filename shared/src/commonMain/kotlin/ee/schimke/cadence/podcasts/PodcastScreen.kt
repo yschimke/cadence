@@ -206,6 +206,14 @@ fun AddPodcastsScreen(
           PodcastProvider.entries
             .filter { it != PodcastProvider.PocketCasts || controller.platform.pocketCastsApi }
             .filter { it != PodcastProvider.LibroFm || controller.platform.libroFmApi }
+            .filter {
+              it !in
+                setOf(
+                  PodcastProvider.Audiobookshelf,
+                  PodcastProvider.Jellyfin,
+                  PodcastProvider.Plex,
+                ) || controller.platform.authenticatedDownloads
+            }
             .forEach { option ->
               ListItem(
                 leadingContent = { Icon(option.icon, contentDescription = null) },

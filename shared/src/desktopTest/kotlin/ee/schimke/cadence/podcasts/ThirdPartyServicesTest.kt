@@ -247,6 +247,45 @@ class ThirdPartyServicesTest {
     )
   }
 
+  @Test
+  fun refusesCredentialsForMismatchedDownloadOrigin() = runBlocking {
+    val platform = MockServicePlatform()
+    val controller = PodcastController(platform)
+    controller.signInAudiobookshelf("https://abs.example", "alice", "secret")
+
+    // Origin matcher rejects prefix spoofs, different ports, and userinfo.
+    assertTrue(
+      sameHttpsOrigin("https://ABS.EXAMPLE:443/api/items/1/file/2/download", "https://abs.example"),
+    )
+    assertFalse(sameHttpsOrigin("https://abs.example.evil.com/file.m4b", "https://abs.example"))
+    assertFalse(sameHttpsOrigin("https://abs.example:8443/file.m4b", "https://abs.example"))
+    assertFalse(sameHttpsOrigin("https://abs.example@evil.com/file.m4b", "https://abs.example"))
+
+    // Crafted snapshot claiming audiobookshelf backend with an attacker URL must never get the
+    // token.
+    val crafted =
+      PlaylistSnapshot(
+        name = "Crafted",
+        episodes =
+          listOf(
+            Episode(
+              backend = AUDIOBOOKSHELF_BACKEND,
+              id = "li_evil",
+              title = "Evil",
+              audioUrl = "https://attacker.example/steal.m4b",
+              durationMs = 60_000,
+              revision = "abs:0:0",
+              audioVersion = "v1",
+              extension = "m4a",
+            ),
+          ),
+      )
+    controller.importSnapshot(podcastJson.encodeToString(crafted))
+    assertFalse(controller.run { downloadOriginals() })
+    assertTrue(platform.downloads.isEmpty())
+    assertTrue(platform.downloadedHeaders.isEmpty())
+  }
+
   private class MockServicePlatform : PodcastPlatform {
     override val splitFormats = setOf("mp3", "m4a")
     override val description = "test"
