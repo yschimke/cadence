@@ -1,11 +1,27 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-22T11:54:00.295Z",
+  "generatedAt": "2026-11-22T13:12:59.202Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "55eac92f7faaeef9ec229696fd3fad328e3d451d",
+        "subject": "chore(main): release 0.1.37 (#691)",
+        "at": "2026-11-22T12:47:16Z",
+        "author": "github-actions[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "7c32db9abed7c0ee434579f049ef0834cc77388d",
+        "subject": "feat: add Audiobookshelf, Subsonic/OpenSubsonic, Jellyfin, Plex and LibriVox sources (#696)",
+        "at": "2026-11-22T12:34:11Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "e37c2e04a4e9b2da202464be2248ebb5f9c99f05",
         "subject": "fix(deps): update dependency ee.schimke.composeai:rc-players-bom to v3.12.0 (#694)",
@@ -466,22 +482,6 @@
         "sha": "047236a8f7e0e958bc253d9e9a17134ec8c40db0",
         "subject": "chore(deps): update yschimke/livery action to v0.17.0 (#637)",
         "at": "2026-11-16T01:14:23Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "04922cfabaeb39551c4f702cc288940c86935516",
-        "subject": "fix(deps): update livery to v0.16.0 (#636)",
-        "at": "2026-11-15T18:16:08Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "58a35764199e98b51e61960f6c5d53ad1e0505d3",
-        "subject": "fix(deps): update livery to v0.15.0 (#634)",
-        "at": "2026-11-15T13:56:44Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []

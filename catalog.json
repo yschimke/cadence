@@ -6628,10 +6628,10 @@
           "bounds": {
             "x": 42,
             "y": 42,
-            "width": 925,
-            "height": 95
+            "width": 966,
+            "height": 190
           },
-          "label": "Add podcasts or audiobooks",
+          "label": "Add podcasts, audiobooks or music",
           "padding": {
             "start": 16,
             "top": 16,
@@ -6642,11 +6642,11 @@
         {
           "bounds": {
             "x": 42,
-            "y": 148,
-            "width": 827,
+            "y": 243,
+            "width": 786,
             "height": 53
           },
-          "label": "Choose one service. Your folders stay alongside it.",
+          "label": "Choose a service. Your folders stay alongside it.",
           "padding": {
             "start": 16,
             "top": 4,
@@ -6855,6 +6855,21 @@
           },
           "role": "Button",
           "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 0,
+            "y": 168,
+            "width": 1050,
+            "height": 2457
+          },
+          "padding": {
+            "start": 16,
+            "top": 0,
+            "end": 16,
+            "bottom": 0
+          },
+          "gap": 12
         },
         {
           "bounds": {
@@ -7074,6 +7089,21 @@
         },
         {
           "bounds": {
+            "x": 0,
+            "y": 168,
+            "width": 1076,
+            "height": 2457
+          },
+          "padding": {
+            "start": 16,
+            "top": 0,
+            "end": 16,
+            "bottom": 0
+          },
+          "gap": 12
+        },
+        {
+          "bounds": {
             "x": 719,
             "y": 179,
             "width": 163,
@@ -7259,6 +7289,21 @@
         },
         {
           "bounds": {
+            "x": 0,
+            "y": 168,
+            "width": 1076,
+            "height": 2191
+          },
+          "padding": {
+            "start": 16,
+            "top": 0,
+            "end": 16,
+            "bottom": 0
+          },
+          "gap": 12
+        },
+        {
+          "bounds": {
             "x": 897,
             "y": 189,
             "width": 137,
@@ -7362,6 +7407,408 @@
       "bodyLine": 201,
       "sourceDirectory": "composeApp",
       "sourceFunction": "PodcastReplaceSourcePreview"
+    },
+    {
+      "componentId": "composeApp/PodcastAudiobookshelfPreview",
+      "images": [
+        {
+          "variant": "ideal",
+          "path": "images/composeapp-podcastaudiobookshelfpreview/ideal__default__compact.png",
+          "state": "default",
+          "width": 1078,
+          "height": 2625,
+          "size": "compact",
+          "livePreview": "https://preview.coo.ee/cadence/p/composeapp-podcastaudiobookshelfpreview__ideal__default__compact",
+          "previewId": "ee.schimke.cadence.preview.PodcastPreviewsKt.PodcastAudiobookshelfPreview_Add_podcasts___Audiobookshelf_signed_in",
+          "previewParams": {
+            "showBackground": true,
+            "device": "spec:width=411dp,height=1000dp,dpi=420",
+            "widthDp": 411,
+            "heightDp": 1000
+          },
+          "density": 2.625,
+          "figmaSvg": "https://preview.coo.ee/cadence/render/composeapp-podcastaudiobookshelfpreview__ideal__default__compact.svg"
+        }
+      ],
+      "greenlines": [
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 22,
+              "y": 32,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 22,
+            "y": 32,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 719,
+              "y": 179,
+              "width": 163,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 719,
+            "y": 179,
+            "width": 163,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 882,
+              "y": 179,
+              "width": 152,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 882,
+            "y": 179,
+            "width": 152,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 836,
+              "y": 337,
+              "width": 198,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 836,
+            "y": 337,
+            "width": 198,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 42,
+              "y": 1158,
+              "width": 193,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 42,
+            "y": 1158,
+            "width": 193,
+            "height": 105
+          }
+        }
+      ],
+      "redlines": [
+        {
+          "bounds": {
+            "x": 22,
+            "y": 32,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 0,
+            "y": 168,
+            "width": 1076,
+            "height": 2457
+          },
+          "padding": {
+            "start": 16,
+            "top": 0,
+            "end": 16,
+            "bottom": 0
+          },
+          "gap": 12
+        },
+        {
+          "bounds": {
+            "x": 719,
+            "y": 179,
+            "width": 163,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 882,
+            "y": 179,
+            "width": 152,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 836,
+            "y": 337,
+            "width": 198,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 1158,
+            "width": 193,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        }
+      ],
+      "section": ":composeApp",
+      "group": "Previews",
+      "caption": "Add podcasts — Audiobookshelf signed in",
+      "wireframe": "wireframes/composeapp-podcastaudiobookshelfpreview.svg",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastPreviews.kt",
+      "sourceModule": ":composeApp",
+      "bodyLine": 228,
+      "sourceDirectory": "composeApp",
+      "sourceFunction": "PodcastAudiobookshelfPreview"
+    },
+    {
+      "componentId": "composeApp/PodcastSubsonicPreview",
+      "images": [
+        {
+          "variant": "ideal",
+          "path": "images/composeapp-podcastsubsonicpreview/ideal__default__compact.png",
+          "state": "default",
+          "width": 1078,
+          "height": 2625,
+          "size": "compact",
+          "livePreview": "https://preview.coo.ee/cadence/p/composeapp-podcastsubsonicpreview__ideal__default__compact",
+          "previewId": "ee.schimke.cadence.preview.PodcastPreviewsKt.PodcastSubsonicPreview_Add_podcasts___Subsonic_signed_in",
+          "previewParams": {
+            "showBackground": true,
+            "device": "spec:width=411dp,height=1000dp,dpi=420",
+            "widthDp": 411,
+            "heightDp": 1000
+          },
+          "density": 2.625,
+          "figmaSvg": "https://preview.coo.ee/cadence/render/composeapp-podcastsubsonicpreview__ideal__default__compact.svg"
+        }
+      ],
+      "greenlines": [
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 22,
+              "y": 32,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 22,
+            "y": 32,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 719,
+              "y": 179,
+              "width": 163,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 719,
+            "y": 179,
+            "width": 163,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 882,
+              "y": 179,
+              "width": 152,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 882,
+            "y": 179,
+            "width": 152,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 836,
+              "y": 337,
+              "width": 198,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 836,
+            "y": 337,
+            "width": 198,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 42,
+              "y": 1158,
+              "width": 193,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 42,
+            "y": 1158,
+            "width": 193,
+            "height": 105
+          }
+        }
+      ],
+      "redlines": [
+        {
+          "bounds": {
+            "x": 22,
+            "y": 32,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 0,
+            "y": 168,
+            "width": 1076,
+            "height": 2457
+          },
+          "padding": {
+            "start": 16,
+            "top": 0,
+            "end": 16,
+            "bottom": 0
+          },
+          "gap": 12
+        },
+        {
+          "bounds": {
+            "x": 719,
+            "y": 179,
+            "width": 163,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 882,
+            "y": 179,
+            "width": 152,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 836,
+            "y": 337,
+            "width": 198,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 1158,
+            "width": 193,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        }
+      ],
+      "section": ":composeApp",
+      "group": "Previews",
+      "caption": "Add podcasts — Subsonic signed in",
+      "wireframe": "wireframes/composeapp-podcastsubsonicpreview.svg",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastPreviews.kt",
+      "sourceModule": ":composeApp",
+      "bodyLine": 256,
+      "sourceDirectory": "composeApp",
+      "sourceFunction": "PodcastSubsonicPreview"
     },
     {
       "componentId": "composeApp/PodcastWidgetBluetoothPreview",
@@ -15659,7 +16106,7 @@
     "ee.schimke.cadence (CadenceTheme)"
   ],
   "renderer": "compose-preview 2.79.0",
-  "generatedAt": "2026-11-22T11:53:57.094Z",
+  "generatedAt": "2026-11-22T13:12:54.725Z",
   "failures": [
     {
       "id": "render-failed--googleoauthactivity--activity-googleoauthactivity",
@@ -15731,7 +16178,7 @@
   "componentsFile": "components.json",
   "source": {
     "repo": "yschimke/cadence",
-    "ref": "e37c2e04a4e9b2da202464be2248ebb5f9c99f05",
+    "ref": "55eac92f7faaeef9ec229696fd3fad328e3d451d",
     "module": ""
   }
 }
