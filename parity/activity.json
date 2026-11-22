@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-21T18:27:20.198Z",
+  "generatedAt": "2026-11-22T11:36:16.379Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "bacabd5b3915671fe7817e07d8df07a16acac87f",
+        "subject": "fix(deps): update livery to v0.22.0 (#695)",
+        "at": "2026-11-22T11:19:37Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "367060b7da7f221e36d65ef5c2902213e5666b01",
         "subject": "fix: retry a device-only restore-key escrow until it reaches the cloud (#693)",
@@ -474,14 +482,6 @@
         "sha": "62c1a65b70460492172757412768886bf26a3b9b",
         "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.94.0 (#632)",
         "at": "2026-11-15T13:54:54Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "7e9e43d1a46c3ee2e3f8e7f6f949e41fc8522256",
-        "subject": "fix(deps): update dependency ee.schimke.composeai:rc-players-bom to v3.5.2 (#631)",
-        "at": "2026-11-15T05:14:00Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
