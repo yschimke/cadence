@@ -1,6 +1,6 @@
 {
     "formatVersion": "compose-preview-history/v1",
-    "generatedFrom": "130217198b5ae4e32851b17a153e7d6e659c159f",
+    "generatedFrom": "d8cb10e67a81f8e153188f5fedeff65abe6d6edf",
     "previews": {
         "composeApp/activity__MainActivity": {
             "path": "renders/composeApp/activity__MainActivity.png",
@@ -2088,6 +2088,13 @@
             "path": "renders/composeApp/AddPodcastsPreview_Add_podcasts-e09ca4b7.png",
             "versions": [
                 {
+                    "blob": "286937eec538a61da5dcd3db9b09a6179328c478",
+                    "commit": "d8cb10e67a81f8e153188f5fedeff65abe6d6edf",
+                    "date": "2026-11-22T12:39:56Z",
+                    "sourceSha": "7c32db9a",
+                    "commits": 1
+                },
+                {
                     "blob": "bbaf22007cdf30446eda6bd8ccdf06b730f6591f",
                     "commit": "3f6e25c42d3f50f7ef794668cc4058e9d76dd18a",
                     "date": "2026-11-21T11:04:10Z",
@@ -2116,7 +2123,22 @@
                     "commits": 1
                 }
             ],
-            "observations": 4,
+            "observations": 5,
+            "unstable": false,
+            "flapCount": 0
+        },
+        "composeApp/ee.schimke.cadence.preview.PodcastPreviewsKt.PodcastAudiobookshelfPreview_Add podcasts — Audiobookshelf signed in": {
+            "path": "renders/composeApp/PodcastAudiobookshelfPreview_Add_podcasts_Audiobookshelf_signed_in-21c50774.png",
+            "versions": [
+                {
+                    "blob": "a0f56e26e04425534612970cbceb2e1c77577642",
+                    "commit": "d8cb10e67a81f8e153188f5fedeff65abe6d6edf",
+                    "date": "2026-11-22T12:39:56Z",
+                    "sourceSha": "7c32db9a",
+                    "commits": 1
+                }
+            ],
+            "observations": 1,
             "unstable": false,
             "flapCount": 0
         },
@@ -2297,6 +2319,21 @@
                 }
             ],
             "observations": 2,
+            "unstable": false,
+            "flapCount": 0
+        },
+        "composeApp/ee.schimke.cadence.preview.PodcastPreviewsKt.PodcastSubsonicPreview_Add podcasts — Subsonic signed in": {
+            "path": "renders/composeApp/PodcastSubsonicPreview_Add_podcasts_Subsonic_signed_in-022f6c3f.png",
+            "versions": [
+                {
+                    "blob": "01f5d7e99052814ae4ebef4f5b12dad6f9ffc031",
+                    "commit": "d8cb10e67a81f8e153188f5fedeff65abe6d6edf",
+                    "date": "2026-11-22T12:39:56Z",
+                    "sourceSha": "7c32db9a",
+                    "commits": 1
+                }
+            ],
+            "observations": 1,
             "unstable": false,
             "flapCount": 0
         },
