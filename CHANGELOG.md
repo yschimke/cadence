@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.1.37](https://github.com/yschimke/cadence/compare/v0.1.36...v0.1.37) (2026-11-22)
+
+
+### Features
+
+* add Audiobookshelf, Subsonic/OpenSubsonic, Jellyfin, Plex and LibriVox sources ([#696](https://github.com/yschimke/cadence/issues/696)) ([7c32db9](https://github.com/yschimke/cadence/commit/7c32db9abed7c0ee434579f049ef0834cc77388d))
+* restore sign-in on a new phone via Restore Credentials ([#690](https://github.com/yschimke/cadence/issues/690)) ([8693842](https://github.com/yschimke/cadence/commit/8693842bb593067b9093a4eab48dbe4a94e37515))
+
+
+### Bug Fixes
+
+* **deps:** update compose-preview-daemon-bom to v3.28.2 with Robolectric 4.18 ([#689](https://github.com/yschimke/cadence/issues/689)) ([d58385d](https://github.com/yschimke/cadence/commit/d58385d611af10633247cc3660a78cd8c06a280d))
+* **deps:** update dependency ee.schimke.composeai:rc-players-bom to v3.12.0 ([#694](https://github.com/yschimke/cadence/issues/694)) ([e37c2e0](https://github.com/yschimke/cadence/commit/e37c2e04a4e9b2da202464be2248ebb5f9c99f05))
+* **deps:** update livery to v0.22.0 ([#695](https://github.com/yschimke/cadence/issues/695)) ([bacabd5](https://github.com/yschimke/cadence/commit/bacabd5b3915671fe7817e07d8df07a16acac87f))
+* retry a device-only restore-key escrow until it reaches the cloud ([#693](https://github.com/yschimke/cadence/issues/693)) ([367060b](https://github.com/yschimke/cadence/commit/367060b7da7f221e36d65ef5c2902213e5666b01))
+
 ## [0.1.36](https://github.com/yschimke/cadence/compare/v0.1.35...v0.1.36) (2026-11-21)
 
 
