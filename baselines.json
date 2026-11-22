@@ -196,7 +196,15 @@
     "functionName": "AddPodcastsPreview",
     "module": "composeApp",
     "renderBasename": "AddPodcastsPreview_Add_podcasts-e09ca4b7.png",
-    "sha256": "1e0107c00fcd5d38341d79ad53d95de88581e27a3754597dd8b1e32dbd9d4f3e",
+    "sha256": "4c971a4a1fc33a788f47a4bc8929f8afbd2d267b7bd5a68e95f1d3dfd2c59c00",
+    "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastPreviews.kt"
+  },
+  "composeApp/ee.schimke.cadence.preview.PodcastPreviewsKt.PodcastAudiobookshelfPreview_Add podcasts \u2014 Audiobookshelf signed in": {
+    "captureLabel": "",
+    "functionName": "PodcastAudiobookshelfPreview",
+    "module": "composeApp",
+    "renderBasename": "PodcastAudiobookshelfPreview_Add_podcasts_Audiobookshelf_signed_in-21c50774.png",
+    "sha256": "f700d3242fed2f60a5c490cb734f7d46cf1a4c8692590a5a467850b8ed155224",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.PodcastPreviewsKt.PodcastImportedPreview_Podcast sync \u2014 imported": {
@@ -237,6 +245,14 @@
     "module": "composeApp",
     "renderBasename": "PodcastReplaceSourcePreview_Add_podcasts_Libro_fm_replaces_Pocket_Casts-b6c570ef.png",
     "sha256": "7d5a190893d62e1994741366d8a4512701c90812982cca9fcc8dd5eb2195aef0",
+    "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastPreviews.kt"
+  },
+  "composeApp/ee.schimke.cadence.preview.PodcastPreviewsKt.PodcastSubsonicPreview_Add podcasts \u2014 Subsonic signed in": {
+    "captureLabel": "",
+    "functionName": "PodcastSubsonicPreview",
+    "module": "composeApp",
+    "renderBasename": "PodcastSubsonicPreview_Add_podcasts_Subsonic_signed_in-022f6c3f.png",
+    "sha256": "38da1af8ce4fff7c27f07bcaac8eec9f0c35ff2b6b4efb1da0b502e0d2a36bf0",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.CloudSyncWidgetLargePreview_Cloud sync widget \u00b7 large": {
