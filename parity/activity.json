@@ -1,11 +1,27 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-22T11:36:16.379Z",
+  "generatedAt": "2026-11-22T11:54:00.295Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "e37c2e04a4e9b2da202464be2248ebb5f9c99f05",
+        "subject": "fix(deps): update dependency ee.schimke.composeai:rc-players-bom to v3.12.0 (#694)",
+        "at": "2026-11-22T11:25:44Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "5659ed092d2a2b8ceaf4d81dcbc714777931f803",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.103.0 (#692)",
+        "at": "2026-11-22T11:19:47Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "bacabd5b3915671fe7817e07d8df07a16acac87f",
         "subject": "fix(deps): update livery to v0.22.0 (#695)",
@@ -466,22 +482,6 @@
         "sha": "58a35764199e98b51e61960f6c5d53ad1e0505d3",
         "subject": "fix(deps): update livery to v0.15.0 (#634)",
         "at": "2026-11-15T13:56:44Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "f9a73badc6c9c81e50b5b39c4262c3adb08f743e",
-        "subject": "fix(deps): update dependency ee.schimke.composeai:compose-preview-daemon-bom to v3.28.0 (#633)",
-        "at": "2026-11-15T13:56:07Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "62c1a65b70460492172757412768886bf26a3b9b",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.94.0 (#632)",
-        "at": "2026-11-15T13:54:54Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
