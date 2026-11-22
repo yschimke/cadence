@@ -218,3 +218,57 @@ internal fun PodcastReplaceSourcePreview() {
     )
   }
 }
+
+@Preview(
+  name = "Add podcasts — Audiobookshelf signed in",
+  showBackground = true,
+  device = "spec:width=411dp,height=1000dp,dpi=420",
+)
+@Composable
+internal fun PodcastAudiobookshelfPreview() {
+  AndroidMaterialTheme {
+    AddPodcastsScreen(
+      remember {
+        PodcastController(PreviewPodcastPlatform).apply {
+          state.value =
+            LocalPodcastState(
+              audiobookshelf = AudiobookshelfSession("https://abs.example", "preview", "listener"),
+            )
+          audiobookshelfLibraries.value =
+            listOf(
+              AudiobookshelfLibrary("lib1", "Audiobooks", "book"),
+              AudiobookshelfLibrary("lib2", "Podcasts", "podcast"),
+            )
+        }
+      },
+      onDone = {},
+      initialProvider = PodcastProvider.Audiobookshelf,
+    )
+  }
+}
+
+@Preview(
+  name = "Add podcasts — Subsonic signed in",
+  showBackground = true,
+  device = "spec:width=411dp,height=1000dp,dpi=420",
+)
+@Composable
+internal fun PodcastSubsonicPreview() {
+  AndroidMaterialTheme {
+    AddPodcastsScreen(
+      remember {
+        PodcastController(PreviewPodcastPlatform).apply {
+          state.value =
+            LocalPodcastState(
+              subsonic =
+                SubsonicSession("https://music.example", username = "listener", password = "pw"),
+            )
+          subsonicPlaylists.value = listOf(SubsonicPlaylist("pl1", "Swim Mix", 12))
+          subsonicAlbums.value = listOf(SubsonicAlbum("al1", "Ambient Waves", "Oceanic", 8))
+        }
+      },
+      onDone = {},
+      initialProvider = PodcastProvider.Subsonic,
+    )
+  }
+}

@@ -10,8 +10,10 @@ import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.filled.ContentPaste
 import androidx.compose.material.icons.filled.Headphones
+import androidx.compose.material.icons.filled.LibraryMusic
 import androidx.compose.material.icons.filled.Podcasts
 import androidx.compose.material.icons.filled.RssFeed
 import androidx.compose.material.icons.filled.Sync
@@ -43,9 +45,9 @@ fun rememberPodcastController(): PodcastController {
 }
 
 /**
- * The podcast and audiobook services you can add. Only one is connected at a time, alongside any
- * number of folders; [kinds] are the sources it stands for, to tell when adding it replaces
- * another.
+ * The podcast, audiobook and music services you can add. Signed-in services can be paired together,
+ * alongside any number of folders; [kinds] are the sources it stands for, to tell when adding it
+ * replaces another.
  */
 enum class PodcastProvider(
   val title: String,
@@ -64,6 +66,36 @@ enum class PodcastProvider(
     "Audiobooks you own on Libro.fm",
     Icons.Filled.Headphones,
     setOf(PodcastSourceKind.LibroFm),
+  ),
+  Audiobookshelf(
+    "Audiobookshelf",
+    "Self-hosted audiobooks and podcasts with progress sync",
+    Icons.Filled.Headphones,
+    setOf(PodcastSourceKind.Audiobookshelf),
+  ),
+  Subsonic(
+    "Subsonic / Navidrome",
+    "Music playlists, albums and starred tracks from OpenSubsonic servers",
+    Icons.Filled.LibraryMusic,
+    setOf(PodcastSourceKind.Subsonic),
+  ),
+  Jellyfin(
+    "Jellyfin",
+    "Self-hosted music playlists, albums and audiobooks",
+    Icons.Filled.LibraryMusic,
+    setOf(PodcastSourceKind.Jellyfin),
+  ),
+  Plex(
+    "Plex",
+    "Music playlists and audiobooks from your Plex Media Server",
+    Icons.Filled.LibraryMusic,
+    setOf(PodcastSourceKind.Plex),
+  ),
+  LibriVox(
+    "LibriVox",
+    "Free public-domain audiobooks, no account needed",
+    Icons.AutoMirrored.Filled.MenuBook,
+    setOf(PodcastSourceKind.Rss),
   ),
   Rss(
     "Podcast feed",
@@ -154,32 +186,35 @@ fun AddPodcastsScreen(
       }
       val chosen = provider
       if (chosen == null) {
-        Text(
-          "Add podcasts or audiobooks",
-          style = MaterialTheme.typography.headlineMedium,
-          modifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp),
-        )
-        Text(
-          local.library.playlist?.let {
-            if (local.library.source in PAIRED_SOURCES)
-              "Pocket Casts and Libro.fm can be kept together. Another service replaces ${local.library.source.title}; your folders stay."
-            else "Choose one service. It replaces ${local.library.source.title}; your folders stay."
-          } ?: "Choose one service. Your folders stay alongside it.",
-          style = MaterialTheme.typography.bodyMedium,
-          color = MaterialTheme.colorScheme.onSurfaceVariant,
-          modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 4.dp, bottom = 8.dp),
-        )
-        PodcastProvider.entries
-          .filter { it != PodcastProvider.PocketCasts || controller.platform.pocketCastsApi }
-          .filter { it != PodcastProvider.LibroFm || controller.platform.libroFmApi }
-          .forEach { option ->
-            ListItem(
-              leadingContent = { Icon(option.icon, contentDescription = null) },
-              headlineContent = { Text(option.title) },
-              supportingContent = { Text(option.detail) },
-              modifier = Modifier.clickable { provider = option },
-            )
-          }
+        Column(Modifier.weight(1f).verticalScroll(rememberScrollState())) {
+          Text(
+            "Add podcasts, audiobooks or music",
+            style = MaterialTheme.typography.headlineMedium,
+            modifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp),
+          )
+          Text(
+            local.library.playlist?.let {
+              if (local.library.source in PAIRED_SOURCES)
+                "Signed-in services can be kept together. Another service replaces ${local.library.source.title}; your folders stay."
+              else
+                "Choose one service. It replaces ${local.library.source.title}; your folders stay."
+            } ?: "Choose a service. Your folders stay alongside it.",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 4.dp, bottom = 8.dp),
+          )
+          PodcastProvider.entries
+            .filter { it != PodcastProvider.PocketCasts || controller.platform.pocketCastsApi }
+            .filter { it != PodcastProvider.LibroFm || controller.platform.libroFmApi }
+            .forEach { option ->
+              ListItem(
+                leadingContent = { Icon(option.icon, contentDescription = null) },
+                headlineContent = { Text(option.title) },
+                supportingContent = { Text(option.detail) },
+                modifier = Modifier.clickable { provider = option },
+              )
+            }
+        }
         return@Column
       }
       Row(
@@ -192,7 +227,10 @@ fun AddPodcastsScreen(
         Text(chosen.title, style = MaterialTheme.typography.headlineSmall)
       }
       Column(
-        Modifier.padding(horizontal = 16.dp).fillMaxWidth(),
+        Modifier.weight(1f)
+          .verticalScroll(rememberScrollState())
+          .padding(horizontal = 16.dp)
+          .fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(12.dp),
       ) {
         val besideKind = pairedKind(local.library, chosen)
@@ -219,7 +257,15 @@ fun AddPodcastsScreen(
         if (chosen != PodcastProvider.Export)
           EpisodeCount(
             latest,
-            if (chosen == PodcastProvider.LibroFm) "audiobooks" else "episodes",
+            when (chosen) {
+              PodcastProvider.LibroFm -> "audiobooks"
+              PodcastProvider.Subsonic -> "tracks"
+              PodcastProvider.Audiobookshelf,
+              PodcastProvider.Jellyfin,
+              PodcastProvider.Plex -> "items"
+              PodcastProvider.LibriVox -> "chapters"
+              else -> "episodes"
+            },
             enabled = !working,
           ) {
             latest = it
@@ -238,6 +284,25 @@ fun AddPodcastsScreen(
             )
           PodcastProvider.LibroFm ->
             LibroFmForm(controller, local, working, pending, latest, alongside, ::import, ::action)
+          PodcastProvider.Audiobookshelf ->
+            AudiobookshelfForm(
+              controller,
+              local,
+              working,
+              pending,
+              latest,
+              alongside,
+              ::import,
+              ::action,
+            )
+          PodcastProvider.Subsonic ->
+            SubsonicForm(controller, local, working, pending, latest, alongside, ::import, ::action)
+          PodcastProvider.Jellyfin ->
+            JellyfinForm(controller, local, working, pending, latest, alongside, ::import, ::action)
+          PodcastProvider.Plex ->
+            PlexForm(controller, local, working, pending, latest, alongside, ::import, ::action)
+          PodcastProvider.LibriVox ->
+            LibriVoxForm(controller, working, pending, latest, ::import, ::action)
           PodcastProvider.Rss ->
             RssForm(local, working) { url -> import { importRss(url, latest) } }
           PodcastProvider.Gpodder ->
@@ -247,6 +312,7 @@ fun AddPodcastsScreen(
           PodcastProvider.Export ->
             ExportForm(working) { text -> import { importText(text, latest) } }
         }
+        Spacer(Modifier.height(16.dp))
       }
     }
   }
@@ -568,6 +634,662 @@ private fun LibroFmChoice(
     modifier =
       Modifier.selectable(selected, enabled = enabled, role = Role.RadioButton, onClick = onSelect),
   )
+}
+
+@Composable
+private fun AudiobookshelfForm(
+  controller: PodcastController,
+  local: LocalPodcastState,
+  busy: Boolean,
+  pending: String?,
+  latest: Int,
+  alongside: Boolean,
+  import: (suspend PodcastController.() -> Unit) -> Unit,
+  action: (suspend PodcastController.() -> Unit) -> Unit,
+) {
+  val libraries by controller.audiobookshelfLibraries.collectAsState()
+  var list by rememberSaveable {
+    mutableStateOf(
+      local.library.second?.takeIf { it.kind == PodcastSourceKind.Audiobookshelf }?.list
+        ?: local.library.sourceList.takeIf {
+          local.library.source == PodcastSourceKind.Audiobookshelf
+        }
+        ?: AUDIOBOOKSHELF_IN_PROGRESS,
+    )
+  }
+  var server by rememberSaveable { mutableStateOf(local.audiobookshelf.server) }
+  var username by rememberSaveable { mutableStateOf(local.audiobookshelf.username) }
+  var password by remember { mutableStateOf("") }
+  var apiToken by remember { mutableStateOf("") }
+  var useToken by rememberSaveable { mutableStateOf(false) }
+
+  LaunchedEffect(local.audiobookshelf.signedIn) {
+    if (
+      controller.state.value.audiobookshelf.signedIn &&
+        controller.audiobookshelfLibraries.value.isEmpty()
+    )
+      controller.run { refreshAudiobookshelfLibraries() }
+  }
+
+  if (local.audiobookshelf.signedIn) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+      Text(
+        "Signed in" +
+          local.audiobookshelf.username.takeIf { it.isNotBlank() }?.let { " as $it" }.orEmpty() +
+          " · ${local.audiobookshelf.baseUrl.substringAfter("https://")}",
+        style = MaterialTheme.typography.bodyMedium,
+        modifier = Modifier.weight(1f),
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis,
+      )
+      TextButton(enabled = !busy, onClick = { action { signOutAudiobookshelf() } }) {
+        Text("Sign out")
+      }
+    }
+    LibroFmChoice(
+      "Continue listening",
+      "In-progress audiobooks and podcast episodes",
+      list == AUDIOBOOKSHELF_IN_PROGRESS,
+      !busy,
+    ) {
+      list = AUDIOBOOKSHELF_IN_PROGRESS
+    }
+    libraries.forEach { lib ->
+      val id = "$AUDIOBOOKSHELF_LIBRARY_PREFIX${lib.id}"
+      LibroFmChoice(
+        lib.name,
+        if (lib.mediaType == "podcast") "Podcast library" else "Audiobook library",
+        list == id,
+        !busy,
+      ) {
+        list = id
+      }
+    }
+    Button(
+      enabled = !busy,
+      onClick = {
+        import {
+          if (alongside) importSecond(PodcastSourceKind.Audiobookshelf, list, latest)
+          else importAudiobookshelf(list, latest)
+        }
+      },
+    ) {
+      Text(if (pending == "Adding podcasts…") "Adding…" else "Add")
+    }
+    Text(
+      "Downloads DRM-free audio directly from your Audiobookshelf server and supports sending updated progress back.",
+      style = MaterialTheme.typography.bodySmall,
+    )
+    return
+  }
+
+  Text(
+    "Connect your Audiobookshelf server using its official REST API.",
+    style = MaterialTheme.typography.bodyMedium,
+  )
+  OutlinedTextField(
+    server,
+    { server = it },
+    enabled = !busy,
+    label = { Text("Server URL (https://…)") },
+    singleLine = true,
+    modifier = Modifier.fillMaxWidth(),
+  )
+  Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+    FilterChip(
+      selected = !useToken,
+      onClick = { useToken = false },
+      label = { Text("Username & password") },
+    )
+    FilterChip(selected = useToken, onClick = { useToken = true }, label = { Text("API token") })
+  }
+  if (useToken) {
+    OutlinedTextField(
+      apiToken,
+      { apiToken = it },
+      enabled = !busy,
+      label = { Text("API token") },
+      singleLine = true,
+      visualTransformation = PasswordVisualTransformation(),
+      modifier = Modifier.fillMaxWidth(),
+    )
+    Button(
+      enabled = !busy && server.isNotBlank() && apiToken.isNotBlank(),
+      onClick = {
+        val supplied = apiToken
+        apiToken = ""
+        action { signInAudiobookshelfToken(server, supplied) }
+      },
+    ) {
+      Text(if (pending != null) "Signing in…" else "Sign in")
+    }
+  } else {
+    OutlinedTextField(
+      username,
+      { username = it },
+      enabled = !busy,
+      label = { Text("Username") },
+      singleLine = true,
+      modifier = Modifier.fillMaxWidth(),
+    )
+    OutlinedTextField(
+      password,
+      { password = it },
+      enabled = !busy,
+      label = { Text("Password") },
+      singleLine = true,
+      visualTransformation = PasswordVisualTransformation(),
+      modifier = Modifier.fillMaxWidth(),
+    )
+    Button(
+      enabled = !busy && server.isNotBlank() && username.isNotBlank() && password.isNotBlank(),
+      onClick = {
+        val supplied = password
+        password = ""
+        action { signInAudiobookshelf(server, username, supplied) }
+      },
+    ) {
+      Text(if (pending != null) "Signing in…" else "Sign in")
+    }
+  }
+}
+
+@Composable
+private fun SubsonicForm(
+  controller: PodcastController,
+  local: LocalPodcastState,
+  busy: Boolean,
+  pending: String?,
+  latest: Int,
+  alongside: Boolean,
+  import: (suspend PodcastController.() -> Unit) -> Unit,
+  action: (suspend PodcastController.() -> Unit) -> Unit,
+) {
+  val playlists by controller.subsonicPlaylists.collectAsState()
+  val albums by controller.subsonicAlbums.collectAsState()
+  var list by rememberSaveable {
+    mutableStateOf(
+      local.library.second?.takeIf { it.kind == PodcastSourceKind.Subsonic }?.list
+        ?: local.library.sourceList.takeIf { local.library.source == PodcastSourceKind.Subsonic }
+        ?: SUBSONIC_STARRED,
+    )
+  }
+  var server by rememberSaveable { mutableStateOf(local.subsonic.server) }
+  var username by rememberSaveable { mutableStateOf(local.subsonic.username) }
+  var password by remember { mutableStateOf("") }
+  var apiKey by remember { mutableStateOf("") }
+  var useApiKey by rememberSaveable { mutableStateOf(local.subsonic.apiKey.isNotBlank()) }
+
+  LaunchedEffect(local.subsonic.signedIn) {
+    if (
+      controller.state.value.subsonic.signedIn &&
+        controller.subsonicPlaylists.value.isEmpty() &&
+        controller.subsonicAlbums.value.isEmpty()
+    )
+      controller.run { refreshSubsonicCatalog() }
+  }
+
+  if (local.subsonic.signedIn) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+      Text(
+        "Signed in" +
+          local.subsonic.username.takeIf { it.isNotBlank() }?.let { " as $it" }.orEmpty() +
+          " · ${local.subsonic.baseUrl.substringAfter("https://")}",
+        style = MaterialTheme.typography.bodyMedium,
+        modifier = Modifier.weight(1f),
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis,
+      )
+      TextButton(enabled = !busy, onClick = { action { signOutSubsonic() } }) { Text("Sign out") }
+    }
+    LibroFmChoice("Starred songs", "Your favorited tracks", list == SUBSONIC_STARRED, !busy) {
+      list = SUBSONIC_STARRED
+    }
+    playlists.forEach { pl ->
+      val id = "$SUBSONIC_PLAYLIST_PREFIX${pl.id}"
+      val tracks = "${pl.songCount} ${if (pl.songCount == 1) "track" else "tracks"}"
+      LibroFmChoice(pl.name, "Playlist · $tracks", list == id, !busy) { list = id }
+    }
+    albums.forEach { album ->
+      val id = "$SUBSONIC_ALBUM_PREFIX${album.id}"
+      val tracks = "${album.songCount} ${if (album.songCount == 1) "track" else "tracks"}"
+      LibroFmChoice(
+        album.name,
+        listOf(album.artist, tracks).filter { it.isNotBlank() }.joinToString(" · "),
+        list == id,
+        !busy,
+      ) {
+        list = id
+      }
+    }
+    Button(
+      enabled = !busy,
+      onClick = {
+        import {
+          if (alongside) importSecond(PodcastSourceKind.Subsonic, list, latest)
+          else importSubsonic(list, latest)
+        }
+      },
+    ) {
+      Text(if (pending == "Adding podcasts…") "Adding…" else "Add")
+    }
+    Text(
+      "Works with Navidrome, Airsonic, Gonic, Ampache, Funkwhale and other OpenSubsonic servers.",
+      style = MaterialTheme.typography.bodySmall,
+    )
+    return
+  }
+
+  Text(
+    "Connect any Subsonic or OpenSubsonic music server (Navidrome, Airsonic, Gonic, Funkwhale).",
+    style = MaterialTheme.typography.bodyMedium,
+  )
+  OutlinedTextField(
+    server,
+    { server = it },
+    enabled = !busy,
+    label = { Text("Server URL (https://…)") },
+    singleLine = true,
+    modifier = Modifier.fillMaxWidth(),
+  )
+  Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+    FilterChip(
+      selected = !useApiKey,
+      onClick = { useApiKey = false },
+      label = { Text("Username & password") },
+    )
+    FilterChip(selected = useApiKey, onClick = { useApiKey = true }, label = { Text("API key") })
+  }
+  if (useApiKey) {
+    OutlinedTextField(
+      apiKey,
+      { apiKey = it },
+      enabled = !busy,
+      label = { Text("OpenSubsonic API key") },
+      singleLine = true,
+      visualTransformation = PasswordVisualTransformation(),
+      modifier = Modifier.fillMaxWidth(),
+    )
+    Button(
+      enabled = !busy && server.isNotBlank() && apiKey.isNotBlank(),
+      onClick = {
+        val supplied = apiKey
+        apiKey = ""
+        action { signInSubsonic(server, "", "", supplied) }
+      },
+    ) {
+      Text(if (pending != null) "Signing in…" else "Sign in")
+    }
+  } else {
+    OutlinedTextField(
+      username,
+      { username = it },
+      enabled = !busy,
+      label = { Text("Username") },
+      singleLine = true,
+      modifier = Modifier.fillMaxWidth(),
+    )
+    OutlinedTextField(
+      password,
+      { password = it },
+      enabled = !busy,
+      label = { Text("Password") },
+      singleLine = true,
+      visualTransformation = PasswordVisualTransformation(),
+      modifier = Modifier.fillMaxWidth(),
+    )
+    Button(
+      enabled = !busy && server.isNotBlank() && username.isNotBlank() && password.isNotBlank(),
+      onClick = {
+        val supplied = password
+        password = ""
+        action { signInSubsonic(server, username, supplied) }
+      },
+    ) {
+      Text(if (pending != null) "Signing in…" else "Sign in")
+    }
+  }
+}
+
+@Composable
+private fun JellyfinForm(
+  controller: PodcastController,
+  local: LocalPodcastState,
+  busy: Boolean,
+  pending: String?,
+  latest: Int,
+  alongside: Boolean,
+  import: (suspend PodcastController.() -> Unit) -> Unit,
+  action: (suspend PodcastController.() -> Unit) -> Unit,
+) {
+  val playlists by controller.jellyfinPlaylists.collectAsState()
+  val albums by controller.jellyfinAlbums.collectAsState()
+  var list by rememberSaveable {
+    mutableStateOf(
+      local.library.second?.takeIf { it.kind == PodcastSourceKind.Jellyfin }?.list
+        ?: local.library.sourceList.takeIf { local.library.source == PodcastSourceKind.Jellyfin }
+        ?: JELLYFIN_AUDIOBOOKS,
+    )
+  }
+  var server by rememberSaveable { mutableStateOf(local.jellyfin.server) }
+  var username by rememberSaveable { mutableStateOf(local.jellyfin.username) }
+  var password by remember { mutableStateOf("") }
+
+  LaunchedEffect(local.jellyfin.signedIn) {
+    if (
+      controller.state.value.jellyfin.signedIn &&
+        controller.jellyfinPlaylists.value.isEmpty() &&
+        controller.jellyfinAlbums.value.isEmpty()
+    )
+      controller.run { refreshJellyfinCatalog() }
+  }
+
+  if (local.jellyfin.signedIn) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+      Text(
+        "Signed in as ${local.jellyfin.username} · ${local.jellyfin.baseUrl.substringAfter("https://")}",
+        style = MaterialTheme.typography.bodyMedium,
+        modifier = Modifier.weight(1f),
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis,
+      )
+      TextButton(enabled = !busy, onClick = { action { signOutJellyfin() } }) { Text("Sign out") }
+    }
+    LibroFmChoice(
+      "Audiobooks",
+      "Your Jellyfin audiobooks, newest first",
+      list == JELLYFIN_AUDIOBOOKS,
+      !busy,
+    ) {
+      list = JELLYFIN_AUDIOBOOKS
+    }
+    LibroFmChoice(
+      "Favorites",
+      "Favorite music tracks and audiobooks",
+      list == JELLYFIN_FAVORITES,
+      !busy,
+    ) {
+      list = JELLYFIN_FAVORITES
+    }
+    playlists.forEach { pl ->
+      val id = "$JELLYFIN_PLAYLIST_PREFIX${pl.id}"
+      LibroFmChoice(pl.name, "Playlist", list == id, !busy) { list = id }
+    }
+    albums.forEach { album ->
+      val id = "$JELLYFIN_ALBUM_PREFIX${album.id}"
+      LibroFmChoice(album.name, album.subtitle.ifBlank { "Album" }, list == id, !busy) { list = id }
+    }
+    Button(
+      enabled = !busy,
+      onClick = {
+        import {
+          if (alongside) importSecond(PodcastSourceKind.Jellyfin, list, latest)
+          else importJellyfin(list, latest)
+        }
+      },
+    ) {
+      Text(if (pending == "Adding podcasts…") "Adding…" else "Add")
+    }
+    return
+  }
+
+  Text(
+    "Connect your Jellyfin server to sync music playlists, albums and audiobooks.",
+    style = MaterialTheme.typography.bodyMedium,
+  )
+  OutlinedTextField(
+    server,
+    { server = it },
+    enabled = !busy,
+    label = { Text("Server URL (https://…)") },
+    singleLine = true,
+    modifier = Modifier.fillMaxWidth(),
+  )
+  OutlinedTextField(
+    username,
+    { username = it },
+    enabled = !busy,
+    label = { Text("Username") },
+    singleLine = true,
+    modifier = Modifier.fillMaxWidth(),
+  )
+  OutlinedTextField(
+    password,
+    { password = it },
+    enabled = !busy,
+    label = { Text("Password") },
+    singleLine = true,
+    visualTransformation = PasswordVisualTransformation(),
+    modifier = Modifier.fillMaxWidth(),
+  )
+  Button(
+    enabled = !busy && server.isNotBlank() && username.isNotBlank(),
+    onClick = {
+      val supplied = password
+      password = ""
+      action { signInJellyfin(server, username, supplied) }
+    },
+  ) {
+    Text(if (pending != null) "Signing in…" else "Sign in")
+  }
+}
+
+@Composable
+private fun PlexForm(
+  controller: PodcastController,
+  local: LocalPodcastState,
+  busy: Boolean,
+  pending: String?,
+  latest: Int,
+  alongside: Boolean,
+  import: (suspend PodcastController.() -> Unit) -> Unit,
+  action: (suspend PodcastController.() -> Unit) -> Unit,
+) {
+  val playlists by controller.plexPlaylists.collectAsState()
+  val sections by controller.plexSections.collectAsState()
+  val pin by controller.plexPin.collectAsState()
+  val servers by controller.plexServers.collectAsState()
+  val uriHandler = LocalUriHandler.current
+  var list by rememberSaveable {
+    mutableStateOf(
+      local.library.second?.takeIf { it.kind == PodcastSourceKind.Plex }?.list
+        ?: local.library.sourceList.takeIf { local.library.source == PodcastSourceKind.Plex }
+        ?: "",
+    )
+  }
+  var server by rememberSaveable { mutableStateOf(local.plex.server) }
+  var token by remember { mutableStateOf("") }
+  var useDirectToken by rememberSaveable { mutableStateOf(false) }
+
+  LaunchedEffect(local.plex.signedIn) {
+    if (
+      controller.state.value.plex.signedIn &&
+        controller.plexPlaylists.value.isEmpty() &&
+        controller.plexSections.value.isEmpty()
+    )
+      controller.run { refreshPlexCatalog() }
+  }
+
+  LaunchedEffect(playlists, sections) {
+    if (list.isBlank()) {
+      list =
+        playlists.firstOrNull()?.let { "$PLEX_PLAYLIST_PREFIX${it.ratingKey}" }
+          ?: sections.firstOrNull()?.let { "$PLEX_SECTION_PREFIX${it.key}" }
+          ?: ""
+    }
+  }
+
+  if (local.plex.signedIn) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+      Text(
+        "Connected" +
+          local.plex.serverName.takeIf { it.isNotBlank() }?.let { " to $it" }.orEmpty() +
+          " · ${local.plex.baseUrl.substringAfter("https://")}",
+        style = MaterialTheme.typography.bodyMedium,
+        modifier = Modifier.weight(1f),
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis,
+      )
+      TextButton(enabled = !busy, onClick = { action { signOutPlex() } }) { Text("Sign out") }
+    }
+    playlists.forEach { pl ->
+      val id = "$PLEX_PLAYLIST_PREFIX${pl.ratingKey}"
+      val countText = "${pl.leafCount} ${if (pl.leafCount == 1) "item" else "items"}"
+      LibroFmChoice(pl.title, "Playlist · $countText", list == id, !busy) { list = id }
+    }
+    sections.forEach { section ->
+      val id = "$PLEX_SECTION_PREFIX${section.key}"
+      LibroFmChoice(section.title, "Audio library (recently added)", list == id, !busy) {
+        list = id
+      }
+    }
+    Button(
+      enabled = !busy && list.isNotBlank(),
+      onClick = {
+        import {
+          if (alongside) importSecond(PodcastSourceKind.Plex, list, latest)
+          else importPlex(list, latest)
+        }
+      },
+    ) {
+      Text(if (pending == "Adding podcasts…") "Adding…" else "Add")
+    }
+    Text(
+      "Downloads original DRM-free files from your Plex Media Server and supports sending updated listening progress back.",
+      style = MaterialTheme.typography.bodySmall,
+    )
+    return
+  }
+
+  Text(
+    "Connect your Plex Media Server to sync music playlists and audiobooks.",
+    style = MaterialTheme.typography.bodyMedium,
+  )
+  Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+    FilterChip(
+      selected = !useDirectToken,
+      onClick = { useDirectToken = false },
+      label = { Text("Sign in with Plex.tv") },
+    )
+    FilterChip(
+      selected = useDirectToken,
+      onClick = { useDirectToken = true },
+      label = { Text("Server & token") },
+    )
+  }
+  if (!useDirectToken) {
+    if (servers.isNotEmpty()) {
+      Text("Choose a Plex Media Server:", style = MaterialTheme.typography.titleSmall)
+      servers.forEach { choice ->
+        ListItem(
+          headlineContent = { Text(choice.name) },
+          supportingContent = { Text(choice.url.substringAfter("https://")) },
+          modifier =
+            Modifier.clickable(enabled = !busy) {
+              action { signInPlexToken(choice.url, choice.token, choice.name) }
+            },
+        )
+      }
+    } else if (pin != null) {
+      val currentPin = pin!!
+      Text(
+        "Approve Cadence on plex.tv, then return here and tap Check sign-in.",
+        style = MaterialTheme.typography.bodySmall,
+      )
+      Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        Button(enabled = !busy, onClick = { uriHandler.openUri(currentPin.authUrl) }) {
+          Text("Open Plex sign-in")
+        }
+        OutlinedButton(enabled = !busy, onClick = { action { pollPlexPin() } }) {
+          Text("Check sign-in")
+        }
+      }
+    } else {
+      Button(enabled = !busy, onClick = { action { startPlexPin() } }) {
+        Text(if (pending != null) "Starting…" else "Sign in with Plex.tv")
+      }
+    }
+  } else {
+    OutlinedTextField(
+      server,
+      { server = it },
+      enabled = !busy,
+      label = { Text("Server URL (https://…)") },
+      singleLine = true,
+      modifier = Modifier.fillMaxWidth(),
+    )
+    OutlinedTextField(
+      token,
+      { token = it },
+      enabled = !busy,
+      label = { Text("X-Plex-Token") },
+      singleLine = true,
+      visualTransformation = PasswordVisualTransformation(),
+      modifier = Modifier.fillMaxWidth(),
+    )
+    Button(
+      enabled = !busy && server.isNotBlank() && token.isNotBlank(),
+      onClick = {
+        val supplied = token
+        token = ""
+        action { signInPlexToken(server, supplied) }
+      },
+    ) {
+      Text(if (pending != null) "Connecting…" else "Connect")
+    }
+  }
+}
+
+@Composable
+private fun LibriVoxForm(
+  controller: PodcastController,
+  busy: Boolean,
+  pending: String?,
+  latest: Int,
+  import: (suspend PodcastController.() -> Unit) -> Unit,
+  action: (suspend PodcastController.() -> Unit) -> Unit,
+) {
+  val results by controller.libriVoxResults.collectAsState()
+  var query by rememberSaveable { mutableStateOf("") }
+  var selectedUrl by rememberSaveable { mutableStateOf("") }
+
+  LaunchedEffect(Unit) {
+    if (controller.libriVoxResults.value.isEmpty()) controller.run { searchLibriVoxBooks("") }
+  }
+
+  Text(
+    "Search 40,000+ free public-domain audiobooks from LibriVox. Chapters import via their official RSS feed.",
+    style = MaterialTheme.typography.bodyMedium,
+  )
+  Row(
+    horizontalArrangement = Arrangement.spacedBy(8.dp),
+    verticalAlignment = Alignment.CenterVertically,
+  ) {
+    OutlinedTextField(
+      query,
+      { query = it },
+      enabled = !busy,
+      label = { Text("Title search") },
+      singleLine = true,
+      modifier = Modifier.weight(1f),
+    )
+    Button(enabled = !busy, onClick = { action { searchLibriVoxBooks(query) } }) { Text("Search") }
+  }
+  results.forEach { book ->
+    val detail =
+      listOf(book.authors, book.totalTime, book.language)
+        .filter { it.isNotBlank() }
+        .joinToString(" · ")
+    LibroFmChoice(book.title, detail, selectedUrl == book.rssUrl, !busy) {
+      selectedUrl = book.rssUrl
+    }
+  }
+  Button(
+    enabled = !busy && selectedUrl.isNotBlank(),
+    onClick = { import { importRss(selectedUrl, latest) } },
+  ) {
+    Text(if (pending == "Adding podcasts…") "Adding…" else "Add")
+  }
 }
 
 @Composable
@@ -1009,7 +1731,9 @@ private fun EpisodeCard(
         episode.backend == "gpodder" ||
           (episode.backend == "pocket-casts" &&
             local.pocketCasts.signedIn &&
-            !local.pocketCasts.server)
+            !local.pocketCasts.server) ||
+          (episode.backend == AUDIOBOOKSHELF_BACKEND && local.audiobookshelf.signedIn) ||
+          (episode.backend == PLEX_BACKEND && local.plex.signedIn)
       ) {
         val sent = local.sentPositions[episode.key]
         if (position > episode.positionMs && position != sent)

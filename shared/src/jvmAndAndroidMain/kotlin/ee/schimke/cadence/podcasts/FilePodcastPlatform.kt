@@ -6,12 +6,17 @@ import java.net.URI
 import java.nio.file.AtomicMoveNotSupportedException
 import java.nio.file.Files
 import java.nio.file.StandardCopyOption.*
+import java.util.concurrent.TimeUnit
 import javax.xml.parsers.DocumentBuilderFactory
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody.Companion.toRequestBody
 import org.w3c.dom.Element
 
 abstract class FilePodcastPlatform(protected val root: File) : PodcastPlatform {
@@ -165,6 +170,15 @@ abstract class FilePodcastPlatform(protected val root: File) : PodcastPlatform {
       }
     }
 
+  private val patchClient by lazy {
+    OkHttpClient.Builder()
+      .connectTimeout(30, TimeUnit.SECONDS)
+      .readTimeout(60, TimeUnit.SECONDS)
+      .followRedirects(false)
+      .followSslRedirects(false)
+      .build()
+  }
+
   override suspend fun request(
     url: String,
     method: String,
@@ -172,30 +186,31 @@ abstract class FilePodcastPlatform(protected val root: File) : PodcastPlatform {
     body: String?,
   ): String =
     withContext(Dispatchers.IO) {
+      if (method == "PATCH") {
+        val uri = URI(url)
+        require(uri.scheme == "https" && uri.userInfo == null)
+        val contentType = headers["Content-Type"] ?: "application/json"
+        val req =
+          Request.Builder()
+            .url(url)
+            .apply { headers.forEach { (k, v) -> header(k, v) } }
+            .patch((body ?: "").toRequestBody(contentType.toMediaTypeOrNull()))
+            .build()
+        patchClient.newCall(req).execute().use { response ->
+          checkResponseStatus(response.code)
+          check(response.code in 200..299) { "Request failed" }
+          val text = response.body.string()
+          require(text.length <= 8_000_000)
+          return@withContext text
+        }
+      }
       connection(url, method, headers).let { conn ->
         try {
           if (body != null) {
             conn.doOutput = true
             conn.outputStream.use { it.write(body.toByteArray()) }
           }
-          when (conn.responseCode) {
-            400 -> throw PodcastProblem("The server rejected the request (HTTP 400).", 400)
-            401,
-            403 ->
-              throw PodcastProblem(
-                "The server refused the sign-in. Check the user name and password (or the cloud project's row policies) and sign in again.",
-                conn.responseCode,
-              )
-            404 ->
-              throw PodcastProblem(
-                "Not found (HTTP 404). Check the server URL and server type.",
-                404,
-              )
-            409 ->
-              throw PodcastProblem(
-                "Cloud revision conflict. Restore cloud configuration, reapply local settings, and save again.",
-              )
-          }
+          checkResponseStatus(conn.responseCode)
           check(conn.responseCode in 200..299) { "Request failed" }
           conn.inputStream.bufferedReader().use { reader ->
             val text = StringBuilder()
@@ -213,6 +228,27 @@ abstract class FilePodcastPlatform(protected val root: File) : PodcastPlatform {
         }
       }
     }
+
+  private fun checkResponseStatus(code: Int) {
+    when (code) {
+      400 -> throw PodcastProblem("The server rejected the request (HTTP 400).", 400)
+      401,
+      403 ->
+        throw PodcastProblem(
+          "The server refused the sign-in. Check the user name and password (or the cloud project's row policies) and sign in again.",
+          code,
+        )
+      404 ->
+        throw PodcastProblem(
+          "Not found (HTTP 404). Check the server URL and server type.",
+          404,
+        )
+      409 ->
+        throw PodcastProblem(
+          "Cloud revision conflict. Restore cloud configuration, reapply local settings, and save again.",
+        )
+    }
+  }
 
   private fun connection(
     url: String,
@@ -233,13 +269,17 @@ abstract class FilePodcastPlatform(protected val root: File) : PodcastPlatform {
   }
 
   /**
-   * Opens a public GET, following at most five HTTPS redirects. No account headers are sent, so a
-   * redirect cannot leak credentials. The caller must disconnect the returned connection.
+   * Opens a GET, following at most five HTTPS redirects. Optional [headers] are sent only on the
+   * initial request and stripped before any redirect so credentials can never leak to another host.
+   * The caller must disconnect the returned connection.
    */
-  protected fun openPublic(url: String): HttpURLConnection {
+  protected fun openPublic(
+    url: String,
+    headers: Map<String, String> = emptyMap(),
+  ): HttpURLConnection {
     var location = url
-    repeat(6) {
-      val conn = connection(location)
+    repeat(6) { hop ->
+      val conn = connection(location, headers = if (hop == 0) headers else emptyMap())
       val code = conn.responseCode
       if (code !in listOf(301, 302, 303, 307, 308)) {
         if (code == 200) return conn
@@ -306,13 +346,19 @@ abstract class FilePodcastPlatform(protected val root: File) : PodcastPlatform {
         work.mkdirs()
         val tracks = mutableListOf<File>()
         episode.audioParts.forEachIndexed { index, url ->
-          val zip = File(work, "part-$index.zip")
-          fetchTo(url, zip) { bytes, total ->
+          val part = File(work, "part-$index.bin")
+          fetchTo(url, part, episode.downloadHeaders) { bytes, total ->
             if (total > 0)
               onProgress(index * PART_SCALE + bytes * PART_SCALE / total, parts * PART_SCALE)
           }
-          tracks += extractMp3Tracks(zip, File(work, "part-$index"))
-          zip.delete()
+          if (isZipFile(part)) {
+            tracks += extractMp3Tracks(part, File(work, "part-$index"))
+            part.delete()
+          } else {
+            val mp3 = File(work, "part-$index.mp3")
+            check(part.renameTo(mp3)) { "Couldn't stage MP3 part" }
+            tracks += mp3
+          }
         }
         if (tracks.isEmpty()) throw PodcastProblem("the download had no MP3 tracks")
         joinMp3Tracks(tracks, temp)
@@ -340,12 +386,31 @@ abstract class FilePodcastPlatform(protected val root: File) : PodcastPlatform {
       }
     }
 
+  private fun isZipFile(file: File): Boolean =
+    file.length() >= 4 &&
+      file.inputStream().use { input ->
+        val header = ByteArray(4)
+        input.read(header) == 4 &&
+          header[0] == 0x50.toByte() &&
+          header[1] == 0x4B.toByte() &&
+          header[2] == 0x03.toByte() &&
+          header[3] == 0x04.toByte()
+      }
+
   /**
-   * Streams a public HTTPS file to [target], cancellable, refusing anything over 2 GB. Open so
-   * device and desktop tests can serve parts locally.
+   * Streams an HTTPS file to [target], cancellable, refusing anything over 2 GB. Open so device and
+   * desktop tests can serve parts locally.
    */
-  protected open suspend fun fetchTo(url: String, target: File, onProgress: (Long, Long) -> Unit) {
-    val conn = openPublic(url)
+  protected open suspend fun fetchTo(url: String, target: File, onProgress: (Long, Long) -> Unit) =
+    fetchTo(url, target, emptyMap(), onProgress)
+
+  protected open suspend fun fetchTo(
+    url: String,
+    target: File,
+    headers: Map<String, String>,
+    onProgress: (Long, Long) -> Unit,
+  ) {
+    val conn = openPublic(url, headers)
     try {
       val total = conn.contentLengthLong
       var count = 0L
@@ -380,7 +445,7 @@ abstract class FilePodcastPlatform(protected val root: File) : PodcastPlatform {
       destination.parentFile!!.mkdirs()
       val temp = File(destination.parentFile, destination.name + ".part")
       try {
-        val conn = openPublic(episode.audioUrl)
+        val conn = openPublic(episode.audioUrl, episode.downloadHeaders)
         try {
           val type = conn.contentType?.substringBefore(';')?.trim()?.lowercase()
           if (type != null && !type.isAudioDownload())

@@ -142,6 +142,16 @@ class PodcastController(val platform: PodcastPlatform) {
   private var pocketCastsCapture: PocketCastsCapture? = null
   /** The signed-in Libro.fm library, newest purchase first, to pick a book from. */
   val libroFmBooks = MutableStateFlow<List<LibroFmBook>>(emptyList())
+  val audiobookshelfLibraries = MutableStateFlow<List<AudiobookshelfLibrary>>(emptyList())
+  val subsonicPlaylists = MutableStateFlow<List<SubsonicPlaylist>>(emptyList())
+  val subsonicAlbums = MutableStateFlow<List<SubsonicAlbum>>(emptyList())
+  val jellyfinPlaylists = MutableStateFlow<List<JellyfinCollection>>(emptyList())
+  val jellyfinAlbums = MutableStateFlow<List<JellyfinCollection>>(emptyList())
+  val plexPlaylists = MutableStateFlow<List<PlexPlaylist>>(emptyList())
+  val plexSections = MutableStateFlow<List<PlexSection>>(emptyList())
+  val plexPin = MutableStateFlow<PlexPin?>(null)
+  val plexServers = MutableStateFlow<List<PlexServerChoice>>(emptyList())
+  val libriVoxResults = MutableStateFlow<List<LibriVoxBook>>(emptyList())
   // A successful action's summary, shown instead of the generic "Saved".
   private var notice: String? = null
 
@@ -486,6 +496,10 @@ class PodcastController(val platform: PodcastPlatform) {
         PodcastSourceKind.Rss -> state.value.library.feedUrl.isNotBlank()
         PodcastSourceKind.Gpodder -> gpodderPassword.isNotBlank()
         PodcastSourceKind.LibroFm -> state.value.libroFm.signedIn
+        PodcastSourceKind.Audiobookshelf -> state.value.audiobookshelf.signedIn
+        PodcastSourceKind.Subsonic -> state.value.subsonic.signedIn
+        PodcastSourceKind.Jellyfin -> state.value.jellyfin.signedIn
+        PodcastSourceKind.Plex -> state.value.plex.signedIn
         else -> false
       }
 
@@ -511,6 +525,11 @@ class PodcastController(val platform: PodcastPlatform) {
           throw PodcastProblem("Enter your gpodder password again to refresh")
         else importGpodder(state.value.gpodder, gpodderPassword, library.feedLatest)
       PodcastSourceKind.LibroFm -> importLibroFm(library.sourceList, library.feedLatest)
+      PodcastSourceKind.Audiobookshelf ->
+        importAudiobookshelf(library.sourceList, library.feedLatest)
+      PodcastSourceKind.Subsonic -> importSubsonic(library.sourceList, library.feedLatest)
+      PodcastSourceKind.Jellyfin -> importJellyfin(library.sourceList, library.feedLatest)
+      PodcastSourceKind.Plex -> importPlex(library.sourceList, library.feedLatest)
       else -> throw PodcastProblem("Import a new export to update these episodes")
     }
     val second = state.value.library.second ?: return
@@ -521,8 +540,7 @@ class PodcastController(val platform: PodcastPlatform) {
 
   /**
    * Adds [kind] beside the main source, or reads it again: the first [latest] of [list] join the
-   * synced episodes after the main source's, and the rest wait in [SecondSource.upcoming]. Only
-   * Pocket Casts and Libro.fm pair up, one of each.
+   * synced episodes after the main source's, and the rest wait in [SecondSource.upcoming].
    */
   suspend fun importSecond(
     kind: PodcastSourceKind,
@@ -531,27 +549,55 @@ class PodcastController(val platform: PodcastPlatform) {
   ) {
     val main = state.value.library.source
     if (state.value.library.playlist == null || main !in PAIRED_SOURCES)
-      throw PodcastProblem("Add Pocket Casts or Libro.fm first, then the other beside it")
+      throw PodcastProblem("Add a signed-in service first, then another beside it")
     if (kind !in PAIRED_SOURCES || kind == main)
       throw PodcastProblem("${kind.title} can't be added beside ${main.title}")
     val backend = sourceBackend(kind)
     val name: String
     val all: List<Episode>
     val skipped: Int
-    if (kind == PodcastSourceKind.PocketCasts) {
-      val (snapshot, missing) = readPocketCasts(pocketCastsReader(), list, MAX_FEED_EPISODES)
-      name = snapshot.name
-      all = snapshot.episodes
-      skipped = missing
-    } else {
-      val api = libroFm()
-      val books = api.library()
-      libroFmBooks.value = books
-      val (snapshot, missing) = libroFmSnapshot(books, list)
-      name = snapshot.name
-      // Libro.fm has no position to read, so this app's own is kept across refreshes.
-      all = keepLocalPositions(libroFmFormats(api, snapshot.episodes, latest))
-      skipped = missing
+    when (kind) {
+      PodcastSourceKind.PocketCasts -> {
+        val (snapshot, missing) = readPocketCasts(pocketCastsReader(), list, MAX_FEED_EPISODES)
+        name = snapshot.name
+        all = snapshot.episodes
+        skipped = missing
+      }
+      PodcastSourceKind.LibroFm -> {
+        val api = libroFm()
+        val books = api.library()
+        libroFmBooks.value = books
+        val (snapshot, missing) = libroFmSnapshot(books, list)
+        name = snapshot.name
+        // Libro.fm has no position to read, so this app's own is kept across refreshes.
+        all = keepLocalPositions(libroFmFormats(api, snapshot.episodes, latest))
+        skipped = missing
+      }
+      PodcastSourceKind.Audiobookshelf -> {
+        val (snapshot, missing) = readAudiobookshelf(list)
+        name = snapshot.name
+        all = snapshot.episodes
+        skipped = missing
+      }
+      PodcastSourceKind.Subsonic -> {
+        val (snapshot, missing) = readSubsonic(list)
+        name = snapshot.name
+        all = keepLocalPositions(snapshot.episodes)
+        skipped = missing
+      }
+      PodcastSourceKind.Jellyfin -> {
+        val (snapshot, missing) = readJellyfin(list)
+        name = snapshot.name
+        all = snapshot.episodes
+        skipped = missing
+      }
+      PodcastSourceKind.Plex -> {
+        val (snapshot, missing) = readPlex(list)
+        name = snapshot.name
+        all = snapshot.episodes
+        skipped = missing
+      }
+      else -> throw PodcastProblem("${kind.title} can't be added beside ${main.title}")
     }
     val library = state.value.library
     val current = library.playlist ?: throw PodcastProblem("Connect a source first")
@@ -577,7 +623,7 @@ class PodcastController(val platform: PodcastPlatform) {
     platform.pruneAudio(playlist.episodes)
     recheckDownloads()
     recheckCachedProcessing()
-    val noun = if (kind == PodcastSourceKind.LibroFm) "audiobook" else "episode"
+    val noun = sourceItemNoun(kind)
     val later = all.size - minOf(all.size, latest)
     notice =
       if (all.isEmpty()) "Added $name beside ${main.title}, empty for now"
@@ -780,17 +826,396 @@ class PodcastController(val platform: PodcastPlatform) {
           if (skipped > 0) " · skipped $skipped without a known length" else ""
   }
 
+  private fun sourceItemNoun(kind: PodcastSourceKind?): String =
+    when (kind) {
+      PodcastSourceKind.LibroFm -> "audiobook"
+      PodcastSourceKind.Subsonic -> "track"
+      PodcastSourceKind.Jellyfin -> "item"
+      PodcastSourceKind.Audiobookshelf -> "item"
+      else -> "episode"
+    }
+
+  private fun audiobookshelf() =
+    AudiobookshelfApi(platform, state.value.audiobookshelf) {
+      save(state.value.copy(audiobookshelf = AudiobookshelfSession()))
+      audiobookshelfLibraries.value = emptyList()
+    }
+
+  suspend fun signInAudiobookshelf(server: String, username: String, password: String) {
+    if (server.isBlank() || username.isBlank() || password.isBlank())
+      throw PodcastProblem("Enter your Audiobookshelf server URL, username and password")
+    val session = AudiobookshelfApi.signIn(platform, server, username.trim(), password)
+    save(state.value.copy(audiobookshelf = session))
+    refreshAudiobookshelfLibraries()
+    notice = "Signed in to Audiobookshelf as ${session.username.ifBlank { username.trim() }}"
+  }
+
+  suspend fun signInAudiobookshelfToken(server: String, token: String) {
+    if (server.isBlank() || token.isBlank())
+      throw PodcastProblem("Enter your Audiobookshelf server URL and API token")
+    val session = AudiobookshelfApi.signInWithToken(platform, server, token)
+    save(state.value.copy(audiobookshelf = session))
+    refreshAudiobookshelfLibraries()
+    notice =
+      "Signed in to Audiobookshelf" +
+        session.username.takeIf { it.isNotBlank() }?.let { " as $it" }.orEmpty()
+  }
+
+  suspend fun refreshAudiobookshelfLibraries() {
+    audiobookshelfLibraries.value = audiobookshelf().libraries()
+  }
+
+  suspend fun signOutAudiobookshelf() {
+    audiobookshelfLibraries.value = emptyList()
+    save(state.value.copy(audiobookshelf = AudiobookshelfSession()))
+    notice = "Signed out of Audiobookshelf"
+  }
+
+  private suspend fun readAudiobookshelf(list: String): Pair<PlaylistSnapshot, Int> {
+    val api = audiobookshelf()
+    val (_, progressList) = api.me()
+    val progressByKey = progressList.associateBy { it.libraryItemId to it.episodeId }
+    val libraries = api.libraries()
+    audiobookshelfLibraries.value = libraries
+    val name: String
+    val entries: List<Pair<String, String>>
+    if (list == AUDIOBOOKSHELF_IN_PROGRESS || list.isBlank()) {
+      name = "Continue listening"
+      entries = api.itemsInProgress()
+    } else {
+      val libId = list.removePrefix(AUDIOBOOKSHELF_LIBRARY_PREFIX)
+      name = libraries.firstOrNull { it.id == libId }?.name ?: "Audiobookshelf"
+      entries = api.libraryItems(libId, MAX_FEED_EPISODES)
+    }
+    var skipped = 0
+    val episodes = mutableListOf<Episode>()
+    for ((itemId, epId) in entries.take(MAX_FEED_EPISODES)) {
+      val expanded = api.expandedItem(itemId, epId)
+      if (expanded.isEmpty()) {
+        skipped++
+        continue
+      }
+      for (item in expanded) {
+        val progress = progressByKey[item.id to item.episodeId]
+        val ep = audiobookshelfToEpisode(state.value.audiobookshelf.baseUrl, item, progress)
+        if (ep == null || episodes.any { it.key == ep.key }) skipped++ else episodes += ep
+        if (episodes.size >= MAX_FEED_EPISODES) break
+      }
+      if (episodes.size >= MAX_FEED_EPISODES) break
+    }
+    return PlaylistSnapshot(name = name, episodes = episodes) to skipped
+  }
+
+  suspend fun importAudiobookshelf(list: String, latest: Int = state.value.library.feedLatest) {
+    val (snapshot, skipped) = readAudiobookshelf(list)
+    val all = snapshot.episodes
+    importSnapshot(
+      podcastJson.encodeToString(snapshot.copy(episodes = all.take(latest))),
+      upcoming = all.drop(latest),
+      kind = PodcastSourceKind.Audiobookshelf,
+    )
+    save(
+      state.value.copy(
+        library =
+          state.value.library.copy(
+            feedLatest = latest,
+            source = PodcastSourceKind.Audiobookshelf,
+            sourceList = list,
+          ),
+      ),
+    )
+    val later = all.size - minOf(all.size, latest)
+    notice =
+      if (all.isEmpty()) "${snapshot.name} is empty for now. Refresh when something is added."
+      else
+        "Imported ${count(minOf(all.size, latest), "item")} from ${snapshot.name}" +
+          (if (later > 0) " · $later more listed" else "") +
+          if (skipped > 0) " · skipped $skipped without supported audio" else ""
+  }
+
+  private fun subsonic() =
+    SubsonicApi(platform, state.value.subsonic) {
+      save(state.value.copy(subsonic = SubsonicSession()))
+      subsonicPlaylists.value = emptyList()
+      subsonicAlbums.value = emptyList()
+    }
+
+  suspend fun signInSubsonic(
+    server: String,
+    username: String,
+    password: String,
+    apiKey: String = "",
+  ) {
+    val session = SubsonicApi.signIn(platform, server, username, password, apiKey)
+    save(state.value.copy(subsonic = session))
+    refreshSubsonicCatalog()
+    notice =
+      "Signed in to Subsonic" +
+        session.username.takeIf { it.isNotBlank() }?.let { " as $it" }.orEmpty()
+  }
+
+  suspend fun refreshSubsonicCatalog() {
+    val api = subsonic()
+    subsonicPlaylists.value = api.playlists()
+    subsonicAlbums.value = api.newestAlbums()
+  }
+
+  suspend fun signOutSubsonic() {
+    subsonicPlaylists.value = emptyList()
+    subsonicAlbums.value = emptyList()
+    save(state.value.copy(subsonic = SubsonicSession()))
+    notice = "Signed out of Subsonic"
+  }
+
+  private suspend fun readSubsonic(list: String): Pair<PlaylistSnapshot, Int> {
+    val api = subsonic()
+    val (name, songs) =
+      when {
+        list.startsWith(SUBSONIC_PLAYLIST_PREFIX) ->
+          api.playlist(list.removePrefix(SUBSONIC_PLAYLIST_PREFIX))
+        list.startsWith(SUBSONIC_ALBUM_PREFIX) ->
+          api.album(list.removePrefix(SUBSONIC_ALBUM_PREFIX))
+        else -> "Starred songs" to api.starred()
+      }
+    val server = state.value.subsonic.baseUrl
+    val episodes = songs.distinctBy { it.id }.mapNotNull { subsonicToEpisode(server, it) }
+    val skipped = songs.distinctBy { it.id }.size - episodes.size
+    return PlaylistSnapshot(name = name, episodes = episodes) to skipped
+  }
+
+  suspend fun importSubsonic(list: String, latest: Int = state.value.library.feedLatest) {
+    val (snapshot, skipped) = readSubsonic(list)
+    val all = keepLocalPositions(snapshot.episodes)
+    importSnapshot(
+      podcastJson.encodeToString(snapshot.copy(episodes = all.take(latest))),
+      upcoming = all.drop(latest),
+      kind = PodcastSourceKind.Subsonic,
+    )
+    save(
+      state.value.copy(
+        library =
+          state.value.library.copy(
+            feedLatest = latest,
+            source = PodcastSourceKind.Subsonic,
+            sourceList = list,
+          ),
+      ),
+    )
+    val later = all.size - minOf(all.size, latest)
+    notice =
+      if (all.isEmpty()) "${snapshot.name} is empty for now."
+      else
+        "Imported ${count(minOf(all.size, latest), "track")} from ${snapshot.name}" +
+          (if (later > 0) " · $later more listed" else "") +
+          if (skipped > 0) " · skipped $skipped without a known length" else ""
+  }
+
+  private fun jellyfin() =
+    JellyfinApi(platform, state.value.jellyfin) {
+      save(state.value.copy(jellyfin = JellyfinSession()))
+      jellyfinPlaylists.value = emptyList()
+      jellyfinAlbums.value = emptyList()
+    }
+
+  suspend fun signInJellyfin(server: String, username: String, password: String) {
+    val session = JellyfinApi.signIn(platform, server, username, password)
+    save(state.value.copy(jellyfin = session))
+    refreshJellyfinCatalog()
+    notice = "Signed in to Jellyfin as ${session.username}"
+  }
+
+  suspend fun refreshJellyfinCatalog() {
+    val api = jellyfin()
+    jellyfinPlaylists.value = api.playlists()
+    jellyfinAlbums.value = api.newestAlbums()
+  }
+
+  suspend fun signOutJellyfin() {
+    jellyfinPlaylists.value = emptyList()
+    jellyfinAlbums.value = emptyList()
+    save(state.value.copy(jellyfin = JellyfinSession()))
+    notice = "Signed out of Jellyfin"
+  }
+
+  private suspend fun readJellyfin(list: String): Pair<PlaylistSnapshot, Int> {
+    val api = jellyfin()
+    val (name, items) =
+      when {
+        list.startsWith(JELLYFIN_PLAYLIST_PREFIX) -> {
+          val id = list.removePrefix(JELLYFIN_PLAYLIST_PREFIX)
+          val title =
+            jellyfinPlaylists.value.firstOrNull { it.id == id }?.name ?: "Jellyfin playlist"
+          title to api.playlistItems(id)
+        }
+        list.startsWith(JELLYFIN_ALBUM_PREFIX) -> {
+          val id = list.removePrefix(JELLYFIN_ALBUM_PREFIX)
+          val title = jellyfinAlbums.value.firstOrNull { it.id == id }?.name ?: "Jellyfin album"
+          title to api.albumItems(id)
+        }
+        list == JELLYFIN_FAVORITES -> "Favorites" to api.favorites()
+        else -> "Audiobooks" to api.audiobooks()
+      }
+    val server = state.value.jellyfin.baseUrl
+    val episodes = items.distinctBy { it.id }.mapNotNull { jellyfinToEpisode(server, it) }
+    val skipped = items.distinctBy { it.id }.size - episodes.size
+    return PlaylistSnapshot(name = name, episodes = episodes) to skipped
+  }
+
+  suspend fun importJellyfin(list: String, latest: Int = state.value.library.feedLatest) {
+    val (snapshot, skipped) = readJellyfin(list)
+    val all = snapshot.episodes
+    importSnapshot(
+      podcastJson.encodeToString(snapshot.copy(episodes = all.take(latest))),
+      upcoming = all.drop(latest),
+      kind = PodcastSourceKind.Jellyfin,
+    )
+    save(
+      state.value.copy(
+        library =
+          state.value.library.copy(
+            feedLatest = latest,
+            source = PodcastSourceKind.Jellyfin,
+            sourceList = list,
+          ),
+      ),
+    )
+    val later = all.size - minOf(all.size, latest)
+    notice =
+      if (all.isEmpty()) "${snapshot.name} is empty for now."
+      else
+        "Imported ${count(minOf(all.size, latest), "item")} from ${snapshot.name}" +
+          (if (later > 0) " · $later more listed" else "") +
+          if (skipped > 0) " · skipped $skipped without a known length" else ""
+  }
+
+  private fun plex() =
+    PlexApi(platform, state.value.plex) {
+      save(state.value.copy(plex = PlexSession()))
+      plexPlaylists.value = emptyList()
+      plexSections.value = emptyList()
+    }
+
+  suspend fun signInPlexToken(server: String, token: String, serverName: String = "") {
+    val session = PlexApi.signInWithToken(platform, server, token, serverName)
+    save(state.value.copy(plex = session))
+    plexPin.value = null
+    plexServers.value = emptyList()
+    refreshPlexCatalog()
+    notice = "Connected to Plex" + serverName.takeIf { it.isNotBlank() }?.let { " ($it)" }.orEmpty()
+  }
+
+  suspend fun startPlexPin() {
+    plexServers.value = emptyList()
+    plexPin.value = PlexApi.startPin(platform)
+    notice = "Open the Plex sign-in page, then tap Check sign-in"
+  }
+
+  suspend fun pollPlexPin() {
+    val pin = plexPin.value ?: throw PodcastProblem("Start Plex sign-in first")
+    val servers =
+      PlexApi.pollPin(platform, pin.id)
+        ?: throw PodcastProblem("Waiting for Plex approval. Finish signing in, then try again.")
+    if (servers.size == 1) {
+      val s = servers.single()
+      signInPlexToken(s.url, s.token, s.name)
+    } else {
+      plexServers.value = servers
+      notice = "Choose a Plex server"
+    }
+  }
+
+  suspend fun refreshPlexCatalog() {
+    val api = plex()
+    plexPlaylists.value = api.playlists()
+    plexSections.value = api.audioSections()
+  }
+
+  suspend fun signOutPlex() {
+    plexPlaylists.value = emptyList()
+    plexSections.value = emptyList()
+    plexPin.value = null
+    plexServers.value = emptyList()
+    save(state.value.copy(plex = PlexSession()))
+    notice = "Signed out of Plex"
+  }
+
+  private suspend fun readPlex(list: String): Pair<PlaylistSnapshot, Int> {
+    val api = plex()
+    val (name, tracks) =
+      when {
+        list.startsWith(PLEX_PLAYLIST_PREFIX) ->
+          api.playlistItems(list.removePrefix(PLEX_PLAYLIST_PREFIX))
+        list.startsWith(PLEX_SECTION_PREFIX) ->
+          api.sectionTracks(list.removePrefix(PLEX_SECTION_PREFIX), MAX_FEED_EPISODES)
+        else -> {
+          val firstSection =
+            plexSections.value.firstOrNull()
+              ?: api.audioSections().firstOrNull()
+              ?: throw PodcastProblem("No music or audiobook libraries found on this Plex server")
+          api.sectionTracks(firstSection.key, MAX_FEED_EPISODES)
+        }
+      }
+    val server = state.value.plex.baseUrl
+    val episodes = tracks.distinctBy { it.ratingKey }.mapNotNull { plexToEpisode(server, it) }
+    val skipped = tracks.distinctBy { it.ratingKey }.size - episodes.size
+    return PlaylistSnapshot(name = name, episodes = episodes) to skipped
+  }
+
+  suspend fun importPlex(list: String, latest: Int = state.value.library.feedLatest) {
+    val (snapshot, skipped) = readPlex(list)
+    val all = snapshot.episodes
+    importSnapshot(
+      podcastJson.encodeToString(snapshot.copy(episodes = all.take(latest))),
+      upcoming = all.drop(latest),
+      kind = PodcastSourceKind.Plex,
+    )
+    save(
+      state.value.copy(
+        library =
+          state.value.library.copy(
+            feedLatest = latest,
+            source = PodcastSourceKind.Plex,
+            sourceList = list,
+          ),
+      ),
+    )
+    val later = all.size - minOf(all.size, latest)
+    notice =
+      if (all.isEmpty()) "${snapshot.name} is empty for now."
+      else
+        "Imported ${count(minOf(all.size, latest), "item")} from ${snapshot.name}" +
+          (if (later > 0) " · $later more listed" else "") +
+          if (skipped > 0) " · skipped $skipped without supported audio" else ""
+  }
+
+  suspend fun searchLibriVoxBooks(query: String) {
+    libriVoxResults.value = searchLibriVox(platform, query)
+    notice =
+      if (libriVoxResults.value.isEmpty()) "No LibriVox audiobooks matched"
+      else "Found ${count(libriVoxResults.value.size, "audiobook")} on LibriVox"
+  }
+
   /**
    * [episode] with audio it can be downloaded from now. Libro.fm's links expire within minutes, so
-   * a book not yet on this device gets a fresh one.
+   * a book not yet on this device gets a fresh one; authenticated self-hosted servers attach their
+   * credentials only for the download request, never persisting them in the library.
    */
-  private suspend fun downloadable(episode: Episode): Episode =
-    when {
-      episode.backend != LIBRO_FM_BACKEND || platform.originalAvailable(episode) -> episode
-      episode.extension == "mp3" ->
-        libroFm().mp3Parts(episode.id).let { episode.copy(audioUrl = it.first(), audioParts = it) }
-      else -> episode.copy(audioUrl = libroFm().m4bUrl(episode.id))
+  private suspend fun downloadable(episode: Episode): Episode {
+    if (platform.originalAvailable(episode)) return episode
+    return when (episode.backend) {
+      LIBRO_FM_BACKEND ->
+        if (episode.extension == "mp3")
+          libroFm().mp3Parts(episode.id).let {
+            episode.copy(audioUrl = it.first(), audioParts = it)
+          }
+        else episode.copy(audioUrl = libroFm().m4bUrl(episode.id))
+      AUDIOBOOKSHELF_BACKEND -> episode.copy(downloadHeaders = audiobookshelf().authHeaders())
+      SUBSONIC_BACKEND -> episode.copy(audioUrl = subsonic().downloadUrl(episode.id))
+      JELLYFIN_BACKEND -> episode.copy(downloadHeaders = jellyfin().authHeaders())
+      PLEX_BACKEND -> episode.copy(downloadHeaders = plex().authHeaders())
+      else -> episode
     }
+  }
 
   /**
    * Finds chapters for each episode set to split by chapter that doesn't have them yet: a joined
@@ -1087,7 +1512,16 @@ class PodcastController(val platform: PodcastPlatform) {
       sendPocketCastsPosition(episode)
       return
     }
-    if (episode.backend != "gpodder") throw PodcastProblem("Only gpodder imports accept positions")
+    if (episode.backend == AUDIOBOOKSHELF_BACKEND) {
+      sendAudiobookshelfPosition(episode)
+      return
+    }
+    if (episode.backend == PLEX_BACKEND) {
+      sendPlexPosition(episode)
+      return
+    }
+    if (episode.backend != "gpodder")
+      throw PodcastProblem("This source does not accept position updates")
     val account = state.value.gpodder
     if (gpodderPassword.isBlank()) throw PodcastProblem("Import from gpodder again to sign in")
     val position =
@@ -1158,6 +1592,67 @@ class PodcastController(val platform: PodcastPlatform) {
     api.sendPosition(episode.id, remote.podcastUuid, position, episode.durationMs)
     save(state.value.copy(sentPositions = state.value.sentPositions + (episode.key to position)))
     notice = "Sent ${formatTime(position)} to Pocket Casts"
+  }
+
+  private suspend fun sendAudiobookshelfPosition(episode: Episode) {
+    if (!state.value.audiobookshelf.signedIn)
+      throw PodcastProblem("Sign in to Audiobookshelf before sending a position")
+    val position =
+      episodePosition(
+        episode,
+        state.value.library,
+        state.value.library.manifests.firstOrNull { it.episode.key == episode.key }?.config,
+      )
+    if (position <= episode.positionMs) throw PodcastProblem("Set a later episode position first")
+    val parts = episode.id.split('/', limit = 2)
+    val itemId = parts[0]
+    val epId = parts.getOrElse(1) { "" }
+    val api = audiobookshelf()
+    val remote = api.progress(itemId, epId)
+    val remoteMs =
+      when {
+        remote == null -> 0L
+        remote.isFinished -> episode.durationMs
+        else -> (remote.currentTimeSeconds * 1000).toLong().coerceIn(0, episode.durationMs)
+      }
+    val importedSec = episode.positionMs / 1000
+    val remoteSec = remoteMs / 1000
+    val previousSendSec = state.value.sentPositions[episode.key]?.let { it / 1000 }
+    if (remoteSec != importedSec && remoteSec != previousSendSec)
+      throw PodcastProblem(
+        "This item moved in Audiobookshelf since import. Refresh before sending a position.",
+      )
+    if (remote?.isFinished == true && position < episode.durationMs)
+      throw PodcastProblem(
+        "This item is already marked finished in Audiobookshelf. Refresh before sending a position.",
+      )
+    api.sendPosition(itemId, epId, position, episode.durationMs)
+    save(state.value.copy(sentPositions = state.value.sentPositions + (episode.key to position)))
+    notice = "Sent ${formatTime(position)} to Audiobookshelf"
+  }
+
+  private suspend fun sendPlexPosition(episode: Episode) {
+    if (!state.value.plex.signedIn)
+      throw PodcastProblem("Sign in to Plex before sending a position")
+    val position =
+      episodePosition(
+        episode,
+        state.value.library,
+        state.value.library.manifests.firstOrNull { it.episode.key == episode.key }?.config,
+      )
+    if (position <= episode.positionMs) throw PodcastProblem("Set a later episode position first")
+    val api = plex()
+    val remote = api.track(episode.id) ?: throw PodcastProblem("Plex didn't return this item")
+    val importedSec = episode.positionMs / 1000
+    val remoteSec = remote.viewOffsetMs / 1000
+    val previousSendSec = state.value.sentPositions[episode.key]?.let { it / 1000 }
+    if (remoteSec != importedSec && remoteSec != previousSendSec)
+      throw PodcastProblem(
+        "This item moved in Plex since import. Refresh before sending a position.",
+      )
+    api.sendPosition(episode.id, position, episode.durationMs)
+    save(state.value.copy(sentPositions = state.value.sentPositions + (episode.key to position)))
+    notice = "Sent ${formatTime(position)} to Plex"
   }
 
   /**
