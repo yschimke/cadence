@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-22T13:12:59.202Z",
+  "generatedAt": "2026-11-22T14:20:29.579Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "953451fb3aad18dead68095b248813a7a69b8bd5",
+        "subject": "fix(deps): update dependency ee.schimke.composeai:compose-preview-daemon-bom to v3.29.0 (#682)",
+        "at": "2026-11-22T14:06:56Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "55eac92f7faaeef9ec229696fd3fad328e3d451d",
         "subject": "chore(main): release 0.1.37 (#691)",
@@ -474,14 +482,6 @@
         "sha": "6fab7d1513ce6597bb056e638361d300ab80d7c8",
         "subject": "fix(deps): update dependency ee.schimke.composeai:rc-players-bom to v3.6.0 (#635)",
         "at": "2026-11-16T03:12:09Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "047236a8f7e0e958bc253d9e9a17134ec8c40db0",
-        "subject": "chore(deps): update yschimke/livery action to v0.17.0 (#637)",
-        "at": "2026-11-16T01:14:23Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
