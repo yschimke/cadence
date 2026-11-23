@@ -3,6 +3,7 @@ package ee.schimke.cadence.widgets
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Build
+import android.os.Parcel
 import android.util.TypedValue
 import android.widget.RemoteViews
 import ee.schimke.cadence.R
@@ -33,10 +34,6 @@ internal class NotificationLivery(private val livery: WidgetLivery) : Notificati
     notificationId: Int,
     body: NotificationBody,
   ): RemoteViews? {
-    // Android 17 (API 37) rejects a Remote Compose body nested in a notification, wrapped or not
-    // ("Nested RemoteViews cannot contain DrawInstructions"): NotificationManager.notify throws and
-    // a foreground service's parcelled notification crashes the app. Plain notifications there.
-    if (Build.VERSION.SDK_INT >= 37) return null
     val open = body.contentIntent ?: return null
     val render =
       notifications.render(
@@ -69,16 +66,37 @@ internal class NotificationLivery(private val livery: WidgetLivery) : Notificati
     // SystemUI's player gives the body every dp it is offered (up to 256), whatever height the
     // document asks for, which left a short download note a screen tall. A container of the
     // body's own height is all the player is offered.
-    return RemoteViews(context.packageName, R.layout.notification_body).apply {
-      // An update can be reapplied to the shown views, where addView appends: clear first, so
-      // progress posts don't stack bodies.
-      removeAllViews(R.id.notification_body)
-      addView(R.id.notification_body, views)
-      setViewLayoutHeight(
-        R.id.notification_body,
-        heightDp(body, context.resources.configuration).toFloat(),
-        TypedValue.COMPLEX_UNIT_DIP,
-      )
+    val wrapped =
+      RemoteViews(context.packageName, R.layout.notification_body).apply {
+        // An update can be reapplied to the shown views, where addView appends: clear first, so
+        // progress posts don't stack bodies.
+        removeAllViews(R.id.notification_body)
+        addView(R.id.notification_body, views)
+        setViewLayoutHeight(
+          R.id.notification_body,
+          heightDp(body, context.resources.configuration).toFloat(),
+          TypedValue.COMPLEX_UNIT_DIP,
+        )
+      }
+    // Some Android 17 builds refuse a Remote Compose body nested in a notification ("Nested
+    // RemoteViews cannot contain DrawInstructions"): NotificationManager.notify throws and a
+    // foreground service's parcelled notification crashes the app. Posting is where it is read
+    // back, so read it back here and post plain where the platform won't take it.
+    return wrapped.takeIf { it.survivesParcel() }
+  }
+
+  /** Whether this Android accepts these views once a notification carries them across a parcel. */
+  private fun RemoteViews.survivesParcel(): Boolean {
+    val parcel = Parcel.obtain()
+    return try {
+      writeToParcel(parcel, 0)
+      parcel.setDataPosition(0)
+      RemoteViews.CREATOR.createFromParcel(parcel)
+      true
+    } catch (_: IllegalArgumentException) {
+      false
+    } finally {
+      parcel.recycle()
     }
   }
 
