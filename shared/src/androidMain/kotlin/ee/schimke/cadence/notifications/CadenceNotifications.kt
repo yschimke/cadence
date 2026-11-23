@@ -3,6 +3,7 @@ package ee.schimke.cadence.notifications
 import android.app.Notification
 import android.app.PendingIntent
 import android.content.Context
+import android.util.Log
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import kotlin.coroutines.cancellation.CancellationException
@@ -53,7 +54,9 @@ object CadenceNotifications {
         renderer?.let { withContext(Dispatchers.Default) { it.render(context, notificationId, body) } }
       } catch (e: CancellationException) {
         throw e
-      } catch (_: Exception) {
+      } catch (e: Exception) {
+        // Plain notification, but say why: a body that never draws is otherwise invisible.
+        Log.w("CadenceNotifications", "Remote Compose body not drawn", e)
         null
       }
     return builder(context, channel, body, views).apply(configure).build()
