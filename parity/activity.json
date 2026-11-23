@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-22T14:20:29.579Z",
+  "generatedAt": "2026-11-23T06:45:46.382Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "90a9a09327d8ae1c5169735c08339dc875ff4956",
+        "subject": "chore(deps): update yschimke/livery action to v0.23.0 (#698)",
+        "at": "2026-11-23T00:44:22Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "953451fb3aad18dead68095b248813a7a69b8bd5",
         "subject": "fix(deps): update dependency ee.schimke.composeai:compose-preview-daemon-bom to v3.29.0 (#682)",
@@ -475,14 +483,6 @@
         "subject": "chore(main): release 0.1.32 (#612)",
         "at": "2026-11-16T06:39:43Z",
         "author": "github-actions[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "6fab7d1513ce6597bb056e638361d300ab80d7c8",
-        "subject": "fix(deps): update dependency ee.schimke.composeai:rc-players-bom to v3.6.0 (#635)",
-        "at": "2026-11-16T03:12:09Z",
-        "author": "renovate[bot]",
         "previewIds": [],
         "components": []
       }
