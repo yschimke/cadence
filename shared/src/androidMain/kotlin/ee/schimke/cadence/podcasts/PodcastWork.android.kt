@@ -130,24 +130,36 @@ class PodcastPreparationWorker(context: Context, params: WorkerParameters) :
       }
     val openIntent = CadenceNotifications.openApp(applicationContext)
     val cancelIntent = WorkManager.getInstance(applicationContext).createCancelPendingIntent(id)
+    fun progressBody(message: String, fraction: Float? = null) =
+      NotificationBody(
+        title,
+        message,
+        if (task == "process") NotificationIcon.Process else NotificationIcon.Download,
+        progress = fraction,
+        indeterminate = fraction == null,
+        contentIntent = openIntent,
+        cancelIntent = cancelIntent,
+      )
     suspend fun notification(message: String, fraction: Float? = null) =
       CadenceNotifications.build(
         applicationContext,
         "podcast-preparation",
         PROGRESS_NOTIFICATION,
-        NotificationBody(
-          title,
-          message,
-          if (task == "process") NotificationIcon.Process else NotificationIcon.Download,
-          progress = fraction,
-          indeterminate = fraction == null,
-          contentIntent = openIntent,
-          cancelIntent = cancelIntent,
-        ),
+        progressBody(message, fraction),
       ) {
         setOngoing(true)
       }
-    val initial = notification("Preparing…")
+    // WorkManager hands this to its foreground service in an Intent; Android 17 refuses a
+    // Remote Compose body nested in a parcelled notification and crashes the app. Plain here, the
+    // Livery body on the updates below (posted straight to the NotificationManager).
+    val initial =
+      CadenceNotifications.buildPlain(
+        applicationContext,
+        "podcast-preparation",
+        progressBody("Preparing…"),
+      ) {
+        setOngoing(true)
+      }
     setForeground(
       if (Build.VERSION.SDK_INT >= 29)
         ForegroundInfo(PROGRESS_NOTIFICATION, initial, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)

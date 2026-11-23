@@ -1,8 +1,11 @@
 package ee.schimke.cadence.widgets
 
+import android.app.Notification
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Build
+import android.os.Parcel
+import android.util.Log
 import android.util.TypedValue
 import android.widget.RemoteViews
 import ee.schimke.cadence.R
@@ -33,6 +36,44 @@ internal class NotificationLivery(private val livery: WidgetLivery) : Notificati
     notificationId: Int,
     body: NotificationBody,
   ): RemoteViews? {
+    val views = draw(context, notificationId, body) ?: return null
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return views
+    // Already wrapped for SystemUI's template (RcLauncherWidgets.notificationRemoteViews).
+    // SystemUI's
+    // player gives the body every dp it is offered (up to 256), whatever height the document asks
+    // for, which left a short download note a screen tall. A container of the body's own height is
+    // all the player is offered.
+    val wrapped =
+      RemoteViews(context.packageName, R.layout.notification_body).apply {
+        // An update can be reapplied to the shown views, where addView appends: clear first, so
+        // progress posts don't stack bodies.
+        removeAllViews(R.id.notification_body)
+        addView(R.id.notification_body, views)
+        setViewLayoutHeight(
+          R.id.notification_body,
+          heightDp(body, context.resources.configuration).toFloat(),
+          TypedValue.COMPLEX_UNIT_DIP,
+        )
+      }
+    // Some Android 17 builds refuse a Remote Compose body nested twice ("Nested RemoteViews cannot
+    // contain DrawInstructions"): NotificationManager.notify throws and a foreground service's
+    // parcelled notification crashes the app. Posting is where it is read back, so read each shape
+    // back here. Adding a view to a container changes it, so the second try is drawn afresh.
+    if (wrapped.survivesNotificationParcel(context)) return wrapped
+    val asIs = draw(context, notificationId, body)
+    if (asIs != null && asIs.survivesNotificationParcel(context)) {
+      Log.i(TAG, "notification body shape: Livery's views as they are")
+      return asIs
+    }
+    Log.i(TAG, "notification body shape: plain")
+    return null
+  }
+
+  private suspend fun draw(
+    context: Context,
+    notificationId: Int,
+    body: NotificationBody,
+  ): RemoteViews? {
     val open = body.contentIntent ?: return null
     val render =
       notifications.render(
@@ -57,24 +98,31 @@ internal class NotificationLivery(private val livery: WidgetLivery) : Notificati
     // The bundled catalog holds the template, so this is only a newer download; the next post
     // (progress updates are frequent) draws it.
     if (render.hasMisses) scope.launch { render.fetchMissed() }
-    // Already wrapped for SystemUI's template (RcLauncherWidgets.notificationRemoteViews): Android
-    // 17 refuses a nested view that has DrawInstructions, crashing a foreground service. The
-    // wrapper doesn't carry that flag, so it nests in a plain layout as it does in SystemUI's.
-    val views = render.views ?: return null
-    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return views
-    // SystemUI's player gives the body every dp it is offered (up to 256), whatever height the
-    // document asks for, which left a short download note a screen tall. A container of the
-    // body's own height is all the player is offered.
-    return RemoteViews(context.packageName, R.layout.notification_body).apply {
-      // An update can be reapplied to the shown views, where addView appends: clear first, so
-      // progress posts don't stack bodies.
-      removeAllViews(R.id.notification_body)
-      addView(R.id.notification_body, views)
-      setViewLayoutHeight(
-        R.id.notification_body,
-        heightDp(body, context.resources.configuration).toFloat(),
-        TypedValue.COMPLEX_UNIT_DIP,
-      )
+    return render.views
+  }
+
+  /**
+   * Whether this Android accepts these views once a notification carries them across a parcel, as
+   * WorkManager's foreground service and SystemUI read it. The whole [Notification] is read back:
+   * that is where the DrawInstructions check runs, and the views alone don't parcel standalone.
+   */
+  private fun RemoteViews.survivesNotificationParcel(context: Context): Boolean {
+    val notification =
+      Notification.Builder(context, "cadence-body-check")
+        .setSmallIcon(android.R.drawable.stat_sys_download)
+        .setCustomBigContentView(this)
+        .build()
+    val parcel = Parcel.obtain()
+    return try {
+      notification.writeToParcel(parcel, 0)
+      parcel.setDataPosition(0)
+      Notification.CREATOR.createFromParcel(parcel)
+      true
+    } catch (e: RuntimeException) {
+      Log.i(TAG, "this Android won't take the body: ${e.message}")
+      false
+    } finally {
+      parcel.recycle()
     }
   }
 
@@ -105,3 +153,5 @@ internal fun notificationBodyHeightDp(
     .toInt()
     .coerceIn(NotificationTemplate.MIN_HEIGHT_DP, NotificationTemplate.MAX_HEIGHT_DP)
 }
+
+private const val TAG = "NotificationLivery"
