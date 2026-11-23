@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.38](https://github.com/yschimke/cadence/compare/v0.1.37...v0.1.38) (2026-11-23)
+
+
+### Bug Fixes
+
+* **deps:** update dependency ee.schimke.composeai:compose-preview-daemon-bom to v3.29.0 ([#682](https://github.com/yschimke/cadence/issues/682)) ([953451f](https://github.com/yschimke/cadence/commit/953451fb3aad18dead68095b248813a7a69b8bd5))
+* mark sign-in fields as username/email/password for autofill ([#700](https://github.com/yschimke/cadence/issues/700)) ([e870eec](https://github.com/yschimke/cadence/commit/e870eecf6daa6bb50edabc5d5daa34e1c80e04e1))
+
 ## [0.1.37](https://github.com/yschimke/cadence/compare/v0.1.36...v0.1.37) (2026-11-22)
 
 
