@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-23T06:45:46.382Z",
+  "generatedAt": "2026-11-23T07:38:17.929Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "e870eecf6daa6bb50edabc5d5daa34e1c80e04e1",
+        "subject": "fix: mark sign-in fields as username/email/password for autofill (#700)",
+        "at": "2026-11-23T07:25:46Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "90a9a09327d8ae1c5169735c08339dc875ff4956",
         "subject": "chore(deps): update yschimke/livery action to v0.23.0 (#698)",
@@ -475,14 +483,6 @@
         "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.95.0 (#640)",
         "at": "2026-11-16T19:53:24Z",
         "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "79c8215a94054319228e7c65880544f6b0df04b2",
-        "subject": "chore(main): release 0.1.32 (#612)",
-        "at": "2026-11-16T06:39:43Z",
-        "author": "github-actions[bot]",
         "previewIds": [],
         "components": []
       }
