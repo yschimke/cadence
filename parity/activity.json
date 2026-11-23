@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-23T08:13:02.795Z",
+  "generatedAt": "2026-11-23T08:27:00.908Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "c202b9f74401bce4572fc933f931eeed93393eb6",
+        "subject": "chore(main): release 0.1.38 (#697)",
+        "at": "2026-11-23T07:57:22Z",
+        "author": "github-actions[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "e08dde63a13bc92bb34e4acec8dfcb3713eb090c",
         "subject": "fix: stop Android 17 crashing on Remote Compose notification bodies (#699)",
@@ -474,14 +482,6 @@
         "sha": "da9cc22e53c1e2ab04cf0cf6b07574a0ca6e5dee",
         "subject": "fix(deps): update livery to v0.19.0 (#642)",
         "at": "2026-11-16T19:58:01Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "cd76618359be1b327a0acf1d733873e181c4d0e5",
-        "subject": "chore(deps): update anthropics/claude-code-action action to v1.0.277 (#638)",
-        "at": "2026-11-16T19:54:06Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
