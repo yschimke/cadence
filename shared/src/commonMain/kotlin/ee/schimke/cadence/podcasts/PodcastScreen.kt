@@ -22,10 +22,12 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.autofill.ContentType
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.contentType
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextOverflow
@@ -486,7 +488,7 @@ private fun PocketCastsForm(
     enabled = !busy,
     label = { Text("Email") },
     singleLine = true,
-    modifier = Modifier.fillMaxWidth(),
+    modifier = Modifier.fillMaxWidth().semantics { contentType = ContentType.EmailAddress },
   )
   OutlinedTextField(
     password,
@@ -495,7 +497,7 @@ private fun PocketCastsForm(
     label = { Text("Password") },
     singleLine = true,
     visualTransformation = PasswordVisualTransformation(),
-    modifier = Modifier.fillMaxWidth(),
+    modifier = Modifier.fillMaxWidth().semantics { contentType = ContentType.Password },
   )
   OutlinedButton(
     enabled = !busy && email.isNotBlank() && password.isNotBlank(),
@@ -604,7 +606,7 @@ private fun LibroFmForm(
     enabled = !busy,
     label = { Text("Email") },
     singleLine = true,
-    modifier = Modifier.fillMaxWidth(),
+    modifier = Modifier.fillMaxWidth().semantics { contentType = ContentType.EmailAddress },
   )
   OutlinedTextField(
     password,
@@ -613,7 +615,7 @@ private fun LibroFmForm(
     label = { Text("Password") },
     singleLine = true,
     visualTransformation = PasswordVisualTransformation(),
-    modifier = Modifier.fillMaxWidth(),
+    modifier = Modifier.fillMaxWidth().semantics { contentType = ContentType.Password },
   )
   Button(
     enabled = !busy && email.isNotBlank() && password.isNotBlank(),
@@ -778,7 +780,7 @@ private fun AudiobookshelfForm(
       enabled = !busy,
       label = { Text("Username") },
       singleLine = true,
-      modifier = Modifier.fillMaxWidth(),
+      modifier = Modifier.fillMaxWidth().semantics { contentType = ContentType.Username },
     )
     OutlinedTextField(
       password,
@@ -787,7 +789,7 @@ private fun AudiobookshelfForm(
       label = { Text("Password") },
       singleLine = true,
       visualTransformation = PasswordVisualTransformation(),
-      modifier = Modifier.fillMaxWidth(),
+      modifier = Modifier.fillMaxWidth().semantics { contentType = ContentType.Password },
     )
     Button(
       enabled = !busy && server.isNotBlank() && username.isNotBlank() && password.isNotBlank(),
@@ -935,7 +937,7 @@ private fun SubsonicForm(
       enabled = !busy,
       label = { Text("Username") },
       singleLine = true,
-      modifier = Modifier.fillMaxWidth(),
+      modifier = Modifier.fillMaxWidth().semantics { contentType = ContentType.Username },
     )
     OutlinedTextField(
       password,
@@ -944,7 +946,7 @@ private fun SubsonicForm(
       label = { Text("Password") },
       singleLine = true,
       visualTransformation = PasswordVisualTransformation(),
-      modifier = Modifier.fillMaxWidth(),
+      modifier = Modifier.fillMaxWidth().semantics { contentType = ContentType.Password },
     )
     Button(
       enabled = !busy && server.isNotBlank() && username.isNotBlank() && password.isNotBlank(),
@@ -1059,7 +1061,7 @@ private fun JellyfinForm(
     enabled = !busy,
     label = { Text("Username") },
     singleLine = true,
-    modifier = Modifier.fillMaxWidth(),
+    modifier = Modifier.fillMaxWidth().semantics { contentType = ContentType.Username },
   )
   OutlinedTextField(
     password,
@@ -1068,7 +1070,7 @@ private fun JellyfinForm(
     label = { Text("Password") },
     singleLine = true,
     visualTransformation = PasswordVisualTransformation(),
-    modifier = Modifier.fillMaxWidth(),
+    modifier = Modifier.fillMaxWidth().semantics { contentType = ContentType.Password },
   )
   Button(
     enabled = !busy && server.isNotBlank() && username.isNotBlank(),
@@ -1356,7 +1358,7 @@ private fun GpodderForm(
     { user = it },
     label = { Text("User name") },
     singleLine = true,
-    modifier = Modifier.fillMaxWidth(),
+    modifier = Modifier.fillMaxWidth().semantics { contentType = ContentType.Username },
   )
   OutlinedTextField(
     password,
@@ -1365,7 +1367,7 @@ private fun GpodderForm(
     supportingText = { Text("Kept only until you close the app") },
     singleLine = true,
     visualTransformation = PasswordVisualTransformation(),
-    modifier = Modifier.fillMaxWidth(),
+    modifier = Modifier.fillMaxWidth().semantics { contentType = ContentType.Password },
   )
   Button(
     enabled = !busy && server.isNotBlank() && user.isNotBlank() && password.isNotBlank(),
@@ -1988,7 +1990,7 @@ private fun CloudBackup(
         { email = it },
         label = { Text("Email") },
         singleLine = true,
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth().semantics { contentType = ContentType.EmailAddress },
       )
       OutlinedTextField(
         password,
@@ -1996,7 +1998,7 @@ private fun CloudBackup(
         label = { Text("Password") },
         singleLine = true,
         visualTransformation = PasswordVisualTransformation(),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth().semantics { contentType = ContentType.Password },
       )
       Button(
         enabled =
