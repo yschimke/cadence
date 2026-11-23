@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-23T07:38:17.929Z",
+  "generatedAt": "2026-11-23T08:13:02.795Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "e08dde63a13bc92bb34e4acec8dfcb3713eb090c",
+        "subject": "fix: stop Android 17 crashing on Remote Compose notification bodies (#699)",
+        "at": "2026-11-23T07:56:07Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "e870eecf6daa6bb50edabc5d5daa34e1c80e04e1",
         "subject": "fix: mark sign-in fields as username/email/password for autofill (#700)",
@@ -474,14 +482,6 @@
         "sha": "cd76618359be1b327a0acf1d733873e181c4d0e5",
         "subject": "chore(deps): update anthropics/claude-code-action action to v1.0.277 (#638)",
         "at": "2026-11-16T19:54:06Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "1a71cbda58dc1f6ed6e335cecf160b937b89f732",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.95.0 (#640)",
-        "at": "2026-11-16T19:53:24Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
