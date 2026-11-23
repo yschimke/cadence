@@ -59,11 +59,12 @@ class OvernightPodcastWorker(context: Context, params: WorkerParameters) :
         NotificationManager.IMPORTANCE_LOW,
       ),
     )
+    // Plain: WorkManager parcels this into its foreground service's Intent, and Android 17 crashes
+    // on a Remote Compose body nested there.
     val notification =
-      CadenceNotifications.build(
+      CadenceNotifications.buildPlain(
         applicationContext,
         "podcast-preparation",
-        9012,
         NotificationBody(
           "Preparing podcasts",
           "Cadence is preparing your podcasts while charging",

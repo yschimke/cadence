@@ -33,6 +33,10 @@ internal class NotificationLivery(private val livery: WidgetLivery) : Notificati
     notificationId: Int,
     body: NotificationBody,
   ): RemoteViews? {
+    // Android 17 (API 37) rejects a Remote Compose body nested in a notification, wrapped or not
+    // ("Nested RemoteViews cannot contain DrawInstructions"): NotificationManager.notify throws and
+    // a foreground service's parcelled notification crashes the app. Plain notifications there.
+    if (Build.VERSION.SDK_INT >= 37) return null
     val open = body.contentIntent ?: return null
     val render =
       notifications.render(
