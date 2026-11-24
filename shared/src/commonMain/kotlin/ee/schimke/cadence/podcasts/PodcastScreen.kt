@@ -9,6 +9,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.toggleable
+import androidx.compose.foundation.text.input.clearText
+import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -20,6 +22,7 @@ import androidx.compose.material.icons.filled.Podcasts
 import androidx.compose.material.icons.filled.RssFeed
 import androidx.compose.material.icons.filled.Sync
 import androidx.compose.material3.*
+import androidx.compose.material3.OutlinedSecureTextField
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -31,7 +34,6 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.contentType
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -403,7 +405,7 @@ private fun PocketCastsForm(
   }
   var web by rememberSaveable { mutableStateOf(false) }
   var email by rememberSaveable { mutableStateOf(local.pocketCasts.email) }
-  var password by remember { mutableStateOf("") }
+  val password = rememberTextFieldState()
   // A session saved earlier needs its lists; signing in loads them itself, so this isn't keyed on
   // the session (a second load queued behind a failed sign-in would hide its message).
   LaunchedEffect(loaded) {
@@ -493,20 +495,17 @@ private fun PocketCastsForm(
     singleLine = true,
     modifier = Modifier.fillMaxWidth().semantics { contentType = ContentType.EmailAddress },
   )
-  OutlinedTextField(
-    password,
-    { password = it },
+  OutlinedSecureTextField(
+    state = password,
     enabled = !busy,
     label = { Text("Password") },
-    singleLine = true,
-    visualTransformation = PasswordVisualTransformation(),
     modifier = Modifier.fillMaxWidth().semantics { contentType = ContentType.Password },
   )
   OutlinedButton(
-    enabled = !busy && email.isNotBlank() && password.isNotBlank(),
+    enabled = !busy && email.isNotBlank() && password.text.isNotBlank(),
     onClick = {
-      val supplied = password
-      password = ""
+      val supplied = password.text.toString()
+      password.clearText()
       action { signInPocketCasts(email, supplied) }
     },
   ) {
@@ -543,7 +542,7 @@ private fun LibroFmForm(
     )
   }
   var email by rememberSaveable { mutableStateOf(local.libroFm.email) }
-  var password by remember { mutableStateOf("") }
+  val password = rememberTextFieldState()
   // A sign-in saved earlier needs its library; signing in loads it itself.
   LaunchedEffect(loaded) {
     if (controller.state.value.libroFm.signedIn && controller.libroFmBooks.value.isEmpty())
@@ -611,20 +610,17 @@ private fun LibroFmForm(
     singleLine = true,
     modifier = Modifier.fillMaxWidth().semantics { contentType = ContentType.EmailAddress },
   )
-  OutlinedTextField(
-    password,
-    { password = it },
+  OutlinedSecureTextField(
+    state = password,
     enabled = !busy,
     label = { Text("Password") },
-    singleLine = true,
-    visualTransformation = PasswordVisualTransformation(),
     modifier = Modifier.fillMaxWidth().semantics { contentType = ContentType.Password },
   )
   Button(
-    enabled = !busy && email.isNotBlank() && password.isNotBlank(),
+    enabled = !busy && email.isNotBlank() && password.text.isNotBlank(),
     onClick = {
-      val supplied = password
-      password = ""
+      val supplied = password.text.toString()
+      password.clearText()
       action { signInLibroFm(email, supplied) }
     },
   ) {
@@ -672,8 +668,8 @@ private fun AudiobookshelfForm(
   }
   var server by rememberSaveable { mutableStateOf(local.audiobookshelf.server) }
   var username by rememberSaveable { mutableStateOf(local.audiobookshelf.username) }
-  var password by remember { mutableStateOf("") }
-  var apiToken by remember { mutableStateOf("") }
+  val password = rememberTextFieldState()
+  val apiToken = rememberTextFieldState()
   var useToken by rememberSaveable { mutableStateOf(false) }
 
   LaunchedEffect(local.audiobookshelf.signedIn) {
@@ -757,20 +753,17 @@ private fun AudiobookshelfForm(
     FilterChip(selected = useToken, onClick = { useToken = true }, label = { Text("API token") })
   }
   if (useToken) {
-    OutlinedTextField(
-      apiToken,
-      { apiToken = it },
+    OutlinedSecureTextField(
+      state = apiToken,
       enabled = !busy,
       label = { Text("API token") },
-      singleLine = true,
-      visualTransformation = PasswordVisualTransformation(),
       modifier = Modifier.fillMaxWidth(),
     )
     Button(
-      enabled = !busy && server.isNotBlank() && apiToken.isNotBlank(),
+      enabled = !busy && server.isNotBlank() && apiToken.text.isNotBlank(),
       onClick = {
-        val supplied = apiToken
-        apiToken = ""
+        val supplied = apiToken.text.toString()
+        apiToken.clearText()
         action { signInAudiobookshelfToken(server, supplied) }
       },
     ) {
@@ -785,20 +778,17 @@ private fun AudiobookshelfForm(
       singleLine = true,
       modifier = Modifier.fillMaxWidth().semantics { contentType = ContentType.Username },
     )
-    OutlinedTextField(
-      password,
-      { password = it },
+    OutlinedSecureTextField(
+      state = password,
       enabled = !busy,
       label = { Text("Password") },
-      singleLine = true,
-      visualTransformation = PasswordVisualTransformation(),
       modifier = Modifier.fillMaxWidth().semantics { contentType = ContentType.Password },
     )
     Button(
-      enabled = !busy && server.isNotBlank() && username.isNotBlank() && password.isNotBlank(),
+      enabled = !busy && server.isNotBlank() && username.isNotBlank() && password.text.isNotBlank(),
       onClick = {
-        val supplied = password
-        password = ""
+        val supplied = password.text.toString()
+        password.clearText()
         action { signInAudiobookshelf(server, username, supplied) }
       },
     ) {
@@ -829,8 +819,8 @@ private fun SubsonicForm(
   }
   var server by rememberSaveable { mutableStateOf(local.subsonic.server) }
   var username by rememberSaveable { mutableStateOf(local.subsonic.username) }
-  var password by remember { mutableStateOf("") }
-  var apiKey by remember { mutableStateOf("") }
+  val password = rememberTextFieldState()
+  val apiKey = rememberTextFieldState()
   var useApiKey by rememberSaveable { mutableStateOf(local.subsonic.apiKey.isNotBlank()) }
 
   LaunchedEffect(local.subsonic.signedIn) {
@@ -914,20 +904,17 @@ private fun SubsonicForm(
     FilterChip(selected = useApiKey, onClick = { useApiKey = true }, label = { Text("API key") })
   }
   if (useApiKey) {
-    OutlinedTextField(
-      apiKey,
-      { apiKey = it },
+    OutlinedSecureTextField(
+      state = apiKey,
       enabled = !busy,
       label = { Text("OpenSubsonic API key") },
-      singleLine = true,
-      visualTransformation = PasswordVisualTransformation(),
       modifier = Modifier.fillMaxWidth(),
     )
     Button(
-      enabled = !busy && server.isNotBlank() && apiKey.isNotBlank(),
+      enabled = !busy && server.isNotBlank() && apiKey.text.isNotBlank(),
       onClick = {
-        val supplied = apiKey
-        apiKey = ""
+        val supplied = apiKey.text.toString()
+        apiKey.clearText()
         action { signInSubsonic(server, "", "", supplied) }
       },
     ) {
@@ -942,20 +929,17 @@ private fun SubsonicForm(
       singleLine = true,
       modifier = Modifier.fillMaxWidth().semantics { contentType = ContentType.Username },
     )
-    OutlinedTextField(
-      password,
-      { password = it },
+    OutlinedSecureTextField(
+      state = password,
       enabled = !busy,
       label = { Text("Password") },
-      singleLine = true,
-      visualTransformation = PasswordVisualTransformation(),
       modifier = Modifier.fillMaxWidth().semantics { contentType = ContentType.Password },
     )
     Button(
-      enabled = !busy && server.isNotBlank() && username.isNotBlank() && password.isNotBlank(),
+      enabled = !busy && server.isNotBlank() && username.isNotBlank() && password.text.isNotBlank(),
       onClick = {
-        val supplied = password
-        password = ""
+        val supplied = password.text.toString()
+        password.clearText()
         action { signInSubsonic(server, username, supplied) }
       },
     ) {
@@ -986,7 +970,7 @@ private fun JellyfinForm(
   }
   var server by rememberSaveable { mutableStateOf(local.jellyfin.server) }
   var username by rememberSaveable { mutableStateOf(local.jellyfin.username) }
-  var password by remember { mutableStateOf("") }
+  val password = rememberTextFieldState()
 
   LaunchedEffect(local.jellyfin.signedIn) {
     if (
@@ -1066,20 +1050,17 @@ private fun JellyfinForm(
     singleLine = true,
     modifier = Modifier.fillMaxWidth().semantics { contentType = ContentType.Username },
   )
-  OutlinedTextField(
-    password,
-    { password = it },
+  OutlinedSecureTextField(
+    state = password,
     enabled = !busy,
     label = { Text("Password") },
-    singleLine = true,
-    visualTransformation = PasswordVisualTransformation(),
     modifier = Modifier.fillMaxWidth().semantics { contentType = ContentType.Password },
   )
   Button(
     enabled = !busy && server.isNotBlank() && username.isNotBlank(),
     onClick = {
-      val supplied = password
-      password = ""
+      val supplied = password.text.toString()
+      password.clearText()
       action { signInJellyfin(server, username, supplied) }
     },
   ) {
@@ -1111,7 +1092,7 @@ private fun PlexForm(
     )
   }
   var server by rememberSaveable { mutableStateOf(local.plex.server) }
-  var token by remember { mutableStateOf("") }
+  val token = rememberTextFieldState()
   var useDirectToken by rememberSaveable { mutableStateOf(false) }
 
   LaunchedEffect(local.plex.signedIn) {
@@ -1231,20 +1212,17 @@ private fun PlexForm(
       singleLine = true,
       modifier = Modifier.fillMaxWidth(),
     )
-    OutlinedTextField(
-      token,
-      { token = it },
+    OutlinedSecureTextField(
+      state = token,
       enabled = !busy,
       label = { Text("X-Plex-Token") },
-      singleLine = true,
-      visualTransformation = PasswordVisualTransformation(),
       modifier = Modifier.fillMaxWidth(),
     )
     Button(
-      enabled = !busy && server.isNotBlank() && token.isNotBlank(),
+      enabled = !busy && server.isNotBlank() && token.text.isNotBlank(),
       onClick = {
-        val supplied = token
-        token = ""
+        val supplied = token.text.toString()
+        token.clearText()
         action { signInPlexToken(server, supplied) }
       },
     ) {
@@ -1332,7 +1310,7 @@ private fun GpodderForm(
   var flavor by rememberSaveable { mutableStateOf(local.gpodder.flavor) }
   var server by rememberSaveable { mutableStateOf(local.gpodder.server) }
   var user by rememberSaveable { mutableStateOf(local.gpodder.user) }
-  var password by remember { mutableStateOf("") }
+  val password = rememberTextFieldState()
   FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
     GpodderFlavor.entries.forEach {
       FilterChip(
@@ -1363,20 +1341,17 @@ private fun GpodderForm(
     singleLine = true,
     modifier = Modifier.fillMaxWidth().semantics { contentType = ContentType.Username },
   )
-  OutlinedTextField(
-    password,
-    { password = it },
+  OutlinedSecureTextField(
+    state = password,
     label = { Text(if (flavor == GpodderFlavor.Nextcloud) "App password" else "Password") },
     supportingText = { Text("Kept only until you close the app") },
-    singleLine = true,
-    visualTransformation = PasswordVisualTransformation(),
     modifier = Modifier.fillMaxWidth().semantics { contentType = ContentType.Password },
   )
   Button(
-    enabled = !busy && server.isNotBlank() && user.isNotBlank() && password.isNotBlank(),
+    enabled = !busy && server.isNotBlank() && user.isNotBlank() && password.text.isNotBlank(),
     onClick = {
-      val supplied = password
-      password = ""
+      val supplied = password.text.toString()
+      password.clearText()
       onImport(GpodderAccount(flavor, server.trim(), user.trim()), supplied)
     },
   ) {
@@ -1435,7 +1410,7 @@ fun PodcastScreen(
     ) {
       if (busy || work.status != null)
         item {
-          if (busy) LinearProgressIndicator(Modifier.fillMaxWidth())
+          if (busy) androidx.compose.material3.LinearWavyProgressIndicator(Modifier.fillMaxWidth())
           Text(status, style = MaterialTheme.typography.bodySmall)
         }
       if (playlist == null) {
@@ -1819,18 +1794,28 @@ private fun Expandable(
   content: @Composable ColumnScope.() -> Unit,
 ) {
   var open by rememberSaveable(title) { mutableStateOf(initiallyExpanded) }
+  val motionScheme = MaterialTheme.motionScheme
   OutlinedCard(Modifier.fillMaxWidth()) {
     ListItem(
       headlineContent = { Text(title) },
       trailingContent = { Text(if (open) "Hide" else "Show") },
       modifier = Modifier.clickable { open = !open },
     )
-    if (open)
+    androidx.compose.animation.AnimatedVisibility(
+      visible = open,
+      enter =
+        androidx.compose.animation.expandVertically(motionScheme.defaultSpatialSpec()) +
+          androidx.compose.animation.fadeIn(motionScheme.fastEffectsSpec()),
+      exit =
+        androidx.compose.animation.shrinkVertically(motionScheme.defaultSpatialSpec()) +
+          androidx.compose.animation.fadeOut(motionScheme.fastEffectsSpec()),
+    ) {
       Column(
         Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
         content = content,
       )
+    }
   }
 }
 
@@ -1959,7 +1944,7 @@ private fun CloudBackup(
   var url by rememberSaveable { mutableStateOf(local.cloudUrl) }
   var key by rememberSaveable { mutableStateOf(local.cloudKey) }
   var email by remember { mutableStateOf("") }
-  var password by remember { mutableStateOf("") }
+  val password = rememberTextFieldState()
   var providerSelected by rememberSaveable { mutableStateOf(local.cloudUrl.isNotBlank()) }
   Expandable(if (signedIn) "Cloud sync" else "Connect a cloud sync provider", initiallyExpanded) {
     Text(
@@ -1995,12 +1980,9 @@ private fun CloudBackup(
         singleLine = true,
         modifier = Modifier.fillMaxWidth().semantics { contentType = ContentType.EmailAddress },
       )
-      OutlinedTextField(
-        password,
-        { password = it },
+      OutlinedSecureTextField(
+        state = password,
         label = { Text("Password") },
-        singleLine = true,
-        visualTransformation = PasswordVisualTransformation(),
         modifier = Modifier.fillMaxWidth().semantics { contentType = ContentType.Password },
       )
       Button(
@@ -2009,10 +1991,10 @@ private fun CloudBackup(
             url.isNotBlank() &&
             key.isNotBlank() &&
             email.isNotBlank() &&
-            password.isNotBlank(),
+            password.text.isNotBlank(),
         onClick = {
-          val supplied = password
-          password = ""
+          val supplied = password.text.toString()
+          password.clearText()
           action {
             if (state.value.cloudUrl != url.trim() || state.value.cloudKey != key.trim())
               configureCloud(url.trim(), key.trim())
