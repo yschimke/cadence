@@ -16284,7 +16284,7 @@
       "wireframe": "wireframes/wearapp-connectedwearcompanionpreview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/WearCompanionApp.kt",
       "sourceModule": ":wearApp",
-      "bodyLine": 379,
+      "bodyLine": 384,
       "sourceDirectory": "wearApp",
       "sourceFunction": "ConnectedWearCompanionPreview",
       "parameters": [
@@ -16504,7 +16504,7 @@
       "wireframe": "wireframes/wearapp-localaudioplaylistpreview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/wear/WearCompanionApp.kt",
       "sourceModule": ":wearApp",
-      "bodyLine": 420,
+      "bodyLine": 425,
       "sourceDirectory": "wearApp",
       "sourceFunction": "LocalAudioPlaylistPreview",
       "parameters": [
@@ -16970,7 +16970,7 @@
     "ee.schimke.cadence (CadenceTheme)"
   ],
   "renderer": "compose-preview 2.79.0",
-  "generatedAt": "2026-11-24T08:33:42.392Z",
+  "generatedAt": "2026-11-24T10:47:11.936Z",
   "failures": [
     {
       "id": "render-failed--googleoauthactivity--activity-googleoauthactivity",
@@ -17042,7 +17042,7 @@
   "componentsFile": "components.json",
   "source": {
     "repo": "yschimke/cadence",
-    "ref": "e749ce270b4b255952595152e63d72832d491f42",
+    "ref": "0d0a3cfedfc41c8ce811371fdd47e6f53ed53850",
     "module": ""
   }
 }

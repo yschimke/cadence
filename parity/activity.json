@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-24T08:33:45.994Z",
+  "generatedAt": "2026-11-24T10:47:15.149Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "0d0a3cfedfc41c8ce811371fdd47e6f53ed53850",
+        "subject": "feat: upgrade CMP Material 3 to 1.13.0-rc01 and modernize Compose motion and lifecycle (#710)",
+        "at": "2026-11-24T10:33:35Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "e749ce270b4b255952595152e63d72832d491f42",
         "subject": "feat: press Eject on the system's drive notification for Eject USB (#707)",
@@ -474,14 +482,6 @@
         "sha": "250e36359207326095c658edd908316080e38d1e",
         "subject": "chore(deps): update anthropics/claude-code-action action to v1.0.281 (#651)",
         "at": "2026-11-18T05:43:50Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "9a8136117a41e3e72dc4bae7f2cc5a37769a8381",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.98.0 (#650)",
-        "at": "2026-11-18T04:14:58Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
