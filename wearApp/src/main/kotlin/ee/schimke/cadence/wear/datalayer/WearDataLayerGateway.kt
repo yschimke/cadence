@@ -19,6 +19,8 @@ import ee.schimke.cadence.wearcontract.WearCompanionProtocol
 import ee.schimke.rcsp.RcspCapabilities
 import ee.schimke.rcsp.RcspCommandId
 import ee.schimke.rcsp.WorkingMode
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -48,7 +50,7 @@ class DataLayerHeadsetGateway(private val context: Context) : HeadsetGateway {
     if (!isSupported(action.command)) return HeadsetActionResult.Unsupported(action.command.id)
     val command =
       action.toCompanionCommand() ?: return HeadsetActionResult.Unsupported(action.command.id)
-    return runCatching {
+    return try {
       val nodes = Wearable.getNodeClient(context).connectedNodes.await()
       if (nodes.isEmpty()) return HeadsetActionResult.Failed("Cadence phone is not reachable")
       val payload = WearCompanionProtocol.encode(command)
@@ -58,8 +60,10 @@ class DataLayerHeadsetGateway(private val context: Context) : HeadsetGateway {
           .await()
       }
       HeadsetActionResult.Sent
+    } catch (t: Throwable) {
+      currentCoroutineContext().ensureActive()
+      HeadsetActionResult.Failed(t.message ?: "Could not send command to Cadence")
     }
-      .getOrElse { HeadsetActionResult.Failed(it.message ?: "Could not send command to Cadence") }
   }
 
   fun accept(dataItem: com.google.android.gms.wearable.DataItem) {

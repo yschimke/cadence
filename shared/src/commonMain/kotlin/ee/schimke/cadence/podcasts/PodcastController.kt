@@ -8,6 +8,8 @@ import kotlin.time.Duration.Companion.seconds
 import kotlin.time.TimeMark
 import kotlin.time.TimeSource
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -216,15 +218,17 @@ class PodcastController(val platform: PodcastPlatform) {
       platform.pocketCastsServer?.let { server ->
         // The server's sign-in is the one that counts; another browser may have changed it. If it
         // can't be reached, the last known state stays until a call says otherwise.
-        runCatching { server.session() }
-          .onSuccess { email ->
-            state.value =
-              state.value.copy(
-                pocketCasts =
-                  if (email == null) PocketCastsSession()
-                  else PocketCastsSession(email = email, server = true),
-              )
-          }
+        try {
+          val email = server.session()
+          state.value =
+            state.value.copy(
+              pocketCasts =
+                if (email == null) PocketCastsSession()
+                else PocketCastsSession(email = email, server = true),
+            )
+        } catch (_: Throwable) {
+          currentCoroutineContext().ensureActive()
+        }
       }
       recheckReady()
       recheckDownloads()
