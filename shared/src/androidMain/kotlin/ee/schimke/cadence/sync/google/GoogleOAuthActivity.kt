@@ -28,6 +28,7 @@ internal class GoogleOAuthActivity : ComponentActivity() {
   private lateinit var authService: AuthorizationService
   private lateinit var deferred: CompletableDeferred<GoogleAccount>
   private lateinit var config: OAuthConfig
+  private var pendingPair: Pair<OAuthConfig, CompletableDeferred<GoogleAccount>>? = null
 
   private val authLauncher =
     registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -41,6 +42,7 @@ internal class GoogleOAuthActivity : ComponentActivity() {
       finish()
       return
     }
+    pendingPair = pending
     config = pending.first
     deferred = pending.second
     authService = AuthorizationService(this)
@@ -65,9 +67,7 @@ internal class GoogleOAuthActivity : ComponentActivity() {
   }
 
   private fun clearPendingSlot() {
-    if (::config.isInitialized && ::deferred.isInitialized) {
-      pendingSlot.compareAndSet(config to deferred, null)
-    }
+    pendingPair?.let { pendingSlot.compareAndSet(it, null) }
   }
 
   private fun handleAuthResult(data: Intent?) {
