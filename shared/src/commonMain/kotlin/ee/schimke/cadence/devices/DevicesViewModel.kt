@@ -48,7 +48,7 @@ class DevicesViewModel(private val devicesRepo: DevicesRepo, val usbManager: Usb
       }
       .stateIn(
         viewModelScope,
-        started = SharingStarted.WhileSubscribed(),
+        started = SharingStarted.WhileSubscribed(5_000),
         initialValue = UiState.Loading,
       )
 

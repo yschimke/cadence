@@ -8,10 +8,14 @@ import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.SingleIn
 import dev.zacsweers.metro.binding
 import ee.schimke.cadence.datastore.proto.SourceKind
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.isActive
+import kotlinx.coroutines.withContext
 import okio.Path
 import okio.buffer
 import okio.source
@@ -57,26 +61,29 @@ class AndroidRefreshOrchestrator(
 
         // Wipe and re-materialise the staging directory each refresh. Simple
         // and predictable; no diffing yet.
-        stagingArea.clearProfile(profile.staging_subpath)
+        withContext(Dispatchers.IO) { stagingArea.clearProfile(profile.staging_subpath) }
         val targetRoot = stagingArea.profileDir(profile.staging_subpath)
 
-        _progress.value = _progress.value.copy(filesTotal = items.size)
+        _progress.update { it.copy(filesTotal = items.size) }
         var done = 0
         for (item in items) {
           if (!isActive) break
-          _progress.value = _progress.value.copy(currentFileName = item.displayName)
-          copy(item, targetRoot)
+          _progress.update { it.copy(currentFileName = item.displayName) }
+          withContext(Dispatchers.IO) { copy(item, targetRoot) }
           done++
-          _progress.value = _progress.value.copy(filesCompleted = done)
+          _progress.update { it.copy(filesCompleted = done) }
         }
 
         syncRepo.recordRefreshSuccess(profile.id, currentIso8601())
-        _progress.value = _progress.value.copy(running = false, currentFileName = null)
+      } catch (ce: CancellationException) {
+        throw ce
       } catch (t: Throwable) {
         val message = t.message ?: t.javaClass.simpleName
         syncRepo.recordRefreshFailure(profile.id, message)
-        _progress.value = _progress.value.copy(running = false, lastError = message)
+        _progress.update { it.copy(lastError = message) }
         throw t
+      } finally {
+        _progress.update { it.copy(running = false, currentFileName = null) }
       }
     }
   }

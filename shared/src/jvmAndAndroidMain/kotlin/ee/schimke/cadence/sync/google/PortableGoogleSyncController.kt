@@ -1,12 +1,14 @@
 package ee.schimke.cadence.sync.google
 
 import ee.schimke.cadence.sync.SyncRepo
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class PortableGoogleSyncController(
@@ -15,23 +17,25 @@ class PortableGoogleSyncController(
   scope: CoroutineScope,
 ) : GoogleSyncController {
   private val _state = MutableStateFlow(GoogleSyncState(available = true))
-  override val state: StateFlow<GoogleSyncState> = _state
+  override val state: StateFlow<GoogleSyncState> = _state.asStateFlow()
 
   init {
-    val sources = combine(accounts.account, accounts.config, syncRepo.preferences, ::projectState)
-    scope.launch { sources.collect { _state.value = it } }
+    val sources =
+      combine(accounts.account, accounts.config, syncRepo.preferences) { account, config, prefs ->
+        Triple(account, config, prefs)
+      }
+    scope.launch {
+      sources.collect { (account, config, prefs) ->
+        _state.update { current ->
+          current.copy(
+            configured = config != null,
+            signedInEmail = account?.email,
+            enabled = prefs?.cross_device_sync_enabled == true,
+          )
+        }
+      }
+    }
   }
-
-  private fun projectState(
-    account: GoogleAccount?,
-    config: OAuthConfig?,
-    prefs: ee.schimke.cadence.datastore.proto.SyncPreferences?,
-  ): GoogleSyncState =
-    _state.value.copy(
-      configured = config != null,
-      signedInEmail = account?.email,
-      enabled = prefs?.cross_device_sync_enabled == true,
-    )
 
   override suspend fun signIn() = runBusy { accounts.signIn() }
 
@@ -51,13 +55,15 @@ class PortableGoogleSyncController(
   override suspend fun refreshConfig() = accounts.reloadConfig()
 
   private suspend inline fun runBusy(crossinline block: suspend () -> Unit) {
-    _state.value = _state.value.copy(busy = true, lastError = null)
+    _state.update { it.copy(busy = true, lastError = null) }
     try {
       block()
+    } catch (ce: CancellationException) {
+      throw ce
     } catch (e: Throwable) {
-      _state.value = _state.value.copy(lastError = e.message ?: e::class.simpleName)
+      _state.update { it.copy(lastError = e.message ?: e::class.simpleName) }
     } finally {
-      _state.value = _state.value.copy(busy = false)
+      _state.update { it.copy(busy = false) }
     }
   }
 }

@@ -2,6 +2,7 @@ package ee.schimke.cadence.sync
 
 import ee.schimke.cadence.sync.google.GoogleAccountRepo
 import ee.schimke.cadence.sync.google.GoogleDriveClient
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.json.Json
@@ -34,11 +35,17 @@ class GoogleDriveManifestStore(
   private val dirty = mutableSetOf<String>()
 
   override suspend fun load(deviceId: String): SyncManifest {
-    val remote = runCatching {
-      drive.downloadByName(fileName(deviceId))
+    val remoteText =
+      try {
+        drive.downloadByName(fileName(deviceId))
+      } catch (ce: CancellationException) {
+        throw ce
+      } catch (_: Throwable) {
+        null
+      }
+    val remote = remoteText?.let {
+      runCatching { json.decodeFromString<SyncManifest>(it) }.getOrNull()
     }
-      .getOrNull()
-      ?.let { runCatching { json.decodeFromString<SyncManifest>(it) }.getOrNull() }
     if (remote != null) return remote
     return local.load(deviceId)
   }
@@ -61,10 +68,16 @@ class GoogleDriveManifestStore(
   /** Caller must hold [writeLock]. Clears the dirty flag only when the upload succeeds. */
   private suspend fun flushLocked(deviceId: String) {
     val merged = local.load(deviceId)
-    val result = runCatching {
-      drive.uploadOrReplace(fileName(deviceId), json.encodeToString(merged))
-    }
-    if (result.isSuccess) synchronized(dirty) { dirty -= deviceId }
+    val uploaded =
+      try {
+        drive.uploadOrReplace(fileName(deviceId), json.encodeToString(merged))
+        true
+      } catch (ce: CancellationException) {
+        throw ce
+      } catch (_: Throwable) {
+        false
+      }
+    if (uploaded) synchronized(dirty) { dirty -= deviceId }
   }
 
   private suspend fun fileName(deviceId: String) = "cadence-manifest-${sharedKeyFor(deviceId)}.json"

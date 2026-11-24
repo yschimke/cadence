@@ -1104,8 +1104,7 @@ class AndroidBluetoothController(
       mediaSessionManager.addOnActiveSessionsChangedListener(listener, component)
     }
 
-    val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
-    val ticker = scope.launch {
+    val ticker = launch(Dispatchers.Default) {
       while (true) {
         delay(2_000)
         snapshot()

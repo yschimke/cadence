@@ -70,8 +70,8 @@ class SeasonRedrawWorker(context: Context, params: WorkerParameters) :
           // A second past the boundary, so the season has started (or ended) when it draws.
           .setInitialDelay(next - now + 1_000, TimeUnit.MILLISECONDS)
           .build()
-      // Replaces this run, which has finished its work.
-      work.enqueueUniqueWork(WORK_NAME, ExistingWorkPolicy.REPLACE, request)
+      // Appends after this run (or replaces failed/cancelled) without cancelling the active worker.
+      work.enqueueUniqueWork(WORK_NAME, ExistingWorkPolicy.APPEND_OR_REPLACE, request)
     }
 
     /** The next time after [now] that an experiment or season in [manifest] starts or ends. */

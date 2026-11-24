@@ -9,12 +9,15 @@ import dev.zacsweers.metro.SingleIn
 import dev.zacsweers.metro.binding
 import ee.schimke.cadence.data.DevicesRepo
 import ee.schimke.cadence.data.toUri
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import okio.Path.Companion.toPath
@@ -32,7 +35,7 @@ class AndroidSyncOrchestrator(
 
   private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
   private val _progress = MutableStateFlow(SyncProgress())
-  override val progress = _progress
+  override val progress = _progress.asStateFlow()
 
   private var currentJob: Job? = null
 
@@ -68,49 +71,58 @@ class AndroidSyncOrchestrator(
 
     currentJob = scope.launch {
       _progress.value = SyncProgress(running = true, filesTotal = totalFiles)
-      val rootDoc =
-        openDeviceTree(context, device.path)
-          ?: return@launch reportError("Cannot open device tree URI")
+      try {
+        val rootDoc =
+          openDeviceTree(context, device.path)
+            ?: return@launch reportError("Cannot open device tree URI")
 
-      var completed = 0
-      val fullySyncedProfileIds = mutableSetOf<String>()
-      for ((profile, entries) in plan) {
-        if (!isActive) break
-        _progress.value = _progress.value.copy(currentProfileName = profile.name)
-        val profileRootSegments = profile.staging_subpath.split('/').filter { it.isNotBlank() }
-        val profileRoot = ensureDirectories(rootDoc, profileRootSegments)
-        var profileAnyFailure = false
-        var profileAnySuccess = false
-        for (entry in entries) {
+        var completed = 0
+        val fullySyncedProfileIds = mutableSetOf<String>()
+        for ((profile, entries) in plan) {
           if (!isActive) break
-          _progress.value =
-            _progress.value.copy(
-              currentFileName = entry.relativePath,
-              currentBytes = 0,
-              currentTotal = entry.sizeBytes,
-            )
-          runCatching { copyOne(entry, profileRoot) }
-            .onSuccess {
+          _progress.update { it.copy(currentProfileName = profile.name) }
+          val profileRootSegments = profile.staging_subpath.split('/').filter { it.isNotBlank() }
+          val profileRoot = ensureDirectories(rootDoc, profileRootSegments)
+          var profileAnyFailure = false
+          var profileAnySuccess = false
+          for (entry in entries) {
+            if (!isActive) break
+            _progress.update {
+              it.copy(
+                currentFileName = entry.relativePath,
+                currentBytes = 0,
+                currentTotal = entry.sizeBytes,
+              )
+            }
+            try {
+              copyOne(entry, profileRoot)
               profileAnySuccess = true
               completed++
-              _progress.value = _progress.value.copy(filesCompleted = completed)
-            }
-            .onFailure {
+              _progress.update { it.copy(filesCompleted = completed) }
+            } catch (ce: CancellationException) {
+              throw ce
+            } catch (t: Throwable) {
               profileAnyFailure = true
-              _progress.value =
-                _progress.value.copy(
-                  lastError = "${entry.relativePath}: ${it.message ?: it.javaClass.simpleName}",
+              _progress.update {
+                it.copy(
+                  lastError = "${entry.relativePath}: ${t.message ?: t.javaClass.simpleName}",
                 )
+              }
             }
+          }
+          // Only mark a profile synced when every file in it landed; a partial run leaves
+          // last_synced_at as-is so the Copy screen keeps showing "new content ready".
+          if (profileAnySuccess && !profileAnyFailure) fullySyncedProfileIds += profile.id
         }
-        // Only mark a profile synced when every file in it landed; a partial run leaves
-        // last_synced_at as-is so the Copy screen keeps showing "new content ready".
-        if (profileAnySuccess && !profileAnyFailure) fullySyncedProfileIds += profile.id
+        if (isActive && fullySyncedProfileIds.isNotEmpty()) {
+          val syncedAt = java.time.Instant.now().toString()
+          fullySyncedProfileIds.forEach { syncRepo.recordSyncSuccess(it, syncedAt) }
+        }
+      } finally {
+        _progress.update {
+          it.copy(running = false, currentFileName = null, currentProfileName = null)
+        }
       }
-      val syncedAt = java.time.Instant.now().toString()
-      fullySyncedProfileIds.forEach { syncRepo.recordSyncSuccess(it, syncedAt) }
-      _progress.value =
-        _progress.value.copy(running = false, currentFileName = null, currentProfileName = null)
     }
   }
 
