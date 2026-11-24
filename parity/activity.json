@@ -1,11 +1,35 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-24T10:47:15.149Z",
+  "generatedAt": "2026-11-24T13:36:47.203Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "a37f0ffc68f6616aec85eebfa80311da5ab4303f",
+        "subject": "refactor: modernize DI with Metro 1.6, metrox, and KMP graphs (#712)",
+        "at": "2026-11-24T13:18:03Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "46f860037c9d44391cdf21703f3b7f7c551fb28f",
+        "subject": "fix: harden coroutine cancellation, lifecycle, and sync resilience (#708)",
+        "at": "2026-11-24T11:07:42Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "733c312cdd163a25cda583f67c69a9085fffcb8c",
+        "subject": "refactor: use Ktor with OkHttp engine exclusively for HTTP (#709)",
+        "at": "2026-11-24T11:07:38Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "0d0a3cfedfc41c8ce811371fdd47e6f53ed53850",
         "subject": "feat: upgrade CMP Material 3 to 1.13.0-rc01 and modernize Compose motion and lifecycle (#710)",
@@ -458,30 +482,6 @@
         "sha": "ac8a6ef85defd0408fdd8edfb7499180561b3a78",
         "subject": "chore(deps): update anthropics/claude-code-action action to v1.0.282 (#653)",
         "at": "2026-11-18T19:23:29Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "bb06a8fd26aaf614184e2ce1b4dcd2a283f137c1",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.99.3 (#654)",
-        "at": "2026-11-18T19:22:38Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "6d755a41aadbe455398af3ccaea582736b594a5c",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.98.2 (#652)",
-        "at": "2026-11-18T11:57:40Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "250e36359207326095c658edd908316080e38d1e",
-        "subject": "chore(deps): update anthropics/claude-code-action action to v1.0.281 (#651)",
-        "at": "2026-11-18T05:43:50Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
