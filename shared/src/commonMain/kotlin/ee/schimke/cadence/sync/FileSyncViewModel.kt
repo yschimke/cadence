@@ -6,6 +6,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.Inject
@@ -96,7 +97,8 @@ class FileSyncViewModel(
   }
 
   /** The screen state, from the path [UseAppStateTransform] selects. */
-  @Composable fun collectState(): State<UiState> = transformState ?: legacyState.collectAsState()
+  @Composable
+  fun collectState(): State<UiState> = transformState ?: legacyState.collectAsStateWithLifecycle()
 
   /** One-tap first-run path: adds the folder to a Library profile and stages it. */
   fun addFolderToLibrary(name: String, treeUri: String) {

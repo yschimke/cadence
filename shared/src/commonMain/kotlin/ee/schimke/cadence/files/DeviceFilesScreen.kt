@@ -7,12 +7,12 @@ import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ee.schimke.cadence.filelist.FileTree
 import ee.schimke.cadence.metro.metroViewModel
 
@@ -20,7 +20,7 @@ import ee.schimke.cadence.metro.metroViewModel
 fun DeviceFilesScreen(modifier: Modifier = Modifier) {
   val viewModel = metroViewModel<DeviceFilesViewModel>()
 
-  val uiState by viewModel.uiState.collectAsState()
+  val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
   DeviceFilesContent(uiState, modifier)
 }

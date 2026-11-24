@@ -1,7 +1,10 @@
 package ee.schimke.cadence
 
-import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,6 +18,7 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -22,10 +26,10 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -47,12 +51,13 @@ import kotlinx.serialization.Serializable
 @Composable
 fun App(desktopNavigation: DesktopNavigation? = null) {
   val developerModel = metroViewModel<DeveloperModeViewModel>()
-  val developerEnabled by developerModel.enabled.collectAsState()
+  val developerEnabled by developerModel.enabled.collectAsStateWithLifecycle()
   val developer =
     remember(developerEnabled) { DeveloperMode(developerEnabled, developerModel::setEnabled) }
   CompositionLocalProvider(LocalDeveloperMode provides developer) { AppContent(desktopNavigation) }
 }
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 private fun AppContent(desktopNavigation: DesktopNavigation?) {
   val navController = rememberNavController()
@@ -75,10 +80,11 @@ private fun AppContent(desktopNavigation: DesktopNavigation?) {
     navController.navigateDesktopSection(section)
   }
   val podcasts = rememberPodcastController()
-  val podcastState by podcasts.state.collectAsState()
+  val podcastState by podcasts.state.collectAsStateWithLifecycle()
   if (podcastState.target.isNotBlank()) AutomaticallyMatchHeadphones(podcastState.target)
 
   val entry by navController.currentBackStackEntryAsState()
+  val motionScheme = MaterialTheme.motionScheme
   Row(Modifier.fillMaxSize()) {
     if (desktopNavigation != null) DesktopSidebar(desktopNavigation)
     Column(Modifier.weight(1f).fillMaxSize()) {
@@ -110,8 +116,22 @@ private fun AppContent(desktopNavigation: DesktopNavigation?) {
                 Modifier.consumeWindowInsets(WindowInsets.safeDrawing.only(WindowInsetsSides.Top))
               else Modifier,
             ),
-        popExitTransition = { scaleOut(targetScale = 0.9f) },
-        popEnterTransition = { EnterTransition.None },
+        enterTransition = {
+          slideInHorizontally(motionScheme.defaultSpatialSpec()) { it / 6 } +
+            fadeIn(motionScheme.defaultEffectsSpec())
+        },
+        exitTransition = {
+          slideOutHorizontally(motionScheme.defaultSpatialSpec()) { -it / 12 } +
+            fadeOut(motionScheme.fastEffectsSpec())
+        },
+        popEnterTransition = {
+          slideInHorizontally(motionScheme.defaultSpatialSpec()) { -it / 12 } +
+            fadeIn(motionScheme.defaultEffectsSpec())
+        },
+        popExitTransition = {
+          scaleOut(motionScheme.defaultSpatialSpec(), targetScale = 0.92f) +
+            fadeOut(motionScheme.fastEffectsSpec())
+        },
       ) {
         composable<Home> {
           HomeScreen(

@@ -6,6 +6,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.Inject
@@ -117,7 +118,8 @@ class HomeViewModel(
   }
 
   /** The screen state, from the path [UseAppStateTransform] selects. */
-  @Composable fun collectState(): State<UiState> = transformState ?: legacyState.collectAsState()
+  @Composable
+  fun collectState(): State<UiState> = transformState ?: legacyState.collectAsStateWithLifecycle()
 
   init {
     // List each source when it's added; a refresh can change the files, so list again after one.

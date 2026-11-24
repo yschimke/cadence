@@ -1,19 +1,21 @@
 package ee.schimke.cadence.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.MaterialExpressiveTheme
+import androidx.compose.material3.MotionScheme
 import androidx.compose.runtime.Composable
 
 /**
- * The Cadence brand scheme, for desktop and the browser, which have no wallpaper colours. Android
- * uses Material 3 Expressive with dynamic colours instead; the Compose Multiplatform material3
- * release used here (1.9.0) keeps `MaterialExpressiveTheme` and `MotionScheme` internal, so this
- * stays on `MaterialTheme` until a release makes them public.
+ * The Cadence brand scheme, for desktop and the browser, which have no wallpaper colours. Uses
+ * Material 3 Expressive with `MotionScheme.expressive()` to match Android.
  */
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun CadenceTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
-  MaterialTheme(
+  MaterialExpressiveTheme(
     colorScheme = if (darkTheme) CadenceDarkColors else CadenceLightColors,
+    motionScheme = MotionScheme.expressive(),
     content = content,
   )
 }
