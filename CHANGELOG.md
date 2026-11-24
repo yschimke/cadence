@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.1.39](https://github.com/yschimke/cadence/compare/v0.1.38...v0.1.39) (2026-11-24)
+
+
+### Features
+
+* migrate password fields to OutlinedSecureTextField and animate Expandable sections ([#713](https://github.com/yschimke/cadence/issues/713)) ([cf8e251](https://github.com/yschimke/cadence/commit/cf8e25188abb0badaa91ae5256d06dfc9e254c6f))
+* press Eject on the system's drive notification for Eject USB ([#707](https://github.com/yschimke/cadence/issues/707)) ([e749ce2](https://github.com/yschimke/cadence/commit/e749ce270b4b255952595152e63d72832d491f42))
+* upgrade CMP Material 3 to 1.13.0-rc01 and modernize Compose motion and lifecycle ([#710](https://github.com/yschimke/cadence/issues/710)) ([0d0a3cf](https://github.com/yschimke/cadence/commit/0d0a3cfedfc41c8ce811371fdd47e6f53ed53850))
+
+
+### Bug Fixes
+
+* **deps:** update dependency ee.schimke.composeai:compose-preview-daemon-bom to v3.29.1 ([#715](https://github.com/yschimke/cadence/issues/715)) ([e5a6982](https://github.com/yschimke/cadence/commit/e5a698298169434caf51207c895a179043455c97))
+* **deps:** update dependency ee.schimke.composeai:rc-players-bom to v3.12.1 ([#701](https://github.com/yschimke/cadence/issues/701)) ([61c81e5](https://github.com/yschimke/cadence/commit/61c81e5d7a9972417aa02f7afeaa2106b3f82570))
+* **deps:** update livery to v0.25.0 ([#706](https://github.com/yschimke/cadence/issues/706)) ([bc1d49a](https://github.com/yschimke/cadence/commit/bc1d49a9a248cc932bdf06e6505316d54300adac))
+* **deps:** update livery to v0.26.0 ([#718](https://github.com/yschimke/cadence/issues/718)) ([15bfa20](https://github.com/yschimke/cadence/commit/15bfa20fd62cbae81c19bc616d14a2dd635c0d85))
+* harden coroutine cancellation, lifecycle, and sync resilience ([#708](https://github.com/yschimke/cadence/issues/708)) ([46f8600](https://github.com/yschimke/cadence/commit/46f860037c9d44391cdf21703f3b7f7c551fb28f))
+* offer Download/Process on Home before the headphone drive is chosen ([#705](https://github.com/yschimke/cadence/issues/705)) ([d20cdf6](https://github.com/yschimke/cadence/commit/d20cdf620dd72b78d48d6448532e432761194738))
+* preserve cooperative cancellation in PodcastController and WearDataLayerGateway ([#719](https://github.com/yschimke/cadence/issues/719)) ([de04332](https://github.com/yschimke/cadence/commit/de043325a7f77e17e621318748a3cbecd51c7128))
+
 ## [0.1.38](https://github.com/yschimke/cadence/compare/v0.1.37...v0.1.38) (2026-11-23)
 
 
