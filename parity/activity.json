@@ -1,11 +1,43 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-24T13:36:47.203Z",
+  "generatedAt": "2026-11-24T14:49:42.976Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "e5a698298169434caf51207c895a179043455c97",
+        "subject": "fix(deps): update dependency ee.schimke.composeai:compose-preview-daemon-bom to v3.29.1 (#715)",
+        "at": "2026-11-24T14:36:31Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "bd34c7e5ea3b4b96139a4357e3970fcebb5a38da",
+        "subject": "chore(deps): update yschimke/livery action to v0.26.0 (#716)",
+        "at": "2026-11-24T14:32:13Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "cf8e25188abb0badaa91ae5256d06dfc9e254c6f",
+        "subject": "feat: migrate password fields to OutlinedSecureTextField and animate Expandable sections (#713)",
+        "at": "2026-11-24T14:10:47Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "eeeb83047a9905c068b843f5aa529c216e555d7e",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.103.1 (#714)",
+        "at": "2026-11-24T13:45:58Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "a37f0ffc68f6616aec85eebfa80311da5ab4303f",
         "subject": "refactor: modernize DI with Metro 1.6, metrox, and KMP graphs (#712)",
@@ -450,38 +482,6 @@
         "sha": "53b3b512d9e289b1408eb69f436865d474419247",
         "subject": "fix(deps): update androidx to v1.0.0-alpha03 (#657)",
         "at": "2026-11-20T08:11:57Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "0b495976a2cb9e1236d093f6ea1141b6bf18120d",
-        "subject": "chore(build): raise Android compileSdk to 37.1 (#659)",
-        "at": "2026-11-20T07:06:11Z",
-        "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "c00e168a74e1f02ba26b2855b7a47039a260dd61",
-        "subject": "chore(deps): update anthropics/claude-code-action action to v1.0.283 (#655)",
-        "at": "2026-11-19T07:51:32Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "6e293b2a25abb1fd9c482c693040921a1e54cadd",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.101.0 (#656)",
-        "at": "2026-11-19T07:44:57Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "ac8a6ef85defd0408fdd8edfb7499180561b3a78",
-        "subject": "chore(deps): update anthropics/claude-code-action action to v1.0.282 (#653)",
-        "at": "2026-11-18T19:23:29Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
