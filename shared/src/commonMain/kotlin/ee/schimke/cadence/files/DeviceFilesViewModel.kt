@@ -4,17 +4,22 @@ package ee.schimke.cadence.files
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.navigation.toRoute
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.Assisted
+import dev.zacsweers.metro.AssistedFactory
+import dev.zacsweers.metro.AssistedInject
 import dev.zacsweers.metro.ContributesIntoMap
-import dev.zacsweers.metro.Inject
+import dev.zacsweers.metrox.viewmodel.ViewModelAssistedFactory
+import dev.zacsweers.metrox.viewmodel.ViewModelAssistedFactoryKey
 import ee.schimke.cadence.DeviceFiles
 import ee.schimke.cadence.data.DevicesRepo
 import ee.schimke.cadence.data.StorageManager
 import ee.schimke.cadence.data.Volume
 import ee.schimke.cadence.datastore.proto.Device
-import ee.schimke.cadence.metro.ViewModelKey
-import ee.schimke.cadence.metro.ViewModelScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -24,15 +29,14 @@ import okio.FileSystem
 import okio.Path
 import okio.Path.Companion.toPath
 
-@ContributesIntoMap(ViewModelScope::class)
-@ViewModelKey(DeviceFilesViewModel::class)
-@Inject
+@AssistedInject
 class DeviceFilesViewModel(
-  private val savedStateHandle: SavedStateHandle,
+  @Assisted extras: CreationExtras,
   private val devicesRepo: DevicesRepo,
   private val fileSystem: FileSystem?,
   private val storageManager: StorageManager,
 ) : ViewModel() {
+  private val savedStateHandle: SavedStateHandle = extras.createSavedStateHandle()
   val route = savedStateHandle.toRoute<DeviceFiles>()
 
   val uiState: StateFlow<UiState> =
@@ -52,6 +56,13 @@ class DeviceFilesViewModel(
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = UiState.Loading(route),
       )
+
+  @AssistedFactory
+  @ViewModelAssistedFactoryKey(DeviceFilesViewModel::class)
+  @ContributesIntoMap(AppScope::class)
+  fun interface Factory : ViewModelAssistedFactory {
+    override fun create(extras: CreationExtras): DeviceFilesViewModel
+  }
 
   sealed class UiState {
     abstract val name: String

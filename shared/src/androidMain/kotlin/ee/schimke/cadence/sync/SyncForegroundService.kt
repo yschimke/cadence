@@ -14,8 +14,11 @@ import ee.schimke.cadence.notifications.CadenceNotifications
 import ee.schimke.cadence.notifications.NotificationBody
 import ee.schimke.cadence.notifications.NotificationIcon
 import androidx.core.content.getSystemService
-import ee.schimke.cadence.metro.AndroidAppGraph
-import ee.schimke.cadence.metro.AppGraphProvider
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesIntoMap
+import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.binding
+import dev.zacsweers.metrox.android.ServiceKey
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -24,7 +27,12 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class SyncForegroundService : Service() {
+@ContributesIntoMap(AppScope::class, binding<Service>())
+@ServiceKey(SyncForegroundService::class)
+@Inject
+class SyncForegroundService(
+  private val syncOrchestrator: SyncOrchestrator,
+) : Service() {
 
   private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
   private var observer: Job? = null
@@ -39,12 +47,11 @@ class SyncForegroundService : Service() {
   override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
     startForeground(NOTIFICATION_ID, buildNotification(initialText()), foregroundType())
     val targetId = intent?.getStringExtra(EXTRA_TARGET_DEVICE_ID)
-    val orchestrator = appGraph().syncOrchestrator
     observer?.cancel()
     observer = scope.launch {
       var hasStarted = false
-      launch { orchestrator.startSync(targetId) }
-      orchestrator.progress.collectLatest { progress ->
+      launch { syncOrchestrator.startSync(targetId) }
+      syncOrchestrator.progress.collectLatest { progress ->
         if (progress.running) hasStarted = true
         updateNotification(progress)
         if (hasStarted && !progress.running) {
@@ -60,8 +67,6 @@ class SyncForegroundService : Service() {
     scope.cancel()
     super.onDestroy()
   }
-
-  private fun appGraph(): AndroidAppGraph = (applicationContext as AppGraphProvider).appGraph
 
   private fun ensureChannel() {
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return

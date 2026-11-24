@@ -62,8 +62,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.zacsweers.metrox.viewmodel.metroViewModel
 import ee.schimke.cadence.developer.LocalDeveloperMode
-import ee.schimke.cadence.metro.metroViewModel
 
 @Composable
 fun BluetoothControlsScreen(modifier: Modifier = Modifier) {

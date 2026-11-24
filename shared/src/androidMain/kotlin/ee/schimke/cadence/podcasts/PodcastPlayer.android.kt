@@ -66,7 +66,7 @@ internal fun withLocalPodcastPlayer(
 internal fun launchPodcastEpisode(
   context: android.content.Context,
   episode: Episode,
-  controller: PodcastController = AndroidPodcastPlatform.instance(context).controller(),
+  controller: PodcastController = AndroidPodcastPlatform.from(context).controller(),
   localPlayer: MediaController? = null,
 ) {
   val appContext = context.applicationContext
@@ -98,7 +98,7 @@ internal fun launchPodcastEpisode(
         .show()
     }
   } else {
-    val file = AndroidPodcastPlatform.instance(appContext).originalForPlayback(episode) ?: return
+    val file = AndroidPodcastPlatform.from(appContext).originalForPlayback(episode) ?: return
     fun startOn(player: MediaController) {
       val metadata =
         MediaMetadata.Builder()
@@ -182,7 +182,15 @@ actual fun rememberPodcastPlayer(
   )
 }
 
-class PodcastPlaybackService : MediaSessionService() {
+@dev.zacsweers.metro.ContributesIntoMap(
+  dev.zacsweers.metro.AppScope::class,
+  dev.zacsweers.metro.binding<android.app.Service>(),
+)
+@dev.zacsweers.metrox.android.ServiceKey(PodcastPlaybackService::class)
+@dev.zacsweers.metro.Inject
+class PodcastPlaybackService(
+  private val podcastPlatform: AndroidPodcastPlatform,
+) : MediaSessionService() {
   companion object {
     val playerState = MutableStateFlow(PodcastPlayerUi())
   }
@@ -190,9 +198,7 @@ class PodcastPlaybackService : MediaSessionService() {
   private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
   private lateinit var player: ExoPlayer
   private lateinit var session: MediaSession
-  private val controller by lazy {
-    AndroidPodcastPlatform.instance(applicationContext).controller()
-  }
+  private val controller by lazy { podcastPlatform.controller() }
   private var episode: Episode? = null
   private var lastSavedPosition = -1L
 

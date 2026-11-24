@@ -3,11 +3,11 @@ package ee.schimke.cadence.developer
 import androidx.compose.runtime.compositionLocalOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.Inject
+import dev.zacsweers.metrox.viewmodel.ViewModelKey
 import ee.schimke.cadence.data.SettingsStore
-import ee.schimke.cadence.metro.ViewModelKey
-import ee.schimke.cadence.metro.ViewModelScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -35,7 +35,7 @@ class DeveloperModeRepo(private val store: SettingsStore) {
   }
 }
 
-@ContributesIntoMap(ViewModelScope::class)
+@ContributesIntoMap(AppScope::class)
 @ViewModelKey(DeveloperModeViewModel::class)
 @Inject
 class DeveloperModeViewModel(private val repo: DeveloperModeRepo) : ViewModel() {

@@ -8,8 +8,10 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
+import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.Inject
+import dev.zacsweers.metrox.viewmodel.ViewModelKey
 import ee.schimke.cadence.UseAppStateTransform
 import ee.schimke.cadence.data.DevicesRepo
 import ee.schimke.cadence.datastore.proto.Device
@@ -18,8 +20,6 @@ import ee.schimke.cadence.datastore.proto.SyncPreferences
 import ee.schimke.cadence.datastore.proto.SyncProfile
 import ee.schimke.cadence.datastore.proto.SyncSource
 import ee.schimke.cadence.devices.storageLocation
-import ee.schimke.cadence.metro.ViewModelKey
-import ee.schimke.cadence.metro.ViewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -31,7 +31,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-@ContributesIntoMap(ViewModelScope::class)
+@ContributesIntoMap(AppScope::class)
 @ViewModelKey(FileSyncViewModel::class)
 @Inject
 class FileSyncViewModel(

@@ -98,11 +98,11 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.zacsweers.metrox.viewmodel.metroViewModel
 import ee.schimke.cadence.datastore.proto.SourceKind
 import ee.schimke.cadence.datastore.proto.SyncSource
 import ee.schimke.cadence.devices.rememberEjectUsb
 import ee.schimke.cadence.devices.rememberFileExplorerOpenLauncher
-import ee.schimke.cadence.metro.metroViewModel
 import ee.schimke.cadence.podcasts.Episode
 import ee.schimke.cadence.podcasts.EpisodeDetails
 import ee.schimke.cadence.podcasts.KeepPodcastScreenAwake

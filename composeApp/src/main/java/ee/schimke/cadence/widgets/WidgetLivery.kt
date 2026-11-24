@@ -2,6 +2,9 @@ package ee.schimke.cadence.widgets
 
 import android.content.Context
 import android.os.Build
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.SingleIn
 import ee.schimke.cadence.analytics.CadenceFirebase
 import ee.schimke.livery.client.AnalyticsEventSink
 import ee.schimke.livery.client.AndroidBundled
@@ -40,10 +43,13 @@ import okio.ByteString.Companion.decodeBase64
  * Seasons (`composeApp/livery/seasons/`) are written into the manifest as experiments that every
  * user is in, so the planner's [Experiments] is what makes the widget draw a season's design.
  */
-internal class WidgetLivery(
+@SingleIn(AppScope::class)
+class WidgetLivery(
   context: Context,
-  private val clock: Clock = Clock { System.currentTimeMillis() },
+  private val clock: Clock,
 ) {
+  @Inject constructor(context: Context) : this(context, Clock { System.currentTimeMillis() })
+
   private val dir = File(context.noBackupFilesDir, "livery")
   private val kv: KeyValueStore = FileKeyValueStore(File(dir, "kv"))
 
@@ -157,13 +163,5 @@ internal class WidgetLivery(
       CATALOG_PUBLIC_KEY.takeIf { it.isNotBlank() }
         ?.let { listOf(TrustedKey(CATALOG_KEY_ID, requireNotNull(it.decodeBase64()))) }
         .orEmpty()
-
-    @Volatile private var instance: WidgetLivery? = null
-
-    fun get(context: Context): WidgetLivery =
-      instance
-        ?: synchronized(this) {
-          instance ?: WidgetLivery(context.applicationContext).also { instance = it }
-        }
   }
 }

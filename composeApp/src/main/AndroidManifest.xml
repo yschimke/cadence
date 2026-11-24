@@ -52,7 +52,7 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:theme="@android:style/Theme.Material.NoActionBar"
-        android:appComponentFactory="ee.schimke.cadence.metro.MetroAppComponentFactory"
+        android:appComponentFactory="dev.zacsweers.metrox.android.MetroAppComponentFactory"
         tools:replace="android:appComponentFactory"
         android:name=".CadenceApplication">
         <!-- WorkManager is configured on demand by CadenceApplication. Keep other Startup
@@ -84,10 +84,13 @@
         <service
             android:name=".sync.SyncForegroundService"
             android:exported="false"
-            android:foregroundServiceType="dataSync" />
+            android:foregroundServiceType="dataSync"
+            tools:ignore="Instantiatable" />
 
         <service android:name="ee.schimke.cadence.podcasts.PodcastPlaybackService"
-            android:exported="false" android:foregroundServiceType="mediaPlayback">
+            android:exported="false"
+            android:foregroundServiceType="mediaPlayback"
+            tools:ignore="Instantiatable">
             <intent-filter><action android:name="androidx.media3.session.MediaSessionService" /></intent-filter>
         </service>
 
@@ -107,7 +110,8 @@
         <service
             android:name=".wear.PhoneWearCommandService"
             android:exported="true"
-            android:permission="com.google.android.gms.permission.BIND_WEARABLE_LISTENER">
+            android:permission="com.google.android.gms.permission.BIND_WEARABLE_LISTENER"
+            tools:ignore="Instantiatable">
             <intent-filter>
                 <action android:name="com.google.android.gms.wearable.MESSAGE_RECEIVED" />
             </intent-filter>
@@ -115,7 +119,8 @@
 
         <receiver
             android:name=".sync.UsbAttachReceiver"
-            android:exported="true">
+            android:exported="true"
+            tools:ignore="Instantiatable">
             <intent-filter>
                 <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
                 <action android:name="android.hardware.usb.action.USB_DEVICE_DETACHED" />
@@ -132,7 +137,8 @@
         <receiver
             android:name=".widgets.HeadphoneControlsWidget"
             android:exported="false"
-            android:label="Headphone controls">
+            android:label="Headphone controls"
+            tools:ignore="Instantiatable">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>

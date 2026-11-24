@@ -7,13 +7,14 @@ import android.content.IntentFilter
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Inject
-import dev.zacsweers.metro.binding
+import dev.zacsweers.metro.SingleIn
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.callbackFlow
 
-@ContributesBinding(AppScope::class, binding = binding<UsbManager>())
+@ContributesBinding(AppScope::class)
+@SingleIn(AppScope::class)
 @Inject
 class AndroidUsbManager(private val applicationContext: Context) : UsbManager {
   private val manager =

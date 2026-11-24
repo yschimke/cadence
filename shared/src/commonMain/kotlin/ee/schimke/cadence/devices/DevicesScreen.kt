@@ -47,10 +47,10 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.zacsweers.metrox.viewmodel.metroViewModel
 import ee.schimke.cadence.datastore.proto.Device
 import ee.schimke.cadence.home.SwipeAction
 import ee.schimke.cadence.home.SwipeActionRow
-import ee.schimke.cadence.metro.metroViewModel
 import ee.schimke.cadence.usb.UsbConnection
 import ee.schimke.cadence.usb.UsbDevice
 import kotlinx.coroutines.launch

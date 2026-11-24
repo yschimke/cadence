@@ -9,6 +9,13 @@ import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.Assisted
+import dev.zacsweers.metro.AssistedFactory
+import dev.zacsweers.metro.AssistedInject
+import dev.zacsweers.metro.ContributesIntoMap
+import ee.schimke.cadence.metro.AssistedWorkerFactory
+import ee.schimke.cadence.metro.WorkerKey
 import ee.schimke.cadence.platform.Analytics
 import ee.schimke.cadence.podcasts.PodcastSyncWidget
 import ee.schimke.livery.client.RefreshResult
@@ -22,11 +29,14 @@ import java.util.concurrent.TimeUnit
  * A failed refresh is not retried here: the repository backs off on its own, and the bundled or
  * last downloaded catalog keeps drawing.
  */
-class CatalogRefreshWorker(context: Context, params: WorkerParameters) :
-  CoroutineWorker(context, params) {
+@AssistedInject
+class CatalogRefreshWorker(
+  @Assisted context: Context,
+  @Assisted params: WorkerParameters,
+  private val widgetLivery: WidgetLivery,
+) : CoroutineWorker(context, params) {
   override suspend fun doWork(): Result {
-    val livery = WidgetLivery.get(applicationContext)
-    when (val result = livery.repository.refresh()) {
+    when (val result = widgetLivery.repository.refresh()) {
       is RefreshResult.Updated -> {
         Log.i(TAG, "widget catalog updated to serial ${result.serial}")
         HeadphoneControlsWidget.updateAll(applicationContext)
@@ -41,17 +51,23 @@ class CatalogRefreshWorker(context: Context, params: WorkerParameters) :
     return Result.success()
   }
 
+  @AssistedFactory
+  @WorkerKey(CatalogRefreshWorker::class)
+  @ContributesIntoMap(AppScope::class)
+  fun interface Factory : AssistedWorkerFactory {
+    override fun create(context: Context, params: WorkerParameters): CatalogRefreshWorker
+  }
+
   companion object {
     /**
      * Fetches the catalog now (Settings' refresh), whatever the daily schedule says, and redraws
      * both widgets either way, so they pick up the current season's look. Returns a line for the
      * user.
      */
-    suspend fun refreshNow(context: Context): String {
+    suspend fun refreshNow(context: Context, livery: WidgetLivery): String {
       val app = context.applicationContext
       val result =
-        if (WidgetLivery.trustedKeys.isEmpty()) null
-        else WidgetLivery.get(app).repository.refresh(force = true)
+        if (WidgetLivery.trustedKeys.isEmpty()) null else livery.repository.refresh(force = true)
       HeadphoneControlsWidget.updateAll(app)
       PodcastSyncWidget.updateAll(app)
       if (result is RefreshResult.Updated) SeasonRedrawWorker.ensureScheduled(app, replace = true)
