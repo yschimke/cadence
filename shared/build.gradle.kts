@@ -41,8 +41,9 @@ kotlin {
       dependsOn(commonMain.get())
       dependencies {
         implementation(libs.androidx.datastore)
-        // OkHttp drives the Google OAuth refresh + Drive v3 calls. Android ships neither
-        // java.net.http nor a sync HTTP client of its own, so one dep covers both platforms.
+        // Ktor with OkHttp engine drives all JVM and Android HTTP calls, sharing one connection
+        // pool across Google OAuth/Drive and podcast networking.
+        implementation(libs.ktor.client.okhttp)
         implementation(libs.okhttp)
         // Podcast artwork on Home.
         implementation(libs.coil.network.okhttp)
