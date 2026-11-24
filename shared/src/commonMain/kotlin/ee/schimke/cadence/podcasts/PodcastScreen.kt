@@ -1,3 +1,5 @@
+@file:OptIn(androidx.compose.material3.ExperimentalMaterial3ExpressiveApi::class)
+
 package ee.schimke.cadence.podcasts
 
 import androidx.compose.foundation.clickable
@@ -34,6 +36,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ee.schimke.cadence.developer.LocalDeveloperMode
 import ee.schimke.cadence.devices.rememberFileExplorerOpenLauncher
 import kotlinx.coroutines.launch
@@ -147,9 +150,9 @@ fun AddPodcastsScreen(
   modifier: Modifier = Modifier,
   initialProvider: PodcastProvider? = null,
 ) {
-  val local by controller.state.collectAsState()
-  val busy by controller.busy.collectAsState()
-  val status by controller.status.collectAsState()
+  val local by controller.state.collectAsStateWithLifecycle()
+  val busy by controller.busy.collectAsStateWithLifecycle()
+  val status by controller.status.collectAsStateWithLifecycle()
   val snackbar = remember { SnackbarHostState() }
   val scope = rememberCoroutineScope()
   var provider by rememberSaveable { mutableStateOf(initialProvider) }
@@ -183,7 +186,7 @@ fun AddPodcastsScreen(
   Scaffold(modifier = modifier, snackbarHost = { SnackbarHost(snackbar) }) { padding ->
     Column(Modifier.padding(padding).fillMaxSize()) {
       if (working) {
-        LinearProgressIndicator(Modifier.fillMaxWidth())
+        androidx.compose.material3.LinearWavyProgressIndicator(Modifier.fillMaxWidth())
         Text(pending ?: status, Modifier.padding(16.dp), style = MaterialTheme.typography.bodySmall)
       }
       val chosen = provider
@@ -387,8 +390,8 @@ private fun PocketCastsForm(
   import: (suspend PodcastController.() -> Unit) -> Unit,
   action: (suspend PodcastController.() -> Unit) -> Unit,
 ) {
-  val lists by controller.pocketCastsLists.collectAsState()
-  val loaded by controller.loaded.collectAsState()
+  val lists by controller.pocketCastsLists.collectAsStateWithLifecycle()
+  val loaded by controller.loaded.collectAsStateWithLifecycle()
   var list by rememberSaveable {
     mutableStateOf(
       local.library.second?.takeIf { it.kind == PodcastSourceKind.PocketCasts }?.list
@@ -530,8 +533,8 @@ private fun LibroFmForm(
   import: (suspend PodcastController.() -> Unit) -> Unit,
   action: (suspend PodcastController.() -> Unit) -> Unit,
 ) {
-  val books by controller.libroFmBooks.collectAsState()
-  val loaded by controller.loaded.collectAsState()
+  val books by controller.libroFmBooks.collectAsStateWithLifecycle()
+  val loaded by controller.loaded.collectAsStateWithLifecycle()
   var list by rememberSaveable {
     mutableStateOf(
       local.library.second?.takeIf { it.kind == PodcastSourceKind.LibroFm }?.list
@@ -657,7 +660,7 @@ private fun AudiobookshelfForm(
   import: (suspend PodcastController.() -> Unit) -> Unit,
   action: (suspend PodcastController.() -> Unit) -> Unit,
 ) {
-  val libraries by controller.audiobookshelfLibraries.collectAsState()
+  val libraries by controller.audiobookshelfLibraries.collectAsStateWithLifecycle()
   var list by rememberSaveable {
     mutableStateOf(
       local.library.second?.takeIf { it.kind == PodcastSourceKind.Audiobookshelf }?.list
@@ -815,8 +818,8 @@ private fun SubsonicForm(
   import: (suspend PodcastController.() -> Unit) -> Unit,
   action: (suspend PodcastController.() -> Unit) -> Unit,
 ) {
-  val playlists by controller.subsonicPlaylists.collectAsState()
-  val albums by controller.subsonicAlbums.collectAsState()
+  val playlists by controller.subsonicPlaylists.collectAsStateWithLifecycle()
+  val albums by controller.subsonicAlbums.collectAsStateWithLifecycle()
   var list by rememberSaveable {
     mutableStateOf(
       local.library.second?.takeIf { it.kind == PodcastSourceKind.Subsonic }?.list
@@ -972,8 +975,8 @@ private fun JellyfinForm(
   import: (suspend PodcastController.() -> Unit) -> Unit,
   action: (suspend PodcastController.() -> Unit) -> Unit,
 ) {
-  val playlists by controller.jellyfinPlaylists.collectAsState()
-  val albums by controller.jellyfinAlbums.collectAsState()
+  val playlists by controller.jellyfinPlaylists.collectAsStateWithLifecycle()
+  val albums by controller.jellyfinAlbums.collectAsStateWithLifecycle()
   var list by rememberSaveable {
     mutableStateOf(
       local.library.second?.takeIf { it.kind == PodcastSourceKind.Jellyfin }?.list
@@ -1095,10 +1098,10 @@ private fun PlexForm(
   import: (suspend PodcastController.() -> Unit) -> Unit,
   action: (suspend PodcastController.() -> Unit) -> Unit,
 ) {
-  val playlists by controller.plexPlaylists.collectAsState()
-  val sections by controller.plexSections.collectAsState()
-  val pin by controller.plexPin.collectAsState()
-  val servers by controller.plexServers.collectAsState()
+  val playlists by controller.plexPlaylists.collectAsStateWithLifecycle()
+  val sections by controller.plexSections.collectAsStateWithLifecycle()
+  val pin by controller.plexPin.collectAsStateWithLifecycle()
+  val servers by controller.plexServers.collectAsStateWithLifecycle()
   val uriHandler = LocalUriHandler.current
   var list by rememberSaveable {
     mutableStateOf(
@@ -1259,7 +1262,7 @@ private fun LibriVoxForm(
   import: (suspend PodcastController.() -> Unit) -> Unit,
   action: (suspend PodcastController.() -> Unit) -> Unit,
 ) {
-  val results by controller.libriVoxResults.collectAsState()
+  val results by controller.libriVoxResults.collectAsStateWithLifecycle()
   var query by rememberSaveable { mutableStateOf("") }
   var selectedUrl by rememberSaveable { mutableStateOf("") }
 
@@ -1406,9 +1409,9 @@ fun PodcastScreen(
   onChangeSource: () -> Unit,
   modifier: Modifier = Modifier,
 ) {
-  val local by controller.state.collectAsState()
-  val controllerBusy by controller.busy.collectAsState()
-  val controllerStatus by controller.status.collectAsState()
+  val local by controller.state.collectAsStateWithLifecycle()
+  val controllerBusy by controller.busy.collectAsStateWithLifecycle()
+  val controllerStatus by controller.status.collectAsStateWithLifecycle()
   val work = rememberPodcastWork(controller)
   val busy = controllerBusy || work.active
   val status = work.status ?: controllerStatus
@@ -1952,7 +1955,7 @@ private fun CloudBackup(
   action: (suspend PodcastController.() -> Unit) -> Unit,
   initiallyExpanded: Boolean = false,
 ) {
-  val signedIn by controller.signedIn.collectAsState()
+  val signedIn by controller.signedIn.collectAsStateWithLifecycle()
   var url by rememberSaveable { mutableStateOf(local.cloudUrl) }
   var key by rememberSaveable { mutableStateOf(local.cloudKey) }
   var email by remember { mutableStateOf("") }
@@ -2031,8 +2034,8 @@ private fun CloudBackup(
 
 @Composable
 fun CloudSyncScreen(controller: PodcastController) {
-  val local by controller.state.collectAsState()
-  val busy by controller.busy.collectAsState()
+  val local by controller.state.collectAsStateWithLifecycle()
+  val busy by controller.busy.collectAsStateWithLifecycle()
   val snackbar = remember { SnackbarHostState() }
   val scope = rememberCoroutineScope()
   fun action(block: suspend PodcastController.() -> Unit) {

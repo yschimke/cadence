@@ -1,3 +1,5 @@
+@file:OptIn(androidx.compose.material3.ExperimentalMaterial3ExpressiveApi::class)
+
 package ee.schimke.cadence.sync
 
 import androidx.compose.foundation.clickable
@@ -30,16 +32,17 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenu
 import androidx.compose.material3.ExposedDropdownMenuAnchorType
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.LoadingIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
@@ -48,7 +51,6 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -62,6 +64,7 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ee.schimke.cadence.LocalPortableHost
 import ee.schimke.cadence.datastore.proto.NetworkConstraint
 import ee.schimke.cadence.datastore.proto.SourceKind
@@ -85,7 +88,7 @@ fun ManageSyncScreen(
 ) {
   val viewModel = metroViewModel<FileSyncViewModel>()
   val state by viewModel.collectState()
-  val suggestions by viewModel.suggestions.collectAsState()
+  val suggestions by viewModel.suggestions.collectAsStateWithLifecycle()
   // Folders join the default profile so they keep refreshing; developer mode can add others.
   val launcher = rememberDirectorySourceLauncher(viewModel::addFolderToLibrary)
 
@@ -297,7 +300,7 @@ private fun WidgetDesignsRow(designs: WidgetDesigns) {
       )
     }
     if (refreshing) {
-      CircularProgressIndicator(Modifier.size(24.dp), strokeWidth = 2.dp)
+      LoadingIndicator(Modifier.size(28.dp))
     } else {
       TextButton(
         onClick = {

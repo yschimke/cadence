@@ -9,13 +9,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.wear.compose.foundation.lazy.TransformingLazyColumn
 import androidx.wear.compose.foundation.lazy.items
 import androidx.wear.compose.foundation.lazy.rememberTransformingLazyColumnState
@@ -51,7 +51,7 @@ fun WearCompanionApp(
   onDismissSettings: () -> Unit = {},
   modifier: Modifier = Modifier,
 ) {
-  val snapshot by gateway.snapshot.collectAsState()
+  val snapshot by gateway.snapshot.collectAsStateWithLifecycle()
   val scope = rememberCoroutineScope()
   MaterialTheme {
     Box(modifier = modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
@@ -61,14 +61,19 @@ fun WearCompanionApp(
           scope.launch { gateway.execute(action) }
         }
       }
-      if (showSettings) {
-        DeviceSettingsScreen(
-          snapshot = snapshot,
-          modifier = Modifier.fillMaxSize(),
-          onAction = onAction,
-        )
-      } else {
-        WearCompanionContent(snapshot = snapshot, onAction = onAction)
+      androidx.compose.animation.AnimatedContent(
+        targetState = showSettings,
+        label = "wearSettingsTransition",
+      ) { settingsVisible ->
+        if (settingsVisible) {
+          DeviceSettingsScreen(
+            snapshot = snapshot,
+            modifier = Modifier.fillMaxSize(),
+            onAction = onAction,
+          )
+        } else {
+          WearCompanionContent(snapshot = snapshot, onAction = onAction)
+        }
       }
     }
   }

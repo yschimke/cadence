@@ -1,5 +1,11 @@
+@file:OptIn(androidx.compose.material3.ExperimentalMaterial3ExpressiveApi::class)
+
 package ee.schimke.cadence.home
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -46,10 +52,12 @@ import androidx.compose.material.icons.filled.Source
 import androidx.compose.material.icons.filled.Usb
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.LinearWavyProgressIndicator
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
@@ -70,7 +78,6 @@ import androidx.compose.material3.TooltipDefaults
 import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
@@ -90,6 +97,7 @@ import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ee.schimke.cadence.datastore.proto.SourceKind
 import ee.schimke.cadence.datastore.proto.SyncSource
 import ee.schimke.cadence.devices.rememberEjectUsb
@@ -168,17 +176,17 @@ fun HomeScreen(
 ) {
   val viewModel = metroViewModel<HomeViewModel>()
   val state by viewModel.collectState()
-  val suggestions by viewModel.suggestions.collectAsState()
-  val podcastState by podcasts.state.collectAsState()
-  val podcastBusy by podcasts.busy.collectAsState()
-  val podcastStatus by podcasts.status.collectAsState()
+  val suggestions by viewModel.suggestions.collectAsStateWithLifecycle()
+  val podcastState by podcasts.state.collectAsStateWithLifecycle()
+  val podcastBusy by podcasts.busy.collectAsStateWithLifecycle()
+  val podcastStatus by podcasts.status.collectAsStateWithLifecycle()
   val podcastWork =
     rememberPodcastWork(podcasts).let {
       if (podcastBusy && it.status == null) it.copy(status = podcastStatus) else it
     }
   val rawPodcastPlayer = rememberPodcastPlayer(podcasts, state.bluetooth.mediaAccessGranted)
   KeepPodcastScreenAwake(podcastBusy && !podcastWork.active)
-  val podcastsLoaded by podcasts.loaded.collectAsState()
+  val podcastsLoaded by podcasts.loaded.collectAsStateWithLifecycle()
   val snackbar = remember { SnackbarHostState() }
   val scope = rememberCoroutineScope()
   val podcastPlayer =
@@ -400,40 +408,57 @@ fun HomeContent(
       // (the icon on the status row). Only an episode playing on this phone keeps a player here,
       // so it can be paused without leaving Home.
       if (podcastPlayer.title != null && !state.bluetooth.localAudioControls)
-        item(key = "phone-player") { PhonePodcastPlayer(podcastPlayer) }
+        item(key = "phone-player") {
+          Box(Modifier.animateItem()) { PhonePodcastPlayer(podcastPlayer) }
+        }
       if (playlist != null)
         item(key = "podcasts") {
-          PodcastSection(podcasts, canArchive, actions, podcastPlayer) { opened = it }
+          Box(Modifier.animateItem()) {
+            PodcastSection(podcasts, canArchive, actions, podcastPlayer) { opened = it }
+          }
         }
       val fresh = if (podcasts.showFresh) podcasts.freshToReview else emptyList()
       if (fresh.isNotEmpty())
         item(key = "fresh") {
           // Folded away until asked for: the playlist above is what gets synced.
           var expanded by rememberSaveable { mutableStateOf(false) }
-          if (expanded)
-            FreshSection(
-              fresh,
-              addTo =
-                if (!canAddFresh) null
-                else if (podcasts.library.sourceList == POCKET_CASTS_UP_NEXT) "Up Next"
-                else playlist?.name,
-              onAdd = actions.onAddFresh,
-              onDismiss = actions.onDismissFresh,
-              onOpen = { opened = EpisodeInfo(it, status = "New release") },
-              onCollapse = { expanded = false },
-            )
-          else FindMoreContent(fresh.size) { expanded = true }
+          val motionScheme = MaterialTheme.motionScheme
+          AnimatedContent(
+            targetState = expanded,
+            transitionSpec = {
+              fadeIn(motionScheme.fastEffectsSpec()) togetherWith
+                fadeOut(motionScheme.fastEffectsSpec())
+            },
+            label = "freshSection",
+            modifier = Modifier.animateItem(),
+          ) { isExpanded ->
+            if (isExpanded)
+              FreshSection(
+                fresh,
+                addTo =
+                  if (!canAddFresh) null
+                  else if (podcasts.library.sourceList == POCKET_CASTS_UP_NEXT) "Up Next"
+                  else playlist?.name,
+                onAdd = actions.onAddFresh,
+                onDismiss = actions.onDismissFresh,
+                onOpen = { opened = EpisodeInfo(it, status = "New release") },
+                onCollapse = { expanded = false },
+              )
+            else FindMoreContent(fresh.size) { expanded = true }
+          }
         }
       items(state.sources, key = { it.id }, contentType = { "source" }) { source ->
         // One scan of the profiles per source instead of three.
         val profile = state.profileFor(source)
-        FolderSection(
-          source = source,
-          contents = state.contents[source.id] ?: HomeViewModel.SourceContents(loading = true),
-          lastRefreshed = profile?.last_refreshed_at.orEmpty(),
-          refreshing = state.refresh.running && state.refresh.profileId == profile?.id,
-          onRefresh = profile?.let { { actions.onRefreshFolder(it.id) } },
-        )
+        Box(Modifier.animateItem()) {
+          FolderSection(
+            source = source,
+            contents = state.contents[source.id] ?: HomeViewModel.SourceContents(loading = true),
+            lastRefreshed = profile?.last_refreshed_at.orEmpty(),
+            refreshing = state.refresh.running && state.refresh.profileId == profile?.id,
+            onRefresh = profile?.let { { actions.onRefreshFolder(it.id) } },
+          )
+        }
       }
     }
   }
@@ -638,7 +663,7 @@ private fun WorkProgress(work: PodcastWorkUi) {
       modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
     )
     val fraction = work.fraction
-    if (fraction == null) LinearProgressIndicator(Modifier.fillMaxWidth())
+    if (fraction == null) LinearWavyProgressIndicator(Modifier.fillMaxWidth())
     else LinearProgressIndicator(progress = { fraction }, modifier = Modifier.fillMaxWidth())
   }
 }
@@ -1151,7 +1176,7 @@ private fun FolderSection(
           }
         },
     )
-    if (refreshing) LinearProgressIndicator(Modifier.fillMaxWidth())
+    if (refreshing) LinearWavyProgressIndicator(Modifier.fillMaxWidth())
     val shown = if (expanded) items else items.take(FOLDER_PREVIEW)
     shown.forEach { item ->
       HorizontalDivider()

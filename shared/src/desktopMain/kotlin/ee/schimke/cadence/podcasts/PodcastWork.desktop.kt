@@ -1,13 +1,14 @@
 package ee.schimke.cadence.podcasts
 
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 
 @Composable
 actual fun rememberPodcastWork(controller: PodcastController): PodcastWorkUi {
   val scope = rememberCoroutineScope()
-  val fraction by controller.progress.collectAsState()
-  val status by controller.status.collectAsState()
+  val fraction by controller.progress.collectAsStateWithLifecycle()
+  val status by controller.status.collectAsStateWithLifecycle()
   // Runs in the foreground here, so "active" is simply one of these tasks being in flight.
   var running by remember { mutableStateOf(false) }
   var failure by remember { mutableStateOf<Pair<String, String>?>(null) }

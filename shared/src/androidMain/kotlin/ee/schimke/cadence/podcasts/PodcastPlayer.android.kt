@@ -1,5 +1,6 @@
 package ee.schimke.cadence.podcasts
 
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import android.app.PendingIntent
 import android.content.ComponentName
 import android.content.Intent
@@ -128,7 +129,7 @@ actual fun rememberPodcastPlayer(
   mediaAccess: Boolean,
 ): PodcastPlayerUi {
   val context = LocalContext.current.applicationContext
-  val state by PodcastPlaybackService.playerState.collectAsState()
+  val state by PodcastPlaybackService.playerState.collectAsStateWithLifecycle()
   val mediaAppsInstalled =
     remember(context) {
       listOf(POCKET_CASTS, "com.spotify.music", "de.danoeh.antennapod").any { packageName ->
