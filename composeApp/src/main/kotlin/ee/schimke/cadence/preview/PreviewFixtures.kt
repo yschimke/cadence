@@ -393,6 +393,12 @@ internal object PreviewFixtures {
         ),
     )
 
+  /** Downloaded, but not processed, with no headphone drive chosen yet. */
+  val downloadedPodcastState =
+    podcastState.copy(
+      downloadedEpisodeKeys = podcastState.library.playlist!!.episodes.map { it.key }.toSet(),
+    )
+
   /** Set up and prepared overnight: plugging in copies these. */
   val preparedPodcastState = podcastState.let { state ->
     val manifests =

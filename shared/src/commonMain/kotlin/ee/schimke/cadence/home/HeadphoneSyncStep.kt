@@ -143,6 +143,14 @@ fun widgetButton(step: HeadphoneSyncStep, cloud: CloudSyncStatus): StatusCardBut
     else -> null
   }
 
+/** Download or Process, whichever is still to do, or null when nothing is left to prepare. */
+private fun prepareButton(cloud: CloudSyncStatus, primary: Boolean): StatusCardButton? =
+  when {
+    cloud.canDownload -> StatusCardButton("download", "Download", primary)
+    cloud.canProcess -> StatusCardButton("process", "Process now", primary)
+    else -> null
+  }
+
 /**
  * The buttons [step] needs, main action first: "Sync now" when plugged in and ready, "Download" or
  * "Process now" while preparing, and so on. [syncFolders] adds "Sync folders" beside them.
@@ -155,9 +163,12 @@ fun statusButtons(
 ): List<StatusCardButton> = buildList {
   when (step) {
     HeadphoneSyncStep.NoSource -> add(StatusCardButton("add", "Add a source", primary = true))
-    HeadphoneSyncStep.PlugInToSetUp -> Unit
-    HeadphoneSyncStep.ChooseStorage ->
+    // Preparing needs no headphones, so it's offered before the drive is chosen too.
+    HeadphoneSyncStep.PlugInToSetUp -> prepareButton(cloud, primary = true)?.let(::add)
+    HeadphoneSyncStep.ChooseStorage -> {
       add(StatusCardButton("storage", "Choose drive", primary = true))
+      prepareButton(cloud, primary = false)?.let(::add)
+    }
     is HeadphoneSyncStep.Prepare ->
       add(
         if (cloud.canDownload) StatusCardButton("download", "Download", primary = true)

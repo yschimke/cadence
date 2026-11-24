@@ -73,6 +73,21 @@ class SyncHeadlineTest {
     assertEquals(listOf("download"), ids(HeadphoneSyncStep.Prepare(false)))
     assertEquals(listOf("eject", "sync-again"), ids(HeadphoneSyncStep.UpToDate(true)))
     assertEquals(listOf("sync-again"), ids(HeadphoneSyncStep.UpToDate(true), ejectable = false))
+    // Preparing needs no headphones, so setup steps offer it too: first when it's all there is.
+    assertEquals(listOf("download"), ids(HeadphoneSyncStep.PlugInToSetUp))
+    assertEquals(listOf("storage", "download"), ids(HeadphoneSyncStep.ChooseStorage))
+    val downloaded = imported.copy(downloadedEpisodeKeys = setOf(episode.key))
+    val toProcess = cloudSyncStatus(downloaded, true, true)
+    assertEquals(
+      listOf("process"),
+      statusButtons(HeadphoneSyncStep.PlugInToSetUp, toProcess, true, false).map { it.id },
+    )
+    // Nothing left to prepare: nothing to offer until the headphones are plugged in.
+    val prepared = toProcess.copy(canDownload = false, canProcess = false)
+    assertEquals(
+      emptyList(),
+      statusButtons(HeadphoneSyncStep.PlugInToSetUp, prepared, true, false).map { it.id },
+    )
     // Folders sit beside the episode sync, once.
     assertEquals(
       listOf("sync", "folders"),
