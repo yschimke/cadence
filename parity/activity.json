@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-24T03:15:54.949Z",
+  "generatedAt": "2026-11-24T07:14:06.265Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "bc1d49a9a248cc932bdf06e6505316d54300adac",
+        "subject": "fix(deps): update livery to v0.25.0 (#706)",
+        "at": "2026-11-24T07:03:49Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "61c81e5d7a9972417aa02f7afeaa2106b3f82570",
         "subject": "fix(deps): update dependency ee.schimke.composeai:rc-players-bom to v3.12.1 (#701)",
@@ -474,14 +482,6 @@
         "sha": "62bca0bf127c60ccefe68af494c0352321b275cb",
         "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.96.0 (#647)",
         "at": "2026-11-17T20:57:25Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "adbcafe7c4dcd8cb5f74c5e4589a339ea931e75a",
-        "subject": "fix(deps): update livery to v0.20.0 (#648)",
-        "at": "2026-11-17T20:56:53Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
