@@ -188,6 +188,11 @@
                     "group": null
                 },
                 {
+                    "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.HomeChooseDriveProcessPreview_Home___choose_drive__to_process",
+                    "componentId": null,
+                    "group": null
+                },
+                {
                     "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.HomeConnectedControlsPreview_Home___headphones_and_controls",
                     "componentId": null,
                     "group": null
@@ -224,6 +229,16 @@
                 },
                 {
                     "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.HomeReadyToCopyPreview_Home___ready_to_copy",
+                    "componentId": null,
+                    "group": null
+                },
+                {
+                    "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.HomeSetupDownloadPreview_Home___set_up__to_download",
+                    "componentId": null,
+                    "group": null
+                },
+                {
+                    "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.HomeSetupProcessPreview_Home___set_up__to_process",
                     "componentId": null,
                     "group": null
                 },

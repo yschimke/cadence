@@ -1,11 +1,27 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-24T07:14:06.265Z",
+  "generatedAt": "2026-11-24T08:33:45.994Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "e749ce270b4b255952595152e63d72832d491f42",
+        "subject": "feat: press Eject on the system's drive notification for Eject USB (#707)",
+        "at": "2026-11-24T08:23:53Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "d20cdf620dd72b78d48d6448532e432761194738",
+        "subject": "fix: offer Download/Process on Home before the headphone drive is chosen (#705)",
+        "at": "2026-11-24T07:09:12Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "bc1d49a9a248cc932bdf06e6505316d54300adac",
         "subject": "fix(deps): update livery to v0.25.0 (#706)",
@@ -466,22 +482,6 @@
         "sha": "9a8136117a41e3e72dc4bae7f2cc5a37769a8381",
         "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.98.0 (#650)",
         "at": "2026-11-18T04:14:58Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "8c5a81baf969d3c0da09f7bcb9c0ead02c9cf4bc",
-        "subject": "chore(deps): update anthropics/claude-code-action action to v1.0.280 (#649)",
-        "at": "2026-11-18T04:14:50Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "62bca0bf127c60ccefe68af494c0352321b275cb",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.96.0 (#647)",
-        "at": "2026-11-17T20:57:25Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
