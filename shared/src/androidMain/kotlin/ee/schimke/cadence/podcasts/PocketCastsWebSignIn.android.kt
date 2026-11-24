@@ -1,3 +1,5 @@
+@file:OptIn(androidx.compose.material3.ExperimentalMaterial3ExpressiveApi::class)
+
 package ee.schimke.cadence.podcasts
 
 import android.annotation.SuppressLint
@@ -136,7 +138,10 @@ actual fun PocketCastsWebSignIn(
       modifier = Modifier.fillMaxSize(),
       onRelease = { it.destroy() },
     )
-    if (loading) LinearProgressIndicator(Modifier.fillMaxWidth().align(Alignment.TopCenter))
+    if (loading)
+      androidx.compose.material3.LinearWavyProgressIndicator(
+        Modifier.fillMaxWidth().align(Alignment.TopCenter),
+      )
   }
   LaunchedEffect(Unit) {
     var signedInAt = 0L
