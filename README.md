@@ -66,6 +66,7 @@ Auto-generated from `main`. Browse inline or compare against PR branches.
 | `DevicesScreenEmptyPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/DevicesScreenEmptyPreview_Devices_empty-af5a9e1c.png" width="150" /> |
 | `DevicesScreenLoadedPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/DevicesScreenLoadedPreview_Devices_loaded-cfb106a7.png" width="150" /> |
 | `DevicesScreenLoadingPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/DevicesScreenLoadingPreview_Devices_loading-8e171a67.png" width="150" /> |
+| `HomeChooseDriveProcessPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HomeChooseDriveProcessPreview_Home_choose_drive_to_process-03be1471.png" width="150" /> |
 | `HomeConnectedControlsPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HomeConnectedControlsPreview_Home_headphones_and_controls-d527acc7.png" width="150" /> |
 | `HomeDownloadFailedPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HomeDownloadFailedPreview_Home_download_failed-c8141de9.png" width="150" /> |
 | `HomeDownloadingPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HomeDownloadingPreview_Home_downloading-1b5958c7.png" width="150" /> |
@@ -74,6 +75,8 @@ Auto-generated from `main`. Browse inline or compare against PR branches.
 | `HomeHeadphonesPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HomeHeadphonesPreview_Home_headphones_connected-71a28d46.png" width="150" /> |
 | `HomeLibraryPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HomeLibraryPreview_Home_library-7701225c.png" width="150" /> |
 | `HomeReadyToCopyPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HomeReadyToCopyPreview_Home_ready_to_copy-3a801e9d.png" width="150" /> |
+| `HomeSetupDownloadPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HomeSetupDownloadPreview_Home_set_up_to_download-6ff1ff1a.png" width="150" /> |
+| `HomeSetupProcessPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HomeSetupProcessPreview_Home_set_up_to_process-06153b3f.png" width="150" /> |
 | `HomeUpToDatePreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/HomeUpToDatePreview_Home_up_to_date-2cbd5a11.png" width="150" /> |
 | `ManageEmptyPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/ManageEmptyPreview_Manage_empty-55c57410.png" width="150" /> |
 | `ManagePopulatedPreview` | <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/main/renders/composeApp/ManagePopulatedPreview_Manage_populated-41ab32cd.png" width="150" /> |
