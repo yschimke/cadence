@@ -5,12 +5,11 @@ import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.SingleIn
-import dev.zacsweers.metro.binding
 import okio.FileSystem
 import okio.Path
 import okio.Path.Companion.toOkioPath
 
-@ContributesBinding(AppScope::class, binding = binding<StagingArea>())
+@ContributesBinding(AppScope::class)
 @SingleIn(AppScope::class)
 @Inject
 class AndroidStagingArea(

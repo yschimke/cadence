@@ -110,8 +110,12 @@ actual fun rememberPodcastWork(controller: PodcastController): PodcastWorkUi {
   )
 }
 
-class PodcastPreparationWorker(context: Context, params: WorkerParameters) :
-  CoroutineWorker(context, params) {
+@dev.zacsweers.metro.AssistedInject
+class PodcastPreparationWorker(
+  @dev.zacsweers.metro.Assisted context: Context,
+  @dev.zacsweers.metro.Assisted params: WorkerParameters,
+  private val podcastPlatform: AndroidPodcastPlatform,
+) : CoroutineWorker(context, params) {
   override suspend fun doWork(): Result {
     val task = inputData.getString(TASK)
     val manager =
@@ -166,7 +170,7 @@ class PodcastPreparationWorker(context: Context, params: WorkerParameters) :
         ForegroundInfo(PROGRESS_NOTIFICATION, initial, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
       else ForegroundInfo(PROGRESS_NOTIFICATION, initial),
     )
-    val controller = AndroidPodcastPlatform.instance(applicationContext).controller()
+    val controller = podcastPlatform.controller()
     val ok = coroutineScope {
       val updates =
         launch(start = CoroutineStart.UNDISPATCHED) {
@@ -229,6 +233,13 @@ class PodcastPreparationWorker(context: Context, params: WorkerParameters) :
         },
       )
     return Result.failure(workDataOf(ERROR to error, TASK to task))
+  }
+
+  @dev.zacsweers.metro.AssistedFactory
+  @ee.schimke.cadence.metro.WorkerKey(PodcastPreparationWorker::class)
+  @dev.zacsweers.metro.ContributesIntoMap(dev.zacsweers.metro.AppScope::class)
+  fun interface Factory : ee.schimke.cadence.metro.AssistedWorkerFactory {
+    override fun create(context: Context, params: WorkerParameters): PodcastPreparationWorker
   }
 }
 

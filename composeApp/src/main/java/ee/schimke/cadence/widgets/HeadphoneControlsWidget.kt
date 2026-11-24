@@ -13,7 +13,6 @@ import ee.schimke.cadence.R
 import ee.schimke.cadence.bluetooth.BluetoothController
 import ee.schimke.cadence.bluetooth.ShokzPlayer
 import ee.schimke.cadence.bluetooth.WorkingMode
-import ee.schimke.cadence.metro.AppGraphProvider
 import ee.schimke.cadence.platform.Analytics
 import ee.schimke.composeai.rcwidget.launcher.RcLauncherWidgets
 import ee.schimke.livery.client.ImageResolver
@@ -43,21 +42,28 @@ import kotlinx.coroutines.withContext
  * that can't be drawn, get a `RemoteViews` layout with the same controls.
  */
 @androidx.annotation.OptIn(UnstableApi::class)
-class HeadphoneControlsWidget : LiveryLauncherWidgetProvider() {
+@dev.zacsweers.metro.ContributesIntoMap(
+  dev.zacsweers.metro.AppScope::class,
+  dev.zacsweers.metro.binding<android.content.BroadcastReceiver>(),
+)
+@dev.zacsweers.metrox.android.BroadcastReceiverKey(HeadphoneControlsWidget::class)
+@dev.zacsweers.metro.Inject
+class HeadphoneControlsWidget(
+  private val bluetoothController: BluetoothController,
+  private val widgetLivery: WidgetLivery,
+) : LiveryLauncherWidgetProvider() {
   override suspend fun plan(context: Context, slot: WidgetSlot): PlanResult =
-    livery(context).let { livery ->
-      livery.planner
-        .forAppData(
-          slot.query(
-            HeadphoneControlsTemplate.CONTRACT,
-            minor = HeadphoneControlsTemplate.CONTRACT_MINOR,
-          ),
-          HeadphoneControlsTemplate.data(latest, context.systemWidgetColors()),
-        )
-        .also(livery::drawn)
-    }
+    widgetLivery.planner
+      .forAppData(
+        slot.query(
+          HeadphoneControlsTemplate.CONTRACT,
+          minor = HeadphoneControlsTemplate.CONTRACT_MINOR,
+        ),
+        HeadphoneControlsTemplate.data(latest, context.systemWidgetColors()),
+      )
+      .also(widgetLivery::drawn)
 
-  override fun images(context: Context): ImageResolver = livery(context).images
+  override fun images(context: Context): ImageResolver = widgetLivery.images
 
   /**
    * Every state's branch stays in the document the launcher gets (the player picks the live one):
@@ -87,7 +93,6 @@ class HeadphoneControlsWidget : LiveryLauncherWidgetProvider() {
       "widget_action",
       mapOf("widget" to "headphones", "action" to tap.action),
     )
-    val controller = controller(context) ?: return
     withContext(Dispatchers.Main.immediate) {
       val player = shokzPlayer
       if (latest.showWater && player != null)
@@ -96,19 +101,19 @@ class HeadphoneControlsWidget : LiveryLauncherWidgetProvider() {
           HeadphoneWidgetAction.Play -> player.play()
           HeadphoneWidgetAction.Pause -> player.pause()
           HeadphoneWidgetAction.Next -> player.nextTrack()
-          HeadphoneWidgetAction.SwitchToMp3 -> controller.setWorkingMode(WorkingMode.Mp3)
+          HeadphoneWidgetAction.SwitchToMp3 -> bluetoothController.setWorkingMode(WorkingMode.Mp3)
           HeadphoneWidgetAction.SwitchToBluetooth ->
-            controller.setWorkingMode(WorkingMode.Bluetooth)
+            bluetoothController.setWorkingMode(WorkingMode.Bluetooth)
         }
       else
         when (action) {
-          HeadphoneWidgetAction.Previous -> controller.previous()
-          HeadphoneWidgetAction.Play -> controller.play()
-          HeadphoneWidgetAction.Pause -> controller.pause()
-          HeadphoneWidgetAction.Next -> controller.next()
-          HeadphoneWidgetAction.SwitchToMp3 -> controller.setWorkingMode(WorkingMode.Mp3)
+          HeadphoneWidgetAction.Previous -> bluetoothController.previous()
+          HeadphoneWidgetAction.Play -> bluetoothController.play()
+          HeadphoneWidgetAction.Pause -> bluetoothController.pause()
+          HeadphoneWidgetAction.Next -> bluetoothController.next()
+          HeadphoneWidgetAction.SwitchToMp3 -> bluetoothController.setWorkingMode(WorkingMode.Mp3)
           HeadphoneWidgetAction.SwitchToBluetooth ->
-            controller.setWorkingMode(WorkingMode.Bluetooth)
+            bluetoothController.setWorkingMode(WorkingMode.Bluetooth)
         }
     }
   }
@@ -150,11 +155,6 @@ class HeadphoneControlsWidget : LiveryLauncherWidgetProvider() {
 
     internal fun updateAll(context: Context) =
       LiveryLauncherWidgetProvider.updateAll(context, HeadphoneControlsWidget::class.java)
-
-    private fun controller(context: Context): BluetoothController? =
-      (context.applicationContext as? AppGraphProvider)?.appGraph?.bluetoothController
-
-    private fun livery(context: Context): WidgetLivery = WidgetLivery.get(context)
 
     /**
      * Pre-Android 16 launchers: one `RemoteViews` per size step, and the launcher shows the largest

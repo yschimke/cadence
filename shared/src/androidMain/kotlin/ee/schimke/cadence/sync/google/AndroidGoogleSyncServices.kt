@@ -5,8 +5,8 @@ import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.SingleIn
-import dev.zacsweers.metro.binding
 import ee.schimke.cadence.auth.AndroidCredentialVault
+import ee.schimke.cadence.auth.CredentialVault
 import ee.schimke.cadence.auth.VaultSecretFile
 import ee.schimke.cadence.sync.SyncRepo
 import kotlinx.coroutines.CoroutineScope
@@ -19,18 +19,20 @@ import okio.Path.Companion.toOkioPath
  * controller as one aggregate so the Metro graph can bind a single [GoogleSyncController] without
  * having to resolve the intermediate factories separately.
  */
-@ContributesBinding(AppScope::class, binding = binding<GoogleSyncController>())
+@ContributesBinding(AppScope::class)
 @SingleIn(AppScope::class)
 @Inject
 class AndroidGoogleSyncServices(
   context: Context,
   syncRepo: SyncRepo,
+  vault: CredentialVault,
   bundledOAuth: BundledAndroidOAuth,
-) : GoogleSyncController by build(context, syncRepo, bundledOAuth.config) {
+) : GoogleSyncController by build(context, syncRepo, vault, bundledOAuth.config) {
   companion object {
     private fun build(
       context: Context,
       syncRepo: SyncRepo,
+      vault: CredentialVault,
       bundled: OAuthConfig?,
     ): GoogleSyncController {
       val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
@@ -41,10 +43,10 @@ class AndroidGoogleSyncServices(
       val accountStore =
         GoogleAccountStore(
           VaultSecretFile(
-            vault = AndroidCredentialVault.instance(context),
+            vault = vault,
             slot = AndroidCredentialVault.GOOGLE_SLOT,
             legacy = context.filesDir.resolve("google-auth.json"),
-          )
+          ),
         )
       val accounts =
         GoogleAccountRepo(

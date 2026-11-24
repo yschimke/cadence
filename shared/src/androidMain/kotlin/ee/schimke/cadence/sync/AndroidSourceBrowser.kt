@@ -6,13 +6,12 @@ import androidx.documentfile.provider.DocumentFile
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Inject
-import dev.zacsweers.metro.binding
 import ee.schimke.cadence.datastore.proto.SourceKind
 import ee.schimke.cadence.datastore.proto.SyncSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-@ContributesBinding(AppScope::class, binding = binding<SourceBrowser>())
+@ContributesBinding(AppScope::class)
 @Inject
 class AndroidSourceBrowser(
   private val context: Context,

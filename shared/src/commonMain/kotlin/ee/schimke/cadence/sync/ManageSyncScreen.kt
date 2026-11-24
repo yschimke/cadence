@@ -65,13 +65,13 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.zacsweers.metrox.viewmodel.metroViewModel
 import ee.schimke.cadence.LocalPortableHost
 import ee.schimke.cadence.datastore.proto.NetworkConstraint
 import ee.schimke.cadence.datastore.proto.SourceKind
 import ee.schimke.cadence.datastore.proto.SyncProfile
 import ee.schimke.cadence.datastore.proto.SyncSource
 import ee.schimke.cadence.developer.LocalDeveloperMode
-import ee.schimke.cadence.metro.metroViewModel
 import ee.schimke.cadence.platform.LocalPlayUpdateSettings
 import ee.schimke.cadence.platform.LocalWidgetDesigns
 import ee.schimke.cadence.platform.PlayUpdateSettings

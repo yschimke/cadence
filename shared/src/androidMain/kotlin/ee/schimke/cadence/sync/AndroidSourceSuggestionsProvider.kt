@@ -7,9 +7,8 @@ import android.net.Uri
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Inject
-import dev.zacsweers.metro.binding
 
-@ContributesBinding(AppScope::class, binding = binding<SourceSuggestionsProvider>())
+@ContributesBinding(AppScope::class)
 @Inject
 class AndroidSourceSuggestionsProvider(
   private val context: Context,

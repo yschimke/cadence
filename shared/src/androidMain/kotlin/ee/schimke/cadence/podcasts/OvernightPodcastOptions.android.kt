@@ -46,8 +46,12 @@ fun scheduleOvernightPodcasts(context: Context) {
   work.enqueueUniquePeriodicWork(WORK, ExistingPeriodicWorkPolicy.KEEP, request)
 }
 
-class OvernightPodcastWorker(context: Context, params: WorkerParameters) :
-  CoroutineWorker(context, params) {
+@dev.zacsweers.metro.AssistedInject
+class OvernightPodcastWorker(
+  @dev.zacsweers.metro.Assisted context: Context,
+  @dev.zacsweers.metro.Assisted params: WorkerParameters,
+  private val podcastPlatform: AndroidPodcastPlatform,
+) : CoroutineWorker(context, params) {
   override suspend fun doWork(): Result {
     if (ZonedDateTime.now().hour !in 0..6) return Result.success()
     val manager =
@@ -80,7 +84,7 @@ class OvernightPodcastWorker(context: Context, params: WorkerParameters) :
         ForegroundInfo(9012, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
       else ForegroundInfo(9012, notification),
     )
-    val controller = AndroidPodcastPlatform.instance(applicationContext).controller()
+    val controller = podcastPlatform.controller()
     val ok = controller.run {
       if (!loaded.value) load()
       if (state.value.library.playlist != null) {
@@ -90,6 +94,13 @@ class OvernightPodcastWorker(context: Context, params: WorkerParameters) :
     }
     if (ok) notifyReady(applicationContext, controller.state.value)
     return if (ok) Result.success() else Result.retry()
+  }
+
+  @dev.zacsweers.metro.AssistedFactory
+  @ee.schimke.cadence.metro.WorkerKey(OvernightPodcastWorker::class)
+  @dev.zacsweers.metro.ContributesIntoMap(dev.zacsweers.metro.AppScope::class)
+  fun interface Factory : ee.schimke.cadence.metro.AssistedWorkerFactory {
+    override fun create(context: Context, params: WorkerParameters): OvernightPodcastWorker
   }
 }
 

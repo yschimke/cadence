@@ -6,7 +6,6 @@ import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.SingleIn
-import dev.zacsweers.metro.binding
 import ee.schimke.cadence.data.DevicesRepo
 import ee.schimke.cadence.data.toUri
 import kotlinx.coroutines.CancellationException
@@ -23,7 +22,7 @@ import kotlinx.coroutines.launch
 import okio.Path.Companion.toPath
 import okio.buffer
 
-@ContributesBinding(AppScope::class, binding = binding<SyncOrchestrator>())
+@ContributesBinding(AppScope::class)
 @SingleIn(AppScope::class)
 @Inject
 class AndroidSyncOrchestrator(

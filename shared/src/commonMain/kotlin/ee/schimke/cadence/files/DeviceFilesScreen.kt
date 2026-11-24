@@ -13,12 +13,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.zacsweers.metrox.viewmodel.assistedMetroViewModel
 import ee.schimke.cadence.filelist.FileTree
-import ee.schimke.cadence.metro.metroViewModel
 
 @Composable
 fun DeviceFilesScreen(modifier: Modifier = Modifier) {
-  val viewModel = metroViewModel<DeviceFilesViewModel>()
+  val viewModel = assistedMetroViewModel<DeviceFilesViewModel>()
 
   val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 

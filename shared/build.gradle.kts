@@ -82,6 +82,7 @@ kotlin {
       // api so the AppAuth RedirectUriReceiverActivity reference in composeApp's manifest resolves
       // during Android lint — not just at runtime.
       api(libs.appauth)
+      api(libs.metrox.android)
     }
     commonMain.dependencies {
       implementation(libs.kotlinx.coroutines.core)
@@ -102,6 +103,8 @@ kotlin {
       implementation(libs.material.icons.extended)
       implementation(libs.ktor.client.core)
       implementation(libs.coil.compose)
+      api(libs.metrox.viewmodel)
+      api(libs.metrox.viewmodel.compose)
     }
     wasmJsMain.dependencies {
       implementation(libs.coil.network.ktor3)

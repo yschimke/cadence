@@ -44,8 +44,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import dev.zacsweers.metrox.viewmodel.metroViewModel
 import ee.schimke.cadence.datastore.proto.SyncProfile
-import ee.schimke.cadence.metro.metroViewModel
 
 @Composable
 fun FileSyncScreen(modifier: Modifier = Modifier, onClose: () -> Unit, onManage: () -> Unit) {

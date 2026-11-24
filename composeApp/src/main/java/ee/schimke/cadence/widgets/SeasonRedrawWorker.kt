@@ -7,6 +7,13 @@ import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.Assisted
+import dev.zacsweers.metro.AssistedFactory
+import dev.zacsweers.metro.AssistedInject
+import dev.zacsweers.metro.ContributesIntoMap
+import ee.schimke.cadence.metro.AssistedWorkerFactory
+import ee.schimke.cadence.metro.WorkerKey
 import ee.schimke.cadence.podcasts.PodcastSyncWidget
 import ee.schimke.livery.protocol.Manifest
 import java.util.concurrent.TimeUnit
@@ -22,16 +29,27 @@ import java.util.concurrent.TimeUnit
  * from: the downloaded one, else the APK's. It needs no network, because a season's design is
  * already on the device before it starts.
  */
-class SeasonRedrawWorker(context: Context, params: WorkerParameters) :
-  CoroutineWorker(context, params) {
+@AssistedInject
+class SeasonRedrawWorker(
+  @Assisted context: Context,
+  @Assisted params: WorkerParameters,
+  private val widgetLivery: WidgetLivery,
+) : CoroutineWorker(context, params) {
   override suspend fun doWork(): Result {
     if (inputData.getBoolean(KEY_REDRAW, true)) {
       HeadphoneControlsWidget.updateAll(applicationContext)
       // The sync card's pool follows the same season.
       PodcastSyncWidget.updateAll(applicationContext)
     }
-    scheduleNext(applicationContext)
+    scheduleNext(applicationContext, widgetLivery)
     return Result.success()
+  }
+
+  @AssistedFactory
+  @WorkerKey(SeasonRedrawWorker::class)
+  @ContributesIntoMap(AppScope::class)
+  fun interface Factory : AssistedWorkerFactory {
+    override fun create(context: Context, params: WorkerParameters): SeasonRedrawWorker
   }
 
   companion object {
@@ -56,8 +74,8 @@ class SeasonRedrawWorker(context: Context, params: WorkerParameters) :
         )
     }
 
-    private suspend fun scheduleNext(context: Context) {
-      val manifest = WidgetLivery.get(context).repository.current()
+    private suspend fun scheduleNext(context: Context, livery: WidgetLivery) {
+      val manifest = livery.repository.current()
       val now = System.currentTimeMillis()
       val next = nextBoundary(manifest, now)
       val work = WorkManager.getInstance(context)

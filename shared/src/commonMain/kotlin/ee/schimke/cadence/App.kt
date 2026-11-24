@@ -34,6 +34,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import dev.zacsweers.metrox.viewmodel.metroViewModel
 import ee.schimke.cadence.bluetooth.BluetoothControlsScreen
 import ee.schimke.cadence.developer.DeveloperMode
 import ee.schimke.cadence.developer.DeveloperModeViewModel
@@ -41,7 +42,6 @@ import ee.schimke.cadence.developer.LocalDeveloperMode
 import ee.schimke.cadence.devices.DevicesScreen
 import ee.schimke.cadence.files.DeviceFilesScreen
 import ee.schimke.cadence.home.HomeScreen
-import ee.schimke.cadence.metro.metroViewModel
 import ee.schimke.cadence.platform.Analytics
 import ee.schimke.cadence.podcasts.*
 import ee.schimke.cadence.sync.FileSyncScreen

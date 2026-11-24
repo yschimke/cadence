@@ -8,9 +8,12 @@ import dev.zacsweers.metro.SingleIn
 import ee.schimke.cadence.BuildConfig
 import ee.schimke.cadence.sync.google.BundledAndroidOAuth
 import ee.schimke.cadence.sync.google.OAuthConfig
+import ee.schimke.cadence.widgets.WidgetLivery
 
 @DependencyGraph(AppScope::class)
 interface CadenceAppGraph : AndroidAppGraph {
+  val widgetLivery: WidgetLivery
+
   @Provides
   @SingleIn(AppScope::class)
   fun provideBundledOAuth(): BundledAndroidOAuth =

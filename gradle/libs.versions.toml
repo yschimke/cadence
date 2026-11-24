@@ -161,6 +161,9 @@ glance-wear-tooling-preview = { module = "androidx.glance.wear:wear-tooling-prev
 wear-compose-remote-material3 = { module = "androidx.wear.compose.remote:remote-material3", version.ref = "wearComposeRemote" }
 play-app-update = { module = "com.google.android.play:app-update", version.ref = "playAppUpdate" }
 play-services-wearable = { module = "com.google.android.gms:play-services-wearable", version.ref = "playServicesWearable" }
+metrox-viewmodel = { module = "dev.zacsweers.metro:metrox-viewmodel", version.ref = "metro" }
+metrox-viewmodel-compose = { module = "dev.zacsweers.metro:metrox-viewmodel-compose", version.ref = "metro" }
+metrox-android = { module = "dev.zacsweers.metro:metrox-android", version.ref = "metro" }
 
 [plugins]
 liveryCatalog = { id = "ee.schimke.composeai.livery.catalog", version.ref = "livery" }

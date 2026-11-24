@@ -4,12 +4,12 @@ package ee.schimke.cadence.devices
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.Inject
+import dev.zacsweers.metrox.viewmodel.ViewModelKey
 import ee.schimke.cadence.data.DevicesRepo
 import ee.schimke.cadence.datastore.proto.Device
-import ee.schimke.cadence.metro.ViewModelKey
-import ee.schimke.cadence.metro.ViewModelScope
 import ee.schimke.cadence.usb.UsbDevice
 import ee.schimke.cadence.usb.UsbManager
 import kotlin.uuid.ExperimentalUuidApi
@@ -21,7 +21,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import okio.Path
 
-@ContributesIntoMap(ViewModelScope::class)
+@ContributesIntoMap(AppScope::class)
 @ViewModelKey(DevicesViewModel::class)
 @Inject
 class DevicesViewModel(private val devicesRepo: DevicesRepo, val usbManager: UsbManager) :

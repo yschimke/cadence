@@ -99,27 +99,33 @@ class PhoneWearDataPublisher(
 }
 
 /** Receives semantic watch commands; no Bluetooth protocol is exposed through the Data Layer. */
-class PhoneWearCommandService : WearableListenerService() {
+@dev.zacsweers.metro.ContributesIntoMap(
+  dev.zacsweers.metro.AppScope::class,
+  dev.zacsweers.metro.binding<android.app.Service>(),
+)
+@dev.zacsweers.metrox.android.ServiceKey(PhoneWearCommandService::class)
+@dev.zacsweers.metro.Inject
+class PhoneWearCommandService(
+  private val bluetoothController: BluetoothController,
+) : WearableListenerService() {
   override fun onMessageReceived(event: MessageEvent) {
     if (event.path != WearCompanionProtocol.CommandPath) return
     val command = WearCompanionProtocol.decodeCommand(event.data) ?: return
-    val controller =
-      (applicationContext as ee.schimke.cadence.CadenceApplication).appGraph.bluetoothController
     commandScope.launch {
       when (command) {
-        CompanionCommand.Play -> controller.play()
-        CompanionCommand.Pause -> controller.pause()
-        CompanionCommand.PreviousTrack -> controller.previous()
-        CompanionCommand.NextTrack -> controller.next()
+        CompanionCommand.Play -> bluetoothController.play()
+        CompanionCommand.Pause -> bluetoothController.pause()
+        CompanionCommand.PreviousTrack -> bluetoothController.previous()
+        CompanionCommand.NextTrack -> bluetoothController.next()
         is CompanionCommand.SelectMode ->
           when (command.mode) {
-            WorkingMode.LocalAudio -> controller.setWorkingMode(PhoneWorkingMode.Mp3)
-            WorkingMode.Bluetooth -> controller.setWorkingMode(PhoneWorkingMode.Bluetooth)
+            WorkingMode.LocalAudio -> bluetoothController.setWorkingMode(PhoneWorkingMode.Mp3)
+            WorkingMode.Bluetooth -> bluetoothController.setWorkingMode(PhoneWorkingMode.Bluetooth)
             else -> Unit
           }
-        is CompanionCommand.SetVolume -> controller.setVolume(command.percent)
+        is CompanionCommand.SetVolume -> bluetoothController.setVolume(command.percent)
         is CompanionCommand.SelectEqualizerPreset ->
-          command.preset.toPhonePreset()?.let { controller.setEqualizer(it) }
+          command.preset.toPhonePreset()?.let { bluetoothController.setEqualizer(it) }
         // Playlist selection is not captured for OpenSwim Pro, so the bridge declines it.
         is CompanionCommand.PlayLocalAudio -> Unit
       }

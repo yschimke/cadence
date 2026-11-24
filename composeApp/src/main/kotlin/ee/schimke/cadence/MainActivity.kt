@@ -15,18 +15,22 @@ import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.binding
-import ee.schimke.cadence.metro.ActivityKey
+import dev.zacsweers.metrox.android.ActivityKey
+import dev.zacsweers.metrox.viewmodel.LocalMetroViewModelFactory
+import dev.zacsweers.metrox.viewmodel.MetroViewModelFactory
 import ee.schimke.cadence.platform.LocalPlayUpdateSettings
 import ee.schimke.cadence.platform.LocalWidgetDesigns
 import ee.schimke.cadence.platform.PlayUpdateSettings
 import ee.schimke.cadence.platform.WidgetDesigns
 import ee.schimke.cadence.widgets.CatalogRefreshWorker
+import ee.schimke.cadence.widgets.WidgetLivery
 
 @ContributesIntoMap(AppScope::class, binding<Activity>())
 @ActivityKey(MainActivity::class)
 @Inject
 class MainActivity(
-  private val viewModelFactory: ViewModelProvider.Factory,
+  private val metroViewModelFactory: MetroViewModelFactory,
+  private val widgetLivery: WidgetLivery,
 ) : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     // minSdk 34 always gets the system splash screen. core-splashscreen added nothing, and on exit
@@ -49,10 +53,13 @@ class MainActivity(
           },
         )
       val widgetDesigns = remember {
-        WidgetDesigns(refresh = { CatalogRefreshWorker.refreshNow(applicationContext) })
+        WidgetDesigns(
+          refresh = { CatalogRefreshWorker.refreshNow(applicationContext, widgetLivery) },
+        )
       }
       AndroidMaterialTheme {
         CompositionLocalProvider(
+          LocalMetroViewModelFactory provides metroViewModelFactory,
           LocalPlayUpdateSettings provides playUpdates,
           LocalWidgetDesigns provides widgetDesigns,
         ) {
@@ -63,7 +70,5 @@ class MainActivity(
   }
 
   override val defaultViewModelProviderFactory: ViewModelProvider.Factory
-    get() {
-      return viewModelFactory
-    }
+    get() = metroViewModelFactory
 }

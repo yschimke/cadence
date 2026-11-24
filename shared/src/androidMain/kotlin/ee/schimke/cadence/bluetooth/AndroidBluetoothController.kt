@@ -30,7 +30,6 @@ import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.SingleIn
-import dev.zacsweers.metro.binding
 import ee.schimke.cadence.platform.Analytics
 import ee.schimke.cadence.podcasts.AndroidPodcastPlatform
 import ee.schimke.cadence.podcasts.LocalPodcastState
@@ -69,13 +68,14 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-@ContributesBinding(AppScope::class, binding = binding<BluetoothController>())
+@ContributesBinding(AppScope::class)
 @SingleIn(AppScope::class)
 @Inject
 @OptIn(ExperimentalCoroutinesApi::class)
 class AndroidBluetoothController(
   private val applicationContext: Context,
   private val syncRepo: SyncRepo,
+  private val podcastPlatform: AndroidPodcastPlatform,
 ) : BluetoothController {
 
   private val audioManager =
@@ -87,9 +87,7 @@ class AndroidBluetoothController(
   private val mediaSessionManager: MediaSessionManager? =
     applicationContext.getSystemService(Context.MEDIA_SESSION_SERVICE) as? MediaSessionManager
 
-  private val podcastController by lazy {
-    AndroidPodcastPlatform.instance(applicationContext).controller()
-  }
+  private val podcastController by lazy { podcastPlatform.controller() }
 
   private val prefs =
     applicationContext.getSharedPreferences(HeadsetModePrefsName, Context.MODE_PRIVATE)

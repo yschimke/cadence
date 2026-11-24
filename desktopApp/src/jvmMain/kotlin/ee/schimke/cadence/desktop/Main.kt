@@ -111,7 +111,7 @@ fun main() {
           }
         }
       }
-      PortableApp(services.factory, navigation)
+      PortableApp(services.metroViewModelFactory, navigation)
     }
   }
 }

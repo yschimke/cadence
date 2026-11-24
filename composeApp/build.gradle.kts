@@ -136,6 +136,9 @@ dependencies {
   implementation(libs.composeai.preview.annotations)
   implementation(libs.androidx.activity.compose)
   implementation(libs.androidx.lifecycle.viewmodel)
+  implementation(libs.metrox.android)
+  implementation(libs.metrox.viewmodel)
+  implementation(libs.metrox.viewmodel.compose)
   // Required on the application module's classpath because the Metro
   // dependency graph (CadenceAppGraph) is generated here and aggregates
   // bindings whose types reference DataStore / okio / WorkManager / ktor.

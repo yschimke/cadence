@@ -14,12 +14,11 @@ import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.SingleIn
-import dev.zacsweers.metro.binding
 import ee.schimke.cadence.datastore.proto.NetworkConstraint
 import ee.schimke.cadence.datastore.proto.SyncProfile
 import java.util.concurrent.TimeUnit
 
-@ContributesBinding(AppScope::class, binding = binding<RefreshScheduler>())
+@ContributesBinding(AppScope::class)
 @SingleIn(AppScope::class)
 @Inject
 class WorkManagerRefreshScheduler(

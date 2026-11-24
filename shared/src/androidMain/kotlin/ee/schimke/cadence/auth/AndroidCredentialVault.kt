@@ -36,17 +36,6 @@ object AndroidCredentialVault {
 
   private const val TAG = "CredentialVault"
 
-  @Volatile private var singleton: CredentialVault? = null
-
-  fun instance(context: Context): CredentialVault =
-    singleton
-      ?: synchronized(this) {
-        singleton
-          ?: create(context.applicationContext, CredentialManagerRestoreKeyEscrow(context)).also {
-            singleton = it
-          }
-      }
-
   fun create(context: Context, escrow: RestoreKeyEscrow): CredentialVault =
     CredentialVault(
       vaultFile = File(context.filesDir, VAULT_FILE_NAME),

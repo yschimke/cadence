@@ -15,9 +15,14 @@ import androidx.media3.common.MediaItem
 import androidx.media3.common.MimeTypes
 import androidx.media3.transformer.*
 import androidx.media3.transformer.Composition
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.SingleIn
 import ee.schimke.cadence.auth.AndroidCredentialVault
+import ee.schimke.cadence.auth.CredentialManagerRestoreKeyEscrow
 import ee.schimke.cadence.auth.CredentialVault
 import ee.schimke.cadence.data.toUri
+import ee.schimke.cadence.metro.AppGraphProvider
 import ee.schimke.cadence.platform.reportNonFatal
 import java.io.File
 import kotlin.coroutines.resume
@@ -30,14 +35,22 @@ import okio.Path.Companion.toPath
 @Composable
 actual fun rememberPodcastPlatform(): PodcastPlatform {
   val context = LocalContext.current.applicationContext
-  return remember(context) { AndroidPodcastPlatform.instance(context) }
+  return remember(context) { AndroidPodcastPlatform.from(context) }
 }
 
 @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
-open class AndroidPodcastPlatform(private val context: Context) :
-  FilePodcastPlatform(File(context.filesDir, "podcasts")) {
+@SingleIn(AppScope::class)
+open class AndroidPodcastPlatform
+@Inject
+constructor(
+  private val context: Context,
+  private val vault: CredentialVault,
+) : FilePodcastPlatform(File(context.filesDir, "podcasts")) {
+  constructor(
+    context: Context,
+  ) : this(context, AndroidCredentialVault.create(context, CredentialManagerRestoreKeyEscrow(context)))
+
   private val sharedController by lazy { PodcastController(this) }
-  private val vault by lazy { AndroidCredentialVault.instance(context) }
 
   /** Whether the stored sessions couldn't be read yet ([CredentialVault.Lookup.Pending]). */
   @Volatile private var secretsPending = false
@@ -86,13 +99,10 @@ open class AndroidPodcastPlatform(private val context: Context) :
   }
 
   companion object {
-    @Volatile private var singleton: AndroidPodcastPlatform? = null
-
-    fun instance(context: Context): AndroidPodcastPlatform =
-      singleton
-        ?: synchronized(this) {
-          singleton ?: AndroidPodcastPlatform(context.applicationContext).also { singleton = it }
-        }
+    fun from(context: Context): AndroidPodcastPlatform {
+      val app = context.applicationContext
+      return (app as? AppGraphProvider)?.appGraph?.podcastPlatform ?: AndroidPodcastPlatform(app)
+    }
   }
 
   override val splitFormats = setOf("m4a")
