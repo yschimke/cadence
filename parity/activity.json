@@ -1,11 +1,27 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-24T14:49:42.976Z",
+  "generatedAt": "2026-11-24T15:20:15.761Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "15bfa20fd62cbae81c19bc616d14a2dd635c0d85",
+        "subject": "fix(deps): update livery to v0.26.0 (#718)",
+        "at": "2026-11-24T15:02:49Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "b7f62d40eb3196f1cc75f61776640d9702a1620b",
+        "subject": "chore(deps): update amannn/action-semantic-pull-request action to v6.1.4 (#717)",
+        "at": "2026-11-24T14:46:25Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "e5a698298169434caf51207c895a179043455c97",
         "subject": "fix(deps): update dependency ee.schimke.composeai:compose-preview-daemon-bom to v3.29.1 (#715)",
@@ -466,22 +482,6 @@
         "sha": "d65e32a47e31ad94178029a5f4051d2e45927dbf",
         "subject": "fix(deps): update remote-compose (#641)",
         "at": "2026-11-20T08:12:34Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "532b39db0174923bb36c63887a3874bf03a240f4",
-        "subject": "chore(deps): update plugin com.squareup.wire to v7.2.2 (#646)",
-        "at": "2026-11-20T08:12:17Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "53b3b512d9e289b1408eb69f436865d474419247",
-        "subject": "fix(deps): update androidx to v1.0.0-alpha03 (#657)",
-        "at": "2026-11-20T08:11:57Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
