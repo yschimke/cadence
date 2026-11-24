@@ -50,7 +50,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -62,6 +61,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ee.schimke.cadence.developer.LocalDeveloperMode
 import ee.schimke.cadence.metro.metroViewModel
 
@@ -69,8 +69,8 @@ import ee.schimke.cadence.metro.metroViewModel
 fun BluetoothControlsScreen(modifier: Modifier = Modifier) {
   val viewModel = metroViewModel<BluetoothControlsViewModel>()
   val requestBluetoothPermission = rememberBluetoothConnectPermissionLauncher(viewModel::refresh)
-  val state by viewModel.state.collectAsState()
-  val lastResult by viewModel.lastCommandResult.collectAsState()
+  val state by viewModel.state.collectAsStateWithLifecycle()
+  val lastResult by viewModel.lastCommandResult.collectAsStateWithLifecycle()
   val snackbarHost = remember { SnackbarHostState() }
 
   LaunchedEffect(Unit) { viewModel.refresh() }

@@ -70,7 +70,6 @@ import androidx.compose.material3.TooltipDefaults
 import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
@@ -90,6 +89,7 @@ import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ee.schimke.cadence.datastore.proto.SourceKind
 import ee.schimke.cadence.datastore.proto.SyncSource
 import ee.schimke.cadence.devices.rememberEjectUsb
@@ -168,17 +168,17 @@ fun HomeScreen(
 ) {
   val viewModel = metroViewModel<HomeViewModel>()
   val state by viewModel.collectState()
-  val suggestions by viewModel.suggestions.collectAsState()
-  val podcastState by podcasts.state.collectAsState()
-  val podcastBusy by podcasts.busy.collectAsState()
-  val podcastStatus by podcasts.status.collectAsState()
+  val suggestions by viewModel.suggestions.collectAsStateWithLifecycle()
+  val podcastState by podcasts.state.collectAsStateWithLifecycle()
+  val podcastBusy by podcasts.busy.collectAsStateWithLifecycle()
+  val podcastStatus by podcasts.status.collectAsStateWithLifecycle()
   val podcastWork =
     rememberPodcastWork(podcasts).let {
       if (podcastBusy && it.status == null) it.copy(status = podcastStatus) else it
     }
   val rawPodcastPlayer = rememberPodcastPlayer(podcasts, state.bluetooth.mediaAccessGranted)
   KeepPodcastScreenAwake(podcastBusy && !podcastWork.active)
-  val podcastsLoaded by podcasts.loaded.collectAsState()
+  val podcastsLoaded by podcasts.loaded.collectAsStateWithLifecycle()
   val snackbar = remember { SnackbarHostState() }
   val scope = rememberCoroutineScope()
   val podcastPlayer =

@@ -22,10 +22,10 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -47,7 +47,7 @@ import kotlinx.serialization.Serializable
 @Composable
 fun App(desktopNavigation: DesktopNavigation? = null) {
   val developerModel = metroViewModel<DeveloperModeViewModel>()
-  val developerEnabled by developerModel.enabled.collectAsState()
+  val developerEnabled by developerModel.enabled.collectAsStateWithLifecycle()
   val developer =
     remember(developerEnabled) { DeveloperMode(developerEnabled, developerModel::setEnabled) }
   CompositionLocalProvider(LocalDeveloperMode provides developer) { AppContent(desktopNavigation) }
@@ -75,7 +75,7 @@ private fun AppContent(desktopNavigation: DesktopNavigation?) {
     navController.navigateDesktopSection(section)
   }
   val podcasts = rememberPodcastController()
-  val podcastState by podcasts.state.collectAsState()
+  val podcastState by podcasts.state.collectAsStateWithLifecycle()
   if (podcastState.target.isNotBlank()) AutomaticallyMatchHeadphones(podcastState.target)
 
   val entry by navController.currentBackStackEntryAsState()

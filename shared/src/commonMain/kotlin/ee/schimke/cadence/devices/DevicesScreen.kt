@@ -34,7 +34,6 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
@@ -47,6 +46,7 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ee.schimke.cadence.datastore.proto.Device
 import ee.schimke.cadence.home.SwipeAction
 import ee.schimke.cadence.home.SwipeActionRow
@@ -64,8 +64,8 @@ fun DevicesScreen(
   onDeviceClick: ((Device) -> Unit)?,
 ) {
   val viewModel = metroViewModel<DevicesViewModel>()
-  val uiState by viewModel.uiState.collectAsState()
-  val connection by viewModel.usbManager.connection.collectAsState(UsbConnection())
+  val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+  val connection by viewModel.usbManager.connection.collectAsStateWithLifecycle(UsbConnection())
   val permissionCheck =
     rememberFileExplorerOpenLauncher(onGranted = { name, path -> viewModel.addDevice(path, name) })
   val openInFiles = rememberOpenInFilesApp()

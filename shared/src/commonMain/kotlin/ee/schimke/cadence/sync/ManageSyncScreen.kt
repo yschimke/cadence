@@ -48,7 +48,6 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -62,6 +61,7 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ee.schimke.cadence.LocalPortableHost
 import ee.schimke.cadence.datastore.proto.NetworkConstraint
 import ee.schimke.cadence.datastore.proto.SourceKind
@@ -85,7 +85,7 @@ fun ManageSyncScreen(
 ) {
   val viewModel = metroViewModel<FileSyncViewModel>()
   val state by viewModel.collectState()
-  val suggestions by viewModel.suggestions.collectAsState()
+  val suggestions by viewModel.suggestions.collectAsStateWithLifecycle()
   // Folders join the default profile so they keep refreshing; developer mode can add others.
   val launcher = rememberDirectorySourceLauncher(viewModel::addFolderToLibrary)
 

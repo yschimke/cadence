@@ -1,5 +1,6 @@
 package ee.schimke.cadence.podcasts
 
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ee.schimke.cadence.notifications.CadenceNotifications
 import ee.schimke.cadence.notifications.NotificationBody
 import ee.schimke.cadence.notifications.NotificationIcon
@@ -56,12 +57,12 @@ actual fun rememberPodcastWork(controller: PodcastController): PodcastWorkUi {
   val context = LocalContext.current.applicationContext
   val work = remember(context) { WorkManager.getInstance(context) }
   val infos by
-    remember(work) { work.getWorkInfosForUniqueWorkFlow(WORK_NAME) }.collectAsState(emptyList())
+    remember(work) { work.getWorkInfosForUniqueWorkFlow(WORK_NAME) }.collectAsStateWithLifecycle(emptyList())
   val current = infos.firstOrNull { !it.state.isFinished } ?: infos.lastOrNull()
   val active =
     current?.state in setOf(WorkInfo.State.ENQUEUED, WorkInfo.State.RUNNING, WorkInfo.State.BLOCKED)
-  val status by controller.status.collectAsState()
-  val fraction by controller.progress.collectAsState()
+  val status by controller.status.collectAsStateWithLifecycle()
+  val fraction by controller.progress.collectAsStateWithLifecycle()
   // Notification permission is optional for the work itself. Start it even if the user declines.
   // Saveable: the permission result can arrive in a recreated activity.
   var pendingTask by rememberSaveable { mutableStateOf("download") }
