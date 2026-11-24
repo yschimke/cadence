@@ -122,12 +122,26 @@ actual fun rememberOpenInFilesApp(): ((Path) -> Boolean)? {
 
 /**
  * Android reserves programmatic USB unmounting for system apps (`MOUNT_UNMOUNT_FILESYSTEMS`), so
- * ejecting opens system Storage settings where Android's Eject action is one tap away.
+ * ejecting presses Eject on the system's drive notification ([UsbEject], which needs notification
+ * access). Without that, or without such a notification, it opens system Storage settings where
+ * Android's Eject action is one tap away.
  */
 @Composable
 actual fun rememberEjectUsb(): (() -> Boolean)? {
   val context = LocalContext.current
-  return { openStorageSettingsForEject(context) }
+  return {
+    UsbEject.requestEject(context) {
+      if (!openStorageSettingsForEject(context)) {
+        android.widget.Toast.makeText(
+            context,
+            "Open Storage in Settings to eject USB storage.",
+            android.widget.Toast.LENGTH_LONG,
+          )
+          .show()
+      }
+    }
+    true
+  }
 }
 
 fun openStorageSettingsForEject(context: android.content.Context): Boolean {
