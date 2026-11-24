@@ -1,11 +1,35 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-23T08:27:00.908Z",
+  "generatedAt": "2026-11-24T03:15:54.949Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "61c81e5d7a9972417aa02f7afeaa2106b3f82570",
+        "subject": "fix(deps): update dependency ee.schimke.composeai:rc-players-bom to v3.12.1 (#701)",
+        "at": "2026-11-24T03:02:08Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "3b5866a39ccc2662938e7820232f95304df49b0c",
+        "subject": "chore(deps): update anthropics/claude-code-action action to v1.0.289 (#703)",
+        "at": "2026-11-24T02:26:31Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "0e9cbb5dbae4d672340818a0b946d37242be8842",
+        "subject": "chore(deps): update yschimke/livery action to v0.25.0 (#702)",
+        "at": "2026-11-23T21:44:43Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "c202b9f74401bce4572fc933f931eeed93393eb6",
         "subject": "chore(main): release 0.1.38 (#697)",
@@ -458,30 +482,6 @@
         "sha": "adbcafe7c4dcd8cb5f74c5e4589a339ea931e75a",
         "subject": "fix(deps): update livery to v0.20.0 (#648)",
         "at": "2026-11-17T20:56:53Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "634e3221906bd14b85d4346e8cc97ae077100ced",
-        "subject": "chore(deps): update anthropics/claude-code-action action to v1.0.278 (#644)",
-        "at": "2026-11-17T04:31:12Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "cf9d75813de242a6835efcac25764a0259079362",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.95.2 (#645)",
-        "at": "2026-11-17T04:30:37Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "da9cc22e53c1e2ab04cf0cf6b07574a0ca6e5dee",
-        "subject": "fix(deps): update livery to v0.19.0 (#642)",
-        "at": "2026-11-16T19:58:01Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
