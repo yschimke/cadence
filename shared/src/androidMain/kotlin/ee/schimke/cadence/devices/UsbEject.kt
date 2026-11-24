@@ -56,23 +56,31 @@ object UsbEject {
       }
       .getOrNull()
 
-  /** Fires Eject on the first removable-drive notification in [active]; false if there's none. */
+  /** What [ejectActions] needs to know about one active notification. */
+  class Candidate(val channelId: String?, val tag: String?, val actions: Array<Notification.Action>?)
+
+  /** The Eject action of every removable-drive notification among [candidates]. */
+  fun ejectActions(candidates: List<Candidate>, label: String?): List<Notification.Action> =
+    candidates
+      .filter { isUsbStorageNotification(it.channelId, it.tag) }
+      .mapNotNull { findEjectAction(it.actions, label) }
+
+  /**
+   * Fires Eject on the drive notification in [active], but only when there is exactly one: with an
+   * SD card beside the headphones the notifications don't say which drive Cadence means, and
+   * ejecting the wrong one would be worse than sending the user to Storage settings. False when
+   * there's none or more than one.
+   */
   fun ejectFrom(active: Array<StatusBarNotification>): Boolean {
-    val label = systemEjectLabel()
-    for (sbn in active) {
-      val notification = sbn.notification ?: continue
-      if (!isUsbStorageNotification(notification.channelId, sbn.tag)) continue
-      val action = findEjectAction(notification.actions, label) ?: continue
-      val intent = action.actionIntent ?: continue
-      return try {
-        intent.send()
-        true
-      } catch (e: android.app.PendingIntent.CanceledException) {
-        Log.w(TAG, "Eject action was cancelled", e)
-        false
-      }
+    val candidates = active.map { Candidate(it.notification?.channelId, it.tag, it.notification?.actions) }
+    val intent = ejectActions(candidates, systemEjectLabel()).singleOrNull()?.actionIntent ?: return false
+    return try {
+      intent.send()
+      true
+    } catch (e: android.app.PendingIntent.CanceledException) {
+      Log.w(TAG, "Eject action was cancelled", e)
+      false
     }
-    return false
   }
 
   /**

@@ -51,6 +51,18 @@ class UsbEjectTest {
   }
 
   @Test
+  fun ejectsOnlyWhenExactlyOneDriveNotificationMatches() {
+    val eject = action("Eject")
+    val usb = UsbEject.Candidate("STO", "public:8,1", arrayOf(action("Explore"), eject))
+    val card = UsbEject.Candidate("STO", "public:179,64", arrayOf(action("Eject")))
+    val media = UsbEject.Candidate("media", "now-playing", arrayOf(action("Eject")))
+    assertEquals(listOf(eject), UsbEject.ejectActions(listOf(media, usb), null))
+    // An SD card beside the headphones: two drives, so neither is picked.
+    assertEquals(2, UsbEject.ejectActions(listOf(usb, card), null).size)
+    assertEquals(emptyList(), UsbEject.ejectActions(listOf(media), null))
+  }
+
+  @Test
   fun reportsNotFoundWhenNothingIsListening() {
     var notFound = 0
     UsbEject.requestEject(app) { notFound++ }
