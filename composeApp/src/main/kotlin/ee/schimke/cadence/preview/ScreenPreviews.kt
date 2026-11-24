@@ -133,6 +133,64 @@ internal fun HomeConnectedControlsPreview() {
 }
 
 @Preview(
+  name = "Home — set up, to download",
+  showBackground = true,
+  device = "spec:width=411dp,height=900dp,dpi=420",
+)
+@Composable
+internal fun HomeSetupDownloadPreview() {
+  AndroidMaterialTheme {
+    HomeContent(
+      state = PreviewFixtures.libraryState,
+      podcasts = PreviewFixtures.podcastState,
+      actions = HomeActions(),
+      canRefreshPodcasts = true,
+      podcastWork = PodcastWorkUi(supportsDownload = true),
+      modifier = themedModifier,
+    )
+  }
+}
+
+@Preview(
+  name = "Home — set up, to process",
+  showBackground = true,
+  device = "spec:width=411dp,height=900dp,dpi=420",
+)
+@Composable
+internal fun HomeSetupProcessPreview() {
+  AndroidMaterialTheme {
+    HomeContent(
+      state = PreviewFixtures.libraryState,
+      podcasts = PreviewFixtures.downloadedPodcastState,
+      actions = HomeActions(),
+      canRefreshPodcasts = true,
+      podcastWork = PodcastWorkUi(supportsDownload = true),
+      modifier = themedModifier,
+    )
+  }
+}
+
+@Preview(
+  name = "Home — choose drive, to process",
+  showBackground = true,
+  device = "spec:width=411dp,height=900dp,dpi=420",
+)
+@Composable
+internal fun HomeChooseDriveProcessPreview() {
+  AndroidMaterialTheme {
+    HomeContent(
+      state =
+        PreviewFixtures.libraryState.copy(attachedDevice = PreviewFixtures.usbDevices.first()),
+      podcasts = PreviewFixtures.downloadedPodcastState,
+      actions = HomeActions(),
+      canRefreshPodcasts = true,
+      podcastWork = PodcastWorkUi(supportsDownload = true),
+      modifier = themedModifier,
+    )
+  }
+}
+
+@Preview(
   name = "Home — downloading",
   showBackground = true,
   device = "spec:width=411dp,height=1200dp,dpi=420",
