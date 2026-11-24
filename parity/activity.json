@@ -1,11 +1,27 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-24T15:20:15.761Z",
+  "generatedAt": "2026-11-24T22:58:13.903Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "74eb401eba1f9bde94011ac577a6f6a7b9346183",
+        "subject": "chore(main): release 0.1.39 (#704)",
+        "at": "2026-11-24T22:43:14Z",
+        "author": "github-actions[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "de043325a7f77e17e621318748a3cbecd51c7128",
+        "subject": "fix: preserve cooperative cancellation in PodcastController and WearDataLayerGateway (#719)",
+        "at": "2026-11-24T18:09:33Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "15bfa20fd62cbae81c19bc616d14a2dd635c0d85",
         "subject": "fix(deps): update livery to v0.26.0 (#718)",
@@ -466,22 +482,6 @@
         "sha": "1785173b2de79ffffe9dfb5dd1016ae71910cffb",
         "subject": "fix(deps): update androidx-compose (#658)",
         "at": "2026-11-20T08:14:37Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "70d4e55d78fc54f4477336599815b5863773a0eb",
-        "subject": "chore(deps): update dependency dev.zacsweers.metro to v1.6.0 (#639)",
-        "at": "2026-11-20T08:13:05Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "d65e32a47e31ad94178029a5f4051d2e45927dbf",
-        "subject": "fix(deps): update remote-compose (#641)",
-        "at": "2026-11-20T08:12:34Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []
