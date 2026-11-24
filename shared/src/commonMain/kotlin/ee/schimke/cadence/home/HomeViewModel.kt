@@ -40,6 +40,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @ContributesIntoMap(ViewModelScope::class)
@@ -143,17 +144,18 @@ class HomeViewModel(
 
   private fun list(sourceId: String) {
     viewModelScope.launch {
-      contents.value +=
-        sourceId to (contents.value[sourceId] ?: SourceContents()).copy(loading = true)
-      contents.value +=
-        sourceId to
-          try {
-            SourceContents(items = browser.browse(sourceId))
-          } catch (e: CancellationException) {
-            throw e
-          } catch (e: Exception) {
-            SourceContents(error = "Can't read this folder. Add it again to restore access.")
-          }
+      contents.update { current ->
+        current + (sourceId to (current[sourceId] ?: SourceContents()).copy(loading = true))
+      }
+      val result =
+        try {
+          SourceContents(items = browser.browse(sourceId))
+        } catch (e: CancellationException) {
+          throw e
+        } catch (e: Exception) {
+          SourceContents(error = "Can't read this folder. Add it again to restore access.")
+        }
+      contents.update { current -> current + (sourceId to result) }
     }
   }
 

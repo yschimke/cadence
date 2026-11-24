@@ -49,7 +49,7 @@ class DeviceFilesViewModel(
       }
       .stateIn(
         viewModelScope,
-        started = SharingStarted.WhileSubscribed(),
+        started = SharingStarted.WhileSubscribed(5_000),
         initialValue = UiState.Loading(route),
       )
 

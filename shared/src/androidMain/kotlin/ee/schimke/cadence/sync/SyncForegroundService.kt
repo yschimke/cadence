@@ -95,14 +95,14 @@ class SyncForegroundService : Service() {
       contentIntent = CadenceNotifications.openApp(this),
     )
 
-  private val configure: NotificationCompat.Builder.() -> Unit = {
-    setOngoing(true)
+  private fun configureNotification(ongoing: Boolean): NotificationCompat.Builder.() -> Unit = {
+    setOngoing(ongoing)
     setCategory(NotificationCompat.CATEGORY_PROGRESS)
   }
 
   /** The first post is synchronous (startForeground), so plain; updates get the Livery body. */
   private fun buildNotification(text: String): Notification =
-    CadenceNotifications.buildPlain(this, CHANNEL_ID, body(text), configure)
+    CadenceNotifications.buildPlain(this, CHANNEL_ID, body(text), configureNotification(true))
 
   private suspend fun updateNotification(progress: SyncProgress) {
     val mgr = getSystemService<NotificationManager>() ?: return
@@ -126,7 +126,7 @@ class SyncForegroundService : Service() {
           current = progress.filesCompleted,
           error = progress.lastError != null,
         ),
-        configure,
+        configureNotification(ongoing = progress.running),
       )
     mgr.notify(NOTIFICATION_ID, notif)
   }

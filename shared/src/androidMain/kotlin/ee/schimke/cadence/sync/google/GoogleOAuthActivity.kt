@@ -28,6 +28,7 @@ internal class GoogleOAuthActivity : ComponentActivity() {
   private lateinit var authService: AuthorizationService
   private lateinit var deferred: CompletableDeferred<GoogleAccount>
   private lateinit var config: OAuthConfig
+  private var pendingPair: Pair<OAuthConfig, CompletableDeferred<GoogleAccount>>? = null
 
   private val authLauncher =
     registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -36,30 +37,37 @@ internal class GoogleOAuthActivity : ComponentActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    val pending = pendingSlot.getAndSet(null)
+    val pending = pendingSlot.get()
     if (pending == null) {
       finish()
       return
     }
+    pendingPair = pending
     config = pending.first
     deferred = pending.second
     authService = AuthorizationService(this)
-    val serviceConfig =
-      AuthorizationServiceConfiguration(
-        Uri.parse(GOOGLE_AUTH_ENDPOINT),
-        Uri.parse(GOOGLE_TOKEN_ENDPOINT),
-      )
-    val request =
-      AuthorizationRequest.Builder(
-          serviceConfig,
-          config.clientId,
-          ResponseTypeValues.CODE,
-          Uri.parse(reversedClientRedirectUri(config.clientId)),
+    if (savedInstanceState == null) {
+      val serviceConfig =
+        AuthorizationServiceConfiguration(
+          Uri.parse(GOOGLE_AUTH_ENDPOINT),
+          Uri.parse(GOOGLE_TOKEN_ENDPOINT),
         )
-        .setScopes(GOOGLE_DRIVE_APPDATA_SCOPE, GOOGLE_OPENID_EMAIL_SCOPE)
-        .setPrompt("consent")
-        .build()
-    authLauncher.launch(authService.getAuthorizationRequestIntent(request))
+      val request =
+        AuthorizationRequest.Builder(
+            serviceConfig,
+            config.clientId,
+            ResponseTypeValues.CODE,
+            Uri.parse(reversedClientRedirectUri(config.clientId)),
+          )
+          .setScopes(GOOGLE_DRIVE_APPDATA_SCOPE, GOOGLE_OPENID_EMAIL_SCOPE)
+          .setPrompt("consent")
+          .build()
+      authLauncher.launch(authService.getAuthorizationRequestIntent(request))
+    }
+  }
+
+  private fun clearPendingSlot() {
+    pendingPair?.let { pendingSlot.compareAndSet(it, null) }
   }
 
   private fun handleAuthResult(data: Intent?) {
@@ -76,6 +84,7 @@ internal class GoogleOAuthActivity : ComponentActivity() {
                     "Token exchange returned no access token (${tokenEx?.message ?: "unknown error"})",
                   )
               val email = fetchGoogleUserEmail(accessToken)
+              clearPendingSlot()
               deferred.complete(
                 GoogleAccount(
                   email = email,
@@ -86,6 +95,7 @@ internal class GoogleOAuthActivity : ComponentActivity() {
                 ),
               )
             } catch (e: Throwable) {
+              clearPendingSlot()
               deferred.completeExceptionally(e)
             } finally {
               finish()
@@ -93,10 +103,12 @@ internal class GoogleOAuthActivity : ComponentActivity() {
           }
         }
       ex != null -> {
+        clearPendingSlot()
         deferred.completeExceptionally(GoogleOAuthCancelled())
         finish()
       }
       else -> {
+        clearPendingSlot()
         deferred.completeExceptionally(IllegalStateException("No authorization result"))
         finish()
       }
@@ -104,6 +116,12 @@ internal class GoogleOAuthActivity : ComponentActivity() {
   }
 
   override fun onDestroy() {
+    if (!isChangingConfigurations) {
+      clearPendingSlot()
+      if (::deferred.isInitialized && !deferred.isCompleted) {
+        deferred.completeExceptionally(GoogleOAuthCancelled())
+      }
+    }
     if (::authService.isInitialized) authService.dispose()
     super.onDestroy()
   }

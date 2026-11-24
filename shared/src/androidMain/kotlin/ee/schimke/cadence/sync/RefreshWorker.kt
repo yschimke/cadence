@@ -5,6 +5,7 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import ee.schimke.cadence.metro.AppGraphProvider
 import ee.schimke.cadence.platform.Analytics
+import kotlinx.coroutines.CancellationException
 
 class RefreshWorker(
   context: Context,
@@ -20,6 +21,8 @@ class RefreshWorker(
       orchestrator.refresh(profileId)
       Analytics.current.event("sync_refresh", mapOf("ok" to true))
       Result.success()
+    } catch (ce: CancellationException) {
+      throw ce
     } catch (t: Throwable) {
       Analytics.current.event("sync_refresh", mapOf("ok" to false))
       // Periodic work runs again on its cadence; one-off work uses the
