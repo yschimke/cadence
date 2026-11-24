@@ -1,22 +1,31 @@
 package ee.schimke.cadence.podcasts
 
+import ee.schimke.cadence.net.SharedHttpClient
+import io.ktor.client.request.header
+import io.ktor.client.request.prepareGet
+import io.ktor.client.request.prepareRequest
+import io.ktor.client.request.setBody
+import io.ktor.client.statement.HttpResponse
+import io.ktor.client.statement.bodyAsChannel
+import io.ktor.http.ContentType
+import io.ktor.http.HttpHeaders
+import io.ktor.http.HttpMethod
+import io.ktor.http.content.TextContent
+import io.ktor.http.contentLength
+import io.ktor.http.contentType
+import io.ktor.utils.io.readAvailable
+import java.io.ByteArrayOutputStream
 import java.io.File
-import java.net.HttpURLConnection
 import java.net.URI
 import java.nio.file.AtomicMoveNotSupportedException
 import java.nio.file.Files
 import java.nio.file.StandardCopyOption.*
-import java.util.concurrent.TimeUnit
 import javax.xml.parsers.DocumentBuilderFactory
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.RequestBody.Companion.toRequestBody
 import org.w3c.dom.Element
 
 abstract class FilePodcastPlatform(protected val root: File) : PodcastPlatform {
@@ -170,15 +179,6 @@ abstract class FilePodcastPlatform(protected val root: File) : PodcastPlatform {
       }
     }
 
-  private val patchClient by lazy {
-    OkHttpClient.Builder()
-      .connectTimeout(30, TimeUnit.SECONDS)
-      .readTimeout(60, TimeUnit.SECONDS)
-      .followRedirects(false)
-      .followSslRedirects(false)
-      .build()
-  }
-
   override suspend fun request(
     url: String,
     method: String,
@@ -186,47 +186,33 @@ abstract class FilePodcastPlatform(protected val root: File) : PodcastPlatform {
     body: String?,
   ): String =
     withContext(Dispatchers.IO) {
-      if (method == "PATCH") {
-        val uri = URI(url)
-        require(uri.scheme == "https" && uri.userInfo == null)
-        val contentType = headers["Content-Type"] ?: "application/json"
-        val req =
-          Request.Builder()
-            .url(url)
-            .apply { headers.forEach { (k, v) -> header(k, v) } }
-            .patch((body ?: "").toRequestBody(contentType.toMediaTypeOrNull()))
-            .build()
-        patchClient.newCall(req).execute().use { response ->
-          checkResponseStatus(response.code)
-          check(response.code in 200..299) { "Request failed" }
-          val text = response.body.string()
-          require(text.length <= 8_000_000)
-          return@withContext text
-        }
-      }
-      connection(url, method, headers).let { conn ->
-        try {
-          if (body != null) {
-            conn.doOutput = true
-            conn.outputStream.use { it.write(body.toByteArray()) }
-          }
-          checkResponseStatus(conn.responseCode)
-          check(conn.responseCode in 200..299) { "Request failed" }
-          conn.inputStream.bufferedReader().use { reader ->
-            val text = StringBuilder()
-            val buffer = CharArray(8192)
-            while (true) {
-              val count = reader.read(buffer)
-              if (count < 0) break
-              text.append(buffer, 0, count)
-              require(text.length <= 8_000_000)
+      val uri = URI(url)
+      require(uri.scheme == "https" && uri.userInfo == null)
+      val contentTypeHeader =
+        headers.entries.firstOrNull { it.key.equals(HttpHeaders.ContentType, ignoreCase = true) }
+      SharedHttpClient.noRedirectsClient
+        .prepareRequest(url) {
+          this.method = HttpMethod.parse(method)
+          headers.forEach { (key, value) ->
+            if (!key.equals(HttpHeaders.ContentType, ignoreCase = true)) {
+              header(key, value)
             }
-            text.toString()
           }
-        } finally {
-          conn.disconnect()
+          if (body != null) {
+            val contentType =
+              contentTypeHeader?.value?.let { ContentType.parse(it) }
+                ?: ContentType.Application.Json
+            setBody(TextContent(body, contentType))
+          }
         }
-      }
+        .execute { response ->
+          val code = response.status.value
+          checkResponseStatus(code)
+          check(code in 200..299) { "Request failed" }
+          readBoundedText(response, maxBytes = 8_000_000) {
+            throw IllegalArgumentException("Response exceeds 8 MB limit")
+          }
+        }
     }
 
   private fun checkResponseStatus(code: Int) {
@@ -250,73 +236,80 @@ abstract class FilePodcastPlatform(protected val root: File) : PodcastPlatform {
     }
   }
 
-  private fun connection(
-    url: String,
-    method: String = "GET",
-    headers: Map<String, String> = emptyMap(),
-  ): HttpURLConnection {
-    val uri = URI(url)
-    require(uri.scheme == "https" && uri.userInfo == null)
-    return (uri.toURL().openConnection() as HttpURLConnection).apply {
-      requestMethod = method
-      connectTimeout = 30_000
-      readTimeout = 60_000
-      // Never forward credentials across a redirect. Public enclosure downloads handle redirects
-      // below.
-      instanceFollowRedirects = false
-      headers.forEach { (key, value) -> setRequestProperty(key, value) }
-    }
-  }
-
   /**
-   * Opens a GET, following at most five HTTPS redirects. Optional [headers] are sent only on the
-   * initial request and stripped before any redirect so credentials can never leak to another host.
-   * The caller must disconnect the returned connection.
+   * Opens a GET via Ktor, following at most five HTTPS redirects. Optional [headers] are sent only
+   * on the initial request and stripped before any redirect so credentials can never leak to
+   * another host.
    */
-  protected fun openPublic(
+  protected suspend fun <T> openPublic(
     url: String,
     headers: Map<String, String> = emptyMap(),
-  ): HttpURLConnection {
+    block: suspend (HttpResponse) -> T,
+  ): T {
     var location = url
     repeat(6) { hop ->
-      val conn = connection(location, headers = if (hop == 0) headers else emptyMap())
-      val code = conn.responseCode
-      if (code !in listOf(301, 302, 303, 307, 308)) {
-        if (code == 200) return conn
-        conn.disconnect()
-        throw PodcastProblem("The server answered HTTP $code. Check the URL is public.", code)
-      }
-      val next = conn.getHeaderField("Location")
-      conn.disconnect()
-      location =
-        URI(location)
-          .resolve(next ?: throw PodcastProblem("Redirect without a location"))
-          .toString()
-      if (!location.startsWith("https://"))
+      val uri = URI(location)
+      require(uri.scheme == "https" && uri.userInfo == null)
+      var nextLocation: String? = null
+      var resultSet = false
+      @Suppress("UNCHECKED_CAST") var result: T = null as T
+      SharedHttpClient.noRedirectsClient
+        .prepareGet(location) {
+          if (hop == 0) {
+            headers.forEach { (key, value) -> header(key, value) }
+          }
+        }
+        .execute { response ->
+          val code = response.status.value
+          if (code in listOf(301, 302, 303, 307, 308)) {
+            val next = response.headers[HttpHeaders.Location]
+            nextLocation =
+              URI(location)
+                .resolve(next ?: throw PodcastProblem("Redirect without a location"))
+                .toString()
+          } else if (code == 200) {
+            result = block(response)
+            resultSet = true
+          } else {
+            throw PodcastProblem("The server answered HTTP $code. Check the URL is public.", code)
+          }
+        }
+      if (resultSet) return result
+      val resolved = nextLocation ?: throw PodcastProblem("Redirect without a location")
+      if (!resolved.startsWith("https://")) {
         throw PodcastProblem("The server redirected to an insecure (HTTP) address")
+      }
+      location = resolved
     }
     throw PodcastProblem("Too many redirects")
   }
 
   protected suspend fun feedText(url: String): String =
     withContext(Dispatchers.IO) {
-      val conn = openPublic(url)
-      try {
-        conn.inputStream.bufferedReader().use { reader ->
-          val text = StringBuilder()
-          val buffer = CharArray(64 * 1024)
-          while (true) {
-            val count = reader.read(buffer)
-            if (count < 0) break
-            text.append(buffer, 0, count)
-            if (text.length > MAX_FEED_CHARS) throw PodcastProblem("Feed is larger than 40 MB")
-          }
-          text.toString()
+      openPublic(url) { response ->
+        readBoundedText(response, maxBytes = MAX_FEED_CHARS) {
+          throw PodcastProblem("Feed is larger than 40 MB")
         }
-      } finally {
-        conn.disconnect()
       }
     }
+
+  private suspend fun readBoundedText(
+    response: HttpResponse,
+    maxBytes: Int,
+    onTooLarge: () -> Nothing,
+  ): String {
+    val channel = response.bodyAsChannel()
+    val out = ByteArrayOutputStream()
+    val buffer = ByteArray(64 * 1024)
+    while (true) {
+      currentCoroutineContext().ensureActive()
+      val count = channel.readAvailable(buffer, 0, buffer.size)
+      if (count < 0) break
+      if (out.size() + count > maxBytes) onTooLarge()
+      out.write(buffer, 0, count)
+    }
+    return out.toString(Charsets.UTF_8.name())
+  }
 
   protected open suspend fun download(
     episode: Episode,
@@ -412,28 +405,25 @@ abstract class FilePodcastPlatform(protected val root: File) : PodcastPlatform {
     headers: Map<String, String>,
     onProgress: (Long, Long) -> Unit,
   ) {
-    val conn = openPublic(url, headers)
-    try {
-      val total = conn.contentLengthLong
+    openPublic(url, headers) { response ->
+      val total = response.contentLength() ?: -1L
       var count = 0L
-      conn.inputStream.use { source ->
-        target.outputStream().use { output ->
-          val buffer = ByteArray(64 * 1024)
-          while (true) {
-            currentCoroutineContext().ensureActive()
-            val read = source.read(buffer)
-            if (read < 0) break
-            count += read
-            if (count > 2_000_000_000L) throw PodcastProblem("the audio is over 2 GB")
-            output.write(buffer, 0, read)
-            onProgress(count, total)
-          }
+      val channel = response.bodyAsChannel()
+      target.outputStream().use { output ->
+        val buffer = ByteArray(64 * 1024)
+        while (true) {
+          currentCoroutineContext().ensureActive()
+          val read = channel.readAvailable(buffer, 0, buffer.size)
+          if (read < 0) break
+          count += read
+          if (count > 2_000_000_000L) throw PodcastProblem("the audio is over 2 GB")
+          output.write(buffer, 0, read)
+          onProgress(count, total)
         }
       }
-      if (total >= 0 && total != count)
+      if (total >= 0 && total != count) {
         throw PodcastProblem("the download stopped early, at ${count * 100 / total}%")
-    } finally {
-      conn.disconnect()
+      }
     }
   }
 
@@ -447,36 +437,34 @@ abstract class FilePodcastPlatform(protected val root: File) : PodcastPlatform {
       destination.parentFile!!.mkdirs()
       val temp = File(destination.parentFile, destination.name + ".part")
       try {
-        val conn = openPublic(episode.audioUrl, episode.downloadHeaders)
-        try {
-          val type = conn.contentType?.substringBefore(';')?.trim()?.lowercase()
-          if (type != null && !type.isAudioDownload())
+        openPublic(episode.audioUrl, episode.downloadHeaders) { response ->
+          val type = response.contentType()?.withoutParameters()?.toString()?.lowercase()
+          if (type != null && !type.isAudioDownload()) {
             throw PodcastProblem("the server sent $type instead of audio")
-          val total = conn.contentLengthLong
+          }
+          val total = response.contentLength() ?: -1L
           var count = 0L
           onProgress(0, total)
-          conn.inputStream.use { source ->
-            temp.outputStream().use { output ->
-              val buffer = ByteArray(64 * 1024)
-              while (true) {
-                currentCoroutineContext().ensureActive()
-                val read = source.read(buffer)
-                if (read < 0) break
-                count += read
-                if (count > 2_000_000_000L) throw PodcastProblem("the audio is over 2 GB")
-                output.write(buffer, 0, read)
-                onProgress(count, total)
-              }
-              output.fd.sync()
+          val channel = response.bodyAsChannel()
+          temp.outputStream().use { output ->
+            val buffer = ByteArray(64 * 1024)
+            while (true) {
+              currentCoroutineContext().ensureActive()
+              val read = channel.readAvailable(buffer, 0, buffer.size)
+              if (read < 0) break
+              count += read
+              if (count > 2_000_000_000L) throw PodcastProblem("the audio is over 2 GB")
+              output.write(buffer, 0, read)
+              onProgress(count, total)
             }
+            output.fd.sync()
           }
           currentCoroutineContext().ensureActive()
           if (count == 0L) throw PodcastProblem("the server sent an empty file")
-          if (total >= 0 && total != count)
+          if (total >= 0 && total != count) {
             throw PodcastProblem("the download stopped early, at ${count * 100 / total}%")
+          }
           replacePodcastFile(temp, destination)
-        } finally {
-          conn.disconnect()
         }
       } finally {
         temp.delete()

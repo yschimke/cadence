@@ -1,6 +1,11 @@
 package ee.schimke.cadence.sync.google
 
 import com.sun.net.httpserver.HttpServer
+import ee.schimke.cadence.net.SharedHttpClient
+import io.ktor.client.HttpClient
+import io.ktor.client.request.forms.submitForm
+import io.ktor.client.statement.bodyAsText
+import io.ktor.http.parameters
 import java.awt.Desktop
 import java.net.InetSocketAddress
 import java.net.URI
@@ -16,10 +21,6 @@ import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeout
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.RequestBody.Companion.toRequestBody
 
 /**
  * Desktop installed-app OAuth 2.0 flow with PKCE. Pops the browser at Google's consent screen,
@@ -30,7 +31,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
  */
 class DesktopGoogleOAuthFlow(
   private val config: OAuthConfig,
-  private val http: OkHttpClient = sharedHttp,
+  private val http: HttpClient = SharedHttpClient.client,
   private val timeout: Duration = 5.minutes,
 ) : GoogleOAuthFlow {
   private val json = Json { ignoreUnknownKeys = true }
@@ -126,22 +127,26 @@ class DesktopGoogleOAuthFlow(
     }
   }
 
-  private fun exchangeCode(code: String, redirectUri: String, verifier: String): TokenResponse {
-    val body =
-      formUrlEncoded(
-        "code" to code,
-        "client_id" to config.clientId,
-        "client_secret" to config.clientSecret,
-        "redirect_uri" to redirectUri,
-        "grant_type" to "authorization_code",
-        "code_verifier" to verifier,
+  private suspend fun exchangeCode(
+    code: String,
+    redirectUri: String,
+    verifier: String,
+  ): TokenResponse {
+    val response =
+      http.submitForm(
+        url = "https://oauth2.googleapis.com/token",
+        formParameters =
+          parameters {
+            append("code", code)
+            append("client_id", config.clientId)
+            append("client_secret", config.clientSecret)
+            append("redirect_uri", redirectUri)
+            append("grant_type", "authorization_code")
+            append("code_verifier", verifier)
+          },
       )
-    val request =
-      Request.Builder()
-        .url("https://oauth2.googleapis.com/token")
-        .post(body.toRequestBody("application/x-www-form-urlencoded".toMediaType()))
-        .build()
-    val (status, text) = http.newCall(request).executeAsText()
+    val status = response.status.value
+    val text = response.bodyAsText()
     check(status == 200) { "Token exchange failed ($status): $text" }
     return json.decodeFromString(text)
   }
@@ -154,9 +159,6 @@ class DesktopGoogleOAuthFlow(
     }
     Desktop.getDesktop().browse(URI(url))
   }
-
-  private fun formUrlEncoded(vararg pairs: Pair<String, String>): String =
-    pairs.joinToString("&") { (k, v) -> "${encode(k)}=${encode(v)}" }
 
   private fun encode(value: String): String = URLEncoder.encode(value, StandardCharsets.UTF_8)
 
