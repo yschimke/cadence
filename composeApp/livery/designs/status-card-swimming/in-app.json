@@ -1,0 +1,69 @@
+{
+    "target": {
+        "surface": "in-app",
+        "rcApiLevel": 7,
+        "profiles": [
+            "widgets"
+        ],
+        "size": {
+            "minWidthDp": 280,
+            "minHeightDp": 120
+        }
+    },
+    "reads": [
+        "attention",
+        "audio_controls",
+        "battery",
+        "button_1_download",
+        "button_1_label",
+        "button_1_primary",
+        "button_2_download",
+        "button_2_label",
+        "button_2_primary",
+        "button_3_download",
+        "button_3_label",
+        "button_3_primary",
+        "change_lines",
+        "changes",
+        "changes_expanded",
+        "dark",
+        "has_button_1",
+        "has_button_2",
+        "has_button_3",
+        "has_changes",
+        "has_headline",
+        "has_headphones_count",
+        "has_phone_count",
+        "has_source",
+        "headline",
+        "headphones_count",
+        "headphones_text",
+        "phone_count",
+        "phone_text",
+        "progress",
+        "ready",
+        "refresh",
+        "source",
+        "standing",
+        "swimming",
+        "theme.background",
+        "theme.on_background",
+        "theme.on_primary",
+        "theme.primary",
+        "theme.supporting",
+        "theme.tertiary",
+        "theme.warning"
+    ],
+    "emits": [
+        "audio-controls",
+        "button_1",
+        "button_2",
+        "button_3",
+        "changes",
+        "refresh"
+    ],
+    "source": {
+        "tool": "capture",
+        "composable": "StatusCardTemplateContent"
+    }
+}

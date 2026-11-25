@@ -74,6 +74,8 @@ class WidgetLivery(
           ),
           // Notification bodies (NotificationLivery) download with every refresh too.
           LiveryNotifications.DEFAULT_CAPABILITIES,
+          // And Home's status card designs (StatusCardLivery).
+          StatusCardLivery.CAPABILITIES,
         ),
       bundled = AndroidBundled.fromAssets(context),
     )

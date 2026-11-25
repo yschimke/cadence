@@ -28,6 +28,9 @@ message Settings {
   // Advanced: shows the way into the headphones' Bluetooth audio controls on Home. Off by
   // default; turned on in Settings.
   bool headphone_controls = 10;
+  // The status card design Home draws (a design id of the cadence/status-card contract in the
+  // Livery catalog); empty draws the swimming pool.
+  string card_design = 11;
 }
 
 message Device {

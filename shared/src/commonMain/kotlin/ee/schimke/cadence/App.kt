@@ -44,9 +44,9 @@ import ee.schimke.cadence.files.DeviceFilesScreen
 import ee.schimke.cadence.home.HomeScreen
 import ee.schimke.cadence.platform.Analytics
 import ee.schimke.cadence.podcasts.*
-import ee.schimke.cadence.settings.AdvancedSettings
-import ee.schimke.cadence.settings.AdvancedSettingsViewModel
-import ee.schimke.cadence.settings.LocalAdvancedSettings
+import ee.schimke.cadence.settings.AppSettings
+import ee.schimke.cadence.settings.AppSettingsViewModel
+import ee.schimke.cadence.settings.LocalAppSettings
 import ee.schimke.cadence.settings.SettingsScreen
 import ee.schimke.cadence.sync.FileSyncScreen
 import ee.schimke.cadence.sync.ManageSyncScreen
@@ -58,15 +58,21 @@ fun App(desktopNavigation: DesktopNavigation? = null) {
   val developerEnabled by developerModel.enabled.collectAsStateWithLifecycle()
   val developer =
     remember(developerEnabled) { DeveloperMode(developerEnabled, developerModel::setEnabled) }
-  val advancedModel = metroViewModel<AdvancedSettingsViewModel>()
-  val headphoneControls by advancedModel.headphoneControls.collectAsStateWithLifecycle()
-  val advanced =
-    remember(headphoneControls) {
-      AdvancedSettings(headphoneControls, advancedModel::setHeadphoneControls)
+  val settingsModel = metroViewModel<AppSettingsViewModel>()
+  val headphoneControls by settingsModel.headphoneControls.collectAsStateWithLifecycle()
+  val cardDesign by settingsModel.cardDesign.collectAsStateWithLifecycle()
+  val settings =
+    remember(headphoneControls, cardDesign) {
+      AppSettings(
+        headphoneControls,
+        settingsModel::setHeadphoneControls,
+        cardDesign,
+        settingsModel::setCardDesign,
+      )
     }
   CompositionLocalProvider(
     LocalDeveloperMode provides developer,
-    LocalAdvancedSettings provides advanced,
+    LocalAppSettings provides settings,
   ) {
     AppContent(desktopNavigation)
   }

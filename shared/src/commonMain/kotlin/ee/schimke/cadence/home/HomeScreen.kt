@@ -129,7 +129,7 @@ import ee.schimke.cadence.podcasts.rememberPodcastPlayer
 import ee.schimke.cadence.podcasts.rememberPodcastWork
 import ee.schimke.cadence.podcasts.sourceBackend
 import ee.schimke.cadence.podcasts.title
-import ee.schimke.cadence.settings.LocalAdvancedSettings
+import ee.schimke.cadence.settings.LocalAppSettings
 import ee.schimke.cadence.sync.BrowsedItem
 import ee.schimke.cadence.sync.SourceSuggestion
 import ee.schimke.cadence.sync.formatLastRefreshed
@@ -509,7 +509,7 @@ private fun LibraryTopBar(
  */
 @Composable
 private fun headphoneControls(state: HomeViewModel.UiState): Boolean =
-  state.bluetoothSupported && LocalAdvancedSettings.current.headphoneControls
+  state.bluetoothSupported && LocalAppSettings.current.headphoneControls
 
 /** An icon button whose label also shows as a tooltip on long-press or hover. */
 @OptIn(ExperimentalMaterial3Api::class)

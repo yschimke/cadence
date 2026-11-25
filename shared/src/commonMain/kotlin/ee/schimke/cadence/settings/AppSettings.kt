@@ -17,37 +17,53 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 /**
- * Options most people leave alone, under Advanced in Settings and kept in the settings proto.
- * [headphoneControls] offers the headphones' Bluetooth audio controls on Home.
+ * The choices made in Settings, kept in the settings proto. [headphoneControls] (under Advanced)
+ * offers the headphones' Bluetooth audio controls on Home; [cardDesign] is the status card design
+ * Home draws, a design id from the Livery catalog, or empty for the swimming pool.
  */
-class AdvancedSettings(
+class AppSettings(
   val headphoneControls: Boolean,
   val setHeadphoneControls: (Boolean) -> Unit,
+  val cardDesign: String = "",
+  val setCardDesign: (String) -> Unit = {},
 )
 
-/** Everything off, as in previews; [ee.schimke.cadence.App] provides the stored choices. */
-val LocalAdvancedSettings = compositionLocalOf {
-  AdvancedSettings(headphoneControls = false, setHeadphoneControls = {})
+/** The defaults, as in previews; [ee.schimke.cadence.App] provides the stored choices. */
+val LocalAppSettings = compositionLocalOf {
+  AppSettings(headphoneControls = false, setHeadphoneControls = {})
 }
 
 @Inject
-class AdvancedSettingsRepo(private val store: SettingsStore) {
+class AppSettingsRepo(private val store: SettingsStore) {
   val headphoneControls: Flow<Boolean> =
     store.data.map { it.headphone_controls }.distinctUntilChanged()
+
+  val cardDesign: Flow<String> = store.data.map { it.card_design }.distinctUntilChanged()
 
   suspend fun setHeadphoneControls(enabled: Boolean) {
     store.updateData { it.copy(headphone_controls = enabled) }
   }
+
+  suspend fun setCardDesign(id: String) {
+    store.updateData { it.copy(card_design = id) }
+  }
 }
 
 @ContributesIntoMap(AppScope::class)
-@ViewModelKey(AdvancedSettingsViewModel::class)
+@ViewModelKey(AppSettingsViewModel::class)
 @Inject
-class AdvancedSettingsViewModel(private val repo: AdvancedSettingsRepo) : ViewModel() {
+class AppSettingsViewModel(private val repo: AppSettingsRepo) : ViewModel() {
   val headphoneControls: StateFlow<Boolean> =
     repo.headphoneControls.stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
+  val cardDesign: StateFlow<String> =
+    repo.cardDesign.stateIn(viewModelScope, SharingStarted.Eagerly, "")
+
   fun setHeadphoneControls(enabled: Boolean) {
     viewModelScope.launch { repo.setHeadphoneControls(enabled) }
+  }
+
+  fun setCardDesign(id: String) {
+    viewModelScope.launch { repo.setCardDesign(id) }
   }
 }

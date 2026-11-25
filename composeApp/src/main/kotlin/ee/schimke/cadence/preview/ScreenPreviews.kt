@@ -21,13 +21,17 @@ import ee.schimke.cadence.files.DeviceFilesViewModel
 import ee.schimke.cadence.home.HomeActions
 import ee.schimke.cadence.home.HomeContent
 import ee.schimke.cadence.home.HomeViewModel
+import ee.schimke.cadence.platform.CardDesign
+import ee.schimke.cadence.platform.CardDesigns
+import ee.schimke.cadence.platform.DEFAULT_CARD_DESIGN
+import ee.schimke.cadence.platform.LocalCardDesigns
 import ee.schimke.cadence.platform.LocalPlayUpdateSettings
 import ee.schimke.cadence.platform.PlayUpdateSettings
 import ee.schimke.cadence.podcasts.LocalPodcastState
 import ee.schimke.cadence.podcasts.PodcastPlayerUi
 import ee.schimke.cadence.podcasts.PodcastWorkUi
-import ee.schimke.cadence.settings.AdvancedSettings
-import ee.schimke.cadence.settings.LocalAdvancedSettings
+import ee.schimke.cadence.settings.AppSettings
+import ee.schimke.cadence.settings.LocalAppSettings
 import ee.schimke.cadence.settings.SettingsScreen
 import ee.schimke.cadence.sync.ManageSyncContent
 
@@ -71,7 +75,7 @@ internal fun HomeLibraryPreview() {
 internal fun HomeHeadphoneControlsPreview() {
   AndroidMaterialTheme {
     CompositionLocalProvider(
-      LocalAdvancedSettings provides AdvancedSettings(headphoneControls = true) {},
+      LocalAppSettings provides AppSettings(headphoneControls = true, setHeadphoneControls = {}),
     ) {
       HomeContent(
         state = PreviewFixtures.libraryState.copy(bluetoothSupported = true),
@@ -590,6 +594,8 @@ internal fun SettingsPreview() {
   AndroidMaterialTheme {
     CompositionLocalProvider(
       LocalPlayUpdateSettings provides PlayUpdateSettings("0.1.40", tester = false) {},
+      // The catalog built into the app has the one design so far.
+      LocalCardDesigns provides CardDesigns { listOf(CardDesign(DEFAULT_CARD_DESIGN, "Swimming")) },
     ) {
       SettingsScreen(modifier = themedModifier)
     }
@@ -605,7 +611,7 @@ internal fun SettingsPreview() {
 internal fun SettingsDeveloperPreview() {
   AndroidMaterialTheme {
     CompositionLocalProvider(
-      LocalAdvancedSettings provides AdvancedSettings(headphoneControls = true) {},
+      LocalAppSettings provides AppSettings(headphoneControls = true, setHeadphoneControls = {}),
       LocalDeveloperMode provides DeveloperMode(enabled = true) {},
       LocalPlayUpdateSettings provides PlayUpdateSettings("0.1.40", tester = true) {},
     ) {

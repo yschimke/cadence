@@ -18,11 +18,14 @@ import dev.zacsweers.metro.binding
 import dev.zacsweers.metrox.android.ActivityKey
 import dev.zacsweers.metrox.viewmodel.LocalMetroViewModelFactory
 import dev.zacsweers.metrox.viewmodel.MetroViewModelFactory
+import ee.schimke.cadence.platform.LocalCardDesigns
 import ee.schimke.cadence.platform.LocalPlayUpdateSettings
 import ee.schimke.cadence.platform.LocalWidgetDesigns
 import ee.schimke.cadence.platform.PlayUpdateSettings
 import ee.schimke.cadence.platform.WidgetDesigns
+import ee.schimke.cadence.podcasts.LocalStatusCardRenderer
 import ee.schimke.cadence.widgets.CatalogRefreshWorker
+import ee.schimke.cadence.widgets.StatusCardLivery
 import ee.schimke.cadence.widgets.WidgetLivery
 
 @ContributesIntoMap(AppScope::class, binding<Activity>())
@@ -31,6 +34,7 @@ import ee.schimke.cadence.widgets.WidgetLivery
 class MainActivity(
   private val metroViewModelFactory: MetroViewModelFactory,
   private val widgetLivery: WidgetLivery,
+  private val statusCardLivery: StatusCardLivery,
 ) : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     // minSdk 34 always gets the system splash screen. core-splashscreen added nothing, and on exit
@@ -62,6 +66,8 @@ class MainActivity(
           LocalMetroViewModelFactory provides metroViewModelFactory,
           LocalPlayUpdateSettings provides playUpdates,
           LocalWidgetDesigns provides widgetDesigns,
+          LocalCardDesigns provides statusCardLivery.designs,
+          LocalStatusCardRenderer provides statusCardLivery,
         ) {
           App()
         }
