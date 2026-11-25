@@ -117,10 +117,12 @@
       "default": false,
       "description": "Button 1 is the step's main action: a filled pill"
     },
-    "button_1_download": {
-      "type": "bool",
-      "default": false,
-      "description": "Button 1 shows a download arrow instead of its label"
+    "button_1_icon": {
+      "type": "int",
+      "min": 0,
+      "max": 7,
+      "default": 0,
+      "description": "Button 1's icon instead of its label: 0 the label; 1 sync, 2 download, 3 process, 4 eject, 5 add, 6 storage, 7 folders"
     },
     "has_button_2": {
       "type": "bool",
@@ -137,10 +139,12 @@
       "default": false,
       "description": "Button 2 is the step's main action: a filled pill"
     },
-    "button_2_download": {
-      "type": "bool",
-      "default": false,
-      "description": "Button 2 shows a download arrow instead of its label"
+    "button_2_icon": {
+      "type": "int",
+      "min": 0,
+      "max": 7,
+      "default": 0,
+      "description": "Button 2's icon instead of its label: 0 the label; 1 sync, 2 download, 3 process, 4 eject, 5 add, 6 storage, 7 folders"
     },
     "has_button_3": {
       "type": "bool",
@@ -157,10 +161,12 @@
       "default": false,
       "description": "Button 3 is the step's main action: a filled pill"
     },
-    "button_3_download": {
-      "type": "bool",
-      "default": false,
-      "description": "Button 3 shows a download arrow instead of its label"
+    "button_3_icon": {
+      "type": "int",
+      "min": 0,
+      "max": 7,
+      "default": 0,
+      "description": "Button 3's icon instead of its label: 0 the label; 1 sync, 2 download, 3 process, 4 eject, 5 add, 6 storage, 7 folders"
     },
     "swimming": {
       "type": "bool",
@@ -274,7 +280,9 @@
       "button_1_primary": true,
       "has_button_2": true,
       "button_2_label": "Eject USB",
-      "standing": true
+      "standing": true,
+      "button_1_icon": 1,
+      "button_2_icon": 4
     },
     "download": {
       "headphones_count": "3",
@@ -294,7 +302,7 @@
       "button_1_label": "Download",
       "button_1_primary": true,
       "dark": true,
-      "button_1_download": true
+      "button_1_icon": 2
     }
   }
 }

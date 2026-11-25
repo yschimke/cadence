@@ -14,6 +14,7 @@ import ee.schimke.livery.client.ContractBinder
 import ee.schimke.livery.instantiate.InstantiateResult
 import ee.schimke.livery.instantiate.TemplateInstantiator
 import ee.schimke.livery.protocol.Contract
+import ee.schimke.livery.widgets.launcher.LiveryLauncherWidgetProvider
 import java.io.File
 import kotlin.test.Test
 import kotlin.test.assertTrue
@@ -105,5 +106,53 @@ class StatusCardPlatformTest {
     assertTrue(out is InstantiateResult.Ok, "$out")
     player.widget(out.bytes.toByteArray(), 360, 250, "home").assertDraws("Home's card")
     assertTrue(values.buttonFor("button_2")?.id == "download", "slot 2 is the second button")
+  }
+
+  /**
+   * The card as a launcher widget: each example at a 4×2, 4×3 and 5×3 footprint, published as a
+   * widget is, inside the launcher's budgets, with its taps as the numbered actions a launcher
+   * reports and each one back to the contract's action name.
+   */
+  @Test
+  fun everyExampleDrawsAsALauncherWidget() = runBlocking {
+    val contract = Json {
+      ignoreUnknownKeys = true
+    }
+      .decodeFromString(
+        Contract.serializer(),
+        File(catalog, "contracts/status-card.json").readText(),
+      )
+    val template =
+      File(catalog, "designs/${StatusCardTemplate.SWIMMING_DESIGN}/in-app.rc")
+        .readBytes()
+        .toByteString()
+    assertTrue(
+      template.size <= LiveryLauncherWidgetProvider.DEFAULT_TEMPLATE_MAX_BYTES,
+      "the template is ${template.size} bytes",
+    )
+    for ((name, example) in contract.examples) {
+      for ((width, height) in listOf(312 to 152, 312 to 220, 420 to 260)) {
+        val bindings = (ContractBinder.bind(contract, example) as BindResult.Ok).bindings
+        val out = TemplateInstantiator { _, _, _ ->
+          null
+        }
+          .instantiate(
+            template,
+            bindings,
+            width,
+            height,
+            maxBytes = HeadphoneControlsWidget.DOCUMENT_MAX_BYTES,
+            numericActions = true,
+          )
+        assertTrue(out is InstantiateResult.Ok, "'$name' at ${width}x$height: $out")
+        assertTrue(
+          out.actions.values.all { it in contract.actions },
+          "'$name' taps ${out.actions.values}",
+        )
+        player
+          .widget(out.bytes.toByteArray(), width, height, "launcher-$name-${width}x$height")
+          .assertDraws("'$name' as a ${width}x$height launcher widget")
+      }
+    }
   }
 }

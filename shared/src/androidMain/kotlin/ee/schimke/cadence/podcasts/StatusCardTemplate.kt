@@ -3,12 +3,11 @@ package ee.schimke.cadence.podcasts
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BatteryFull
 import androidx.compose.material.icons.filled.Cloud
-import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.Headphones
 import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.Sync
+import androidx.compose.material.icons.filled.PhoneAndroid
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
@@ -46,6 +45,7 @@ import ee.schimke.composeai.rccreation.compose.shapes.RemoteRoundedCornerShape
 import ee.schimke.composeai.rccreation.compose.state.RemoteBoolean
 import ee.schimke.composeai.rccreation.compose.state.RemoteColor
 import ee.schimke.composeai.rccreation.compose.state.RemoteFloat
+import ee.schimke.composeai.rccreation.compose.state.RemoteInt
 import ee.schimke.composeai.rccreation.compose.state.RemoteState
 import ee.schimke.composeai.rccreation.compose.state.RemoteString
 import ee.schimke.composeai.rccreation.compose.state.rdp
@@ -115,8 +115,11 @@ object StatusCardTemplate {
 
   fun buttonPrimary(slot: Int) = "button_${slot}_primary"
 
-  /** The slot shows a download arrow instead of its label (its label is what is read out). */
-  fun buttonDownload(slot: Int) = "button_${slot}_download"
+  /**
+   * The slot's icon, drawn instead of its label (which is what is read out): 0 shows the label,
+   * otherwise one more than its index in [StatusButtonIcons].
+   */
+  fun buttonIcon(slot: Int) = "button_${slot}_icon"
 
   /** The action a button slot's tap fires; Home maps it back to the button in that slot. */
   fun buttonAction(slot: Int) = "button_$slot"
@@ -185,7 +188,10 @@ data class StatusCardValues(
         put(t.hasButton(slot), button != null)
         put(t.buttonLabel(slot), button?.label.orEmpty())
         put(t.buttonPrimary(slot), button?.primary == true)
-        put(t.buttonDownload(slot), button?.id == "download")
+        put(
+          t.buttonIcon(slot),
+          button?.let { b -> StatusButtonIcons.indexOfFirst { b.id in it.first } + 1 } ?: 0,
+        )
       }
       put(t.SWIMMING, pool.swimming)
       put(t.STANDING, pool.standing)
@@ -299,7 +305,7 @@ fun StatusCardTemplateContent(onAction: @Composable (String) -> RemoteAction?) {
             palette.onBackground,
           )
           MetricLine(
-            Icons.Default.Sync,
+            Icons.Default.PhoneAndroid,
             flag(t.READY).select(palette.tertiary, palette.warning),
             t.HAS_PHONE_COUNT,
             t.PHONE_COUNT,
@@ -349,7 +355,7 @@ fun StatusCardTemplateContent(onAction: @Composable (String) -> RemoteAction?) {
                 SlotButton(
                   text(t.buttonLabel(slot)),
                   flag(t.buttonPrimary(slot)),
-                  flag(t.buttonDownload(slot)),
+                  RemoteInt.createNamedRemoteInt(t.buttonIcon(slot), 0, user),
                   palette,
                   onAction(t.buttonAction(slot)),
                 )
@@ -508,8 +514,7 @@ private val BranchIcons =
     Icons.Default.ExpandMore,
     Icons.Default.Refresh,
     Icons.Default.Headphones,
-    Icons.Filled.Download,
-  )
+  ) + StatusButtonIcons.map { it.second }
 
 /** Width (and height) of each icon button: the 48dp minimum touch target. */
 private const val IconButtonDp = 48
@@ -538,7 +543,7 @@ private fun IconButton(icon: ImageVector, label: String, color: RemoteColor, onT
 private fun SlotButton(
   label: RemoteString,
   primary: RemoteBoolean,
-  download: RemoteBoolean,
+  icon: RemoteInt,
   palette: CardPalette,
   onTap: RemoteAction?,
 ) {
@@ -558,8 +563,8 @@ private fun SlotButton(
   ) {
     val content = primary.select(palette.onPrimary, palette.primary)
     // A known action reads as its icon; the label stays as what a screen reader says.
-    RemoteStateLayout(download) { arrow ->
-      if (arrow) WidgetIcon(Icons.Filled.Download, content)
+    RemoteStateLayout(icon, *IntArray(StatusButtonIcons.size + 1) { it }) { which ->
+      if (which > 0) WidgetIcon(StatusButtonIcons[which - 1].second, content)
       else
         RemoteText(
           label,
