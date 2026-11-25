@@ -121,10 +121,12 @@ fun RemoteDrawScope.drawWater(
   w: RemoteFloat = width,
   h: RemoteFloat = height,
 ) {
-  val crestCount = clamp(crests, 1.ri, MaxCrests.ri)
+  val fixedCrests = crests.constantValueOrNull?.coerceIn(1, MaxCrests)
   // The wave paths cover the most crests the drawing can be asked for.
-  val pathCrests = crests.constantValueOrNull?.coerceIn(1, MaxCrests) ?: MaxCrests
-  val wavelength = w / crestCount.toRemoteFloat()
+  val pathCrests = fixedCrests ?: MaxCrests
+  val wavelength =
+    if (fixedCrests != null) w / fixedCrests.toFloat()
+    else w / clamp(crests, 1.ri, MaxCrests.ri).toRemoteFloat()
   clipRect(0f.rf, 0f.rf, w, h) {
     drawRect(fill(colors.air), offset(0f, 0f), RemoteSize(w, h))
     // Sun glints dancing just above the surface.
@@ -132,7 +134,7 @@ fun RemoteDrawScope.drawWater(
       val twinkle = sin(clock * glint.speed + glint.phase)
       drawCircle(
         fill(colors.foam.copy(alpha = 0.85f)),
-        h * bubbleScale * 0.035f * clampZero(twinkle),
+        h * (bubbleScale * 0.035f) * clampZero(twinkle),
         RemoteOffset(w * glint.x, h * (level - bubbleScale * 0.16f)),
       )
     }
@@ -183,14 +185,14 @@ private fun RemoteDrawScope.drawBubble(
   // 0 at the bottom, 1 at the surface, then it pops and starts again.
   val rise = (clock / bubble.period + bubble.phase) % 1f
   val bottom = 1.08f
-  val y = h * bottom - h * (level * -1f + (bottom - 0.04f)) * rise
+  val y = h * bottom - h * (bottom.rf - level - 0.04f) * rise
   val x = w * bubble.x + sin(clock * (TwoPi / 3f) + index * 1.3f) * h * 0.045f
-  val radius = h * scale * bubble.radius * (rise * 0.5f + 0.6f)
+  val radius = h * (scale * bubble.radius) * (rise * 0.5f + 0.6f)
   drawCircle(
     RemotePaint {
       color = foam.copy(alpha = 0.75f).rc
       style = StrokeStyle
-      strokeWidth = h * scale * 0.014f
+      strokeWidth = h * (scale * 0.014f)
     },
     radius,
     RemoteOffset(x, y),
