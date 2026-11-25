@@ -6,10 +6,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.produceState
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.remote.player.view.RemoteComposePlayer
 import androidx.compose.ui.unit.dp
 import ee.schimke.cadence.widgets.WidgetColors
 import ee.schimke.composeai.rcwidget.creation.androidx.RcWidgetCaptureSize
@@ -69,8 +72,12 @@ actual fun PodcastSyncHomeCard(
   val colors = WidgetColors.from(MaterialTheme.colorScheme)
   val height = statusCardHeight(source, extras, headline)
   val currentOnAction by rememberUpdatedState(onAction)
-  // Each change recaptures the document, so the swimmer moves in whole percents.
-  val swum = progress?.let { (it.coerceIn(0f, 1f) * 100).toInt() / 100f }
+  // The pool is named values in the document: a change is written into the playing card, not
+  // captured again, so the swimmer keeps pace with the task.
+  val pool = StatusCardPool.values(showSwimming, ready, working, progress)
+  val currentPool by rememberUpdatedState(pool)
+  val player = remember { PlayerRef() }
+  SideEffect { player.current?.write(pool) }
   BoxWithConstraints(Modifier.fillMaxWidth().height(height.dp)) {
     val width = maxWidth.value.toInt().coerceAtLeast(1)
     val capture by
@@ -82,14 +89,11 @@ actual fun PodcastSyncHomeCard(
         available,
         battery,
         ready,
-        showSwimming,
         headline,
         source,
         attention,
         extras,
         colors,
-        working,
-        swum,
       ) {
         value =
           try {
@@ -109,7 +113,8 @@ actual fun PodcastSyncHomeCard(
                 extras = extras,
                 fixedScale = 1f,
                 working = working,
-                progress = swum,
+                progress = progress,
+                namedPool = true,
               )
             }
           } catch (cancelled: CancellationException) {
@@ -121,11 +126,26 @@ actual fun PodcastSyncHomeCard(
     val document = capture
     if (document == null)
       PodcastSyncHomeFallback(
-    copied, available, battery, headline, source, extras, working, progress, onAction)
+        copied,
+        available,
+        battery,
+        headline,
+        source,
+        extras,
+        working,
+        progress,
+        onAction,
+      )
     else
       RcAdaptiveRemoteDocumentPlayer(
         document.bytes,
         Modifier.fillMaxWidth().height(height.dp),
+        // Each new document gets a new player: hold on to it and give it the pool as it is now,
+        // which may have moved on since the capture.
+        seed = { playing ->
+          player.current = playing
+          playing.write(currentPool)
+        },
         // The player is an Android View; screen readers need a name for it as well.
         contentDescription = headline ?: "Sync status",
         onNamedAction = { name, metadata ->
@@ -138,4 +158,17 @@ actual fun PodcastSyncHomeCard(
         },
       )
   }
+}
+
+/** The card's playing document, once there is one. */
+private class PlayerRef {
+  var current: RemoteComposePlayer? = null
+}
+
+/** Writes [pool] into the playing card's named values; booleans are named ints, 0 or 1. */
+private fun RemoteComposePlayer.write(pool: StatusCardPool) {
+  setUserLocalInt(StatusCardPool.SWIMMING, if (pool.swimming) 1 else 0)
+  setUserLocalInt(StatusCardPool.STANDING, if (pool.standing) 1 else 0)
+  setUserLocalFloat(StatusCardPool.PROGRESS, pool.progress)
+  invalidate()
 }

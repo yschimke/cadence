@@ -14,10 +14,13 @@ import ee.schimke.composeai.rccreation.compose.layout.RemoteSize
 import ee.schimke.composeai.rccreation.compose.modifier.RemoteModifier
 import ee.schimke.composeai.rccreation.compose.path.RemotePath
 import ee.schimke.composeai.rccreation.compose.state.RemoteFloat
+import ee.schimke.composeai.rccreation.compose.state.RemoteInt
 import ee.schimke.composeai.rccreation.compose.state.RemotePaint
 import ee.schimke.composeai.rccreation.compose.state.RemoteTimeVariables
+import ee.schimke.composeai.rccreation.compose.state.clamp
 import ee.schimke.composeai.rccreation.compose.state.rc
 import ee.schimke.composeai.rccreation.compose.state.rf
+import ee.schimke.composeai.rccreation.compose.state.ri
 import ee.schimke.composeai.rccreation.compose.state.sin
 import java.time.LocalTime
 
@@ -89,23 +92,41 @@ fun WaterBackground(
   sizePx: RemoteFloat? = null,
 ) {
   RemoteCanvas(modifier) {
-    drawWater(colors, level, crests, bubbles, clock, w = sizePx ?: width, h = sizePx ?: height)
+    drawWater(
+      colors,
+      level.rf,
+      crests.ri,
+      bubbles.ri,
+      clock,
+      w = sizePx ?: width,
+      h = sizePx ?: height,
+    )
   }
 }
 
-/** [WaterBackground]'s drawing, for canvases that layer more on top. */
+/**
+ * [WaterBackground]'s drawing, for canvases that layer more on top. [level], [crests], [bubbles]
+ * and [bubbleScale] may be values that change while the document plays. A constant [crests] or
+ * [bubbles] draws exactly that many; one that can change draws for up to [MaxCrests] crests and all
+ * the bubbles, hiding the ones not wanted.
+ */
 fun RemoteDrawScope.drawWater(
   colors: WaterColors,
-  level: Float = 0.38f,
-  crests: Int = 2,
-  bubbles: Int = 5,
+  level: RemoteFloat = 0.38f.rf,
+  crests: RemoteInt = 2.ri,
+  bubbles: RemoteInt = 5.ri,
   clock: RemoteFloat = SwimClock,
-  bubbleScale: Float = 1f,
+  bubbleScale: RemoteFloat = 1f.rf,
   amplitude: Float = 0.075f,
   w: RemoteFloat = width,
   h: RemoteFloat = height,
 ) {
-  val wavelength = w / crests.coerceAtLeast(1).toFloat()
+  val fixedCrests = crests.constantValueOrNull?.coerceIn(1, MaxCrests)
+  // The wave paths cover the most crests the drawing can be asked for.
+  val pathCrests = fixedCrests ?: MaxCrests
+  val wavelength =
+    if (fixedCrests != null) w / fixedCrests.toFloat()
+    else w / clamp(crests, 1.ri, MaxCrests.ri).toRemoteFloat()
   clipRect(0f.rf, 0f.rf, w, h) {
     drawRect(fill(colors.air), offset(0f, 0f), RemoteSize(w, h))
     // Sun glints dancing just above the surface.
@@ -113,19 +134,19 @@ fun RemoteDrawScope.drawWater(
       val twinkle = sin(clock * glint.speed + glint.phase)
       drawCircle(
         fill(colors.foam.copy(alpha = 0.85f)),
-        h * (0.035f * bubbleScale) * clampZero(twinkle),
-        RemoteOffset(w * glint.x, h * (level - 0.16f * bubbleScale)),
+        h * (bubbleScale * 0.035f) * clampZero(twinkle),
+        RemoteOffset(w * glint.x, h * (level - bubbleScale * 0.16f)),
       )
     }
     // Back layer drifts right and slower; front layer drifts left: the parallax reads as swell.
-    drawWave(colors.backWave, wavelength, h, level - 0.07f, amplitude * 0.8f, crests) {
+    drawWave(colors.backWave, wavelength, h, level - 0.07f, amplitude * 0.8f, pathCrests) {
       clock / 3.6f
     }
-    drawWave(colors.frontWave, wavelength, h, level, amplitude, crests, reverse = false) {
+    drawWave(colors.frontWave, wavelength, h, level, amplitude, pathCrests, reverse = false) {
       clock / 2.4f + 0.3f
     }
     // A highlight riding the front crest.
-    drawWaveLine(colors.foam.copy(alpha = 0.55f), wavelength, h, level, amplitude, crests) {
+    drawWaveLine(colors.foam.copy(alpha = 0.55f), wavelength, h, level, amplitude, pathCrests) {
       clock / 2.4f + 0.3f
     }
     drawRect(
@@ -133,33 +154,45 @@ fun RemoteDrawScope.drawWater(
       RemoteOffset(0f.rf, h * 0.78f),
       RemoteSize(w, h * 0.22f),
     )
-    Bubbles.take(bubbles.coerceIn(0, Bubbles.size)).forEachIndexed { index, bubble ->
-      drawBubble(bubble, index, w, h, level, colors.foam, clock, bubbleScale)
+    val fixed = bubbles.constantValueOrNull
+    if (fixed != null) {
+      Bubbles.take(fixed.coerceIn(0, Bubbles.size)).forEachIndexed { index, bubble ->
+        drawBubble(bubble, index, w, h, level, colors.foam, clock, bubbleScale)
+      }
+    } else {
+      // Every bubble, those past the count shrunk to nothing.
+      Bubbles.forEachIndexed { index, bubble ->
+        val shown = index.ri.isLessThan(bubbles).select(1f.rf, 0f.rf)
+        drawBubble(bubble, index, w, h, level, colors.foam, clock, bubbleScale * shown)
+      }
     }
   }
 }
+
+/** The most wave crests [drawWater] draws across its width. */
+const val MaxCrests = 8
 
 private fun RemoteDrawScope.drawBubble(
   bubble: Bubble,
   index: Int,
   w: RemoteFloat,
   h: RemoteFloat,
-  level: Float,
+  level: RemoteFloat,
   foam: Color,
   clock: RemoteFloat,
-  scale: Float,
+  scale: RemoteFloat,
 ) {
   // 0 at the bottom, 1 at the surface, then it pops and starts again.
   val rise = (clock / bubble.period + bubble.phase) % 1f
   val bottom = 1.08f
-  val y = h * bottom - h * (bottom - level - 0.04f) * rise
+  val y = h * bottom - h * (bottom.rf - level - 0.04f) * rise
   val x = w * bubble.x + sin(clock * (TwoPi / 3f) + index * 1.3f) * h * 0.045f
-  val radius = h * (bubble.radius * scale) * (rise * 0.5f + 0.6f)
+  val radius = h * (scale * bubble.radius) * (rise * 0.5f + 0.6f)
   drawCircle(
     RemotePaint {
       color = foam.copy(alpha = 0.75f).rc
       style = StrokeStyle
-      strokeWidth = h * (0.014f * scale)
+      strokeWidth = h * (scale * 0.014f)
     },
     radius,
     RemoteOffset(x, y),
@@ -179,7 +212,7 @@ private fun RemoteDrawScope.drawWave(
   color: Color,
   wavelength: RemoteFloat,
   h: RemoteFloat,
-  level: Float,
+  level: RemoteFloat,
   amplitude: Float,
   crests: Int,
   reverse: Boolean = true,
@@ -193,7 +226,7 @@ private fun RemoteDrawScope.drawWaveLine(
   color: Color,
   wavelength: RemoteFloat,
   h: RemoteFloat,
-  level: Float,
+  level: RemoteFloat,
   amplitude: Float,
   crests: Int,
   cycles: () -> RemoteFloat,
@@ -215,7 +248,7 @@ private fun RemoteDrawScope.drawWaveLine(
 private fun RemoteDrawScope.slideWave(
   wavelength: RemoteFloat,
   h: RemoteFloat,
-  level: Float,
+  level: RemoteFloat,
   reverse: Boolean,
   cycles: RemoteFloat,
   draw: RemoteDrawScope.() -> Unit,

@@ -22,6 +22,7 @@ import androidx.compose.remote.creation.compose.modifier.clip
 import androidx.compose.remote.creation.compose.modifier.fillMaxSize
 import androidx.compose.remote.creation.compose.shapes.RemoteRoundedCornerShape
 import androidx.compose.remote.creation.compose.state.RemoteFloat
+import androidx.compose.remote.creation.compose.state.rb
 import androidx.compose.remote.creation.compose.state.rc
 import androidx.compose.remote.creation.compose.state.rdp
 import androidx.compose.remote.creation.compose.state.rf
@@ -188,7 +189,7 @@ fun SwimmingPoolPreview() {
             .clip(RemoteRoundedCornerShape(16.rdp))
             .background(Color(0xFF1B2024).rc),
         ) {
-          SwimmingPool(RemoteModifier.fillMaxSize(), swimming = swimming, clock = t.rf)
+          SwimmingPool(RemoteModifier.fillMaxSize(), swimming = swimming.rb, clock = t.rf)
         }
       }
     }

@@ -19,6 +19,7 @@ import androidx.compose.remote.creation.compose.modifier.fillMaxSize
 import androidx.compose.remote.creation.compose.shapes.RemoteRoundedCornerShape
 import androidx.compose.remote.creation.compose.state.rc
 import androidx.compose.remote.creation.compose.state.rdp
+import androidx.compose.remote.creation.compose.state.rf
 import androidx.compose.remote.creation.compose.state.rs
 import androidx.compose.remote.creation.compose.state.rsp
 import androidx.compose.remote.creation.compose.text.RemoteFontWeight
@@ -139,7 +140,7 @@ fun SwimmingPoolAnimatedPreview() {
         .clip(RemoteRoundedCornerShape(16.rdp))
         .background(Color(0xFF1B2024).rc),
     ) {
-      SwimmingPool(RemoteModifier.fillMaxSize(), lapSeconds = 5f)
+      SwimmingPool(RemoteModifier.fillMaxSize(), lapSeconds = 5f.rf)
     }
   }
 }
