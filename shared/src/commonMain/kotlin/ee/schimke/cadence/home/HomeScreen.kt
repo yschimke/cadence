@@ -95,6 +95,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -595,8 +596,16 @@ private fun StatusSection(
           refresh = cloud.hasSource,
           audioControls = state.bluetoothSupported,
         )
-      // The card is a Remote Compose document that names itself and its buttons.
-      Box(Modifier.fillMaxWidth().clip(RoundedCornerShape(20.dp))) {
+      // The card is a Remote Compose document that names itself and its buttons. Its player
+      // can't announce changes, so the running task's status is a polite live region here.
+      Box(
+        Modifier.fillMaxWidth().clip(RoundedCornerShape(20.dp)).semantics {
+          if (working) {
+            liveRegion = LiveRegionMode.Polite
+            stateDescription = workStatus
+          }
+        },
+      ) {
         PodcastSyncHomeCard(
           copied = summary.copied,
           available = summary.available,
