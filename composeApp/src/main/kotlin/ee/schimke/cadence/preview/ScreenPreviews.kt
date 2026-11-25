@@ -70,7 +70,11 @@ internal fun HomeLibraryPreview() {
 }
 
 /** Home with the headphones' audio controls turned on under Advanced in Settings. */
-@Preview(name = "Home — headphone controls", showBackground = true, heightDp = 900)
+@Preview(
+  name = "Home — headphone controls",
+  showBackground = true,
+  device = "spec:width=411dp,height=900dp,dpi=420",
+)
 @Composable
 internal fun HomeHeadphoneControlsPreview() {
   AndroidMaterialTheme {

@@ -66,6 +66,7 @@ class DesktopNavigationTest {
             composable<ManageSync> {}
             composable<FileSync> {}
             composable<CloudSync> {}
+            composable<Settings> {}
           }
       }
 
