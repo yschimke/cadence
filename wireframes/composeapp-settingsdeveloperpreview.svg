@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1076 1575" width="1076" height="1575" role="img" aria-label="composeApp/SettingsDeveloperPreview layout wireframe">
+  <title>composeApp/SettingsDeveloperPreview — layout wireframe (slots + tokens)</title>
+  <rect width="1076" height="1575" fill="#ffffff"/>
+  <g>
+    <rect x="0" y="0" width="1076" height="1575" fill="none" fill-opacity="0" stroke="#5B6470" stroke-width="1" stroke-opacity="0.5"/>
+  </g>
+  <g>
+    <rect x="0" y="0" width="1076" height="1575" fill="none" fill-opacity="0" stroke="#2E7D6B" stroke-width="1" stroke-opacity="0.5"/>
+  </g>
+  <g>
+    <rect x="0" y="0" width="1076" height="1575" fill="#FAF8FE" fill-opacity="1" stroke="#8E6BA8" stroke-width="1.5" stroke-opacity="1"/>
+    <text x="3" y="12" font-family="system-ui, sans-serif" font-size="9" fill="#8E6BA8">#FFFAF8FE</text>
+  </g>
+  <g>
+    <rect x="0" y="0" width="1076" height="1575" fill="none" fill-opacity="0" stroke="#B0813B" stroke-width="1" stroke-opacity="0.5"/>
+  </g>
+  <g>
+    <rect x="42" y="42" width="228" height="84" fill="none" fill-opacity="0" stroke="#3B72A8" stroke-width="1" stroke-opacity="0.5"/>
+  </g>
+  <g>
+    <rect x="42" y="179" width="188" height="63" fill="none" fill-opacity="0" stroke="#3B72A8" stroke-width="1" stroke-opacity="0.5"/>
+  </g>
+  <g>
+    <rect x="42" y="274" width="992" height="179" fill="none" fill-opacity="0" stroke="#3B72A8" stroke-width="1" stroke-opacity="0.5"/>
+  </g>
+  <g>
+    <rect x="42" y="274" width="813" height="179" fill="none" fill-opacity="0" stroke="#A85B6B" stroke-width="1" stroke-opacity="0.5"/>
+  </g>
+  <g>
+    <rect x="42" y="274" width="329" height="53" fill="none" fill-opacity="0" stroke="#4F8A4A" stroke-width="1" stroke-opacity="0.5"/>
+  </g>
+  <g>
+    <rect x="42" y="327" width="813" height="126" fill="none" fill-opacity="0" stroke="#4F8A4A" stroke-width="1" stroke-opacity="0.5"/>
+  </g>
+  <g>
+    <path d="M939,322 H992 A42,42 0 0 1 1034,364 V364 A42,42 0 0 1 992,406 H939 A42,42 0 0 1 897,364 V364 A42,42 0 0 1 939,322 Z" fill="#4C5E8B" fill-opacity="1" stroke="#000000" stroke-width="1.5" stroke-opacity="1"/>
+    <text x="900" y="334" font-family="system-ui, sans-serif" font-size="9" fill="#000000">#FF4C5E8B</text>
+  </g>
+  <g>
+    <path d="M991.5,333 H991.5 A31.5,31.5 0 0 1 1023,364.5 V364.5 A31.5,31.5 0 0 1 991.5,396 H991.5 A31.5,31.5 0 0 1 960,364.5 V364.5 A31.5,31.5 0 0 1 991.5,333 Z" fill="#F9F8FF" fill-opacity="1" stroke="#4F8A4A" stroke-width="1.5" stroke-opacity="1"/>
+    <text x="963" y="345" font-family="system-ui, sans-serif" font-size="9" fill="#4F8A4A">#FFF9F8FF</text>
+  </g>
+  <g>
+    <rect x="42" y="485" width="992" height="147" fill="none" fill-opacity="0" stroke="#3B72A8" stroke-width="1" stroke-opacity="0.5"/>
+  </g>
+  <g>
+    <rect x="42" y="485" width="855" height="147" fill="none" fill-opacity="0" stroke="#A85B6B" stroke-width="1" stroke-opacity="0.5"/>
+  </g>
+  <g>
+    <rect x="42" y="485" width="343" height="63" fill="none" fill-opacity="0" stroke="#4F8A4A" stroke-width="1" stroke-opacity="0.5"/>
+  </g>
+  <g>
+    <rect x="42" y="548" width="855" height="84" fill="none" fill-opacity="0" stroke="#4F8A4A" stroke-width="1" stroke-opacity="0.5"/>
+  </g>
+  <g>
+    <path d="M939,517 H992 A42,42 0 0 1 1034,559 V559 A42,42 0 0 1 992,601 H939 A42,42 0 0 1 897,559 V559 A42,42 0 0 1 939,517 Z" fill="#4C5E8B" fill-opacity="1" stroke="#000000" stroke-width="1.5" stroke-opacity="1"/>
+    <text x="900" y="529" font-family="system-ui, sans-serif" font-size="9" fill="#000000">#FF4C5E8B</text>
+  </g>
+  <g>
+    <path d="M991.5,528 H991.5 A31.5,31.5 0 0 1 1023,559.5 V559.5 A31.5,31.5 0 0 1 991.5,591 H991.5 A31.5,31.5 0 0 1 960,559.5 V559.5 A31.5,31.5 0 0 1 991.5,528 Z" fill="#F9F8FF" fill-opacity="1" stroke="#4F8A4A" stroke-width="1.5" stroke-opacity="1"/>
+    <text x="963" y="540" font-family="system-ui, sans-serif" font-size="9" fill="#4F8A4A">#FFF9F8FF</text>
+  </g>
+  <g>
+    <rect x="42" y="664" width="992" height="126" fill="none" fill-opacity="0" stroke="#3B72A8" stroke-width="1" stroke-opacity="0.5"/>
+  </g>
+  <g>
+    <rect x="42" y="680" width="855" height="95" fill="none" fill-opacity="0" stroke="#A85B6B" stroke-width="1" stroke-opacity="0.5"/>
+  </g>
+  <g>
+    <rect x="42" y="680" width="220" height="53" fill="none" fill-opacity="0" stroke="#4F8A4A" stroke-width="1" stroke-opacity="0.5"/>
+  </g>
+  <g>
+    <rect x="42" y="733" width="812" height="42" fill="none" fill-opacity="0" stroke="#4F8A4A" stroke-width="1" stroke-opacity="0.5"/>
+  </g>
+  <g>
+    <path d="M939,685 H992 A42,42 0 0 1 1034,727 V727 A42,42 0 0 1 992,769 H939 A42,42 0 0 1 897,727 V727 A42,42 0 0 1 939,685 Z" fill="#4C5E8B" fill-opacity="1" stroke="#000000" stroke-width="1.5" stroke-opacity="1"/>
+    <text x="900" y="697" font-family="system-ui, sans-serif" font-size="9" fill="#000000">#FF4C5E8B</text>
+  </g>
+  <g>
+    <path d="M991.5,696 H991.5 A31.5,31.5 0 0 1 1023,727.5 V727.5 A31.5,31.5 0 0 1 991.5,759 H991.5 A31.5,31.5 0 0 1 960,727.5 V727.5 A31.5,31.5 0 0 1 991.5,696 Z" fill="#F9F8FF" fill-opacity="1" stroke="#4F8A4A" stroke-width="1.5" stroke-opacity="1"/>
+    <text x="963" y="708" font-family="system-ui, sans-serif" font-size="9" fill="#4F8A4A">#FFF9F8FF</text>
+  </g>
+  <g>
+    <rect x="42" y="843" width="216" height="42" fill="none" fill-opacity="0" stroke="#3B72A8" stroke-width="1" stroke-opacity="0.5"/>
+  </g>
+</svg>

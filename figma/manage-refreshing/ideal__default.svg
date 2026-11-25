@@ -24,425 +24,403 @@
 </defs>
 <g transform="translate(0, 0)">
   <g id="Root">
-    <clipPath id="clip-0"><rect x="0" y="0" width="1050" height="4987"/></clipPath>
     <g id="ReusableComposeNode">
         <rect x="0" y="0" width="1050" height="4987" fill="#FAF8FE"/>
-      <g clip-path="url(#clip-0)">
-        <clipPath id="clip-1"><rect x="0" y="0" width="1050" height="4987"/></clipPath>
-        <g id="ReusableComposeNode">
-          <g clip-path="url(#clip-1)">
-            <g id="Column">
-              <g id="Empty">
-                <text x="42" y="105.73" font-size="63" font-family="Roboto Flex" font-weight="400" fill="#30323A">Manage sources</text>
-              </g>
-              <g id="Empty">
-                <text x="42" y="180.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">Choose where your audio comes from.</text>
-              </g>
-            </g>
-            <g id="Box" filter="url(#shadow-3)">
-              <rect x="42" y="227" width="966" height="273" rx="31.5" ry="31.5" fill="#F3F3FA"/>
-              <g id="Row">
-                <g id="BoxKt" data-material-icon="folder" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/folder/v1/24px.svg">
-                  <g transform="translate(84 332) scale(2.62 2.62)">
-                    <use href="#material-icon-materialicons-folder" xlink:href="#material-icon-materialicons-folder"/>
-                  </g>
-                </g>
-                <g id="Spacer">
-                </g>
-                <g id="Column">
-                  <g id="Empty">
-                    <text x="179" y="314.99" font-size="42" font-family="Roboto Flex" font-weight="600" letter-spacing="1.31" fill="#30323A">Podbean — staged</text>
-                  </g>
-                  <g id="Empty">
-                    <text font-size="31.5" font-family="Roboto Flex" font-weight="400" letter-spacing="1.05" fill="#5D5F68"><tspan x="179" y="363" textLength="562" lengthAdjust="spacing">content://com.android.externalstorage</tspan><tspan x="179" y="405" textLength="362" lengthAdjust="spacing">.documents/tree/primary</tspan><tspan x="179" y="447" textLength="202" lengthAdjust="spacing">%3APodcasts</tspan></text>
-                  </g>
-                </g>
-                <g id="Empty">
-                  <text x="744" y="374.86" font-size="31.5" font-family="Roboto Flex" font-weight="500" letter-spacing="1.31" fill="#5D5F68">Folder</text>
-                </g>
-                <g id="Box">
-                  <g id="BoxKt" data-material-icon="close" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/close/v1/24px.svg">
-                    <g transform="translate(872 333) scale(2.62 2.62)">
-                      <use href="#material-icon-materialicons-close" xlink:href="#material-icon-materialicons-close"/>
-                    </g>
-                  </g>
-                </g>
+      <g id="ReusableComposeNode">
+        <g id="Column">
+          <g id="Empty">
+            <text x="42" y="105.73" font-size="63" font-family="Roboto Flex" font-weight="400" fill="#30323A">Manage sources</text>
+          </g>
+          <g id="Empty">
+            <text x="42" y="180.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#5D5F68">Choose where your audio comes from.</text>
+          </g>
+        </g>
+        <g id="Box" filter="url(#shadow-3)">
+          <rect x="42" y="227" width="966" height="273" rx="31.5" ry="31.5" fill="#F3F3FA"/>
+          <g id="Row">
+            <g id="BoxKt" data-material-icon="folder" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/folder/v1/24px.svg">
+              <g transform="translate(84 332) scale(2.62 2.62)">
+                <use href="#material-icon-materialicons-folder" xlink:href="#material-icon-materialicons-folder"/>
               </g>
             </g>
-            <g id="Box" filter="url(#shadow-3)">
-              <rect x="42" y="532" width="966" height="231" rx="31.5" ry="31.5" fill="#F3F3FA"/>
-              <g id="Row">
-                <g id="BoxKt" data-material-icon="folder" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/folder/v1/24px.svg">
-                  <g transform="translate(84 616) scale(2.62 2.62)">
-                    <use href="#material-icon-materialicons-folder" xlink:href="#material-icon-materialicons-folder"/>
-                  </g>
-                </g>
-                <g id="Spacer">
-                </g>
-                <g id="Column">
-                  <g id="Empty">
-                    <text x="179" y="619.99" font-size="42" font-family="Roboto Flex" font-weight="600" letter-spacing="1.31" fill="#30323A">Drive — Swim Mixes</text>
-                  </g>
-                  <g id="Empty">
-                    <text font-size="31.5" font-family="Roboto Flex" font-weight="400" letter-spacing="1.05" fill="#5D5F68"><tspan x="179" y="668" textLength="518" lengthAdjust="spacing">content://com.google.android.apps</tspan><tspan x="179" y="710" textLength="454" lengthAdjust="spacing">.docs.storage/tree/swim-mixes</tspan></text>
-                  </g>
-                </g>
-                <g id="Empty">
-                  <text x="744" y="658.86" font-size="31.5" font-family="Roboto Flex" font-weight="500" letter-spacing="1.31" fill="#5D5F68">Folder</text>
-                </g>
-                <g id="Box">
-                  <g id="BoxKt" data-material-icon="close" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/close/v1/24px.svg">
-                    <g transform="translate(872 617) scale(2.62 2.62)">
-                      <use href="#material-icon-materialicons-close" xlink:href="#material-icon-materialicons-close"/>
-                    </g>
-                  </g>
-                </g>
-              </g>
-            </g>
-            <g id="Box" filter="url(#shadow-3)">
-              <rect x="42" y="795" width="966" height="273" rx="31.5" ry="31.5" fill="#F3F3FA"/>
-              <g id="Row">
-                <g id="BoxKt" data-material-icon="folder" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/folder/v1/24px.svg">
-                  <g transform="translate(84 900) scale(2.62 2.62)">
-                    <use href="#material-icon-materialicons-folder" xlink:href="#material-icon-materialicons-folder"/>
-                  </g>
-                </g>
-                <g id="Spacer">
-                </g>
-                <g id="Column">
-                  <g id="Empty">
-                    <text x="179" y="882.99" font-size="42" font-family="Roboto Flex" font-weight="600" letter-spacing="1.31" fill="#30323A">NAS — Audiobooks</text>
-                  </g>
-                  <g id="Empty">
-                    <text x="179" y="931.86" font-size="31.5" font-family="Roboto Flex" font-weight="400" letter-spacing="1.05" fill="#5D5F68">nfs://nas.local/exports/audiobooks</text>
-                  </g>
-                  <g id="Empty">
-                    <text font-size="31.5" font-family="Roboto Flex" font-weight="400" letter-spacing="1.05" fill="#B3261E"><tspan x="179" y="973" textLength="525" lengthAdjust="spacing">NFS browsing not yet implemented;</tspan><tspan x="179" y="1015" textLength="342" lengthAdjust="spacing">saved for future mount.</tspan></text>
-                  </g>
-                </g>
-                <g id="Empty">
-                  <text x="779" y="942.86" font-size="31.5" font-family="Roboto Flex" font-weight="500" letter-spacing="1.31" fill="#5D5F68">NFS</text>
-                </g>
-                <g id="Box">
-                  <g id="BoxKt" data-material-icon="close" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/close/v1/24px.svg">
-                    <g transform="translate(872 901) scale(2.62 2.62)">
-                      <use href="#material-icon-materialicons-close" xlink:href="#material-icon-materialicons-close"/>
-                    </g>
-                  </g>
-                </g>
-              </g>
+            <g id="Spacer">
             </g>
             <g id="Column">
-              <g id="Box">
-                <rect x="43" y="1112" width="349" height="103" rx="51.5" ry="51.5" fill="none" stroke="#B0B1BC" stroke-width="2.62"/>
-                <g id="Empty">
-                  <text x="105" y="1175.92" font-size="36.75" font-family="Roboto Flex" font-weight="500" letter-spacing="0.26" fill="#5D5F68">Add podcasts</text>
-                </g>
-              </g>
-              <g id="Box">
-                <rect x="43" y="1249" width="429" height="103" rx="51.5" ry="51.5" fill="none" stroke="#B0B1BC" stroke-width="2.62"/>
-                <g id="Empty">
-                  <text x="105" y="1312.92" font-size="36.75" font-family="Roboto Flex" font-weight="500" letter-spacing="0.26" fill="#5D5F68">Add files or folders</text>
-                </g>
-              </g>
-            </g>
-            <g id="Box">
-              <rect x="42" y="1395" width="966" height="327" rx="31.5" ry="31.5" fill="#E1E2ED"/>
-              <g id="Row">
-                <g id="Column">
-                  <g id="Empty">
-                    <text x="74" y="1465.92" font-size="36.75" font-family="Roboto Flex" font-weight="600" letter-spacing="0.26" fill="#5D5F68">Don't see your storage?</text>
-                  </g>
-                  <g id="Empty">
-                    <text font-size="31.5" font-family="Roboto Flex" font-weight="400" letter-spacing="1.05" fill="#5D5F68"><tspan x="74" y="1511" textLength="484" lengthAdjust="spacing">Drive, Dropbox, Nextcloud, SMB,</tspan><tspan x="74" y="1553" textLength="470" lengthAdjust="spacing">FTP, WebDAV and more become</tspan><tspan x="74" y="1595" textLength="475" lengthAdjust="spacing">pickable once you install an app</tspan><tspan x="74" y="1637" textLength="393" lengthAdjust="spacing">that exposes them through</tspan><tspan x="74" y="1679" textLength="301" lengthAdjust="spacing">Android's file picker.</tspan></text>
-                  </g>
-                </g>
-                <g id="Spacer">
-                </g>
-                <g id="Box">
-                  <rect x="621" y="1508" width="354" height="103" rx="51.5" ry="51.5" fill="none" stroke="#B0B1BC" stroke-width="2.62"/>
-                  <g id="Empty">
-                    <text x="683" y="1571.92" font-size="36.75" font-family="Roboto Flex" font-weight="500" letter-spacing="0.26" fill="#5D5F68">Discover apps</text>
-                  </g>
-                </g>
-              </g>
-            </g>
-            <g id="Row">
-              <g id="Column">
-                <g id="Empty">
-                  <text x="42" y="1799.99" font-size="42" font-family="Roboto Flex" font-weight="600" letter-spacing="0.53" fill="#30323A">Developer options</text>
-                </g>
-                <g id="Empty">
-                  <text font-size="31.5" font-family="Roboto Flex" font-weight="400" letter-spacing="1.05" fill="#5D5F68"><tspan x="42" y="1848" textLength="803" lengthAdjust="spacing">For testing and diagnostics. Tap the version 7 times to</tspan><tspan x="42" y="1890" textLength="261" lengthAdjust="spacing">show them again.</tspan></text>
-                </g>
-              </g>
-              <g id="Box">
-                <rect x="871" y="1786" width="137" height="84" rx="42" ry="42" fill="#4C5E8B"/>
-                <g id="Box">
-                  <rect x="934" y="1797" width="63" height="63" rx="31.5" ry="31.5" fill="#F9F8FF"/>
-                </g>
-              </g>
-            </g>
-            <g id="Box">
               <g id="Empty">
-                <text x="74" y="2008.92" font-size="36.75" font-family="Roboto Flex" font-weight="500" letter-spacing="0.26" fill="#4C5E8B">Cross-device backup</text>
+                <text x="179" y="314.99" font-size="42" font-family="Roboto Flex" font-weight="600" letter-spacing="1.31" fill="#30323A">Podbean — staged</text>
               </g>
-            </g>
-            <g id="Box">
-              <rect x="43" y="2103" width="366" height="103" rx="51.5" ry="51.5" fill="none" stroke="#B0B1BC" stroke-width="2.62"/>
               <g id="Empty">
-                <text x="105" y="2166.92" font-size="36.75" font-family="Roboto Flex" font-weight="500" letter-spacing="0.26" fill="#5D5F68">Add NFS share</text>
-              </g>
-            </g>
-            <g id="Box" filter="url(#shadow-3)">
-                <rect x="42" y="2249" width="966" height="798" rx="31.5" ry="31.5" fill="#F3F3FA"/>
-              <g id="Column">
-                <g id="Empty">
-                  <text x="84" y="2336.98" font-size="42" font-family="Roboto Flex" font-weight="600" letter-spacing="0.53" fill="#30323A">Target headphones</text>
-                </g>
-                <g id="OutlinedTextField">
-                  <image href="ideal__default.figma-raster/2663.png" x="84" y="2375" width="882" height="147"/>
-                </g>
-                <g id="Row">
-                  <g id="Box">
-                    <rect x="84" y="2564" width="137" height="84" rx="42" ry="42" fill="#4C5E8B"/>
-                    <g id="Box">
-                      <rect x="147" y="2575" width="63" height="63" rx="31.5" ry="31.5" fill="#F9F8FF"/>
-                    </g>
-                  </g>
-                  <g id="Spacer">
-                  </g>
-                  <g id="Empty">
-                    <text x="253" y="2620.98" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">Auto-sync on USB attach</text>
-                  </g>
-                </g>
-                <g id="OutlinedTextField">
-                  <image href="ideal__default.figma-raster/2678.png" x="84" y="2711" width="882" height="147"/>
-                </g>
-                <g id="Box">
-                  <g id="Empty">
-                    <text x="116" y="2954.92" font-size="36.75" font-family="Roboto Flex" font-weight="500" letter-spacing="0.26" fill="#4C5E8B">Save USB match</text>
-                  </g>
-                </g>
-              </g>
-            </g>
-            <g id="Row">
-              <g id="Column">
-                <g id="Empty">
-                  <text x="42" y="3124.99" font-size="42" font-family="Roboto Flex" font-weight="600" letter-spacing="0.53" fill="#30323A">Sync profiles</text>
-                </g>
-                <g id="Empty">
-                  <text font-size="31.5" font-family="Roboto Flex" font-weight="400" letter-spacing="1.05" fill="#5D5F68"><tspan x="42" y="3173" textLength="660" lengthAdjust="spacing">Combine file sources and refresh them in the</tspan><tspan x="42" y="3215" textLength="185" lengthAdjust="spacing">background.</tspan></text>
-                </g>
-              </g>
-              <g id="Box">
-                <rect x="705" y="3101" width="303" height="105" rx="52.5" ry="52.5" fill="#4C5E8B"/>
-                <g id="Empty">
-                  <text x="768" y="3165.92" font-size="36.75" font-family="Roboto Flex" font-weight="500" letter-spacing="0.26" fill="#F9F8FF">Add profile</text>
-                </g>
-              </g>
-            </g>
-            <g id="Box" filter="url(#shadow-3)">
-              <rect x="42" y="3258" width="966" height="599" rx="31.5" ry="31.5" fill="#F3F3FA"/>
-              <g id="Column">
-                <g id="Row">
-                  <g id="BoxKt" data-material-icon="cloud" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/cloud/v1/24px.svg">
-                    <g transform="translate(84 3332) scale(2.62 2.62)">
-                      <use href="#material-icon-materialicons-cloud" xlink:href="#material-icon-materialicons-cloud"/>
-                    </g>
-                  </g>
-                  <g id="Spacer">
-                  </g>
-                  <g id="Column">
-                    <g id="Empty">
-                      <text x="179" y="3356.99" font-size="42" font-family="Roboto Flex" font-weight="600" letter-spacing="0.53" fill="#30323A">Morning podcasts</text>
-                    </g>
-                    <g id="Empty">
-                      <text x="179" y="3405.86" font-size="31.5" font-family="Roboto Flex" font-weight="400" letter-spacing="1.05" fill="#5D5F68">Podbean — staged</text>
-                    </g>
-                  </g>
-                  <g id="Box">
-                    <g id="BoxKt" data-material-icon="close" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/close/v1/24px.svg">
-                      <g transform="translate(872 3332) scale(2.62 2.62)">
-                        <use href="#material-icon-materialicons-close" xlink:href="#material-icon-materialicons-close"/>
-                      </g>
-                    </g>
-                  </g>
-                </g>
-                <g id="Row">
-                  <g id="Box">
-                    <rect x="84" y="3468" width="137" height="84" rx="42" ry="42" fill="#4C5E8B"/>
-                    <g id="Box">
-                      <rect x="147" y="3479" width="63" height="63" rx="31.5" ry="31.5" fill="#F9F8FF"/>
-                    </g>
-                  </g>
-                  <g id="Spacer">
-                  </g>
-                  <g id="Column">
-                    <g id="Empty">
-                      <text x="253" y="3501.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#30323A">Auto-refresh every 60 min on Wi-Fi</text>
-                    </g>
-                    <g id="Empty">
-                      <text x="253" y="3547.86" font-size="31.5" font-family="Roboto Flex" font-weight="400" letter-spacing="1.05" fill="#5D5F68">Last refreshed 2026-04-25</text>
-                    </g>
-                  </g>
-                </g>
-                <g id="Spacer">
-                  <g transform="translate(84 3594) scale(1 1)">
-                    <path d="M399.5,5.5 L876.5,5.5" fill="none" stroke="#DCE2F9" stroke-width="11" stroke-linecap="round"/>
-                    <path d="M5.5,5.5 L378,5.5" fill="none" stroke="#4C5E8B" stroke-width="11" stroke-linecap="round"/>
-                    <path d="M871.25,5.5 A5.25,5.25 0 1 0 881.75,5.5 A5.25,5.25 0 1 0 871.25,5.5 Z" fill="#4C5E8B"/>
-                  </g>
-                </g>
-                <g id="Empty">
-                  <text x="84" y="3657.86" font-size="31.5" font-family="Roboto Flex" font-weight="400" letter-spacing="1.05" fill="#30323A">412 — Tides of the Pacific.mp3 (3/7)</text>
-                </g>
-                <g id="Box">
-                  <rect x="85" y="3701" width="399" height="103" rx="51.5" ry="51.5" fill="none" stroke="#B0B1BC" stroke-opacity="0.1" stroke-width="2.62"/>
-                  <g id="Row">
-                    <g id="BoxKt" data-material-icon="refresh" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/refresh/v1/24px.svg">
-                      <g transform="translate(147 3721) scale(2.62 2.62)">
-                        <use href="#material-icon-materialicons-refresh" xlink:href="#material-icon-materialicons-refresh"/>
-                      </g>
-                    </g>
-                    <g id="Spacer">
-                    </g>
-                    <g id="Empty">
-                      <text x="221" y="3764.92" font-size="36.75" font-family="Roboto Flex" font-weight="500" letter-spacing="0.26" fill="#5D5F68" fill-opacity="0.38">Refresh now</text>
-                    </g>
-                  </g>
-                </g>
-              </g>
-            </g>
-            <g id="Box" filter="url(#shadow-3)">
-              <rect x="42" y="3889" width="966" height="504" rx="31.5" ry="31.5" fill="#F3F3FA"/>
-              <g id="Column">
-                <g id="Row">
-                  <g id="BoxKt" data-material-icon="cloud" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/cloud/v1/24px.svg">
-                    <g transform="translate(84 3963) scale(2.62 2.62)">
-                      <use href="#material-icon-materialicons-cloud" xlink:href="#material-icon-materialicons-cloud"/>
-                    </g>
-                  </g>
-                  <g id="Spacer">
-                  </g>
-                  <g id="Column">
-                    <g id="Empty">
-                      <text x="179" y="3987.99" font-size="42" font-family="Roboto Flex" font-weight="600" letter-spacing="0.53" fill="#30323A">Swim mixes</text>
-                    </g>
-                    <g id="Empty">
-                      <text x="179" y="4036.86" font-size="31.5" font-family="Roboto Flex" font-weight="400" letter-spacing="1.05" fill="#5D5F68">Drive — Swim Mixes</text>
-                    </g>
-                  </g>
-                  <g id="Box">
-                    <g id="BoxKt" data-material-icon="close" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/close/v1/24px.svg">
-                      <g transform="translate(872 3963) scale(2.62 2.62)">
-                        <use href="#material-icon-materialicons-close" xlink:href="#material-icon-materialicons-close"/>
-                      </g>
-                    </g>
-                  </g>
-                </g>
-                <g id="Row">
-                  <g id="Box">
-                    <rect x="87" y="4102" width="131" height="78" rx="39" ry="39" fill="#E1E2ED" stroke="#787A84" stroke-width="5.25"/>
-                    <g id="Box">
-                      <rect x="105" y="4120" width="42" height="42" rx="21" ry="21" fill="#787A84"/>
-                    </g>
-                  </g>
-                  <g id="Spacer">
-                  </g>
-                  <g id="Column">
-                    <g id="Empty">
-                      <text x="253" y="4132.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#30323A">Manual refresh only</text>
-                    </g>
-                    <g id="Empty">
-                      <text x="253" y="4178.86" font-size="31.5" font-family="Roboto Flex" font-weight="400" letter-spacing="1.05" fill="#5D5F68">Last refreshed 2026-04-24</text>
-                    </g>
-                  </g>
-                </g>
-                <g id="Box">
-                  <rect x="85" y="4237" width="399" height="103" rx="51.5" ry="51.5" fill="none" stroke="#B0B1BC" stroke-width="2.62"/>
-                  <g id="Row">
-                    <g id="BoxKt" data-material-icon="refresh" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/refresh/v1/24px.svg">
-                      <g transform="translate(147 4257) scale(2.62 2.62)">
-                        <use href="#material-icon-materialicons-refresh-2" xlink:href="#material-icon-materialicons-refresh-2"/>
-                      </g>
-                    </g>
-                    <g id="Spacer">
-                    </g>
-                    <g id="Empty">
-                      <text x="221" y="4300.92" font-size="36.75" font-family="Roboto Flex" font-weight="500" letter-spacing="0.26" fill="#5D5F68">Refresh now</text>
-                    </g>
-                  </g>
-                </g>
-              </g>
-            </g>
-            <g id="Box" filter="url(#shadow-3)">
-              <rect x="42" y="4425" width="966" height="515" rx="31.5" ry="31.5" fill="#F3F3FA"/>
-              <g id="Column">
-                <g id="Row">
-                  <g id="BoxKt" data-material-icon="cloud" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/cloud/v1/24px.svg">
-                    <g transform="translate(84 4499) scale(2.62 2.62)">
-                      <use href="#material-icon-materialicons-cloud" xlink:href="#material-icon-materialicons-cloud"/>
-                    </g>
-                  </g>
-                  <g id="Spacer">
-                  </g>
-                  <g id="Column">
-                    <g id="Empty">
-                      <text x="179" y="4523.99" font-size="42" font-family="Roboto Flex" font-weight="600" letter-spacing="0.53" fill="#30323A">Audiobooks</text>
-                    </g>
-                    <g id="Empty">
-                      <text x="179" y="4572.86" font-size="31.5" font-family="Roboto Flex" font-weight="400" letter-spacing="1.05" fill="#5D5F68">NAS — Audiobooks</text>
-                    </g>
-                  </g>
-                  <g id="Box">
-                    <g id="BoxKt" data-material-icon="close" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/close/v1/24px.svg">
-                      <g transform="translate(872 4499) scale(2.62 2.62)">
-                        <use href="#material-icon-materialicons-close" xlink:href="#material-icon-materialicons-close"/>
-                      </g>
-                    </g>
-                  </g>
-                </g>
-                <g id="Row">
-                  <g id="Box">
-                    <rect x="87" y="4644" width="131" height="78" rx="39" ry="39" fill="#E1E2ED" stroke="#787A84" stroke-width="5.25"/>
-                    <g id="Box">
-                      <rect x="105" y="4662" width="42" height="42" rx="21" ry="21" fill="#787A84"/>
-                    </g>
-                  </g>
-                  <g id="Spacer">
-                  </g>
-                  <g id="Column">
-                    <g id="Empty">
-                      <text x="253" y="4652.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#30323A">Manual refresh only</text>
-                    </g>
-                    <g id="Empty">
-                      <text x="253" y="4698.86" font-size="31.5" font-family="Roboto Flex" font-weight="400" letter-spacing="1.05" fill="#5D5F68">Never refreshed</text>
-                    </g>
-                    <g id="Empty">
-                      <text x="253" y="4740.86" font-size="31.5" font-family="Roboto Flex" font-weight="400" letter-spacing="1.05" fill="#B3261E">Could not reach nas.local</text>
-                    </g>
-                  </g>
-                </g>
-                <g id="Box">
-                  <rect x="85" y="4784" width="399" height="103" rx="51.5" ry="51.5" fill="none" stroke="#B0B1BC" stroke-width="2.62"/>
-                  <g id="Row">
-                    <g id="BoxKt" data-material-icon="refresh" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/refresh/v1/24px.svg">
-                      <g transform="translate(147 4804) scale(2.62 2.62)">
-                        <use href="#material-icon-materialicons-refresh-2" xlink:href="#material-icon-materialicons-refresh-2"/>
-                      </g>
-                    </g>
-                    <g id="Spacer">
-                    </g>
-                    <g id="Empty">
-                      <text x="221" y="4847.92" font-size="36.75" font-family="Roboto Flex" font-weight="500" letter-spacing="0.26" fill="#5D5F68">Refresh now</text>
-                    </g>
-                  </g>
-                </g>
+                <text font-size="31.5" font-family="Roboto Flex" font-weight="400" letter-spacing="1.05" fill="#5D5F68"><tspan x="179" y="363" textLength="562" lengthAdjust="spacing">content://com.android.externalstorage</tspan><tspan x="179" y="405" textLength="362" lengthAdjust="spacing">.documents/tree/primary</tspan><tspan x="179" y="447" textLength="202" lengthAdjust="spacing">%3APodcasts</tspan></text>
               </g>
             </g>
             <g id="Empty">
-              <text x="42" y="5024.86" font-size="31.5" font-family="Roboto Flex" font-weight="400" letter-spacing="1.05" fill="#5D5F68">Cadence</text>
+              <text x="744" y="374.86" font-size="31.5" font-family="Roboto Flex" font-weight="500" letter-spacing="1.31" fill="#5D5F68">Folder</text>
+            </g>
+            <g id="Box">
+              <g id="BoxKt" data-material-icon="close" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/close/v1/24px.svg">
+                <g transform="translate(872 333) scale(2.62 2.62)">
+                  <use href="#material-icon-materialicons-close" xlink:href="#material-icon-materialicons-close"/>
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
+        <g id="Box" filter="url(#shadow-3)">
+          <rect x="42" y="532" width="966" height="231" rx="31.5" ry="31.5" fill="#F3F3FA"/>
+          <g id="Row">
+            <g id="BoxKt" data-material-icon="folder" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/folder/v1/24px.svg">
+              <g transform="translate(84 616) scale(2.62 2.62)">
+                <use href="#material-icon-materialicons-folder" xlink:href="#material-icon-materialicons-folder"/>
+              </g>
+            </g>
+            <g id="Spacer">
+            </g>
+            <g id="Column">
+              <g id="Empty">
+                <text x="179" y="619.99" font-size="42" font-family="Roboto Flex" font-weight="600" letter-spacing="1.31" fill="#30323A">Drive — Swim Mixes</text>
+              </g>
+              <g id="Empty">
+                <text font-size="31.5" font-family="Roboto Flex" font-weight="400" letter-spacing="1.05" fill="#5D5F68"><tspan x="179" y="668" textLength="518" lengthAdjust="spacing">content://com.google.android.apps</tspan><tspan x="179" y="710" textLength="454" lengthAdjust="spacing">.docs.storage/tree/swim-mixes</tspan></text>
+              </g>
+            </g>
+            <g id="Empty">
+              <text x="744" y="658.86" font-size="31.5" font-family="Roboto Flex" font-weight="500" letter-spacing="1.31" fill="#5D5F68">Folder</text>
+            </g>
+            <g id="Box">
+              <g id="BoxKt" data-material-icon="close" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/close/v1/24px.svg">
+                <g transform="translate(872 617) scale(2.62 2.62)">
+                  <use href="#material-icon-materialicons-close" xlink:href="#material-icon-materialicons-close"/>
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
+        <g id="Box" filter="url(#shadow-3)">
+          <rect x="42" y="795" width="966" height="273" rx="31.5" ry="31.5" fill="#F3F3FA"/>
+          <g id="Row">
+            <g id="BoxKt" data-material-icon="folder" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/folder/v1/24px.svg">
+              <g transform="translate(84 900) scale(2.62 2.62)">
+                <use href="#material-icon-materialicons-folder" xlink:href="#material-icon-materialicons-folder"/>
+              </g>
+            </g>
+            <g id="Spacer">
+            </g>
+            <g id="Column">
+              <g id="Empty">
+                <text x="179" y="882.99" font-size="42" font-family="Roboto Flex" font-weight="600" letter-spacing="1.31" fill="#30323A">NAS — Audiobooks</text>
+              </g>
+              <g id="Empty">
+                <text x="179" y="931.86" font-size="31.5" font-family="Roboto Flex" font-weight="400" letter-spacing="1.05" fill="#5D5F68">nfs://nas.local/exports/audiobooks</text>
+              </g>
+              <g id="Empty">
+                <text font-size="31.5" font-family="Roboto Flex" font-weight="400" letter-spacing="1.05" fill="#B3261E"><tspan x="179" y="973" textLength="525" lengthAdjust="spacing">NFS browsing not yet implemented;</tspan><tspan x="179" y="1015" textLength="342" lengthAdjust="spacing">saved for future mount.</tspan></text>
+              </g>
+            </g>
+            <g id="Empty">
+              <text x="779" y="942.86" font-size="31.5" font-family="Roboto Flex" font-weight="500" letter-spacing="1.31" fill="#5D5F68">NFS</text>
+            </g>
+            <g id="Box">
+              <g id="BoxKt" data-material-icon="close" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/close/v1/24px.svg">
+                <g transform="translate(872 901) scale(2.62 2.62)">
+                  <use href="#material-icon-materialicons-close" xlink:href="#material-icon-materialicons-close"/>
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
+        <g id="Column">
+          <g id="Box">
+            <rect x="43" y="1112" width="349" height="103" rx="51.5" ry="51.5" fill="none" stroke="#B0B1BC" stroke-width="2.62"/>
+            <g id="Empty">
+              <text x="105" y="1175.92" font-size="36.75" font-family="Roboto Flex" font-weight="500" letter-spacing="0.26" fill="#5D5F68">Add podcasts</text>
+            </g>
+          </g>
+          <g id="Box">
+            <rect x="43" y="1249" width="429" height="103" rx="51.5" ry="51.5" fill="none" stroke="#B0B1BC" stroke-width="2.62"/>
+            <g id="Empty">
+              <text x="105" y="1312.92" font-size="36.75" font-family="Roboto Flex" font-weight="500" letter-spacing="0.26" fill="#5D5F68">Add files or folders</text>
+            </g>
+          </g>
+        </g>
+        <g id="Box">
+          <rect x="42" y="1395" width="966" height="327" rx="31.5" ry="31.5" fill="#E1E2ED"/>
+          <g id="Row">
+            <g id="Column">
+              <g id="Empty">
+                <text x="74" y="1465.92" font-size="36.75" font-family="Roboto Flex" font-weight="600" letter-spacing="0.26" fill="#5D5F68">Don't see your storage?</text>
+              </g>
+              <g id="Empty">
+                <text font-size="31.5" font-family="Roboto Flex" font-weight="400" letter-spacing="1.05" fill="#5D5F68"><tspan x="74" y="1511" textLength="484" lengthAdjust="spacing">Drive, Dropbox, Nextcloud, SMB,</tspan><tspan x="74" y="1553" textLength="470" lengthAdjust="spacing">FTP, WebDAV and more become</tspan><tspan x="74" y="1595" textLength="475" lengthAdjust="spacing">pickable once you install an app</tspan><tspan x="74" y="1637" textLength="393" lengthAdjust="spacing">that exposes them through</tspan><tspan x="74" y="1679" textLength="301" lengthAdjust="spacing">Android's file picker.</tspan></text>
+              </g>
+            </g>
+            <g id="Spacer">
+            </g>
+            <g id="Box">
+              <rect x="621" y="1508" width="354" height="103" rx="51.5" ry="51.5" fill="none" stroke="#B0B1BC" stroke-width="2.62"/>
+              <g id="Empty">
+                <text x="683" y="1571.92" font-size="36.75" font-family="Roboto Flex" font-weight="500" letter-spacing="0.26" fill="#5D5F68">Discover apps</text>
+              </g>
+            </g>
+          </g>
+        </g>
+        <g id="Empty">
+          <text x="42" y="1799.99" font-size="42" font-family="Roboto Flex" font-weight="600" letter-spacing="0.53" fill="#30323A">Developer options</text>
+        </g>
+        <g id="Box">
+          <g id="Empty">
+            <text x="74" y="1924.92" font-size="36.75" font-family="Roboto Flex" font-weight="500" letter-spacing="0.26" fill="#4C5E8B">Cross-device backup</text>
+          </g>
+        </g>
+        <g id="Box">
+          <rect x="43" y="2019" width="366" height="103" rx="51.5" ry="51.5" fill="none" stroke="#B0B1BC" stroke-width="2.62"/>
+          <g id="Empty">
+            <text x="105" y="2082.92" font-size="36.75" font-family="Roboto Flex" font-weight="500" letter-spacing="0.26" fill="#5D5F68">Add NFS share</text>
+          </g>
+        </g>
+        <g id="Box" filter="url(#shadow-3)">
+            <rect x="42" y="2165" width="966" height="798" rx="31.5" ry="31.5" fill="#F3F3FA"/>
+          <g id="Column">
+            <g id="Empty">
+              <text x="84" y="2252.98" font-size="42" font-family="Roboto Flex" font-weight="600" letter-spacing="0.53" fill="#30323A">Target headphones</text>
+            </g>
+            <g id="OutlinedTextField">
+              <image href="ideal__default.figma-raster/2187.png" x="84" y="2291" width="882" height="147"/>
+            </g>
+            <g id="Row">
+              <g id="Box">
+                <rect x="84" y="2480" width="137" height="84" rx="42" ry="42" fill="#4C5E8B"/>
+                <g id="Box">
+                  <rect x="147" y="2491" width="63" height="63" rx="31.5" ry="31.5" fill="#F9F8FF"/>
+                </g>
+              </g>
+              <g id="Spacer">
+              </g>
+              <g id="Empty">
+                <text x="253" y="2536.98" font-size="42" font-family="Roboto Flex" font-weight="400" letter-spacing="1.31" fill="#30323A">Auto-sync on USB attach</text>
+              </g>
+            </g>
+            <g id="OutlinedTextField">
+              <image href="ideal__default.figma-raster/2202.png" x="84" y="2627" width="882" height="147"/>
+            </g>
+            <g id="Box">
+              <g id="Empty">
+                <text x="116" y="2870.92" font-size="36.75" font-family="Roboto Flex" font-weight="500" letter-spacing="0.26" fill="#4C5E8B">Save USB match</text>
+              </g>
+            </g>
+          </g>
+        </g>
+        <g id="Row">
+          <g id="Column">
+            <g id="Empty">
+              <text x="42" y="3040.99" font-size="42" font-family="Roboto Flex" font-weight="600" letter-spacing="0.53" fill="#30323A">Sync profiles</text>
+            </g>
+            <g id="Empty">
+              <text font-size="31.5" font-family="Roboto Flex" font-weight="400" letter-spacing="1.05" fill="#5D5F68"><tspan x="42" y="3089" textLength="660" lengthAdjust="spacing">Combine file sources and refresh them in the</tspan><tspan x="42" y="3131" textLength="185" lengthAdjust="spacing">background.</tspan></text>
+            </g>
+          </g>
+          <g id="Box">
+            <rect x="705" y="3017" width="303" height="105" rx="52.5" ry="52.5" fill="#4C5E8B"/>
+            <g id="Empty">
+              <text x="768" y="3081.92" font-size="36.75" font-family="Roboto Flex" font-weight="500" letter-spacing="0.26" fill="#F9F8FF">Add profile</text>
+            </g>
+          </g>
+        </g>
+        <g id="Box" filter="url(#shadow-3)">
+          <rect x="42" y="3174" width="966" height="599" rx="31.5" ry="31.5" fill="#F3F3FA"/>
+          <g id="Column">
+            <g id="Row">
+              <g id="BoxKt" data-material-icon="cloud" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/cloud/v1/24px.svg">
+                <g transform="translate(84 3248) scale(2.62 2.62)">
+                  <use href="#material-icon-materialicons-cloud" xlink:href="#material-icon-materialicons-cloud"/>
+                </g>
+              </g>
+              <g id="Spacer">
+              </g>
+              <g id="Column">
+                <g id="Empty">
+                  <text x="179" y="3272.99" font-size="42" font-family="Roboto Flex" font-weight="600" letter-spacing="0.53" fill="#30323A">Morning podcasts</text>
+                </g>
+                <g id="Empty">
+                  <text x="179" y="3321.86" font-size="31.5" font-family="Roboto Flex" font-weight="400" letter-spacing="1.05" fill="#5D5F68">Podbean — staged</text>
+                </g>
+              </g>
+              <g id="Box">
+                <g id="BoxKt" data-material-icon="close" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/close/v1/24px.svg">
+                  <g transform="translate(872 3248) scale(2.62 2.62)">
+                    <use href="#material-icon-materialicons-close" xlink:href="#material-icon-materialicons-close"/>
+                  </g>
+                </g>
+              </g>
+            </g>
+            <g id="Row">
+              <g id="Box">
+                <rect x="84" y="3384" width="137" height="84" rx="42" ry="42" fill="#4C5E8B"/>
+                <g id="Box">
+                  <rect x="147" y="3395" width="63" height="63" rx="31.5" ry="31.5" fill="#F9F8FF"/>
+                </g>
+              </g>
+              <g id="Spacer">
+              </g>
+              <g id="Column">
+                <g id="Empty">
+                  <text x="253" y="3417.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#30323A">Auto-refresh every 60 min on Wi-Fi</text>
+                </g>
+                <g id="Empty">
+                  <text x="253" y="3463.86" font-size="31.5" font-family="Roboto Flex" font-weight="400" letter-spacing="1.05" fill="#5D5F68">Last refreshed 2026-04-25</text>
+                </g>
+              </g>
+            </g>
+            <g id="Spacer">
+              <g transform="translate(84 3510) scale(1 1)">
+                <path d="M399.5,5.5 L876.5,5.5" fill="none" stroke="#DCE2F9" stroke-width="11" stroke-linecap="round"/>
+                <path d="M5.5,5.5 L378,5.5" fill="none" stroke="#4C5E8B" stroke-width="11" stroke-linecap="round"/>
+                <path d="M871.25,5.5 A5.25,5.25 0 1 0 881.75,5.5 A5.25,5.25 0 1 0 871.25,5.5 Z" fill="#4C5E8B"/>
+              </g>
+            </g>
+            <g id="Empty">
+              <text x="84" y="3573.86" font-size="31.5" font-family="Roboto Flex" font-weight="400" letter-spacing="1.05" fill="#30323A">412 — Tides of the Pacific.mp3 (3/7)</text>
+            </g>
+            <g id="Box">
+              <rect x="85" y="3617" width="399" height="103" rx="51.5" ry="51.5" fill="none" stroke="#B0B1BC" stroke-opacity="0.1" stroke-width="2.62"/>
+              <g id="Row">
+                <g id="BoxKt" data-material-icon="refresh" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/refresh/v1/24px.svg">
+                  <g transform="translate(147 3637) scale(2.62 2.62)">
+                    <use href="#material-icon-materialicons-refresh" xlink:href="#material-icon-materialicons-refresh"/>
+                  </g>
+                </g>
+                <g id="Spacer">
+                </g>
+                <g id="Empty">
+                  <text x="221" y="3680.92" font-size="36.75" font-family="Roboto Flex" font-weight="500" letter-spacing="0.26" fill="#5D5F68" fill-opacity="0.38">Refresh now</text>
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
+        <g id="Box" filter="url(#shadow-3)">
+          <rect x="42" y="3805" width="966" height="504" rx="31.5" ry="31.5" fill="#F3F3FA"/>
+          <g id="Column">
+            <g id="Row">
+              <g id="BoxKt" data-material-icon="cloud" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/cloud/v1/24px.svg">
+                <g transform="translate(84 3879) scale(2.62 2.62)">
+                  <use href="#material-icon-materialicons-cloud" xlink:href="#material-icon-materialicons-cloud"/>
+                </g>
+              </g>
+              <g id="Spacer">
+              </g>
+              <g id="Column">
+                <g id="Empty">
+                  <text x="179" y="3903.99" font-size="42" font-family="Roboto Flex" font-weight="600" letter-spacing="0.53" fill="#30323A">Swim mixes</text>
+                </g>
+                <g id="Empty">
+                  <text x="179" y="3952.86" font-size="31.5" font-family="Roboto Flex" font-weight="400" letter-spacing="1.05" fill="#5D5F68">Drive — Swim Mixes</text>
+                </g>
+              </g>
+              <g id="Box">
+                <g id="BoxKt" data-material-icon="close" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/close/v1/24px.svg">
+                  <g transform="translate(872 3879) scale(2.62 2.62)">
+                    <use href="#material-icon-materialicons-close" xlink:href="#material-icon-materialicons-close"/>
+                  </g>
+                </g>
+              </g>
+            </g>
+            <g id="Row">
+              <g id="Box">
+                <rect x="87" y="4018" width="131" height="78" rx="39" ry="39" fill="#E1E2ED" stroke="#787A84" stroke-width="5.25"/>
+                <g id="Box">
+                  <rect x="105" y="4036" width="42" height="42" rx="21" ry="21" fill="#787A84"/>
+                </g>
+              </g>
+              <g id="Spacer">
+              </g>
+              <g id="Column">
+                <g id="Empty">
+                  <text x="253" y="4048.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#30323A">Manual refresh only</text>
+                </g>
+                <g id="Empty">
+                  <text x="253" y="4094.86" font-size="31.5" font-family="Roboto Flex" font-weight="400" letter-spacing="1.05" fill="#5D5F68">Last refreshed 2026-04-24</text>
+                </g>
+              </g>
+            </g>
+            <g id="Box">
+              <rect x="85" y="4153" width="399" height="103" rx="51.5" ry="51.5" fill="none" stroke="#B0B1BC" stroke-width="2.62"/>
+              <g id="Row">
+                <g id="BoxKt" data-material-icon="refresh" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/refresh/v1/24px.svg">
+                  <g transform="translate(147 4173) scale(2.62 2.62)">
+                    <use href="#material-icon-materialicons-refresh-2" xlink:href="#material-icon-materialicons-refresh-2"/>
+                  </g>
+                </g>
+                <g id="Spacer">
+                </g>
+                <g id="Empty">
+                  <text x="221" y="4216.92" font-size="36.75" font-family="Roboto Flex" font-weight="500" letter-spacing="0.26" fill="#5D5F68">Refresh now</text>
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
+        <g id="Box" filter="url(#shadow-3)">
+          <rect x="42" y="4341" width="966" height="515" rx="31.5" ry="31.5" fill="#F3F3FA"/>
+          <g id="Column">
+            <g id="Row">
+              <g id="BoxKt" data-material-icon="cloud" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/cloud/v1/24px.svg">
+                <g transform="translate(84 4415) scale(2.62 2.62)">
+                  <use href="#material-icon-materialicons-cloud" xlink:href="#material-icon-materialicons-cloud"/>
+                </g>
+              </g>
+              <g id="Spacer">
+              </g>
+              <g id="Column">
+                <g id="Empty">
+                  <text x="179" y="4439.99" font-size="42" font-family="Roboto Flex" font-weight="600" letter-spacing="0.53" fill="#30323A">Audiobooks</text>
+                </g>
+                <g id="Empty">
+                  <text x="179" y="4488.86" font-size="31.5" font-family="Roboto Flex" font-weight="400" letter-spacing="1.05" fill="#5D5F68">NAS — Audiobooks</text>
+                </g>
+              </g>
+              <g id="Box">
+                <g id="BoxKt" data-material-icon="close" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/close/v1/24px.svg">
+                  <g transform="translate(872 4415) scale(2.62 2.62)">
+                    <use href="#material-icon-materialicons-close" xlink:href="#material-icon-materialicons-close"/>
+                  </g>
+                </g>
+              </g>
+            </g>
+            <g id="Row">
+              <g id="Box">
+                <rect x="87" y="4560" width="131" height="78" rx="39" ry="39" fill="#E1E2ED" stroke="#787A84" stroke-width="5.25"/>
+                <g id="Box">
+                  <rect x="105" y="4578" width="42" height="42" rx="21" ry="21" fill="#787A84"/>
+                </g>
+              </g>
+              <g id="Spacer">
+              </g>
+              <g id="Column">
+                <g id="Empty">
+                  <text x="253" y="4568.92" font-size="36.75" font-family="Roboto Flex" font-weight="400" letter-spacing="0.53" fill="#30323A">Manual refresh only</text>
+                </g>
+                <g id="Empty">
+                  <text x="253" y="4614.86" font-size="31.5" font-family="Roboto Flex" font-weight="400" letter-spacing="1.05" fill="#5D5F68">Never refreshed</text>
+                </g>
+                <g id="Empty">
+                  <text x="253" y="4656.86" font-size="31.5" font-family="Roboto Flex" font-weight="400" letter-spacing="1.05" fill="#B3261E">Could not reach nas.local</text>
+                </g>
+              </g>
+            </g>
+            <g id="Box">
+              <rect x="85" y="4700" width="399" height="103" rx="51.5" ry="51.5" fill="none" stroke="#B0B1BC" stroke-width="2.62"/>
+              <g id="Row">
+                <g id="BoxKt" data-material-icon="refresh" data-material-icon-style="Filled" data-material-icon-url="https://fonts.gstatic.com/s/i/materialicons/refresh/v1/24px.svg">
+                  <g transform="translate(147 4720) scale(2.62 2.62)">
+                    <use href="#material-icon-materialicons-refresh-2" xlink:href="#material-icon-materialicons-refresh-2"/>
+                  </g>
+                </g>
+                <g id="Spacer">
+                </g>
+                <g id="Empty">
+                  <text x="221" y="4763.92" font-size="36.75" font-family="Roboto Flex" font-weight="500" letter-spacing="0.26" fill="#5D5F68">Refresh now</text>
+                </g>
+              </g>
             </g>
           </g>
         </g>

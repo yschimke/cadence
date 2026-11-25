@@ -485,7 +485,7 @@
       "wireframe": "wireframes/home-empty.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 34,
+      "bodyLine": 39,
       "sourceDirectory": "composeApp",
       "sourceFunction": "HomeEmptyPreview"
     },
@@ -745,7 +745,7 @@
       "wireframe": "wireframes/devices-loaded.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 265,
+      "bodyLine": 288,
       "sourceDirectory": "composeApp",
       "sourceFunction": "DevicesScreenLoadedPreview"
     },
@@ -774,7 +774,7 @@
       "wireframe": "wireframes/devices-loading.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 284,
+      "bodyLine": 307,
       "sourceDirectory": "composeApp",
       "sourceFunction": "DevicesScreenLoadingPreview"
     },
@@ -835,7 +835,7 @@
       "wireframe": "wireframes/devices-empty.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 297,
+      "bodyLine": 320,
       "sourceDirectory": "composeApp",
       "sourceFunction": "DevicesScreenEmptyPreview"
     },
@@ -864,7 +864,7 @@
       "wireframe": "wireframes/devicefiles-loading.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 310,
+      "bodyLine": 333,
       "sourceDirectory": "composeApp",
       "sourceFunction": "DeviceFilesLoadingPreview"
     },
@@ -893,7 +893,7 @@
       "wireframe": "wireframes/devicefiles-notavailable.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 321,
+      "bodyLine": 344,
       "sourceDirectory": "composeApp",
       "sourceFunction": "DeviceFilesNotAvailablePreview"
     },
@@ -1480,7 +1480,7 @@
       "wireframe": "wireframes/bluetooth-disconnected.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 335,
+      "bodyLine": 358,
       "sourceDirectory": "composeApp",
       "sourceFunction": "BluetoothDisconnectedPreview"
     },
@@ -2030,7 +2030,7 @@
       "wireframe": "wireframes/bluetooth-connectedplaying.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 363,
+      "bodyLine": 386,
       "sourceDirectory": "composeApp",
       "sourceFunction": "BluetoothConnectedPlayingPreview"
     },
@@ -2686,7 +2686,7 @@
       "wireframe": "wireframes/bluetooth-permissionmissing.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 391,
+      "bodyLine": 414,
       "sourceDirectory": "composeApp",
       "sourceFunction": "BluetoothPermissionMissingPreview"
     },
@@ -3093,7 +3093,7 @@
       "wireframe": "wireframes/bluetooth-mp3mode.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 419,
+      "bodyLine": 442,
       "sourceDirectory": "composeApp",
       "sourceFunction": "BluetoothMp3ModePreview"
     },
@@ -3742,7 +3742,7 @@
       "wireframe": "wireframes/bluetooth-developer.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 447,
+      "bodyLine": 470,
       "sourceDirectory": "composeApp",
       "sourceFunction": "BluetoothDeveloperPreview"
     },
@@ -3865,21 +3865,6 @@
           },
           "role": "Button",
           "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 42,
-            "y": 881,
-            "width": 129,
-            "height": 84
-          },
-          "label": "Cadence",
-          "padding": {
-            "start": 0,
-            "top": 8,
-            "end": 0,
-            "bottom": 8
-          }
         }
       ],
       "group": "Manage",
@@ -3887,7 +3872,7 @@
       "wireframe": "wireframes/manage-empty.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 497,
+      "bodyLine": 520,
       "sourceDirectory": "composeApp",
       "sourceFunction": "ManageEmptyPreview"
     },
@@ -4127,21 +4112,6 @@
           },
           "role": "Button",
           "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 42,
-            "y": 1754,
-            "width": 129,
-            "height": 84
-          },
-          "label": "Cadence",
-          "padding": {
-            "start": 0,
-            "top": 8,
-            "end": 0,
-            "bottom": 8
-          }
         }
       ],
       "group": "Manage",
@@ -4149,7 +4119,7 @@
       "wireframe": "wireframes/manage-populated.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 519,
+      "bodyLine": 542,
       "sourceDirectory": "composeApp",
       "sourceFunction": "ManagePopulatedPreview"
     },
@@ -4294,39 +4264,19 @@
         {
           "kind": "a11y",
           "severity": "info",
-          "message": "switch",
-          "detail": {
-            "role": "switch",
-            "bounds": {
-              "x": 871,
-              "y": 1786,
-              "width": 137,
-              "height": 84
-            }
-          },
-          "bounds": {
-            "x": 871,
-            "y": 1786,
-            "width": 137,
-            "height": 84
-          }
-        },
-        {
-          "kind": "a11y",
-          "severity": "info",
           "message": "button",
           "detail": {
             "role": "button",
             "bounds": {
               "x": 42,
-              "y": 1944,
+              "y": 1860,
               "width": 406,
               "height": 105
             }
           },
           "bounds": {
             "x": 42,
-            "y": 1944,
+            "y": 1860,
             "width": 406,
             "height": 105
           }
@@ -4339,14 +4289,14 @@
             "role": "button",
             "bounds": {
               "x": 42,
-              "y": 2102,
+              "y": 2018,
               "width": 368,
               "height": 105
             }
           },
           "bounds": {
             "x": 42,
-            "y": 2102,
+            "y": 2018,
             "width": 368,
             "height": 105
           }
@@ -4359,14 +4309,14 @@
             "role": "switch",
             "bounds": {
               "x": 84,
-              "y": 2564,
+              "y": 2480,
               "width": 137,
               "height": 84
             }
           },
           "bounds": {
             "x": 84,
-            "y": 2564,
+            "y": 2480,
             "width": 137,
             "height": 84
           }
@@ -4379,14 +4329,14 @@
             "role": "button",
             "bounds": {
               "x": 84,
-              "y": 2890,
+              "y": 2806,
               "width": 329,
               "height": 105
             }
           },
           "bounds": {
             "x": 84,
-            "y": 2890,
+            "y": 2806,
             "width": 329,
             "height": 105
           }
@@ -4399,14 +4349,14 @@
             "role": "button",
             "bounds": {
               "x": 705,
-              "y": 3101,
+              "y": 3017,
               "width": 303,
               "height": 105
             }
           },
           "bounds": {
             "x": 705,
-            "y": 3101,
+            "y": 3017,
             "width": 303,
             "height": 105
           }
@@ -4419,14 +4369,14 @@
             "role": "button",
             "bounds": {
               "x": 851,
-              "y": 3311,
+              "y": 3227,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 851,
-            "y": 3311,
+            "y": 3227,
             "width": 105,
             "height": 105
           }
@@ -4439,14 +4389,14 @@
             "role": "switch",
             "bounds": {
               "x": 84,
-              "y": 3447,
+              "y": 3363,
               "width": 882,
               "height": 126
             }
           },
           "bounds": {
             "x": 84,
-            "y": 3447,
+            "y": 3363,
             "width": 882,
             "height": 126
           }
@@ -4460,14 +4410,14 @@
             "label": "Refresh Morning podcasts now",
             "bounds": {
               "x": 84,
-              "y": 3700,
+              "y": 3616,
               "width": 401,
               "height": 105
             }
           },
           "bounds": {
             "x": 84,
-            "y": 3700,
+            "y": 3616,
             "width": 401,
             "height": 105
           }
@@ -4480,14 +4430,14 @@
             "role": "button",
             "bounds": {
               "x": 851,
-              "y": 3942,
+              "y": 3858,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 851,
-            "y": 3942,
+            "y": 3858,
             "width": 105,
             "height": 105
           }
@@ -4500,14 +4450,14 @@
             "role": "switch",
             "bounds": {
               "x": 84,
-              "y": 4078,
+              "y": 3994,
               "width": 882,
               "height": 126
             }
           },
           "bounds": {
             "x": 84,
-            "y": 4078,
+            "y": 3994,
             "width": 882,
             "height": 126
           }
@@ -4521,14 +4471,14 @@
             "label": "Refresh Swim mixes now",
             "bounds": {
               "x": 84,
-              "y": 4236,
+              "y": 4152,
               "width": 401,
               "height": 105
             }
           },
           "bounds": {
             "x": 84,
-            "y": 4236,
+            "y": 4152,
             "width": 401,
             "height": 105
           }
@@ -4541,14 +4491,14 @@
             "role": "button",
             "bounds": {
               "x": 851,
-              "y": 4478,
+              "y": 4394,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
             "x": 851,
-            "y": 4478,
+            "y": 4394,
             "width": 105,
             "height": 105
           }
@@ -4561,14 +4511,14 @@
             "role": "switch",
             "bounds": {
               "x": 84,
-              "y": 4614,
+              "y": 4530,
               "width": 882,
               "height": 137
             }
           },
           "bounds": {
             "x": 84,
-            "y": 4614,
+            "y": 4530,
             "width": 882,
             "height": 137
           }
@@ -4582,14 +4532,14 @@
             "label": "Refresh Audiobooks now",
             "bounds": {
               "x": 84,
-              "y": 4783,
+              "y": 4699,
               "width": 401,
               "height": 105
             }
           },
           "bounds": {
             "x": 84,
-            "y": 4783,
+            "y": 4699,
             "width": 401,
             "height": 105
           }
@@ -4694,27 +4644,8 @@
         },
         {
           "bounds": {
-            "x": 871,
-            "y": 1786,
-            "width": 137,
-            "height": 84
-          },
-          "role": "Switch",
-          "cornerRadius": 16
-        },
-        {
-          "bounds": {
-            "x": 934,
-            "y": 1797,
-            "width": 63,
-            "height": 63
-          },
-          "cornerRadius": 12
-        },
-        {
-          "bounds": {
             "x": 42,
-            "y": 1944,
+            "y": 1860,
             "width": 406,
             "height": 105
           },
@@ -4724,7 +4655,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 2102,
+            "y": 2018,
             "width": 368,
             "height": 105
           },
@@ -4734,7 +4665,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 2249,
+            "y": 2165,
             "width": 966,
             "height": 798
           },
@@ -4743,7 +4674,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 2375,
+            "y": 2291,
             "width": 882,
             "height": 147
           },
@@ -4752,7 +4683,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 2564,
+            "y": 2480,
             "width": 137,
             "height": 84
           },
@@ -4762,7 +4693,7 @@
         {
           "bounds": {
             "x": 147,
-            "y": 2575,
+            "y": 2491,
             "width": 63,
             "height": 63
           },
@@ -4771,7 +4702,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 2690,
+            "y": 2606,
             "width": 882,
             "height": 168
           },
@@ -4785,7 +4716,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 2711,
+            "y": 2627,
             "width": 882,
             "height": 147
           },
@@ -4794,7 +4725,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 2890,
+            "y": 2806,
             "width": 329,
             "height": 105
           },
@@ -4804,7 +4735,7 @@
         {
           "bounds": {
             "x": 705,
-            "y": 3101,
+            "y": 3017,
             "width": 303,
             "height": 105
           },
@@ -4814,7 +4745,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 3258,
+            "y": 3174,
             "width": 966,
             "height": 599
           },
@@ -4823,7 +4754,7 @@
         {
           "bounds": {
             "x": 851,
-            "y": 3311,
+            "y": 3227,
             "width": 105,
             "height": 105
           },
@@ -4833,7 +4764,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 3468,
+            "y": 3384,
             "width": 137,
             "height": 84
           },
@@ -4842,7 +4773,7 @@
         {
           "bounds": {
             "x": 147,
-            "y": 3479,
+            "y": 3395,
             "width": 63,
             "height": 63
           },
@@ -4851,7 +4782,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 3568,
+            "y": 3484,
             "width": 882,
             "height": 63
           },
@@ -4865,7 +4796,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 3700,
+            "y": 3616,
             "width": 401,
             "height": 105
           },
@@ -4876,7 +4807,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 3889,
+            "y": 3805,
             "width": 966,
             "height": 504
           },
@@ -4885,7 +4816,7 @@
         {
           "bounds": {
             "x": 851,
-            "y": 3942,
+            "y": 3858,
             "width": 105,
             "height": 105
           },
@@ -4895,7 +4826,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 4099,
+            "y": 4015,
             "width": 137,
             "height": 84
           },
@@ -4904,7 +4835,7 @@
         {
           "bounds": {
             "x": 105,
-            "y": 4120,
+            "y": 4036,
             "width": 42,
             "height": 42
           },
@@ -4913,7 +4844,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 4236,
+            "y": 4152,
             "width": 401,
             "height": 105
           },
@@ -4924,7 +4855,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 4425,
+            "y": 4341,
             "width": 966,
             "height": 515
           },
@@ -4933,7 +4864,7 @@
         {
           "bounds": {
             "x": 851,
-            "y": 4478,
+            "y": 4394,
             "width": 105,
             "height": 105
           },
@@ -4943,7 +4874,7 @@
         {
           "bounds": {
             "x": 84,
-            "y": 4641,
+            "y": 4557,
             "width": 137,
             "height": 84
           },
@@ -4952,7 +4883,7 @@
         {
           "bounds": {
             "x": 105,
-            "y": 4662,
+            "y": 4578,
             "width": 42,
             "height": 42
           },
@@ -4961,28 +4892,13 @@
         {
           "bounds": {
             "x": 84,
-            "y": 4783,
+            "y": 4699,
             "width": 401,
             "height": 105
           },
           "role": "Button",
           "label": "Refresh Audiobooks now",
           "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 42,
-            "y": 4972,
-            "width": 129,
-            "height": 15
-          },
-          "label": "Cadence",
-          "padding": {
-            "start": 0,
-            "top": 8,
-            "end": 0,
-            "bottom": 8
-          }
         }
       ],
       "group": "Manage",
@@ -4990,7 +4906,7 @@
       "wireframe": "wireframes/manage-refreshing.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 541,
+      "bodyLine": 564,
       "sourceDirectory": "composeApp",
       "sourceFunction": "ManageRefreshingPreview"
     },
@@ -7832,7 +7748,7 @@
       "caption": "Podcast widget · Bluetooth",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 81,
+      "bodyLine": 86,
       "sourceDirectory": "composeApp",
       "sourceFunction": "PodcastWidgetBluetoothPreview",
       "parameters": [
@@ -7864,6 +7780,11 @@
           "name": "progress",
           "type": "Float?",
           "hasDefault": true
+        },
+        {
+          "name": "working",
+          "type": "Boolean",
+          "hasDefault": true
         }
       ]
     },
@@ -7889,7 +7810,7 @@
       "caption": "Podcast widget · MP3",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 88,
+      "bodyLine": 93,
       "sourceDirectory": "composeApp",
       "sourceFunction": "PodcastWidgetMp3Preview",
       "parameters": [
@@ -7921,6 +7842,11 @@
           "name": "progress",
           "type": "Float?",
           "hasDefault": true
+        },
+        {
+          "name": "working",
+          "type": "Boolean",
+          "hasDefault": true
         }
       ]
     },
@@ -7946,7 +7872,7 @@
       "caption": "Podcast widget · MP3 · tall",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 95,
+      "bodyLine": 100,
       "sourceDirectory": "composeApp",
       "sourceFunction": "PodcastWidgetTallPreview",
       "parameters": [
@@ -7978,6 +7904,11 @@
           "name": "progress",
           "type": "Float?",
           "hasDefault": true
+        },
+        {
+          "name": "working",
+          "type": "Boolean",
+          "hasDefault": true
         }
       ]
     },
@@ -8007,7 +7938,7 @@
       "caption": "Podcast widget · MP3 · light",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 107,
+      "bodyLine": 112,
       "sourceDirectory": "composeApp",
       "sourceFunction": "PodcastWidgetMp3LightPreview",
       "parameters": [
@@ -8039,6 +7970,11 @@
           "name": "progress",
           "type": "Float?",
           "hasDefault": true
+        },
+        {
+          "name": "working",
+          "type": "Boolean",
+          "hasDefault": true
         }
       ]
     },
@@ -8064,7 +8000,7 @@
       "caption": "Podcast widget · Bluetooth pool",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 114,
+      "bodyLine": 119,
       "sourceDirectory": "composeApp",
       "sourceFunction": "PodcastWidgetBluetoothPoolPreview",
       "parameters": [
@@ -8096,6 +8032,11 @@
           "name": "progress",
           "type": "Float?",
           "hasDefault": true
+        },
+        {
+          "name": "working",
+          "type": "Boolean",
+          "hasDefault": true
         }
       ]
     },
@@ -8121,7 +8062,7 @@
       "caption": "Podcast widget · MP3 small",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 121,
+      "bodyLine": 126,
       "sourceDirectory": "composeApp",
       "sourceFunction": "PodcastWidgetMp3SmallPreview",
       "parameters": [
@@ -8153,6 +8094,11 @@
           "name": "progress",
           "type": "Float?",
           "hasDefault": true
+        },
+        {
+          "name": "working",
+          "type": "Boolean",
+          "hasDefault": true
         }
       ]
     },
@@ -8178,7 +8124,7 @@
       "caption": "Podcast widget · disconnected",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 128,
+      "bodyLine": 133,
       "sourceDirectory": "composeApp",
       "sourceFunction": "PodcastWidgetDisconnectedPreview",
       "parameters": [
@@ -8210,6 +8156,11 @@
           "name": "progress",
           "type": "Float?",
           "hasDefault": true
+        },
+        {
+          "name": "working",
+          "type": "Boolean",
+          "hasDefault": true
         }
       ]
     },
@@ -8239,7 +8190,7 @@
       "caption": "Cloud sync widget",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 168,
+      "bodyLine": 173,
       "sourceDirectory": "composeApp",
       "sourceFunction": "CloudSyncWidgetPreview",
       "parameters": [
@@ -8275,7 +8226,7 @@
       "caption": "Cloud sync widget · light",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 180,
+      "bodyLine": 185,
       "sourceDirectory": "composeApp",
       "sourceFunction": "CloudSyncWidgetLightPreview",
       "parameters": [
@@ -8307,7 +8258,7 @@
       "caption": "Cloud sync widget · small",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 187,
+      "bodyLine": 192,
       "sourceDirectory": "composeApp",
       "sourceFunction": "CloudSyncWidgetSmallPreview",
       "parameters": [
@@ -8339,7 +8290,7 @@
       "caption": "Cloud sync widget · large",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 194,
+      "bodyLine": 199,
       "sourceDirectory": "composeApp",
       "sourceFunction": "CloudSyncWidgetLargePreview",
       "parameters": [
@@ -8371,7 +8322,7 @@
       "caption": "Podcast widget · MP3 large",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 201,
+      "bodyLine": 206,
       "sourceDirectory": "composeApp",
       "sourceFunction": "PodcastWidgetMp3LargePreview",
       "parameters": [
@@ -8403,6 +8354,11 @@
           "name": "progress",
           "type": "Float?",
           "hasDefault": true
+        },
+        {
+          "name": "working",
+          "type": "Boolean",
+          "hasDefault": true
         }
       ]
     },
@@ -8428,7 +8384,7 @@
       "caption": "Podcast widget · winter",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 210,
+      "bodyLine": 215,
       "sourceDirectory": "composeApp",
       "sourceFunction": "PodcastWidgetWinterPreview",
       "parameters": [
@@ -8460,6 +8416,11 @@
           "name": "progress",
           "type": "Float?",
           "hasDefault": true
+        },
+        {
+          "name": "working",
+          "type": "Boolean",
+          "hasDefault": true
         }
       ]
     },
@@ -8485,7 +8446,7 @@
       "caption": "Podcast widget · Christmas",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 217,
+      "bodyLine": 222,
       "sourceDirectory": "composeApp",
       "sourceFunction": "PodcastWidgetChristmasPreview",
       "parameters": [
@@ -8517,6 +8478,11 @@
           "name": "progress",
           "type": "Float?",
           "hasDefault": true
+        },
+        {
+          "name": "working",
+          "type": "Boolean",
+          "hasDefault": true
         }
       ]
     },
@@ -8542,7 +8508,7 @@
       "caption": "Podcast widget · New Year",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 224,
+      "bodyLine": 229,
       "sourceDirectory": "composeApp",
       "sourceFunction": "PodcastWidgetNewYearPreview",
       "parameters": [
@@ -8574,6 +8540,11 @@
           "name": "progress",
           "type": "Float?",
           "hasDefault": true
+        },
+        {
+          "name": "working",
+          "type": "Boolean",
+          "hasDefault": true
         }
       ]
     },
@@ -8599,7 +8570,7 @@
       "caption": "Podcast widget · Halloween",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 231,
+      "bodyLine": 236,
       "sourceDirectory": "composeApp",
       "sourceFunction": "PodcastWidgetHalloweenPreview",
       "parameters": [
@@ -8631,6 +8602,11 @@
           "name": "progress",
           "type": "Float?",
           "hasDefault": true
+        },
+        {
+          "name": "working",
+          "type": "Boolean",
+          "hasDefault": true
         }
       ]
     },
@@ -8656,7 +8632,7 @@
       "caption": "Podcast widget · Christmas · Bluetooth",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 238,
+      "bodyLine": 243,
       "sourceDirectory": "composeApp",
       "sourceFunction": "PodcastWidgetChristmasStandingPreview",
       "parameters": [
@@ -8688,6 +8664,11 @@
           "name": "progress",
           "type": "Float?",
           "hasDefault": true
+        },
+        {
+          "name": "working",
+          "type": "Boolean",
+          "hasDefault": true
         }
       ]
     },
@@ -8713,7 +8694,7 @@
       "caption": "Status card · preparing",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 253,
+      "bodyLine": 258,
       "sourceDirectory": "composeApp",
       "sourceFunction": "StatusCardPreparingPreview",
       "parameters": [
@@ -8744,6 +8725,11 @@
         {
           "name": "progress",
           "type": "Float?",
+          "hasDefault": true
+        },
+        {
+          "name": "working",
+          "type": "Boolean",
           "hasDefault": true
         }
       ]
@@ -8844,6 +8830,26 @@
             "y": 3658,
             "width": 105,
             "height": 17
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 672,
+              "y": 32,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 672,
+            "y": 32,
+            "width": 105,
+            "height": 105
           }
         },
         {
@@ -9092,6 +9098,16 @@
         },
         {
           "bounds": {
+            "x": 672,
+            "y": 32,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
             "x": 798,
             "y": 32,
             "width": 105,
@@ -9117,9 +9133,373 @@
       "wireframe": "wireframes/composeapp-homelibrarypreview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 49,
+      "bodyLine": 54,
       "sourceDirectory": "composeApp",
       "sourceFunction": "HomeLibraryPreview"
+    },
+    {
+      "componentId": "composeApp/HomeHeadphoneControlsPreview",
+      "images": [
+        {
+          "variant": "ideal",
+          "path": "images/composeapp-homeheadphonecontrolspreview/ideal__default.png",
+          "state": "default",
+          "width": 1050,
+          "height": 2363,
+          "livePreview": "https://preview.coo.ee/cadence/p/composeapp-homeheadphonecontrolspreview__ideal__default",
+          "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.HomeHeadphoneControlsPreview_Home___headphone_controls",
+          "previewParams": {
+            "showBackground": true
+          },
+          "density": 2.625
+        }
+      ],
+      "greenlines": [
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 882,
+              "y": 1560,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 882,
+            "y": 1560,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 882,
+              "y": 2347,
+              "width": 105,
+              "height": 15
+            }
+          },
+          "bounds": {
+            "x": 882,
+            "y": 2347,
+            "width": 105,
+            "height": 15
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            }
+          },
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 672,
+              "y": 32,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 672,
+            "y": 32,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 798,
+              "y": 32,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 798,
+            "y": 32,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 924,
+              "y": 32,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 924,
+            "y": 32,
+            "width": 105,
+            "height": 105
+          }
+        }
+      ],
+      "redlines": [
+        {
+          "bounds": {
+            "x": 42,
+            "y": 189,
+            "width": 966,
+            "height": 520
+          },
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 751,
+            "width": 966,
+            "height": 724
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 751,
+            "width": 966,
+            "height": 148
+          },
+          "padding": {
+            "start": 16,
+            "top": 12,
+            "end": 4,
+            "bottom": 4
+          }
+        },
+        {
+          "bounds": {
+            "x": 105,
+            "y": 902,
+            "width": 840,
+            "height": 189
+          },
+          "padding": {
+            "start": 24,
+            "top": 0,
+            "end": 24,
+            "bottom": 0
+          }
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 944,
+            "width": 105,
+            "height": 105
+          },
+          "cornerRadius": 8
+        },
+        {
+          "bounds": {
+            "x": 231,
+            "y": 1031,
+            "width": 735,
+            "height": 60
+          },
+          "padding": {
+            "start": 0,
+            "top": 10,
+            "end": 0,
+            "bottom": 10
+          }
+        },
+        {
+          "bounds": {
+            "x": 105,
+            "y": 1094,
+            "width": 840,
+            "height": 189
+          },
+          "padding": {
+            "start": 24,
+            "top": 0,
+            "end": 24,
+            "bottom": 0
+          }
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 1136,
+            "width": 105,
+            "height": 105
+          },
+          "cornerRadius": 8
+        },
+        {
+          "bounds": {
+            "x": 231,
+            "y": 1223,
+            "width": 735,
+            "height": 60
+          },
+          "padding": {
+            "start": 0,
+            "top": 10,
+            "end": 0,
+            "bottom": 10
+          }
+        },
+        {
+          "bounds": {
+            "x": 105,
+            "y": 1286,
+            "width": 840,
+            "height": 189
+          },
+          "padding": {
+            "start": 24,
+            "top": 0,
+            "end": 24,
+            "bottom": 0
+          }
+        },
+        {
+          "bounds": {
+            "x": 84,
+            "y": 1328,
+            "width": 105,
+            "height": 105
+          },
+          "cornerRadius": 8
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 1517,
+            "width": 966,
+            "height": 745
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 882,
+            "y": 1560,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 2304,
+            "width": 966,
+            "height": 58
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 882,
+            "y": 2347,
+            "width": 105,
+            "height": 15
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          },
+          "role": "Button",
+          "padding": {
+            "start": 8,
+            "top": 0,
+            "end": 8,
+            "bottom": 0
+          },
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 672,
+            "y": 32,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 798,
+            "y": 32,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 924,
+            "y": 32,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        }
+      ],
+      "section": ":composeApp",
+      "group": "Previews",
+      "caption": "Home — headphone controls",
+      "wireframe": "wireframes/composeapp-homeheadphonecontrolspreview.svg",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "sourceModule": ":composeApp",
+      "bodyLine": 71,
+      "sourceDirectory": "composeApp",
+      "sourceFunction": "HomeHeadphoneControlsPreview"
     },
     {
       "componentId": "composeApp/HomeHeadphonesPreview",
@@ -9155,6 +9535,26 @@
           "bounds": {
             "x": 882,
             "y": 1733,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 672,
+              "y": 32,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 672,
+            "y": 32,
             "width": 105,
             "height": 105
           }
@@ -9351,6 +9751,16 @@
         },
         {
           "bounds": {
+            "x": 672,
+            "y": 32,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
             "x": 798,
             "y": 32,
             "width": 105,
@@ -9376,7 +9786,7 @@
       "wireframe": "wireframes/composeapp-homeheadphonespreview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 65,
+      "bodyLine": 88,
       "sourceDirectory": "composeApp",
       "sourceFunction": "HomeHeadphonesPreview"
     },
@@ -9418,6 +9828,26 @@
           "bounds": {
             "x": 908,
             "y": 1633,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 698,
+              "y": 32,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 698,
+            "y": 32,
             "width": 105,
             "height": 105
           }
@@ -9614,6 +10044,16 @@
         },
         {
           "bounds": {
+            "x": 698,
+            "y": 32,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
             "x": 824,
             "y": 32,
             "width": 105,
@@ -9639,7 +10079,7 @@
       "wireframe": "wireframes/composeapp-homereadytocopypreview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 83,
+      "bodyLine": 106,
       "sourceDirectory": "composeApp",
       "sourceFunction": "HomeReadyToCopyPreview"
     },
@@ -9723,6 +10163,26 @@
             "y": 0,
             "width": 0,
             "height": 0
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 698,
+              "y": 32,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 698,
+            "y": 32,
+            "width": 105,
+            "height": 105
           }
         },
         {
@@ -9952,6 +10412,16 @@
         },
         {
           "bounds": {
+            "x": 698,
+            "y": 32,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
             "x": 824,
             "y": 32,
             "width": 105,
@@ -9977,7 +10447,7 @@
       "wireframe": "wireframes/composeapp-homeuptodatepreview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 101,
+      "bodyLine": 124,
       "sourceDirectory": "composeApp",
       "sourceFunction": "HomeUpToDatePreview"
     },
@@ -10061,6 +10531,26 @@
             "y": 0,
             "width": 0,
             "height": 0
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 698,
+              "y": 32,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 698,
+            "y": 32,
+            "width": 105,
+            "height": 105
           }
         },
         {
@@ -10290,6 +10780,16 @@
         },
         {
           "bounds": {
+            "x": 698,
+            "y": 32,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
             "x": 824,
             "y": 32,
             "width": 105,
@@ -10315,7 +10815,7 @@
       "wireframe": "wireframes/composeapp-homeconnectedcontrolspreview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 119,
+      "bodyLine": 142,
       "sourceDirectory": "composeApp",
       "sourceFunction": "HomeConnectedControlsPreview"
     },
@@ -10408,6 +10908,26 @@
           "detail": {
             "role": "button",
             "bounds": {
+              "x": 698,
+              "y": 32,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 698,
+            "y": 32,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
               "x": 824,
               "y": 32,
               "width": 105,
@@ -10628,6 +11148,16 @@
         },
         {
           "bounds": {
+            "x": 698,
+            "y": 32,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
             "x": 824,
             "y": 32,
             "width": 105,
@@ -10653,7 +11183,7 @@
       "wireframe": "wireframes/composeapp-homesetupdownloadpreview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 141,
+      "bodyLine": 164,
       "sourceDirectory": "composeApp",
       "sourceFunction": "HomeSetupDownloadPreview"
     },
@@ -10746,6 +11276,26 @@
           "detail": {
             "role": "button",
             "bounds": {
+              "x": 698,
+              "y": 32,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 698,
+            "y": 32,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
               "x": 824,
               "y": 32,
               "width": 105,
@@ -10966,6 +11516,16 @@
         },
         {
           "bounds": {
+            "x": 698,
+            "y": 32,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
             "x": 824,
             "y": 32,
             "width": 105,
@@ -10991,7 +11551,7 @@
       "wireframe": "wireframes/composeapp-homesetupprocesspreview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 160,
+      "bodyLine": 183,
       "sourceDirectory": "composeApp",
       "sourceFunction": "HomeSetupProcessPreview"
     },
@@ -11033,6 +11593,26 @@
           "bounds": {
             "x": 908,
             "y": 1733,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 698,
+              "y": 32,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 698,
+            "y": 32,
             "width": 105,
             "height": 105
           }
@@ -11229,6 +11809,16 @@
         },
         {
           "bounds": {
+            "x": 698,
+            "y": 32,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
             "x": 824,
             "y": 32,
             "width": 105,
@@ -11254,7 +11844,7 @@
       "wireframe": "wireframes/composeapp-homechoosedriveprocesspreview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 179,
+      "bodyLine": 202,
       "sourceDirectory": "composeApp",
       "sourceFunction": "HomeChooseDriveProcessPreview"
     },
@@ -11338,6 +11928,26 @@
             "y": 0,
             "width": 0,
             "height": 0
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 698,
+              "y": 32,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 698,
+            "y": 32,
+            "width": 105,
+            "height": 105
           }
         },
         {
@@ -11567,6 +12177,16 @@
         },
         {
           "bounds": {
+            "x": 698,
+            "y": 32,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
             "x": 824,
             "y": 32,
             "width": 105,
@@ -11592,7 +12212,7 @@
       "wireframe": "wireframes/composeapp-homedownloadingpreview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 199,
+      "bodyLine": 222,
       "sourceDirectory": "composeApp",
       "sourceFunction": "HomeDownloadingPreview"
     },
@@ -11716,6 +12336,26 @@
             "y": 0,
             "width": 0,
             "height": 0
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 698,
+              "y": 32,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 698,
+            "y": 32,
+            "width": 105,
+            "height": 105
           }
         },
         {
@@ -11974,6 +12614,16 @@
         },
         {
           "bounds": {
+            "x": 698,
+            "y": 32,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
             "x": 824,
             "y": 32,
             "width": 105,
@@ -11999,7 +12649,7 @@
       "wireframe": "wireframes/composeapp-homedownloadfailedpreview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 224,
+      "bodyLine": 247,
       "sourceDirectory": "composeApp",
       "sourceFunction": "HomeDownloadFailedPreview"
     },
@@ -12083,6 +12733,26 @@
             "y": 0,
             "width": 0,
             "height": 0
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 698,
+              "y": 32,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 698,
+            "y": 32,
+            "width": 105,
+            "height": 105
           }
         },
         {
@@ -12397,6 +13067,16 @@
         },
         {
           "bounds": {
+            "x": 698,
+            "y": 32,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
             "x": 824,
             "y": 32,
             "width": 105,
@@ -12422,9 +13102,295 @@
       "wireframe": "wireframes/composeapp-homefreshpreview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 250,
+      "bodyLine": 273,
       "sourceDirectory": "composeApp",
       "sourceFunction": "HomeFreshPreview"
+    },
+    {
+      "componentId": "composeApp/SettingsPreview",
+      "images": [
+        {
+          "variant": "ideal",
+          "path": "images/composeapp-settingspreview/ideal__default__compact.png",
+          "state": "default",
+          "width": 1078,
+          "height": 1575,
+          "size": "compact",
+          "livePreview": "https://preview.coo.ee/cadence/p/composeapp-settingspreview__ideal__default__compact",
+          "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.SettingsPreview_Settings",
+          "previewParams": {
+            "showBackground": true,
+            "device": "spec:width=411dp,height=600dp",
+            "widthDp": 411,
+            "heightDp": 600
+          },
+          "density": 2.625,
+          "figmaSvg": "https://preview.coo.ee/cadence/render/composeapp-settingspreview__ideal__default__compact.svg"
+        }
+      ],
+      "greenlines": [
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "switch",
+          "detail": {
+            "role": "switch",
+            "bounds": {
+              "x": 42,
+              "y": 274,
+              "width": 992,
+              "height": 179
+            }
+          },
+          "bounds": {
+            "x": 42,
+            "y": 274,
+            "width": 992,
+            "height": 179
+          }
+        }
+      ],
+      "redlines": [
+        {
+          "bounds": {
+            "x": 42,
+            "y": 179,
+            "width": 188,
+            "height": 63
+          },
+          "label": "Advanced",
+          "padding": {
+            "start": 0,
+            "top": 8,
+            "end": 0,
+            "bottom": 0
+          }
+        },
+        {
+          "bounds": {
+            "x": 897,
+            "y": 322,
+            "width": 137,
+            "height": 84
+          },
+          "cornerRadius": 16
+        },
+        {
+          "bounds": {
+            "x": 918,
+            "y": 343,
+            "width": 42,
+            "height": 42
+          },
+          "cornerRadius": 8
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 485,
+            "width": 216,
+            "height": 84
+          },
+          "label": "Version 0.1.40",
+          "padding": {
+            "start": 0,
+            "top": 8,
+            "end": 0,
+            "bottom": 8
+          }
+        }
+      ],
+      "section": ":composeApp",
+      "group": "Previews",
+      "caption": "Settings",
+      "wireframe": "wireframes/composeapp-settingspreview.svg",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "sourceModule": ":composeApp",
+      "bodyLine": 589,
+      "sourceDirectory": "composeApp",
+      "sourceFunction": "SettingsPreview"
+    },
+    {
+      "componentId": "composeApp/SettingsDeveloperPreview",
+      "images": [
+        {
+          "variant": "ideal",
+          "path": "images/composeapp-settingsdeveloperpreview/ideal__default__compact.png",
+          "state": "default",
+          "width": 1078,
+          "height": 1575,
+          "size": "compact",
+          "livePreview": "https://preview.coo.ee/cadence/p/composeapp-settingsdeveloperpreview__ideal__default__compact",
+          "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.SettingsDeveloperPreview_Settings___advanced_and_developer",
+          "previewParams": {
+            "showBackground": true,
+            "device": "spec:width=411dp,height=600dp",
+            "widthDp": 411,
+            "heightDp": 600
+          },
+          "density": 2.625,
+          "figmaSvg": "https://preview.coo.ee/cadence/render/composeapp-settingsdeveloperpreview__ideal__default__compact.svg"
+        }
+      ],
+      "greenlines": [
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "switch",
+          "detail": {
+            "role": "switch",
+            "bounds": {
+              "x": 42,
+              "y": 274,
+              "width": 992,
+              "height": 179
+            }
+          },
+          "bounds": {
+            "x": 42,
+            "y": 274,
+            "width": 992,
+            "height": 179
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "switch",
+          "detail": {
+            "role": "switch",
+            "bounds": {
+              "x": 897,
+              "y": 517,
+              "width": 137,
+              "height": 84
+            }
+          },
+          "bounds": {
+            "x": 897,
+            "y": 517,
+            "width": 137,
+            "height": 84
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "switch",
+          "detail": {
+            "role": "switch",
+            "bounds": {
+              "x": 897,
+              "y": 685,
+              "width": 137,
+              "height": 84
+            }
+          },
+          "bounds": {
+            "x": 897,
+            "y": 685,
+            "width": 137,
+            "height": 84
+          }
+        }
+      ],
+      "redlines": [
+        {
+          "bounds": {
+            "x": 42,
+            "y": 179,
+            "width": 188,
+            "height": 63
+          },
+          "label": "Advanced",
+          "padding": {
+            "start": 0,
+            "top": 8,
+            "end": 0,
+            "bottom": 0
+          }
+        },
+        {
+          "bounds": {
+            "x": 897,
+            "y": 322,
+            "width": 137,
+            "height": 84
+          },
+          "cornerRadius": 16
+        },
+        {
+          "bounds": {
+            "x": 960,
+            "y": 333,
+            "width": 63,
+            "height": 63
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 897,
+            "y": 517,
+            "width": 137,
+            "height": 84
+          },
+          "role": "Switch",
+          "cornerRadius": 16
+        },
+        {
+          "bounds": {
+            "x": 960,
+            "y": 528,
+            "width": 63,
+            "height": 63
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 897,
+            "y": 685,
+            "width": 137,
+            "height": 84
+          },
+          "role": "Switch",
+          "cornerRadius": 16
+        },
+        {
+          "bounds": {
+            "x": 960,
+            "y": 696,
+            "width": 63,
+            "height": 63
+          },
+          "cornerRadius": 12
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 822,
+            "width": 216,
+            "height": 84
+          },
+          "label": "Version 0.1.40",
+          "padding": {
+            "start": 0,
+            "top": 8,
+            "end": 0,
+            "bottom": 8
+          }
+        }
+      ],
+      "section": ":composeApp",
+      "group": "Previews",
+      "caption": "Settings — advanced and developer",
+      "wireframe": "wireframes/composeapp-settingsdeveloperpreview.svg",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
+      "sourceModule": ":composeApp",
+      "bodyLine": 605,
+      "sourceDirectory": "composeApp",
+      "sourceFunction": "SettingsDeveloperPreview"
     },
     {
       "componentId": "composeApp/SyncModeReadyPreview",
@@ -13244,6 +14210,26 @@
           "detail": {
             "role": "button",
             "bounds": {
+              "x": 698,
+              "y": 32,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 698,
+            "y": 32,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
               "x": 824,
               "y": 32,
               "width": 105,
@@ -13421,6 +14407,16 @@
           "bounds": {
             "x": 908,
             "y": 1560,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 698,
+            "y": 32,
             "width": 105,
             "height": 105
           },
@@ -13508,6 +14504,26 @@
           "detail": {
             "role": "button",
             "bounds": {
+              "x": 698,
+              "y": 32,
+              "width": 105,
+              "height": 105
+            }
+          },
+          "bounds": {
+            "x": 698,
+            "y": 32,
+            "width": 105,
+            "height": 105
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
               "x": 824,
               "y": 32,
               "width": 105,
@@ -13685,6 +14701,16 @@
           "bounds": {
             "x": 908,
             "y": 1560,
+            "width": 105,
+            "height": 105
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 698,
+            "y": 32,
             "width": 105,
             "height": 105
           },
@@ -14537,21 +15563,6 @@
           },
           "role": "Button",
           "cornerRadius": 20
-        },
-        {
-          "bounds": {
-            "x": 42,
-            "y": 1712,
-            "width": 129,
-            "height": 84
-          },
-          "label": "Cadence",
-          "padding": {
-            "start": 0,
-            "top": 8,
-            "end": 0,
-            "bottom": 8
-          }
         }
       ],
       "section": ":composeApp",
@@ -14645,6 +15656,26 @@
             "y": 0,
             "width": 0,
             "height": 0
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 912,
+              "y": 24,
+              "width": 80,
+              "height": 80
+            }
+          },
+          "bounds": {
+            "x": 912,
+            "y": 24,
+            "width": 80,
+            "height": 80
           }
         },
         {
@@ -14870,6 +15901,16 @@
             "end": 8,
             "bottom": 0
           },
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 912,
+            "y": 24,
+            "width": 80,
+            "height": 80
+          },
+          "role": "Button",
           "cornerRadius": 20
         },
         {
@@ -14993,6 +16034,26 @@
           "detail": {
             "role": "button",
             "bounds": {
+              "x": 912,
+              "y": 24,
+              "width": 80,
+              "height": 80
+            }
+          },
+          "bounds": {
+            "x": 912,
+            "y": 24,
+            "width": 80,
+            "height": 80
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
               "x": 1008,
               "y": 24,
               "width": 80,
@@ -15213,6 +16274,16 @@
         },
         {
           "bounds": {
+            "x": 912,
+            "y": 24,
+            "width": 80,
+            "height": 80
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
             "x": 1008,
             "y": 24,
             "width": 80,
@@ -15323,6 +16394,26 @@
             "y": 0,
             "width": 0,
             "height": 0
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
+              "x": 1312,
+              "y": 24,
+              "width": 80,
+              "height": 80
+            }
+          },
+          "bounds": {
+            "x": 1312,
+            "y": 24,
+            "width": 80,
+            "height": 80
           }
         },
         {
@@ -15548,6 +16639,16 @@
             "end": 8,
             "bottom": 0
           },
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
+            "x": 1312,
+            "y": 24,
+            "width": 80,
+            "height": 80
+          },
+          "role": "Button",
           "cornerRadius": 20
         },
         {
@@ -15671,6 +16772,26 @@
           "detail": {
             "role": "button",
             "bounds": {
+              "x": 1312,
+              "y": 24,
+              "width": 80,
+              "height": 80
+            }
+          },
+          "bounds": {
+            "x": 1312,
+            "y": 24,
+            "width": 80,
+            "height": 80
+          }
+        },
+        {
+          "kind": "a11y",
+          "severity": "info",
+          "message": "button",
+          "detail": {
+            "role": "button",
+            "bounds": {
               "x": 1408,
               "y": 24,
               "width": 80,
@@ -15891,6 +17012,16 @@
         },
         {
           "bounds": {
+            "x": 1312,
+            "y": 24,
+            "width": 80,
+            "height": 80
+          },
+          "role": "Button",
+          "cornerRadius": 20
+        },
+        {
+          "bounds": {
             "x": 1408,
             "y": 24,
             "width": 80,
@@ -15945,7 +17076,7 @@
       "caption": "Water buttons · launcher",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/swim/SwimPreviews.kt",
       "sourceModule": ":swimUi",
-      "bodyLine": 55,
+      "bodyLine": 56,
       "sourceDirectory": "swimUi",
       "sourceFunction": "WaterButtonsLauncherPreview",
       "parameters": [
@@ -15977,7 +17108,7 @@
       "caption": "Swim lane · odd and even laps",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/swim/SwimPreviews.kt",
       "sourceModule": ":swimUi",
-      "bodyLine": 112,
+      "bodyLine": 113,
       "sourceDirectory": "swimUi",
       "sourceFunction": "SwimLaneLapsPreview",
       "parameters": [
@@ -16022,7 +17153,7 @@
       "caption": "Swim lane · flip turn",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/swim/SwimPreviews.kt",
       "sourceModule": ":swimUi",
-      "bodyLine": 128,
+      "bodyLine": 129,
       "sourceDirectory": "swimUi",
       "sourceFunction": "SwimLaneFlipTurnPreview",
       "parameters": [
@@ -16058,7 +17189,7 @@
       "caption": "Swim lane · flip turn · launcher",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/swim/SwimPreviews.kt",
       "sourceModule": ":swimUi",
-      "bodyLine": 134,
+      "bodyLine": 135,
       "sourceDirectory": "swimUi",
       "sourceFunction": "SwimLaneFlipTurnLauncherPreview",
       "parameters": [
@@ -16094,7 +17225,7 @@
       "caption": "Swim lane · endless laps",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/swim/SwimPreviews.kt",
       "sourceModule": ":swimUi",
-      "bodyLine": 162,
+      "bodyLine": 163,
       "sourceDirectory": "swimUi",
       "sourceFunction": "SwimLaneEndlessPreview",
       "parameters": [
@@ -16139,7 +17270,7 @@
       "caption": "Swimming pool",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/swim/SwimPreviews.kt",
       "sourceModule": ":swimUi",
-      "bodyLine": 178,
+      "bodyLine": 179,
       "sourceDirectory": "swimUi",
       "sourceFunction": "SwimmingPoolPreview",
       "parameters": [
@@ -17069,7 +18200,7 @@
     "ee.schimke.cadence (CadenceTheme)"
   ],
   "renderer": "compose-preview 2.79.0",
-  "generatedAt": "2026-11-25T06:53:07.300Z",
+  "generatedAt": "2026-11-25T07:53:42.412Z",
   "failures": [
     {
       "id": "render-failed--googleoauthactivity--activity-googleoauthactivity",
@@ -17141,7 +18272,7 @@
   "componentsFile": "components.json",
   "source": {
     "repo": "yschimke/cadence",
-    "ref": "a271cb48c6726c14b81583dae7e892c8302100fc",
+    "ref": "633898844752107bc64f2aa4fa63dcc8863563d6",
     "module": ""
   }
 }

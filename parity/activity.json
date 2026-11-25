@@ -1,11 +1,27 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-25T06:53:10.833Z",
+  "generatedAt": "2026-11-25T07:53:47.211Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "633898844752107bc64f2aa4fa63dcc8863563d6",
+        "subject": "feat: add Settings with headphone controls as an advanced option (#726)",
+        "at": "2026-11-25T07:40:35Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "f26589a40d12c8e7d9c1b88f3389021dc23eaecf",
+        "subject": "feat: drive the status card's swimmer with named remote values (#725)",
+        "at": "2026-11-25T06:51:31Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "a271cb48c6726c14b81583dae7e892c8302100fc",
         "subject": "fix(deps): update dependency org.robolectric:robolectric to v4.18.1 (#724)",
@@ -467,22 +483,6 @@
         "subject": "fix: tighten Remote Compose notification body height and drop duplicate Cancel pill (#668)",
         "at": "2026-11-20T09:10:04Z",
         "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "f5ef39eaa29bcfc8bde9ade0f5a95577319bc442",
-        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.102.0 (#666)",
-        "at": "2026-11-20T08:35:05Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "70eec752ea2a3f569766e357bfe7722b4c2cd69a",
-        "subject": "chore(deps): update anthropics/claude-code-action action to v1.0.284 (#662)",
-        "at": "2026-11-20T08:32:30Z",
-        "author": "renovate[bot]",
         "previewIds": [],
         "components": []
       }

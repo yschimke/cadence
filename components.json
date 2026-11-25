@@ -218,6 +218,11 @@
                     "group": null
                 },
                 {
+                    "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.HomeHeadphoneControlsPreview_Home___headphone_controls",
+                    "componentId": null,
+                    "group": null
+                },
+                {
                     "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.HomeHeadphonesPreview_Home___headphones_connected",
                     "componentId": null,
                     "group": null
@@ -259,6 +264,16 @@
                 },
                 {
                     "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.ManageRefreshingPreview_Manage_-_developer__refreshing",
+                    "componentId": null,
+                    "group": null
+                },
+                {
+                    "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.SettingsDeveloperPreview_Settings___advanced_and_developer",
+                    "componentId": null,
+                    "group": null
+                },
+                {
+                    "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.SettingsPreview_Settings",
                     "componentId": null,
                     "group": null
                 },
@@ -1562,7 +1577,7 @@
                 "name": "PodcastWidgetPreview",
                 "origin": "PROJECT",
                 "jvmName": "PodcastWidgetPreview",
-                "descriptor": "(ZLjava/lang/String;Lee/schimke/cadence/widgets/WidgetColors;Lee/schimke/cadence/swim/PoolSeason;FLjava/lang/Float;Landroidx/compose/runtime/Composer;II)V",
+                "descriptor": "(ZLjava/lang/String;Lee/schimke/cadence/widgets/WidgetColors;Lee/schimke/cadence/swim/PoolSeason;FLjava/lang/Float;ZLandroidx/compose/runtime/Composer;II)V",
                 "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
                 "docs": "unavailable",
                 "receiver": null
@@ -1645,6 +1660,19 @@
                     "noArgFactory": null,
                     "scopeDslReceiver": null,
                     "lambdaReturnTypeFqn": null
+                },
+                {
+                    "name": "working",
+                    "type": "Boolean",
+                    "typeFqn": "kotlin.Boolean",
+                    "hasDefault": true,
+                    "composableSlot": false,
+                    "composableSlotReceiver": null,
+                    "nullable": false,
+                    "noArgConstructible": false,
+                    "noArgFactory": null,
+                    "scopeDslReceiver": null,
+                    "lambdaReturnTypeFqn": null
                 }
             ],
             "slots": [],
@@ -1710,6 +1738,11 @@
                     "group": null
                 },
                 {
+                    "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetSwimmingAnimatedPreview_Podcast_widget___swimming___animated",
+                    "componentId": null,
+                    "group": null
+                },
+                {
                     "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetTallPreview_Podcast_widget___MP3___tall",
                     "componentId": null,
                     "group": null
@@ -1720,7 +1753,17 @@
                     "group": null
                 },
                 {
+                    "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.StatusCardPreparingAnimatedPreview_Status_card___preparing___animated",
+                    "componentId": null,
+                    "group": null
+                },
+                {
                     "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.StatusCardPreparingPreview_Status_card___preparing",
+                    "componentId": null,
+                    "group": null
+                },
+                {
+                    "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.StatusCardSyncingAnimatedPreview_Status_card___syncing___animated",
                     "componentId": null,
                     "group": null
                 }
