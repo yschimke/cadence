@@ -10,15 +10,19 @@ import ee.schimke.composeai.rccreation.compose.layout.RemoteDrawScope
 import ee.schimke.composeai.rccreation.compose.layout.RemoteOffset
 import ee.schimke.composeai.rccreation.compose.layout.RemoteSize
 import ee.schimke.composeai.rccreation.compose.modifier.RemoteModifier
+import ee.schimke.composeai.rccreation.compose.state.RemoteBoolean
 import ee.schimke.composeai.rccreation.compose.state.RemoteColor
 import ee.schimke.composeai.rccreation.compose.state.RemoteFloat
+import ee.schimke.composeai.rccreation.compose.state.RemoteInt
 import ee.schimke.composeai.rccreation.compose.state.RemotePaint
 import ee.schimke.composeai.rccreation.compose.state.clamp
 import ee.schimke.composeai.rccreation.compose.state.copySign
 import ee.schimke.composeai.rccreation.compose.state.floor
 import ee.schimke.composeai.rccreation.compose.state.min
+import ee.schimke.composeai.rccreation.compose.state.rb
 import ee.schimke.composeai.rccreation.compose.state.rc
 import ee.schimke.composeai.rccreation.compose.state.rf
+import ee.schimke.composeai.rccreation.compose.state.ri
 import ee.schimke.composeai.rccreation.compose.state.selectIfLt
 import ee.schimke.composeai.rccreation.compose.state.sin
 import ee.schimke.composeai.rccreation.compose.state.toRad
@@ -122,7 +126,7 @@ fun SwimLaneLaps(
   clock: RemoteFloat = LocalSwimClock.current,
 ) {
   RemoteCanvas(modifier) {
-    val motion = LapMotion(clock, lapSeconds)
+    val motion = LapMotion(clock, lapSeconds.rf)
     drawLane(
       colors = colors,
       direction = motion.direction,
@@ -143,12 +147,18 @@ fun SwimLaneLaps(
 /**
  * Open water with no lane: [WaterBackground] with the swimmer at the surface, doing endless laps of
  * the canvas width with a flip turn at each edge when [swimming], or treading water by the left
- * edge when not. [swimmerSize] is the swimmer's band as a fraction of the height. A [season] swaps
- * the water and the swimmer's cap and adds its own scene, moving on the same clock.
+ * edge when not, or standing still on the deck while [standing]. [swimmerSize] is the swimmer's
+ * band as a fraction of the height. A [season] swaps the water and the swimmer's cap and adds its
+ * own scene, moving on the same clock.
  *
- * With a [progress] (0 at the left edge, 1 at the right) the pool is a progress bar instead: the
- * swimmer strokes left to right and sits [progress] of the way across, wherever [swimming] and
- * [standing] say otherwise.
+ * With a [progress] of 0 or more (0 at the left edge, 1 at the right) the pool is a progress bar
+ * instead: the swimmer strokes left to right and sits [progress] of the way across, whatever
+ * [swimming] and [standing] say. Below 0 there is no progress.
+ *
+ * Everything that can change while the document plays is a remote value, so a host can move the
+ * swimmer, set it swimming or stand it on the deck by writing named values into the player, with no
+ * new capture. [season] and [amplitude] stay fixed: one picks which scene is drawn, the other is
+ * built into the wave paths.
  */
 @Composable
 @RemoteComposable
@@ -156,93 +166,87 @@ fun SwimmingPool(
   modifier: RemoteModifier = RemoteModifier,
   water: WaterColors = WaterColors.Night,
   swimmer: SwimmerColors = SwimmerColors.Default,
-  swimming: Boolean = true,
-  level: Float = 0.6f,
-  crests: Int = 3,
-  bubbles: Int = 5,
-  bubbleScale: Float = 0.5f,
-  swimmerSize: Float = 0.24f,
-  lapSeconds: Float = 9f,
+  swimming: RemoteBoolean = true.rb,
+  level: RemoteFloat = 0.6f.rf,
+  crests: RemoteInt = 3.ri,
+  bubbles: RemoteInt = 5.ri,
+  bubbleScale: RemoteFloat = 0.5f.rf,
+  swimmerSize: RemoteFloat = 0.24f.rf,
+  lapSeconds: RemoteFloat = 9f.rf,
   clock: RemoteFloat = LocalSwimClock.current,
   amplitude: Float = 0.05f,
-  standing: Boolean = false,
+  standing: RemoteBoolean = false.rb,
   season: PoolSeason = PoolSeason.None,
-  progress: Float? = null,
+  progress: RemoteFloat = NoProgress.rf,
 ) {
-  val standing = standing && progress == null
   val water = season.water ?: water
   val swimmer = season.swimmer ?: swimmer
   RemoteCanvas(modifier) {
     val w = width
     val h = height
-    val sceneClock = if (standing) 0f.rf else clock
+    val tracking = progress.isGreaterThanOrEqualTo(0f.rf)
+    // Progress puts the swimmer in the water, whatever else is set.
+    val stood = standing.and(tracking.not())
+    val lapping = swimming.and(tracking.not())
+    val treading = swimming.not().and(tracking.not())
+    // A still deck: no bubbles and a stopped clock for the water and the season's scene.
+    val sceneClock = stood.select(0f.rf, clock)
     drawWater(
       water,
       level,
       crests,
-      if (standing) 0 else bubbles,
-      if (standing) 0f.rf else clock,
+      stood.select(0.ri, bubbles),
+      sceneClock,
       bubbleScale = bubbleScale,
       amplitude = amplitude,
     )
     drawSeasonSky(season, level, sceneClock)
     val band = h * swimmerSize
     clipRect(0f.rf, 0f.rf, w, h) {
-      if (standing) {
-        translate(w * 0.12f, h * level) {
-          scale(band, band, offset(0f, 0f)) { drawStandingSwimmer(swimmer) }
-        }
-      } else {
-        translate(0f.rf, h * level - band * 0.45f) {
-          val lane = LaneGeometry(w, band, wall = 0f.rf)
-          if (progress != null) {
-            drawSwimmer(
-              swimmer,
-              lane.swimmerX(1f.rf, progress.coerceIn(0f, 1f).rf),
-              lane.mid,
-              lane.unit,
-              1f.rf,
-              null,
-              clock,
-            )
-          } else if (swimming) {
-            val motion = LapMotion(clock, lapSeconds)
-            drawPushOffBubbles(
-              swimmer.splash,
-              lane.startX(motion.direction),
-              lane.mid,
-              band,
-              motion.direction,
-              motion.lapClock,
-            )
-            drawSwimmer(
-              swimmer,
-              lane.swimmerX(motion.direction, motion.position),
-              lane.mid,
-              lane.unit,
-              motion.direction,
-              motion.lapClock,
-              clock,
-            )
-          } else {
-            // Treading water: bobbing by the wall, unhurried strokes.
-            val bob = sin(clock * (TwoPi / 3f)) * band * 0.05f
-            drawSwimmer(
-              swimmer,
-              lane.swimmerX(1f.rf, 0f.rf),
-              lane.mid + bob,
-              lane.unit,
-              1f.rf,
-              null,
-              clock * 0.3f,
-            )
-          }
-        }
+      // Both figures are drawn; the one not in use is scaled to nothing.
+      val onDeck = stood.select(band, 0f.rf)
+      translate(w * 0.12f, h * level) {
+        scale(onDeck, onDeck, offset(0f, 0f)) { drawStandingSwimmer(swimmer) }
+      }
+      translate(0f.rf, h * level - band * 0.45f) {
+        val lane = LaneGeometry(w, band, wall = 0f.rf)
+        val inWater = stood.select(0f.rf, 1f.rf)
+        val motion = LapMotion(clock, lapSeconds)
+        val direction = lapping.select(motion.direction, 1f.rf)
+        val position =
+          tracking.select(clamp(progress, 0f, 1f), lapping.select(motion.position, 0f.rf))
+        // Off the laps the turn has long finished, which leaves the steady swimming pose.
+        val turnClock = lapping.select(motion.lapClock, SettledTurnSeconds.rf)
+        // Treading water: bobbing by the wall, unhurried strokes.
+        val bob = treading.select(sin(clock * (TwoPi / 3f)) * band * 0.05f, 0f.rf)
+        drawPushOffBubbles(
+          swimmer.splash,
+          lane.startX(direction),
+          lane.mid,
+          band * inWater,
+          direction,
+          turnClock,
+        )
+        drawSwimmer(
+          swimmer,
+          lane.swimmerX(direction, position),
+          lane.mid + bob,
+          lane.unit * inWater,
+          direction,
+          turnClock,
+          treading.select(clock * 0.3f, clock),
+        )
       }
     }
     drawSeasonFront(season, level, sceneClock)
   }
 }
+
+/** [SwimmingPool]'s progress when there is none. */
+const val NoProgress = -1f
+
+/** Long past a flip turn and its glide, where [drawSwimmer] settles on the steady pose. */
+private const val SettledTurnSeconds = 100f
 
 private fun RemoteDrawScope.drawStandingSwimmer(colors: SwimmerColors) {
   val limb = RemotePaint {
@@ -274,7 +278,7 @@ private fun RemoteDrawScope.drawStandingSwimmer(colors: SwimmerColors) {
 }
 
 /** Endless laps of [lapSeconds]: which way, how far, and seconds since the last wall. */
-private class LapMotion(clock: RemoteFloat, lapSeconds: Float) {
+private class LapMotion(clock: RemoteFloat, lapSeconds: RemoteFloat) {
   private val laps = clock / lapSeconds
   private val lapIndex = floor(laps)
   /** 0 on odd laps (the first), 1 on even laps. */

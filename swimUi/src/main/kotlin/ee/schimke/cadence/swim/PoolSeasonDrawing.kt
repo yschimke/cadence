@@ -17,7 +17,11 @@ import kotlin.math.sin as sinOf
 /**
  * What [season] adds above the water, behind the swimmer. [level] is the surface (0 top, 1 bottom).
  */
-internal fun RemoteDrawScope.drawSeasonSky(season: PoolSeason, level: Float, clock: RemoteFloat) {
+internal fun RemoteDrawScope.drawSeasonSky(
+  season: PoolSeason,
+  level: RemoteFloat,
+  clock: RemoteFloat,
+) {
   val w = width
   val h = height
   when (season) {
@@ -37,7 +41,7 @@ internal fun RemoteDrawScope.drawSeasonSky(season: PoolSeason, level: Float, clo
             spark,
             RemoteOffset(
               w * burst.x + spread * cos(angle),
-              h * (level * burst.y) + spread * sinOf(angle),
+              h * level * burst.y + spread * sinOf(angle),
             ),
           )
         }
@@ -51,7 +55,11 @@ internal fun RemoteDrawScope.drawSeasonSky(season: PoolSeason, level: Float, clo
 }
 
 /** What [season] adds in front of everything: falling snow, or a skeleton shark cruising past. */
-internal fun RemoteDrawScope.drawSeasonFront(season: PoolSeason, level: Float, clock: RemoteFloat) {
+internal fun RemoteDrawScope.drawSeasonFront(
+  season: PoolSeason,
+  level: RemoteFloat,
+  clock: RemoteFloat,
+) {
   val w = width
   val h = height
   when (season) {

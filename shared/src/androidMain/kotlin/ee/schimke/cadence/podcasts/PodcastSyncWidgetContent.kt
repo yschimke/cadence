@@ -23,9 +23,14 @@ import androidx.compose.remote.creation.compose.modifier.fillMaxSize
 import androidx.compose.remote.creation.compose.modifier.fillMaxWidth
 import androidx.compose.remote.creation.compose.modifier.height
 import androidx.compose.remote.creation.compose.modifier.padding
+import androidx.compose.remote.creation.compose.state.RemoteBoolean
+import androidx.compose.remote.creation.compose.state.RemoteFloat
+import androidx.compose.remote.creation.compose.state.RemoteState
+import androidx.compose.remote.creation.compose.state.rb
 import androidx.compose.remote.creation.compose.state.rc
 import androidx.compose.remote.creation.compose.state.rdp
 import androidx.compose.remote.creation.compose.state.rf
+import androidx.compose.remote.creation.compose.state.ri
 import androidx.compose.remote.creation.compose.state.rs
 import androidx.compose.remote.creation.compose.state.rsp
 import androidx.compose.remote.creation.compose.text.RemoteFontWeight
@@ -47,6 +52,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import ee.schimke.cadence.swim.PoolSeason
+import ee.schimke.cadence.swim.androidx.NoProgress
 import ee.schimke.cadence.swim.androidx.SwimmingPool
 import ee.schimke.cadence.widgets.WidgetColors
 import ee.schimke.cadence.widgets.waterColors
@@ -95,6 +101,12 @@ fun PodcastSyncWidgetContent(
    * swimming laps.
    */
   progress: Float? = null,
+  /**
+   * The pool's swimming, standing and progress as named values ([StatusCardPool]) that a host
+   * writes into the playing document, so they change without a new capture. Home's card sets
+   * this; the launcher widget, captured afresh for each update, leaves them constant.
+   */
+  namedPool: Boolean = false,
 ) {
   val lane = heightDp >= 140
   // A tall slot also has room for the source line under the battery.
@@ -272,17 +284,18 @@ fun PodcastSyncWidgetContent(
           }
         }
       if (lane) {
+        val pool = StatusCardPool.values(showSwimming, ready, working, progress)
         SwimmingPool(
           RemoteModifier.fillMaxWidth().height(poolHeight.rdp),
           water = colors.waterColors(),
-          swimming = (showSwimming && ready) || working,
-          level = 0.35f,
-          bubbles = if (ready) 6 else 3,
+          swimming = pool.remoteSwimming(named = namedPool),
+          level = 0.35f.rf,
+          bubbles = (if (ready) 6 else 3).ri,
           amplitude = 0.025f,
-          swimmerSize = 0.48f,
-          standing = !showSwimming && !working,
+          swimmerSize = 0.48f.rf,
+          standing = pool.remoteStanding(named = namedPool),
           season = season,
-          progress = progress,
+          progress = pool.remoteProgress(named = namedPool),
         )
       }
     }
@@ -466,4 +479,41 @@ internal fun compactMinutes(part: String): String {
   val minutes = part.removeSuffix("m").toIntOrNull()?.takeIf { part.endsWith("m") } ?: return part
   return if (minutes < 60) "${minutes}m"
   else if (minutes % 60 == 0) "${minutes / 60}h" else "${minutes / 60}h ${minutes % 60}m"
+}
+
+/**
+ * What the status card's pool shows: the swimmer doing laps, standing on the deck or marking a
+ * task's [progress] ([NoProgress] when there is none). Home writes these into its playing card by
+ * [SWIMMING], [STANDING] and [PROGRESS] in the User domain, so the swimmer moves without a capture.
+ */
+data class StatusCardPool(val swimming: Boolean, val standing: Boolean, val progress: Float) {
+  fun remoteSwimming(named: Boolean): RemoteBoolean =
+    if (named) RemoteBoolean.createNamedRemoteBoolean(SWIMMING, swimming, RemoteState.Domain.User)
+    else swimming.rb
+
+  fun remoteStanding(named: Boolean): RemoteBoolean =
+    if (named) RemoteBoolean.createNamedRemoteBoolean(STANDING, standing, RemoteState.Domain.User)
+    else standing.rb
+
+  fun remoteProgress(named: Boolean): RemoteFloat =
+    if (named) RemoteFloat.createNamedRemoteFloat(PROGRESS, progress, RemoteState.Domain.User)
+    else progress.rf
+
+  companion object {
+    const val SWIMMING = "statusCard.pool.swimming"
+    const val STANDING = "statusCard.pool.standing"
+    const val PROGRESS = "statusCard.pool.progress"
+
+    /**
+     * The swimmer laps while the phone controls the audio and has episodes ready, or while a task
+     * runs; it stands on the deck when neither. A task's [progress] (0 to 1) puts it that far
+     * across instead.
+     */
+    fun values(showSwimming: Boolean, ready: Boolean, working: Boolean, progress: Float?) =
+      StatusCardPool(
+        swimming = (showSwimming && ready) || working,
+        standing = !showSwimming && !working,
+        progress = progress?.coerceIn(0f, 1f) ?: NoProgress,
+      )
+  }
 }
