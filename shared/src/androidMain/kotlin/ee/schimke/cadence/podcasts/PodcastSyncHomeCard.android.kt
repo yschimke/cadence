@@ -101,16 +101,20 @@ actual fun PodcastSyncHomeCard(
         colors = colors,
       )
     val document by
-      produceState<ByteArray?>(null, renderer, design, failed, values, width, height) {
+      produceState<RenderedCard?>(null, renderer, design, failed, values, width, height) {
         // Keeps the last document while the next binds, so the card never blinks empty.
         if (renderer == null || failed) value = null
-        else renderer.render(design, values, width, height)?.let { value = it } ?: run { value = null }
+        else
+          renderer.render(design, values, width, height)?.let { value = RenderedCard(it, values) }
+            ?: run { value = null }
       }
-    val bytes = document
-    if (bytes != null) {
-      val currentValues by rememberUpdatedState(values)
+    val rendered = document
+    if (rendered != null) {
+      // Taps are read against the values the playing document was drawn from: while the next one
+      // binds, the card on screen still shows the old buttons in its slots.
+      val shown by rememberUpdatedState(rendered.values)
       RcAdaptiveRemoteDocumentPlayer(
-        bytes,
+        rendered.bytes,
         Modifier.fillMaxWidth().height(height.dp),
         // The player is an Android View; screen readers need a name for it as well.
         contentDescription = headline ?: "Sync status",
@@ -118,7 +122,7 @@ actual fun PodcastSyncHomeCard(
         onNamedAction = { name, metadata ->
           val action = (metadata as? String)?.substringBefore("\n--RC-METADATA-V1--\n") ?: name
           // A button slot's tap is the button in that slot.
-          currentOnAction(currentValues.buttonFor(action)?.id ?: action)
+          currentOnAction(shown.buttonFor(action)?.id ?: action)
         },
       )
     } else {
@@ -250,6 +254,9 @@ private fun CapturedStatusCard(
       },
     )
 }
+
+/** A design's document and the values it was drawn with, whose button slots its taps name. */
+private class RenderedCard(val bytes: ByteArray, val values: StatusCardValues)
 
 /** The card's playing document, once there is one. */
 private class PlayerRef {
