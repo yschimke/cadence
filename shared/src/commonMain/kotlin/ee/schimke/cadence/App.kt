@@ -44,6 +44,10 @@ import ee.schimke.cadence.files.DeviceFilesScreen
 import ee.schimke.cadence.home.HomeScreen
 import ee.schimke.cadence.platform.Analytics
 import ee.schimke.cadence.podcasts.*
+import ee.schimke.cadence.settings.AdvancedSettings
+import ee.schimke.cadence.settings.AdvancedSettingsViewModel
+import ee.schimke.cadence.settings.LocalAdvancedSettings
+import ee.schimke.cadence.settings.SettingsScreen
 import ee.schimke.cadence.sync.FileSyncScreen
 import ee.schimke.cadence.sync.ManageSyncScreen
 import kotlinx.serialization.Serializable
@@ -54,7 +58,18 @@ fun App(desktopNavigation: DesktopNavigation? = null) {
   val developerEnabled by developerModel.enabled.collectAsStateWithLifecycle()
   val developer =
     remember(developerEnabled) { DeveloperMode(developerEnabled, developerModel::setEnabled) }
-  CompositionLocalProvider(LocalDeveloperMode provides developer) { AppContent(desktopNavigation) }
+  val advancedModel = metroViewModel<AdvancedSettingsViewModel>()
+  val headphoneControls by advancedModel.headphoneControls.collectAsStateWithLifecycle()
+  val advanced =
+    remember(headphoneControls) {
+      AdvancedSettings(headphoneControls, advancedModel::setHeadphoneControls)
+    }
+  CompositionLocalProvider(
+    LocalDeveloperMode provides developer,
+    LocalAdvancedSettings provides advanced,
+  ) {
+    AppContent(desktopNavigation)
+  }
 }
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
@@ -142,6 +157,7 @@ private fun AppContent(desktopNavigation: DesktopNavigation?) {
             onCopyToHeadphones = { navController.navigate(FileSync) },
             onBluetoothControls = { navController.navigate(BluetoothControls) },
             onManageSources = { navController.navigate(ManageSync) },
+            onSettings = { navController.navigate(Settings) },
             onFileExplorer = { navController.navigate(Devices) },
           )
         }
@@ -183,6 +199,11 @@ private fun AppContent(desktopNavigation: DesktopNavigation?) {
             onManage = { navController.navigate(ManageSync) },
           )
         }
+        composable<Settings> {
+          SettingsScreen(
+            modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
+          )
+        }
         composable<ManageSync> {
           ManageSyncScreen(
             podcastSource = podcastState.library.playlist?.name,
@@ -208,6 +229,8 @@ private fun AppContent(desktopNavigation: DesktopNavigation?) {
 @Serializable data object FileSync
 
 @Serializable data object ManageSync
+
+@Serializable data object Settings
 
 @Serializable data object Podcasts
 

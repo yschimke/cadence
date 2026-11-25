@@ -21,9 +21,14 @@ import ee.schimke.cadence.files.DeviceFilesViewModel
 import ee.schimke.cadence.home.HomeActions
 import ee.schimke.cadence.home.HomeContent
 import ee.schimke.cadence.home.HomeViewModel
+import ee.schimke.cadence.platform.LocalPlayUpdateSettings
+import ee.schimke.cadence.platform.PlayUpdateSettings
 import ee.schimke.cadence.podcasts.LocalPodcastState
 import ee.schimke.cadence.podcasts.PodcastPlayerUi
 import ee.schimke.cadence.podcasts.PodcastWorkUi
+import ee.schimke.cadence.settings.AdvancedSettings
+import ee.schimke.cadence.settings.LocalAdvancedSettings
+import ee.schimke.cadence.settings.SettingsScreen
 import ee.schimke.cadence.sync.ManageSyncContent
 
 private val themedModifier
@@ -57,6 +62,24 @@ internal fun HomeLibraryPreview() {
       podcastPlayer = PodcastPlayerUi(suggestMediaAccess = true),
       modifier = themedModifier,
     )
+  }
+}
+
+/** Home with the headphones' audio controls turned on under Advanced in Settings. */
+@Preview(name = "Home — headphone controls", showBackground = true, heightDp = 900)
+@Composable
+internal fun HomeHeadphoneControlsPreview() {
+  AndroidMaterialTheme {
+    CompositionLocalProvider(
+      LocalAdvancedSettings provides AdvancedSettings(headphoneControls = true) {},
+    ) {
+      HomeContent(
+        state = PreviewFixtures.libraryState.copy(bluetoothSupported = true),
+        podcasts = PreviewFixtures.podcastState,
+        actions = HomeActions(),
+        modifier = themedModifier,
+      )
+    }
   }
 }
 
@@ -557,6 +580,36 @@ internal fun ManageRefreshingPreview() {
         onSetAutoSync = manageCallbacks.onSetAutoSync,
         onSetUsbMatch = manageCallbacks.onSetUsbMatch,
       )
+    }
+  }
+}
+
+@Preview(name = "Settings", showBackground = true, device = "spec:width=411dp,height=600dp")
+@Composable
+internal fun SettingsPreview() {
+  AndroidMaterialTheme {
+    CompositionLocalProvider(
+      LocalPlayUpdateSettings provides PlayUpdateSettings("0.1.40", tester = false) {},
+    ) {
+      SettingsScreen(modifier = themedModifier)
+    }
+  }
+}
+
+@Preview(
+  name = "Settings — advanced and developer",
+  showBackground = true,
+  device = "spec:width=411dp,height=600dp",
+)
+@Composable
+internal fun SettingsDeveloperPreview() {
+  AndroidMaterialTheme {
+    CompositionLocalProvider(
+      LocalAdvancedSettings provides AdvancedSettings(headphoneControls = true) {},
+      LocalDeveloperMode provides DeveloperMode(enabled = true) {},
+      LocalPlayUpdateSettings provides PlayUpdateSettings("0.1.40", tester = true) {},
+    ) {
+      SettingsScreen(modifier = themedModifier)
     }
   }
 }

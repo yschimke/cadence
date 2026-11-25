@@ -23,8 +23,11 @@ message Settings {
   // sync writes in a cross-host manifest.
   string host_id = 8;
   // Shows the developer options (sync profiles, NFS, USB auto-sync, diagnostics). Unlocked by
-  // tapping the version in Manage sources.
+  // tapping the version in Settings.
   bool developer_mode = 9;
+  // Advanced: shows the way into the headphones' Bluetooth audio controls on Home. Off by
+  // default; turned on in Settings.
+  bool headphone_controls = 10;
 }
 
 message Device {

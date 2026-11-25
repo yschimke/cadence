@@ -2,7 +2,6 @@
 
 package ee.schimke.cadence.sync
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -15,7 +14,6 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -42,7 +40,6 @@ import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
-import androidx.compose.material3.LoadingIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
@@ -54,7 +51,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -72,11 +68,6 @@ import ee.schimke.cadence.datastore.proto.SourceKind
 import ee.schimke.cadence.datastore.proto.SyncProfile
 import ee.schimke.cadence.datastore.proto.SyncSource
 import ee.schimke.cadence.developer.LocalDeveloperMode
-import ee.schimke.cadence.platform.LocalPlayUpdateSettings
-import ee.schimke.cadence.platform.LocalWidgetDesigns
-import ee.schimke.cadence.platform.PlayUpdateSettings
-import ee.schimke.cadence.platform.WidgetDesigns
-import kotlinx.coroutines.launch
 
 @Composable
 fun ManageSyncScreen(
@@ -169,8 +160,6 @@ fun ManageSyncContent(
 ) {
   val portable = LocalPortableHost.current
   val developer = LocalDeveloperMode.current
-  val playUpdates = LocalPlayUpdateSettings.current
-  val widgetDesigns = LocalWidgetDesigns.current
   Surface(modifier = modifier, color = MaterialTheme.colorScheme.background) {
     LazyColumn(
       modifier =
@@ -235,8 +224,14 @@ fun ManageSyncContent(
         }
       }
       if (developer.enabled) {
-        item { DeveloperHeader(onTurnOff = { developer.setEnabled(false) }) }
-        playUpdates?.let { settings -> item { EarlyUpdatesRow(settings) } }
+        item {
+          Text(
+            "Developer options",
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.SemiBold,
+            modifier = Modifier.semantics { heading() },
+          )
+        }
         item { TextButton(onClick = onCloudBackup) { Text("Cross-device backup") } }
         item { OutlinedButton(onClick = onAddNfsShare) { Text("Add NFS share") } }
         item { TargetDeviceCard(state, onSelectTargetDevice, onSetAutoSync, onSetUsbMatch) }
@@ -268,122 +263,8 @@ fun ManageSyncContent(
             onDelete = { onDeleteProfile(profile.id) },
           )
         }
-        widgetDesigns?.let { designs -> item { WidgetDesignsRow(designs) } }
-      }
-      item {
-        AppVersionRow(
-          version = playUpdates?.version,
-          developer = developer.enabled,
-          onUnlock = { developer.setEnabled(true) },
-        )
       }
     }
-  }
-}
-
-/**
- * Fetches the widgets' designs now rather than waiting for the daily refresh: to pick up a design
- * or season just published, or to check what the widgets draw.
- */
-@Composable
-private fun WidgetDesignsRow(designs: WidgetDesigns) {
-  val scope = rememberCoroutineScope()
-  var refreshing by remember { mutableStateOf(false) }
-  var result by remember { mutableStateOf<String?>(null) }
-  Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
-    Column(Modifier.weight(1f)) {
-      Text("Widget designs", style = MaterialTheme.typography.titleSmall)
-      Text(
-        result ?: "Seasonal looks for the home-screen widgets, updated daily.",
-        style = MaterialTheme.typography.bodySmall,
-        color = MaterialTheme.colorScheme.onSurfaceVariant,
-      )
-    }
-    if (refreshing) {
-      LoadingIndicator(Modifier.size(28.dp))
-    } else {
-      TextButton(
-        onClick = {
-          refreshing = true
-          scope.launch {
-            result =
-              try {
-                designs.refresh()
-              } finally {
-                refreshing = false
-              }
-          }
-        },
-      ) {
-        Text("Refresh")
-      }
-    }
-  }
-}
-
-/** Taps on [AppVersionRow] that turn on developer mode. */
-private const val DEVELOPER_TAPS = 7
-
-/**
- * The installed version, or the app name where it is not known (desktop, web). Tapping it
- * [DEVELOPER_TAPS] times turns on developer mode, which shows the options most people never need.
- */
-@Composable
-private fun AppVersionRow(version: String?, developer: Boolean, onUnlock: () -> Unit) {
-  var taps by remember { mutableStateOf(0) }
-  Text(
-    version?.let { "Version $it" } ?: "Cadence",
-    style = MaterialTheme.typography.bodySmall,
-    color = MaterialTheme.colorScheme.onSurfaceVariant,
-    modifier =
-      Modifier.clickable(enabled = !developer) {
-          taps++
-          if (taps >= DEVELOPER_TAPS) {
-            taps = 0
-            onUnlock()
-          }
-        }
-        .padding(vertical = 8.dp),
-  )
-}
-
-/** Starts the developer options, with the switch that hides them again. */
-@Composable
-private fun DeveloperHeader(onTurnOff: () -> Unit) {
-  Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
-    Column(Modifier.weight(1f)) {
-      Text(
-        "Developer options",
-        style = MaterialTheme.typography.titleMedium,
-        fontWeight = FontWeight.SemiBold,
-        modifier = Modifier.semantics { heading() },
-      )
-      Text(
-        "For testing and diagnostics. Tap the version 7 times to show them again.",
-        style = MaterialTheme.typography.bodySmall,
-        color = MaterialTheme.colorScheme.onSurfaceVariant,
-      )
-    }
-    Switch(checked = true, onCheckedChange = { if (!it) onTurnOff() })
-  }
-}
-
-/**
- * Opts this device in to Play updates as soon as they appear (internal testers); otherwise updates
- * are offered once they are a week old.
- */
-@Composable
-private fun EarlyUpdatesRow(settings: PlayUpdateSettings) {
-  Row(verticalAlignment = Alignment.CenterVertically) {
-    Column(Modifier.weight(1f)) {
-      Text("Early updates", style = MaterialTheme.typography.titleSmall)
-      Text(
-        "Update as soon as a new version is on Play, for testers.",
-        style = MaterialTheme.typography.bodySmall,
-        color = MaterialTheme.colorScheme.onSurfaceVariant,
-      )
-    }
-    Switch(checked = settings.tester, onCheckedChange = settings.onTesterChange)
   }
 }
 
