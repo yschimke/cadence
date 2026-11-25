@@ -485,7 +485,7 @@
       "wireframe": "wireframes/home-empty.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 39,
+      "bodyLine": 43,
       "sourceDirectory": "composeApp",
       "sourceFunction": "HomeEmptyPreview"
     },
@@ -745,7 +745,7 @@
       "wireframe": "wireframes/devices-loaded.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 288,
+      "bodyLine": 296,
       "sourceDirectory": "composeApp",
       "sourceFunction": "DevicesScreenLoadedPreview"
     },
@@ -774,7 +774,7 @@
       "wireframe": "wireframes/devices-loading.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 307,
+      "bodyLine": 315,
       "sourceDirectory": "composeApp",
       "sourceFunction": "DevicesScreenLoadingPreview"
     },
@@ -835,7 +835,7 @@
       "wireframe": "wireframes/devices-empty.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 320,
+      "bodyLine": 328,
       "sourceDirectory": "composeApp",
       "sourceFunction": "DevicesScreenEmptyPreview"
     },
@@ -864,7 +864,7 @@
       "wireframe": "wireframes/devicefiles-loading.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 333,
+      "bodyLine": 341,
       "sourceDirectory": "composeApp",
       "sourceFunction": "DeviceFilesLoadingPreview"
     },
@@ -893,7 +893,7 @@
       "wireframe": "wireframes/devicefiles-notavailable.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 344,
+      "bodyLine": 352,
       "sourceDirectory": "composeApp",
       "sourceFunction": "DeviceFilesNotAvailablePreview"
     },
@@ -1480,7 +1480,7 @@
       "wireframe": "wireframes/bluetooth-disconnected.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 358,
+      "bodyLine": 366,
       "sourceDirectory": "composeApp",
       "sourceFunction": "BluetoothDisconnectedPreview"
     },
@@ -2030,7 +2030,7 @@
       "wireframe": "wireframes/bluetooth-connectedplaying.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 386,
+      "bodyLine": 394,
       "sourceDirectory": "composeApp",
       "sourceFunction": "BluetoothConnectedPlayingPreview"
     },
@@ -2686,7 +2686,7 @@
       "wireframe": "wireframes/bluetooth-permissionmissing.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 414,
+      "bodyLine": 422,
       "sourceDirectory": "composeApp",
       "sourceFunction": "BluetoothPermissionMissingPreview"
     },
@@ -3093,7 +3093,7 @@
       "wireframe": "wireframes/bluetooth-mp3mode.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 442,
+      "bodyLine": 450,
       "sourceDirectory": "composeApp",
       "sourceFunction": "BluetoothMp3ModePreview"
     },
@@ -3742,7 +3742,7 @@
       "wireframe": "wireframes/bluetooth-developer.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 470,
+      "bodyLine": 478,
       "sourceDirectory": "composeApp",
       "sourceFunction": "BluetoothDeveloperPreview"
     },
@@ -3872,7 +3872,7 @@
       "wireframe": "wireframes/manage-empty.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 520,
+      "bodyLine": 528,
       "sourceDirectory": "composeApp",
       "sourceFunction": "ManageEmptyPreview"
     },
@@ -4119,7 +4119,7 @@
       "wireframe": "wireframes/manage-populated.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 542,
+      "bodyLine": 550,
       "sourceDirectory": "composeApp",
       "sourceFunction": "ManagePopulatedPreview"
     },
@@ -4906,7 +4906,7 @@
       "wireframe": "wireframes/manage-refreshing.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 564,
+      "bodyLine": 572,
       "sourceDirectory": "composeApp",
       "sourceFunction": "ManageRefreshingPreview"
     },
@@ -9133,7 +9133,7 @@
       "wireframe": "wireframes/composeapp-homelibrarypreview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 54,
+      "bodyLine": 58,
       "sourceDirectory": "composeApp",
       "sourceFunction": "HomeLibraryPreview"
     },
@@ -9142,14 +9142,18 @@
       "images": [
         {
           "variant": "ideal",
-          "path": "images/composeapp-homeheadphonecontrolspreview/ideal__default.png",
+          "path": "images/composeapp-homeheadphonecontrolspreview/ideal__default__compact.png",
           "state": "default",
-          "width": 1050,
-          "height": 2363,
-          "livePreview": "https://preview.coo.ee/cadence/p/composeapp-homeheadphonecontrolspreview__ideal__default",
+          "width": 1078,
+          "height": 2362,
+          "size": "compact",
+          "livePreview": "https://preview.coo.ee/cadence/p/composeapp-homeheadphonecontrolspreview__ideal__default__compact",
           "previewId": "ee.schimke.cadence.preview.ScreenPreviewsKt.HomeHeadphoneControlsPreview_Home___headphone_controls",
           "previewParams": {
-            "showBackground": true
+            "showBackground": true,
+            "device": "spec:width=411dp,height=900dp,dpi=420",
+            "widthDp": 411,
+            "heightDp": 900
           },
           "density": 2.625
         }
@@ -9162,14 +9166,14 @@
           "detail": {
             "role": "button",
             "bounds": {
-              "x": 882,
+              "x": 908,
               "y": 1560,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
-            "x": 882,
+            "x": 908,
             "y": 1560,
             "width": 105,
             "height": 105
@@ -9182,17 +9186,17 @@
           "detail": {
             "role": "button",
             "bounds": {
-              "x": 882,
+              "x": 908,
               "y": 2347,
               "width": 105,
-              "height": 15
+              "height": 12
             }
           },
           "bounds": {
-            "x": 882,
+            "x": 908,
             "y": 2347,
             "width": 105,
-            "height": 15
+            "height": 12
           }
         },
         {
@@ -9222,14 +9226,14 @@
           "detail": {
             "role": "button",
             "bounds": {
-              "x": 672,
+              "x": 698,
               "y": 32,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
-            "x": 672,
+            "x": 698,
             "y": 32,
             "width": 105,
             "height": 105
@@ -9242,14 +9246,14 @@
           "detail": {
             "role": "button",
             "bounds": {
-              "x": 798,
+              "x": 824,
               "y": 32,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
-            "x": 798,
+            "x": 824,
             "y": 32,
             "width": 105,
             "height": 105
@@ -9262,14 +9266,14 @@
           "detail": {
             "role": "button",
             "bounds": {
-              "x": 924,
+              "x": 950,
               "y": 32,
               "width": 105,
               "height": 105
             }
           },
           "bounds": {
-            "x": 924,
+            "x": 950,
             "y": 32,
             "width": 105,
             "height": 105
@@ -9281,7 +9285,7 @@
           "bounds": {
             "x": 42,
             "y": 189,
-            "width": 966,
+            "width": 992,
             "height": 520
           },
           "cornerRadius": 20
@@ -9290,7 +9294,7 @@
           "bounds": {
             "x": 42,
             "y": 751,
-            "width": 966,
+            "width": 992,
             "height": 724
           },
           "cornerRadius": 12
@@ -9299,7 +9303,7 @@
           "bounds": {
             "x": 42,
             "y": 751,
-            "width": 966,
+            "width": 992,
             "height": 148
           },
           "padding": {
@@ -9313,7 +9317,7 @@
           "bounds": {
             "x": 105,
             "y": 902,
-            "width": 840,
+            "width": 866,
             "height": 189
           },
           "padding": {
@@ -9336,7 +9340,7 @@
           "bounds": {
             "x": 231,
             "y": 1031,
-            "width": 735,
+            "width": 761,
             "height": 60
           },
           "padding": {
@@ -9350,7 +9354,7 @@
           "bounds": {
             "x": 105,
             "y": 1094,
-            "width": 840,
+            "width": 866,
             "height": 189
           },
           "padding": {
@@ -9373,7 +9377,7 @@
           "bounds": {
             "x": 231,
             "y": 1223,
-            "width": 735,
+            "width": 761,
             "height": 60
           },
           "padding": {
@@ -9387,7 +9391,7 @@
           "bounds": {
             "x": 105,
             "y": 1286,
-            "width": 840,
+            "width": 866,
             "height": 189
           },
           "padding": {
@@ -9410,14 +9414,14 @@
           "bounds": {
             "x": 42,
             "y": 1517,
-            "width": 966,
+            "width": 992,
             "height": 745
           },
           "cornerRadius": 12
         },
         {
           "bounds": {
-            "x": 882,
+            "x": 908,
             "y": 1560,
             "width": 105,
             "height": 105
@@ -9429,17 +9433,17 @@
           "bounds": {
             "x": 42,
             "y": 2304,
-            "width": 966,
-            "height": 58
+            "width": 992,
+            "height": 55
           },
           "cornerRadius": 12
         },
         {
           "bounds": {
-            "x": 882,
+            "x": 908,
             "y": 2347,
             "width": 105,
-            "height": 15
+            "height": 12
           },
           "role": "Button",
           "cornerRadius": 20
@@ -9462,7 +9466,7 @@
         },
         {
           "bounds": {
-            "x": 672,
+            "x": 698,
             "y": 32,
             "width": 105,
             "height": 105
@@ -9472,7 +9476,7 @@
         },
         {
           "bounds": {
-            "x": 798,
+            "x": 824,
             "y": 32,
             "width": 105,
             "height": 105
@@ -9482,7 +9486,7 @@
         },
         {
           "bounds": {
-            "x": 924,
+            "x": 950,
             "y": 32,
             "width": 105,
             "height": 105
@@ -9497,7 +9501,7 @@
       "wireframe": "wireframes/composeapp-homeheadphonecontrolspreview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 71,
+      "bodyLine": 79,
       "sourceDirectory": "composeApp",
       "sourceFunction": "HomeHeadphoneControlsPreview"
     },
@@ -9786,7 +9790,7 @@
       "wireframe": "wireframes/composeapp-homeheadphonespreview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 88,
+      "bodyLine": 96,
       "sourceDirectory": "composeApp",
       "sourceFunction": "HomeHeadphonesPreview"
     },
@@ -10079,7 +10083,7 @@
       "wireframe": "wireframes/composeapp-homereadytocopypreview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 106,
+      "bodyLine": 114,
       "sourceDirectory": "composeApp",
       "sourceFunction": "HomeReadyToCopyPreview"
     },
@@ -10447,7 +10451,7 @@
       "wireframe": "wireframes/composeapp-homeuptodatepreview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 124,
+      "bodyLine": 132,
       "sourceDirectory": "composeApp",
       "sourceFunction": "HomeUpToDatePreview"
     },
@@ -10815,7 +10819,7 @@
       "wireframe": "wireframes/composeapp-homeconnectedcontrolspreview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 142,
+      "bodyLine": 150,
       "sourceDirectory": "composeApp",
       "sourceFunction": "HomeConnectedControlsPreview"
     },
@@ -11183,7 +11187,7 @@
       "wireframe": "wireframes/composeapp-homesetupdownloadpreview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 164,
+      "bodyLine": 172,
       "sourceDirectory": "composeApp",
       "sourceFunction": "HomeSetupDownloadPreview"
     },
@@ -11551,7 +11555,7 @@
       "wireframe": "wireframes/composeapp-homesetupprocesspreview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 183,
+      "bodyLine": 191,
       "sourceDirectory": "composeApp",
       "sourceFunction": "HomeSetupProcessPreview"
     },
@@ -11844,7 +11848,7 @@
       "wireframe": "wireframes/composeapp-homechoosedriveprocesspreview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 202,
+      "bodyLine": 210,
       "sourceDirectory": "composeApp",
       "sourceFunction": "HomeChooseDriveProcessPreview"
     },
@@ -12212,7 +12216,7 @@
       "wireframe": "wireframes/composeapp-homedownloadingpreview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 222,
+      "bodyLine": 230,
       "sourceDirectory": "composeApp",
       "sourceFunction": "HomeDownloadingPreview"
     },
@@ -12649,7 +12653,7 @@
       "wireframe": "wireframes/composeapp-homedownloadfailedpreview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 247,
+      "bodyLine": 255,
       "sourceDirectory": "composeApp",
       "sourceFunction": "HomeDownloadFailedPreview"
     },
@@ -13102,7 +13106,7 @@
       "wireframe": "wireframes/composeapp-homefreshpreview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 273,
+      "bodyLine": 281,
       "sourceDirectory": "composeApp",
       "sourceFunction": "HomeFreshPreview"
     },
@@ -13137,14 +13141,14 @@
             "role": "switch",
             "bounds": {
               "x": 42,
-              "y": 274,
+              "y": 548,
               "width": 992,
               "height": 179
             }
           },
           "bounds": {
             "x": 42,
-            "y": 274,
+            "y": 548,
             "width": 992,
             "height": 179
           }
@@ -13155,6 +13159,36 @@
           "bounds": {
             "x": 42,
             "y": 179,
+            "width": 217,
+            "height": 63
+          },
+          "label": "Status card",
+          "padding": {
+            "start": 0,
+            "top": 8,
+            "end": 0,
+            "bottom": 0
+          }
+        },
+        {
+          "bounds": {
+            "x": 147,
+            "y": 311,
+            "width": 172,
+            "height": 53
+          },
+          "label": "Swimming",
+          "padding": {
+            "start": 16,
+            "top": 0,
+            "end": 0,
+            "bottom": 0
+          }
+        },
+        {
+          "bounds": {
+            "x": 42,
+            "y": 453,
             "width": 188,
             "height": 63
           },
@@ -13169,7 +13203,7 @@
         {
           "bounds": {
             "x": 897,
-            "y": 322,
+            "y": 596,
             "width": 137,
             "height": 84
           },
@@ -13178,7 +13212,7 @@
         {
           "bounds": {
             "x": 918,
-            "y": 343,
+            "y": 617,
             "width": 42,
             "height": 42
           },
@@ -13187,7 +13221,7 @@
         {
           "bounds": {
             "x": 42,
-            "y": 485,
+            "y": 759,
             "width": 216,
             "height": 84
           },
@@ -13206,7 +13240,7 @@
       "wireframe": "wireframes/composeapp-settingspreview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 589,
+      "bodyLine": 597,
       "sourceDirectory": "composeApp",
       "sourceFunction": "SettingsPreview"
     },
@@ -13388,7 +13422,7 @@
       "wireframe": "wireframes/composeapp-settingsdeveloperpreview.svg",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "sourceModule": ":composeApp",
-      "bodyLine": 605,
+      "bodyLine": 615,
       "sourceDirectory": "composeApp",
       "sourceFunction": "SettingsDeveloperPreview"
     },
@@ -18200,7 +18234,7 @@
     "ee.schimke.cadence (CadenceTheme)"
   ],
   "renderer": "compose-preview 2.79.0",
-  "generatedAt": "2026-11-25T07:53:42.412Z",
+  "generatedAt": "2026-11-25T08:41:22.492Z",
   "failures": [
     {
       "id": "render-failed--googleoauthactivity--activity-googleoauthactivity",
@@ -18272,7 +18306,7 @@
   "componentsFile": "components.json",
   "source": {
     "repo": "yschimke/cadence",
-    "ref": "633898844752107bc64f2aa4fa63dcc8863563d6",
+    "ref": "b524c7f25689f154a7415d921e816d1a1c32d5af",
     "module": ""
   }
 }

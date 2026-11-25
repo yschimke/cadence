@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-25T07:53:47.211Z",
+  "generatedAt": "2026-11-25T08:41:27.111Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "b524c7f25689f154a7415d921e816d1a1c32d5af",
+        "subject": "feat: draw Home's status card from Livery designs, with icon buttons (#727)",
+        "at": "2026-11-25T08:28:59Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "633898844752107bc64f2aa4fa63dcc8863563d6",
         "subject": "feat: add Settings with headphone controls as an advanced option (#726)",
@@ -474,14 +482,6 @@
         "sha": "594ab4a62d6ba309a8f38d5a8a4eca02c7d81a89",
         "subject": "fix(build): exclude compose-ai-tools checkout from verifyYschimkeBoms (#669)",
         "at": "2026-11-20T09:22:44Z",
-        "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "8b16d0b21ce6abbe1f920d4a0122987d8f44bd78",
-        "subject": "fix: tighten Remote Compose notification body height and drop duplicate Cancel pill (#668)",
-        "at": "2026-11-20T09:10:04Z",
         "author": "Yuri Schimke",
         "previewIds": [],
         "components": []
