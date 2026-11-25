@@ -18,9 +18,76 @@
       "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "variant": "spec:width=411dp,height=1200dp,dpi=420"
+    },
+    {
+      "annotatedBasename": "",
+      "cleanBasename": "SwimLaneEndlessPreview_Swim_lane_endless_laps-3bd8ff30.png",
+      "findings": [],
+      "functionName": "SwimLaneEndlessPreview",
+      "module": "swimUi",
+      "previewId": "ee.schimke.cadence.swim.SwimPreviewsKt.SwimLaneEndlessPreview_Swim lane \u00b7 endless laps",
+      "rendersDir": "swimUi",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/swim/SwimPreviews.kt",
+      "variant": ""
+    },
+    {
+      "annotatedBasename": "",
+      "cleanBasename": "SwimLaneFlipTurnLauncherPreview_Swim_lane_flip_turn_launcher-ca909f07.png",
+      "findings": [],
+      "functionName": "SwimLaneFlipTurnLauncherPreview",
+      "module": "swimUi",
+      "previewId": "ee.schimke.cadence.swim.SwimPreviewsKt.SwimLaneFlipTurnLauncherPreview_Swim lane \u00b7 flip turn \u00b7 launcher",
+      "rendersDir": "swimUi",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/swim/SwimPreviews.kt",
+      "variant": ""
+    },
+    {
+      "annotatedBasename": "",
+      "cleanBasename": "SwimLaneFlipTurnPreview_Swim_lane_flip_turn-31a2260f.png",
+      "findings": [],
+      "functionName": "SwimLaneFlipTurnPreview",
+      "module": "swimUi",
+      "previewId": "ee.schimke.cadence.swim.SwimPreviewsKt.SwimLaneFlipTurnPreview_Swim lane \u00b7 flip turn",
+      "rendersDir": "swimUi",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/swim/SwimPreviews.kt",
+      "variant": ""
+    },
+    {
+      "annotatedBasename": "",
+      "cleanBasename": "SwimLaneLapsPreview_Swim_lane_odd_and_even_laps-35df6d6f.png",
+      "findings": [],
+      "functionName": "SwimLaneLapsPreview",
+      "module": "swimUi",
+      "previewId": "ee.schimke.cadence.swim.SwimPreviewsKt.SwimLaneLapsPreview_Swim lane \u00b7 odd and even laps",
+      "rendersDir": "swimUi",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/swim/SwimPreviews.kt",
+      "variant": ""
+    },
+    {
+      "annotatedBasename": "",
+      "cleanBasename": "SwimmingPoolPreview_Swimming_pool-28ed1567.png",
+      "findings": [],
+      "functionName": "SwimmingPoolPreview",
+      "module": "swimUi",
+      "previewId": "ee.schimke.cadence.swim.SwimPreviewsKt.SwimmingPoolPreview_Swimming pool",
+      "rendersDir": "swimUi",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/swim/SwimPreviews.kt",
+      "variant": ""
+    },
+    {
+      "annotatedBasename": "",
+      "cleanBasename": "WaterButtonsLauncherPreview_Water_buttons_launcher-5df3807f.png",
+      "findings": [],
+      "functionName": "WaterButtonsLauncherPreview",
+      "module": "swimUi",
+      "previewId": "ee.schimke.cadence.swim.SwimPreviewsKt.WaterButtonsLauncherPreview_Water buttons \u00b7 launcher",
+      "rendersDir": "swimUi",
+      "sourceFile": "src/main/kotlin/ee/schimke/cadence/swim/SwimPreviews.kt",
+      "variant": ""
     }
   ],
   "scope": "changed-previews",
+  "status": "atf-unavailable",
   "uncheckedPreviews": [
     {
       "module": "composeApp",
