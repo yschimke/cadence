@@ -1,6 +1,6 @@
 {
     "formatVersion": "compose-preview-history/v1",
-    "generatedFrom": "cbc6e807504a04aaf285be2fb9d8d3d6fdc429e6",
+    "generatedFrom": "70908d1bb646ee4919e33392a425be2f8c9dd4d1",
     "previews": {
         "composeApp/activity__MainActivity": {
             "path": "renders/composeApp/activity__MainActivity.png",
@@ -4399,6 +4399,21 @@
             "unstable": false,
             "flapCount": 0
         },
+        "composeApp/ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.StatusCardPreparingPreview_Status card · preparing": {
+            "path": "renders/composeApp/StatusCardPreparingPreview_Status_card_preparing-f64cb6f5.png",
+            "versions": [
+                {
+                    "blob": "4f46f32a00777ad9c20353fa65272e3ea760e58b",
+                    "commit": "70908d1bb646ee4919e33392a425be2f8c9dd4d1",
+                    "date": "2026-11-25T06:21:42Z",
+                    "sourceSha": "a65366df",
+                    "commits": 1
+                }
+            ],
+            "observations": 1,
+            "unstable": false,
+            "flapCount": 0
+        },
         "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.BluetoothConnectedPlayingPreview_BT controls - connected + playing": {
             "path": "renders/composeApp/BluetoothConnectedPlayingPreview_BT_controls_connected_playing-45366603.png",
             "versions": [
@@ -4990,6 +5005,13 @@
             "path": "renders/composeApp/HomeDownloadingPreview_Home_downloading-1b5958c7.png",
             "versions": [
                 {
+                    "blob": "4defe28c92768cb524b06e85fab64ef99a6adc12",
+                    "commit": "70908d1bb646ee4919e33392a425be2f8c9dd4d1",
+                    "date": "2026-11-25T06:21:42Z",
+                    "sourceSha": "a65366df",
+                    "commits": 1
+                },
+                {
                     "blob": "09a5edc8d2b908287dfcba16040024de50ed0307",
                     "commit": "d91d0297474abc48f40cb2ee2c776a1ed60ffebd",
                     "date": "2026-11-21T11:42:42Z",
@@ -5032,7 +5054,7 @@
                     "commits": 1
                 }
             ],
-            "observations": 6,
+            "observations": 7,
             "unstable": false,
             "flapCount": 0
         },
