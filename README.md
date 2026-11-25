@@ -1,6 +1,6 @@
 # Accessibility Report
 
-_Auto-generated from `compose-preview/a11y/pr`. 53 preview(s) across 1 module(s) · 1 error(s) · 1 warning(s) · 9 info._
+_Auto-generated from `compose-preview/a11y/pr`. 48 preview(s) across 1 module(s) · 1 error(s) · 1 warning(s) · 8 info._
 
 Browse inline; image URLs are pinned to the commit SHA on the baseline branch so links keep resolving after merge.
 
@@ -39,30 +39,6 @@ _No findings._
 | # | Level | Rule | Element | Message |
 |--:|---|---|---|---|
 | 1 | INFO | DuplicateSpeakableTextCheck | android.widget.TextView | This non-clickable item's speakable text: "Saltwater Daily · Pocket Casts" is identical to that of 1 other item(s). |
-
-### `CloudSyncWidgetLargePreview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/CloudSyncWidgetLargePreview_Cloud_sync_widget_large-2f8e7fdc.png" width="400" />
-
-_No findings._
-
-### `CloudSyncWidgetLightPreview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/CloudSyncWidgetLightPreview_Cloud_sync_widget_light-b8e2ad8c.png" width="400" />
-
-_No findings._
-
-### `CloudSyncWidgetPreview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/CloudSyncWidgetPreview_Cloud_sync_widget-761df7cb.png" width="400" />
-
-_No findings._
-
-### `CloudSyncWidgetSmallPreview`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/CloudSyncWidgetSmallPreview_Cloud_sync_widget_small-f212ff03.png" width="400" />
-
-_No findings._
 
 ### `DeviceFilesLoadingPreview`
 
@@ -132,7 +108,7 @@ _No findings._
 
 _No findings._
 
-### `HomeHeadphoneControlsPreview`
+### `HomeHeadphoneControlsPreview` · `spec:width=411dp,height=900dp,dpi=420`
 
 <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/HomeHeadphoneControlsPreview_Home_headphone_controls-dc41f7aa.a11y.png" width="400" />
 
@@ -211,14 +187,6 @@ _No findings._
 <img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/PlayStorePhoneHomeLight_Play_Store_phone_Home_light-a1bae343.a11y.png" width="400" />
 
 _No findings._
-
-### `PlayStorePhoneManage` · `pixel_2`
-
-<img src="https://raw.githubusercontent.com/yschimke/cadence/compose-preview/a11y/pr/renders/composeApp/PlayStorePhoneManage_Play_Store_phone_Manage-5865e3ea.a11y.png" width="400" />
-
-| # | Level | Rule | Element | Message |
-|--:|---|---|---|---|
-| 1 | INFO | DuplicateSpeakableTextCheck | android.widget.TextView | This non-clickable item's speakable text: "Folder" is identical to that of 1 other item(s). |
 
 ### `PlayStoreSevenInchHomeDark` · `spec:width=600dp,height=960dp,dpi=320`
 
