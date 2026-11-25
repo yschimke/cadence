@@ -48,6 +48,7 @@ import androidx.compose.material.icons.filled.Podcasts
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.SdStorage
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Source
 import androidx.compose.material.icons.filled.Usb
 import androidx.compose.material3.Button
@@ -128,6 +129,7 @@ import ee.schimke.cadence.podcasts.rememberPodcastPlayer
 import ee.schimke.cadence.podcasts.rememberPodcastWork
 import ee.schimke.cadence.podcasts.sourceBackend
 import ee.schimke.cadence.podcasts.title
+import ee.schimke.cadence.settings.LocalAdvancedSettings
 import ee.schimke.cadence.sync.BrowsedItem
 import ee.schimke.cadence.sync.SourceSuggestion
 import ee.schimke.cadence.sync.formatLastRefreshed
@@ -158,6 +160,7 @@ data class HomeActions(
   val onEjectUsb: (() -> Unit)? = null,
   val onBluetoothControls: () -> Unit = {},
   val onManageSources: () -> Unit = {},
+  val onSettings: () -> Unit = {},
   val onFileExplorer: () -> Unit = {},
   val onPrevious: () -> Unit = {},
   val onPlayPause: () -> Unit = {},
@@ -174,6 +177,7 @@ fun HomeScreen(
   onManageSources: () -> Unit,
   onFileExplorer: () -> Unit,
   modifier: Modifier = Modifier,
+  onSettings: () -> Unit = {},
 ) {
   val viewModel = metroViewModel<HomeViewModel>()
   val state by viewModel.collectState()
@@ -295,6 +299,7 @@ fun HomeScreen(
           },
         onBluetoothControls = onBluetoothControls,
         onManageSources = onManageSources,
+        onSettings = onSettings,
         onFileExplorer = onFileExplorer,
         onPrevious = viewModel::previousTrack,
         onPlayPause = viewModel::playPause,
@@ -491,11 +496,20 @@ private fun LibraryTopBar(
       // Where Home's settings live, in plain sight rather than behind an overflow menu.
       TopBarAction(Icons.Filled.Source, "Manage sources", actions.onManageSources)
       TopBarAction(Icons.Filled.SdStorage, "Storage", actions.onFileExplorer)
-      if (empty && state.bluetoothSupported && state.bluetooth.connectedDevice == null)
+      TopBarAction(Icons.Filled.Settings, "Settings", actions.onSettings)
+      if (empty && headphoneControls(state) && state.bluetooth.connectedDevice == null)
         TopBarAction(Icons.Filled.Bluetooth, "Bluetooth controls", actions.onBluetoothControls)
     }
   }
 }
+
+/**
+ * Whether Home offers the headphones' Bluetooth audio controls: on a platform that has them, once
+ * turned on under Advanced in Settings.
+ */
+@Composable
+private fun headphoneControls(state: HomeViewModel.UiState): Boolean =
+  state.bluetoothSupported && LocalAdvancedSettings.current.headphoneControls
 
 /** An icon button whose label also shows as a tooltip on long-press or hover. */
 @OptIn(ExperimentalMaterial3Api::class)
@@ -594,7 +608,7 @@ private fun StatusSection(
           changes = changes.takeIf { it.isNotEmpty() }?.summary(),
           changeLines = if (changesExpanded) changeLines(changes) else emptyList(),
           refresh = cloud.hasSource,
-          audioControls = state.bluetoothSupported,
+          audioControls = headphoneControls(state),
         )
       // The card is a Remote Compose document that names itself and its buttons. Its player
       // can't announce changes, so the running task's status is a polite live region here.
@@ -637,7 +651,7 @@ private fun StatusSection(
           if (button.primary) Button(onClick = { act(button.id) }) { Text(button.label) }
           else TextButton(onClick = { act(button.id) }) { Text(button.label) }
         }
-        if (state.bluetoothSupported)
+        if (headphoneControls(state))
           TopBarAction(Icons.Filled.Headphones, "Audio controls", actions.onBluetoothControls)
       }
     }

@@ -36,11 +36,13 @@ private fun PodcastWidgetPreview(
   seconds: Float = 3.2f,
   /** Home's card while a task runs: its status as the headline, the swimmer as its progress. */
   progress: Float? = null,
+  /** Home's card while a task runs with no percentage yet: the swimmer does laps. */
+  working: Boolean = progress != null,
 ) {
   BoxWithConstraints(Modifier.fillMaxSize()) {
     val width = maxWidth.value.toInt()
     val height = maxHeight.value.toInt()
-    key(width, height, colors, seconds) {
+    key(width, height, colors, seconds, progress) {
       RemoteContentPreview(Modifier.fillMaxSize(), RcLauncherWidgets.profileFor()) {
         val content: @Composable @RemoteComposable () -> Unit = {
           PodcastSyncWidgetContent(
@@ -54,18 +56,21 @@ private fun PodcastWidgetPreview(
             colors = colors,
             season = season,
             headline =
-              if (progress != null) "Preparing 2 of 3: Cristiano Ronaldo: What Is His Legacy?"
-              else "Plug in to sync",
+              when {
+                progress != null -> "Preparing 2 of 3: Cristiano Ronaldo: What Is His Legacy?"
+                working -> "Downloading new episodes…"
+                else -> "Plug in to sync"
+              },
             source = "Up Next · 2 h ago",
-            attention = progress == null,
+            attention = !working,
             extras =
-              if (progress != null) StatusCardExtras(refresh = true, audioControls = true)
+              if (working) StatusCardExtras(refresh = true, audioControls = true)
               else
                 StatusCardExtras(
                   buttons = listOf(StatusCardButton("open", "Sync", primary = true)),
                 ),
-            fixedScale = if (progress != null) 1f else null,
-            working = progress != null,
+            fixedScale = if (working) 1f else null,
+            working = working,
             progress = progress,
           )
         }
@@ -252,4 +257,36 @@ internal fun PodcastWidgetChristmasAnimatedPreview() {
 @Composable
 internal fun StatusCardPreparingPreview() {
   PodcastWidgetPreview(false, progress = 0.33f)
+}
+
+// The swimming animation, recorded frame by frame on the swim clock.
+
+/** The launcher widget's pool: a lap, the flip turn at the wall and the push off. */
+@Preview(name = "Podcast widget · swimming · animated", widthDp = 312, heightDp = 152)
+@AnimatedPreview(durationMs = 5000, frameIntervalMs = 100, showCurves = false)
+@Composable
+internal fun PodcastWidgetSwimmingAnimatedPreview() {
+  // A lap starts at 0 s on the clock; 6.5 s in, the swimmer is near the far wall, turning soon.
+  PodcastWidgetPreview(true, seconds = 6.5f + rememberPreviewSeconds())
+}
+
+/** Home's card while a task runs before it has a percentage: the swimmer does laps. */
+@Preview(name = "Status card · syncing · animated", widthDp = 360, heightDp = 176)
+@AnimatedPreview(durationMs = 4000, frameIntervalMs = 100, showCurves = false)
+@Composable
+internal fun StatusCardSyncingAnimatedPreview() {
+  PodcastWidgetPreview(false, working = true, seconds = rememberPreviewSeconds())
+}
+
+/** Home's card while preparing episodes: the swimmer strokes across as the progress climbs. */
+@Preview(name = "Status card · preparing · animated", widthDp = 360, heightDp = 198)
+@AnimatedPreview(durationMs = 4000, frameIntervalMs = 100, showCurves = false)
+@Composable
+internal fun StatusCardPreparingAnimatedPreview() {
+  val seconds = rememberPreviewSeconds()
+  PodcastWidgetPreview(
+    false,
+    seconds = seconds,
+    progress = (0.1f + seconds / 5f).coerceAtMost(0.9f),
+  )
 }

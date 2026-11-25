@@ -25,6 +25,7 @@ enum class DesktopSection(
   Sources("Sources", "ManageSync", Icons.Default.Folder),
   Transfers("Transfers", "FileSync", Icons.Default.Sync),
   CloudBackup("Cloud backup", "CloudSync", Icons.Default.Cloud),
+  Settings("Settings", "Settings", Icons.Default.Settings),
 }
 
 class DesktopNavigation {
@@ -48,6 +49,7 @@ internal fun NavController.navigateDesktopSection(section: DesktopSection) {
       DesktopSection.Sources -> ManageSync
       DesktopSection.Transfers -> FileSync
       DesktopSection.CloudBackup -> CloudSync
+      DesktopSection.Settings -> Settings
     }
   navigate(route) {
     launchSingleTop = true
