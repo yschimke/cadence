@@ -4,7 +4,7 @@
     "functionName": "MainActivity",
     "module": "composeApp",
     "renderBasename": "activity__MainActivity.png",
-    "sha256": "fb7001c01e65bae1c94af942cde2d86100d822f41068cbb59736ac4f45d5a6f6",
+    "sha256": "800365546ccf824e917c3010c684342a7394380fa4456311f6383063b9820f68",
     "sourceFile": null
   },
   "composeApp/ee.schimke.cadence.preview.FoundationPreviewsKt.FoundationMaterial3DarkPreview_Foundation \u2014 Material 3 dark": {
@@ -383,6 +383,14 @@
     "sha256": "c6aa093ce065a26f84ea27b317c35b7d6f44a6f7ce139ea530c6a9d2cfdab205",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt"
   },
+  "composeApp/ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetSwimmingAnimatedPreview_Podcast widget \u00b7 swimming \u00b7 animated": {
+    "captureLabel": "",
+    "functionName": "PodcastWidgetSwimmingAnimatedPreview",
+    "module": "composeApp",
+    "renderBasename": "PodcastWidgetSwimmingAnimatedPreview_Podcast_widget_swimming_animated-b9a2645c.gif",
+    "sha256": "071b6798bc115fb2d570387cd540570b4eebd986030258d4158432a383e617ab",
+    "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt"
+  },
   "composeApp/ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetTallPreview_Podcast widget \u00b7 MP3 \u00b7 tall": {
     "captureLabel": "",
     "functionName": "PodcastWidgetTallPreview",
@@ -399,12 +407,28 @@
     "sha256": "0511a72092bd074804251e6afb2e6261c54b838af1cf08e76613a3c75cd16f52",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt"
   },
+  "composeApp/ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.StatusCardPreparingAnimatedPreview_Status card \u00b7 preparing \u00b7 animated": {
+    "captureLabel": "",
+    "functionName": "StatusCardPreparingAnimatedPreview",
+    "module": "composeApp",
+    "renderBasename": "StatusCardPreparingAnimatedPreview_Status_card_preparing_animated-07d67969.gif",
+    "sha256": "eb0935bc68738c04e90e581bcec157ed7fa92a621a2d8e5f39b5766cc59c52d8",
+    "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt"
+  },
   "composeApp/ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.StatusCardPreparingPreview_Status card \u00b7 preparing": {
     "captureLabel": "",
     "functionName": "StatusCardPreparingPreview",
     "module": "composeApp",
     "renderBasename": "StatusCardPreparingPreview_Status_card_preparing-f64cb6f5.png",
     "sha256": "870e46be739c4bbf4b0b89569be7b7f30616924cdc0e939009b1b704e9c6c8ae",
+    "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt"
+  },
+  "composeApp/ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.StatusCardSyncingAnimatedPreview_Status card \u00b7 syncing \u00b7 animated": {
+    "captureLabel": "",
+    "functionName": "StatusCardSyncingAnimatedPreview",
+    "module": "composeApp",
+    "renderBasename": "StatusCardSyncingAnimatedPreview_Status_card_syncing_animated-8efdeb82.gif",
+    "sha256": "54081b010d2dd91b99197891d5e0c530bd8414a8f08016ec9f561378d24ee8d8",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.BluetoothConnectedPlayingPreview_BT controls - connected + playing": {
@@ -492,7 +516,7 @@
     "functionName": "HomeChooseDriveProcessPreview",
     "module": "composeApp",
     "renderBasename": "HomeChooseDriveProcessPreview_Home_choose_drive_to_process-03be1471.png",
-    "sha256": "51a3d12aeb56fb2411054afa4ab6cbe74abe44d9cea12287f2dd117bd0e21e99",
+    "sha256": "3519323d11b4b9d37cddb4543d07a73e92ed44cb37c1d654ea318169ae504812",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.HomeConnectedControlsPreview_Home \u2014 headphones and controls": {
@@ -500,7 +524,7 @@
     "functionName": "HomeConnectedControlsPreview",
     "module": "composeApp",
     "renderBasename": "HomeConnectedControlsPreview_Home_headphones_and_controls-d527acc7.png",
-    "sha256": "9a9ffaf61a090b1cb09351dcb385bac936b8d019c933fcc985264299da0b19c1",
+    "sha256": "ef3c56782d587779b80a0d8cc5a4c523aed07744afb420e6b79e717fed9ce742",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.HomeDownloadFailedPreview_Home \u2014 download failed": {
@@ -508,7 +532,7 @@
     "functionName": "HomeDownloadFailedPreview",
     "module": "composeApp",
     "renderBasename": "HomeDownloadFailedPreview_Home_download_failed-c8141de9.png",
-    "sha256": "0af3dbfed16c11b53f708e3e462d59d341bc6bb1e5a2b42b914ccb0aa1a5057a",
+    "sha256": "97e306bbbc9c9b222106affccc9348afb5c7d96c1e0c662e88aba13e4ab2a2db",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.HomeDownloadingPreview_Home \u2014 downloading": {
@@ -516,7 +540,7 @@
     "functionName": "HomeDownloadingPreview",
     "module": "composeApp",
     "renderBasename": "HomeDownloadingPreview_Home_downloading-1b5958c7.png",
-    "sha256": "c2ba44bf8f3678a661f1574af92cd8d01881ecfe91def3f47dc744c9f79baff1",
+    "sha256": "a5361103d782ee3105faef7ad643b413bcfc8b1530cae3ae2ce9fe832285c6f1",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.HomeEmptyPreview_Home \u2014 empty": {
@@ -524,7 +548,7 @@
     "functionName": "HomeEmptyPreview",
     "module": "composeApp",
     "renderBasename": "HomeEmptyPreview_Home_empty-571e68af.png",
-    "sha256": "06640204ffafcaf1eae318828004fd56bf296ee6391a742ef3a250fd06834345",
+    "sha256": "bea641d5ed474c5b17e9fd615c04d086297d32c5ad4970abe6b057c6885589ee",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.HomeFreshPreview_Home \u2014 new releases": {
@@ -532,7 +556,15 @@
     "functionName": "HomeFreshPreview",
     "module": "composeApp",
     "renderBasename": "HomeFreshPreview_Home_new_releases-638a4962.png",
-    "sha256": "86b8a39f680233c911e1353da6ffe93933211601dafdad7912be12e651d0edbf",
+    "sha256": "ec59fae81884fd3c1c15ec01781c52e077ec3a4dcddc809c84afb1174a5fd759",
+    "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt"
+  },
+  "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.HomeHeadphoneControlsPreview_Home \u2014 headphone controls": {
+    "captureLabel": "",
+    "functionName": "HomeHeadphoneControlsPreview",
+    "module": "composeApp",
+    "renderBasename": "HomeHeadphoneControlsPreview_Home_headphone_controls-dc41f7aa.png",
+    "sha256": "3de7174d4a44f6598a30fd9d3b8076a17fc12e0f04a8dd55f70cc89740ef7f35",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.HomeHeadphonesPreview_Home \u2014 headphones connected": {
@@ -540,7 +572,7 @@
     "functionName": "HomeHeadphonesPreview",
     "module": "composeApp",
     "renderBasename": "HomeHeadphonesPreview_Home_headphones_connected-71a28d46.png",
-    "sha256": "8f618eb722c9fac3f32e074005e988868f79261090c11ce84d5cf7d3c4b6acfe",
+    "sha256": "5451a930eb9b2dd0322e2e37dd6f58834589150bf068accd5595d1858705a6a1",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.HomeLibraryPreview_Home \u2014 library": {
@@ -548,7 +580,7 @@
     "functionName": "HomeLibraryPreview",
     "module": "composeApp",
     "renderBasename": "HomeLibraryPreview_Home_library-7701225c.png",
-    "sha256": "1938ca5a7877247ce58d9fa84f7a8cbe102cbcff8168fac2f37da1214ce1ca2d",
+    "sha256": "29c424a4811702155f7c80305b19e8c4640e86d5e67eca286936c87d9c5755e4",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.HomeReadyToCopyPreview_Home \u2014 ready to copy": {
@@ -556,7 +588,7 @@
     "functionName": "HomeReadyToCopyPreview",
     "module": "composeApp",
     "renderBasename": "HomeReadyToCopyPreview_Home_ready_to_copy-3a801e9d.png",
-    "sha256": "6afee86df38f29ed2c6618b51c3a68854251a5dea514bb65258e4442d3589be8",
+    "sha256": "6f84c10bfea8dcac74ed5495bfff16bf9d2442275c229eadd164f163815c152f",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.HomeSetupDownloadPreview_Home \u2014 set up, to download": {
@@ -564,7 +596,7 @@
     "functionName": "HomeSetupDownloadPreview",
     "module": "composeApp",
     "renderBasename": "HomeSetupDownloadPreview_Home_set_up_to_download-6ff1ff1a.png",
-    "sha256": "702bca2f7f0a605094eff21b589e8bca67ec208a6e17721d4ab600c4fb6e4628",
+    "sha256": "6fe6a07d623ee0da75d4a09bd460185889fd48ecc8dd2680dfee4bada8ea4495",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.HomeSetupProcessPreview_Home \u2014 set up, to process": {
@@ -572,7 +604,7 @@
     "functionName": "HomeSetupProcessPreview",
     "module": "composeApp",
     "renderBasename": "HomeSetupProcessPreview_Home_set_up_to_process-06153b3f.png",
-    "sha256": "0c4a8953e0e2828f8452c89f53475489b511b63ad0651050fd3007d8c1715d87",
+    "sha256": "1c7f61fa49cb22d4fbb66f3180ab06dd80f7b912a099ba32bd77477307e7731d",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.HomeUpToDatePreview_Home \u2014 up to date": {
@@ -580,7 +612,7 @@
     "functionName": "HomeUpToDatePreview",
     "module": "composeApp",
     "renderBasename": "HomeUpToDatePreview_Home_up_to_date-2cbd5a11.png",
-    "sha256": "d434cc00da2830de1323ee4bcd7da594718465325180fd5a133e9e6eff430d36",
+    "sha256": "de9ddd6c21b3a943dfa8992fe3c25010690169066c3553e2726db9358088ddb1",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.ManageEmptyPreview_Manage - empty": {
@@ -588,7 +620,7 @@
     "functionName": "ManageEmptyPreview",
     "module": "composeApp",
     "renderBasename": "ManageEmptyPreview_Manage_empty-55c57410.png",
-    "sha256": "a4830e0ec3a24fa85bd36501ee80d8342d0b7fed6da6edf73164e96f14419bcc",
+    "sha256": "43feed52b0f45bc6023adab891f2e9c53916a8f173b8ff5b3b60f02b9787baac",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.ManagePopulatedPreview_Manage - populated": {
@@ -596,7 +628,7 @@
     "functionName": "ManagePopulatedPreview",
     "module": "composeApp",
     "renderBasename": "ManagePopulatedPreview_Manage_populated-41ab32cd.png",
-    "sha256": "785faac3d6798e6be47d0331620f739bbf22a40e704aa58f13aa602e3c52f05b",
+    "sha256": "b8022aede4d7f3c86d32d0af48b57ef240a62d4602b014336d6df06af8613b62",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.ManageRefreshingPreview_Manage - developer, refreshing": {
@@ -604,7 +636,23 @@
     "functionName": "ManageRefreshingPreview",
     "module": "composeApp",
     "renderBasename": "ManageRefreshingPreview_Manage_developer_refreshing-8faaf151.png",
-    "sha256": "098a5ad663353aa3f7b7864cc17137cd76d74724fd0b13a7aa6d92cdfc25b219",
+    "sha256": "e243388f6ca393798207c2b35cc9a7cda1c6b6c61705ff24822294abe34d7f27",
+    "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt"
+  },
+  "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.SettingsDeveloperPreview_Settings \u2014 advanced and developer": {
+    "captureLabel": "",
+    "functionName": "SettingsDeveloperPreview",
+    "module": "composeApp",
+    "renderBasename": "SettingsDeveloperPreview_Settings_advanced_and_developer-ce10762d.png",
+    "sha256": "e71a9630e0293b3d7687e49d8b36c04d34b8ae780d4ee37e9814b0ac2fc49b0a",
+    "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt"
+  },
+  "composeApp/ee.schimke.cadence.preview.ScreenPreviewsKt.SettingsPreview_Settings": {
+    "captureLabel": "",
+    "functionName": "SettingsPreview",
+    "module": "composeApp",
+    "renderBasename": "SettingsPreview_Settings-bb788da3.png",
+    "sha256": "ab62c7209ff9041ea71ea326ea8071c846d5b24e11f5d56a5d8a4928498f525c",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStorePhoneBluetooth_Play Store \u00b7 phone \u00b7 Bluetooth": {
@@ -620,7 +668,7 @@
     "functionName": "PlayStorePhoneHomeDark",
     "module": "composeApp",
     "renderBasename": "PlayStorePhoneHomeDark_Play_Store_phone_Home_dark-aef8b2b7.png",
-    "sha256": "072eade610b9d908293ecc55e5510b6da9ff678373d648b9b4def9a14561e301",
+    "sha256": "bba1105ca783511f3eaa896e36150dd97cf551fe6eb551b383c68db1ff029517",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/playstore/PlayStorePreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStorePhoneHomeLight_Play Store \u00b7 phone \u00b7 Home (light)": {
@@ -628,7 +676,7 @@
     "functionName": "PlayStorePhoneHomeLight",
     "module": "composeApp",
     "renderBasename": "PlayStorePhoneHomeLight_Play_Store_phone_Home_light-a1bae343.png",
-    "sha256": "ce1293a52b5f59434ea0da01bf9fa782423260c6e65cb5d67e491bb138096d29",
+    "sha256": "420ac9b56e3d7526dce578520442abc284b773edf6a205172c56c440ff5fe1b3",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/playstore/PlayStorePreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStorePhoneManage_Play Store \u00b7 phone \u00b7 Manage": {
@@ -636,7 +684,7 @@
     "functionName": "PlayStorePhoneManage",
     "module": "composeApp",
     "renderBasename": "PlayStorePhoneManage_Play_Store_phone_Manage-5865e3ea.png",
-    "sha256": "c720ac0a69c31d1267950fafcf52f460c343fe9c0aa8efc54d165fea0d788459",
+    "sha256": "334719db4c6805c6a077be4055988aec6a204d02d51b3b2eb010283604ebd6f9",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/playstore/PlayStorePreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStorePhoneSync_Play Store \u00b7 phone \u00b7 Sync": {
@@ -652,7 +700,7 @@
     "functionName": "PlayStoreSevenInchHomeDark",
     "module": "composeApp",
     "renderBasename": "PlayStoreSevenInchHomeDark_Play_Store_7_tablet_Home_dark-79090521.png",
-    "sha256": "7aee968358c73bc894b101a1093d803469a852276cb7443a0d8af85c55aed707",
+    "sha256": "cddfaad6b6d6b4284a7934b7ed5c0968249d45ed2b686f45c9cb600a9a22e68b",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/playstore/PlayStorePreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStoreSevenInchHomeLight_Play Store \u00b7 7_ tablet \u00b7 Home (light)": {
@@ -660,7 +708,7 @@
     "functionName": "PlayStoreSevenInchHomeLight",
     "module": "composeApp",
     "renderBasename": "PlayStoreSevenInchHomeLight_Play_Store_7_tablet_Home_light-59744afc.png",
-    "sha256": "ee619acdeaf5e84d7bcf2ff068e71c670d9e357515357cd8e74e7e588c15b3ef",
+    "sha256": "82872ecb22c94fd26e68e30e50710860b2d4fb9e73236d44e6ad204fc7c2cd8b",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/playstore/PlayStorePreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStoreTenInchHomeDark_Play Store \u00b7 10_ tablet \u00b7 Home (dark)": {
@@ -668,7 +716,7 @@
     "functionName": "PlayStoreTenInchHomeDark",
     "module": "composeApp",
     "renderBasename": "PlayStoreTenInchHomeDark_Play_Store_10_tablet_Home_dark-91cf4524.png",
-    "sha256": "b1b3e28700e0b1d378e48ef32ae6a58b15a1197a52c9b4005c9d506100e0d6cf",
+    "sha256": "f5faae0a9428f0685abfb111a93d2103006505468c4e68e7f9e69f4c2c4bfcc9",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/playstore/PlayStorePreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.playstore.PlayStorePreviewsKt.PlayStoreTenInchHomeLight_Play Store \u00b7 10_ tablet \u00b7 Home (light)": {
@@ -676,7 +724,7 @@
     "functionName": "PlayStoreTenInchHomeLight",
     "module": "composeApp",
     "renderBasename": "PlayStoreTenInchHomeLight_Play_Store_10_tablet_Home_light-536fa195.png",
-    "sha256": "a17267dd8255534a3f0ff72773de0765a4c8822036eac13d485ed085e07bcad4",
+    "sha256": "5ee465b82be22a1c69777bed6b40bead5be9e828ac6909e9c75c995097c65859",
     "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/playstore/PlayStorePreviews.kt"
   },
   "composeApp/ee.schimke.cadence.preview.redesign.RedesignPreviewsKt.SyncModeDonePreview_Sync complete": {
