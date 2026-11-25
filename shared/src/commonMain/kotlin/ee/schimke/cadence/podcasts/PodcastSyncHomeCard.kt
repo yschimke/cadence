@@ -9,6 +9,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Download
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
@@ -44,6 +45,8 @@ data class StatusCardExtras(
  * Home's status card, drawn from the same document as the launcher widget: [headline] says what to
  * do next, then the headphones, what's ready on this phone, the battery and [source], with the
  * step's buttons and the next sync's changes from [extras]. Taps report their id to [onAction].
+ * While a task is [working] the swimmer swims laps, and once it reports how far it has got,
+ * [progress] (0 to 1) moves the swimmer across the pool instead.
  */
 @Composable
 expect fun PodcastSyncHomeCard(
@@ -56,6 +59,8 @@ expect fun PodcastSyncHomeCard(
   source: String?,
   attention: Boolean,
   extras: StatusCardExtras = StatusCardExtras(),
+  working: Boolean = false,
+  progress: Float? = null,
   onAction: (String) -> Unit = {},
 )
 
@@ -69,6 +74,8 @@ fun PodcastSyncHomeFallback(
   headline: String? = null,
   source: String? = null,
   extras: StatusCardExtras = StatusCardExtras(),
+  working: Boolean = false,
+  progress: Float? = null,
   onAction: (String) -> Unit = {},
 ) {
   OutlinedCard(Modifier.fillMaxWidth()) {
@@ -78,6 +85,9 @@ fun PodcastSyncHomeFallback(
       Text(available, style = MaterialTheme.typography.bodyMedium)
       Text(battery ?: "Battery unavailable", style = MaterialTheme.typography.bodyMedium)
       source?.let { Text(it, style = MaterialTheme.typography.bodyMedium) }
+      val bar = Modifier.fillMaxWidth().padding(vertical = 8.dp)
+      if (progress != null) LinearProgressIndicator(progress = { progress }, modifier = bar)
+      else if (working) LinearProgressIndicator(bar)
       extras.changes?.let { changes ->
         TextButton(onClick = { onAction(StatusCardExtras.CHANGES) }) {
           Text("What will change · $changes")

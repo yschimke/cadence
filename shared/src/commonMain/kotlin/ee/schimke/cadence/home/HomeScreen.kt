@@ -95,6 +95,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -574,8 +575,14 @@ private fun StatusSection(
       "folders" -> actions.onCopyToHeadphones()
     }
   }
+  // With a card, the running task's status takes its headline and the swimmer shows how far it has
+  // got, so nothing appears or disappears below the card as tasks start and finish.
+  val onCard = podcasts.library.playlist != null
+  val working = podcastWork.active || copying
+  val workStatus =
+    if (copying) podcastWork.status ?: "Syncing…" else podcastWork.status ?: "Working…"
   Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-    if (podcasts.library.playlist != null) {
+    if (onCard) {
       val summary = podcastWidgetSummary(podcasts)
       val changes =
         if (step is HeadphoneSyncStep.ReadyToCopy && !copying) headphoneSyncChanges(podcasts)
@@ -589,18 +596,28 @@ private fun StatusSection(
           refresh = cloud.hasSource,
           audioControls = state.bluetoothSupported,
         )
-      // The card is a Remote Compose document that names itself and its buttons.
-      Box(Modifier.fillMaxWidth().clip(RoundedCornerShape(20.dp))) {
+      // The card is a Remote Compose document that names itself and its buttons. Its player
+      // can't announce changes, so the running task's status is a polite live region here.
+      Box(
+        Modifier.fillMaxWidth().clip(RoundedCornerShape(20.dp)).semantics {
+          if (working) {
+            liveRegion = LiveRegionMode.Polite
+            stateDescription = workStatus
+          }
+        },
+      ) {
         PodcastSyncHomeCard(
           copied = summary.copied,
           available = summary.available,
           battery = podcastWidgetBattery(device, podcasts.target),
           ready = podcasts.readyForDevice(),
           showSwimming = state.bluetooth.localAudioControls,
-          headline = headline,
+          headline = if (working) workStatus else headline,
           source = syncSourceLine(cloud),
-          attention = step.needsAttention,
+          attention = step.needsAttention && !working,
           extras = extras,
+          working = working,
+          progress = podcastWork.fraction.takeIf { podcastWork.active && !copying },
         ) { id ->
           if (id == StatusCardExtras.CHANGES) changesExpanded = !changesExpanded else act(id)
         }
@@ -625,7 +642,8 @@ private fun StatusSection(
       }
     }
     when {
-      copying -> WorkProgress(PodcastWorkUi(status = podcastWork.status ?: "Syncing…"))
+      working && onCard -> Unit
+      copying -> WorkProgress(PodcastWorkUi(status = workStatus))
       podcastWork.active -> WorkProgress(podcastWork)
       else -> podcastWork.error?.let { WorkError(it, podcastWork) }
     }

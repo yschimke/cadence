@@ -61,12 +61,16 @@ actual fun PodcastSyncHomeCard(
   source: String?,
   attention: Boolean,
   extras: StatusCardExtras,
+  working: Boolean,
+  progress: Float?,
   onAction: (String) -> Unit,
 ) {
   val context = LocalContext.current
   val colors = WidgetColors.from(MaterialTheme.colorScheme)
   val height = statusCardHeight(source, extras, headline)
   val currentOnAction by rememberUpdatedState(onAction)
+  // Each change recaptures the document, so the swimmer moves in whole percents.
+  val swum = progress?.let { (it.coerceIn(0f, 1f) * 100).toInt() / 100f }
   BoxWithConstraints(Modifier.fillMaxWidth().height(height.dp)) {
     val width = maxWidth.value.toInt().coerceAtLeast(1)
     val capture by
@@ -84,6 +88,8 @@ actual fun PodcastSyncHomeCard(
         attention,
         extras,
         colors,
+        working,
+        swum,
       ) {
         value =
           try {
@@ -102,6 +108,8 @@ actual fun PodcastSyncHomeCard(
                 attention = attention,
                 extras = extras,
                 fixedScale = 1f,
+                working = working,
+                progress = swum,
               )
             }
           } catch (cancelled: CancellationException) {
@@ -112,7 +120,8 @@ actual fun PodcastSyncHomeCard(
       }
     val document = capture
     if (document == null)
-      PodcastSyncHomeFallback(copied, available, battery, headline, source, extras, onAction)
+      PodcastSyncHomeFallback(
+    copied, available, battery, headline, source, extras, working, progress, onAction)
     else
       RcAdaptiveRemoteDocumentPlayer(
         document.bytes,

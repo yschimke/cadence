@@ -34,6 +34,8 @@ private fun PodcastWidgetPreview(
   season: PoolSeason = PoolSeason.None,
   /** Freeze static previews so wall-clock swimming never creates spurious screenshot diffs. */
   seconds: Float = 3.2f,
+  /** Home's card while a task runs: its status as the headline, the swimmer as its progress. */
+  progress: Float? = null,
 ) {
   BoxWithConstraints(Modifier.fillMaxSize()) {
     val width = maxWidth.value.toInt()
@@ -51,11 +53,20 @@ private fun PodcastWidgetPreview(
             widthDp = width,
             colors = colors,
             season = season,
-            headline = "Plug in to sync",
+            headline =
+              if (progress != null) "Preparing 2 of 3: Cristiano Ronaldo: What Is His Legacy?"
+              else "Plug in to sync",
             source = "Up Next · 2 h ago",
-            attention = true,
+            attention = progress == null,
             extras =
-              StatusCardExtras(buttons = listOf(StatusCardButton("open", "Sync", primary = true))),
+              if (progress != null) StatusCardExtras(refresh = true, audioControls = true)
+              else
+                StatusCardExtras(
+                  buttons = listOf(StatusCardButton("open", "Sync", primary = true)),
+                ),
+            fixedScale = if (progress != null) 1f else null,
+            working = progress != null,
+            progress = progress,
           )
         }
         SwimClockAt(seconds, content)
@@ -234,4 +245,11 @@ internal fun PodcastWidgetChristmasStandingPreview() {
 @Composable
 internal fun PodcastWidgetChristmasAnimatedPreview() {
   PodcastWidgetPreview(true, season = PoolSeason.Christmas, seconds = rememberPreviewSeconds())
+}
+
+/** Home's card while preparing episodes: the swimmer a third of the way across. */
+@Preview(name = "Status card · preparing", widthDp = 360, heightDp = 198)
+@Composable
+internal fun StatusCardPreparingPreview() {
+  PodcastWidgetPreview(false, progress = 0.33f)
 }
