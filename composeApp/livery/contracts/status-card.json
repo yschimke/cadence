@@ -1,0 +1,308 @@
+{
+  "id": "cadence/status-card",
+  "major": 1,
+  "title": "Home status card",
+  "dataSource": "App",
+  "inputs": {
+    "headline": {
+      "type": "string",
+      "description": "What to do next, or the running task's status",
+      "maxLength": 120
+    },
+    "has_headline": {
+      "type": "bool",
+      "default": false,
+      "description": "Shows the headline"
+    },
+    "attention": {
+      "type": "bool",
+      "default": false,
+      "description": "The headline asks for something now: it takes the accent colour"
+    },
+    "headphones_count": {
+      "type": "string",
+      "description": "How many episodes the headphones hold, drawn large",
+      "maxLength": 8
+    },
+    "has_headphones_count": {
+      "type": "bool",
+      "default": false,
+      "description": "Shows the headphones count"
+    },
+    "headphones_text": {
+      "type": "string",
+      "description": "The rest of the headphones line: 'on headphones · 2h 49m', or the whole line without a count",
+      "required": true,
+      "maxLength": 80
+    },
+    "phone_count": {
+      "type": "string",
+      "description": "How many episodes this phone has ready or to prepare",
+      "maxLength": 8
+    },
+    "has_phone_count": {
+      "type": "bool",
+      "default": false,
+      "description": "Shows the phone count"
+    },
+    "phone_text": {
+      "type": "string",
+      "description": "The rest of the phone line: 'ready · 2h 19m' or 'to prepare · 2h 19m'",
+      "required": true,
+      "maxLength": 80
+    },
+    "ready": {
+      "type": "bool",
+      "default": false,
+      "description": "The phone's episodes are ready: the phone line takes the ready colour, else the pending one"
+    },
+    "battery": {
+      "type": "string",
+      "description": "The headphones' charge and one playtime estimate, or 'Battery unknown'",
+      "required": true,
+      "maxLength": 60
+    },
+    "source": {
+      "type": "string",
+      "description": "Where the episodes come from and when they were checked",
+      "maxLength": 80
+    },
+    "has_source": {
+      "type": "bool",
+      "default": false,
+      "description": "Shows the source line"
+    },
+    "changes": {
+      "type": "string",
+      "description": "'What will change · 3 new · 1 removed'",
+      "maxLength": 80
+    },
+    "has_changes": {
+      "type": "bool",
+      "default": false,
+      "description": "Shows the changes row, which taps 'changes'"
+    },
+    "changes_expanded": {
+      "type": "bool",
+      "default": false,
+      "description": "Shows one line per change below the changes row"
+    },
+    "change_lines": {
+      "type": "string",
+      "description": "One change per line, newline-separated, at most seven",
+      "maxLength": 600
+    },
+    "refresh": {
+      "type": "bool",
+      "default": false,
+      "description": "Offers checking for new episodes ('refresh')"
+    },
+    "audio_controls": {
+      "type": "bool",
+      "default": false,
+      "description": "Offers the headphones' audio controls ('audio-controls')"
+    },
+    "has_button_1": {
+      "type": "bool",
+      "default": false,
+      "description": "Shows button slot 1, which taps 'button_1'"
+    },
+    "button_1_label": {
+      "type": "string",
+      "description": "Button 1's label, and what a screen reader says for it",
+      "maxLength": 24
+    },
+    "button_1_primary": {
+      "type": "bool",
+      "default": false,
+      "description": "Button 1 is the step's main action: a filled pill"
+    },
+    "button_1_icon": {
+      "type": "int",
+      "min": 0,
+      "max": 7,
+      "default": 0,
+      "description": "Button 1's icon instead of its label: 0 the label; 1 sync, 2 download, 3 process, 4 eject, 5 add, 6 storage, 7 folders"
+    },
+    "has_button_2": {
+      "type": "bool",
+      "default": false,
+      "description": "Shows button slot 2, which taps 'button_2'"
+    },
+    "button_2_label": {
+      "type": "string",
+      "description": "Button 2's label, and what a screen reader says for it",
+      "maxLength": 24
+    },
+    "button_2_primary": {
+      "type": "bool",
+      "default": false,
+      "description": "Button 2 is the step's main action: a filled pill"
+    },
+    "button_2_icon": {
+      "type": "int",
+      "min": 0,
+      "max": 7,
+      "default": 0,
+      "description": "Button 2's icon instead of its label: 0 the label; 1 sync, 2 download, 3 process, 4 eject, 5 add, 6 storage, 7 folders"
+    },
+    "has_button_3": {
+      "type": "bool",
+      "default": false,
+      "description": "Shows button slot 3, which taps 'button_3'"
+    },
+    "button_3_label": {
+      "type": "string",
+      "description": "Button 3's label, and what a screen reader says for it",
+      "maxLength": 24
+    },
+    "button_3_primary": {
+      "type": "bool",
+      "default": false,
+      "description": "Button 3 is the step's main action: a filled pill"
+    },
+    "button_3_icon": {
+      "type": "int",
+      "min": 0,
+      "max": 7,
+      "default": 0,
+      "description": "Button 3's icon instead of its label: 0 the label; 1 sync, 2 download, 3 process, 4 eject, 5 add, 6 storage, 7 folders"
+    },
+    "swimming": {
+      "type": "bool",
+      "default": false,
+      "description": "The scene's figure is moving: laps, or a task under way"
+    },
+    "standing": {
+      "type": "bool",
+      "default": false,
+      "description": "The scene's figure is still, waiting at the side"
+    },
+    "progress": {
+      "type": "float",
+      "min": -1,
+      "max": 1,
+      "default": -1,
+      "description": "How far the running task has got, 0 to 1, which the figure marks; below 0 there is none"
+    },
+    "dark": {
+      "type": "bool",
+      "default": false,
+      "description": "The card's colours are dark: the scene uses its night look"
+    },
+    "theme.background": {
+      "type": "color",
+      "role": "surfaceContainer"
+    },
+    "theme.on_background": {
+      "type": "color",
+      "role": "onSurface"
+    },
+    "theme.supporting": {
+      "type": "color",
+      "role": "onSurfaceVariant"
+    },
+    "theme.primary": {
+      "type": "color",
+      "role": "primary"
+    },
+    "theme.on_primary": {
+      "type": "color",
+      "role": "onPrimary"
+    },
+    "theme.tertiary": {
+      "type": "color",
+      "role": "tertiary"
+    },
+    "theme.warning": {
+      "type": "color",
+      "role": "secondary"
+    }
+  },
+  "actions": {
+    "changes": {
+      "kind": "app:status-card"
+    },
+    "refresh": {
+      "kind": "app:status-card"
+    },
+    "audio-controls": {
+      "kind": "app:status-card"
+    },
+    "button_1": {
+      "kind": "app:status-card"
+    },
+    "button_2": {
+      "kind": "app:status-card"
+    },
+    "button_3": {
+      "kind": "app:status-card"
+    }
+  },
+  "examples": {
+    "preparing": {
+      "headphones_count": "3",
+      "has_headphones_count": true,
+      "headphones_text": "on headphones · 2h 49m",
+      "phone_count": "3",
+      "has_phone_count": true,
+      "battery": "Battery unknown",
+      "source": "Swim Series · 1 min ago",
+      "has_source": true,
+      "refresh": true,
+      "audio_controls": true,
+      "headline": "Preparing 2 of 3: Cristiano Ronaldo: What Is His Legacy?",
+      "has_headline": true,
+      "phone_text": "to prepare · 2h 19m",
+      "swimming": true,
+      "progress": 0.4
+    },
+    "ready_to_sync": {
+      "headphones_count": "3",
+      "has_headphones_count": true,
+      "headphones_text": "on headphones · 2h 49m",
+      "phone_count": "3",
+      "has_phone_count": true,
+      "battery": "Battery unknown",
+      "source": "Swim Series · 1 min ago",
+      "has_source": true,
+      "refresh": true,
+      "audio_controls": true,
+      "headline": "Ready to sync",
+      "has_headline": true,
+      "attention": true,
+      "ready": true,
+      "phone_text": "ready · 2h 19m",
+      "has_changes": true,
+      "changes": "What will change · 2 new · 1 removed",
+      "has_button_1": true,
+      "button_1_label": "Sync",
+      "button_1_primary": true,
+      "has_button_2": true,
+      "button_2_label": "Eject USB",
+      "standing": true,
+      "button_1_icon": 1,
+      "button_2_icon": 4
+    },
+    "download": {
+      "headphones_count": "3",
+      "has_headphones_count": true,
+      "headphones_text": "on headphones · 2h 49m",
+      "phone_count": "3",
+      "has_phone_count": true,
+      "battery": "Battery unknown",
+      "source": "Swim Series · 1 min ago",
+      "has_source": true,
+      "refresh": true,
+      "audio_controls": true,
+      "headline": "2 to download",
+      "has_headline": true,
+      "phone_text": "to prepare · 2h 19m",
+      "has_button_1": true,
+      "button_1_label": "Download",
+      "button_1_primary": true,
+      "dark": true,
+      "button_1_icon": 2
+    }
+  }
+}

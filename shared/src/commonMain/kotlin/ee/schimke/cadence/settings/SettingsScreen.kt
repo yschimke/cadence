@@ -15,10 +15,13 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.LoadingIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
@@ -26,6 +29,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
@@ -37,6 +41,9 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import ee.schimke.cadence.developer.LocalDeveloperMode
+import ee.schimke.cadence.platform.CardDesign
+import ee.schimke.cadence.platform.DEFAULT_CARD_DESIGN
+import ee.schimke.cadence.platform.LocalCardDesigns
 import ee.schimke.cadence.platform.LocalPlayUpdateSettings
 import ee.schimke.cadence.platform.LocalWidgetDesigns
 import ee.schimke.cadence.platform.PlayUpdateSettings
@@ -49,7 +56,12 @@ import kotlinx.coroutines.launch
  */
 @Composable
 fun SettingsScreen(modifier: Modifier = Modifier) {
-  val advanced = LocalAdvancedSettings.current
+  val settings = LocalAppSettings.current
+  val cardDesigns = LocalCardDesigns.current
+  val designs by
+    produceState(emptyList<CardDesign>(), cardDesigns) {
+      value = cardDesigns?.list?.invoke().orEmpty()
+    }
   val developer = LocalDeveloperMode.current
   val playUpdates = LocalPlayUpdateSettings.current
   val widgetDesigns = LocalWidgetDesigns.current
@@ -70,6 +82,17 @@ fun SettingsScreen(modifier: Modifier = Modifier) {
           modifier = Modifier.semantics { heading() },
         )
       }
+      if (designs.isNotEmpty()) {
+        item { SettingsHeading("Status card") }
+        val selected = settings.cardDesign.ifEmpty { DEFAULT_CARD_DESIGN }
+        items(designs, key = { it.id }) { design ->
+          DesignRow(
+            design.title,
+            selected = design.id == selected,
+            onSelect = { settings.setCardDesign(design.id) },
+          )
+        }
+      }
       item { SettingsHeading("Advanced") }
       item {
         SwitchRow(
@@ -77,8 +100,8 @@ fun SettingsScreen(modifier: Modifier = Modifier) {
           summary =
             "Play, pause and switch modes on Bluetooth headphones from Home, for headphones " +
               "that support it.",
-          checked = advanced.headphoneControls,
-          onCheckedChange = advanced.setHeadphoneControls,
+          checked = settings.headphoneControls,
+          onCheckedChange = settings.setHeadphoneControls,
         )
       }
       if (developer.enabled) {
@@ -106,6 +129,25 @@ private fun SettingsHeading(title: String) {
     color = MaterialTheme.colorScheme.primary,
     modifier = Modifier.padding(top = 8.dp).semantics { heading() },
   )
+}
+
+/** One of the status card's designs: the whole row picks it. */
+@Composable
+private fun DesignRow(title: String, selected: Boolean, onSelect: () -> Unit) {
+  Row(
+    verticalAlignment = Alignment.CenterVertically,
+    modifier =
+      Modifier.fillMaxWidth()
+        .heightIn(min = 48.dp)
+        .selectable(selected = selected, role = Role.RadioButton, onClick = onSelect),
+  ) {
+    RadioButton(selected = selected, onClick = null)
+    Text(
+      title,
+      style = MaterialTheme.typography.titleSmall,
+      modifier = Modifier.padding(start = 16.dp),
+    )
+  }
 }
 
 /** A setting that is on or off: the whole row toggles it, not just the switch. */

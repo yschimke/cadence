@@ -6,7 +6,13 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.AutoFixHigh
 import androidx.compose.material.icons.filled.Download
+import androidx.compose.material.icons.filled.Eject
+import androidx.compose.material.icons.filled.Folder
+import androidx.compose.material.icons.filled.SdStorage
+import androidx.compose.material.icons.filled.SyncAlt
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
@@ -16,7 +22,27 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+
+/**
+ * The icons the status card's buttons draw in place of their labels, which stay what a screen
+ * reader says. Sync is a two-way transfer, unlike refresh's circular arrow beside it.
+ */
+val StatusButtonIcons: List<Pair<Set<String>, ImageVector>> =
+  listOf(
+    setOf("sync", "sync-again", "open") to Icons.Filled.SyncAlt,
+    setOf("download") to Icons.Filled.Download,
+    setOf("process") to Icons.Filled.AutoFixHigh,
+    setOf("eject") to Icons.Filled.Eject,
+    setOf("add") to Icons.Filled.Add,
+    setOf("storage") to Icons.Filled.SdStorage,
+    setOf("folders") to Icons.Filled.Folder,
+  )
+
+/** The icon button [id] draws, or null to show its label. */
+fun statusButtonIcon(id: String): ImageVector? =
+  StatusButtonIcons.firstOrNull { id in it.first }?.second
 
 /** A button drawn inside the status card; its [id] comes back through `onAction`. */
 data class StatusCardButton(val id: String, val label: String, val primary: Boolean = false)
@@ -98,9 +124,8 @@ fun PodcastSyncHomeFallback(
       FlowRow {
         extras.buttons.forEach { button ->
           val label: @Composable () -> Unit = {
-            if (button.id == "download")
-              Icon(Icons.Filled.Download, contentDescription = button.label)
-            else Text(button.label)
+            val icon = statusButtonIcon(button.id)
+            if (icon != null) Icon(icon, contentDescription = button.label) else Text(button.label)
           }
           if (button.primary) Button(onClick = { onAction(button.id) }) { label() }
           else TextButton(onClick = { onAction(button.id) }) { label() }

@@ -29,9 +29,18 @@ Every change here is a pull request (Livery's [repository mode]):
   module). SystemUI plays it as Remote Compose on Android 16 and later (`NotificationLivery`);
   older versions show the plain notification.
 
-The templates are generated: after changing the widget's or notification's drawing code, run
+- `contracts/status-card.json`: Home's status card (`cadence/status-card@1`): the headline, the
+  headphones and phone lines, battery, source, the "What will change" row, three button slots, the
+  refresh and audio-controls icons, the scene's state (`swimming`, `standing`, `progress`, `dark`)
+  and the card's colours. A design redraws the whole card; Settings lists the contract's designs
+  and Home draws the one picked (`StatusCardLivery`), or the card it draws itself if none plays.
+- `designs/status-card-swimming/`: the swimming pool, the default, captured from
+  `StatusCardTemplateContent` (shared module) as one in-app template. A runners design is another
+  folder for the same contract with its own scene; it shows in Settings once it is in the catalog.
 
-    ./gradlew :composeApp:testDebugUnitTest --tests '*HeadphoneTemplatesTest*' --tests '*NotificationTemplatesTest*' -Pcadence.livery.regenerate=true
+The templates are generated: after changing the widget's, notification's or card's drawing code, run
+
+    ./gradlew :composeApp:testDebugUnitTest --tests '*HeadphoneTemplatesTest*' --tests '*NotificationTemplatesTest*' --tests '*StatusCardTemplatesTest*' -Pcadence.livery.regenerate=true
 
 Without the property the same test fails when a committed template is stale.
 

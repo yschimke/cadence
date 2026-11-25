@@ -7,7 +7,7 @@ import androidx.compose.material.icons.filled.BatteryFull
 import androidx.compose.material.icons.filled.Cloud
 import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.Headphones
-import androidx.compose.material.icons.filled.Sync
+import androidx.compose.material.icons.filled.PhoneAndroid
 import androidx.compose.remote.creation.compose.action.RemoteAction
 import androidx.compose.remote.creation.compose.layout.RemoteAlignment
 import androidx.compose.remote.creation.compose.layout.RemoteArrangement
@@ -179,7 +179,7 @@ fun PodcastSyncWidgetContent(
           )
           SyncMetricLine(
             available,
-            Icons.Default.Sync,
+            Icons.Default.PhoneAndroid,
             if (ready) "ready" else "to prepare",
             if (ready) colors.tertiary else colors.warning,
             colors.onBackground,
@@ -466,13 +466,6 @@ private fun StatusButton(button: StatusCardButton, colors: WidgetColors, fill: B
       )
   }
 }
-
-/** The icon drawn in place of a button's label, or null to show the label. */
-internal fun statusButtonIcon(id: String): ImageVector? =
-  when (id) {
-    "download" -> Icons.Filled.Download
-    else -> null
-  }
 
 /** "138m" as "2h 18m"; anything else unchanged. */
 internal fun compactMinutes(part: String): String {
