@@ -1,50 +1,6 @@
 {
   "entries": [
     {
-      "annotatedBasename": "",
-      "cleanBasename": "CloudSyncWidgetLargePreview_Cloud_sync_widget_large-2f8e7fdc.png",
-      "findings": [],
-      "functionName": "CloudSyncWidgetLargePreview",
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.CloudSyncWidgetLargePreview_Cloud sync widget \u00b7 large",
-      "rendersDir": "composeApp",
-      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
-      "variant": ""
-    },
-    {
-      "annotatedBasename": "",
-      "cleanBasename": "CloudSyncWidgetLightPreview_Cloud_sync_widget_light-b8e2ad8c.png",
-      "findings": [],
-      "functionName": "CloudSyncWidgetLightPreview",
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.CloudSyncWidgetLightPreview_Cloud sync widget \u00b7 light",
-      "rendersDir": "composeApp",
-      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
-      "variant": ""
-    },
-    {
-      "annotatedBasename": "",
-      "cleanBasename": "CloudSyncWidgetPreview_Cloud_sync_widget-761df7cb.png",
-      "findings": [],
-      "functionName": "CloudSyncWidgetPreview",
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.CloudSyncWidgetPreview_Cloud sync widget",
-      "rendersDir": "composeApp",
-      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
-      "variant": ""
-    },
-    {
-      "annotatedBasename": "",
-      "cleanBasename": "CloudSyncWidgetSmallPreview_Cloud_sync_widget_small-f212ff03.png",
-      "findings": [],
-      "functionName": "CloudSyncWidgetSmallPreview",
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.CloudSyncWidgetSmallPreview_Cloud sync widget \u00b7 small",
-      "rendersDir": "composeApp",
-      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
-      "variant": ""
-    },
-    {
       "annotatedBasename": "HomeDownloadingPreview_Home_downloading-1b5958c7.a11y.png",
       "cleanBasename": "HomeDownloadingPreview_Home_downloading-1b5958c7.png",
       "findings": [
@@ -62,160 +18,6 @@
       "rendersDir": "composeApp",
       "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/ScreenPreviews.kt",
       "variant": "spec:width=411dp,height=1200dp,dpi=420"
-    },
-    {
-      "annotatedBasename": "",
-      "cleanBasename": "PodcastWidgetBluetoothPoolPreview_Podcast_widget_Bluetooth_pool-ba4b2667.png",
-      "findings": [],
-      "functionName": "PodcastWidgetBluetoothPoolPreview",
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetBluetoothPoolPreview_Podcast widget \u00b7 Bluetooth pool",
-      "rendersDir": "composeApp",
-      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
-      "variant": ""
-    },
-    {
-      "annotatedBasename": "",
-      "cleanBasename": "PodcastWidgetBluetoothPreview_Podcast_widget_Bluetooth-2f84c33e.png",
-      "findings": [],
-      "functionName": "PodcastWidgetBluetoothPreview",
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetBluetoothPreview_Podcast widget \u00b7 Bluetooth",
-      "rendersDir": "composeApp",
-      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
-      "variant": ""
-    },
-    {
-      "annotatedBasename": "",
-      "cleanBasename": "PodcastWidgetChristmasPreview_Podcast_widget_Christmas-4cf9d5c0.png",
-      "findings": [],
-      "functionName": "PodcastWidgetChristmasPreview",
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetChristmasPreview_Podcast widget \u00b7 Christmas",
-      "rendersDir": "composeApp",
-      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
-      "variant": ""
-    },
-    {
-      "annotatedBasename": "",
-      "cleanBasename": "PodcastWidgetChristmasStandingPreview_Podcast_widget_Christmas_Bluetooth-cbc54ced.png",
-      "findings": [],
-      "functionName": "PodcastWidgetChristmasStandingPreview",
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetChristmasStandingPreview_Podcast widget \u00b7 Christmas \u00b7 Bluetooth",
-      "rendersDir": "composeApp",
-      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
-      "variant": ""
-    },
-    {
-      "annotatedBasename": "",
-      "cleanBasename": "PodcastWidgetDisconnectedPreview_Podcast_widget_disconnected-f475e778.png",
-      "findings": [],
-      "functionName": "PodcastWidgetDisconnectedPreview",
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetDisconnectedPreview_Podcast widget \u00b7 disconnected",
-      "rendersDir": "composeApp",
-      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
-      "variant": ""
-    },
-    {
-      "annotatedBasename": "",
-      "cleanBasename": "PodcastWidgetHalloweenPreview_Podcast_widget_Halloween-fcbd6c77.png",
-      "findings": [],
-      "functionName": "PodcastWidgetHalloweenPreview",
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetHalloweenPreview_Podcast widget \u00b7 Halloween",
-      "rendersDir": "composeApp",
-      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
-      "variant": ""
-    },
-    {
-      "annotatedBasename": "",
-      "cleanBasename": "PodcastWidgetMp3LargePreview_Podcast_widget_MP3_large-06e82c93.png",
-      "findings": [],
-      "functionName": "PodcastWidgetMp3LargePreview",
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetMp3LargePreview_Podcast widget \u00b7 MP3 large",
-      "rendersDir": "composeApp",
-      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
-      "variant": ""
-    },
-    {
-      "annotatedBasename": "",
-      "cleanBasename": "PodcastWidgetMp3LightPreview_Podcast_widget_MP3_light-cdc23576.png",
-      "findings": [],
-      "functionName": "PodcastWidgetMp3LightPreview",
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetMp3LightPreview_Podcast widget \u00b7 MP3 \u00b7 light",
-      "rendersDir": "composeApp",
-      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
-      "variant": ""
-    },
-    {
-      "annotatedBasename": "",
-      "cleanBasename": "PodcastWidgetMp3Preview_Podcast_widget_MP3-3525244f.png",
-      "findings": [],
-      "functionName": "PodcastWidgetMp3Preview",
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetMp3Preview_Podcast widget \u00b7 MP3",
-      "rendersDir": "composeApp",
-      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
-      "variant": ""
-    },
-    {
-      "annotatedBasename": "",
-      "cleanBasename": "PodcastWidgetMp3SmallPreview_Podcast_widget_MP3_small-aa8827a4.png",
-      "findings": [],
-      "functionName": "PodcastWidgetMp3SmallPreview",
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetMp3SmallPreview_Podcast widget \u00b7 MP3 small",
-      "rendersDir": "composeApp",
-      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
-      "variant": ""
-    },
-    {
-      "annotatedBasename": "",
-      "cleanBasename": "PodcastWidgetNewYearPreview_Podcast_widget_New_Year-52299ab0.png",
-      "findings": [],
-      "functionName": "PodcastWidgetNewYearPreview",
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetNewYearPreview_Podcast widget \u00b7 New Year",
-      "rendersDir": "composeApp",
-      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
-      "variant": ""
-    },
-    {
-      "annotatedBasename": "",
-      "cleanBasename": "PodcastWidgetTallPreview_Podcast_widget_MP3_tall-26f28a8b.png",
-      "findings": [],
-      "functionName": "PodcastWidgetTallPreview",
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetTallPreview_Podcast widget \u00b7 MP3 \u00b7 tall",
-      "rendersDir": "composeApp",
-      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
-      "variant": ""
-    },
-    {
-      "annotatedBasename": "",
-      "cleanBasename": "PodcastWidgetWinterPreview_Podcast_widget_winter-c44e8291.png",
-      "findings": [],
-      "functionName": "PodcastWidgetWinterPreview",
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetWinterPreview_Podcast widget \u00b7 winter",
-      "rendersDir": "composeApp",
-      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
-      "variant": ""
-    },
-    {
-      "annotatedBasename": "",
-      "cleanBasename": "StatusCardPreparingPreview_Status_card_preparing-f64cb6f5.png",
-      "findings": [],
-      "functionName": "StatusCardPreparingPreview",
-      "module": "composeApp",
-      "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.StatusCardPreparingPreview_Status card \u00b7 preparing",
-      "rendersDir": "composeApp",
-      "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
-      "variant": ""
     }
   ],
   "scope": "changed-previews",
@@ -335,6 +137,78 @@
     {
       "module": "composeApp",
       "previewId": "ee.schimke.cadence.preview.PodcastPreviewsKt.PodcastSubsonicPreview_Add podcasts \u2014 Subsonic signed in"
+    },
+    {
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.CloudSyncWidgetLargePreview_Cloud sync widget \u00b7 large"
+    },
+    {
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.CloudSyncWidgetLightPreview_Cloud sync widget \u00b7 light"
+    },
+    {
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.CloudSyncWidgetPreview_Cloud sync widget"
+    },
+    {
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.CloudSyncWidgetSmallPreview_Cloud sync widget \u00b7 small"
+    },
+    {
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetBluetoothPoolPreview_Podcast widget \u00b7 Bluetooth pool"
+    },
+    {
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetBluetoothPreview_Podcast widget \u00b7 Bluetooth"
+    },
+    {
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetChristmasPreview_Podcast widget \u00b7 Christmas"
+    },
+    {
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetChristmasStandingPreview_Podcast widget \u00b7 Christmas \u00b7 Bluetooth"
+    },
+    {
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetDisconnectedPreview_Podcast widget \u00b7 disconnected"
+    },
+    {
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetHalloweenPreview_Podcast widget \u00b7 Halloween"
+    },
+    {
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetMp3LargePreview_Podcast widget \u00b7 MP3 large"
+    },
+    {
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetMp3LightPreview_Podcast widget \u00b7 MP3 \u00b7 light"
+    },
+    {
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetMp3Preview_Podcast widget \u00b7 MP3"
+    },
+    {
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetMp3SmallPreview_Podcast widget \u00b7 MP3 small"
+    },
+    {
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetNewYearPreview_Podcast widget \u00b7 New Year"
+    },
+    {
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetTallPreview_Podcast widget \u00b7 MP3 \u00b7 tall"
+    },
+    {
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetWinterPreview_Podcast widget \u00b7 winter"
+    },
+    {
+      "module": "composeApp",
+      "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.StatusCardPreparingPreview_Status card \u00b7 preparing"
     },
     {
       "module": "composeApp",
