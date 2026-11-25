@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.1.40](https://github.com/yschimke/cadence/compare/v0.1.39...v0.1.40) (2026-11-25)
+
+
+### Features
+
+* add Settings with headphone controls as an advanced option ([#726](https://github.com/yschimke/cadence/issues/726)) ([6338988](https://github.com/yschimke/cadence/commit/633898844752107bc64f2aa4fa63dcc8863563d6))
+* draw Home's status card from Livery designs, with icon buttons ([#727](https://github.com/yschimke/cadence/issues/727)) ([b524c7f](https://github.com/yschimke/cadence/commit/b524c7f25689f154a7415d921e816d1a1c32d5af))
+* drive the status card's swimmer with named remote values ([#725](https://github.com/yschimke/cadence/issues/725)) ([f26589a](https://github.com/yschimke/cadence/commit/f26589a40d12c8e7d9c1b88f3389021dc23eaecf))
+* show running task progress with the status card's swimmer ([#722](https://github.com/yschimke/cadence/issues/722)) ([a65366d](https://github.com/yschimke/cadence/commit/a65366df3fb80f570591cbcd372072a65512c86b))
+
+
+### Bug Fixes
+
+* **deps:** update dependency org.robolectric:robolectric to v4.18.1 ([#724](https://github.com/yschimke/cadence/issues/724)) ([a271cb4](https://github.com/yschimke/cadence/commit/a271cb48c6726c14b81583dae7e892c8302100fc))
+
 ## [0.1.39](https://github.com/yschimke/cadence/compare/v0.1.38...v0.1.39) (2026-11-24)
 
 
