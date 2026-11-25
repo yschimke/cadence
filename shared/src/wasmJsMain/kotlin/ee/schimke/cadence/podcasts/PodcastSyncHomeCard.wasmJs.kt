@@ -13,7 +13,19 @@ actual fun PodcastSyncHomeCard(
   source: String?,
   attention: Boolean,
   extras: StatusCardExtras,
+  working: Boolean,
+  progress: Float?,
   onAction: (String) -> Unit,
 ) {
-  PodcastSyncHomeFallback(copied, available, battery, headline, source, extras, onAction)
+  PodcastSyncHomeFallback(
+    copied,
+    available,
+    battery,
+    headline,
+    source,
+    extras,
+    working,
+    progress,
+    onAction,
+  )
 }

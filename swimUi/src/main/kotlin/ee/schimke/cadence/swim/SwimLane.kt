@@ -145,6 +145,10 @@ fun SwimLaneLaps(
  * the canvas width with a flip turn at each edge when [swimming], or treading water by the left
  * edge when not. [swimmerSize] is the swimmer's band as a fraction of the height. A [season] swaps
  * the water and the swimmer's cap and adds its own scene, moving on the same clock.
+ *
+ * With a [progress] (0 at the left edge, 1 at the right) the pool is a progress bar instead: the
+ * swimmer strokes left to right and sits [progress] of the way across, wherever [swimming] and
+ * [standing] say otherwise.
  */
 @Composable
 @RemoteComposable
@@ -163,7 +167,9 @@ fun SwimmingPool(
   amplitude: Float = 0.05f,
   standing: Boolean = false,
   season: PoolSeason = PoolSeason.None,
+  progress: Float? = null,
 ) {
+  val standing = standing && progress == null
   val water = season.water ?: water
   val swimmer = season.swimmer ?: swimmer
   RemoteCanvas(modifier) {
@@ -189,7 +195,17 @@ fun SwimmingPool(
       } else {
         translate(0f.rf, h * level - band * 0.45f) {
           val lane = LaneGeometry(w, band, wall = 0f.rf)
-          if (swimming) {
+          if (progress != null) {
+            drawSwimmer(
+              swimmer,
+              lane.swimmerX(1f.rf, progress.coerceIn(0f, 1f).rf),
+              lane.mid,
+              lane.unit,
+              1f.rf,
+              null,
+              clock,
+            )
+          } else if (swimming) {
             val motion = LapMotion(clock, lapSeconds)
             drawPushOffBubbles(
               swimmer.splash,

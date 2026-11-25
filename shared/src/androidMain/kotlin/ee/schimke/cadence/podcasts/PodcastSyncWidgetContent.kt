@@ -88,6 +88,13 @@ fun PodcastSyncWidgetContent(
   extras: StatusCardExtras? = null,
   /** Home sizes the card to its content, so it draws at a fixed scale instead of the slot's. */
   fixedScale: Float? = null,
+  /** A sync, download or processing is running: the swimmer swims laps while it does. */
+  working: Boolean = false,
+  /**
+   * How far the running task has got, 0 to 1: the swimmer crosses the pool as it goes instead of
+   * swimming laps.
+   */
+  progress: Float? = null,
 ) {
   val lane = heightDp >= 140
   // A tall slot also has room for the source line under the battery.
@@ -268,13 +275,14 @@ fun PodcastSyncWidgetContent(
         SwimmingPool(
           RemoteModifier.fillMaxWidth().height(poolHeight.rdp),
           water = colors.waterColors(),
-          swimming = showSwimming && ready,
+          swimming = (showSwimming && ready) || working,
           level = 0.35f,
           bubbles = if (ready) 6 else 3,
           amplitude = 0.025f,
           swimmerSize = 0.48f,
-          standing = !showSwimming,
+          standing = !showSwimming && !working,
           season = season,
+          progress = progress,
         )
       }
     }

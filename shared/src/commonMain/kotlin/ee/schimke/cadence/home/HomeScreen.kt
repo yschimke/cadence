@@ -574,8 +574,14 @@ private fun StatusSection(
       "folders" -> actions.onCopyToHeadphones()
     }
   }
+  // With a card, the running task's status takes its headline and the swimmer shows how far it has
+  // got, so nothing appears or disappears below the card as tasks start and finish.
+  val onCard = podcasts.library.playlist != null
+  val working = podcastWork.active || copying
+  val workStatus =
+    if (copying) podcastWork.status ?: "Syncing…" else podcastWork.status ?: "Working…"
   Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-    if (podcasts.library.playlist != null) {
+    if (onCard) {
       val summary = podcastWidgetSummary(podcasts)
       val changes =
         if (step is HeadphoneSyncStep.ReadyToCopy && !copying) headphoneSyncChanges(podcasts)
@@ -597,10 +603,12 @@ private fun StatusSection(
           battery = podcastWidgetBattery(device, podcasts.target),
           ready = podcasts.readyForDevice(),
           showSwimming = state.bluetooth.localAudioControls,
-          headline = headline,
+          headline = if (working) workStatus else headline,
           source = syncSourceLine(cloud),
-          attention = step.needsAttention,
+          attention = step.needsAttention && !working,
           extras = extras,
+          working = working,
+          progress = podcastWork.fraction.takeIf { podcastWork.active && !copying },
         ) { id ->
           if (id == StatusCardExtras.CHANGES) changesExpanded = !changesExpanded else act(id)
         }
@@ -625,7 +633,8 @@ private fun StatusSection(
       }
     }
     when {
-      copying -> WorkProgress(PodcastWorkUi(status = podcastWork.status ?: "Syncing…"))
+      working && onCard -> Unit
+      copying -> WorkProgress(PodcastWorkUi(status = workStatus))
       podcastWork.active -> WorkProgress(podcastWork)
       else -> podcastWork.error?.let { WorkError(it, podcastWork) }
     }
