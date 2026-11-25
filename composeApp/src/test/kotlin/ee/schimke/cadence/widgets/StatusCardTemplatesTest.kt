@@ -2,10 +2,10 @@
 
 package ee.schimke.cadence.widgets
 
+import androidx.compose.runtime.CompositionLocalProvider
 import ee.schimke.cadence.podcasts.StatusCardTemplate
 import ee.schimke.cadence.podcasts.StatusCardTemplateContent
-import ee.schimke.cadence.swim.SwimClockAt
-import ee.schimke.composeai.rccreation.compose.layout.RemoteComposable
+import ee.schimke.cadence.swim.LocalSwimClockStart
 import ee.schimke.composeai.rcwidget.creation.rcWidgetHostAction
 import ee.schimke.livery.capture.CapturedTemplate
 import ee.schimke.livery.capture.DesignFolder
@@ -63,11 +63,11 @@ class StatusCardTemplatesTest {
       StatusCardTemplate.MIN_HEIGHT_DP,
       source = mapOf("composable" to "StatusCardTemplateContent"),
     ) {
-      val content: @androidx.compose.runtime.Composable @RemoteComposable () -> Unit = {
+      // The pool keeps the live swim clock, so the card animates as it plays; only the capture's
+      // own start is pinned, so the committed template never changes with the time it was made.
+      CompositionLocalProvider(LocalSwimClockStart provides 0f) {
         StatusCardTemplateContent(onAction = { rcWidgetHostAction(name = it, payload = it) })
       }
-      // A still moment, so the committed template never changes with the clock.
-      SwimClockAt(0f, content)
     }
 
   private companion object {
