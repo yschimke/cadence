@@ -1,11 +1,43 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-24T22:58:13.903Z",
+  "generatedAt": "2026-11-25T06:53:10.833Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "a271cb48c6726c14b81583dae7e892c8302100fc",
+        "subject": "fix(deps): update dependency org.robolectric:robolectric to v4.18.1 (#724)",
+        "at": "2026-11-25T06:41:31Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "a65366df3fb80f570591cbcd372072a65512c86b",
+        "subject": "feat: show running task progress with the status card's swimmer (#722)",
+        "at": "2026-11-25T06:15:09Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "979fc3236c4b2dc0b1fc033fa6ef6cc0c59e166d",
+        "subject": "chore(deps): update anthropics/claude-code-action action to v1.0.290 (#721)",
+        "at": "2026-11-25T03:07:19Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
+      {
+        "sha": "8fd52049b7d3d84dfdc0f22e4391326da2f64ea8",
+        "subject": "chore(deps): update yschimke/compose-ai-tools action to v2.104.0 (#720)",
+        "at": "2026-11-24T22:53:45Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "74eb401eba1f9bde94011ac577a6f6a7b9346183",
         "subject": "chore(main): release 0.1.39 (#704)",
@@ -450,38 +482,6 @@
         "sha": "70eec752ea2a3f569766e357bfe7722b4c2cd69a",
         "subject": "chore(deps): update anthropics/claude-code-action action to v1.0.284 (#662)",
         "at": "2026-11-20T08:32:30Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "2ef82ad829e9fc7726b818766647431c81c4c305",
-        "subject": "chore(deps): update gradle to v9.9.2 (#663)",
-        "at": "2026-11-20T08:31:20Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "52e8d66425c5adb3a4da8e0bd368926152f497eb",
-        "subject": "fix(deps): update androidx-wear to v1.7.2 (#664)",
-        "at": "2026-11-20T08:30:49Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "377218eeec560c4ec379b9418f70f0f0546b40eb",
-        "subject": "fix(deps): update dependency ee.schimke.composeai:compose-preview-daemon-bom to v3.28.1 (#665)",
-        "at": "2026-11-20T08:30:40Z",
-        "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "1785173b2de79ffffe9dfb5dd1016ae71910cffb",
-        "subject": "fix(deps): update androidx-compose (#658)",
-        "at": "2026-11-20T08:14:37Z",
         "author": "renovate[bot]",
         "previewIds": [],
         "components": []

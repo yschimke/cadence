@@ -1562,7 +1562,7 @@
                 "name": "PodcastWidgetPreview",
                 "origin": "PROJECT",
                 "jvmName": "PodcastWidgetPreview",
-                "descriptor": "(ZLjava/lang/String;Lee/schimke/cadence/widgets/WidgetColors;Lee/schimke/cadence/swim/PoolSeason;FLandroidx/compose/runtime/Composer;II)V",
+                "descriptor": "(ZLjava/lang/String;Lee/schimke/cadence/widgets/WidgetColors;Lee/schimke/cadence/swim/PoolSeason;FLjava/lang/Float;Landroidx/compose/runtime/Composer;II)V",
                 "sourceFile": "src/main/kotlin/ee/schimke/cadence/preview/PodcastWidgetPreviews.kt",
                 "docs": "unavailable",
                 "receiver": null
@@ -1628,6 +1628,19 @@
                     "composableSlot": false,
                     "composableSlotReceiver": null,
                     "nullable": false,
+                    "noArgConstructible": false,
+                    "noArgFactory": null,
+                    "scopeDslReceiver": null,
+                    "lambdaReturnTypeFqn": null
+                },
+                {
+                    "name": "progress",
+                    "type": "Float?",
+                    "typeFqn": "kotlin.Float",
+                    "hasDefault": true,
+                    "composableSlot": false,
+                    "composableSlotReceiver": null,
+                    "nullable": true,
                     "noArgConstructible": false,
                     "noArgFactory": null,
                     "scopeDslReceiver": null,
@@ -1703,6 +1716,11 @@
                 },
                 {
                     "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.PodcastWidgetWinterPreview_Podcast_widget___winter",
+                    "componentId": null,
+                    "group": null
+                },
+                {
+                    "previewId": "ee.schimke.cadence.preview.PodcastWidgetPreviewsKt.StatusCardPreparingPreview_Status_card___preparing",
                     "componentId": null,
                     "group": null
                 }
