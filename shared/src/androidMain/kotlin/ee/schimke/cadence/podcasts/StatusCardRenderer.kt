@@ -13,6 +13,8 @@ fun interface StatusCardRenderer {
     values: StatusCardValues,
     widthDp: Int,
     heightDp: Int,
+    density: Float,
+    fontScale: Float,
   ): ByteArray?
 }
 
