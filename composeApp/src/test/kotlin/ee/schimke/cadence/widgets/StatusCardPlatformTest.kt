@@ -2,6 +2,13 @@
 
 package ee.schimke.cadence.widgets
 
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import androidx.compose.remote.core.CoreDocument
+import androidx.compose.remote.core.RemoteComposeBuffer
+import androidx.compose.remote.core.operations.Theme
+import androidx.compose.remote.core.operations.layout.Component
+import androidx.compose.remote.player.core.platform.AndroidRemoteContext
 import ee.schimke.cadence.podcasts.StatusCardButton
 import ee.schimke.cadence.podcasts.StatusCardExtras
 import ee.schimke.cadence.podcasts.StatusCardPool
@@ -15,8 +22,11 @@ import ee.schimke.livery.instantiate.InstantiateResult
 import ee.schimke.livery.instantiate.TemplateInstantiator
 import ee.schimke.livery.protocol.Contract
 import ee.schimke.livery.widgets.launcher.LiveryLauncherWidgetProvider
+import java.io.ByteArrayInputStream
 import java.io.File
 import kotlin.test.Test
+import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
@@ -24,6 +34,7 @@ import okio.ByteString.Companion.toByteString
 import org.junit.Rule
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
 
@@ -153,6 +164,91 @@ class StatusCardPlatformTest {
           .widget(out.bytes.toByteArray(), width, height, "launcher-$name-${width}x$height")
           .assertDraws("'$name' as a ${width}x$height launcher widget")
       }
+    }
+  }
+
+  /**
+   * Home's in-app card, produced by [StatusCardLivery] and painted by AndroidX's own player
+   * (`CoreDocument` + `AndroidRemoteContext`, which `RemoteComposePlayer` drives): unlike a
+   * launcher widget it does not go through `RcLauncherWidgets.remoteViews`, so [StatusCardLivery]
+   * must bake layout spacing for the display itself or `RowLayout` / `ColumnLayout` leave NaN
+   * heights that fail the pool canvas's `FloatExpression`s.
+   */
+  @Test
+  fun inAppCardPaintsInAndroidxPlayer() = runBlocking {
+    val app = RuntimeEnvironment.getApplication()
+    val livery = StatusCardLivery(WidgetLivery(app))
+    val density = 3f
+    val widthDp = 360
+    val heightDp = 250
+    for (colors in listOf(WidgetColors.Light, WidgetColors.Dark)) {
+      val values =
+        StatusCardValues(
+          headline = "Ready to sync",
+          attention = true,
+          copied = "Last copy: 3 eps · 169m · 1 marked",
+          available = "Ready: 3 eps · 139m",
+          ready = true,
+          battery = "50% · ~3h MP3 · ~4h 30m BT",
+          source = "Swim Series · 1 min ago",
+          extras =
+            StatusCardExtras(
+              buttons =
+                listOf(
+                  StatusCardButton("sync", "Sync", primary = true),
+                  StatusCardButton("download", "Download"),
+                ),
+              changes = "2 new",
+              changeLines = listOf("+ Tides of the Pacific · 31m", "+ Lighthouses · 40m"),
+              refresh = true,
+              audioControls = true,
+            ),
+          pool = StatusCardPool(swimming = false, standing = true, progress = -1f),
+          colors = colors,
+        )
+      val bytes =
+        assertNotNull(
+          livery.render(
+            StatusCardTemplate.SWIMMING_DESIGN,
+            values,
+            widthDp,
+            heightDp,
+            density = density,
+            fontScale = 1f,
+          ),
+          "rendered for dark=${colors.isDark}",
+        )
+      val widthPx = (widthDp * density).toInt()
+      val heightPx = (heightDp * density).toInt()
+      val document =
+        CoreDocument().apply {
+          initFromBuffer(RemoteComposeBuffer.fromInputStream(ByteArrayInputStream(bytes)))
+        }
+      val bitmap = Bitmap.createBitmap(widthPx, heightPx, Bitmap.Config.ARGB_8888)
+      val context =
+        AndroidRemoteContext().apply {
+          setAndroidContext(app)
+          useCanvas(Canvas(bitmap))
+          mWidth = widthPx.toFloat()
+          mHeight = heightPx.toFloat()
+          setDensity(density)
+        }
+      document.initializeContext(context)
+      document.measure(context, 0f, widthPx.toFloat(), 0f, heightPx.toFloat())
+      fun assertFiniteSizes(component: Component) {
+        assertFalse(
+          component.width.isNaN() || component.height.isNaN(),
+          "NaN size on ${component.javaClass.simpleName}(${component.componentId}) for dark=${colors.isDark}",
+        )
+        for (op in component.mList) if (op is Component) assertFiniteSizes(op)
+      }
+      assertFiniteSizes(assertNotNull(document.rootLayoutComponent))
+      document.paint(context, Theme.UNSPECIFIED)
+      val pixels =
+        IntArray(widthPx * heightPx).also {
+          bitmap.getPixels(it, 0, widthPx, 0, 0, widthPx, heightPx)
+        }
+      assertTrue(pixels.any { it != 0 }, "painted pixels for dark=${colors.isDark}")
     }
   }
 }

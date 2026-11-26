@@ -14,6 +14,7 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.remote.player.view.RemoteComposePlayer
 import androidx.compose.ui.unit.dp
 import ee.schimke.cadence.settings.LocalAppSettings
@@ -100,13 +101,25 @@ actual fun PodcastSyncHomeCard(
           ),
         colors = colors,
       )
+    val density = LocalDensity.current
     val document by
-      produceState<RenderedCard?>(null, renderer, design, failed, values, width, height) {
+      produceState<RenderedCard?>(
+        null,
+        renderer,
+        design,
+        failed,
+        values,
+        width,
+        height,
+        density.density,
+        density.fontScale,
+      ) {
         // Keeps the last document while the next binds, so the card never blinks empty.
         if (renderer == null || failed) value = null
         else
-          renderer.render(design, values, width, height)?.let { value = RenderedCard(it, values) }
-            ?: run { value = null }
+          renderer
+            .render(design, values, width, height, density.density, density.fontScale)
+            ?.let { value = RenderedCard(it, values) } ?: run { value = null }
       }
     val rendered = document
     if (rendered != null) {

@@ -9,6 +9,8 @@ import ee.schimke.cadence.platform.CardDesigns
 import ee.schimke.cadence.podcasts.StatusCardRenderer
 import ee.schimke.cadence.podcasts.StatusCardTemplate
 import ee.schimke.cadence.podcasts.StatusCardValues
+import ee.schimke.composeai.rcplayer.edit.RcTargetProfiles
+import ee.schimke.composeai.rcwidget.launcher.RcLauncherWidgets
 import ee.schimke.livery.client.BindResult
 import ee.schimke.livery.client.ContractBinder
 import ee.schimke.livery.client.TemplateQuery
@@ -49,6 +51,8 @@ class StatusCardLivery(private val livery: WidgetLivery) : StatusCardRenderer {
     values: StatusCardValues,
     widthDp: Int,
     heightDp: Int,
+    density: Float,
+    fontScale: Float,
   ): ByteArray? =
     try {
       val loaded =
@@ -76,7 +80,18 @@ class StatusCardLivery(private val livery: WidgetLivery) : StatusCardRenderer {
                 numericActions = false,
               )
           ) {
-            is InstantiateResult.Ok -> out.bytes.toByteArray()
+            // Templates are captured at host density, so every Row/Column `spacedBy(n.rdp)` is a
+            // variable expression over the display's density. AndroidX's in-app player (like the
+            // platform's) never resolves a variable `spacedBy`, leaving NaN heights that propagate
+            // into the pool canvas and fail FloatExpression evaluation; `forDisplay` turns layout
+            // spacing into pixel literals for this display.
+            is InstantiateResult.Ok ->
+              RcLauncherWidgets.forDisplay(
+                out.bytes.toByteArray(),
+                density,
+                fontScale,
+                RcTargetProfiles.ANDROIDX,
+              )
             else -> null.also { Log.w(TAG, "$designId didn't instantiate: $out") }
           }
         else -> null.also { Log.w(TAG, "$designId didn't bind: $bound") }
