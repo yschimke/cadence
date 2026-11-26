@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-25T22:49:57.676Z",
+  "generatedAt": "2026-11-26T03:44:16.936Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "1f9200ae3ca32b962c51cc05bb0d7dc59fc68383",
+        "subject": "chore(deps): update agp to v9.5.3 (#728)",
+        "at": "2026-11-26T03:34:04Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "e3ddd34adac2a05b27cefd57e88ad6b095812188",
         "subject": "fix(deps): update ktor to v3.6.2 (#729)",
@@ -474,14 +482,6 @@
         "sha": "79de124ade43d62d70a064cca3f8b636e5be9a6b",
         "subject": "feat: add USB eject button opening Android Storage settings (#661)",
         "at": "2026-11-20T12:56:55Z",
-        "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "8e3d0dbcfc6c578d548c72417f1aea32d5ab4373",
-        "subject": "fix: restore content:// scheme in AndroidSyncOrchestrator tree URIs (#660)",
-        "at": "2026-11-20T12:56:30Z",
         "author": "Yuri Schimke",
         "previewIds": [],
         "components": []
