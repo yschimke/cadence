@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-27T08:37:42.129Z",
+  "generatedAt": "2026-11-27T17:17:17.277Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "64860cbaac207ef5ebba6d96b9a615cb9c338b58",
+        "subject": "chore(deps): update gradle to v9.9.3 (#734)",
+        "at": "2026-11-27T17:07:01Z",
+        "author": "renovate[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "4b1b1b173f75406fcd275e80cb543b2fa1eb1749",
         "subject": "fix: keep Home status card height stable across sync status changes (#732)",
@@ -475,14 +483,6 @@
         "subject": "chore(deps): update agp to v9.5.2 (#673)",
         "at": "2026-11-21T03:10:29Z",
         "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "13d78078758894529b4d52bf8b4c8ad83172fd16",
-        "subject": "test: cover all notification shapes on API 37.0 and fix ActivityScenario hang (#672)",
-        "at": "2026-11-20T21:33:20Z",
-        "author": "Yuri Schimke",
         "previewIds": [],
         "components": []
       }
