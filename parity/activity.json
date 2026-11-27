@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-27T06:39:03.493Z",
+  "generatedAt": "2026-11-27T08:37:42.129Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "4b1b1b173f75406fcd275e80cb543b2fa1eb1749",
+        "subject": "fix: keep Home status card height stable across sync status changes (#732)",
+        "at": "2026-11-27T08:23:49Z",
+        "author": "Yuri Schimke",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "38a51eb174a6a638e90c454b6f62b200cca6862f",
         "subject": "chore(main): release 0.1.41 (#730)",
@@ -475,14 +483,6 @@
         "subject": "test: cover all notification shapes on API 37.0 and fix ActivityScenario hang (#672)",
         "at": "2026-11-20T21:33:20Z",
         "author": "Yuri Schimke",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "966d5c450acf374f3f948767cbc4dc2a140caa91",
-        "subject": "chore(deps): update github-actions (#670)",
-        "at": "2026-11-20T13:06:04Z",
-        "author": "renovate[bot]",
         "previewIds": [],
         "components": []
       }
