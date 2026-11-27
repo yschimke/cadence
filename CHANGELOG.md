@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.41](https://github.com/yschimke/cadence/compare/v0.1.40...v0.1.41) (2026-11-26)
+
+
+### Bug Fixes
+
+* bake layout spacing for Home's in-app status card ([#731](https://github.com/yschimke/cadence/issues/731)) ([9715349](https://github.com/yschimke/cadence/commit/97153490014a8a9016de7f78cac0bc740d7c3a3e))
+* **deps:** update ktor to v3.6.2 ([#729](https://github.com/yschimke/cadence/issues/729)) ([e3ddd34](https://github.com/yschimke/cadence/commit/e3ddd34adac2a05b27cefd57e88ad6b095812188))
+
 ## [0.1.40](https://github.com/yschimke/cadence/compare/v0.1.39...v0.1.40) (2026-11-25)
 
 
