@@ -1,11 +1,19 @@
 {
   "schema": "compose-preview-activity/v1",
-  "generatedAt": "2026-11-26T08:09:29.591Z",
+  "generatedAt": "2026-11-27T06:39:03.493Z",
   "windowDays": 30,
   "code": {
     "repo": "yschimke/cadence",
     "ref": "main",
     "events": [
+      {
+        "sha": "38a51eb174a6a638e90c454b6f62b200cca6862f",
+        "subject": "chore(main): release 0.1.41 (#730)",
+        "at": "2026-11-27T06:25:52Z",
+        "author": "github-actions[bot]",
+        "previewIds": [],
+        "components": []
+      },
       {
         "sha": "97153490014a8a9016de7f78cac0bc740d7c3a3e",
         "subject": "fix: bake layout spacing for Home's in-app status card (#731)",
@@ -475,14 +483,6 @@
         "subject": "chore(deps): update github-actions (#670)",
         "at": "2026-11-20T13:06:04Z",
         "author": "renovate[bot]",
-        "previewIds": [],
-        "components": []
-      },
-      {
-        "sha": "541c71f62993167f87977a0cc3953b45e2599abc",
-        "subject": "chore(main): release 0.1.33 (#643)",
-        "at": "2026-11-20T12:57:43Z",
-        "author": "github-actions[bot]",
         "previewIds": [],
         "components": []
       }
