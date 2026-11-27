@@ -43,8 +43,10 @@ internal fun statusCardHeight(
     add(23)
     add(20)
     if (source != null) add(20)
+    // Reserve the collapsed "What will change" row so transient status changes (such as archiving)
+    // don't jump the list below; only expanding the change lines grows the card.
+    add(48)
     if (extras.changes != null) {
-      add(48)
       repeat(extras.changeLines.size) { add(16) }
     }
   }

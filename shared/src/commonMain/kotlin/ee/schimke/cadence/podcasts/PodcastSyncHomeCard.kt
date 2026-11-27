@@ -1,9 +1,13 @@
 package ee.schimke.cadence.podcasts
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -21,8 +25,10 @@ import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 
 /**
@@ -90,7 +96,13 @@ expect fun PodcastSyncHomeCard(
   onAction: (String) -> Unit = {},
 )
 
-/** Fallback for platforms that cannot host the Android Remote Compose document. */
+/**
+ * Fallback for platforms that cannot host the Android Remote Compose document.
+ *
+ * Reserves fixed-height slots for the progress bar, collapsed "What will change" row, and action
+ * row so transient sync-status changes (such as archiving an episode) don't shift the content below
+ * the card up and down.
+ */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun PodcastSyncHomeFallback(
@@ -106,22 +118,73 @@ fun PodcastSyncHomeFallback(
 ) {
   OutlinedCard(Modifier.fillMaxWidth()) {
     Column(Modifier.padding(16.dp)) {
-      headline?.let { Text(it, style = MaterialTheme.typography.titleMedium) }
-      Text(copied, style = MaterialTheme.typography.bodyMedium)
-      Text(available, style = MaterialTheme.typography.bodyMedium)
-      Text(battery ?: "Battery unavailable", style = MaterialTheme.typography.bodyMedium)
-      source?.let { Text(it, style = MaterialTheme.typography.bodyMedium) }
-      val bar = Modifier.fillMaxWidth().padding(vertical = 8.dp)
-      if (progress != null) LinearProgressIndicator(progress = { progress }, modifier = bar)
-      else if (working) LinearProgressIndicator(bar)
-      extras.changes?.let { changes ->
-        TextButton(onClick = { onAction(StatusCardExtras.CHANGES) }) {
-          Text("What will change · $changes")
+      headline?.let {
+        Text(
+          it,
+          style = MaterialTheme.typography.titleMedium,
+          maxLines = 1,
+          overflow = TextOverflow.Ellipsis,
+        )
+      }
+      Text(
+        copied,
+        style = MaterialTheme.typography.bodyMedium,
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis,
+      )
+      Text(
+        available,
+        style = MaterialTheme.typography.bodyMedium,
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis,
+      )
+      Text(
+        battery ?: "Battery unavailable",
+        style = MaterialTheme.typography.bodyMedium,
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis,
+      )
+      source?.let {
+        Text(
+          it,
+          style = MaterialTheme.typography.bodyMedium,
+          maxLines = 1,
+          overflow = TextOverflow.Ellipsis,
+        )
+      }
+      Box(Modifier.fillMaxWidth().height(20.dp), contentAlignment = Alignment.Center) {
+        if (progress != null)
+          LinearProgressIndicator(progress = { progress }, modifier = Modifier.fillMaxWidth())
+        else if (working) LinearProgressIndicator(Modifier.fillMaxWidth())
+      }
+      Box(Modifier.fillMaxWidth().height(48.dp), contentAlignment = Alignment.CenterStart) {
+        extras.changes?.let { changes ->
+          TextButton(onClick = { onAction(StatusCardExtras.CHANGES) }) {
+            Text(
+              "What will change · $changes",
+              maxLines = 1,
+              overflow = TextOverflow.Ellipsis,
+            )
+          }
         }
-        extras.changeLines.forEach { Text(it, style = MaterialTheme.typography.bodySmall) }
+      }
+      if (extras.changes != null) {
+        extras.changeLines.forEach {
+          Text(
+            it,
+            style = MaterialTheme.typography.bodySmall,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+          )
+        }
       }
       // Wraps: three actions plus refresh and audio controls don't fit one row on a phone.
-      FlowRow {
+      FlowRow(
+        modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(4.dp),
+        itemVerticalAlignment = Alignment.CenterVertically,
+      ) {
         extras.buttons.forEach { button ->
           val label: @Composable () -> Unit = {
             val icon = statusButtonIcon(button.id)
