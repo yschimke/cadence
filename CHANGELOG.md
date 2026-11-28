@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.42](https://github.com/yschimke/cadence/compare/v0.1.41...v0.1.42) (2026-11-27)
+
+
+### Bug Fixes
+
+* keep Home status card height stable across sync status changes ([#732](https://github.com/yschimke/cadence/issues/732)) ([4b1b1b1](https://github.com/yschimke/cadence/commit/4b1b1b173f75406fcd275e80cb543b2fa1eb1749))
+
 ## [0.1.41](https://github.com/yschimke/cadence/compare/v0.1.40...v0.1.41) (2026-11-26)
 
 
